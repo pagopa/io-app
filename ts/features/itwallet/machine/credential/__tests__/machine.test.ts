@@ -125,6 +125,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const isSessionExpired = jest.fn();
   const isDeferredIssuance = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
+  const isStatusError = jest.fn();
 
   const mockedMachine = itwCredentialIssuanceMachine.provide({
     actions: {
@@ -161,7 +162,8 @@ describe("itwCredentialIssuanceMachine", () => {
     guards: {
       isSessionExpired,
       isDeferredIssuance,
-      hasValidWalletInstanceAttestation
+      hasValidWalletInstanceAttestation,
+      isStatusError
     }
   });
 

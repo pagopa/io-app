@@ -9,6 +9,10 @@ import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../ItwIssuanceCredentialTrustIssuerScreen";
 
+jest.mock("../../../../../utils/hooks/usePreventScreenCapture", () => ({
+  usePreventScreenCapture: jest.fn()
+}));
+
 describe("ItwIssuanceCredentialTrustIssuerScreen", () => {
   it("it should render the screen correctly", () => {
     const component = renderComponent();

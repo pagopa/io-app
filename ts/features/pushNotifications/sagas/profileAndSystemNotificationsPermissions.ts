@@ -11,11 +11,13 @@ import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   trackNotificationsOptInPreviewStatus,
-  trackNotificationsOptInReminderStatus
+  trackNotificationsOptInReminderStatus,
+  trackPushNotificationSystemPopupShown
 } from "../analytics";
 import { setPushPermissionsRequestDuration } from "../store/actions/environment";
 import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
 import { requestNotificationPermissions } from "../utils";
+import { hasUserSeenSystemNotificationsPromptSelector } from "../store/selectors";
 import {
   checkAndUpdateNotificationPermissionsIfNeeded,
   updateNotificationPermissionsIfNeeded
@@ -75,6 +77,13 @@ export function* profileAndSystemNotificationsPermissions(
 
     const requestDuration = endRequestTime - startRequestTime;
     yield* put(setPushPermissionsRequestDuration(requestDuration));
+
+    const systemPermissionPromptShown = yield* select(
+      hasUserSeenSystemNotificationsPromptSelector
+    );
+    if (systemPermissionPromptShown) {
+      yield* call(trackPushNotificationSystemPopupShown);
+    }
 
     yield* call(
       updateNotificationPermissionsIfNeeded,

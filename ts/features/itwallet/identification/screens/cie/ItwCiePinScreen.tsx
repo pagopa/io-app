@@ -27,6 +27,7 @@ import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
 import {
@@ -61,6 +62,8 @@ const ForgottenPin = () => (
 );
 
 export const ItwCiePinScreen = () => {
+  usePreventScreenCapture();
+
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 

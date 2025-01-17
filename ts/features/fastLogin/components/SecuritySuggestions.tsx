@@ -4,12 +4,14 @@ import { View } from "react-native";
 import I18n from "../../../i18n";
 import { openWebUrl } from "../../../utils/url";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { useIODispatch } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { setSecurityAdviceAcknowledged } from "../store/actions/securityAdviceActions";
 import { trackWhatsNewScreen } from "../../whatsnew/analytics";
+import { absolutePortalLinksSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 
 const SecuritySuggestions = () => {
   const dispatch = useIODispatch();
+  const absolutePortalLinks = useIOSelector(absolutePortalLinksSelector);
 
   useOnFirstRender(() => {
     dispatch(setSecurityAdviceAcknowledged(true));
@@ -30,7 +32,7 @@ const SecuritySuggestions = () => {
           label: I18n.t(
             "authentication.security_suggestions.navigate_to_the_site"
           ),
-          onPress: () => openWebUrl("https://ioapp.it/")
+          onPress: () => openWebUrl(absolutePortalLinks.io_web)
         }}
       />
       <VSpacer size={24} />
@@ -41,7 +43,7 @@ const SecuritySuggestions = () => {
           label: I18n.t(
             "authentication.security_suggestions.navigate_to_the_site"
           ),
-          onPress: () => openWebUrl("https://ioapp.it/")
+          onPress: () => openWebUrl(absolutePortalLinks.io_web)
         }}
       />
       <VSpacer size={24} />
