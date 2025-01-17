@@ -653,17 +653,17 @@ authentication:
     privacyLink: Privacy
     nospid: Don't have SPID? Find out more
     nospid-nocie: Don't have SPID or CIE? Find out more
-    card0-title: Ti diamo il benvenuto su IO!
-    card0-content: Scorri per sapere cosa puoi fare in app.
-    card0-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
-    card1-title: Conserva al sicuro i tuoi documenti personali
-    card1-content: Con Documenti su IO hai sempre a portata di mano la versione digitale dei tuoi documenti, come Patente e Tessera Sanitaria
-    card2-title: Ricevi comunicazioni, anche a valore legale
-    card2-content: "Leggi le comunicazioni in arrivo dagli enti: se attivi il servizio SEND, ricevi anche quelle a valore legale e risparmi sui costi di notifica"
-    card3-title: Paga gli avvisi pagoPA con il metodo che preferisci
-    card3-content: Su IO consulti e scarichi le ricevute dei tuoi pagamenti pagoPA, anche se non hai pagato in app
-    card4-title: Accedi ai servizi che più ti interessano
-    card4-content: Accedi direttamente a servizi della Pubblica Amministrazone dedicati a salute, educazione, mobilità, lavoro e molto altro
+    card0-title: Welcome to IO!
+    card0-content: Swipe left to see what you can do in the app
+    card0-content-accessibility:  Select the previous item to open a chat with the IO team if something is not working as it should.
+    card1-title: Keep your personal documents safe
+    card1-content: With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips
+    card2-title: Receive communications, also with legal value
+    card2-content: Read incoming communications from organisations: by activating the SEND service, you will also receive communications with legal value and save on notification costs.
+    card3-title: Pay pagoPA notice by the method you prefer
+    card3-content: On IO, you can view and download receipts for your pagoPA payments, even if you have not paid in the app
+    card4-title: Access to the services you are most interested in
+    card4-content: Direct access to government services related to health, education, mobility, work and more
     expiredCardTitle: The CIE verification failed
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
