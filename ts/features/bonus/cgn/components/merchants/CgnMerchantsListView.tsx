@@ -23,7 +23,11 @@ export const CgnMerchantListViewRenderItem =
                 <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
                   <Badge
                     variant="purple"
-                    text={I18n.t("bonus.cgn.merchantsList.news")}
+                    text={
+                      item.numberOfNewDiscounts
+                        ? item.numberOfNewDiscounts.toString()
+                        : I18n.t("bonus.cgn.merchantsList.news")
+                    }
                   />
                 </View>
               )}
