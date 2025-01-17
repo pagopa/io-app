@@ -42,6 +42,16 @@ export const useBackgroundFetch = () => {
     );
 
     console.log("[BackgroundFetch] configure status: ", status);
+
+    await BackgroundFetch.scheduleTask({
+      taskId: "com.pagopa.io.itw_check",
+      forceAlarmManager: true,
+      delay: 5000,
+      periodic: true,
+      requiredNetworkType: BackgroundFetch.NETWORK_TYPE_ANY,
+      stopOnTerminate: false,
+      startOnBoot: true
+    });
   }, []);
 
   useEffect(() => {
