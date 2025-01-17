@@ -39,7 +39,10 @@ function debugReducer(
     case getType(setDebugData):
       return {
         ...state,
-        debugData: Object.assign({}, state.debugData, action.payload)
+        debugData: {
+          ...state.debugData,
+          ...action.payload
+        }
       };
     case getType(resetDebugData):
       return {
