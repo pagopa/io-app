@@ -30,7 +30,7 @@ const InnerNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}
-      screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
       screenListeners={{
         beforeRemove: () => {
           // Read more on https://reactnavigation.org/docs/preventing-going-back/
