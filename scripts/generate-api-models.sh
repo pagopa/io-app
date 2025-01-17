@@ -1,6 +1,7 @@
 #!/bin/bash
 
 IO_BACKEND_VERSION=v16.4.0-RELEASE
+# need to change after merge on io-services-metadata
 IO_SERVICES_METADATA_VERSION=1.0.56
 
 declare -a apis=(
