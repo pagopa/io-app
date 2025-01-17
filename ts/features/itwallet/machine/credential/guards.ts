@@ -13,7 +13,7 @@ const isSelectCredentialEvent = (
 ): event is SelectCredential => event.type === "select-credential";
 
 export const createCredentialIssuanceGuardsImplementation = () => {
-// eslint-disable-next-line react-hooks/rules-of-hooks
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const store = useIOStore();
 
   return {
