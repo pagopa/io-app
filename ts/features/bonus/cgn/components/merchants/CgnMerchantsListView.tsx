@@ -25,7 +25,7 @@ export const CgnMerchantListViewRenderItem =
                     variant="purple"
                     text={
                       item.numberOfNewDiscounts
-                        ? String(item.numberOfNewDiscounts)
+                        ? item.numberOfNewDiscounts.toString()
                         : I18n.t("bonus.cgn.merchantsList.news")
                     }
                   />
