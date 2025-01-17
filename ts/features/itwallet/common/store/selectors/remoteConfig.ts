@@ -120,7 +120,6 @@ export const itwIsIPatenteCtaEnabledSelector = createSelector(
     )
 );
 
-
 /**
  * Return the remote config about iPatente CTA inside the MDL credential details screen.
  */
@@ -133,4 +132,3 @@ export const itwIPatenteCtaConfigSelector = createSelector(
       O.toUndefined
     )
 );
-
