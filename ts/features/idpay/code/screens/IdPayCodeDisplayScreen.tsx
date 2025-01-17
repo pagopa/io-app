@@ -1,20 +1,9 @@
-import {
-  Banner,
-  Body,
-  ButtonSolid,
-  ContentWrapper,
-  H2,
-  H3,
-  IOColors,
-  IOStyles,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Banner, H3, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, createRef } from "react";
 import { StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
@@ -76,52 +65,56 @@ const IdPayCodeDisplayScreen = () => {
     ? I18n.t("global.buttons.continue")
     : I18n.t("global.buttons.close");
 
-  useHeaderSecondLevel({
-    title: "",
-    canGoBack: true,
-    contextualHelp: emptyContextualHelp,
-    supportRequest: true
-  });
-
   return (
-    <>
+    <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t("idpay.code.onboarding.header")
+      }}
+      description={[
+        { text: I18n.t("idpay.code.onboarding.body1") },
+        {
+          text: "\n"
+        },
+        {
+          text: I18n.t("idpay.code.onboarding.bodyBold"),
+          weight: "Semibold"
+        },
+        {
+          text: "\n"
+        },
+        {
+          text: I18n.t("idpay.code.onboarding.bodyCta"),
+          weight: "Semibold",
+          asLink: true,
+          onPress: presentCieBottomSheet
+        }
+      ]}
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{ showHelp: true }}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: buttonLabel,
+          onPress: handleContinue,
+          testID: "actionButtonTestID"
+        }
+      }}
+      includeContentMargins
+    >
       <LoadingSpinnerOverlay isLoading={isGeneratingCode} loadingOpacity={1}>
-        <ContentWrapper>
-          <H2>{I18n.t("idpay.code.onboarding.header")}</H2>
-          <VSpacer size={16} />
-          <Body color="grey-700" weight="Regular">
-            {I18n.t("idpay.code.onboarding.body1")}
-          </Body>
-          <Body color="grey-700" weight="Semibold">
-            {I18n.t("idpay.code.onboarding.bodyBold")}
-          </Body>
-          <Body weight="Semibold" asLink onPress={presentCieBottomSheet}>
-            {I18n.t("idpay.code.onboarding.bodyCta")}
-          </Body>
-          <VSpacer size={24} />
-          <CodeDisplayComponent code={idPayCode} />
-          <VSpacer size={24} />
-          <Banner
-            color="neutral"
-            pictogramName="security"
-            size="big"
-            viewRef={bannerRef}
-            title={I18n.t("idpay.code.onboarding.banner.header")}
-            content={I18n.t("idpay.code.onboarding.banner.body")}
-          />
-        </ContentWrapper>
-        <SafeAreaView style={IOStyles.horizontalContentPadding}>
-          <ButtonSolid
-            accessibilityLabel={buttonLabel}
-            label={buttonLabel}
-            fullWidth={true}
-            onPress={handleContinue}
-            testID="actionButtonTestID"
-          />
-        </SafeAreaView>
+        <CodeDisplayComponent code={idPayCode} />
+        <VSpacer size={24} />
+        <Banner
+          color="neutral"
+          pictogramName="security"
+          size="big"
+          viewRef={bannerRef}
+          title={I18n.t("idpay.code.onboarding.banner.header")}
+          content={I18n.t("idpay.code.onboarding.banner.body")}
+        />
       </LoadingSpinnerOverlay>
       {bottomSheet}
-    </>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

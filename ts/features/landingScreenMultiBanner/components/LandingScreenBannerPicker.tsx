@@ -3,6 +3,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { landingScreenBannerToRenderSelector } from "../store/selectors";
 import { updateLandingScreenBannerVisibility } from "../store/actions";
 import { landingScreenBannerMap } from "../utils/landingScreenBannerMap";
+import { usePushNotificationsBannerTracking } from "../../pushNotifications/hooks/usePushNotificationsBannerTracking";
 
 export const LandingScreenBannerPicker = () => {
   const dispatch = useIODispatch();
@@ -18,6 +19,8 @@ export const LandingScreenBannerPicker = () => {
       );
     }
   }, [bannerToRender, dispatch]);
+
+  usePushNotificationsBannerTracking();
 
   if (bannerToRender === undefined) {
     return null;

@@ -11,6 +11,7 @@ import { updateLandingScreenBannerVisibility } from "../../store/actions";
 import * as SELECTORS from "../../store/selectors";
 import { LandingScreenBannerId } from "../../utils/landingScreenBannerMap";
 import { LandingScreenBannerPicker } from "../LandingScreenBannerPicker";
+import * as hooks from "../../../pushNotifications/hooks/usePushNotificationsBannerTracking";
 
 jest.mock("../../utils/landingScreenBannerMap", () => ({
   get landingScreenBannerMap() {
@@ -87,6 +88,16 @@ describe("LandingBannerPicker", () => {
     expect(testDispatch).toHaveBeenCalledWith(
       updateLandingScreenBannerVisibility({ id: bannerId, enabled: false })
     );
+  });
+  it("should include 'usePushNotificationsBannerTracking'", () => {
+    const spyUsePushNotificationsBannerTracking = jest.spyOn(
+      hooks,
+      "usePushNotificationsBannerTracking"
+    );
+
+    renderComponent();
+
+    expect(spyUsePushNotificationsBannerTracking.mock.calls.length).toBe(1);
   });
 });
 

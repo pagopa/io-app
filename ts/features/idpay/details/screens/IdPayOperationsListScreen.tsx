@@ -14,7 +14,6 @@ import { useRef } from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import Placeholder from "rn-placeholder";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -23,6 +22,7 @@ import { useTimelineDetailsBottomSheet } from "../../timeline/components/Timelin
 import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
 import { useInitiativeTimelineFetcher } from "../hooks/useInitiativeTimelineFetcher";
 import { IDPayDetailsParamsList } from "../navigation";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 
 export type IdPayOperationsListScreenParams = { initiativeId: string };
 
@@ -129,7 +129,7 @@ export const IdPayOperationsListScreen = () => {
   );
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
@@ -149,7 +149,7 @@ export const IdPayOperationsListScreen = () => {
       <VSpacer size={16} />
       {operationList}
       {detailsBottomSheet.bottomSheet}
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

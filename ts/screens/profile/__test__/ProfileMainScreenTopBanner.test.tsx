@@ -1,13 +1,18 @@
-import { fireEvent } from "@testing-library/react-native";
-import { renderComponent } from "../../../components/__tests__/ForceScrollDownView.test";
-import * as profileBannerImport from "../../../features/profileSettings/store/selectors";
-import { GlobalState } from "../../../store/reducers/types";
-import { ProfileMainScreenTopBanner } from "../ProfileMainScreenTopBanner";
-import * as settingsNavigate from "../../../features/pushNotifications/utils";
-import ROUTES from "../../../navigation/routes";
-import TypedI18n from "../../../i18n";
+import { fireEvent, render } from "@testing-library/react-native";
+import { PropsWithChildren, ReactElement } from "react";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
 import { setShowProfileBanner } from "../../../features/profileSettings/store/actions";
+import * as profileBannerImport from "../../../features/profileSettings/store/selectors";
+import * as analytics from "../../../features/pushNotifications/analytics";
+import * as settingsNavigate from "../../../features/pushNotifications/utils";
+import TypedI18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
+import { GlobalState } from "../../../store/reducers/types";
 import { mockAccessibilityInfo } from "../../../utils/testAccessibility";
+import { ProfileMainScreenTopBanner } from "../ProfileMainScreenTopBanner";
 
 jest.spyOn(settingsNavigate, "openSystemNotificationSettingsScreen");
 const mockNavigate = jest.fn();
@@ -61,6 +66,9 @@ describe("ProfileMainScreenTopBanner", () => {
     jest
       .spyOn(profileBannerImport, "profileBannerToShowSelector")
       .mockImplementation((_: GlobalState) => "NOTIFICATIONS");
+    const spyOnMockTrackPushNotificationsBannerVisualized = jest
+      .spyOn(analytics, "trackPushNotificationsBannerVisualized")
+      .mockImplementation(_ => undefined);
 
     const root = renderComponent(<ProfileMainScreenTopBanner />);
     const component = root.getByTestId("notifications-banner");
@@ -69,6 +77,12 @@ describe("ProfileMainScreenTopBanner", () => {
 
     fireEvent.press(component);
 
+    expect(
+      spyOnMockTrackPushNotificationsBannerVisualized
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      spyOnMockTrackPushNotificationsBannerVisualized
+    ).toHaveBeenCalledWith(ROUTES.SETTINGS_MAIN);
     expect(
       settingsNavigate.openSystemNotificationSettingsScreen
     ).toHaveBeenCalled();
@@ -105,4 +119,44 @@ describe("ProfileMainScreenTopBanner", () => {
 
     expect(mockDispatch).toHaveBeenCalledWith(setShowProfileBanner(false));
   });
+  it(`should call 'trackPushNotificationsBannerVisualized' on first rendering if the push notification banner is the one to show`, () => {
+    jest
+      .spyOn(profileBannerImport, "profileBannerToShowSelector")
+      .mockImplementation((_: GlobalState) => "NOTIFICATIONS");
+    const spyOnMockTrackPushNotificationsBannerVisualized = jest
+      .spyOn(analytics, "trackPushNotificationsBannerVisualized")
+      .mockImplementation(_ => undefined);
+    renderComponent(<ProfileMainScreenTopBanner />);
+    expect(
+      spyOnMockTrackPushNotificationsBannerVisualized
+    ).toHaveBeenCalledTimes(1);
+    expect(
+      spyOnMockTrackPushNotificationsBannerVisualized
+    ).toHaveBeenCalledWith(ROUTES.SETTINGS_MAIN);
+  });
+  it(`should not have called 'trackPushNotificationsBannerVisualized' on first rendering if the push notification banner is not the shown one`, () => {
+    jest
+      .spyOn(profileBannerImport, "profileBannerToShowSelector")
+      .mockImplementation((_: GlobalState) => "PROFILE_BANNER");
+    const spyOnMockTrackPushNotificationsBannerVisualized = jest
+      .spyOn(analytics, "trackPushNotificationsBannerVisualized")
+      .mockImplementation(_ => undefined);
+    renderComponent(<ProfileMainScreenTopBanner />);
+    expect(
+      spyOnMockTrackPushNotificationsBannerVisualized
+    ).toHaveBeenCalledTimes(0);
+  });
 });
+
+export const renderComponent = (component: ReactElement) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
+
+  const Wrapper = ({ children }: PropsWithChildren<any>) => (
+    <Provider store={store}>{children}</Provider>
+  );
+
+  return render(component, {
+    wrapper: Wrapper
+  });
+};

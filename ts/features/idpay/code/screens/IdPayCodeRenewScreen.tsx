@@ -1,12 +1,7 @@
-import {
-  Body,
-  H2,
-  IOStyles,
-  ListItemAction,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ListItemAction } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { Alert, View } from "react-native";
+import { Alert } from "react-native";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import {
@@ -62,25 +57,33 @@ export const IdPayCodeRenewScreen = () => {
   });
 
   return (
-    <>
-      <View style={IOStyles.horizontalContentPadding}>
-        <H2>{I18n.t("idpay.code.renew.screen.header")}</H2>
-        <VSpacer size={16} />
-        <Body>{I18n.t("idpay.code.renew.screen.body")}</Body>
-        <Body weight="Semibold" asLink onPress={presentCieBottomSheet}>
-          {I18n.t("idpay.code.renew.screen.link")}
-        </Body>
-        <VSpacer size={16} />
-        <ListItemAction
-          label={I18n.t("idpay.code.renew.screen.generateCTA")}
-          onPress={() => customAlert(handleConfirm)}
-          icon="change"
-          accessibilityLabel={I18n.t("idpay.code.renew.screen.generateCTA")}
-          variant="danger"
-        />
-      </View>
+    <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t("idpay.code.renew.screen.header")
+      }}
+      description={[
+        { text: I18n.t("idpay.code.renew.screen.body") },
+        { text: "\n" },
+        {
+          text: I18n.t("idpay.code.renew.screen.link"),
+          onPress: presentCieBottomSheet,
+          weight: "Semibold",
+          asLink: true
+        }
+      ]}
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{ showHelp: true }}
+      includeContentMargins
+    >
+      <ListItemAction
+        label={I18n.t("idpay.code.renew.screen.generateCTA")}
+        onPress={() => customAlert(handleConfirm)}
+        icon="change"
+        accessibilityLabel={I18n.t("idpay.code.renew.screen.generateCTA")}
+        variant="danger"
+      />
       {bottomSheet}
-    </>
+    </IOScrollViewWithLargeHeader>
   );
 };
 
