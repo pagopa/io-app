@@ -39,7 +39,7 @@ function debugReducer(
     case getType(setDebugData):
       return {
         ...state,
-        debugData: _.merge(state.debugData, action.payload)
+        debugData: _.merge(undefined, state.debugData, action.payload)
       };
     case getType(resetDebugData):
       return {
@@ -82,8 +82,5 @@ export const isDebugModeEnabledSelector = (state: GlobalState) =>
  */
 export const debugDataSelector = createSelector(
   (state: GlobalState) => state.debug.debugData,
-  debugData =>
-    Object.fromEntries(
-      Object.entries(debugData).filter(([_, value]) => value !== undefined)
-    )
+  debugData => _.pickBy(debugData, value => !!value)
 );
