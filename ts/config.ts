@@ -229,3 +229,10 @@ export const itwEaaVerifierBaseUrl = Config.ITW_EAA_VERIFIER_BASE_URL;
 export const itwBypassIdentityMatch =
   Config.ITW_BYPASS_IDENTITY_MATCH === "YES";
 export const itwIdpHintTest = Config.ITW_IDP_HINT_TEST === "YES";
+
+// Background fetch
+export const backgroundFetchIntervalMinutes = pipe(
+  parseInt(Config.BACKGROUND_FETCH_INTERVAL_MINUTES, 10),
+  t.Integer.decode,
+  E.getOrElse(() => 60)
+);

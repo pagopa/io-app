@@ -60,6 +60,10 @@ import {
   spidLoginReducer,
   SpidLoginState
 } from "../../../spidLogin/store/reducers";
+import {
+  BackgroundFetchState,
+  backgroundFetchReducer
+} from "../../../backgroundFetch/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -85,6 +89,7 @@ export type FeaturesState = {
   mixpanel: MixpanelState;
   ingress: IngressScreenState;
   landingBanners: LandingScreenBannerState;
+  backgroundFetch: BackgroundFetchState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -110,7 +115,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   profileSettings: profileSettingsReducerPersistor,
   mixpanel: mixpanelReducer,
   ingress: ingressScreenReducer,
-  landingBanners: landingScreenBannersReducer
+  landingBanners: landingScreenBannersReducer,
+  backgroundFetch: backgroundFetchReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;
