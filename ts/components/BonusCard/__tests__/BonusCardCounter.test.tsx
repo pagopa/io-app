@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react-native";
-import React from "react";
 import { Provider } from "react-redux";
 import { Store, createStore } from "redux";
 import { applicationChangeState } from "../../../store/actions/application";

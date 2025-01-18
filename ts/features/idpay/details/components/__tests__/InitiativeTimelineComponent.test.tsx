@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";

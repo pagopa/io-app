@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";

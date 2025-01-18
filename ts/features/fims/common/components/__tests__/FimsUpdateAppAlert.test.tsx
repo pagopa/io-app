@@ -1,4 +1,3 @@
-import React from "react";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../../store/actions/application";

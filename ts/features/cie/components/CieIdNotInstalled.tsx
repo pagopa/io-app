@@ -1,11 +1,11 @@
-import React from "react";
-import { Platform } from "react-native";
 import { useIOToast } from "@pagopa/io-app-design-system";
+import { Platform } from "react-native";
+
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import I18n from "../../../i18n";
-import { trackCieIdNotInstalledDownloadAction } from "../analytics";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { openWebUrl } from "../../../utils/url";
+import { trackCieIdNotInstalledDownloadAction } from "../analytics";
 
 export const CIE_ID_IOS_LINK =
   "https://apps.apple.com/it/app/cieid/id1504644677";

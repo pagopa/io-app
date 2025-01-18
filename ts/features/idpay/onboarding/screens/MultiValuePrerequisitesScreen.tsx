@@ -1,18 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import {
-  Body,
-  FooterActionsInline,
-  H1,
-  H6,
-  IOStyles,
-  RadioGroup,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { default as React } from "react";
-import { ScrollView, View } from "react-native";
+import { H6, IOStyles, RadioGroup } from "@pagopa/io-app-design-system";
+import { useEffect, useRef, useState } from "react";
+import { View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
@@ -21,7 +13,7 @@ import {
 } from "../machine/selectors";
 
 const MultiValuePrerequisitesScreen = () => {
-  const pagerRef = React.useRef<PagerView>(null);
+  const pagerRef = useRef<PagerView>(null);
 
   const multiSelfDeclarations = IdPayOnboardingMachineContext.useSelector(
     multiRequiredCriteriaSelector
@@ -30,7 +22,7 @@ const MultiValuePrerequisitesScreen = () => {
     selectCurrentMultiSelfDeclarationPage
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     pagerRef.current?.setPage(currentPage);
   }, [pagerRef, currentPage]);
 
@@ -61,7 +53,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
 }: MultiValuePrerequisiteItemScreenContentProps) => {
   const machine = IdPayOnboardingMachineContext.useActorRef();
 
-  const [selectedValue, setSelectedValue] = React.useState<string | undefined>(
+  const [selectedValue, setSelectedValue] = useState<string | undefined>(
     undefined
   );
 
@@ -79,50 +71,51 @@ const MultiValuePrerequisiteItemScreenContent = ({
   };
   const handleGoBack = () => machine.send({ type: "back" });
 
-  useHeaderSecondLevel({
-    title: I18n.t("idpay.onboarding.headerTitle"),
-    goBack: handleGoBack
-  });
-
   return (
-    <>
-      <View style={IOStyles.horizontalContentPadding}>
-        <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
-        <VSpacer size={16} />
-        <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
-        {/* TODO: Add a proper `onPress` function to the following link.
-          It was a `<Link>` without anything else before */}
-        {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-        <Body weight="Semibold" asLink onPress={() => {}}>
-          {I18n.t("idpay.onboarding.multiPrerequisites.link")}
-        </Body>
-        <VSpacer size={24} />
-        <H6>{selfDeclaration.description}</H6>
-        <ScrollView>
-          <RadioGroup<string>
-            type="radioListItem"
-            items={selfDeclaration.value.map((answer, index) => ({
-              id: index.toString(),
-              value: answer
-            }))}
-            selectedItem={selectedValue}
-            onPress={value => setSelectedValue(value)}
-          />
-        </ScrollView>
-      </View>
-      <FooterActionsInline
-        startAction={{
-          color: "primary",
-          onPress: handleGoBack,
-          label: I18n.t("global.buttons.back")
-        }}
-        endAction={{
+    <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t("idpay.onboarding.multiPrerequisites.header"),
+        section: I18n.t("idpay.onboarding.headerTitle")
+      }}
+      goBack={handleGoBack}
+      includeContentMargins
+      actions={{
+        type: "SingleButton",
+        primary: {
           onPress: handleContinuePress,
           disabled: selectedValue === undefined,
           label: I18n.t("global.buttons.continue")
-        }}
+        }
+      }}
+      description={[
+        {
+          text: I18n.t("idpay.onboarding.multiPrerequisites.body")
+        },
+        {
+          text: "\n"
+        },
+        {
+          //  TODO: Add a proper `onPress` function to the following link.
+          //  It was a `<Link>` without anything else before
+          text: I18n.t("idpay.onboarding.multiPrerequisites.link"),
+          weight: "Semibold",
+          asLink: true,
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          onPress: () => {}
+        }
+      ]}
+    >
+      <H6>{selfDeclaration.description}</H6>
+      <RadioGroup<string>
+        type="radioListItem"
+        items={selfDeclaration.value.map((answer, index) => ({
+          id: index.toString(),
+          value: answer
+        }))}
+        selectedItem={selectedValue}
+        onPress={value => setSelectedValue(value)}
       />
-    </>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

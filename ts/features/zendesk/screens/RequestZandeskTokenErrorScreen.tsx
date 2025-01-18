@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../i18n";
 import { useIODispatch } from "../../../store/hooks";

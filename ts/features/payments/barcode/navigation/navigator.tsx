@@ -4,7 +4,6 @@ import {
   StackNavigationProp,
   TransitionPresets
 } from "@react-navigation/stack";
-import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { PaymentsBarcodeChoiceScreen } from "../screens/PaymentsBarcodeChoiceScreen";
 import { PaymentsBarcodeScanScreen } from "../screens/PaymentsBarcodeScanScreen";

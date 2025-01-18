@@ -1,4 +1,3 @@
-import React from "react";
 import { createStore } from "redux";
 import { Timeline, TimelineItemProps, TimelineProps } from "../Timeline";
 import { appReducer } from "../../../../store/reducers";

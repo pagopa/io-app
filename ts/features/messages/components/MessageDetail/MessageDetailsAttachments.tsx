@@ -1,4 +1,3 @@
-import * as React from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import { ListItemHeader } from "@pagopa/io-app-design-system";

@@ -1,5 +1,6 @@
 import { IOSpacingScale, VStack } from "@pagopa/io-app-design-system";
-import React from "react";
+
+import { PropsWithChildren, useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -22,13 +23,13 @@ type Props = {
  */
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const navigation = useIONavigation();
-  const [isFlipped, setIsFlipped] = React.useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
 
-  const handleFlipButtonPress = React.useCallback(() => {
+  const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(CREDENTIALS_MAP[credential.credentialType]);
     setIsFlipped(_ => !_);
   }, [credential.credentialType]);
@@ -74,7 +75,7 @@ type CardContainerProps = {
 const CardContainer = ({
   children,
   backgroundColor
-}: React.PropsWithChildren<CardContainerProps>) => (
+}: PropsWithChildren<CardContainerProps>) => (
   <View style={styles.cardContainer}>
     {children}
     <View style={[styles.cardBackdrop, { backgroundColor }]} />

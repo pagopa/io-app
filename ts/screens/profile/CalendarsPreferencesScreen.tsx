@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { Calendar } from "react-native-calendar-events";
 import CalendarsListContainer from "../../components/CalendarsListContainer";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";

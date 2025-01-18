@@ -12,8 +12,8 @@
 import { H6, HSpacer, IOColors, IOIcons } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import color from "color";
-import * as React from "react";
-import { useState } from "react";
+
+import { ComponentPropsWithRef, FC, useCallback, useState } from "react";
 import {
   ImageSourcePropType,
   ImageStyle,
@@ -72,7 +72,7 @@ type CommonProp = Readonly<{
   imageStyle?: ImageStyle;
   iconPosition?: "left" | "right";
   inputMaskProps?: TextInputMaskProps &
-    React.ComponentPropsWithRef<typeof TextInputMask>;
+    ComponentPropsWithRef<typeof TextInputMask>;
   inputProps?: TextInputAdditionalProps;
   isValid?: boolean;
   label?: string;
@@ -127,12 +127,12 @@ function getColorsByProps({
 }
 
 const NavigationEventHandler = ({ onPress }: { onPress: () => void }) => {
-  useFocusEffect(React.useCallback(() => onPress, [onPress]));
+  useFocusEffect(useCallback(() => onPress, [onPress]));
 
   return <></>;
 };
 
-export const LabelledItem: React.FC<Props> = ({
+export const LabelledItem: FC<Props> = ({
   iconPosition = "left",
   ...props
 }: Props) => {

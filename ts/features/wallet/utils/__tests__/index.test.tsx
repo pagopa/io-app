@@ -1,5 +1,4 @@
 import { Body } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { withWalletCategoryFilter } from "..";
 import ROUTES from "../../../../navigation/routes";

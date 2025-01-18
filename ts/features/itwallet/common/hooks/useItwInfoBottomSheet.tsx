@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "react-native";
 import { H6, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";

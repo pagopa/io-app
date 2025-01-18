@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
 import { isGestureEnabled } from "../utils/navigation";
 import ValidateEmailScreen from "../screens/profile/mailCheck/ValidateEmailScreen";
 import EmailAlreadyTakenScreen from "../screens/profile/mailCheck/EmailAlreadyTakenScreen";

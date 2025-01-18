@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Modal } from "react-native";
 import I18n from "../../../i18n";
 import { openWebUrl } from "../../../utils/url";

@@ -10,7 +10,7 @@ import * as A from "fp-ts/lib/Array";
 import { contramap } from "fp-ts/lib/Ord";
 import { pipe } from "fp-ts/lib/function";
 import * as N from "fp-ts/number";
-import React from "react";
+import { useCallback, Fragment } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -33,7 +33,7 @@ const PaymentsBarcodeChoiceScreen = () => {
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       analytics.trackBarcodeMultipleCodesScreenView();
     }, [])
   );
@@ -80,10 +80,10 @@ const PaymentsBarcodeChoiceScreen = () => {
           <H2>{I18n.t("wallet.payment.barcodes.choice.title")}</H2>
           <VSpacer size={32} />
           {sortedBarcodes.map((item, index) => (
-            <React.Fragment key={index}>
+            <Fragment key={index}>
               {renderBarcodeItem(item)}
               {index <= sortedBarcodes.length - 2 && <Divider />}
-            </React.Fragment>
+            </Fragment>
           ))}
         </ContentWrapper>
       </ScrollView>

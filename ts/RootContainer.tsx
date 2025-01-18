@@ -8,6 +8,7 @@ import { ReactNavigationInstrumentation } from "./App";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
+import { useBackgroundFetch } from "./features/background/hooks/useBackgroundFetch";
 import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
@@ -20,7 +21,6 @@ import {
   preferredLanguageSelector
 } from "./store/reducers/persistedPreferences";
 import customVariables from "./theme/variables";
-import { useBackgroundFetch } from "./features/background/hooks/useBackgroundFetch";
 
 type RootContainerProps = {
   routingInstumentation: ReactNavigationInstrumentation;

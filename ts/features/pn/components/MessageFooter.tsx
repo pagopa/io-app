@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useCallback } from "react";
+import { MutableRefObject, useCallback } from "react";
 import { View } from "react-native";
 import {
   ButtonSolid,
