@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { CheckboxLabel, IOStyles } from "@pagopa/io-app-design-system";
 import { QtspClause } from "../../../../definitions/fci/QtspClause";
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 });
 
 const QtspClauseListItem = (props: Props) => {
-  const [checked, setChecked] = React.useState(props.checked || false);
+  const [checked, setChecked] = useState(props.checked || false);
   const qtspFilledDocumentUrl = useIOSelector(fciQtspFilledDocumentUrlSelector);
   const onChange = (value: boolean) => {
     setChecked(value);

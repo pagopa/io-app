@@ -6,7 +6,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import * as React from "react";
 import { StyleSheet } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";

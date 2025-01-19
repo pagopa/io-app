@@ -7,7 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import * as React from "react";
+import { useCallback } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
@@ -46,7 +46,7 @@ const ItwPlayground = () => {
     ItwCredentialIssuanceMachineContext.useActorRef();
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       // Resets the machine in case they were left in s failure state
       credentialMachineRef.send({ type: "reset" });
     }, [credentialMachineRef])

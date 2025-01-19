@@ -8,7 +8,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { WithTestID } from "../../../types/WithTestID";
 import { maybeNotNullyString } from "../../../utils/strings";
@@ -48,8 +48,7 @@ type Props = WithTestID<{
 }>;
 
 const LollipopPlaygroundContent = (props: Props) => {
-  const [httpRequestBodyText, setHttpRequestBodyText] =
-    React.useState<string>("");
+  const [httpRequestBodyText, setHttpRequestBodyText] = useState<string>("");
 
   const isMessageBodySet = O.isSome(maybeNotNullyString(httpRequestBodyText));
 

@@ -1,5 +1,4 @@
 import { fireEvent } from "@testing-library/react-native";
-import * as React from "react";
 import { Button } from "react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";

@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useMemo } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -16,7 +16,7 @@ const FailureScreen = () => {
 
   const failureOption = useSelector(selectOnboardingFailure);
 
-  const defaultCloseAction = React.useMemo(
+  const defaultCloseAction = useMemo(
     () => ({
       label: I18n.t("global.buttons.close"),
       accessibilityLabel: I18n.t("global.buttons.close"),
@@ -25,7 +25,7 @@ const FailureScreen = () => {
     [machine]
   );
 
-  const goToInitiativeAction = React.useMemo(
+  const goToInitiativeAction = useMemo(
     () => ({
       label: I18n.t("idpay.onboarding.failure.button.goToInitiative"),
       accessibilityLabel: I18n.t(
@@ -36,7 +36,7 @@ const FailureScreen = () => {
     [machine]
   );
 
-  const genericErrorProps = React.useMemo<OperationResultScreenContentProps>(
+  const genericErrorProps = useMemo<OperationResultScreenContentProps>(
     () => ({
       pictogram: "umbrellaNew",
       title: I18n.t("idpay.onboarding.failure.message.GENERIC.title"),

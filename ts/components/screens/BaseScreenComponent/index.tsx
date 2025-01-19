@@ -1,4 +1,5 @@
-import React, { ComponentProps, PropsWithChildren } from "react";
+import { ComponentProps, PropsWithChildren, ReactNode } from "react";
+
 import { ColorValue, View } from "react-native";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { TranslationKeys } from "../../../../locales/locales";
@@ -31,7 +32,7 @@ interface OwnProps {
   accessibilityLabel?: string;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  headerBody?: React.ReactNode;
+  headerBody?: ReactNode;
   headerBackgroundColor?: ColorValue;
   hideBaseHeader?: boolean;
   appLogo?: boolean;

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Modal } from "react-native";
 import { IOPictograms } from "@pagopa/io-app-design-system";
 import { useAvoidHardwareBackButton } from "../../../utils/useAvoidHardwareBackButton";

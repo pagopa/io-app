@@ -2,7 +2,7 @@
  * A screen to show the app Terms of Service.
  * This screen is used as Privacy screen From Profile section.
  */
-import React, { useState } from "react";
+import { useState } from "react";
 import { H2, IOStyles } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";

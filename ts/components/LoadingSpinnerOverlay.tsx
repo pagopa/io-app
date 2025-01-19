@@ -5,7 +5,8 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../i18n";
 import { IOStyles } from "./core/variables/IOStyles";
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  children?: React.ReactNode;
+  children?: ReactNode;
   isLoading: boolean;
   loadingCaption?: string;
   loadingOpacity?: number;

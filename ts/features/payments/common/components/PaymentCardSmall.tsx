@@ -5,7 +5,7 @@ import {
   LabelMini,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
@@ -27,7 +27,7 @@ const PaymentCardSmall = ({
   accessibilityLabel,
   ...props
 }: PaymentCardSmallProps) => {
-  const labelText = React.useMemo(() => {
+  const labelText = useMemo(() => {
     if (props.hpan) {
       return `•••• ${props.hpan}`;
     }
@@ -47,7 +47,7 @@ const PaymentCardSmall = ({
     return props.brand;
   }, [props]);
 
-  const iconName = React.useMemo(() => {
+  const iconName = useMemo(() => {
     if (props.holderEmail) {
       return "paypal";
     }

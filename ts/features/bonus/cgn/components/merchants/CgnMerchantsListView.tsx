@@ -1,4 +1,3 @@
-import * as React from "react";
 import { ListRenderItem, View } from "react-native";
 import { Badge, H6, ListItemNav } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -23,7 +22,11 @@ export const CgnMerchantListViewRenderItem =
                 <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
                   <Badge
                     variant="purple"
-                    text={I18n.t("bonus.cgn.merchantsList.news")}
+                    text={
+                      item.numberOfNewDiscounts
+                        ? item.numberOfNewDiscounts.toString()
+                        : I18n.t("bonus.cgn.merchantsList.news")
+                    }
                   />
                 </View>
               )}

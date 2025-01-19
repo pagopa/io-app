@@ -1,5 +1,4 @@
 /* eslint-disable curly */
-import * as React from "react";
 import {
   ButtonSolid,
   ListItemHeader,

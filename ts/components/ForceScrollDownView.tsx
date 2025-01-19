@@ -1,4 +1,12 @@
-import React from "react";
+import { IOSpringValues, IconButtonSolid } from "@pagopa/io-app-design-system";
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import {
   LayoutChangeEvent,
   NativeScrollEvent,
@@ -7,14 +15,13 @@ import {
   ScrollViewProps,
   StyleSheet
 } from "react-native";
-import { IOSpringValues, IconButtonSolid } from "@pagopa/io-app-design-system";
 import { ScaleInOutAnimation } from "./animations/ScaleInOutAnimation";
 
 type ForceScrollDownViewProps = {
   /**
    * The content to display inside the scroll view.
    */
-  children: React.ReactNode;
+  children: ReactNode;
   /**
    * The distance from the bottom of the scrollable content at which the "scroll to bottom" button
    * should become hidden. Defaults to 100.
@@ -44,37 +51,37 @@ const ForceScrollDownView = ({
   scrollEnabled = true,
   onThresholdCrossed
 }: ForceScrollDownViewProps) => {
-  const scrollViewRef = React.useRef<ScrollView>(null);
+  const scrollViewRef = useRef<ScrollView>(null);
 
   /**
    * The height of the scroll view, used to determine whether or not the scrollable content fits inside
    * the scroll view and whether the "scroll to bottom" button should be displayed.
    */
-  const [scrollViewHeight, setScrollViewHeight] = React.useState<number>();
+  const [scrollViewHeight, setScrollViewHeight] = useState<number>();
 
   /**
    * The height of the scrollable content, used to determine whether or not the "scroll to bottom" button
    * should be displayed.
    */
-  const [contentHeight, setContentHeight] = React.useState<number>();
+  const [contentHeight, setContentHeight] = useState<number>();
 
   /**
    * Whether or not the scroll view has crossed the threshold from the bottom.
    */
-  const [isThresholdCrossed, setThresholdCrossed] = React.useState(false);
+  const [isThresholdCrossed, setThresholdCrossed] = useState(false);
 
   /**
    * Whether or not the "scroll to bottom" button should be visible. This is controlled by the threshold
    * and the current scroll position.
    */
-  const [isButtonVisible, setButtonVisible] = React.useState(true);
+  const [isButtonVisible, setButtonVisible] = useState(true);
 
   /**
    * A callback that is called whenever the scroll view is scrolled. It checks whether or not the
    * scroll view has crossed the threshold from the bottom and updates the state accordingly.
    * The callback is designed to updatr button visibility only when crossing the threshold.
    */
-  const handleScroll = React.useCallback(
+  const handleScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const { layoutMeasurement, contentOffset, contentSize } =
         event.nativeEvent;
@@ -99,7 +106,7 @@ const ForceScrollDownView = ({
   /**
    * A side effect that calls the `onThresholdCrossed` callback whenever the value of `isThresholdCrossed` changes.
    */
-  React.useEffect(() => {
+  useEffect(() => {
     onThresholdCrossed?.(isThresholdCrossed);
   }, [onThresholdCrossed, isThresholdCrossed]);
 
@@ -107,7 +114,7 @@ const ForceScrollDownView = ({
    * A callback that is called whenever the size of the scrollable content changes. It updates the
    * state with the new content height.
    */
-  const handleContentSizeChange = React.useCallback(
+  const handleContentSizeChange = useCallback(
     (_contentWidth: number, contentHeight: number) => {
       setContentHeight(contentHeight);
     },
@@ -118,7 +125,7 @@ const ForceScrollDownView = ({
    * A callback that is called whenever the size of the scroll view changes. It updates the state
    * with the new scroll view height.
    */
-  const handleLayout = React.useCallback((event: LayoutChangeEvent) => {
+  const handleLayout = useCallback((event: LayoutChangeEvent) => {
     setScrollViewHeight(event.nativeEvent.layout.height);
   }, []);
 
@@ -126,7 +133,7 @@ const ForceScrollDownView = ({
    * A callback that is called when the "scroll to bottom" button is pressed. It scrolls the
    * scroll view to the bottom and hides the button.
    */
-  const handleScrollDownPress = React.useCallback(() => {
+  const handleScrollDownPress = useCallback(() => {
     setButtonVisible(false);
     scrollViewRef.current?.scrollToEnd();
   }, [scrollViewRef]);
@@ -136,7 +143,7 @@ const ForceScrollDownView = ({
    * when the scrollable content cannot fit inside the scroll view and the button is enabled
    * (`scrollEnabled` is `true`).
    */
-  const needsScroll = React.useMemo(
+  const needsScroll = useMemo(
     () =>
       scrollViewHeight != null &&
       contentHeight != null &&

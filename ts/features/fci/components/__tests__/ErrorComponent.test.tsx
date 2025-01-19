@@ -1,6 +1,5 @@
 import "react-native";
 import { Provider } from "react-redux";
-import React from "react";
 import configureMockStore from "redux-mock-store";
 import { constNull } from "fp-ts/lib/function";
 import ErrorComponent from "../ErrorComponent";

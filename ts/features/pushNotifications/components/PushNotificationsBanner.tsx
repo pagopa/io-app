@@ -4,22 +4,12 @@ import {
   FooterActions,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
-import { StyleSheet, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import { useCallback, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import {
-  resetNotificationBannerDismissState,
-  setPushNotificationBannerForceDismissed,
-  setUserDismissedNotificationsBanner
-} from "../store/actions/userBehaviour";
-import { openSystemNotificationSettingsScreen } from "../utils";
-import {
-  shouldResetNotificationBannerDismissStateSelector,
-  timesPushNotificationBannerDismissedSelector
-} from "../store/selectors/notificationsBannerDismissed";
 import {
   trackPushNotificationBannerDismissAlert,
   trackPushNotificationBannerDismissOutcome,
@@ -28,6 +18,16 @@ import {
   trackPushNotificationsBannerTap,
   trackPushNotificationsBannerVisualized
 } from "../analytics";
+import {
+  resetNotificationBannerDismissState,
+  setPushNotificationBannerForceDismissed,
+  setUserDismissedNotificationsBanner
+} from "../store/actions/userBehaviour";
+import {
+  shouldResetNotificationBannerDismissStateSelector,
+  timesPushNotificationBannerDismissedSelector
+} from "../store/selectors/notificationsBannerDismissed";
+import { openSystemNotificationSettingsScreen } from "../utils";
 type Props = {
   closeHandler: () => void;
 };
@@ -39,13 +39,14 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
     shouldResetNotificationBannerDismissStateSelector
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (shouldResetDismissState) {
       trackPushNotificationBannerForceShow();
       dispatch(resetNotificationBannerDismissState());
     }
   }, [dispatch, shouldResetDismissState]);
-  React.useEffect(() => {
+
+  useEffect(() => {
     trackPushNotificationsBannerVisualized(route.name);
   }, [route.name]);
 
@@ -65,7 +66,7 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
     }
   };
 
-  const onPress = React.useCallback(() => {
+  const onPress = useCallback(() => {
     trackPushNotificationsBannerTap(route.name);
     openSystemNotificationSettingsScreen();
   }, [route.name]);
