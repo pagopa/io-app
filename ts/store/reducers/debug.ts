@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import _ from "lodash";
 import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -85,5 +84,8 @@ export const isDebugModeEnabledSelector = (state: GlobalState) =>
  */
 export const debugDataSelector = createSelector(
   (state: GlobalState) => state.debug.debugData,
-  debugData => _.pickBy(debugData, value => !!value)
+  debugData =>
+    Object.fromEntries(
+      Object.entries(debugData).filter(([_, value]) => value !== undefined)
+    )
 );
