@@ -176,56 +176,56 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const onboardPaymentMethodCloseAction: OperationResultScreenContentProps["action"] =
-  {
-    label: I18n.t(
-      "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
-    ),
-    accessibilityLabel: I18n.t(
-      "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
-    ),
-    onPress: () => {
-      analytics.trackPaymentNoSavedMethodExit({
-        organization_name: paymentAnalyticsData?.verifiedData?.paName,
-        organization_fiscal_code:
-          paymentAnalyticsData?.verifiedData?.paFiscalCode,
-        service_name: paymentAnalyticsData?.serviceName,
-        first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
-        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
-      });
-      navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
-      });
-    }
-  };
+    {
+      label: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
+      ),
+      accessibilityLabel: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
+      ),
+      onPress: () => {
+        analytics.trackPaymentNoSavedMethodExit({
+          organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          organization_fiscal_code:
+            paymentAnalyticsData?.verifiedData?.paFiscalCode,
+          service_name: paymentAnalyticsData?.serviceName,
+          first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
+          expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+        });
+        navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+          screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
+        });
+      }
+    };
 
   const onboardPaymentMethodAction: OperationResultScreenContentProps["action"] =
-  {
-    label: I18n.t(
-      "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
-    ),
-    accessibilityLabel: I18n.t(
-      "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
-    ),
-    onPress: () => {
-      analytics.trackPaymentNoSavedMethodContinue({
-        organization_name: paymentAnalyticsData?.verifiedData?.paName,
-        organization_fiscal_code:
-          paymentAnalyticsData?.verifiedData?.paFiscalCode,
-        service_name: paymentAnalyticsData?.serviceName,
-        first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
-        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
-      });
-      dispatch(
-        walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
-      );
-      navigation.replace(
-        PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
-        {
-          screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
-        }
-      );
-    }
-  };
+    {
+      label: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
+      ),
+      accessibilityLabel: I18n.t(
+        "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
+      ),
+      onPress: () => {
+        analytics.trackPaymentNoSavedMethodContinue({
+          organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          organization_fiscal_code:
+            paymentAnalyticsData?.verifiedData?.paFiscalCode,
+          service_name: paymentAnalyticsData?.serviceName,
+          first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
+          expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
+        });
+        dispatch(
+          walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
+        );
+        navigation.replace(
+          PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
+          {
+            screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
+          }
+        );
+      }
+    };
 
   const paymentReversedAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.outcome.PAYMENT_REVERSED.primaryAction"),
@@ -240,8 +240,8 @@ const WalletPaymentOutcomeScreen = () => {
       outcome === WalletPaymentOutcomeEnum.SUCCESS
         ? "COMPLETED"
         : outcome === WalletPaymentOutcomeEnum.DUPLICATE_ORDER
-          ? "DUPLICATED"
-          : undefined;
+        ? "DUPLICATED"
+        : undefined;
     const rptId = paymentOngoingHistory?.rptId;
 
     if (kind && rptId) {
