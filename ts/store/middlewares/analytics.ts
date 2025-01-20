@@ -126,12 +126,13 @@ const trackAction =
         return mp.track(action.type, {
           idp: action.payload.idp
         });
+      case getType(clearCurrentSession):
+        return mp.track(action.type, buildEventProperties("TECH", undefined));
       case getType(analyticsAuthenticationStarted):
       case getType(analyticsAuthenticationCompleted):
       case getType(sessionInformationLoadSuccess):
       case getType(sessionExpired):
       case getType(sessionInvalid):
-      case getType(clearCurrentSession):
       case getType(logoutSuccess):
       // identification
       // identificationSuccess is handled separately
