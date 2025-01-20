@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import { Linking, View } from "react-native";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import {
@@ -190,10 +190,10 @@ const ItwSupportModal = ({ failure, credentialType, dismissModal }: Props) => {
     ]
       .filter(isDefined)
       .map((component, index, list) => (
-        <React.Fragment key={`contact-method-${index}`}>
+        <Fragment key={`contact-method-${index}`}>
           {component}
           {index < list.length - 1 && <Divider />}
-        </React.Fragment>
+        </Fragment>
       ));
   };
 
