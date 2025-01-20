@@ -5,7 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp } from "@react-navigation/native";
-import * as React from "react";
+import { useState, useCallback, useEffect } from "react";
 import { LayoutChangeEvent, SectionList, SectionListData } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -54,15 +54,15 @@ const ReceiptListScreen = () => {
   const navigation = useIONavigation();
 
   const scrollTranslationY = useSharedValue(0);
-  const [titleHeight, setTitleHeight] = React.useState(0);
-  const [isRefreshing, setIsRefreshing] = React.useState(false);
-  const [continuationToken, setContinuationToken] = React.useState<
+  const [titleHeight, setTitleHeight] = useState(0);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [continuationToken, setContinuationToken] = useState<
     string | undefined
   >();
   const [noticeCategory, setNoticeCategory] =
-    React.useState<ReceiptsCategoryFilter>("all");
+    useState<ReceiptsCategoryFilter>("all");
   const [groupedTransactions, setGroupedTransactions] =
-    React.useState<ReadonlyArray<SectionListData<NoticeListItem>>>();
+    useState<ReadonlyArray<SectionListData<NoticeListItem>>>();
   const insets = useSafeAreaInsets();
 
   const transactionsPot = useIOSelector(walletReceiptListPotSelector);
@@ -121,7 +121,7 @@ const ReceiptListScreen = () => {
     );
   };
 
-  const handleCategorySelected = React.useCallback(
+  const handleCategorySelected = useCallback(
     (category: ReceiptsCategoryFilter) => {
       setNoticeCategory(category);
       analytics.trackReceiptFilterUsage(category);
@@ -137,7 +137,7 @@ const ReceiptListScreen = () => {
   );
 
   useOnFirstRender(
-    React.useCallback(() => {
+    useCallback(() => {
       analytics.trackPaymentsReceiptListing();
       dispatch(
         getPaymentsReceiptAction.request({
@@ -157,7 +157,7 @@ const ReceiptListScreen = () => {
     }
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (pot.isSome(transactionsPot)) {
       setGroupedTransactions(groupTransactionsByMonth(transactionsPot.value));
     }

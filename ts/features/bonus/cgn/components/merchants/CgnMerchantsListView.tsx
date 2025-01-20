@@ -1,4 +1,3 @@
-import * as React from "react";
 import { ListRenderItem, View } from "react-native";
 import { Badge, H6, ListItemNav } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";

@@ -1,22 +1,20 @@
-import * as React from "react";
+import { FunctionComponent } from "react";
 import { connect } from "react-redux";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { Dispatch } from "../../../../../../store/actions/types";
+import { isError, isLoading } from "../../../../../../common/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../../../../components/LoadingErrorComponent";
 import I18n from "../../../../../../i18n";
-import { eycaActivationStatusSelector } from "../../../store/reducers/eyca/activation";
+import { Dispatch } from "../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   cgnEycaActivation,
   cgnEycaActivationCancel
 } from "../../../store/actions/eyca/activation";
-import { isError, isLoading } from "../../../../../../common/model/RemoteValue";
+import { eycaActivationStatusSelector } from "../../../store/reducers/eyca/activation";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const EycaActivationLoading: React.FunctionComponent<Props> = (
-  props: Props
-) => (
+const EycaActivationLoading: FunctionComponent<Props> = (props: Props) => (
   <LoadingErrorComponent
     isLoading={props.isLoading}
     onRetry={props.onRetry}

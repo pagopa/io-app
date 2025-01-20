@@ -9,7 +9,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Calendar } from "react-native-calendar-events";
 import { CalendarList } from "../../../components/CalendarList";

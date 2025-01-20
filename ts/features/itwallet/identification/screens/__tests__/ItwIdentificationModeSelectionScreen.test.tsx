@@ -1,7 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
-import React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";

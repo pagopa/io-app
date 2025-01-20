@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useMemo, useCallback } from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { AccessibilityInfo, Platform } from "react-native";
 import I18n from "../i18n";
@@ -29,14 +29,14 @@ export const useCreatePin = (props = { isOnboarding: false }) => {
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const dispatch = useIODispatch();
 
-  const assistanceTool = React.useMemo(
+  const assistanceTool = useMemo(
     () => assistanceToolRemoteConfig(assistanceToolConfig),
     [assistanceToolConfig]
   );
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
 
-  const handleSubmit = React.useCallback(
+  const handleSubmit = useCallback(
     (pin: PinString) => {
       setPin(pin)
         .then(() => {

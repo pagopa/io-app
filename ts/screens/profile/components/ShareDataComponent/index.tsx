@@ -1,5 +1,5 @@
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
-import React, { memo } from "react";
+import { memo } from "react";
 import { tosConfigSelector } from "../../../../features/tos/store/selectors";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";

@@ -1,6 +1,6 @@
 import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import * as React from "react";
+import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
@@ -59,7 +59,7 @@ const WalletCardsContainer = () => {
   const shouldRenderLoadingState = isLoading && isWalletEmpty;
 
   // Content to render in the wallet screen, based on the current state
-  const walletContent = React.useMemo(() => {
+  const walletContent = useMemo(() => {
     if (shouldRenderLoadingState) {
       return <WalletCardsContainerSkeleton />;
     }
@@ -132,14 +132,14 @@ const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   );
 
   useFocusEffect(
-    React.useCallback(
+    useCallback(
       // Automatically dismiss the bottom sheet when focus is lost
       () => eidInfoBottomSheet.dismiss,
       [eidInfoBottomSheet.dismiss]
     )
   );
 
-  const sectionHeader = React.useMemo((): ListItemHeader | undefined => {
+  const sectionHeader = useMemo((): ListItemHeader | undefined => {
     if (!isItwValid) {
       return undefined;
     }
@@ -200,7 +200,7 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
     }
   });
 
-  const sectionHeader = React.useMemo((): ListItemHeader | undefined => {
+  const sectionHeader = useMemo((): ListItemHeader | undefined => {
     // The section header must be displayed only if there are more categories
     if (categories.size <= 1) {
       return undefined;

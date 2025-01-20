@@ -2,7 +2,7 @@ import { FooterActions, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { ForceScrollDownView } from "../../../../components/ForceScrollDownView";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -33,7 +33,7 @@ export const InitiativeDetailsScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (params.serviceId !== undefined) {
       machine.send({
         type: "start-onboarding",

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
 import { profileNameSelector } from "../store/reducers/profile";
 import I18n from "../i18n";

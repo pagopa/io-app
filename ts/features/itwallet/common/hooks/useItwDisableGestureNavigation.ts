@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 /**
@@ -6,7 +6,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
  */
 export const useItwDisableGestureNavigation = () => {
   const navigation = useIONavigation();
-  React.useEffect(() => {
+  useEffect(() => {
     // Disable swipe
     navigation.setOptions({ gestureEnabled: false });
     navigation.getParent()?.setOptions({ gestureEnabled: false });

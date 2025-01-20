@@ -1,15 +1,15 @@
-import React from "react";
 import * as S from "fp-ts/lib/string";
+import { ReactElement, useState } from "react";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { DocumentViewer } from "../../components/DocumentViewer";
+import GenericErrorComponent from "../../components/GenericErrorComponent";
 import { FciParamsList } from "../../navigation/params";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciDownloadPreviewClear, fciEndRequest } from "../../store/actions";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
-import GenericErrorComponent from "../../components/GenericErrorComponent";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 export type FciDocumentPreviewScreenNavigationParams = Readonly<{
   documentUrl: string;
@@ -17,8 +17,8 @@ export type FciDocumentPreviewScreenNavigationParams = Readonly<{
 
 export const FciDocumentPreviewScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_DOC_PREVIEW">
-): React.ReactElement => {
-  const [isError, setIsError] = React.useState(false);
+): ReactElement => {
+  const [isError, setIsError] = useState(false);
   const documentUrl = props.route.params.documentUrl ?? "";
   const fciDownloadPath = useIOSelector(fciDownloadPathSelector);
   const dispatch = useIODispatch();

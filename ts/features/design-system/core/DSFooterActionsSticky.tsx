@@ -6,7 +6,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
-import React, { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import {
   Alert,
   Dimensions,
@@ -103,7 +103,7 @@ export const DSFooterActionsSticky = () => {
     <View style={styles.container}>
       <Animated.ScrollView onScroll={handleScroll} scrollEventThrottle={8}>
         {[...Array(9)].map((_el, i) => (
-          <React.Fragment key={`view-${i}`}>
+          <Fragment key={`view-${i}`}>
             <View
               style={[
                 styles.block,
@@ -115,7 +115,7 @@ export const DSFooterActionsSticky = () => {
               </Text>
             </View>
             <VSpacer size={4} />
-          </React.Fragment>
+          </Fragment>
         ))}
         {/* Action Block Placeholder: START */}
         <View

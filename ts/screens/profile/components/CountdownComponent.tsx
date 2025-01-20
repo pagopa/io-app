@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "react-native";
 import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useCountdown } from "../../../components/countdown/CountdownProvider";

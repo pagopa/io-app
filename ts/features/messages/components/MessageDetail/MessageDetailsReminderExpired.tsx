@@ -1,4 +1,3 @@
-import React from "react";
 import { Alert, IOAlertRadius } from "@pagopa/io-app-design-system";
 import Placeholder from "rn-placeholder";
 import { localeDateFormat } from "../../../../utils/locale";

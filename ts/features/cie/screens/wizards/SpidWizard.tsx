@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod";
 import I18n from "../../../../i18n";

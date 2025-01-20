@@ -1,8 +1,8 @@
-import * as React from "react";
-import { View, StyleSheet, Text, ImageBackground } from "react-native";
 import { IOColors, hexToRgba, useIOTheme } from "@pagopa/io-app-design-system";
+import { ImageBackground, StyleSheet, Text, View } from "react-native";
 
 /* Fake Transparent BG */
+import { ReactNode } from "react";
 import FakeTransparentBg from "../../../../img/utils/transparent-background-pattern.png";
 
 export const logoItemGutter = 8;
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 
 type DSLogoPaymentViewerBoxProps = {
   name: string;
-  image: React.ReactNode;
+  image: ReactNode;
   size: "medium" | "large" | "full";
 };
 

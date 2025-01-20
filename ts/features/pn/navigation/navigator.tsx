@@ -1,4 +1,3 @@
-import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";

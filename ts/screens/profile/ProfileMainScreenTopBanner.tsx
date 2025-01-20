@@ -4,18 +4,18 @@ import {
   ContentWrapper,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { profileBannerToShowSelector } from "../../features/profileSettings/store/selectors";
+import {
+  trackPushNotificationsBannerTap,
+  trackPushNotificationsBannerVisualized
+} from "../../features/pushNotifications/analytics";
 import { openSystemNotificationSettingsScreen } from "../../features/pushNotifications/utils";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import {
-  trackPushNotificationsBannerTap,
-  trackPushNotificationsBannerVisualized
-} from "../../features/pushNotifications/analytics";
 
 export const ProfileMainScreenTopBanner = () => {
   const bannerToShow = useIOSelector(profileBannerToShowSelector);
@@ -34,7 +34,7 @@ export const ProfileMainScreenTopBanner = () => {
     [navigation]
   );
 
-  const onPressNotifications = React.useCallback(() => {
+  const onPressNotifications = useCallback(() => {
     trackPushNotificationsBannerTap(ROUTES.SETTINGS_MAIN);
     openSystemNotificationSettingsScreen();
   }, []);

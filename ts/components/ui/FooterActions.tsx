@@ -12,7 +12,6 @@ import {
   useIOExperimentalDesign,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { ComponentProps, Fragment, PropsWithChildren, useState } from "react";
 import {
   ColorValue,

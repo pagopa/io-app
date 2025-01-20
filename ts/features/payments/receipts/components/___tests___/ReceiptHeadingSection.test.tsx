@@ -1,4 +1,3 @@
-import React from "react";
 import { createStore } from "redux";
 import { OriginEnum } from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";

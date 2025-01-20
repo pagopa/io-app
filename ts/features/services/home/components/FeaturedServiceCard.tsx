@@ -9,7 +9,6 @@ import {
   TestID,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import I18n from "../../../../i18n";

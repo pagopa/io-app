@@ -1,11 +1,11 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
-import React, { createRef, useEffect } from "react";
+import { createRef, useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import { setHasUserAcknowledgedSettingsBanner } from "../../../features/profileSettings/store/actions";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch } from "../../../store/hooks";
-import { setHasUserAcknowledgedSettingsBanner } from "../../../features/profileSettings/store/actions";
 import {
   trackSettingsDiscoverBannerClosure,
   trackSettingsDiscoverBannerTap,
@@ -32,7 +32,7 @@ export const SettingsDiscoveryBanner = ({
       screen: ROUTES.SETTINGS_MAIN
     });
   };
-  const closeHandler = React.useCallback(() => {
+  const closeHandler = useCallback(() => {
     trackSettingsDiscoverBannerClosure();
     dispatch(setHasUserAcknowledgedSettingsBanner(true));
     handleOnClose();

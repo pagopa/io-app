@@ -2,7 +2,6 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
-import * as React from "react";
 import { Platform } from "react-native";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";

@@ -11,7 +11,7 @@ import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pag
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useState, useRef } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -46,7 +46,7 @@ const MAX_LENGTH_NOTICE_NUMBER = 18;
 
 const WalletPaymentInputNoticeNumberScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const [inputState, setInputState] = React.useState<InputState>({
+  const [inputState, setInputState] = useState<InputState>({
     noticeNumberText: "",
     noticeNumber: O.none
   });
@@ -79,7 +79,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
     analytics.trackPaymentNoticeDataEntry();
   });
 
-  const textInputWrappperRef = React.useRef<View>(null);
+  const textInputWrappperRef = useRef<View>(null);
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>

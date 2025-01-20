@@ -1,4 +1,3 @@
-import React from "react";
 import { IOVisualCostants, IconButton } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";

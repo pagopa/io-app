@@ -1,7 +1,8 @@
 import { Divider, FooterActions, IOToast } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+
+import { FunctionComponent, PureComponent } from "react";
 import {
   FlatList,
   Linking,
@@ -67,7 +68,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  *    - if the bonus is active (is_active = true) at on press it shows an alert that invites the user to update
  *    - if the bonus is not active at the on press it does nothing
  */
-class AvailableBonusScreen extends React.PureComponent<Props> {
+class AvailableBonusScreen extends PureComponent<Props> {
   public componentDidMount() {
     const cdcBonus = this.props.availableBonusesList
       .filter(experimentalAndVisibleBonus)
@@ -235,9 +236,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-const AvailableBonusScreenFC: React.FunctionComponent<Props> = (
-  props: Props
-) => (
+const AvailableBonusScreenFC: FunctionComponent<Props> = (props: Props) => (
   <LoadingSpinnerOverlay isLoading={props.isLoading}>
     <AvailableBonusScreen {...props} />
   </LoadingSpinnerOverlay>
