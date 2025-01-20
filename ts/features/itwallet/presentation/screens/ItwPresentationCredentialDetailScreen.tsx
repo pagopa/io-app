@@ -7,7 +7,7 @@ import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   CREDENTIALS_MAP,
   trackCredentialDetail,
@@ -36,6 +36,10 @@ import { ItwCredentialTrustmark } from "../../trustmark/components/ItwCredential
 import ItwCredentialNotFound from "../../common/components/ItwCredentialNotFound";
 import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
+import React from "react";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { itwReviewRequested } from "../../common/store/actions/preferences";
+import { itwReviewRequestedSelector } from "../../common/store/selectors/preferences";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -50,9 +54,26 @@ type Props = IOStackNavigationRouteProps<
  * Component that renders the credential detail screen.
  */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
+  const dispatch = useIODispatch();
   const { credentialType } = route.params;
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
+  );
+  const reviewRequested = useIOSelector(itwReviewRequestedSelector);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      /* The initial state of reviewRequested is undefined,
+       * it means the driving license detail has never been viewed.
+       * It is set to true only the first time the driving license detail is viewed.
+       */
+      if (
+        credentialType === CredentialType.DRIVING_LICENSE &&
+        reviewRequested === undefined
+      ) {
+        dispatch(itwReviewRequested(true));
+      }
+    }, [credentialType, reviewRequested, dispatch])
   );
 
   if (O.isNone(credentialOption)) {

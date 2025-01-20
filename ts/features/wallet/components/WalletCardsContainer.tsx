@@ -34,6 +34,7 @@ import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
+import { useItwReviewRequest } from "../../itwallet/common/hooks/useItwReviewRequest";
 
 const EID_INFO_BOTTOM_PADDING = 128;
 
@@ -113,6 +114,7 @@ const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const isEidExpired = eidStatus === "jwtExpired";
+  +useItwReviewRequest();
 
   useDebugInfo({
     itw: {

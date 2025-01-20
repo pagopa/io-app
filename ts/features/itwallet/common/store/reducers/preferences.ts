@@ -5,7 +5,8 @@ import {
   itwCloseDiscoveryBanner,
   itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
-  itwUnflagCredentialAsRequested
+  itwUnflagCredentialAsRequested,
+  itwReviewRequested
 } from "../actions/preferences";
 
 export type ItwPreferencesState = {
@@ -17,10 +18,16 @@ export type ItwPreferencesState = {
   // Each credential type is associated with a date (ISO string) which represents
   // the date of the last issuance request.
   requestedCredentials: { [credentialType: string]: string };
+  /* Indicates if the user has seen the alert that allows them to rate the app.
+   * If they liked the app, they will be asked to rate it on the store.
+   * If they didn't like it, they will be asked to fill out a questionnaire.
+   */
+  reviewRequested?: boolean;
 };
 
 const INITIAL_STATE: ItwPreferencesState = {
-  requestedCredentials: {}
+  requestedCredentials: {},
+  reviewRequested: undefined
 };
 
 const reducer = (
@@ -63,6 +70,13 @@ const reducer = (
         };
       }
       return state;
+    }
+
+    case getType(itwReviewRequested): {
+      return {
+        ...state,
+        reviewRequested: action.payload
+      };
     }
 
     default:

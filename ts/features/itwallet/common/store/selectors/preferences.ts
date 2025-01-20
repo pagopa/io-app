@@ -49,3 +49,9 @@ export const itwRequestedCredentialsSelector = createSelector(
       .filter(([_, requestedAt]) => isFuture(addHours(requestedAt, 24)))
       .map(([credentialType]) => credentialType)
 );
+
+/**
+ * Returns if the review request should be shown.
+ */
+export const itwReviewRequestedSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.reviewRequested;
