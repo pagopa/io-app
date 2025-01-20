@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
 import { createStore } from "redux";
 import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
 import { Access } from "../../../../../../definitions/fims_history/Access";

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Access } from "../../../../../definitions/fims_history/Access";
 import { potFoldWithDefault } from "../../../../utils/pot";
