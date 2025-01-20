@@ -221,7 +221,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                               <View>
                                 <View
                                   accessibilityHint="Carousel that contains an introduction guide to IO functionalities. Select to know the content."
-                                  accessibilityLabel="IO presentation. Ti diamo il benvenuto su IO!. Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe."
+                                  accessibilityLabel="IO presentation. Welcome to IO!. Select the previous item to open a chat with the IO team if something is not working as it should."
                                   accessible={true}
                                   style={
                                     [
@@ -400,7 +400,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Ti diamo il benvenuto su IO!
+                                    Welcome to IO!
                                   </Text>
                                   <View
                                     style={
@@ -431,7 +431,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Scorri per sapere cosa puoi fare in app.
+                                    Swipe left to see what you can do in the app
                                   </Text>
                                   <View
                                     style={
@@ -454,7 +454,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Conserva al sicuro i tuoi documenti personali. Con Documenti su IO hai sempre a portata di mano la versione digitale dei tuoi documenti, come Patente e Tessera Sanitaria"
+                                  accessibilityLabel="Keep your personal documents safe. With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips"
                                   accessible={true}
                                   style={
                                     [
@@ -686,7 +686,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Conserva al sicuro i tuoi documenti personali
+                                    Keep your personal documents safe
                                   </Text>
                                   <View
                                     style={
@@ -717,7 +717,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Con Documenti su IO hai sempre a portata di mano la versione digitale dei tuoi documenti, come Patente e Tessera Sanitaria
+                                    With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips
                                   </Text>
                                   <View
                                     style={
@@ -740,7 +740,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Ricevi comunicazioni, anche a valore legale. Leggi le comunicazioni in arrivo dagli enti: se attivi il servizio SEND, ricevi anche quelle a valore legale e risparmi sui costi di notifica"
+                                  accessibilityLabel="Receive communications, also with legal value. Read incoming communications from organisations: by activating the SEND service, you will also receive communications with legal value and save on notification costs."
                                   accessible={true}
                                   style={
                                     [
@@ -963,7 +963,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Ricevi comunicazioni, anche a valore legale
+                                    Receive communications, also with legal value
                                   </Text>
                                   <View
                                     style={
@@ -994,7 +994,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Leggi le comunicazioni in arrivo dagli enti: se attivi il servizio SEND, ricevi anche quelle a valore legale e risparmi sui costi di notifica
+                                    Read incoming communications from organisations: by activating the SEND service, you will also receive communications with legal value and save on notification costs.
                                   </Text>
                                   <View
                                     style={
@@ -1017,7 +1017,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Paga gli avvisi pagoPA con il metodo che preferisci. Su IO consulti e scarichi le ricevute dei tuoi pagamenti pagoPA, anche se non hai pagato in app"
+                                  accessibilityLabel="Pay pagoPA notice by the method you prefer. On IO, you can view and download receipts for your pagoPA payments, even if you have not paid in the app"
                                   accessible={true}
                                   style={
                                     [
@@ -1145,7 +1145,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Paga gli avvisi pagoPA con il metodo che preferisci
+                                    Pay pagoPA notice by the method you prefer
                                   </Text>
                                   <View
                                     style={
@@ -1176,7 +1176,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Su IO consulti e scarichi le ricevute dei tuoi pagamenti pagoPA, anche se non hai pagato in app
+                                    On IO, you can view and download receipts for your pagoPA payments, even if you have not paid in the app
                                   </Text>
                                   <View
                                     style={
@@ -1199,7 +1199,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Accedi ai servizi che più ti interessano. Accedi direttamente a servizi della Pubblica Amministrazone dedicati a salute, educazione, mobilità, lavoro e molto altro"
+                                  accessibilityLabel="Access to the services you are most interested in. Direct access to government services related to health, education, mobility, work and more"
                                   accessible={true}
                                   style={
                                     [
@@ -1324,7 +1324,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Accedi ai servizi che più ti interessano
+                                    Access to the services you are most interested in
                                   </Text>
                                   <View
                                     style={
@@ -1355,7 +1355,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    Accedi direttamente a servizi della Pubblica Amministrazone dedicati a salute, educazione, mobilità, lavoro e molto altro
+                                    Direct access to government services related to health, education, mobility, work and more
                                   </Text>
                                   <View
                                     style={
@@ -3235,7 +3235,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                               <View>
                                 <View
                                   accessibilityHint="Carousel that contains an introduction guide to IO functionalities. Select to know the content."
-                                  accessibilityLabel="IO presentation. Ti diamo il benvenuto su IO!. Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe."
+                                  accessibilityLabel="IO presentation. Welcome to IO!. Select the previous item to open a chat with the IO team if something is not working as it should."
                                   accessible={true}
                                   style={
                                     [
@@ -3414,7 +3414,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       ]
                                     }
                                   >
-                                    Ti diamo il benvenuto su IO!
+                                    Welcome to IO!
                                   </Text>
                                   <View
                                     style={
@@ -3445,7 +3445,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       ]
                                     }
                                   >
-                                    Scorri per sapere cosa puoi fare in app.
+                                    Swipe left to see what you can do in the app
                                   </Text>
                                   <View
                                     style={
@@ -3468,7 +3468,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Conserva al sicuro i tuoi documenti personali. Con Documenti su IO hai sempre a portata di mano la versione digitale dei tuoi documenti, come Patente e Tessera Sanitaria"
+                                  accessibilityLabel="Keep your personal documents safe. With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips"
                                   accessible={true}
                                   style={
                                     [
@@ -3700,7 +3700,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       ]
                                     }
                                   >
-                                    Conserva al sicuro i tuoi documenti personali
+                                    Keep your personal documents safe
                                   </Text>
                                   <View
                                     style={
@@ -3731,7 +3731,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       ]
                                     }
                                   >
-                                    Con Documenti su IO hai sempre a portata di mano la versione digitale dei tuoi documenti, come Patente e Tessera Sanitaria
+                                    With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips
                                   </Text>
                                   <View
                                     style={
@@ -3754,7 +3754,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Ricevi comunicazioni, anche a valore legale. Leggi le comunicazioni in arrivo dagli enti: se attivi il servizio SEND, ricevi anche quelle a valore legale e risparmi sui costi di notifica"
+                                  accessibilityLabel="Receive communications, also with legal value. Read incoming communications from organisations: by activating the SEND service, you will also receive communications with legal value and save on notification costs."
                                   accessible={true}
                                   style={
                                     [
@@ -3977,7 +3977,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       ]
                                     }
                                   >
-                                    Ricevi comunicazioni, anche a valore legale
+                                    Receive communications, also with legal value
                                   </Text>
                                   <View
                                     style={
@@ -4008,7 +4008,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       ]
                                     }
                                   >
-                                    Leggi le comunicazioni in arrivo dagli enti: se attivi il servizio SEND, ricevi anche quelle a valore legale e risparmi sui costi di notifica
+                                    Read incoming communications from organisations: by activating the SEND service, you will also receive communications with legal value and save on notification costs.
                                   </Text>
                                   <View
                                     style={
@@ -4031,7 +4031,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Paga gli avvisi pagoPA con il metodo che preferisci. Su IO consulti e scarichi le ricevute dei tuoi pagamenti pagoPA, anche se non hai pagato in app"
+                                  accessibilityLabel="Pay pagoPA notice by the method you prefer. On IO, you can view and download receipts for your pagoPA payments, even if you have not paid in the app"
                                   accessible={true}
                                   style={
                                     [
@@ -4159,7 +4159,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       ]
                                     }
                                   >
-                                    Paga gli avvisi pagoPA con il metodo che preferisci
+                                    Pay pagoPA notice by the method you prefer
                                   </Text>
                                   <View
                                     style={
@@ -4190,7 +4190,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       ]
                                     }
                                   >
-                                    Su IO consulti e scarichi le ricevute dei tuoi pagamenti pagoPA, anche se non hai pagato in app
+                                    On IO, you can view and download receipts for your pagoPA payments, even if you have not paid in the app
                                   </Text>
                                   <View
                                     style={
@@ -4213,7 +4213,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                             >
                               <View>
                                 <View
-                                  accessibilityLabel="Accedi ai servizi che più ti interessano. Accedi direttamente a servizi della Pubblica Amministrazone dedicati a salute, educazione, mobilità, lavoro e molto altro"
+                                  accessibilityLabel="Access to the services you are most interested in. Direct access to government services related to health, education, mobility, work and more"
                                   accessible={true}
                                   style={
                                     [
@@ -4338,7 +4338,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       ]
                                     }
                                   >
-                                    Accedi ai servizi che più ti interessano
+                                    Access to the services you are most interested in
                                   </Text>
                                   <View
                                     style={
@@ -4369,7 +4369,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       ]
                                     }
                                   >
-                                    Accedi direttamente a servizi della Pubblica Amministrazone dedicati a salute, educazione, mobilità, lavoro e molto altro
+                                    Direct access to government services related to health, education, mobility, work and more
                                   </Text>
                                   <View
                                     style={
