@@ -12,7 +12,7 @@ import { GlobalState } from "./types";
 
 type DebugState = Readonly<{
   isDebugModeEnabled: boolean;
-  debugData: Record<string, any>;
+  debugData: Record<string, unknown>;
 }>;
 
 const INITIAL_STATE: DebugState = {
