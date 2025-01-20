@@ -114,7 +114,7 @@ const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const isEidExpired = eidStatus === "jwtExpired";
-  +useItwReviewRequest();
+  useItwReviewRequest();
 
   useDebugInfo({
     itw: {
