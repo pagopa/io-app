@@ -1,5 +1,4 @@
 import { ListItemTransaction, VSpacer } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { ReceiptFadeInOutAnimationView } from "./ReceiptFadeInOutAnimationView";

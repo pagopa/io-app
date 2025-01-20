@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { ReactNode } from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
@@ -42,7 +42,7 @@ import {
 
 type TableRow = WithTestID<{
   label: string;
-  value: string | React.ReactNode;
+  value: string | ReactNode;
 }>;
 
 export type BeneficiaryDetailsProps =

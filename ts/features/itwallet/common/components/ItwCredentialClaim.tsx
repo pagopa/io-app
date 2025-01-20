@@ -2,7 +2,7 @@ import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { Image } from "react-native";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
@@ -336,16 +336,14 @@ export const ItwCredentialClaim = ({
           return <AttachmentsClaimItem name={claim.label} />;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
           return decoded.map((elem, index) => (
-            <React.Fragment
-              key={`${index}_${claim.label}_${elem.driving_privilege}`}
-            >
+            <Fragment key={`${index}_${claim.label}_${elem.driving_privilege}`}>
               {index !== 0 && <Divider />}
               <DrivingPrivilegesClaimItem
                 label={claim.label}
                 claim={elem}
                 detailsButtonVisible={!isPreview}
               />
-            </React.Fragment>
+            </Fragment>
           ));
         } else if (FiscalCodeClaim.is(decoded)) {
           const fiscalCode = pipe(

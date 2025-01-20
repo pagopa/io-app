@@ -7,7 +7,7 @@ import {
   BodySmall,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import React, { useCallback } from "react";
+import { useLayoutEffect, memo, useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -84,7 +84,7 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
     }, [])
   );
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwPresentationCredentialFiscalCodeModal = React.memo(
+const MemoizedItwPresentationCredentialFiscalCodeModal = memo(
   ItwPresentationCredentialFiscalCodeModal
 );
 

@@ -1,5 +1,4 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import React from "react";
 import CieIdErrorScreen from "../screens/errors/CieIdErrorScreen";
 import * as useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import ROUTES from "../../../navigation/routes";

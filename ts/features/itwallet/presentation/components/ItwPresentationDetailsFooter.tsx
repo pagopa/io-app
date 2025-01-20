@@ -1,5 +1,5 @@
 import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
-import React, { useMemo } from "react";
+import { memo, ReactNode, useMemo } from "react";
 import { Alert, View } from "react-native";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
@@ -122,7 +122,7 @@ const ItwPresentationDetailsFooter = ({
 /**
  * Returns custom CTAs for a credential
  */
-const getCredentialActions = (credentialType: string): React.ReactNode =>
+const getCredentialActions = (credentialType: string): ReactNode =>
   ({
     MDL: [<IPatenteListItemAction key="iPatenteActionMdl" />],
     EuropeanHealthInsuranceCard: [],
@@ -173,8 +173,6 @@ const IPatenteListItemAction = () => {
   );
 };
 
-const MemoizedItwPresentationDetailsFooter = React.memo(
-  ItwPresentationDetailsFooter
-);
+const MemoizedItwPresentationDetailsFooter = memo(ItwPresentationDetailsFooter);
 
 export { MemoizedItwPresentationDetailsFooter as ItwPresentationDetailsFooter };

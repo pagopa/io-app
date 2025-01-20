@@ -13,7 +13,7 @@ import {
   useListItemAnimation,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 import { ImageURISource, Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";

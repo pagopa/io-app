@@ -4,7 +4,7 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useCallback } from "react";
+import { useState, useLayoutEffect, memo, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
@@ -41,7 +41,7 @@ type Props = IOStackNavigationRouteProps<
 const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const { credential, status } = route.params;
   const safeAreaInsets = useSafeAreaInsets();
-  const [isFlipped, setFlipped] = React.useState(false);
+  const [isFlipped, setFlipped] = useState(false);
   const theme = useIOTheme();
 
   usePreventScreenCapture();
@@ -53,7 +53,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
     }, [credential.credentialType])
   );
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwPresentationCredentialCardModal = React.memo(
+const MemoizedItwPresentationCredentialCardModal = memo(
   ItwPresentationCredentialCardModal
 );
 

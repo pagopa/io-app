@@ -1,7 +1,6 @@
 import { ContentWrapper, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
-import React from "react";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import {

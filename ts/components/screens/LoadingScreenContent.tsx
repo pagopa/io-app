@@ -8,7 +8,8 @@ import {
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { ReactNode, useEffect } from "react";
 import { AccessibilityInfo, Platform, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
@@ -29,7 +30,7 @@ const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
 
 type LoadingScreenContentProps = WithTestID<{
   contentTitle: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   headerVisible?: boolean;
   animatedPictogramSource?: AnimatedPictogramSource;
 }>;
@@ -44,7 +45,7 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
     animatedPictogramSource
   } = props;
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Since the screen is shown for a very short time,
     // we prefer to announce the content to the screen reader,
     // instead of focusing the first element.

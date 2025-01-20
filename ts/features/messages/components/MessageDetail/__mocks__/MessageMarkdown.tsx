@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "react-native";
 import { MarkdownProps } from "../../../../../components/ui/Markdown/Markdown";
 

@@ -5,7 +5,7 @@ import {
   useIOTheme,
   useScaleAnimation
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { memo } from "react";
 import { Dimensions, Pressable, StyleSheet } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import Animated from "react-native-reanimated";
@@ -98,6 +98,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwPresentationFiscalCode = React.memo(ItwPresentationFiscalCode);
+const MemoizedItwPresentationFiscalCode = memo(ItwPresentationFiscalCode);
 
 export { MemoizedItwPresentationFiscalCode as ItwPresentationFiscalCode };

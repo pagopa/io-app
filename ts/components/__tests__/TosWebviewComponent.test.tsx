@@ -1,5 +1,4 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import * as React from "react";
 // import WebView from "react-native-webview";
 import renderer from "react-test-renderer";
 // import * as O from "fp-ts/lib/Option";

@@ -8,7 +8,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as React from "react";
 import { Platform } from "react-native";
 import {
   IONavigationDarkTheme,
