@@ -1,7 +1,9 @@
 import { BackgroundFetchStatus } from "react-native-background-fetch";
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { BackgroundFetchTaskId } from "../../utils/tasks";
-import { BackgroundFetchTaskConfig } from "../reducers";
+import {
+  BackgroundFetchTaskConfig,
+  BackgroundFetchTaskId
+} from "../../utils/tasks";
 
 export const backgroundFetchUpdateStatus = createStandardAction(
   "BACKGROUND_FETCH_UPDATE_STATUS"
