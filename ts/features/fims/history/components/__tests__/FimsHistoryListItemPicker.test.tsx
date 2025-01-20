@@ -10,8 +10,8 @@ import * as FETCH_HOOKS from "../../../common/hooks";
 import { FimsHistoryListItemPicker } from "../FimsHistoryListItemPicker";
 import * as LIST_ITEMS from "../FimsHistoryListItems";
 
-const mockServiceData = { organization_name: "TEST" } as ServicePublic;
-const mockConsent: Access = {
+const mockServicePublic = { organization_name: "TEST" } as ServicePublic;
+const mockAccess: Access = {
   id: "TESTING",
   redirect: { display_name: "TESTING", uri: "TESTING" },
   service_id: "TESTING_SID",
@@ -26,9 +26,9 @@ describe("FimsHistoryListItem", () => {
   it("should match snapshot for a some state", () => {
     jest
       .spyOn(FETCH_HOOKS, "useAutoFetchingServiceByIdPot")
-      .mockImplementation(() => pot.some(mockServiceData));
+      .mockImplementation(() => pot.some(mockServicePublic));
 
-    const component = renderComponent(mockConsent);
+    const component = renderComponent(mockAccess);
     expect(component).toMatchSnapshot();
   });
   it('should call the "successListItem" in case of (some)', () => {
@@ -38,9 +38,9 @@ describe("FimsHistoryListItem", () => {
       .mockImplementation(testSuccessComponent);
     jest
       .spyOn(FETCH_HOOKS, "useAutoFetchingServiceByIdPot")
-      .mockImplementation(() => pot.some(mockServiceData));
+      .mockImplementation(() => pot.some(mockServicePublic));
 
-    renderComponent(mockConsent);
+    renderComponent(mockAccess);
     const calls = testSuccessComponent.mock.calls as unknown as Array<
       Array<any>
     >;
@@ -48,8 +48,8 @@ describe("FimsHistoryListItem", () => {
     expect(calls.length).toBe(1);
     expect(calls[0].length).toBe(2);
     expect(calls[0][0]).toEqual({
-      consent: mockConsent,
-      serviceData: mockServiceData
+      consent: mockAccess,
+      serviceData: mockServicePublic
     });
   });
   it('should call the "successListItem" in case of (someLoading)', () => {
@@ -60,9 +60,9 @@ describe("FimsHistoryListItem", () => {
       .mockImplementation(testSuccessComponent);
     jest
       .spyOn(FETCH_HOOKS, "useAutoFetchingServiceByIdPot")
-      .mockImplementation(() => pot.someLoading(mockServiceData));
+      .mockImplementation(() => pot.someLoading(mockServicePublic));
 
-    renderComponent(mockConsent);
+    renderComponent(mockAccess);
 
     const calls = testSuccessComponent.mock.calls as unknown as Array<
       Array<any>
@@ -70,8 +70,8 @@ describe("FimsHistoryListItem", () => {
     expect(calls.length).toBe(1);
     expect(calls[0].length).toBe(2);
     expect(calls[0][0]).toEqual({
-      consent: mockConsent,
-      serviceData: mockServiceData
+      consent: mockAccess,
+      serviceData: mockServicePublic
     });
   });
   it('should call the "successListItem" in case of (someError)', () => {
@@ -82,9 +82,9 @@ describe("FimsHistoryListItem", () => {
 
     jest
       .spyOn(FETCH_HOOKS, "useAutoFetchingServiceByIdPot")
-      .mockImplementation(() => pot.someError(mockServiceData, new Error()));
+      .mockImplementation(() => pot.someError(mockServicePublic, new Error()));
 
-    renderComponent(mockConsent);
+    renderComponent(mockAccess);
 
     const calls = testSuccessComponent.mock.calls as unknown as Array<
       Array<any>
@@ -93,8 +93,8 @@ describe("FimsHistoryListItem", () => {
     expect(calls[0].length).toBe(2);
 
     expect(calls[0][0]).toEqual({
-      consent: mockConsent,
-      serviceData: mockServiceData
+      consent: mockAccess,
+      serviceData: mockServicePublic
     });
   });
 });
@@ -103,7 +103,7 @@ const renderComponent = (item: Access) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext(
     () => <FimsHistoryListItemPicker item={item} />,
-    "DUMMY ROUTE",
+    "FIMS_HISTORY",
     {},
     createStore(appReducer, globalState as any)
   );
