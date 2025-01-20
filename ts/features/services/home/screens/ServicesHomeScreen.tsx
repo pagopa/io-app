@@ -87,29 +87,25 @@ export const ServicesHomeScreen = () => {
     [navigation]
   );
 
-  const renderListHeaderComponent = () => (
-    <>
-      <SearchInputComponent />
-      <FeaturedServiceList />
-      <FeaturedInstitutionList />
-      <ListItemHeader label={I18n.t("services.home.institutions.title")} />
-    </>
-  );
-
-  const SearchInputComponent = useCallback(
+  const renderListHeaderComponent = useCallback(
     () => (
-      <SearchInput
-        accessibilityLabel={I18n.t("services.search.input.placeholder")}
-        cancelButtonLabel={I18n.t("services.search.input.cancel")}
-        clearAccessibilityLabel={I18n.t("services.search.input.clear")}
-        placeholder={I18n.t("services.search.input.placeholder")}
-        pressable={{
-          onPress: () => {
-            analytics.trackSearchStart({ source: "search_bar" });
-            navigateToSearch();
-          }
-        }}
-      />
+      <>
+        <SearchInput
+          accessibilityLabel={I18n.t("services.search.input.placeholder")}
+          cancelButtonLabel={I18n.t("services.search.input.cancel")}
+          clearAccessibilityLabel={I18n.t("services.search.input.clear")}
+          placeholder={I18n.t("services.search.input.placeholder")}
+          pressable={{
+            onPress: () => {
+              analytics.trackSearchStart({ source: "search_bar" });
+              navigateToSearch();
+            }
+          }}
+        />
+        <FeaturedServiceList />
+        <FeaturedInstitutionList />
+        <ListItemHeader label={I18n.t("services.home.institutions.title")} />
+      </>
     ),
     [navigateToSearch]
   );
@@ -146,23 +142,10 @@ export const ServicesHomeScreen = () => {
     refresh();
   }, [dispatch, refresh]);
 
-  const handleEndReached = useCallback(
-    ({ distanceFromEnd }: { distanceFromEnd: number }) => {
-      // Managed behavior:
-      // at the end of data load, in case of response error,
-      // the footer is removed from total list length and
-      // `onEndReached` is triggered continuously causing an endless loop.
-      // Implemented solution:
-      // this guard is needed to avoid endless loop
-      if (distanceFromEnd === 0) {
-        return;
-      }
-
-      analytics.trackInstitutionsScroll();
-      fetchNextPage(currentPage + 1);
-    },
-    [currentPage, fetchNextPage]
-  );
+  const handleEndReached = useCallback(() => {
+    analytics.trackInstitutionsScroll();
+    fetchNextPage(currentPage + 1);
+  }, [currentPage, fetchNextPage]);
 
   const navigateToInstitution = useCallback(
     ({ fiscal_code, id, name }: Institution) => {
