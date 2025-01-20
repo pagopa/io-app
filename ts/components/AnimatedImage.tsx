@@ -1,4 +1,4 @@
-import React from "react";
+import { ComponentProps } from "react";
 import { Image } from "react-native";
 import Animated, {
   Easing,
@@ -7,7 +7,7 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 
-export type AnimatedImageProps = React.ComponentProps<typeof Image>;
+export type AnimatedImageProps = ComponentProps<typeof Image>;
 
 /**
  * AnimatedImage component renders an image with a fade-in animation

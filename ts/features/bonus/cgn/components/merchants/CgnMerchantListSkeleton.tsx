@@ -1,4 +1,3 @@
-import React from "react";
 import { Divider, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";

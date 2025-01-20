@@ -12,17 +12,15 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import _ from "lodash";
-import {
-  ComponentProps,
-  default as React,
-  useCallback,
-  useEffect
-} from "react";
+import { ComponentProps, useCallback, useEffect } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { zendeskPrivacyUrl } from "../../../config";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
@@ -56,11 +54,12 @@ import {
   setUserIdentity,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
-  zendeskVersionsHistoryId,
-  zendeskidentityProviderId
+  zendeskidentityProviderId,
+  zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
 import { handleItemOnPress, openWebUrl } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
+import ZENDESK_ROUTES from "../navigation/routes";
 import {
   type ZendeskAssistanceType,
   zendeskStopPolling,
@@ -73,10 +72,6 @@ import {
   zendeskSelectedSubcategorySelector,
   ZendeskTokenStatusEnum
 } from "../store/reducers";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import ZENDESK_ROUTES from "../navigation/routes";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
 /**
  * Transform an array of string into a Zendesk

@@ -12,7 +12,7 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useState } from "react";
 import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -30,7 +30,7 @@ const IDPayPaymentCodeInputScreen = () => {
   const { useActorRef, useSelector } = IdPayPaymentMachineContext;
   const machine = useActorRef();
 
-  const [inputState, setInputState] = React.useState<InputState>({
+  const [inputState, setInputState] = useState<InputState>({
     value: undefined,
     code: O.none
   });

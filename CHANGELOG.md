@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.81.0-rc.4](https://github.com/pagopa/io-app/compare/2.81.0-rc.3...2.81.0-rc.4) (2025-01-17)
+
+
+### Features
+
+* [[PE-882](https://pagopa.atlassian.net/browse/PE-882)] CGN new discounts count ([#6607](https://github.com/pagopa/io-app/issues/6607)) ([93bd0a8](https://github.com/pagopa/io-app/commit/93bd0a83b8285cc91184c8bc43f546534a6c5add))
+
+
+### Chores
+
+* [[IOAPPX-405](https://pagopa.atlassian.net/browse/IOAPPX-405)] Removing unused react imports ([#6562](https://github.com/pagopa/io-app/issues/6562)) ([b84f0d1](https://github.com/pagopa/io-app/commit/b84f0d1ff6a18c700421f9b9135c6c580449afb9))
+* [[IOBP-1122](https://pagopa.atlassian.net/browse/IOBP-1122)] Remove PSP preselection logic based on the onUs field ([#6612](https://github.com/pagopa/io-app/issues/6612)) ([2d7127a](https://github.com/pagopa/io-app/commit/2d7127a0b4a201184e31cc55a0f8f06e8b9d9f98))
+
+## [2.81.0-rc.3](https://github.com/pagopa/io-app/compare/2.81.0-rc.2...2.81.0-rc.3) (2025-01-16)
+
+
+### Chores
+
+* [[IOPID-2579](https://pagopa.atlassian.net/browse/IOPID-2579)] add management of remote portal urls ([#6594](https://github.com/pagopa/io-app/issues/6594)) ([c3b2f95](https://github.com/pagopa/io-app/commit/c3b2f952487771747ad9ae89a2613bd7a966fbdb))
+
 ## [2.81.0-rc.2](https://github.com/pagopa/io-app/compare/2.81.0-rc.1...2.81.0-rc.2) (2025-01-15)
 
 

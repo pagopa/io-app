@@ -1,6 +1,6 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { ReactElement, useCallback, useEffect } from "react";
+import { ReactElement, useCallback, useEffect } from "react";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";

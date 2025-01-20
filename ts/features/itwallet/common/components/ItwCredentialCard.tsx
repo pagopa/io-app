@@ -1,5 +1,4 @@
 import { HStack, IOColors, IOText, Tag } from "@pagopa/io-app-design-system";
-import React from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import Color from "color";
 import { AnimatedImage } from "../../../../components/AnimatedImage";

@@ -5,7 +5,7 @@ import {
   IOColors,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";

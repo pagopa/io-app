@@ -1,4 +1,3 @@
-import React from "react";
 import { FooterActions, IOStyles } from "@pagopa/io-app-design-system";
 import WebView from "react-native-webview";
 import { View } from "react-native";

@@ -1,5 +1,4 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import * as React from "react";
 import {
   IbanOperationDTO,
   OperationTypeEnum as IbanOperationTypeEnum
@@ -130,7 +129,7 @@ describe("Test TimelineOperationListItem", () => {
 
         const container = component.getByTestId("itemTestID");
         fireEvent(container, "onPress");
-        expect(mockOnPress).toBeCalledTimes(1);
+        expect(mockOnPress).toHaveBeenCalledTimes(1);
       });
     });
     describe("when operation type is REJECTED_REFUND", () => {
@@ -177,7 +176,7 @@ describe("Test TimelineOperationListItem", () => {
 
         const container = component.getByTestId("itemTestID");
         fireEvent(container, "onPress");
-        expect(mockOnPress).toBeCalledTimes(1);
+        expect(mockOnPress).toHaveBeenCalledTimes(1);
       });
     });
   });

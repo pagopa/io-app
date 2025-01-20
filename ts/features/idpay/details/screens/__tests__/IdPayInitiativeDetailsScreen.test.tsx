@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
 import { IDPayDetailsRoutes } from "../../navigation";
@@ -56,7 +55,7 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
     expect(
       component.queryByTestId("IDPayDetailsLastUpdatedTestID")
     ).not.toBeNull();
-    expect(component.queryByText("Fake initiative")).not.toBeNull();
+    expect(component.getAllByText("Fake initiative")).not.toBeNull();
     expect(component.queryByText("Fake organization")).not.toBeNull();
 
     expect(
@@ -95,7 +94,7 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
       component.queryByTestId("IDPayDetailsLastUpdatedTestID")
     ).not.toBeNull();
 
-    expect(component.queryByText("Fake initiative")).not.toBeNull();
+    expect(component.getAllByText("Fake initiative")).not.toBeNull();
     expect(component.queryByText("Fake organization")).not.toBeNull();
 
     expect(
