@@ -218,6 +218,12 @@ global:
     noResultsTitle: Nessun risultato.
 tablet:
   message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
+appFeedback:
+  alert:
+    title: "Ti piace “App IO”?"
+    description: "Dicci cosa ne pensi"
+    continue: "Sì"
+    discard: "No"
 rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
   body: Se premi su ‘Continua’, accetti di proseguire a tuo rischio nella navigazione, altrimenti chiudi l’app.

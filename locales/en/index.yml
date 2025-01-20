@@ -218,6 +218,12 @@ global:
     noResultsTitle: No results.
 tablet:
   message: The IO interface is optimized for smartphones, but all the functions compatible with your device are still available.
+appFeedback:
+  alert:
+    title: "Ti piace “App IO”?"
+    description: "Dicci cosa ne pensi"
+    continue: "Sì"
+    discard: "No"
 rooted:
   title: Looks like the security of your device has been compromised!
   body: If you press 'Continue', you agree to continue browsing at your own risk, otherwise close the app.
@@ -655,7 +661,7 @@ authentication:
     nospid-nocie: Don't have SPID or CIE? Find out more
     card0-title: Welcome to IO!
     card0-content: Swipe left to see what you can do in the app
-    card0-content-accessibility:  Select the previous item to open a chat with the IO team if something is not working as it should.
+    card0-content-accessibility: Select the previous item to open a chat with the IO team if something is not working as it should.
     card1-title: Keep your personal documents safe
     card1-content: With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips
     card2-title: Receive communications, also with legal value
