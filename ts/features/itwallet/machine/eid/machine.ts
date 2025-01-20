@@ -73,10 +73,9 @@ export const itwEidIssuanceMachine = setup({
         }
       };
     }),
-    setIsReissuing: assign(({ context }) => ({
-      ...context,
+    setIsReissuing: assign({
       isReissuing: true
-    }))
+    })
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),

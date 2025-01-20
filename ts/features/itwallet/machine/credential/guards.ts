@@ -8,10 +8,9 @@ import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 import { CredentialIssuanceFailureType } from "./failure";
 
-export const createCredentialIssuanceGuardsImplementation = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const store = useIOStore();
-
+export const createCredentialIssuanceGuardsImplementation = (
+  store: ReturnType<typeof useIOStore>
+) => {
   return {
     isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
       "error" in event && event.error instanceof ItwSessionExpiredError,
