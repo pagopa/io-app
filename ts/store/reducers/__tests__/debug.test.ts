@@ -61,4 +61,21 @@ describe("debug", () => {
       E: "E"
     });
   });
+  it("should remove undefined values", () => {
+    const state = appReducer(
+      {
+        debug: {
+          isDebugModeEnabled: true,
+          debugData: { A: "A", B: "B", C: "C" } // <- C has a value
+        }
+      } as any,
+      setDebugData({ C: undefined, D: "D", E: "E" }) // <- C is updated to undefined
+    );
+    expect(debugDataSelector(state)).toEqual({
+      A: "A",
+      B: "B",
+      D: "D",
+      E: "E"
+    });
+  });
 });
