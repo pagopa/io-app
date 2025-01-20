@@ -17,7 +17,6 @@ import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 import { IdPayOnboardingParamsList } from "../navigation/params";
-import IOMarkdown from "../../../../components/IOMarkdown";
 
 export type InitiativeDetailsScreenParams = {
   serviceId?: string;

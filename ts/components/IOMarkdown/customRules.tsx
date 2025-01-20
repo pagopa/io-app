@@ -1,6 +1,5 @@
 import { TxtHeaderNode, TxtLinkNode } from "@textlint/ast-node-types";
 import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { isIoInternalLink } from "../ui/Markdown/handlers/link";
 import { handleInternalLink } from "../../utils/internalLink";
 import { openWebUrl } from "../../utils/url";
