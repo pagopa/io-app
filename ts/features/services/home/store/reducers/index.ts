@@ -15,10 +15,18 @@ import {
   paginatedInstitutionsGet
 } from "../actions";
 
+export type PaginatedInstitutionsError = {
+  reason: NetworkError;
+  time: Date;
+};
+
 export type ServicesHomeState = {
   featuredInstitutions: pot.Pot<Institutions, NetworkError>;
   featuredServices: pot.Pot<FeaturedServices, NetworkError>;
-  paginatedInstitutions: pot.Pot<InstitutionsResource, NetworkError>;
+  paginatedInstitutions: pot.Pot<
+    InstitutionsResource,
+    PaginatedInstitutionsError
+  >;
 };
 
 const INITIAL_STATE: ServicesHomeState = {
@@ -75,10 +83,10 @@ const homeReducer = (
     case getType(paginatedInstitutionsGet.failure):
       return {
         ...state,
-        paginatedInstitutions: pot.toError(
-          state.paginatedInstitutions,
-          action.payload
-        )
+        paginatedInstitutions: pot.toError(state.paginatedInstitutions, {
+          reason: action.payload,
+          time: new Date()
+        })
       };
 
     // Get FeaturedInstitutions actions
@@ -185,15 +193,6 @@ export const featuredServicesSelector = createSelector(
       []
     )
 );
-
-export const isLoadingPaginatedInstitutionsSelector = (state: GlobalState) =>
-  pipe(state, paginatedInstitutionsPotSelector, pot.isLoading);
-
-export const isUpdatingPaginatedInstitutionsSelector = (state: GlobalState) =>
-  pipe(state, paginatedInstitutionsPotSelector, pot.isUpdating);
-
-export const isErrorPaginatedInstitutionsSelector = (state: GlobalState) =>
-  pipe(state, paginatedInstitutionsPotSelector, pot.isError);
 
 export const isLoadingFeaturedInstitutionsSelector = (state: GlobalState) =>
   pipe(state, featuredInstitutionsPotSelector, pot.isLoading);
