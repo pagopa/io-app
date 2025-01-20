@@ -21,6 +21,7 @@ import { Action } from "../../actions/types";
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayTestEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
+import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -393,3 +394,30 @@ export const landingScreenBannerOrderSelector = (state: GlobalState) =>
     O.chainNullableK(banners => banners.priority_order),
     O.getOrElse(() => emptyArray)
   );
+
+export const appFeedbackConfigSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): AppFeedbackConfig | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.app_feedback),
+      O.toUndefined
+    )
+);
+
+export const appFeedbackEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? config.app_feedback?.min_app_version.ios
+            : config.app_feedback?.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);

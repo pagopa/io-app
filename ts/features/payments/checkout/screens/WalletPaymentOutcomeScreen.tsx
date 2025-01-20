@@ -45,6 +45,10 @@ import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
 import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 import { WalletPaymentStepEnum } from "../types";
 import { requestAppReview } from "../../../../utils/storeReview";
+import {
+  appFeedbackConfigSelector,
+  appFeedbackEnabledSelector
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -70,6 +74,8 @@ const WalletPaymentOutcomeScreen = () => {
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
+  const isAppFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
+  const appFeedbackConfig = useIOSelector(appFeedbackConfigSelector);
 
   const supportModal = usePaymentFailureSupportModal({
     outcome
@@ -148,7 +154,7 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleSuccessClose = () => {
-    requestAppReview();
+    requestAppReview(isAppFeedbackEnabled, appFeedbackConfig?.feedback_uri);
     handleClose();
   };
 
