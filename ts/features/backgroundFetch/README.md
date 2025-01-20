@@ -13,6 +13,8 @@ function RootContainer() {
 }
 ```
 
+The hook-based configuration provides a clean way to handle background fetch events by direclty passing the Redux dispatch function into event handlers.
+
 ## Usage
 
 ### Automatic Background Fetch
@@ -25,12 +27,12 @@ To schedule a custom background task:
 
 1. Add your task identifier to the `BackgroundFetchTaskId` enum:
 
-```typescript
-export enum BackgroundFetchTaskId {
-    REACT_NATIVE_BACKGROUND_FETCH = "react-native-background-fetch",
-    YOUR_CUSTOM_TASK = "your-custom-task-id"
-}
-```
+    ```typescript
+    export enum BackgroundFetchTaskId {
+        REACT_NATIVE_BACKGROUND_FETCH = "react-native-background-fetch",
+        YOUR_CUSTOM_TASK = "your-custom-task-id"
+    }
+    ```
 
 2. For iOS, in case there is the need to use a scheduled task, add the task identifiers to `Info.plist` under `BGTaskSchedulerPermittedIdentifiers`:
 
