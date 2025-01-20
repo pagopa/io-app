@@ -3294,7 +3294,7 @@ features:
         unknown: Non disponibile
       digital: Versione digitale
     support:
-      button: "Maggiori informazioni"
+      button: "Mostra dettagli"
       supportTitle: Contatta l'assistenza
       supportDescription: Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
       phone: Chiama {{phoneNumber}}

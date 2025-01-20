@@ -27,6 +27,12 @@ import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
 
+// Errors that allow a user to send a support request to Zendesk
+const zendeskAssistanceErrors = [
+  IssuanceFailureType.UNEXPECTED,
+  IssuanceFailureType.WALLET_PROVIDER_GENERIC
+];
+
 export const ItwIssuanceEidFailureScreen = () => {
   const failureOption =
     ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
@@ -60,7 +66,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
     failure: serializeFailureReason(failure)
   });
   const supportModal = useItwFailureSupportModal({
-    failure
+    failure,
+    supportChatEnabled: zendeskAssistanceErrors.includes(failure.type)
   });
 
   const closeIssuance = (errorConfig: KoState) => {
@@ -68,9 +75,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
     trackWalletCreationFailed(errorConfig);
   };
 
-  const retryIssuance = (errorConfig: KoState) => {
-    machineRef.send({ type: "retry" });
-    trackWalletCreationFailed(errorConfig);
+  const supportModalAction = {
+    label: I18n.t("features.itWallet.support.button"),
+    onPress: supportModal.present
   };
 
   const getOperationResultScreenContentProps =
@@ -82,7 +89,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
             title: I18n.t("features.itWallet.generic.error.title"),
             subtitle: I18n.t("features.itWallet.generic.error.body"),
             pictogram: "workInProgress",
-            action: {
+            action: supportModalAction, // This is a primary action because it includes the Zendesk support chat
+            secondaryAction: {
               label: I18n.t("global.buttons.close"),
               onPress: () =>
                 closeIssuance({
@@ -90,10 +98,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
                   cta_category: "custom_1",
                   cta_id: I18n.t("global.buttons.close")
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-            },
-            secondaryAction: {
-              label: I18n.t("features.itWallet.support.button"),
-              onPress: supportModal.present
             }
           };
         case IssuanceFailureType.ISSUER_GENERIC:
@@ -114,10 +118,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
                   )
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
             },
-            secondaryAction: {
-              label: I18n.t("features.itWallet.support.button"),
-              onPress: supportModal.present
-            }
+            secondaryAction: supportModalAction
           };
         case IssuanceFailureType.UNSUPPORTED_DEVICE:
           return {
@@ -158,19 +159,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
             pictogram: "accessDenied",
             action: {
               label: I18n.t(
-                "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
-              ),
-              onPress: () =>
-                retryIssuance({
-                  reason: failure.reason,
-                  cta_category: "custom_1",
-                  cta_id: I18n.t(
-                    "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
-                  )
-                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-            },
-            secondaryAction: {
-              label: I18n.t(
                 "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
               ),
               onPress: () =>
@@ -181,7 +169,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
                     "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
                   )
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-            }
+            },
+            secondaryAction: supportModalAction
           };
         case IssuanceFailureType.WALLET_REVOCATION_ERROR:
           return {

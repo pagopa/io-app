@@ -31,14 +31,8 @@ import {
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import {
-  IssuanceFailure,
-  IssuanceFailureType
-} from "../../machine/eid/failure";
-import {
-  CredentialIssuanceFailure,
-  CredentialIssuanceFailureType
-} from "../../machine/credential/failure";
+import { IssuanceFailure } from "../../machine/eid/failure";
+import { CredentialIssuanceFailure } from "../../machine/credential/failure";
 
 const { isWalletProviderResponseError, isIssuerResponseError } = Errors;
 
@@ -54,25 +48,17 @@ const ZENDESK_SUBCATEGORY = {
   value: "it_wallet_aggiunta_documenti"
 };
 
-// Errors that allow a user to send a support request to Zendesk
-const zendeskAssistanceErrors = [
-  IssuanceFailureType.UNEXPECTED,
-  IssuanceFailureType.WALLET_PROVIDER_GENERIC,
-  CredentialIssuanceFailureType.UNEXPECTED,
-  CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC
-];
-
 const contactMethodsByCredentialType: Record<
   string,
   SupportContactMethods | undefined
 > = {
   MDL: {
     mobile: "06.4577.5927",
-    landline: "800 232323",
+    landline: "800.232323",
     email: "uco.dgmot@mit.gov.it"
   },
   EuropeanHealthInsuranceCard: {
-    landline: "800 030070"
+    mobile: "800.030.070"
   }
 };
 
@@ -89,13 +75,17 @@ const isDefined = <T,>(x: T | undefined | null | ""): x is T => Boolean(x);
 type Props = {
   failure: IssuanceFailure | CredentialIssuanceFailure;
   credentialType?: string;
-  dismissModal: () => void;
+  supportChatEnabled: boolean;
 };
 
 /**
- * Renders several support methods. The component is standalone for easier testing.
+ * Hook that renders several support methods, with direct integration with Zendesk.
  */
-const ItwSupportModal = ({ failure, credentialType, dismissModal }: Props) => {
+export const useItwFailureSupportModal = ({
+  failure,
+  credentialType,
+  supportChatEnabled
+}: Props) => {
   const dispatch = useIODispatch();
 
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
@@ -134,7 +124,7 @@ const ItwSupportModal = ({ failure, credentialType, dismissModal }: Props) => {
   };
 
   const getContactMethods = (): Array<JSX.Element> => {
-    if (zendeskAssistanceErrors.includes(failure.type)) {
+    if (supportChatEnabled) {
       return [
         <ListItemAction
           key="contact-method-chat"
@@ -143,7 +133,7 @@ const ItwSupportModal = ({ failure, credentialType, dismissModal }: Props) => {
           icon="chat"
           label={I18n.t("features.itWallet.support.chat")}
           onPress={() => {
-            dismissModal();
+            dismiss();
             handleAskAssistance();
           }}
         />
@@ -198,62 +188,40 @@ const ItwSupportModal = ({ failure, credentialType, dismissModal }: Props) => {
   };
 
   const contactMethods = getContactMethods();
+  const hasContactMethods = contactMethods.length > 0;
 
-  return (
-    <VStack space={16}>
-      <Body>{I18n.t("features.itWallet.support.supportDescription")}</Body>
-      <VStack space={24}>
-        {contactMethods.length > 0 && (
-          <View>
-            <ListItemHeader
-              label={I18n.t("features.itWallet.support.supportTitle")}
-            />
-            {contactMethods}
-          </View>
-        )}
-        {code && (
-          <View>
-            <ListItemHeader
-              label={I18n.t("features.itWallet.support.additionalDataTitle")}
-            />
-            <ListItemInfoCopy
-              icon="ladybug"
-              label={I18n.t("features.itWallet.support.errorCode")}
-              value={code}
-              onPress={() => clipboardSetStringWithFeedback(code)}
-            />
-            <VSpacer size={24} />
-          </View>
-        )}
-      </VStack>
-    </VStack>
-  );
-};
-
-type ItwFailureSupportModal = (params: Omit<Props, "dismissModal">) => {
-  bottomSheet: JSX.Element;
-  present: () => void;
-};
-
-/**
- * Hook that exposes the `ItwSupportModal` component in a bottom sheet.
- */
-const useItwFailureSupportModal: ItwFailureSupportModal = ({
-  failure,
-  credentialType
-}) => {
   const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal({
     title: "",
     component: (
-      <ItwSupportModal
-        failure={failure}
-        credentialType={credentialType}
-        dismissModal={() => dismiss()}
-      />
+      <VStack space={16}>
+        <Body>{I18n.t("features.itWallet.support.supportDescription")}</Body>
+        <VStack space={24}>
+          {hasContactMethods && (
+            <View>
+              <ListItemHeader
+                label={I18n.t("features.itWallet.support.supportTitle")}
+              />
+              {contactMethods}
+            </View>
+          )}
+          {code && (
+            <View>
+              <ListItemHeader
+                label={I18n.t("features.itWallet.support.additionalDataTitle")}
+              />
+              <ListItemInfoCopy
+                icon="ladybug"
+                label={I18n.t("features.itWallet.support.errorCode")}
+                value={code}
+                onPress={() => clipboardSetStringWithFeedback(code)}
+              />
+              <VSpacer size={24} />
+            </View>
+          )}
+        </VStack>
+      </VStack>
     )
   });
 
-  return { bottomSheet, present, dismiss };
+  return { bottomSheet, present, dismiss, hasContactMethods };
 };
-
-export { useItwFailureSupportModal, ItwSupportModal };
