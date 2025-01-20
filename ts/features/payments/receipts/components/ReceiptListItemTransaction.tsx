@@ -1,7 +1,7 @@
 import { Avatar, ListItemTransaction } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { format } from "../../../../utils/dates";
 import { getTransactionLogo } from "../../common/utils";
@@ -14,7 +14,7 @@ type Props = {
   onPress?: () => void;
 };
 
-const ReceiptListItemTransaction = React.memo(
+const ReceiptListItemTransaction = memo(
   ({ transaction, onPress }: Props) => {
     const recipient = transaction.payeeName ?? "";
 

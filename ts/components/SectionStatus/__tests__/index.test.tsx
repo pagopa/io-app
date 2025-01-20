@@ -1,6 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";

@@ -1,6 +1,6 @@
 import { Body, HSpacer, Icon, IOStyles } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";

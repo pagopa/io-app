@@ -6,7 +6,6 @@ import {
 import { useNavigation } from "@react-navigation/core";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
 import { View } from "react-native";
 import {
   InitiativeDTO,

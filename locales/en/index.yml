@@ -1896,7 +1896,7 @@ wallet:
       defaultName: Gestore
       pspTitle: Gestore
       pspSortButton: Ordina
-      featuredReason: Perché sei già cliente
+      featuredReason: Sei già cliente
       continueButton: Continua
       sortBottomSheet:
         default: Default

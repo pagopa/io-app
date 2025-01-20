@@ -1,5 +1,6 @@
 import { FooterActions } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { ReactElement } from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -25,7 +26,7 @@ const loadLocales = () => ({
  * @constructor
  * @param props
  */
-const WorkunitGenericFailure = (props: Props): React.ReactElement => {
+const WorkunitGenericFailure = (props: Props): ReactElement => {
   const { headerTitle, title, close } = loadLocales();
   return (
     <BaseScreenComponent headerTitle={headerTitle} goBack={true}>

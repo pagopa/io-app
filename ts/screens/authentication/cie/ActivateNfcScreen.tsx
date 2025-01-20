@@ -1,7 +1,7 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Alert } from "react-native";
 import { IOScrollViewWithListItems } from "../../../components/ui/IOScrollViewWithListItems";
 import I18n from "../../../i18n";

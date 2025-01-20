@@ -1,4 +1,3 @@
-import React from "react";
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";

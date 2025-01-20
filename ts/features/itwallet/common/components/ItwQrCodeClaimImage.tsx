@@ -1,4 +1,3 @@
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";

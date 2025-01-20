@@ -1,5 +1,4 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import React from "react";
 import { View } from "react-native";
 import { ButtonSolid } from "@pagopa/io-app-design-system";
 import * as rnCieId from "@pagopa/io-react-native-cieid";

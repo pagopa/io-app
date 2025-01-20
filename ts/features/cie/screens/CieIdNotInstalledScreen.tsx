@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import CieIdNotInstalled from "../components/CieIdNotInstalled";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";

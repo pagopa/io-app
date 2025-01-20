@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react-native";
-import * as React from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { Card } from "../../../../../../../definitions/cgn/Card";

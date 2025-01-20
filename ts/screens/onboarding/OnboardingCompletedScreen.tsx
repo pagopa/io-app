@@ -1,6 +1,5 @@
 import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import I18n from "../../i18n";
 import { completeOnboarding } from "../../store/actions/onboarding";

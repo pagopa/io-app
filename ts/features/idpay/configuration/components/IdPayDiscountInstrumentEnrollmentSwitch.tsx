@@ -4,7 +4,6 @@ import {
   ListItemSwitch,
   SwitchAction
 } from "@pagopa/io-app-design-system";
-import { default as React } from "react";
 import {
   InstrumentTypeEnum,
   StatusEnum

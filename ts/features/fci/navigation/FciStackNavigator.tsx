@@ -1,4 +1,3 @@
-import * as React from "react";
 import { PathConfigMap } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../utils/navigation";

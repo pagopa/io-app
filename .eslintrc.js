@@ -31,6 +31,9 @@ module.exports = {
     "@stylistic/eslint-plugin-js"
   ],
   rules: {
+    //Rules from react 17 https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#eslint
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
     "comma-dangle": ["error", "never"],
     "no-case-declarations": "off",
     "no-inner-declarations": "off",

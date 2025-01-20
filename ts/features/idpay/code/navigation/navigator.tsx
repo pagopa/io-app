@@ -3,7 +3,6 @@ import {
   StackNavigationProp,
   createStackNavigator
 } from "@react-navigation/stack";
-import * as React from "react";
 import { IdPayCodeDisplayScreen } from "../screens/IdPayCodeDisplayScreen";
 import { IdPayCodeOnboardingScreen } from "../screens/IdPayCodeOnboardingScreen";
 import { IdPayCodeRenewScreen } from "../screens/IdPayCodeRenewScreen";

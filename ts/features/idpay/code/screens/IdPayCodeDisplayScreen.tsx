@@ -1,6 +1,6 @@
 import { Banner, H3, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import * as React from "react";
+import { useEffect, createRef } from "react";
 import { StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -41,7 +41,7 @@ const IdPayCodeDisplayScreen = () => {
   const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isFailure) {
       navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
         screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
@@ -59,7 +59,7 @@ const IdPayCodeDisplayScreen = () => {
     }
   };
 
-  const bannerRef = React.createRef<View>();
+  const bannerRef = createRef<View>();
 
   const buttonLabel: string = isOnboarding
     ? I18n.t("global.buttons.continue")

@@ -2,7 +2,7 @@ import { Body, IOStyles } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constTrue, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
-import * as React from "react";
+import { useCallback, useEffect } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
@@ -47,7 +47,7 @@ export const FimsFlowHandlerScreen = (
   const consentsPot = useIOSelector(fimsConsentsDataSelector);
   const authenticationFailed = useIOSelector(fimsAuthenticationFailedSelector);
 
-  const handleCancelOrAbort = React.useCallback(() => {
+  const handleCancelOrAbort = useCallback(() => {
     if (loadingState !== "abort") {
       dispatch(fimsCancelOrAbortAction());
     }
@@ -71,7 +71,7 @@ export const FimsFlowHandlerScreen = (
   // propagated to this UI, causing a back loop
   useHardwareBackButton(constTrue);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ctaUrl && !requiresAppUpdate) {
       dispatch(fimsGetConsentsListAction.request({ ctaText, ctaUrl }));
     } else if (requiresAppUpdate) {
