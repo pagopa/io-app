@@ -672,15 +672,17 @@ authentication:
     privacyLink: Informativa privacy
     nospid: Non hai SPID? Scopri di più
     nospid-nocie: Non hai SPID o CIE? Scopri di più
-    card1-title: Tutti i messaggi in un solo posto
-    card1-content: Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni Pubbliche
-    card2-title: Usa i tuoi metodi di pagamento preferiti
-    card2-content: Puoi pagare un tributo o una multa con il tuo conto corrente e le tue carte
-    card3-title: Paga velocemente un avviso cartaceo
-    card3-content: Tramite la scansione del QR code puoi velocemente pagare anche un avviso cartaceo
-    card5-title: Ti diamo il benvenuto su IO!
-    card5-content: Vediamo insieme cosa puoi fare
-    card5-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card0-title: Ti diamo il benvenuto su IO!
+    card0-content: Scorri per sapere cosa puoi fare in app.
+    card0-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card1-title: Conserva al sicuro i tuoi documenti personali
+    card1-content: Con Documenti su IO hai sempre a portata di mano la versione digitale dei tuoi documenti, come Patente e Tessera Sanitaria
+    card2-title: Ricevi comunicazioni, anche a valore legale
+    card2-content: "Leggi le comunicazioni in arrivo dagli enti: se attivi il servizio SEND, ricevi anche quelle a valore legale e risparmi sui costi di notifica"
+    card3-title: Paga gli avvisi pagoPA con il metodo che preferisci
+    card3-content: Su IO consulti e scarichi le ricevute dei tuoi pagamenti pagoPA, anche se non hai pagato in app
+    card4-title: Accedi ai servizi che più ti interessano
+    card4-content: Accedi direttamente a servizi della Pubblica Amministrazone dedicati a salute, educazione, mobilità, lavoro e molto altro
     expiredCardTitle: La verifica della CIE non è andata a buon fine
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
