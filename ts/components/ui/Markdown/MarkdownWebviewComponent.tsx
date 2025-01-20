@@ -2,7 +2,7 @@ import { useLinkTo } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { LegacyRef } from "react";
+import { LegacyRef } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 import { WebView } from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";

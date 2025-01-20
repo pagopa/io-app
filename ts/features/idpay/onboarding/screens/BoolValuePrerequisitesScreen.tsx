@@ -1,17 +1,8 @@
-import {
-  Body,
-  FooterActionsInline,
-  H2,
-  ListItemSwitch,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import React from "react";
+import { Divider, ListItemSwitch } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { dpr28Dec2000Url } from "../../../../urls";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -49,53 +40,52 @@ const InitiativeSelfDeclarationsScreen = () => {
   const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
     selfCriteriaBoolAnswers[criteria.code] ?? false;
 
-  useHeaderSecondLevel({
-    title: I18n.t("idpay.onboarding.navigation.header"),
-    contextualHelp: emptyContextualHelp,
-    goBack: goBackOnPress,
-    supportRequest: true
-  });
-
   return (
-    <LoadingSpinnerOverlay isLoading={isLoading}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={IOStyles.horizontalContentPadding}>
-          <H2>{I18n.t("idpay.onboarding.boolPrerequisites.header")}</H2>
-          <VSpacer size={16} />
-          <Body>{I18n.t("idpay.onboarding.boolPrerequisites.body")}</Body>
-          <Body
-            weight="Semibold"
-            asLink
-            onPress={() => openWebUrl(dpr28Dec2000Url)}
-          >
-            {I18n.t("idpay.onboarding.boolPrerequisites.link")}
-          </Body>
-          <VSpacer size={24} />
-          {selfCriteriaBool.map(criteria => (
-            <View key={criteria.code}>
-              <ListItemSwitch
-                label={criteria.description}
-                onSwitchValueChange={toggleCriteria(criteria)}
-                value={getSelfCriteriaBoolAnswer(criteria)}
-              />
-              <VSpacer size={16} />
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-      <FooterActionsInline
-        startAction={{
-          color: "primary",
-          label: I18n.t("global.buttons.back"),
-          onPress: goBackOnPress
-        }}
-        endAction={{
+    <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
+        section: I18n.t("idpay.onboarding.navigation.header")
+      }}
+      description={[
+        {
+          text: I18n.t("idpay.onboarding.boolPrerequisites.body")
+        },
+        {
+          text: "\n"
+        },
+        {
+          text: I18n.t("idpay.onboarding.boolPrerequisites.link"),
+          weight: "Semibold",
+          asLink: true,
+          onPress: () => openWebUrl(dpr28Dec2000Url)
+        }
+      ]}
+      goBack={goBackOnPress}
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{ showHelp: true }}
+      actions={{
+        type: "SingleButton",
+        primary: {
           label: I18n.t("global.buttons.continue"),
           onPress: continueOnPress,
           disabled: !areAllSelfCriteriaBoolAccepted
-        }}
-      />
-    </LoadingSpinnerOverlay>
+        }
+      }}
+      includeContentMargins
+    >
+      <LoadingSpinnerOverlay isLoading={isLoading}>
+        {selfCriteriaBool.map((criteria, index) => (
+          <View key={criteria.code}>
+            <ListItemSwitch
+              label={criteria.description}
+              onSwitchValueChange={toggleCriteria(criteria)}
+              value={getSelfCriteriaBoolAnswer(criteria)}
+            />
+            {index !== selfCriteriaBool.length - 1 && <Divider />}
+          </View>
+        ))}
+      </LoadingSpinnerOverlay>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

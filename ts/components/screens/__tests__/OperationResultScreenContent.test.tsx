@@ -1,4 +1,4 @@
-import React from "react";
+import { ComponentProps } from "react";
 import { createStore } from "redux";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
@@ -32,7 +32,7 @@ describe("OperationResultScreenContent", () => {
 });
 
 function renderComponent(
-  props: React.ComponentProps<typeof OperationResultScreenContent>
+  props: ComponentProps<typeof OperationResultScreenContent>
 ) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(

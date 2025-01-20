@@ -1,6 +1,6 @@
-import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
+import { ReactNode } from "react";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
 
 type Props = Readonly<{
   backgroundColor?: string;
-  children?: React.ReactNode;
-  foreground?: React.ReactNode;
+  children?: ReactNode;
+  foreground?: ReactNode;
   opacity?: number;
 }>;
 

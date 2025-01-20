@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Platform, View } from "react-native";
 import Share from "react-native-share";
@@ -27,7 +27,7 @@ export type ReceiptPreviewScreenProps = RouteProp<
 
 const ReceiptPreviewScreen = () => {
   const [footerActionsMeasurements, setfooterActionsMeasurements] =
-    React.useState<FooterActionsMeasurements>({
+    useState<FooterActionsMeasurements>({
       actionBlockHeight: 0,
       safeBottomAreaHeight: 0
     });

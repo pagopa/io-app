@@ -1,7 +1,6 @@
 import { H2 } from "@pagopa/io-app-design-system";
 import { render } from "@testing-library/react-native";
 import _ from "lodash";
-import React from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../store/actions/application";

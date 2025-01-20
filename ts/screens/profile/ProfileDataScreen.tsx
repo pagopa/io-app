@@ -5,7 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { ComponentProps, useCallback, useMemo } from "react";
+import { ComponentProps, useCallback, useMemo } from "react";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";

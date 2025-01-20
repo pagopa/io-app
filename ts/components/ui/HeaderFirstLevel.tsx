@@ -9,7 +9,6 @@ import {
   alertEdgeToEdgeInsetTransitionConfig,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { createRef, useEffect, useLayoutEffect } from "react";
 import {
   AccessibilityInfo,

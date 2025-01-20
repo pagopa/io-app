@@ -1,5 +1,4 @@
 import { HeaderActionProps } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { useLayoutEffect } from "react";
 import HeaderFirstLevel from "../components/ui/HeaderFirstLevel";
 import { useIONavigation } from "../navigation/params/AppParamsList";

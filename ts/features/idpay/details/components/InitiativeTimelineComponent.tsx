@@ -3,11 +3,12 @@ import {
   Divider,
   H6,
   BodySmall,
-  VSpacer
+  VSpacer,
+  ListItemHeader
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { Fragment } from "react";
 import { View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
@@ -59,13 +60,13 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
     return (
       <>
         {timeline.slice(0, size).map((operation, index) => (
-          <React.Fragment key={operation.operationId}>
+          <Fragment key={operation.operationId}>
             <TimelineOperationListItem
               operation={operation}
               onPress={() => detailsBottomSheet.present(operation)}
             />
             {index < size - 1 ? <Divider /> : undefined}
-          </React.Fragment>
+          </Fragment>
         ))}
       </>
     );
@@ -73,8 +74,20 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
 
   return (
     <View testID="IDPayTimelineTestID">
-      <TimelineHeaderComponent onShowMorePress={navigateToOperationsList} />
-      <VSpacer size={8} />
+      <ListItemHeader
+        label={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
+        )}
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
+            ),
+            onPress: navigateToOperationsList
+          }
+        }}
+      />
       {renderTimelineContent()}
       {detailsBottomSheet.bottomSheet}
     </View>
@@ -99,10 +112,10 @@ const TimelineHeaderComponent = (props: { onShowMorePress?: () => void }) => (
 const TimelineComponentSkeleton = ({ size = 3 }: Pick<Props, "size">) => (
   <View testID="IDPayTimelineSkeletonTestID">
     {Array.from({ length: size }).map((_, index) => (
-      <React.Fragment key={index}>
+      <Fragment key={index}>
         <TimelineOperationListItem isLoading={true} />
         {index < size - 1 ? <Divider /> : undefined}
-      </React.Fragment>
+      </Fragment>
     ))}
   </View>
 );

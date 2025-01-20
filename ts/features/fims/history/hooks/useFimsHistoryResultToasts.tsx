@@ -1,7 +1,7 @@
 /* eslint-disable functional/immutable-data */
 import { IOToast } from "@pagopa/io-app-design-system";
 import { constVoid } from "fp-ts/lib/function";
-import * as React from "react";
+import { useRef, useEffect } from "react";
 import { Alert } from "react-native";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
 import I18n from "../../../../i18n";
@@ -29,9 +29,9 @@ const showFimsAlreadyExportingAlert = (onPress: () => void) =>
 export const useFimsHistoryExport = () => {
   const historyExportState = useIOSelector(fimsHistoryExportStateSelector);
   const dispatch = useIODispatch();
-  const isProcessing = React.useRef<boolean>(false);
+  const isProcessing = useRef<boolean>(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     RemoteValue.fold(
       historyExportState,
       constVoid,
@@ -52,7 +52,7 @@ export const useFimsHistoryExport = () => {
   }, [historyExportState, dispatch]);
 
   // cleanup
-  React.useEffect(
+  useEffect(
     () => () => {
       dispatch(resetFimsHistoryExportState());
     },

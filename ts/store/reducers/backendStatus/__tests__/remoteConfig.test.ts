@@ -3,7 +3,9 @@ import { pipe } from "fp-ts/lib/function";
 import { identity } from "lodash";
 import { GlobalState } from "../../types";
 import {
+  absolutePortalLinksSelector,
   barcodesScannerConfigSelector,
+  generateDynamicUrlSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
   landingScreenBannerOrderSelector
@@ -63,6 +65,75 @@ describe("test selectors", () => {
       const output = barcodesScannerConfigSelector(customStore);
 
       expect(output.dataMatrixPosteEnabled).toBe(true);
+    });
+  });
+
+  describe("absolutePortalLinksSelector", () => {
+    it("should return fallback links if remote config is undefined", () => {
+      const output = absolutePortalLinksSelector(noneStore);
+      expect(output).toStrictEqual({
+        io_web: "https://ioapp.it/",
+        io_showcase: "https://io.italia.it/"
+      });
+    });
+
+    it("should return configured links if present in remote config", () => {
+      const customStore = {
+        remoteConfig: O.some({
+          absolutePortalLinks: {
+            io_web: "https://custom.ioapp.it/",
+            io_showcase: "https://custom.italia.io/"
+          }
+        })
+      } as GlobalState;
+
+      const output = absolutePortalLinksSelector(customStore);
+      expect(output).toStrictEqual({
+        io_web: "https://custom.ioapp.it/",
+        io_showcase: "https://custom.italia.io/"
+      });
+    });
+  });
+
+  describe("generateDynamicUrlSelector", () => {
+    const mockState = {
+      remoteConfig: O.some({
+        absolutePortalLinks: {
+          io_web: "https://custom.ioapp.it/",
+          io_showcase: "https://custom.italia.io/"
+        }
+      })
+    } as GlobalState;
+
+    it("should generate a complete URL with valid base key and path", () => {
+      const output = generateDynamicUrlSelector(
+        mockState,
+        "io_web",
+        "path/to/resource"
+      );
+      expect(output).toBe("https://custom.ioapp.it/path/to/resource");
+    });
+
+    it("should handle missing trailing slash in base URL", () => {
+      const customState = {
+        remoteConfig: O.some({
+          absolutePortalLinks: {
+            io_web: "https://custom.ioapp.it"
+          }
+        })
+      } as GlobalState;
+
+      const output = generateDynamicUrlSelector(
+        customState,
+        "io_web",
+        "another/path"
+      );
+      expect(output).toBe("https://custom.ioapp.it/another/path");
+    });
+
+    it("should return the base key as fallback if an error occurs", () => {
+      const output = generateDynamicUrlSelector(noneStore, "io_web", "path");
+      expect(output).toBe("https://ioapp.it/path");
     });
   });
 });

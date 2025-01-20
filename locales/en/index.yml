@@ -119,7 +119,6 @@ global:
       open:
         label: Contextual Help
         hint: Access information about the contents of the current screen
-  ioWebSite: https://io.italia.it
   symbols:
     question: "?"
     asterisk: "*"
@@ -1895,7 +1894,7 @@ wallet:
       defaultName: Gestore
       pspTitle: Gestore
       pspSortButton: Ordina
-      featuredReason: Perché sei già cliente
+      featuredReason: Sei già cliente
       continueButton: Continua
       sortBottomSheet:
         default: Default

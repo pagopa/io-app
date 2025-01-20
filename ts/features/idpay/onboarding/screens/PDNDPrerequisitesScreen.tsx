@@ -1,21 +1,16 @@
 import {
-  Body,
   ButtonSolid,
   ContentWrapper,
-  FooterActionsInline,
-  H2,
   ModuleSummary,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Fragment, useState } from "react";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -25,17 +20,11 @@ import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 
-const styles = StyleSheet.create({
-  listContainer: {
-    marginTop: 24
-  }
-});
-
 export const PDNDPrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
-  const [authority, setAuthority] = React.useState<string | undefined>();
+  const [authority, setAuthority] = useState<string | undefined>();
   const serviceId = useSelector(selectServiceId);
 
   const serviceName = pipe(
@@ -89,58 +78,44 @@ export const PDNDPrerequisitesScreen = () => {
 
   const pdndCriteria = useSelector(pdndCriteriaSelector);
 
-  useHeaderSecondLevel({
-    title: I18n.t("idpay.onboarding.navigation.header"),
-    contextualHelp: emptyContextualHelp,
-    goBack: goBackOnPress,
-    supportRequest: true
-  });
-
   return (
-    <>
-      <ScrollView>
-        <View style={IOStyles.horizontalContentPadding}>
-          <VSpacer size={16} />
-          <H2>{I18n.t("idpay.onboarding.PDNDPrerequisites.title")}</H2>
-          <VSpacer size={16} />
-          <Body>
-            {I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
-              service: serviceName
-            })}
-          </Body>
-        </View>
-        <View style={[IOStyles.horizontalContentPadding, styles.listContainer]}>
-          {pdndCriteria.map((criteria, index) => (
-            <React.Fragment key={index}>
-              <ModuleSummary
-                label={I18n.t(
-                  `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
-                )}
-                description={getPDNDCriteriaDescription(criteria)}
-                onPress={() => {
-                  setAuthority(criteria.authority);
-                  present();
-                }}
-              />
-              <VSpacer size={16} />
-            </React.Fragment>
-          ))}
-        </View>
-      </ScrollView>
-      <FooterActionsInline
-        startAction={{
-          color: "primary",
-          label: I18n.t("global.buttons.back"),
-          onPress: goBackOnPress
-        }}
-        endAction={{
-          color: "primary",
+    <IOScrollViewWithLargeHeader
+      includeContentMargins
+      title={{
+        label: I18n.t("idpay.onboarding.PDNDPrerequisites.title"),
+        section: I18n.t("idpay.onboarding.navigation.header")
+      }}
+      description={I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
+        service: serviceName
+      })}
+      actions={{
+        type: "SingleButton",
+        primary: {
           label: I18n.t("global.buttons.continue"),
           onPress: continueOnPress
-        }}
-      />
+        }
+      }}
+      goBack={goBackOnPress}
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{ showHelp: true }}
+    >
+      {pdndCriteria.map((criteria, index) => (
+        <Fragment key={index}>
+          <ModuleSummary
+            label={I18n.t(
+              `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
+            )}
+            description={getPDNDCriteriaDescription(criteria)}
+            onPress={() => {
+              setAuthority(criteria.authority);
+              present();
+            }}
+          />
+          <VSpacer size={16} />
+        </Fragment>
+      ))}
       {bottomSheet}
-    </>
+    </IOScrollViewWithLargeHeader>
   );
 };
 
