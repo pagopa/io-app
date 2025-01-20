@@ -1,10 +1,9 @@
-import React from "react";
-import I18n from "../../../../i18n";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
 type Props = {
   credential: StoredCredential;

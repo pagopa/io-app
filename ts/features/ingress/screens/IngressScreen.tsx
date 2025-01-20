@@ -2,7 +2,7 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import React, { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import {
   fetch as fetchNetInfo,
   NetInfoState
@@ -21,6 +21,7 @@ import ModalSectionStatusComponent from "../../../components/SectionStatus/modal
 import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
 import {
   trackIngressCdnSystemError,
+  trackIngressNoInternetConnection,
   trackIngressServicesSlowDown,
   trackIngressTimeout
 } from "../analytics";
@@ -84,14 +85,7 @@ export const IngressScreen = () => {
   }, [dispatch]);
 
   if (netInfo && !netInfo.isConnected) {
-    return (
-      <OperationResultScreenContent
-        testID="device-connection-lost-id"
-        pictogram="lostConnection"
-        title={I18n.t("startup.connection_lost.title")}
-        subtitle={I18n.t("startup.connection_lost.description")}
-      />
-    );
+    return <IngressScreenNoInternetConnection />;
   }
 
   if (showBlockingScreen) {
@@ -113,6 +107,26 @@ export const IngressScreen = () => {
     </>
   );
 };
+
+const IngressScreenNoInternetConnection = memo(() => {
+  const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
+  const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
+
+  useEffect(() => {
+    if (isMixpanelInitialized && isMixpanelEnabled !== false) {
+      void trackIngressNoInternetConnection();
+    }
+  }, [isMixpanelEnabled, isMixpanelInitialized]);
+
+  return (
+    <OperationResultScreenContent
+      testID="device-connection-lost-id"
+      pictogram="lostConnection"
+      title={I18n.t("startup.connection_lost.title")}
+      subtitle={I18n.t("startup.connection_lost.description")}
+    />
+  );
+});
 
 const IngressScreenBlockingError = memo(() => {
   const operationRef = useRef<View>(null);

@@ -1,6 +1,5 @@
 import { IOColors, IOIcons, Icon } from "@pagopa/io-app-design-system";
 import { isString } from "lodash";
-import * as React from "react";
 import {
   Image,
   ImageSourcePropType,

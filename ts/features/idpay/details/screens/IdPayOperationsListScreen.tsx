@@ -10,11 +10,10 @@ import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useRef } from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import Placeholder from "rn-placeholder";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -23,6 +22,7 @@ import { useTimelineDetailsBottomSheet } from "../../timeline/components/Timelin
 import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
 import { useInitiativeTimelineFetcher } from "../hooks/useInitiativeTimelineFetcher";
 import { IDPayDetailsParamsList } from "../navigation";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 
 export type IdPayOperationsListScreenParams = { initiativeId: string };
 
@@ -65,7 +65,7 @@ export const IdPayOperationsListScreen = () => {
   } = useInitiativeTimelineFetcher(initiativeId, 10, handleOnError);
 
   // We need to know if this is the first rendering in order to show the loading spinner overlay
-  const isFirstRenderDispatchedRef = React.useRef(false);
+  const isFirstRenderDispatchedRef = useRef(false);
 
   useOnFirstRender(() => {
     fetchPage(0);
@@ -129,7 +129,7 @@ export const IdPayOperationsListScreen = () => {
   );
 
   return (
-    <RNavScreenWithLargeHeader
+    <IOScrollViewWithLargeHeader
       title={{
         label: I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
@@ -149,7 +149,7 @@ export const IdPayOperationsListScreen = () => {
       <VSpacer size={16} />
       {operationList}
       {detailsBottomSheet.bottomSheet}
-    </RNavScreenWithLargeHeader>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

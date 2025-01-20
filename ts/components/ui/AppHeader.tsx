@@ -1,10 +1,11 @@
 /**
  * A customized Header component.
  */
-import * as React from "react";
-import { View, ColorValue, ViewProps, StatusBar } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { IOStyles, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { PropsWithChildren } from "react";
+import { ColorValue, StatusBar, View, ViewProps } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import variables from "../../theme/variables";
 
 type Props = ViewProps & {
@@ -12,7 +13,7 @@ type Props = ViewProps & {
   hideSafeArea?: boolean;
 };
 
-const AppHeader = (props: React.PropsWithChildren<Props>) => {
+const AppHeader = (props: PropsWithChildren<Props>) => {
   const { top } = useSafeAreaInsets();
   return (
     <View

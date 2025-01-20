@@ -1,4 +1,4 @@
-import React, { ComponentProps, useCallback, useEffect } from "react";
+import { ComponentProps, useCallback, useEffect } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import {
   Divider,

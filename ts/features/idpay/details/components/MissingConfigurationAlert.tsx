@@ -1,6 +1,6 @@
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import { NavigatorScreenParams } from "@react-navigation/native";
-import React from "react";
+import { createRef } from "react";
 import { View } from "react-native";
 import { StatusEnum as InitiativeStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import I18n from "../../../../i18n";
@@ -33,7 +33,7 @@ const MissingConfigurationAlert = (props: Props) => {
     return null;
   }
 
-  const viewRef = React.createRef<View>();
+  const viewRef = createRef<View>();
 
   const screen: Record<StatusWithAlert, keyof IdPayConfigurationParamsList> = {
     NOT_REFUNDABLE_ONLY_IBAN:

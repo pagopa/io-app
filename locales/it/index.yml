@@ -119,7 +119,6 @@ global:
       open:
         label: Aiuto contestuale
         hint: Accedi alle informazioni sul contenuto della schermata corrente
-  ioWebSite: https://io.italia.it
   symbols:
     question: "?"
     asterisk: "*"
@@ -1895,7 +1894,7 @@ wallet:
       defaultName: Gestore
       pspTitle: Gestore
       pspSortButton: Ordina
-      featuredReason: Perché sei già cliente
+      featuredReason: Sei già cliente
       continueButton: Continua
       sortBottomSheet:
         default: Default
@@ -3533,6 +3532,7 @@ features:
           requestAssistance: "Qualcosa non torna?"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
+          openIPatente: "Vai al saldo punti patente"
         dialogs:
           remove:
             title: Vuoi rimuovere il documento dal Portafoglio?

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import * as React from "react";
+import { useState } from "react";
 
 import {
   BodyMonospace,
@@ -144,7 +144,7 @@ export const DSTabNavigation = () => {
 };
 
 const TabNavigationWithState = (props: TabNavigation) => {
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = useState(0);
 
   return (
     <TabNavigation {...props} selectedIndex={index} onItemPress={setIndex}>

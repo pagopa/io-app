@@ -7,7 +7,7 @@ import {
   BodySmall,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { useLayoutEffect, memo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -19,6 +19,7 @@ import {
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid
 } from "../../credentials/store/selectors";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 /**
  * This magic number is the lenght of the encoded fiscal code in a CODE39 barcode.
@@ -72,9 +73,10 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
   const nameSurname = useIOSelector(selectNameSurnameFromEid);
   const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
 
+  usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwPresentationCredentialFiscalCodeModal = React.memo(
+const MemoizedItwPresentationCredentialFiscalCodeModal = memo(
   ItwPresentationCredentialFiscalCodeModal
 );
 

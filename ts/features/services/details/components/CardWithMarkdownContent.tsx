@@ -1,4 +1,4 @@
-import React, { memo, ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import { useLinkTo } from "@react-navigation/native";
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";

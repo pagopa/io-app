@@ -192,9 +192,9 @@ const reducer = (
       // Bundles are stored sorted by default sort rule
       const sortedBundles = getSortedPspList(bundles, "default");
 
-      // Automatically select PSP if only 1 received or with `onUs` property
+      // Automatically select PSP if only 1 received
       const preselectedPsp =
-        sortedBundles.length === 1 || sortedBundles[0]?.onUs
+        sortedBundles.length === 1
           ? O.some(sortedBundles[0])
           : state.selectedPsp;
 

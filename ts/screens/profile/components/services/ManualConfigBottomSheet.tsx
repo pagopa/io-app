@@ -1,6 +1,4 @@
 import { FooterActionsInline } from "@pagopa/io-app-design-system";
-import * as React from "react";
-
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import IOMarkdown from "../../../../components/IOMarkdown";

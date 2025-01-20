@@ -13,8 +13,7 @@ import {
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { ComponentProps } from "react";
+import { useContext, useMemo, ComponentProps } from "react";
 import { Image } from "react-native";
 import Animated, {
   Easing,
@@ -110,7 +109,7 @@ const spaceBetweenActions: IOSpacer = 24;
  * A screen to explain how the bonus activation works and how it will be assigned
  */
 const BonusInformationComponent = (props: Props) => {
-  const { showModal, hideModal } = React.useContext(LightModalContext);
+  const { showModal, hideModal } = useContext(LightModalContext);
   const bonusType = props.bonus;
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusType[getRemoteLocale()];
@@ -119,7 +118,7 @@ const BonusInformationComponent = (props: Props) => {
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
 
-  const bottomMargin: number = React.useMemo(
+  const bottomMargin: number = useMemo(
     () =>
       safeAreaInsets.bottom === 0
         ? IOVisualCostants.appMarginDefault
@@ -133,12 +132,12 @@ const BonusInformationComponent = (props: Props) => {
     ? buttonSolidHeight * 2
     : buttonSolidHeight;
 
-  const safeBottomAreaHeight: number = React.useMemo(
+  const safeBottomAreaHeight: number = useMemo(
     () => bottomMargin + buttonsSolidHeight + contentEndMargin,
     [bottomMargin, buttonsSolidHeight]
   );
 
-  const gradientAreaHeight: number = React.useMemo(
+  const gradientAreaHeight: number = useMemo(
     () => bottomMargin + buttonsSolidHeight + gradientSafeArea,
     [bottomMargin, buttonsSolidHeight]
   );

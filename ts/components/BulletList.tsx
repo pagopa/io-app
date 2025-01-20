@@ -7,7 +7,7 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { ComponentProps, memo, useCallback } from "react";
+import { ComponentProps, memo, useCallback } from "react";
 import { View } from "react-native";
 
 const BULLET_ITEM = "\u2022";

@@ -1,5 +1,4 @@
-import * as React from "react";
-import { ButtonOutline, VSpacer, IOToast } from "@pagopa/io-app-design-system";
+import { ButtonOutline, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import IOMarkdown from "../../../../../../components/IOMarkdown";
 import I18n from "../../../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../../utils/hooks/bottomSheet";

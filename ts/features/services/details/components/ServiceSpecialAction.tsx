@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { ButtonSolid } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import * as B from "fp-ts/lib/boolean";

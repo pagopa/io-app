@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
 import { FimsHistoryScreen } from "../../history/screens/HistoryScreen";
 import {
   FimsFlowHandlerScreen,
