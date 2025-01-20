@@ -1,4 +1,3 @@
-import React from "react";
 import { ModuleAttachment, VSpacer } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";

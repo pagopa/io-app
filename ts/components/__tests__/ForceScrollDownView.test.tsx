@@ -1,5 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactElement } from "react";
+
 import { Text } from "react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
@@ -99,7 +100,7 @@ describe("ForceScrollDownView", () => {
   });
 });
 
-export const renderComponent = (component: React.ReactElement) => {
+export const renderComponent = (component: ReactElement) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
 

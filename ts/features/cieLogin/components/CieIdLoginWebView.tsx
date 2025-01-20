@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { URL } from "react-native-url-polyfill";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { Linking, Platform, StyleSheet, View } from "react-native";

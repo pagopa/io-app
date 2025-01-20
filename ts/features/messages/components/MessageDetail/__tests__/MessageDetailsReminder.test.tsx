@@ -1,4 +1,3 @@
-import React from "react";
 import { createStore } from "redux";
 import { MessageDetailsReminder } from "../MessageDetailsReminder";
 import { appReducer } from "../../../../../store/reducers";

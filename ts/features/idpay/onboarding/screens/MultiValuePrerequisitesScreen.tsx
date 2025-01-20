@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { H6, IOStyles, RadioGroup } from "@pagopa/io-app-design-system";
-import { default as React } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
@@ -13,7 +13,7 @@ import {
 } from "../machine/selectors";
 
 const MultiValuePrerequisitesScreen = () => {
-  const pagerRef = React.useRef<PagerView>(null);
+  const pagerRef = useRef<PagerView>(null);
 
   const multiSelfDeclarations = IdPayOnboardingMachineContext.useSelector(
     multiRequiredCriteriaSelector
@@ -22,7 +22,7 @@ const MultiValuePrerequisitesScreen = () => {
     selectCurrentMultiSelfDeclarationPage
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     pagerRef.current?.setPage(currentPage);
   }, [pagerRef, currentPage]);
 
@@ -53,7 +53,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
 }: MultiValuePrerequisiteItemScreenContentProps) => {
   const machine = IdPayOnboardingMachineContext.useActorRef();
 
-  const [selectedValue, setSelectedValue] = React.useState<string | undefined>(
+  const [selectedValue, setSelectedValue] = useState<string | undefined>(
     undefined
   );
 

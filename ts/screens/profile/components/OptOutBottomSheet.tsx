@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import * as React from "react";
 import { Body, ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";

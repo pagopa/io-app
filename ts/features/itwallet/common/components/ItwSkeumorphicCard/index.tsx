@@ -1,5 +1,6 @@
 import { Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
-import React, { ReactNode, useMemo } from "react";
+import { memo, ReactNode, useMemo } from "react";
+
 import {
   AccessibilityProps,
   Pressable,
@@ -64,7 +65,7 @@ const ItwSkeumorphicCard = ({
     [credential, status]
   );
 
-  const accessibilityProps = React.useMemo(
+  const accessibilityProps = useMemo(
     () =>
       ({
         accessible: true,
@@ -163,6 +164,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwSkeumorphicCard = React.memo(ItwSkeumorphicCard);
+const MemoizedItwSkeumorphicCard = memo(ItwSkeumorphicCard);
 
 export { MemoizedItwSkeumorphicCard as ItwSkeumorphicCard };

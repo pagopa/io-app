@@ -1,4 +1,3 @@
-import * as React from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { H3, IOStyles } from "@pagopa/io-app-design-system";

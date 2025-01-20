@@ -9,7 +9,6 @@ import {
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
 import {
   Image,
   ImageBackground,

@@ -7,7 +7,6 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";

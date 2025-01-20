@@ -5,7 +5,8 @@ import {
   NavigationContainer,
   NavigationContainerProps
 } from "@react-navigation/native";
-import React, { useRef } from "react";
+import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
+
 import { View } from "react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
@@ -51,7 +52,7 @@ const isMainNavigatorReady = (state: OnStateChangeStateType) =>
   state.routes.length > 0 &&
   state.routes[0].name === ROUTES.MAIN;
 
-export const AppStackNavigator = (): React.ReactElement => {
+export const AppStackNavigator = (): ReactElement => {
   // This hook is used since we are in a child of the Context Provider
   // to setup the experimental design system value from AsyncStorage
   // remove this once the experimental design system is stable
@@ -61,7 +62,7 @@ export const AppStackNavigator = (): React.ReactElement => {
 
   const startupStatus = useIOSelector(isStartupLoaded);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(startApplicationInitialization());
   }, [dispatch]);
 
@@ -76,7 +77,7 @@ export const AppStackNavigator = (): React.ReactElement => {
   return <AuthenticatedStackNavigator />;
 };
 
-type InnerNavigationContainerProps = React.PropsWithChildren<{
+type InnerNavigationContainerProps = PropsWithChildren<{
   routingInstrumentation?: ReactNavigationInstrumentation;
 }>;
 

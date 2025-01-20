@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import { View, StyleSheet, Pressable } from "react-native";
 import {
   AnimatedCheckbox,
@@ -38,7 +38,7 @@ const HORIZONTAL_SPACING = 24;
  * @param onClaimSelected - the callback function to be called when a claim is selected
  */
 export const ItwOptionalClaimsList = ({ claims, onClaimSelected }: Props) => {
-  const [selectedClaims, setSelectedClaims] = React.useState<Array<boolean>>(
+  const [selectedClaims, setSelectedClaims] = useState<Array<boolean>>(
     new Array(claims.length).fill(false)
   );
 

@@ -1,5 +1,5 @@
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";

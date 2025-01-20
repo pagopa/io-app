@@ -1,4 +1,4 @@
-import React from "react";
+import { useMemo, memo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import QRCode, { QRCodeProps } from "react-native-qrcode-svg";
 import Placeholder from "rn-placeholder";
@@ -33,7 +33,7 @@ const QrCodeImage = ({
   onError
 }: QrCodeImageProps) => {
   const { width } = useWindowDimensions();
-  const realSize = React.useMemo<number>(() => {
+  const realSize = useMemo<number>(() => {
     if (typeof size === "number") {
       return size;
     }
@@ -65,5 +65,5 @@ const QrCodeImage = ({
   );
 };
 
-const MemoizedQrCodeImage = React.memo(QrCodeImage);
+const MemoizedQrCodeImage = memo(QrCodeImage);
 export { MemoizedQrCodeImage as QrCodeImage };

@@ -1,5 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
-import React, { useCallback, useRef } from "react";
+import { forwardRef, useCallback, useRef } from "react";
 import { FlatList, NativeSyntheticEvent } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import PagerView from "react-native-pager-view";
@@ -27,7 +27,7 @@ import {
 } from "./homeUtils";
 import { ArchiveRestoreBar } from "./ArchiveRestoreBar";
 
-export const PagerViewContainer = React.forwardRef<PagerView>((_, ref) => {
+export const PagerViewContainer = forwardRef<PagerView>((_, ref) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
   const archiveFlatListRef = useRef<FlatList>(null);
