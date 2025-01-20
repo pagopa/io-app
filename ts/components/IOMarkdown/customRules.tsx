@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { TxtHeaderNode, TxtLinkNode } from "@textlint/ast-node-types";
 import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
 import { isIoInternalLink } from "../ui/Markdown/handlers/link";
@@ -40,14 +41,14 @@ export const generateMessagesAndServicesRules = (
     const nodeKey = getTxtNodeKey(header);
 
     return (
-      <>
-        <Heading key={nodeKey}>{header.children.map(render)}</Heading>
+      <Fragment key={nodeKey}>
+        <Heading>{header.children.map(render)}</Heading>
         {generateAccesibilityLinkViewsIfNeeded(
           allLinkData,
           nodeKey,
           (url: string) => handleOpenLink(linkTo, url)
         )}
-      </>
+      </Fragment>
     );
   },
   Link(link: TxtLinkNode, render: Renderer) {

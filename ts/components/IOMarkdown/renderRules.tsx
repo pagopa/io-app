@@ -179,14 +179,14 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     const nodeKey = getTxtNodeKey(paragraph);
 
     return (
-      <>
-        <Body key={nodeKey}>{paragraph.children.map(render)}</Body>
+      <Fragment key={nodeKey}>
+        <Body>{paragraph.children.map(render)}</Body>
         {generateAccesibilityLinkViewsIfNeeded(
           allLinkData,
           nodeKey,
           handleOpenLink
         )}
-      </>
+      </Fragment>
     );
   },
   /**
@@ -301,8 +301,8 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     const nodeKey = getTxtNodeKey(list);
 
     return (
-      <>
-        <View key={nodeKey}>
+      <Fragment key={nodeKey}>
+        <View>
           {isFirstList && <VSpacer size={8} />}
           <View style={IOStyles.row}>
             {isFirstList && <HSpacer size={12} />}
@@ -331,7 +331,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
           nodeKey,
           handleOpenLink
         )}
-      </>
+      </Fragment>
     );
   },
   /**
