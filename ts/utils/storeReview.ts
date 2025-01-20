@@ -2,7 +2,6 @@ import { Alert } from "react-native";
 import * as StoreReview from "react-native-store-review";
 import I18n from "../i18n";
 import { openWebUrl } from "./url";
-import { constVoid } from "fp-ts/lib/function";
 
 export const requestAppReview = (
   isAppFeedbackEnabled: boolean,
