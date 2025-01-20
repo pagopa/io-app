@@ -3,7 +3,7 @@ import {
   RadioGroup,
   VStack
 } from "@pagopa/io-app-design-system";
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import { View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
