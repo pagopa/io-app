@@ -133,7 +133,7 @@ const ItwSupportModal = ({ failure, credentialType, dismissModal }: Props) => {
     }
   };
 
-  const renderContactMethods = (): Array<JSX.Element> => {
+  const getContactMethods = (): Array<JSX.Element> => {
     if (zendeskAssistanceErrors.includes(failure.type)) {
       return [
         <ListItemAction
@@ -197,18 +197,18 @@ const ItwSupportModal = ({ failure, credentialType, dismissModal }: Props) => {
       ));
   };
 
-  const contactMethodsComponents = renderContactMethods();
+  const contactMethods = getContactMethods();
 
   return (
     <VStack space={16}>
       <Body>{I18n.t("features.itWallet.support.supportDescription")}</Body>
       <VStack space={24}>
-        {contactMethodsComponents.length > 0 && (
+        {contactMethods.length > 0 && (
           <View>
             <ListItemHeader
               label={I18n.t("features.itWallet.support.supportTitle")}
             />
-            {contactMethodsComponents}
+            {contactMethods}
           </View>
         )}
         {code && (
