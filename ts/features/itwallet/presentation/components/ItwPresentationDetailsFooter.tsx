@@ -150,7 +150,7 @@ const IPatenteListItemAction = () => {
       ctaConfig.service_organization_name,
       ctaConfig.service_organization_fiscal_code,
       label,
-      "credential_details"
+      "credential_detail"
     );
 
   return (

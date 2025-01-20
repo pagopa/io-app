@@ -27,8 +27,8 @@ const referenceReason = "The reason";
 const referenceServiceId = "01J9RSWBB4VSHVRJSY33XGA6YH" as ServiceId;
 const serviceNames = [undefined, "service name"];
 const sources: ReadonlyArray<
-  "message_detail" | "service_detail" | "credential_details"
-> = ["message_detail", "service_detail", "credential_details"];
+  "message_detail" | "service_detail" | "credential_detail"
+> = ["message_detail", "service_detail", "credential_detail"] as const;
 
 describe("trackAuthenticationStart", () => {
   beforeEach(() => {
