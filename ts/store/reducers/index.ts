@@ -262,10 +262,7 @@ export function createRootReducer(
               _persist: state.features._persist,
               // IT Wallet must be kept
               itWallet: {
-                issuance: state.features.itWallet.issuance,
-                lifecycle: state.features.itWallet.lifecycle,
-                credentials: state.features.itWallet.credentials,
-
+                ...state.features.itWallet,
                 _persist: state.features.itWallet._persist
               }
             },
