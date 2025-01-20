@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { memo } from "react";
 import { View } from "react-native";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import {
@@ -42,7 +42,7 @@ const IDPayCardsList = (props: Props) => {
 };
 
 // Avoid re-rendering if the list of initiatives is the same
-const IDPayCardsListMemo = React.memo(IDPayCardsList);
+const IDPayCardsListMemo = memo(IDPayCardsList);
 
 const IDPayCardsInWalletContainer = () => {
   const initiativeList = useIOSelector(

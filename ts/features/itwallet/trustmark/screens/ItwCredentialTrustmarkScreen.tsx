@@ -1,5 +1,4 @@
 import { Body, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
-import React from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -9,6 +8,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwTrustmarkExpirationTimer } from "../components/ItwTrustmarkExpirationTimer";
 import { ItwTrustmarkQrCode } from "../components/ItwTrustmarkQrCode";
 import { ItwTrustmarkMachineProvider } from "../machine/provider";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 export type ItwCredentialTrustmarkScreenNavigationParams = {
   credentialType: string;
@@ -22,6 +22,7 @@ type ScreenProps = IOStackNavigationRouteProps<
 export const ItwCredentialTrustmarkScreen = (params: ScreenProps) => {
   const { credentialType } = params.route.params;
 
+  usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
   return (

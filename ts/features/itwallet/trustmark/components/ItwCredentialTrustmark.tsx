@@ -17,7 +17,7 @@ import {
   useSVG,
   vec
 } from "@shopify/react-native-skia";
-import { default as React, useState } from "react";
+import { useState } from "react";
 import {
   ColorValue,
   Image,
@@ -346,8 +346,7 @@ const styles = StyleSheet.create({
     height: TRUSTMARK_HEIGHT,
     borderCurve: "continuous",
     borderRadius: buttonBorderRadius,
-    overflow: "hidden",
-    marginVertical: 8
+    overflow: "hidden"
   },
   gradientView: {
     ...StyleSheet.absoluteFillObject

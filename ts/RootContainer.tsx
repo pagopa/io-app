@@ -1,18 +1,16 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { PureComponent } from "react";
 import {
   AppState,
   AppStateStatus,
   NativeEventSubscription,
-  Platform,
   StatusBar
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
-import FlagSecureComponent from "./components/FlagSecure";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
 import { setLocale } from "./i18n";
@@ -43,7 +41,7 @@ type Props = ReturnType<typeof mapStateToProps> &
  * - the UpdateAppModal, if the backend is not compatible with the installed app version
  * - the root for displaying light modals
  */
-class RootContainer extends React.PureComponent<Props> {
+class RootContainer extends PureComponent<Props> {
   private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
@@ -101,7 +99,6 @@ class RootContainer extends React.PureComponent<Props> {
           barStyle={"dark-content"}
           backgroundColor={customVariables.androidStatusBarColor}
         />
-        {Platform.OS === "android" && <FlagSecureComponent />}
 
         <IONavigationContainer
           routingInstrumentation={this.props.routingInstumentation}

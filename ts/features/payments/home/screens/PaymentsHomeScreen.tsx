@@ -1,7 +1,6 @@
 import { IOStyles } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
-import { useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Animated, {
   LinearTransition,
   useAnimatedRef
@@ -51,7 +50,7 @@ const PaymentsHomeScreen = () => {
     walletLatestReceiptListPotSelector
   );
 
-  const [isRefreshing, setIsRefreshing] = React.useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const cannotRefresh =
     pot.isError(paymentMethodsPot) &&
     pot.isNone(paymentMethodsPot) &&

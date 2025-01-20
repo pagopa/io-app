@@ -1,6 +1,5 @@
 import "react-native";
 import { Provider } from "react-redux";
-import React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent } from "@testing-library/react-native";

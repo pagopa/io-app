@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useCallback } from "react";
 import { cgnActivationComplete } from "../../store/actions/activation";
 import I18n from "../../../../../i18n";
 import { useIODispatch } from "../../../../../store/hooks";
@@ -10,7 +10,7 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
  */
 const CgnActivationCompletedScreen = () => {
   const dispatch = useIODispatch();
-  const onConfirm = React.useCallback(() => {
+  const onConfirm = useCallback(() => {
     dispatch(cgnActivationComplete());
   }, [dispatch]);
 

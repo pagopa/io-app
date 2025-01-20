@@ -2,7 +2,7 @@
  * A component that show a Grid with every Identity Provider passed in the idps
  * array property. When an Identity Provider is selected a callback function is called.
  */
-import * as React from "react";
+
 import {
   FlatList,
   ImageSourcePropType,
@@ -13,22 +13,19 @@ import {
 } from "react-native";
 
 import {
-  VSpacer,
   IOSpacingScale,
+  IOVisualCostants,
   ModuleIDP,
-  IOVisualCostants
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import { ComponentProps, FunctionComponent, ReactElement } from "react";
 import { LocalIdpsFallback } from "../utils/idps";
 
 type OwnProps = {
   contentContainerStyle?: StyleProp<ViewStyle>;
-  footerComponent?: React.ComponentProps<
-    typeof FlatList
-  >["ListFooterComponent"];
+  footerComponent?: ComponentProps<typeof FlatList>["ListFooterComponent"];
   headerComponentStyle?: StyleProp<ViewStyle>;
-  headerComponent?: React.ComponentProps<
-    typeof FlatList
-  >["ListHeaderComponent"];
+  headerComponent?: ComponentProps<typeof FlatList>["ListHeaderComponent"];
   // Array of Identity Provider to show in the grid.
   idps: ReadonlyArray<LocalIdpsFallback>;
   // A callback function called when an Identity Provider is selected
@@ -50,7 +47,7 @@ const keyExtractor = (idp: LocalIdpsFallback): string => idp.id;
 
 const renderItem =
   (props: Props) =>
-  (info: ListRenderItemInfo<LocalIdpsFallback>): React.ReactElement => {
+  (info: ListRenderItemInfo<LocalIdpsFallback>): ReactElement => {
     const { onIdpSelected } = props;
     const { item } = info;
     const { id, name, logo, localLogo } = item;
@@ -69,7 +66,7 @@ const renderItem =
     );
   };
 
-const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
+const IdpsGrid: FunctionComponent<Props> = (props: Props) => (
   <FlatList
     testID={props.testID}
     data={props.idps}

@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import { useState, useRef, createRef } from "react";
 import { Platform } from "react-native";
 import { WebView } from "react-native-webview";
 import type {
@@ -91,9 +91,9 @@ const webView = createRef<WebView>();
  * @returns {JSX.Element} - The configured component with WebView.
  */
 export const WebViewComponent = (props: WebViewComponentProps) => {
-  const [webViewUrl, setWebViewUrl] = React.useState(props.authUrl);
-  const [isCardReadingFinished, setCardReadingFinished] = React.useState(false);
-  const cieCompletedEventEmitted = React.useRef(false);
+  const [webViewUrl, setWebViewUrl] = useState(props.authUrl);
+  const [isCardReadingFinished, setCardReadingFinished] = useState(false);
+  const cieCompletedEventEmitted = useRef(false);
 
   /*
    * Once the reading of the card with NFC is finished, it is necessary

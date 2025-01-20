@@ -1,7 +1,6 @@
-import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
-import React from "react";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import {
@@ -36,6 +35,7 @@ import {
 import { ItwCredentialTrustmark } from "../../trustmark/components/ItwCredentialTrustmark";
 import ItwCredentialNotFound from "../../common/components/ItwCredentialNotFound";
 import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -81,6 +81,7 @@ const ItwPresentationCredentialDetail = ({
   );
 
   useDebugInfo(credential);
+  usePreventScreenCapture();
 
   useFocusEffect(() => {
     trackCredentialDetail({
@@ -107,19 +108,18 @@ const ItwPresentationCredentialDetail = ({
       credential={credential}
       ctaProps={ctaProps}
     >
-      <VStack space={16}>
-        <ItwPresentationDetailsHeader credential={credential} />
-        <ContentWrapper>
-          <VStack space={16}>
-            <ItwPresentationAdditionalInfoSection credential={credential} />
-            <ItwPresentationCredentialStatusAlert credential={credential} />
-            <ItwPresentationCredentialInfoAlert credential={credential} />
-            <ItwPresentationClaimsSection credential={credential} />
-            <ItwCredentialTrustmark credential={credential} />
-          </VStack>
-        </ContentWrapper>
-        <ItwPresentationDetailsFooter credential={credential} />
-      </VStack>
+      <ItwPresentationDetailsHeader credential={credential} />
+      <VSpacer size={24} />
+      <ContentWrapper>
+        <VStack space={24}>
+          <ItwPresentationAdditionalInfoSection credential={credential} />
+          <ItwPresentationCredentialStatusAlert credential={credential} />
+          <ItwPresentationCredentialInfoAlert credential={credential} />
+          <ItwPresentationClaimsSection credential={credential} />
+          <ItwCredentialTrustmark credential={credential} />
+          <ItwPresentationDetailsFooter credential={credential} />
+        </VStack>
+      </ContentWrapper>
     </ItwPresentationDetailsScreenBase>
   );
 };
