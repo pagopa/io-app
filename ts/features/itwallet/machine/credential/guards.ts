@@ -10,27 +10,25 @@ import { CredentialIssuanceFailureType } from "./failure";
 
 export const createCredentialIssuanceGuardsImplementation = (
   store: ReturnType<typeof useIOStore>
-) => {
-  return {
-    isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
-      "error" in event && event.error instanceof ItwSessionExpiredError,
+) => ({
+  isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
+    "error" in event && event.error instanceof ItwSessionExpiredError,
 
-    isDeferredIssuance: ({ context }: { context: Context }) =>
-      context.failure?.type === CredentialIssuanceFailureType.ASYNC_ISSUANCE,
+  isDeferredIssuance: ({ context }: { context: Context }) =>
+    context.failure?.type === CredentialIssuanceFailureType.ASYNC_ISSUANCE,
 
-    hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
-      pipe(
-        O.fromNullable(context.walletInstanceAttestation),
-        O.map(isWalletInstanceAttestationValid),
-        O.getOrElse(() => false)
-      ),
+  hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
+    pipe(
+      O.fromNullable(context.walletInstanceAttestation),
+      O.map(isWalletInstanceAttestationValid),
+      O.getOrElse(() => false)
+    ),
 
-    isStatusError: ({ context }: { context: Context }) =>
-      context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS,
+  isStatusError: ({ context }: { context: Context }) =>
+    context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS,
 
-    isSkipNavigation: ({ event }: { event: CredentialIssuanceEvents }) =>
-      event.type === "select-credential" && event.skipNavigation === true,
+  isSkipNavigation: ({ event }: { event: CredentialIssuanceEvents }) =>
+    event.type === "select-credential" && event.skipNavigation === true,
 
-    isWalletValid: () => itwLifecycleIsValidSelector(store.getState())
-  };
-};
+  isWalletValid: () => itwLifecycleIsValidSelector(store.getState())
+});
