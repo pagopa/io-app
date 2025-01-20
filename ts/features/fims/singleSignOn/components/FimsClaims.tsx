@@ -1,15 +1,15 @@
 import { Divider, H6, Icon, IOColors } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { Fragment } from "react";
 import { View, StyleSheet } from "react-native";
 import { Claim } from "../../../../../definitions/fims_sso/Claim";
 
 export const FimsClaimsList = ({ claims }: ClaimsListProps) => (
   <View style={styles.grantsList}>
     {claims.map((claim, index) => (
-      <React.Fragment key={index}>
+      <Fragment key={index}>
         <ClaimListItem label={claim.display_name} />
         {index < claims.length - 1 && <Divider />}
-      </React.Fragment>
+      </Fragment>
     ))}
   </View>
 );

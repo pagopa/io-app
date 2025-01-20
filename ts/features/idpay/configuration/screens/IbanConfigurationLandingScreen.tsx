@@ -4,7 +4,6 @@ import {
   ContentWrapper,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";

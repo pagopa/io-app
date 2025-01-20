@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { constUndefined, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import { ButtonSolidProps, IOPictograms } from "@pagopa/io-app-design-system";

@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "react-native";
 import { Body, IOStyles } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";

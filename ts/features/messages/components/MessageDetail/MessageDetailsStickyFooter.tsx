@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useLinkTo } from "@react-navigation/native";
 import {
@@ -287,7 +287,7 @@ export const MessageDetailsStickyFooter = ({
     canNavigateToPaymentFromMessageSelector(state)
   );
 
-  const onCTAPreActionCallback = React.useCallback(
+  const onCTAPreActionCallback = useCallback(
     (cta: CTA) => (type: CTAActionType) => {
       const state = store.getState();
       computeAndTrackFIMSAuthenticationStart(type, cta.text, serviceId, state);
@@ -296,7 +296,7 @@ export const MessageDetailsStickyFooter = ({
   );
 
   const linkTo = useLinkTo();
-  const onCTAPressedCallback = React.useCallback(
+  const onCTAPressedCallback = useCallback(
     (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => {
       const state = store.getState();
       computeAndTrackCTAPressAnalytics(isFirstCTA, cta, serviceId, state);

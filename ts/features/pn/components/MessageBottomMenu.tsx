@@ -1,5 +1,5 @@
 import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { ContactsListItem } from "../../messages/components/MessageDetail/ContactsListItem";
 import { useIOSelector } from "../../../store/hooks";

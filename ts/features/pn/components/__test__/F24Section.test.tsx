@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createStore } from "redux";
 import { F24Section } from "../F24Section";
 import { appReducer } from "../../../../store/reducers";

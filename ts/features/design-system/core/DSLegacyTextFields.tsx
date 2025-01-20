@@ -1,7 +1,7 @@
 import { H4, IOColors, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
 
 import { LabelledItem } from "../../../components/LabelledItem";

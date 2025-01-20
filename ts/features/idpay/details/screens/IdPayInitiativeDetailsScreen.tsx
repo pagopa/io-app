@@ -14,7 +14,7 @@ import { RouteProp, useFocusEffect } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import {
@@ -93,7 +93,7 @@ const IdPayInitiativeDetailsScreen = () => {
   const discountBottomSheet = useIdPayDiscountDetailsBottomSheet(initiativeId);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       dispatch(idpayInitiativeGet.request({ initiativeId }));
       dispatch(
         idpayTimelinePageGet.request({ initiativeId, page: 0, pageSize: 5 })

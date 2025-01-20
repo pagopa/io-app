@@ -1,4 +1,3 @@
-import React from "react";
 import { useRoute } from "@react-navigation/native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";

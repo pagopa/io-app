@@ -1,5 +1,4 @@
 import { Divider, ListItemSwitch } from "@pagopa/io-app-design-system";
-import React from "react";
 import { View } from "react-native";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";

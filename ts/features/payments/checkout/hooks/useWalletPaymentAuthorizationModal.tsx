@@ -3,7 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { useState, useCallback, useEffect } from "react";
 import URLParse from "url-parse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
@@ -38,11 +38,11 @@ export const useWalletPaymentAuthorizationModal = ({
     walletPaymentAuthorizationUrlSelector
   );
   const [isPendingAuthorization, setIsPendingAuthorization] =
-    React.useState<boolean>(false);
+    useState<boolean>(false);
   const isLoading = pot.isLoading(authorizationUrlPot);
   const isError = pot.isError(authorizationUrlPot);
 
-  const handleAuthorizationOutcome = React.useCallback(
+  const handleAuthorizationOutcome = useCallback(
     (outcome: WalletPaymentOutcome) => {
       onAuthorizationOutcome(outcome);
       dispatch(storePaymentOutcomeToHistory(outcome));
@@ -50,7 +50,7 @@ export const useWalletPaymentAuthorizationModal = ({
     [onAuthorizationOutcome, dispatch]
   );
 
-  const handleAuthorizationResult = React.useCallback(
+  const handleAuthorizationResult = useCallback(
     (resultUrl: string) => {
       const outcome = pipe(
         new URLParse(resultUrl, true),
@@ -63,7 +63,7 @@ export const useWalletPaymentAuthorizationModal = ({
     [handleAuthorizationOutcome]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isPendingAuthorization) {
       return;
     }
@@ -100,7 +100,7 @@ export const useWalletPaymentAuthorizationModal = ({
     dispatch
   ]);
 
-  React.useEffect(
+  useEffect(
     () => () => {
       setIsPendingAuthorization(false);
       dispatch(paymentsStartPaymentAuthorizationAction.cancel());

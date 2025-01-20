@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import {
   Body,
