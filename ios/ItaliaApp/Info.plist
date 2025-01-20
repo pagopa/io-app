@@ -172,7 +172,6 @@
 	<string>app-store</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.pagopa.io.itw_check</string>
 	</array>
 </dict>
 </plist>

@@ -15,12 +15,10 @@ export function* handleBackgroundFetchEventSaga(
   action: ActionType<typeof backgroundFetchEvent>
 ) {
   switch (action.payload) {
+    // This event is called by the react-native-background-fetch package
+    // with the interval configured in useBackgroundFetch hook
     case BackgroundFetchTaskId.REACT_NATIVE_BACKGROUND_FETCH:
-      // This event is called by the react-native-background-fetch package
-      // with the interval configured in useBackgroundFetch hook
       yield* call(checkWalletInstanceAndCredentialsValiditySaga);
-      break;
-    case BackgroundFetchTaskId.ITW_CHECK:
       break;
   }
 

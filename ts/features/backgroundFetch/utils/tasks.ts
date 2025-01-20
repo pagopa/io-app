@@ -9,9 +9,7 @@ import { Prettify } from "../../../types/helpers";
 export enum BackgroundFetchTaskId {
   // Event dispatched automatically by react-native-background-fetch
   // Does not need to be scheduled or registered
-  REACT_NATIVE_BACKGROUND_FETCH = "react-native-background-fetch",
-  // Scheduled task which check the ITW status
-  ITW_CHECK = "com.pagopa.io.itw_check"
+  REACT_NATIVE_BACKGROUND_FETCH = "react-native-background-fetch"
 }
 
 export type BackgroundFetchTaskConfig = Prettify<
