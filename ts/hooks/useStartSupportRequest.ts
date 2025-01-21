@@ -43,6 +43,7 @@ export const useStartSupportRequest = ({
             contextualHelpMarkdown,
             startingRoute: currentScreenName,
             assistanceForPayment: false,
+            assistanceForIdPay: false,
             assistanceForCard: false,
             assistanceForFci: false
           })

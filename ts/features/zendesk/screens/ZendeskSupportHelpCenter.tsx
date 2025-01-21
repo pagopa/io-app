@@ -228,6 +228,7 @@ const ZendeskSupportHelpCenter = () => {
     contextualHelpMarkdown,
     startingRoute,
     assistanceForPayment,
+    assistanceForIdPay,
     assistanceForCard,
     assistanceForFci
   } = route.params || {};
@@ -250,6 +251,7 @@ const ZendeskSupportHelpCenter = () => {
         screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
         params: {
           assistanceForPayment,
+          assistanceForIdPay,
           assistanceForCard,
           assistanceForFci
         }
@@ -259,6 +261,7 @@ const ZendeskSupportHelpCenter = () => {
         screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
         params: {
           assistanceForPayment,
+          assistanceForIdPay,
           assistanceForCard,
           assistanceForFci
         }
@@ -267,6 +270,7 @@ const ZendeskSupportHelpCenter = () => {
   }, [
     assistanceForCard,
     assistanceForFci,
+    assistanceForIdPay,
     assistanceForPayment,
     maybeProfile,
     navigation
@@ -277,6 +281,7 @@ const ZendeskSupportHelpCenter = () => {
       handleContactSupport(
         navigation,
         assistanceForPayment,
+        assistanceForIdPay,
         assistanceForCard,
         assistanceForFci,
         zendeskRemoteConfig
@@ -284,6 +289,7 @@ const ZendeskSupportHelpCenter = () => {
     [
       navigation,
       assistanceForPayment,
+      assistanceForIdPay,
       assistanceForCard,
       assistanceForFci,
       zendeskRemoteConfig

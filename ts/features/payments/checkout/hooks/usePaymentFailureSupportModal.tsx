@@ -123,6 +123,7 @@ const usePaymentFailureSupportModal = ({
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
+        assistanceForIdPay: false,
         assistanceForPayment: true,
         assistanceForCard: false,
         assistanceForFci: false

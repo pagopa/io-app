@@ -23,6 +23,7 @@ import { zendeskSelectedCategorySelector } from "../store/reducers";
 
 export type ZendeskChooseSubCategoryNavigationParams = {
   assistanceForPayment: boolean;
+  assistanceForIdPay: boolean;
   assistanceForCard: boolean;
   assistanceForFci: boolean;
 };
@@ -39,8 +40,12 @@ type Props = IOStackNavigationRouteProps<
 const ZendeskChooseSubCategory = (props: Props) => {
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useIODispatch();
-  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
-    props.route.params;
+  const {
+    assistanceForPayment,
+    assistanceForCard,
+    assistanceForFci,
+    assistanceForIdPay
+  } = props.route.params;
   const selectedSubcategory = (subcategory: ZendeskSubCategory) =>
     dispatch(zendeskSelectedSubcategory(subcategory));
   const zendeskWorkUnitFailure = (reason: string) =>
@@ -78,6 +83,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
         addTicketCustomField(subCategoriesId, subCategory.value);
         props.navigation.navigate("ZENDESK_ASK_PERMISSIONS", {
           assistanceForPayment,
+          assistanceForIdPay,
           assistanceForCard,
           assistanceForFci
         });

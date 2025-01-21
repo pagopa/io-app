@@ -20,6 +20,7 @@ export type ZendeskStartPayload = {
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   startingRoute: string;
   assistanceForPayment: boolean;
+  assistanceForIdPay: boolean;
   assistanceForCard: boolean;
   assistanceForFci: boolean;
 };

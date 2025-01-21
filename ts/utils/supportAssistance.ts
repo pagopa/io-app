@@ -142,6 +142,15 @@ export const zendeskFCICategory: ZendeskCategory = {
   }
 };
 
+export const defaultIdPayCategory: ZendeskCategory = {
+  value: "io_pagamenti_pagopa",
+  description: {
+    "it-IT": "Pagamento pagoPA",
+    "en-EN": "pagoPA payment",
+    "de-DE": "pagoPA-Zahlung"
+  }
+};
+
 export const resetAssistanceData = () => {
   resetCustomFields();
   resetLog();

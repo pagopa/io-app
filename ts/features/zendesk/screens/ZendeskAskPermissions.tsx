@@ -88,6 +88,7 @@ export type ItemPermissionProps = Pick<
 
 export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
+  assistanceForIdPay: boolean;
   assistanceForCard: boolean;
   assistanceForFci: boolean;
 };
