@@ -7,10 +7,11 @@ import {
   BodySmall,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { useLayoutEffect, memo } from "react";
+import { useLayoutEffect, memo, useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -19,6 +20,7 @@ import {
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid
 } from "../../credentials/store/selectors";
+import { trackCredentialCardModal } from "../../analytics";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 /**
@@ -75,6 +77,12 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
 
   usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
+
+  useFocusEffect(
+    useCallback(() => {
+      trackCredentialCardModal("ITW_TS_V2");
+    }, [])
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
