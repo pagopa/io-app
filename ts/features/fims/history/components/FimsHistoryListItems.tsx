@@ -18,11 +18,11 @@ import { FimsHistorySharedStyles } from "../utils/styles";
 
 // ------- TYPES
 
-type SuccessListItemProps = {
+export type FimsHistorySuccessListItemProps = {
   serviceData: ServicePublic;
   consent: Access;
 };
-type BaseHistoryListItemProps = {
+export type FimsHistoryBaseListItemProps = {
   item: Access;
 };
 
@@ -31,7 +31,7 @@ type BaseHistoryListItemProps = {
 export const FimsHistorySuccessListItem = ({
   serviceData,
   consent
-}: SuccessListItemProps) => {
+}: FimsHistorySuccessListItemProps) => {
   const theme = useIOTheme();
   return (
     <View style={defaultListItemStyles}>
@@ -58,7 +58,7 @@ export const FimsHistorySuccessListItem = ({
 
 export const FimsHistoryFailureListItem = ({
   item
-}: BaseHistoryListItemProps) => {
+}: FimsHistoryBaseListItemProps) => {
   const theme = useIOTheme();
 
   return (

@@ -6,9 +6,12 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import {
+  FimsHistoryBaseListItemProps,
   FimsHistoryFailureListItem,
-  FimsHistorySuccessListItem
+  FimsHistorySuccessListItem,
+  FimsHistorySuccessListItemProps
 } from "../FimsHistoryListItems";
+import { FIMS_ROUTES } from "../../../common/navigation";
 
 const mockServicePublic = { organization_name: "TEST" } as ServicePublic;
 const mockAccess: Access = {
@@ -43,14 +46,8 @@ describe("FimsHistoryListItems", () => {
 });
 
 type ListItemProps =
-  | {
-      consent: Access;
-      serviceData: ServicePublic;
-    }
-  | {
-      item: Access;
-    };
-
+  | FimsHistorySuccessListItemProps
+  | FimsHistoryBaseListItemProps;
 const renderComponent = (
   componentProps: ListItemProps,
   Component: React.ComponentType<any>
@@ -58,7 +55,7 @@ const renderComponent = (
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext(
     () => <Component {...componentProps} />,
-    "FIMS_HISTORY",
+    FIMS_ROUTES.HISTORY,
     {},
     createStore(appReducer, globalState as any)
   );
