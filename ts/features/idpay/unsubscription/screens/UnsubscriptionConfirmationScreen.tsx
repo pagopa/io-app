@@ -60,6 +60,25 @@ const checksByInitiativeType = {
     }
   ],
 
+  [InitiativeRewardTypeEnum.EXPENSE]: [
+    {
+      title: I18n.t("idpay.unsubscription.checks.1.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.2.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.2.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.3.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.4.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.4.content")
+    }
+  ],
+
   [InitiativeRewardTypeEnum.DISCOUNT]: [
     {
       title: I18n.t("idpay.unsubscription.checks.1.title"),
