@@ -70,10 +70,16 @@ const contactMethodsByCredentialType: Record<
 
 const extractErrorCode = (failure: Props["failure"]) => {
   const rawError = failure.reason;
-  return isWalletProviderResponseError(rawError) ||
+  if (
+    isWalletProviderResponseError(rawError) ||
     isIssuerResponseError(rawError)
-    ? rawError.code ?? failure.type
-    : failure.type;
+  ) {
+    return rawError.code ?? failure.type;
+  }
+  if (rawError instanceof Error) {
+    return rawError.message;
+  }
+  return failure.type;
 };
 
 const isDefined = <T,>(x: T | undefined | null | ""): x is T => Boolean(x);
