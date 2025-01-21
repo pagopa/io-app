@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useEffect } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -83,7 +83,7 @@ const WalletPaymentOutcomeScreen = () => {
 
   // TODO: This is a workaround to disable swipe back gesture on this screen
   // .. it should be removed as soon as the migration to react-navigation v6 is completed (https://pagopa.atlassian.net/browse/IOBP-522)
-  React.useEffect(() => {
+  useEffect(() => {
     // Disable swipe if not in the payment methods not available outcome
     if (outcome === WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE) {
       return;
@@ -277,6 +277,7 @@ const WalletPaymentOutcomeScreen = () => {
       service_name: paymentAnalyticsData?.serviceName,
       attempt: paymentOngoingHistory?.attempt,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      psp_selected: paymentAnalyticsData?.selectedPsp,
       payment_phase:
         outcome === WalletPaymentOutcomeEnum.GENERIC_ERROR
           ? getPaymentPhaseFromStep(currentStep)

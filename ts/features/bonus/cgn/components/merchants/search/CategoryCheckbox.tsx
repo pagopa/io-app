@@ -2,7 +2,6 @@ import {
   IOCategoryIcons,
   ListItemCheckbox
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 
 type Props = {
   text: string;

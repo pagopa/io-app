@@ -1,4 +1,3 @@
-import React from "react";
 import { Pressable } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";

@@ -1,4 +1,3 @@
-import React from "react";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import I18n from "../../../../../i18n";

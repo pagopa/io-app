@@ -132,6 +132,8 @@ Created on **24/03/2022**
 
 Created on **29/08/2022**
 
+Removed on **10/01/2025** and replaced with `react-native-screenshot-prevent`
+
 #### Reason:
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility

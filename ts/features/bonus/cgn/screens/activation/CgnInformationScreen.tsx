@@ -1,18 +1,18 @@
-import * as React from "react";
+import { FunctionComponent } from "react";
 import { connect } from "react-redux";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { ID_CGN_TYPE } from "../../../common/utils";
 import BonusInformationComponent from "../../../common/components/BonusInformationComponent";
+import { availableBonusTypesSelectorFromId } from "../../../common/store/selectors";
+import { ID_CGN_TYPE } from "../../../common/utils";
 import {
   cgnActivationBack,
   cgnActivationCancel,
   cgnRequestActivation
 } from "../../store/actions/activation";
-import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
-import { availableBonusTypesSelectorFromId } from "../../../common/store/selectors";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -20,7 +20,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 /**
  * This Screen shows all the information about the cgn program, with the rules and t&c.
  */
-const CgnInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
+const CgnInformationScreen: FunctionComponent<Props> = (props: Props) => {
   const onConfirm = () => props.userActivateCgn();
   useHardwareBackButton(() => {
     props.onBack();

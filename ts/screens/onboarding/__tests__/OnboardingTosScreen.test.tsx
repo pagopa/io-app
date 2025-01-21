@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
@@ -335,6 +334,10 @@ const commonSetup = ({
       tos: {
         tos_version: CurrentTestToSVersion,
         tos_url: "https://www.example.com"
+      },
+      absolutePortalLinks: {
+        io_web: "https://ioapp.it/it/accedi/",
+        io_showcase: "https://io.italia.it/"
       },
       itw: {
         enabled: true,

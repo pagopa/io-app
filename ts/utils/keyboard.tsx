@@ -1,4 +1,4 @@
-import React from "react";
+import { ReactNode } from "react";
 import { KeyboardAvoidingView, Platform } from "react-native";
 import customVariables from "../theme/variables";
 
@@ -9,7 +9,7 @@ import customVariables from "../theme/variables";
  * @param content
  */
 export const withKeyboard = (
-  content: React.ReactNode,
+  content: ReactNode,
   insideSafeAreaView: boolean = false
 ) => (
   <KeyboardAvoidingView

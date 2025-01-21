@@ -5,7 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as B from "fp-ts/lib/boolean";
 import { pipe } from "fp-ts/lib/function";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";

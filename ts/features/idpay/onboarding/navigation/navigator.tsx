@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import {
   IdPayOnboardingMachineContext,
@@ -30,7 +29,7 @@ export const InnerNavigator = () => {
       initialRouteName={
         IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS
       }
-      screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
       screenListeners={{
         beforeRemove: () => {
           // Read more on https://reactnavigation.org/docs/preventing-going-back/
@@ -64,7 +63,7 @@ export const InnerNavigator = () => {
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE}
         component={FailureScreen}
-        options={{ gestureEnabled: false }}
+        options={{ gestureEnabled: false, headerShown: false }}
       />
     </Stack.Navigator>
   );

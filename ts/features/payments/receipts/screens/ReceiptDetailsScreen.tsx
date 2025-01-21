@@ -1,7 +1,6 @@
 import { IOColors, useIOTheme, useIOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import * as React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
@@ -108,8 +107,11 @@ const ReceiptDetailsScreen = () => {
   const handleDownloadPdfReceipt = () => {
     analytics.trackPaymentsDownloadReceiptAction({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentAnalyticsData?.receiptUser
+      user: paymentAnalyticsData?.receiptUser,
+      payment_status: "paid"
     });
     dispatch(
       getPaymentsReceiptDownloadAction.request({

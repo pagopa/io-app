@@ -1,4 +1,4 @@
-import { Body, Divider, H1, VSpacer } from "@pagopa/io-app-design-system";
+import { Divider } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   RouteProp,
@@ -6,15 +6,13 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { useCallback, useMemo } from "react";
 import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
 import { IdPayCodeParamsList } from "../../code/navigation/params";
@@ -60,7 +58,7 @@ export const IdPayDiscountInstrumentsScreen = () => {
     isLoadingDiscountInitiativeInstrumentsSelector
   );
 
-  const idPayCodeInstrument = React.useMemo(
+  const idPayCodeInstrument = useMemo(
     () =>
       initiativeInstruments.find(
         initiative => initiative.instrumentType === InstrumentTypeEnum.IDPAYCODE
@@ -71,14 +69,14 @@ export const IdPayDiscountInstrumentsScreen = () => {
   const isLoadingIdPayCodeInstrument = useIOSelector(state =>
     idPayIsLoadingInitiativeInstrumentSelector(
       state,
-      idPayCodeInstrument?.instrumentId || ""
+      idPayCodeInstrument?.instrumentId ?? ""
     )
   );
 
   const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
-  const getInstruments = React.useCallback(() => {
+  const getInstruments = useCallback(() => {
     dispatch(
       idPayInitiativeInstrumentsRefreshStart({
         initiativeId
@@ -97,60 +95,49 @@ export const IdPayDiscountInstrumentsScreen = () => {
         screen: IdPayCodeRoutes.IDPAY_CODE_ONBOARDING,
         params: { initiativeId }
       });
-    } else {
-      if (idPayCodeInstrument && initiativeId) {
-        dispatch(
-          idpayInitiativeInstrumentDelete.request({
-            initiativeId,
-            instrumentId: idPayCodeInstrument.instrumentId
-          })
-        );
-      }
+    } else if (idPayCodeInstrument && initiativeId) {
+      dispatch(
+        idpayInitiativeInstrumentDelete.request({
+          initiativeId,
+          instrumentId: idPayCodeInstrument.instrumentId
+        })
+      );
     }
   };
 
   return (
-    <>
-      <TopScreenComponent goBack contextualHelp={emptyContextualHelp}>
-        <LoadingSpinnerOverlay
-          isLoading={isLoadingInstruments}
-          loadingOpacity={1}
-        >
-          <ScrollView style={styles.container}>
-            <H1>
-              {I18n.t("idpay.configuration.instruments.paymentMethods.header")}
-            </H1>
-            <VSpacer size={8} />
-            <Body>
-              {I18n.t("idpay.configuration.instruments.paymentMethods.body", {
-                initiativeName: initiativeName ?? ""
-              })}
-            </Body>
-            <VSpacer size={24} />
-            <IdPayDiscountInstrumentEnrollmentSwitch
-              instrumentType={InstrumentTypeEnum.IDPAYCODE}
-              onValueChange={handleCieValueChange}
-              onPressAction={presentCieBottomSheet}
-              status={idPayCodeInstrument?.status}
-              isLoading={pot.isLoading(isLoadingIdPayCodeInstrument)}
-              value={idPayCodeInstrument ? true : false}
-            />
-            <Divider />
-            <IdPayDiscountInstrumentEnrollmentSwitch
-              instrumentType={InstrumentTypeEnum.APP_IO_PAYMENT}
-            />
-            <VSpacer size={16} />
-          </ScrollView>
-        </LoadingSpinnerOverlay>
-        {bottomSheet}
-      </TopScreenComponent>
-    </>
+    <IOScrollViewWithLargeHeader
+      includeContentMargins
+      title={{
+        label: I18n.t("idpay.configuration.instruments.paymentMethods.header")
+      }}
+      description={I18n.t(
+        "idpay.configuration.instruments.paymentMethods.body",
+        {
+          initiativeName: initiativeName ?? ""
+        }
+      )}
+      headerActionsProp={{ showHelp: true }}
+      contextualHelp={emptyContextualHelp}
+    >
+      <LoadingSpinnerOverlay
+        isLoading={isLoadingInstruments}
+        loadingOpacity={1}
+      >
+        <IdPayDiscountInstrumentEnrollmentSwitch
+          instrumentType={InstrumentTypeEnum.IDPAYCODE}
+          onValueChange={handleCieValueChange}
+          onPressAction={presentCieBottomSheet}
+          status={idPayCodeInstrument?.status}
+          isLoading={pot.isLoading(isLoadingIdPayCodeInstrument)}
+          value={!!idPayCodeInstrument}
+        />
+        <Divider />
+        <IdPayDiscountInstrumentEnrollmentSwitch
+          instrumentType={InstrumentTypeEnum.APP_IO_PAYMENT}
+        />
+      </LoadingSpinnerOverlay>
+      {bottomSheet}
+    </IOScrollViewWithLargeHeader>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: customVariables.contentPadding
-  }
-});

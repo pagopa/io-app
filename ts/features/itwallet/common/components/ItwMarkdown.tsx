@@ -17,7 +17,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import _ from "lodash";
-import React, { ReactNode } from "react";
+import { Fragment, PropsWithChildren, ReactNode } from "react";
+
 import { StyleSheet } from "react-native";
 import Markdown, { ASTNode } from "react-native-markdown-display";
 import I18n from "../../../../i18n";
@@ -31,46 +32,46 @@ type ItwMarkdownProps = {
 
 const getRules = (onLinkOpen?: ItwMarkdownProps["onLinkOpen"]) => ({
   heading1: (node: ASTNode, children: Array<ReactNode>) => (
-    <React.Fragment key={node.key}>
+    <Fragment key={node.key}>
       <H1>{children}</H1>
       <VSpacer size={8} />
-    </React.Fragment>
+    </Fragment>
   ),
   heading2: (node: ASTNode, children: Array<ReactNode>) => (
-    <React.Fragment key={node.key}>
+    <Fragment key={node.key}>
       <H2>{children}</H2>
       <VSpacer size={8} />
-    </React.Fragment>
+    </Fragment>
   ),
   heading3: (node: ASTNode, children: Array<ReactNode>) => (
-    <React.Fragment key={node.key}>
+    <Fragment key={node.key}>
       <H3>{children}</H3>
       <VSpacer size={8} />
-    </React.Fragment>
+    </Fragment>
   ),
   heading4: (node: ASTNode, children: Array<ReactNode>) => (
-    <React.Fragment key={node.key}>
+    <Fragment key={node.key}>
       <H4>{children}</H4>
       <VSpacer size={8} />
-    </React.Fragment>
+    </Fragment>
   ),
   heading5: (node: ASTNode, children: Array<ReactNode>) => (
-    <React.Fragment key={node.key}>
+    <Fragment key={node.key}>
       <H5>{children}</H5>
       <VSpacer size={8} />
-    </React.Fragment>
+    </Fragment>
   ),
   heading6: (node: ASTNode, children: Array<ReactNode>) => (
-    <React.Fragment key={node.key}>
+    <Fragment key={node.key}>
       <H6>{children}</H6>
       <VSpacer size={8} />
-    </React.Fragment>
+    </Fragment>
   ),
   paragraph: (node: ASTNode, children: Array<ReactNode>) => (
-    <React.Fragment key={node.key}>
+    <Fragment key={node.key}>
       <Body>{children}</Body>
       <VSpacer size={24} />
-    </React.Fragment>
+    </Fragment>
   ),
   strong: (node: ASTNode, children: Array<ReactNode>) => (
     <Body key={node.key} weight="Semibold">
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
  * Main components are mapped into rules object.
  * @param content - contains the text to be converted in react elements.
  */
-const ItwMarkdown = (props: React.PropsWithChildren<ItwMarkdownProps>) => (
+const ItwMarkdown = (props: PropsWithChildren<ItwMarkdownProps>) => (
   <Markdown
     style={_.merge(styles, props.styles)}
     rules={getRules(props.onLinkOpen)}

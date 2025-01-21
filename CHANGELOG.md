@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.81.0-rc.5](https://github.com/pagopa/io-app/compare/2.81.0-rc.4...2.81.0-rc.5) (2025-01-20)
+
+
+### Bug Fixes
+
+* [[IOPAE-1688](https://pagopa.atlassian.net/browse/IOPAE-1688)] Fix infinite scroll on the services home page ([#6613](https://github.com/pagopa/io-app/issues/6613)) ([c2c7654](https://github.com/pagopa/io-app/commit/c2c765430b38b794c8bcc57b16c1598a8804e60e))
+
+
+### Chores
+
+* [[IOBP-1141](https://pagopa.atlassian.net/browse/IOBP-1141)] Added `psp_selected` mixpanel property for the payment flow ([#6616](https://github.com/pagopa/io-app/issues/6616)) ([d78090d](https://github.com/pagopa/io-app/commit/d78090d53ff73d98610e72fe9f6483103c849784))
+
+## [2.81.0-rc.4](https://github.com/pagopa/io-app/compare/2.81.0-rc.3...2.81.0-rc.4) (2025-01-17)
+
+
+### Features
+
+* [[PE-882](https://pagopa.atlassian.net/browse/PE-882)] CGN new discounts count ([#6607](https://github.com/pagopa/io-app/issues/6607)) ([93bd0a8](https://github.com/pagopa/io-app/commit/93bd0a83b8285cc91184c8bc43f546534a6c5add))
+
+
+### Chores
+
+* [[IOAPPX-405](https://pagopa.atlassian.net/browse/IOAPPX-405)] Removing unused react imports ([#6562](https://github.com/pagopa/io-app/issues/6562)) ([b84f0d1](https://github.com/pagopa/io-app/commit/b84f0d1ff6a18c700421f9b9135c6c580449afb9))
+* [[IOBP-1122](https://pagopa.atlassian.net/browse/IOBP-1122)] Remove PSP preselection logic based on the onUs field ([#6612](https://github.com/pagopa/io-app/issues/6612)) ([2d7127a](https://github.com/pagopa/io-app/commit/2d7127a0b4a201184e31cc55a0f8f06e8b9d9f98))
+
+## [2.81.0-rc.3](https://github.com/pagopa/io-app/compare/2.81.0-rc.2...2.81.0-rc.3) (2025-01-16)
+
+
+### Chores
+
+* [[IOPID-2579](https://pagopa.atlassian.net/browse/IOPID-2579)] add management of remote portal urls ([#6594](https://github.com/pagopa/io-app/issues/6594)) ([c3b2f95](https://github.com/pagopa/io-app/commit/c3b2f952487771747ad9ae89a2613bd7a966fbdb))
+
+## [2.81.0-rc.2](https://github.com/pagopa/io-app/compare/2.81.0-rc.1...2.81.0-rc.2) (2025-01-15)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1918](https://pagopa.atlassian.net/browse/SIW-1918)] Add iPatente CTA in MDL details screen ([#6577](https://github.com/pagopa/io-app/issues/6577)) ([40f6224](https://github.com/pagopa/io-app/commit/40f6224246d1e6a352c07180365fc629dd9185ca))
+
+
+### Bug Fixes
+
+* [[IOBP-1101](https://pagopa.atlassian.net/browse/IOBP-1101)] Add missing `Mixpanel` events/properties ([#6581](https://github.com/pagopa/io-app/issues/6581)) ([ea95f85](https://github.com/pagopa/io-app/commit/ea95f85220fb4dbdca0a68de0560b0dd1396d912))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1945](https://pagopa.atlassian.net/browse/SIW-1945)] Disable screenshots and recordings on ITW screens ([#6595](https://github.com/pagopa/io-app/issues/6595)) ([9382eeb](https://github.com/pagopa/io-app/commit/9382eebb070c7cf337ff9dd71b5f3ad666814cf9))
+
+## [2.81.0-rc.1](https://github.com/pagopa/io-app/compare/2.81.0-rc.0...2.81.0-rc.1) (2025-01-14)
+
 ## [2.81.0-rc.0](https://github.com/pagopa/io-app/compare/2.80.0-rc.10...2.81.0-rc.0) (2025-01-14)
 
 

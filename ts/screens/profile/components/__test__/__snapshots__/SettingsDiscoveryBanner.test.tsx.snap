@@ -372,6 +372,7 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
+                          testID="settingsDiscoveryBannerCTA"
                         >
                           <View
                             style={

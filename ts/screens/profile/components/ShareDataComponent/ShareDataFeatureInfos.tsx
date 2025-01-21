@@ -1,15 +1,17 @@
 import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import React, { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
-import { ioSuppliersUrl } from "../../../../urls";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import { TrackingInfo } from "../../analytics/mixpanel/mixpanelAnalytics";
+import { useIOSelector } from "../../../../store/hooks";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { IO_SUPPLIERS_URL_BODY } from "../../../../urls";
 
 export type FeatureProps = {
   trackAction: (info: TrackingInfo) => void;
@@ -128,6 +130,9 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
 };
 
 const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
+  const ioSuppliersUrl = useIOSelector(state =>
+    generateDynamicUrlSelector(state, "io_showcase", IO_SUPPLIERS_URL_BODY)
+  );
   const handleOnPress = () => {
     trackAction(TrackingInfo.SUPPLIERS);
     openWebUrl(ioSuppliersUrl);

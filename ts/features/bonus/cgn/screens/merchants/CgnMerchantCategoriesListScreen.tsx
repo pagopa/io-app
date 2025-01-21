@@ -12,7 +12,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
+import { useState, useEffect, useMemo } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
@@ -31,7 +31,7 @@ import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantL
 export const CgnMerchantCategoriesListScreen = () => {
   const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
-  const [isPullRefresh, setIsPullRefresh] = React.useState(false);
+  const [isPullRefresh, setIsPullRefresh] = useState(false);
   const potCategories = useIOSelector(cgnCategoriesListSelector);
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
@@ -61,20 +61,17 @@ export const CgnMerchantCategoriesListScreen = () => {
     dispatch(cgnCategories.request());
   };
 
-  React.useEffect(loadCategories, [dispatch]);
+  useEffect(loadCategories, [dispatch]);
 
-  const isError = React.useMemo(
-    () => pot.isError(potCategories),
-    [potCategories]
-  );
+  const isError = useMemo(() => pot.isError(potCategories), [potCategories]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isError) {
       IOToast.error(I18n.t("global.genericError"));
     }
   }, [isError]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (pot.isSome(potCategories) && !pot.isLoading(potCategories)) {
       setIsPullRefresh(false);
     }
@@ -127,7 +124,7 @@ export const CgnMerchantCategoriesListScreen = () => {
   };
 
   const categoriesToArray: ReadonlyArray<ProductCategoryWithNewDiscountsCount> =
-    React.useMemo(
+    useMemo(
       () => [...(pot.isSome(potCategories) ? potCategories.value : [])],
       [potCategories]
     );

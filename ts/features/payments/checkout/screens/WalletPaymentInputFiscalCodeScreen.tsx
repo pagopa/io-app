@@ -16,7 +16,7 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useState, useRef } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -62,12 +62,12 @@ const WalletPaymentInputFiscalCodeScreen = () => {
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
-  const [inputState, setInputState] = React.useState<InputState>({
+  const [inputState, setInputState] = useState<InputState>({
     fiscalCodeText: "",
     fiscalCode: O.none
   });
 
-  const textInputWrappperRef = React.useRef<View>(null);
+  const textInputWrappperRef = useRef<View>(null);
   const focusTextInput = () => {
     setAccessibilityFocus(textInputWrappperRef);
   };
