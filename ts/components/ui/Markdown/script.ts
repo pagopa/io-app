@@ -30,3 +30,14 @@ document.body.onclick = function(e) {
   }
 };
 `;
+
+// Script to notify the height of the body to the react WebView component
+export const NOTIFY_BODY_HEIGHT_SCRIPT = `
+const message = {
+  type: "RESIZE_MESSAGE",
+  payload: {
+    height: document.body.scrollHeight
+  }
+};
+window.ReactNativeWebView.postMessage(JSON.stringify(message));
+`;

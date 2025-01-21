@@ -1,10 +1,13 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
+import I18n from "../../../../i18n";
 import {
   IO_FIMS_LINK_PREFIX,
   IO_FIMS_LINK_PROTOCOL,
   IO_INTERNAL_LINK_PREFIX
 } from "../../../../utils/navigation";
+import { openWebUrl } from "../../../../utils/url";
 
 export const isIoInternalLink = (href: string): boolean =>
   href.startsWith(IO_INTERNAL_LINK_PREFIX);
@@ -70,3 +73,23 @@ export const deriveCustomHandledLink = (
     new Error(`"${href}" is not recognized as a valid handled link`)
   );
 };
+
+/**
+ * Handles links clicked in the Markdown (webview) component.
+ */
+export function handleLinkMessage(href: string) {
+  if (isIoInternalLink(href)) {
+    return;
+  } else {
+    // External urls must be opened with the OS browser.
+    // FIXME: Whitelist allowed domains: https://www.pivotaltracker.com/story/show/158470128
+    openWebUrl(href);
+  }
+}
+
+// try to open the given url. If it fails an error toast will shown
+export function openLink(url: string, customError?: string) {
+  const error = customError || I18n.t("global.genericError");
+  const getErrorToast = () => IOToast.error(error);
+  openWebUrl(url, getErrorToast);
+}

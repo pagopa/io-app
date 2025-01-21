@@ -56,6 +56,13 @@ global.fetch = nodeFetch;
 // eslint-disable-next-line functional/immutable-data
 global.AbortController = AbortController;
 
+jest.mock("remark-directive", () => jest.fn());
+jest.mock("remark-rehype", () => jest.fn());
+jest.mock("rehype-stringify", () => jest.fn());
+jest.mock("rehype-format", () => jest.fn());
+jest.mock("unist-util-visit", () => jest.fn());
+jest.mock("hastscript", () => jest.fn());
+
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 
 // eslint-disable-next-line no-underscore-dangle, functional/immutable-data
