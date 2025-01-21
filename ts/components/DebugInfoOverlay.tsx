@@ -8,7 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 
 import { FunctionComponent, useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { connect } from "react-redux";
@@ -31,7 +31,7 @@ const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
 const styles = StyleSheet.create({
   versionContainer: {
     ...StyleSheet.absoluteFillObject,
-    // top: Platform.OS === "android" ? 0 : -8,
+    top: Platform.OS === "android" ? 0 : -8,
     justifyContent: "flex-start",
     alignItems: "center",
     zIndex: 1000

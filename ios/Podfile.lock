@@ -1496,7 +1496,7 @@ PODS:
     - React-Core
   - react-native-render-html (6.3.1):
     - React-Core
-  - react-native-safe-area-context (4.11.1):
+  - react-native-safe-area-context (5.1.0):
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
@@ -2532,7 +2532,7 @@ SPEC CHECKSUMS:
   react-native-pdf: c089a365d5d3b9614cce4a1cca429a71eb037a55
   react-native-pdf-thumbnail: b811c3676a0799d49e4885817ad79aa1d5c05168
   react-native-render-html: 05a7d4490ffc85c88094601207f3e48a90533476
-  react-native-safe-area-context: 17a482f540310e2209f884fd49472d9e1c0e73d6
+  react-native-safe-area-context: e134b241010ebe2aacdcea013565963d13826faa
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
   react-native-skia: 3054428a8b83ff083d7036e2bd73cda213326b1a
   react-native-slider: 5299110eb902bc5169b1dd94192aa28e1bf15ad8
