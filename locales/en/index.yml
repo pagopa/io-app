@@ -3301,6 +3301,7 @@ features:
       landline: Da telefono fisso
       chat: Chiedi aiuto in chat
       email: Scrivi una mail
+      website: Visita il sito
       additionalDataTitle: "Dati aggiuntivi"
       errorCode: Codice errore
     generic:

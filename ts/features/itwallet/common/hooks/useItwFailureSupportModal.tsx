@@ -1,5 +1,7 @@
 import { Fragment } from "react";
 import { Linking, View } from "react-native";
+import * as O from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import {
   Body,
@@ -40,6 +42,7 @@ type SupportContactMethods = Partial<{
   email: string;
   mobile: string;
   landline: string;
+  website: string;
 }>;
 
 // The subcategory is fixed for now. In the future it can be made dynamic depending on the error type.
@@ -56,6 +59,9 @@ const contactMethodsByCredentialType: Record<
     mobile: "06.4577.5927",
     landline: "800.232323",
     email: "uco.dgmot@mit.gov.it"
+  },
+  EuropeanDisabilityCard: {
+    website: "https://www.inps.it"
   },
   EuropeanHealthInsuranceCard: {
     mobile: "800.030.070"
@@ -149,33 +155,58 @@ export const useItwFailureSupportModal = ({
     }
 
     return [
-      contactMethods.mobile && (
-        <ListItemAction
-          testID="contact-method-mobile"
-          variant="primary"
-          icon="phone"
-          label={I18n.t("features.itWallet.support.phone", {
-            phoneNumber: contactMethods.mobile
-          })}
-          onPress={() => Linking.openURL(`tel:${contactMethods.mobile}`)}
-        />
+      pipe(
+        contactMethods.mobile,
+        O.fromNullable,
+        O.fold(constNull, value => (
+          <ListItemAction
+            testID="contact-method-mobile"
+            variant="primary"
+            icon="phone"
+            label={I18n.t("features.itWallet.support.phone", {
+              phoneNumber: value
+            })}
+            onPress={() => Linking.openURL(`tel:${value}`)}
+          />
+        ))
       ),
-      contactMethods.email && (
-        <ListItemAction
-          testID="contact-method-email"
-          variant="primary"
-          icon="chat"
-          label={I18n.t("features.itWallet.support.email")}
-          onPress={() => Linking.openURL(`mailto:${contactMethods.email}`)}
-        />
+      pipe(
+        contactMethods.email,
+        O.fromNullable,
+        O.fold(constNull, value => (
+          <ListItemAction
+            testID="contact-method-email"
+            variant="primary"
+            icon="chat"
+            label={I18n.t("features.itWallet.support.email")}
+            onPress={() => Linking.openURL(`mailto:${value}`)}
+          />
+        ))
       ),
-      contactMethods.landline && (
-        <ListItemInfo
-          testID="contact-method-landline"
-          icon="phone"
-          label={I18n.t("features.itWallet.support.landline")}
-          value={contactMethods.landline}
-        />
+      pipe(
+        contactMethods.website,
+        O.fromNullable,
+        O.fold(constNull, value => (
+          <ListItemAction
+            testID="contact-method-website"
+            variant="primary"
+            icon="website"
+            label={I18n.t("features.itWallet.support.website")}
+            onPress={() => Linking.openURL(value)}
+          />
+        ))
+      ),
+      pipe(
+        contactMethods.landline,
+        O.fromNullable,
+        O.fold(constNull, value => (
+          <ListItemInfo
+            testID="contact-method-landline"
+            icon="phone"
+            label={I18n.t("features.itWallet.support.landline")}
+            value={value}
+          />
+        ))
       )
     ]
       .filter(isDefined)
