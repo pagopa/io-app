@@ -6,7 +6,7 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   Image,
   ImageRequireSource,

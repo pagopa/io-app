@@ -1124,10 +1124,10 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="title2"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1155,10 +1155,10 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -4017,10 +4017,10 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="title2"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -4048,10 +4048,10 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
