@@ -35,6 +35,7 @@ describe("useItwFailureSupportModal", () => {
     expect(queryByTestId("contact-method-mobile")).toBeNull();
     expect(queryByTestId("contact-method-landline")).toBeNull();
     expect(queryByTestId("contact-method-email")).toBeNull();
+    expect(queryByTestId("contact-method-website")).toBeNull();
   });
 
   it("renders contact methods for MDL", () => {
@@ -50,6 +51,7 @@ describe("useItwFailureSupportModal", () => {
     expect(queryByTestId("contact-method-mobile")).toBeTruthy();
     expect(queryByTestId("contact-method-landline")).toBeTruthy();
     expect(queryByTestId("contact-method-email")).toBeTruthy();
+    expect(queryByTestId("contact-method-website")).toBeNull();
   });
 
   it("renders contact methods for EuropeanHealthInsuranceCard", () => {
@@ -65,6 +67,23 @@ describe("useItwFailureSupportModal", () => {
     expect(queryByTestId("contact-method-mobile")).toBeTruthy();
     expect(queryByTestId("contact-method-landline")).toBeNull();
     expect(queryByTestId("contact-method-email")).toBeNull();
+    expect(queryByTestId("contact-method-website")).toBeNull();
+  });
+
+  it("renders contact methods for EuropeanDisabilityCard", () => {
+    const { queryByTestId } = renderHook({
+      supportChatEnabled: false,
+      credentialType: "EuropeanDisabilityCard",
+      failure: {
+        type: CredentialIssuanceFailureType.ISSUER_GENERIC,
+        reason: {}
+      } as CredentialIssuanceFailure
+    });
+    expect(queryByTestId("contact-method-chat")).toBeNull();
+    expect(queryByTestId("contact-method-mobile")).toBeNull();
+    expect(queryByTestId("contact-method-landline")).toBeNull();
+    expect(queryByTestId("contact-method-email")).toBeNull();
+    expect(queryByTestId("contact-method-website")).toBeTruthy();
   });
 });
 
