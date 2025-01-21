@@ -1,0 +1,3598 @@
+openapi: 3.0.3
+info:
+  title: IDPAY IO API
+  version: '1.0'
+  description: |-
+    IDPAY IBAN IO
+    IDPAY Onboarding Workflow IO
+    IDPAY Timeline IO
+    IDPAY Wallet IO
+    IDPAY Payment QRCODE IO
+    IDPAY Payment IO
+servers:
+  - url: 'https://api-io.dev.cstar.pagopa.it/idpay'
+security:
+  - bearerAuth: []
+tags:
+  - name: iban
+    description: ''
+  - name: onboarding
+    description: ''
+  - name: timeline
+    description: ''
+  - name: wallet
+    description: ''
+  - name: payment
+    description: ''
+paths:
+  '/iban/{iban}':
+    get:
+      tags:
+        - iban
+      summary: >-
+        ENG: Returns the details of the IBAN associated to the initiative by the
+        citizen - IT: Ritorna i dettagli di un IBAN associato ad una iniziativa
+      operationId: getIban
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: 'ENG: Language - IT: Lingua'
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: iban
+          in: path
+          description: 'ENG: The citizen IBAN - IT: IBAN del cittadino'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IbanDTO'
+        '401':
+          description: Authentication failed
+        '404':
+          description: The requested ID was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IbanErrorDTO'
+              example:
+                code: IBAN_NOT_FOUND
+                message: Iban not found
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IbanErrorDTO'
+              example:
+                code: IBAN_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IbanErrorDTO'
+              example:
+                code: IBAN_GENERIC_ERROR
+                message: Application error
+  /iban/:
+    get:
+      tags:
+        - iban
+      summary: >-
+        ENG: Returns the list of IBAN associated to the citizen - IT: Ritorna la
+        lista di IBAN associati ad un cittadino
+      operationId: getIbanList
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: 'ENG: Language - IT: Lingua'
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IbanListDTO'
+        '401':
+          description: Authentication failed
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IbanErrorDTO'
+              example:
+                code: IBAN_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IbanErrorDTO'
+              example:
+                code: IBAN_GENERIC_ERROR
+                message: Application error
+  '/onboarding/service/{serviceId}':
+    get:
+      tags:
+        - onboarding
+      summary: >-
+        ENG: Retrieves the initiative ID starting from the corresponding service
+        ID - IT: Ritrova l'identificativo dell'iniziativa a partire
+        dall'idetificativo del service
+      operationId: getInitiativeData
+      parameters:
+        - name: serviceId
+          in: path
+          description: 'ENG: The service ID - IT: Identificativo del service'
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: 'ENG: Language - IT: Lingua'
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+      responses:
+        '200':
+          description: Get successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativeDataDTO'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativeErrorDTO'
+              example:
+                code: INITIATIVE_INVALID_REQUEST
+                message: Something went wrong handling the request
+        '401':
+          description: Authentication failed
+        '404':
+          description: The requested initiative was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativeErrorDTO'
+              example:
+                code: INITIATIVE_NOT_FOUND
+                message: Initiative not found
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativeErrorDTO'
+              example:
+                code: INITIATIVE_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativeErrorDTO'
+              example:
+                code: INITIATIVE_GENERIC_ERROR
+                message: Application error
+  /onboarding/:
+    put:
+      tags:
+        - onboarding
+      summary: >-
+        ENG: Acceptance of Terms & Conditions - IT: Accettazione dei Termini e
+        condizioni
+      operationId: onboardingCitizen
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: 'ENG: Language - IT: Lingua'
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+      requestBody:
+        description: 'ENG: Id of the initiative IT: Identificativo dell''iniziativa'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnboardingPutDTO'
+      responses:
+        '204':
+          description: Acceptance successful
+          content:
+            application/json: {}
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_INVALID_REQUEST
+                message: Something went wrong handling the request
+        '401':
+          description: Authentication failed
+        '403':
+          description: This onboarding is forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_BUDGET_EXHAUSTED
+                message: 'Budget exhausted for initiative [%s]'
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_INITIATIVE_NOT_FOUND
+                message: 'Cannot find initiative [%s]'
+        '429':
+          description: Too many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_GENERIC_ERROR
+                message: An error occurred in the microservice admissibility
+  /onboarding/initiative:
+    put:
+      tags:
+        - onboarding
+      summary: >-
+        ENG: Checks the initiative prerequisites - IT: Verifica i prerequisiti
+        dell'iniziativa
+      operationId: checkPrerequisites
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: 'ENG: Language - IT: Lingua'
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+      requestBody:
+        description: 'ENG: Id of the initiative - IT: Identificatico dell''iniziativa'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnboardingPutDTO'
+            example:
+              initiativeId: string
+      responses:
+        '200':
+          description: Check successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequiredCriteriaDTO'
+        '202':
+          description: Accepted - Request Taken Over
+          content:
+            application/json: {}
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_INVALID_REQUEST
+                message: Something went wrong handling the request
+        '401':
+          description: Authentication failed
+        '403':
+          description: This onboarding is forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_BUDGET_EXHAUSTED
+                message: 'Budget exhausted for initiative [%s]'
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_INITIATIVE_NOT_FOUND
+                message: 'Cannot find initiative [%s]'
+        '429':
+          description: Too many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_GENERIC_ERROR
+                message: An error occurred in the microservice admissibility
+  /onboarding/consent:
+    put:
+      tags:
+        - onboarding
+      summary: >-
+        ENG: Saves the consensus of both PDND and self-declaration - IT: Salva i
+        consensi di PDND e le autodichiarazioni
+      operationId: consentOnboarding
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: 'ENG: Language - IT: Lingua'
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+      requestBody:
+        description: >-
+          ENG: Unique identifier of the subscribed initiative, flag for PDND
+          acceptation and the list of accepted self-declared criteria - IT:
+          Identificativo univoco dell'iniziativa sottoscritta, flag per
+          l'accettazione PDND e l'elenco dei criteri autodichiarati accettati
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsentPutDTO'
+      responses:
+        '202':
+          description: Accepted - Request Taken Over
+          content:
+            application/json: {}
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_INVALID_REQUEST
+                message: Something went wrong handling the request
+        '401':
+          description: Authentication failed
+        '403':
+          description: This onboarding is forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_BUDGET_EXHAUSTED
+                message: 'Budget exhausted for initiative [%s]'
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_INITIATIVE_NOT_FOUND
+                message: 'Cannot find initiative [%s]'
+        '429':
+          description: Too many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_GENERIC_ERROR
+                message: An error occurred in the microservice admissibility
+  '/onboarding/{initiativeId}/status':
+    get:
+      tags:
+        - onboarding
+      summary: >-
+        ENG: Returns the actual onboarding status along with the date on which
+        that status changed and, if present, the date upon which the onboarding
+        successfully went through - IT: Ritorna lo stato attuale dell'adesione
+        insieme alla data in cui quello stato è cambiato e, se presente, la data
+        in cui l'adesione è avvenuta con successo
+      operationId: onboardingStatus
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: 'ENG: Language - IT: Lingua'
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          in: path
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Check successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingStatusDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_INVALID_REQUEST
+                message: Something went wrong handling the request
+        '401':
+          description: Authentication failed
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_USER_NOT_ONBOARDED
+                message: 'The current user is not onboarded on initiative [%s]'
+        '429':
+          description: Too many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingErrorDTO'
+              example:
+                code: ONBOARDING_GENERIC_ERROR
+                message: An error occurred in the microservice admissibility
+  '/timeline/{initiativeId}':
+    get:
+      tags:
+        - timeline
+      summary: >-
+        ENG: Returns the list of transactions and operations of an initiative of
+        a citizen sorted by date (newest->oldest) - IT: Ritorna la lista
+        ordinata di transazioni e operazioni di una iniziativa di un cittadino
+        (nuove->vecchie)
+      operationId: getTimeline
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: 'ENG: Language - IT: Lingua'
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          in: path
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+          required: true
+          schema:
+            type: string
+        - name: operationType
+          in: query
+          description: 'ENG: Operation type filter - IT: Filtro tipologia dell''operazione'
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: 'ENG: The number of the page - IT: Numero della pagina'
+          schema:
+            type: integer
+        - name: size
+          in: query
+          description: >-
+            ENG: Number of items, default 3 - max 10 - IT: Numero di elementi,
+            default 3 - max 10
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimelineDTO'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimelineErrorDTO'
+              example:
+                code: TIMELINE_INVALID_REQUEST
+                message: Something went wrong handling request
+        '401':
+          description: Authentication failed
+        '404':
+          description: The requested ID was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimelineErrorDTO'
+              example:
+                code: TIMELINE_USER_NOT_FOUND
+                message: Timeline for the current user not found
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimelineErrorDTO'
+              example:
+                code: TIMELINE_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimelineErrorDTO'
+              example:
+                code: TIMELINE_GENERIC_ERROR
+                message: Application error
+  '/timeline/{initiativeId}/{operationId}':
+    get:
+      tags:
+        - timeline
+      summary: >-
+        ENG: Returns the detail of a transaction - IT: Ritorna il dettaglio di
+        una transazione
+      operationId: getTimelineDetail
+      parameters:
+        - name: Accept-Language
+          description: 'ENG: Language - IT: Lingua'
+          in: header
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: operationId
+          description: 'ENG: The operation ID - IT: Identificativo dell''operazione'
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationDTO'
+        '401':
+          description: Authentication failed
+        '404':
+          description: The requested ID was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimelineErrorDTO'
+              example:
+                code: TIMELINE_DETAIL_NOT_FOUND
+                message: Detail of Timeline not found
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimelineErrorDTO'
+              example:
+                code: TIMELINE_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimelineErrorDTO'
+              example:
+                code: TIMELINE_GENERIC_ERROR
+                message: Application error
+  /wallet/:
+    get:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Returns the list of active initiatives of a citizen - IT: Ritorna
+        la lista di iniziative attive di un cittadino
+      operationId: getWallet
+      parameters:
+        - name: Accept-Language
+          description: 'ENG: Language - IT: Lingua'
+          in: header
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDTO'
+        '401':
+          description: Authentication failed
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_GENERIC_ERROR
+                message: Application error
+  '/wallet/{initiativeId}/detail':
+    get:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Returns the detail of an initiative - IT: Ritorna i dettagli
+        dell'iniziativa
+      operationId: getInitiativeBeneficiaryDetail
+      parameters:
+        - name: initiativeId
+          in: path
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          description: 'ENG: Language - IT: Lingua'
+          in: header
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativeDetailDTO'
+        '401':
+          description: Authentication failed
+        '404':
+          description: The requested inititative was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativeErrorDTO'
+              example:
+                code: INITIATIVE_NOT_FOUND
+                message: Initiative not found
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativeErrorDTO'
+              example:
+                code: INITIATIVE_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativeErrorDTO'
+              example:
+                code: INITIATIVE_GENERIC_ERROR
+                message: Application error
+  '/wallet/{initiativeId}':
+    get:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Returns the detail of an active initiative of a citizen - IT:
+        Ritorna i dettagli di una iniziativa di un cittadino
+      operationId: getWalletDetail
+      parameters:
+        - name: Accept-Language
+          description: 'ENG: Language - IT: Lingua'
+          in: header
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          in: path
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativeDTO'
+        '401':
+          description: Authentication failed
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_USER_NOT_ONBOARDED
+                message: User not onboarded on this initiative
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_GENERIC_ERROR
+                message: Application error
+  '/wallet/{initiativeId}/iban':
+    put:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Association of an IBAN to an initiative - IT: Associa un IBAN ad
+        un'iniziativa
+      operationId: enrollIban
+      parameters:
+        - name: Accept-Language
+          description: 'ENG: Language - IT: Lingua'
+          in: header
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          in: path
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: >-
+          ENG: Unique identifier of the subscribed initiative, IBAN of the
+          citizen - IT: Identificativo dell'iniziativa sottoscritta, IBAN del
+          cittadino
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IbanPutDTO'
+            example:
+              iban: string
+              description: string
+      responses:
+        '200':
+          description: Enrollment OK
+          content:
+            application/json: {}
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INVALID_REQUEST
+                message: Something went wrong handling the request
+        '401':
+          description: Authentication failed
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_ENROLL_IBAN_NOT_ALLOWED_FOR_DISCOUNT_INITIATIVE
+                message: >-
+                  It is not possible enroll an iban for a discount type
+                  initiative
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_GENERIC_ERROR
+                message: Application error
+  '/wallet/{initiativeId}/instruments/{idWallet}':
+    put:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Association of a payment instrument to an initiative - IT: Associa
+        uno strumento di pagamento ad un'iniziativa
+      operationId: enrollInstrument
+      parameters:
+        - name: Accept-Language
+          description: 'ENG: Language - IT: Lingua'
+          in: header
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          in: path
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+          required: true
+          schema:
+            type: string
+        - name: idWallet
+          in: path
+          description: >-
+            ENG: A unique id that identifies a payment method - IT:
+            Identificativo univoco del metodo di pagamento
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Enrollment OK
+          content:
+            application/json: {}
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INVALID_REQUEST
+                message: Something went wrong handling the request
+        '401':
+          description: Authentication failed
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INSTRUMENT_ALREADY_ASSOCIATED
+                message: Payment Instrument is already associated to another user
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INSTRUMENT_NOT_FOUND
+                message: >-
+                  The selected payment instrument has not been found for the
+                  current user
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_GENERIC_ERROR
+                message: An error occurred in the microservice payment instrument
+  '/wallet/{initiativeId}/instruments':
+    get:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Returns the list of payment instruments associated to the
+        initiative by the citizen - IT: Ritorna la lista di istrumenti di
+        pagamenti associati ad un'iniziativa del cittadino
+      operationId: getInstrumentList
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: 'ENG: Language - IT: Lingua'
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          in: path
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstrumentListDTO'
+        '401':
+          description: Authentication failed
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInstrumentErrorDTO'
+              example:
+                code: PAYMENT_INSTRUMENT_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInstrumentErrorDTO'
+              example:
+                code: PAYMENT_INSTRUMENT_GENERIC_ERROR
+                message: Something gone wrong while send RTD instrument notify
+  '/wallet/{initiativeId}/instruments/{instrumentId}':
+    delete:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Delete a payment instrument from an initiative - IT: Cancella uno
+        strumento di pagamento di un'iniziativa
+      operationId: deleteInstrument
+      parameters:
+        - name: Accept-Language
+          description: 'ENG: Language - IT: Lingua'
+          in: header
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          in: path
+          description: 'ENG: The initiative ID - IT: Identificatico dell''iniziativa'
+          required: true
+          schema:
+            type: string
+        - name: instrumentId
+          in: path
+          description: >-
+            ENG: A unique id, internally detached, which identifies a payment
+            method - IT: Identificativo univoco, che identifica il metodo di
+            pagamento
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Delete OK
+          content:
+            application/json: {}
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INVALID_REQUEST
+                message: Something went wrong handling the request
+        '401':
+          description: Authentication failed
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INSTRUMENT_DELETE_NOT_ALLOWED
+                message: >-
+                  It's not possible to delete an instrument of AppIO payment
+                  types
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INSTRUMENT_NOT_FOUND
+                message: >-
+                  The selected payment instrument has not been found for the
+                  current user
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_GENERIC_ERROR
+                message: An error occurred in the microservice payment instrument
+  '/wallet/{initiativeId}/unsubscribe':
+    delete:
+      tags:
+        - wallet
+      summary: 'ENG: Unsubscribe to an initiative - IT: Disiscrizione ad un''iniziativa'
+      operationId: unsubscribe
+      parameters:
+        - name: Accept-Language
+          description: 'ENG: Language - IT: Lingua'
+          in: header
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          in: path
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Unsubscribe OK
+          content:
+            application/json: {}
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INVALID_REQUEST
+                message: Something went wrong handling the request
+        '401':
+          description: Authentication failed
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_USER_NOT_ONBOARDED
+                message: User not onboarded on this initiative
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_GENERIC_ERROR
+                message: An error occurred in the microservice onboarding
+  '/wallet/{initiativeId}/status':
+    get:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Returns the actual wallet status - IT: Ritorna lo status attuale
+        del wallet
+      operationId: getWalletStatus
+      parameters:
+        - name: Accept-Language
+          description: 'ENG: Language - IT: Lingua'
+          in: header
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          in: path
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Check successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletStatusDTO'
+              example:
+                status: NOT_REFUNDABLE_ONLY_IBAN
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INVALID_REQUEST
+                message: Something went wrong handling the request
+        '401':
+          description: Authentication failed
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_USER_NOT_ONBOARDED
+                message: User not onboarded on this initiative
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_GENERIC_ERROR
+                message: Application error
+  '/wallet/instrument/{idWallet}/initiatives':
+    get:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Returns the initiatives list associated to a payment instrument -
+        IT: Ritorna la lista di iniziative associate ad uno strumento di
+        pagamento
+      operationId: getInitiativesWithInstrument
+      parameters:
+        - name: Accept-Language
+          description: 'ENG: Language - IT: Lingua'
+          in: header
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: idWallet
+          in: path
+          description: 'ENG: The ID Wallet - IT: Identificativo wallet'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiativesWithInstrumentDTO'
+        '401':
+          description: Authentication failed
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INSTRUMENT_NOT_FOUND
+                message: >-
+                  The selected payment instrument has not been found for the
+                  current user
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_GENERIC_ERROR
+                message: An error occurred in the microservice payment instrument
+  /wallet/code/status:
+    get:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Check if the idpay code already exists - IT: Verifica se è già
+        stato generato il codice idpay
+      operationId: getIdpayCodeStatus
+      responses:
+        '200':
+          description: Check successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckEnrollmentDTO'
+        '401':
+          description: Authentication failed
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInstrumentErrorDTO'
+              example:
+                code: PAYMENT_INSTRUMENT_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInstrumentErrorDTO'
+              example:
+                code: PAYMENT_INSTRUMENT_GENERIC_ERROR
+                message: An error occurred in the microservice payment instrument
+  /wallet/code/generate:
+    post:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Generate idpay code, if initativeId is not present new code will be
+        generated,- IT: Generato il codice per idpay, se l'initiativeId non è
+        presente verrà generato un nuovo codice
+      operationId: generateCode
+      requestBody:
+        description: 'ENG: Id of the iniziative - IT: Identificativo dell''iniziativa'
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateCodeReqDTO'
+            example:
+              initiativeId: string
+      responses:
+        '200':
+          description: Check successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateCodeRespDTO'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInstrumentErrorDTO'
+              example:
+                code: PAYMENT_INSTRUMENT_PIN_LENGTH_NOT_VALID
+                message: Pin length is not valid
+        '401':
+          description: Authentication failed
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInstrumentErrorDTO'
+              example:
+                code: PAYMENT_INSTRUMENT_ENROLL_NOT_ALLOWED_FOR_REFUND_INITIATIVE
+                message: >-
+                  It is not possible to enroll a idpayCode for a refund type
+                  initiative
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInstrumentErrorDTO'
+              example:
+                code: PAYMENT_INSTRUMENT_USER_NOT_ONBOARDED
+                message: The current user is not onboarded on initiative
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInstrumentErrorDTO'
+              example:
+                code: PAYMENT_INSTRUMENT_TOO_MANY_REQUESTS
+                message: Too many requests on the ms  Payment Instrument
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInstrumentErrorDTO'
+              example:
+                code: PAYMENT_INSTRUMENT_GENERIC_ERROR
+                message: An error occurred in the microservice wallet
+  '/wallet/{initiativeId}/code/instruments':
+    put:
+      tags:
+        - wallet
+      summary: >-
+        ENG: Association of a payment instrument to an initiative - IT: Associa
+        uno strumento di pagamento ad una iniziativa
+      operationId: enrollInstrumentCode
+      parameters:
+        - name: Accept-Language
+          description: 'ENG: Language - IT: Lingua'
+          in: header
+          schema:
+            type: string
+            example: it-IT
+            default: it-IT
+          required: true
+        - name: initiativeId
+          in: path
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Enrollment OK
+          content:
+            application/json: {}
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INVALID_REQUEST
+                message: Something went wrong handling the request
+        '401':
+          description: Authentication failed
+        '404':
+          description: The requested resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_INSTRUMENT_IDPAYCODE_NOT_FOUND
+                message: idpayCode is not found for the current user
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Server ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletErrorDTO'
+              example:
+                code: WALLET_GENERIC_ERROR
+                message: An error occurred in the microservice payment instrument
+  '/payment/qr-code/{trxCode}/relate-user':
+    put:
+      tags:
+        - payment
+      summary: 'ENG: Pre Authorize payment - IT: Preautorizzazione pagamento'
+      operationId: putPreAuthPayment
+      parameters:
+        - name: trxCode
+          in: path
+          description: 'ENG: The transaction''s code - IT: Codice della transazione'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthPaymentResponseDTO'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_INVALID_REQUEST
+                message: Required trxCode is not present
+        '401':
+          description: Token not validated correctly
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_USER_UNSUBSCRIBED
+                message: The user has unsubscribed from initiative
+        '404':
+          description: Transaction does not exist or is expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_NOT_FOUND_OR_EXPIRED
+                message: transaction not found or expired
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Generic error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_GENERIC_ERROR
+                message: application error (connection microservice error)
+  '/payment/qr-code/{trxCode}/authorize':
+    put:
+      tags:
+        - payment
+      summary: 'ENG: Authorize payment - IT: Autorizzazione pagamento'
+      operationId: putAuthPayment
+      parameters:
+        - name: trxCode
+          in: path
+          description: 'ENG: The transaction''s code - IT: Codice della transazione'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthPaymentResponseDTO'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_INVALID_REQUEST
+                message: Required trxCode is not present
+        '401':
+          description: Token not validated correctly
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_ALREADY_ASSIGNED
+                message: transaction already assigned
+        '404':
+          description: Transaction does not exist or is expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_NOT_FOUND_OR_EXPIRED
+                message: transaction not found or expired
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Generic error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_GENERIC_ERROR
+                message: application error (connection microservice error)
+  '/payment/qr-code/{trxCode}':
+    delete:
+      tags:
+        - payment
+      summary: 'ENG: Cancel payment - IT: Cancellazione pagamento'
+      operationId: deletePayment
+      parameters:
+        - name: trxCode
+          in: path
+          description: 'ENG: The transaction''s code - IT: Codice della transazione'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cancel Ok
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_UNRELATE_NOT_ALLOWED_FOR_TRX_STATUS
+                message: unrelate transaction not allowed due to status
+        '401':
+          description: Token not validated correctly
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_ALREADY_ASSIGNED
+                message: transaction already assigned
+        '404':
+          description: Transaction does not exist or is expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_NOT_FOUND_OR_EXPIRED
+                message: transaction not found or expired
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Generic error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_GENERIC_ERROR
+                message: application error (connection microservice error)
+  /payment/bar-code:
+    post:
+      tags:
+        - payment
+      summary: Create a transaction
+      operationId: createBarCodeTransaction
+      requestBody:
+        description: 'ENG: Id of the iniziative - IT: Identificativo dell''iniziativa'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionBarCodeRequest'
+            example:
+              initiativeId: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionBarCodeResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_INVALID_REQUEST
+                message: Required initiativeId is not present
+        '403':
+          description: User not onboarded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_USER_NOT_ONBOARDED
+                message: User not onboarded
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_NOT_FOUND_OR_EXPIRED
+                message: 'Cannot find transaction with trxCode [trxCode]'
+        '429':
+          description: Too many Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_TOO_MANY_REQUESTS
+                message: Too many requests
+        '500':
+          description: Generic error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionErrorDTO'
+              example:
+                code: PAYMENT_GENERIC_ERROR
+                message: application error (connection microservice error)
+components:
+  schemas:
+    IbanDTO:
+      type: object
+      required:
+        - iban
+        - checkIbanStatus
+        - description
+        - channel
+      properties:
+        iban:
+          type: string
+          description: 'ENG: IBAN of the citizen - IT: IBAN del cittadino'
+        checkIbanStatus:
+          type: string
+          description: 'ENG: Status of checkIban - IT: Stato del checkIban'
+        holderBank:
+          type: string
+          description: 'ENG: Holder Bank name - IT: Nome della banca'
+        description:
+          type: string
+          description: >-
+            ENG: General description associated with the iban - IT: Descrizione
+            generale associata alll'IBAN
+        channel:
+          type: string
+          description: >-
+            ENG: Channel from which the IBAN has been inserted - IT: Canale da
+            cui l'IBAN è stato inserito
+    IbanListDTO:
+      type: object
+      required:
+        - ibanList
+      properties:
+        ibanList:
+          type: array
+          items:
+            $ref: '#/components/schemas/IbanDTO'
+          description: >-
+            ENG: The list of IBAN associated to a citizen - IT: Lista di IBAN
+            associati ad un cittadino
+    IbanErrorDTO:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - IBAN_NOT_FOUND
+            - IBAN_INVALID_REQUEST
+            - IBAN_TOO_MANY_REQUESTS
+            - IBAN_GENERIC_ERROR
+          description: |-
+            "ENG: Error code: IBAN_NOT_FOUND: Iban not found,
+             IBAN_INVALID_REQUEST: Something went wrong handling request,
+             IBAN_TOO_MANY_REQUESTS: Too many requests,
+             IBAN_GENERIC_ERROR: Application Error - IT: Codice di errore:
+             IBAN_NOT_FOUND: Iban non trovato,
+             IBAN_INVALID_REQUEST: Qualcosa è andato storto durante l'invio della richiesta,
+             IBAN_TOO_MANY_REQUESTS: Troppe richieste,
+             IBAN_GENERIC_ERROR: Errore generico"
+        message:
+          type: string
+          description: 'ENG: Error message - IT: Messaggio di errore'
+    ConsentPutDTO:
+      title: ConsentPutDTO
+      type: object
+      required:
+        - initiativeId
+        - pdndAccept
+        - selfDeclarationList
+      properties:
+        initiativeId:
+          type: string
+          description: >-
+            ENG: Unique identifier of the subscribed initiative - IT:
+            Identificativo univoco dell'iniziativa sottoscritta
+        pdndAccept:
+          type: boolean
+          description: 'ENG: Flag for PDND acceptation - IT: Flag per l''accettazione PDND'
+        selfDeclarationList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfConsentDTO'
+          description: >-
+            ENG: The list of accepted self-declared criteria - IT: Lista dei
+            criteri autodichiarati
+    SelfConsentDTO:
+      x-one-of: true
+      allOf:
+        - $ref: '#/components/schemas/SelfConsentBoolDTO'
+        - $ref: '#/components/schemas/SelfConsentMultiDTO'
+        - $ref: '#/components/schemas/SelfConsentTextDTO'
+    OnboardingPutDTO:
+      title: OnboardingPutDTO
+      type: object
+      required:
+        - initiativeId
+      properties:
+        initiativeId:
+          type: string
+          description: >-
+            ENG: Unique identifier of the subscribed initiative - IT:
+            Identificativo univoco dell'iniziativa sottoscritta
+    OnboardingStatusDTO:
+      title: OnboardingStatusDTO
+      type: object
+      required:
+        - status
+        - statusDate
+      properties:
+        status:
+          enum:
+            - ACCEPTED_TC
+            - ON_EVALUATION
+            - ONBOARDING_KO
+            - ELIGIBLE_KO
+            - ONBOARDING_OK
+            - UNSUBSCRIBED
+            - INVITED
+            - DEMANDED
+            - SUSPENDED
+          type: string
+          description: >-
+            ENG: Actual status of the citizen onboarding for an initiative - IT:
+            Stato attuale del cittadino rispetto ad un'iniziativa
+        statusDate:
+          type: string
+          format: date-time
+          description: >-
+            ENG: Date on which the status changed to the current one - IT: Data
+            in cui lo stato è cambiato allo stato attuale
+        onboardingOkDate:
+          type: string
+          format: date-time
+          description: >-
+            ENG: Date on which the onboarding successfully went through - IT:
+            Data in cui l'adesione è avvenuta con successo
+    RequiredCriteriaDTO:
+      type: object
+      required:
+        - pdndCriteria
+        - selfDeclarationList
+      properties:
+        pdndCriteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/PDNDCriteriaDTO'
+          description: >-
+            ENG: The list of checks made on the PDND platform - IT: Lista dei
+            controlli effettutati dalla piattaforma PDND
+        selfDeclarationList:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfDeclarationDTO'
+          description: >-
+            ENG: The list of required self-declared criteria - IT: Lista dei
+            criteri richiesti da autodichiarare
+    SelfDeclarationDTO:
+      oneOf:
+        - $ref: '#/components/schemas/SelfDeclarationBoolDTO'
+        - $ref: '#/components/schemas/SelfDeclarationMultiDTO'
+        - $ref: '#/components/schemas/SelfDeclarationTextDTO'
+    PDNDCriteriaDTO:
+      type: object
+      required:
+        - code
+        - description
+        - value
+        - authority
+      properties:
+        code:
+          type: string
+          enum:
+            - ISEE
+            - BIRTHDATE
+            - RESIDENCE
+          description: >-
+            ENG: A code that identifies the type of criteria - IT: Codice che
+            identifica il tipo di criterio
+        description:
+          type: string
+          description: 'ENG: Description of the criteria - IT: Descrizione del criterio'
+        value:
+          type: string
+          description: >-
+            "ENG: The expected value for the criteria. It is used in conjunction
+            with the operator to define a range or an equality over that
+            criteria. - IT: Valore atteso dal criterio. E' usato insieme al
+            campo operator per definire un insieme di valori o un'uguaglianza
+            con un valore"
+        value2:
+          type: string
+          description: >-
+            "ENG: In situations where the operator expects two values (e.g
+            BETWEEN) this field is populated - IT: Popolato quando il campo
+            operator si aspetta due valori (e.g BETWEEN)"
+        operator:
+          type: string
+          description: >-
+            ENG: Represents the relation between the criteria and the value
+            field - IT: Rappresenta la relazione tra il criterio ed il campo
+            value
+          enum:
+            - EQ
+            - NOT_EQ
+            - LT
+            - LE
+            - GT
+            - GE
+            - BTW_CLOSED
+            - BTW_OPEN
+        authority:
+          type: string
+          description: >-
+            ENG: Authority to request PDND criteria value - IT: Autorità a cui
+            richiedere il valore dei criteri PDND
+          enum:
+            - INPS
+            - AGID
+    SelfDeclarationBoolDTO:
+      type: object
+      required:
+        - _type
+        - code
+        - description
+        - value
+      properties:
+        _type:
+          type: string
+          description: >-
+            ENG: Self-declaration boolean type - IT: Autodichiarazione di tipo
+            boolean
+          enum:
+            - boolean
+        code:
+          type: string
+          description: 'ENG: Self-declaration code - IT: Codice dell''autodichiarazione'
+        description:
+          type: string
+          description: >-
+            ENG: Self-declaration description - IT: Descrizione
+            dell'autodichiarazione
+        value:
+          type: boolean
+          description: >-
+            ENG: Indicates whether the self-declaration is accepted or not - IT:
+            Indica se l'autodichiarazione è accettata o no
+    SelfDeclarationMultiDTO:
+      type: object
+      required:
+        - _type
+        - code
+        - description
+        - value
+      properties:
+        _type:
+          type: string
+          description: >-
+            ENG: Self-declaration value type - IT: Autodichiarazione di tipo
+            multipli
+          enum:
+            - multi
+        code:
+          type: string
+          description: 'ENG: Self-declaration code - IT: Codice dell''autodichiarazione'
+        description:
+          type: string
+          description: >-
+            ENG: Self-declaration description - IT: Descrizione
+            dell'autodichiarazione
+        value:
+          type: array
+          items:
+            type: string
+          description: >-
+            ENG: Indicates self-declaration values - IT: Indica i valori per
+            l'autodichiarazione
+    SelfDeclarationTextDTO:
+      type: object
+      required:
+        - _type
+        - code
+        - description
+        - value
+      properties:
+        _type:
+          type: string
+          description: >-
+            ENG: Self-declaration value type free text - IT: Autodichiarazione di tipo
+            testo libero
+          enum:
+            - text
+        code:
+          type: string
+          description: 'ENG: Self-declaration code - IT: Codice dell''autodichiarazione'
+        description:
+          type: string
+          description: >-
+            ENG: Self-declaration description - IT: Descrizione
+            dell'autodichiarazione
+        value:
+          type: array
+          items:
+            type: string
+          description: >-
+            ENG: Indicates self-declaration values - IT: Indica i valori per
+            l'autodichiarazione
+    SelfConsentBoolDTO:
+      type: object
+      required:
+        - _type
+        - code
+        - accepted
+      properties:
+        _type:
+          type: string
+          enum:
+            - boolean
+          description: 'ENG: Self-consent boolean type - IT: Auto consenso di tipo boolean'
+        code:
+          type: string
+          description: 'ENG: Self-consent code - IT: Codice dell''auto consenso'
+        accepted:
+          type: boolean
+          description: >-
+            ENG: Indicates whether the self-consent is accepted or not - IT:
+            Indica se l'auto consenso è accettato o no
+    SelfConsentMultiDTO:
+      type: object
+      required:
+        - _type
+        - code
+        - value
+      properties:
+        _type:
+          type: string
+          enum:
+            - multi
+          description: 'ENG: Self-consent value type - IT: Auto consenso di tipo multipli'
+        code:
+          type: string
+          description: 'ENG: Self-consent code - IT: Codice dell''auto consenso'
+        value:
+          type: string
+          description: >-
+            ENG: Indicates self-consent values - IT: Indica i valori per gli
+            auto consensi
+    SelfConsentTextDTO:
+      type: object
+      required:
+        - _type
+        - code
+        - value
+      properties:
+        _type:
+          type: string
+          enum:
+            - text
+          description: 'ENG: Self-consent value type free text - IT: Auto consenso di tipo testo libero'
+        code:
+          type: string
+          description: 'ENG: Self-consent code - IT: Codice dell''auto consenso'
+        value:
+          type: string
+          description: >-
+            ENG: Indicates self-consent values - IT: Indica i valori per gli
+            auto consensi
+    ErrorDTO:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: 'ENG: Error code - IT: Codice di errore'
+        message:
+          type: string
+          description: 'ENG: Error message - IT: Messaggio di errore'
+    InitiativeDataDTO:
+      type: object
+      required:
+        - initiativeId
+        - initiativeName
+        - description
+        - organizationId
+        - organizationName
+        - tcLink
+        - privacyLink
+      properties:
+        initiativeId:
+          type: string
+          description: 'ENG: The initiative ID - IT: Identificativo dell''iniziativa'
+        initiativeName:
+          type: string
+          description: 'ENG: Initiative''s name - IT: Nome dell''iniziativa'
+        description:
+          type: string
+          description: 'ENG: Initiative''s description - IT: Descrizione dell''iniziativa'
+        organizationId:
+          type: string
+          description: >-
+            ENG: Id of the organization that created the initiative - IT:
+            Identificativo dell'organizzazione che ha creato l'iniziativa
+        organizationName:
+          type: string
+          description: >-
+            ENG: Name of the organization that created the initiative - IT: Nome
+            dell'organizzazione che ha creato l'iniziativa
+        tcLink:
+          type: string
+          description: >-
+            ENG: URL that redirects to the terms and conditions - IT: URL che
+            porta ai termini e condizioni
+        privacyLink:
+          type: string
+          description: >-
+            ENG: URL that redirects to the privacy policy - IT: URL che
+            reindirizza all'informativa della privacy
+        logoURL:
+          type: string
+          description: >-
+            ENG: URL for the initiative's logo image - IT: URL del logo
+            dell'iniziativa
+    InitiativeErrorDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - INITIATIVE_INVALID_LOCALE_FORMAT
+            - INITIATIVE_INVALID_REQUEST
+            - INITIATIVE_NOT_FOUND
+            - INITIATIVE_TOO_MANY_REQUESTS
+            - INITIATIVE_GENERIC_ERROR
+          description: |-
+            "ENG: Error code:
+             INITIATIVE_INVALID_LOCALE_FORMAT: Initiative not found due to invalid locale format,
+             INITIATIVE_INVALID_REQUEST: Something went wrong handling the request,
+             INITIATIVE_NOT_FOUND: Initiative not found,
+             INITIATIVE_TOO_MANY_REQUESTS: Too many requests,
+             INITIATIVE_GENERIC_ERROR: Application error,
+             - IT: Codice di errore:
+             INITIATIVE_INVALID_LOCALE_FORMAT: Iniziativa non trovata a causa di format locale non valido,
+             INITIATIVE_INVALID_REQUEST: Qualcosa è andato storto durante l'invio della richiesta,
+             INITIATIVE_NOT_FOUND: Iniziativa non trovata,
+             INITIATIVE_TOO_MANY_REQUESTS: Troppe richieste,
+             INITIATIVE_GENERIC_ERROR: Errore generico"
+        message:
+          type: string
+          description: 'ENG: Error message - IT: Messaggio di errore'
+    OnboardingErrorDTO:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - ONBOARDING_USER_UNSUBSCRIBED
+            - ONBOARDING_PAGE_SIZE_NOT_ALLOWED
+            - ONBOARDING_PDND_CONSENT_DENIED
+            - ONBOARDING_SELF_DECLARATION_NOT_VALID
+            - ONBOARDING_SUSPENSION_NOT_ALLOWED_FOR_USER_STATUS
+            - ONBOARDING_READMISSION_NOT_ALLOWED_FOR_USER_STATUS
+            - ONBOARDING_INVALID_REQUEST
+            - ONBOARDING_USER_NOT_IN_WHITELIST
+            - ONBOARDING_INITIATIVE_NOT_STARTED
+            - ONBOARDING_INITIATIVE_ENDED
+            - ONBOARDING_BUDGET_EXHAUSTED
+            - ONBOARDING_INITIATIVE_STATUS_NOT_PUBLISHED
+            - ONBOARDING_TECHNICAL_ERROR
+            - ONBOARDING_UNSATISFIED_REQUIREMENTS
+            - ONBOARDING_GENERIC_ERROR
+            - ONBOARDING_USER_NOT_ONBOARDED
+            - ONBOARDING_INITIATIVE_NOT_FOUND
+            - ONBOARDING_TOO_MANY_REQUESTS
+          description: >-
+            "ENG: Error code: ONBOARDING_USER_UNSUBSCRIBED: The user has
+            unsubscribed from initiative, ONBOARDING_PAGE_SIZE_NOT_ALLOWED: Page
+            size not allowed, ONBOARDING_PDND_CONSENT_DENIED: The PDND consent
+            was denied by the user for the initiative,
+            ONBOARDING_SELF_DECLARATION_NOT_VALID: The self-declaration criteria
+            are not valid for the initiative or those inserted by the user do
+            not match those required by the initiative,
+            ONBOARDING_SUSPENSION_NOT_ALLOWED_FOR_USER_STATUS: It is not
+            possible to suspend the user on initiative,
+            ONBOARDING_READMISSION_NOT_ALLOWED_FOR_USER_STATUS: It is not
+            possible to readmit the user on initiative,
+            ONBOARDING_INVALID_REQUEST: Something went wrong handling the
+            request, ONBOARDING_USER_NOT_IN_WHITELIST: The current user is not
+            allowed to participate to the initiative,
+            ONBOARDING_INITIATIVE_NOT_STARTED: The initiative has not yet begun,
+            ONBOARDING_INITIATIVE_ENDED: The initiative ended,
+            ONBOARDING_BUDGET_EXHAUSTED: Budget exhausted for initiative,
+            ONBOARDING_INITIATIVE_STATUS_NOT_PUBLISHED: The initiative is not
+            active, ONBOARDING_TECHNICAL_ERROR: A technical error occurred
+            during the onboarding process, ONBOARDING_UNSATISFIED_REQUIREMENTS:
+            The user does not satisfy the requirements set for the initiative,
+            ONBOARDING_GENERIC_ERROR: Application error,
+            ONBOARDING_USER_NOT_ONBOARDED: The current user is not onboarded on
+            initiative, ONBOARDING_INITIATIVE_NOT_FOUND: Cannot find initiative,
+            ONBOARDING_TOO_MANY_REQUESTS: Too many requests - IT: Codice di
+            errore: ONBOARDING_USER_UNSUBSCRIBED: L'utente si è disiscritto
+            dall'iniziativa, ONBOARDING_PAGE_SIZE_NOT_ALLOWED: Dimensione pagina
+            non permessa, ONBOARDING_PDND_CONSENT_DENIED: Il consenso PDND per
+            l'iniziativa è stato negato dall'utente,
+            ONBOARDING_SELF_DECLARATION_NOT_VALID: I criteri di
+            autodichiarazione non sono validi per l'iniziativa o quelli inseriti
+            dall'utente non corrispondono con quelli richiesti dall'iniziativa,
+            ONBOARDING_SUSPENSION_NOT_ALLOWED_FOR_USER_STATUS: Non è possibile
+            sospendere l'utente dall'iniziativa,
+            ONBOARDING_READMISSION_NOT_ALLOWED_FOR_USER_STATUS: Non è possibile
+            riammettere l'utente all'iniziativa, ONBOARDING_INVALID_REQUEST:
+            Qualcosa è andato storto durante l'invio della richiesta,
+            ONBOARDING_USER_NOT_IN_WHITELIST: L'utente corrente non ha il
+            permesso di partecipare all'iniziativa,
+            ONBOARDING_INITIATIVE_NOT_STARTED: L'iniziativa non è ancora
+            partita, ONBOARDING_INITIATIVE_ENDED: L'iniziativa è terminata,
+            ONBOARDING_BUDGET_EXHAUSTED: Il budget dell'iniziativa è esaurito,
+            ONBOARDING_INITIATIVE_STATUS_NOT_PUBLISHED: L'iniziativa non è
+            attiva, ONBOARDING_TECHNICAL_ERROR: Si è verificato un errore
+            tecnico durante il processo di adesione,
+            ONBOARDING_UNSATISFIED_REQUIREMENTS: L'utente non soddisfa i
+            requisiti che sono stati richiesti per l'iniziativa,
+            ONBOARDING_GENERIC_ERROR: Errore applicativo,
+            ONBOARDING_USER_NOT_ONBOARDED: Utente non onboardato all'iniziativa,
+            ONBOARDING_INITIATIVE_NOT_FOUND: Iniziativa non trovata,
+            ONBOARDING_TOO_MANY_REQUESTS: Troppe richieste"
+        message:
+          type: string
+          description: 'ENG: Error message- IT: Messaggio di errore'
+    OperationDTO:
+      oneOf:
+        - $ref: '#/components/schemas/TransactionDetailDTO'
+        - $ref: '#/components/schemas/InstrumentOperationDTO'
+        - $ref: '#/components/schemas/IbanOperationDTO'
+        - $ref: '#/components/schemas/OnboardingOperationDTO'
+        - $ref: '#/components/schemas/RefundDetailDTO'
+        - $ref: '#/components/schemas/SuspendOperationDTO'
+        - $ref: '#/components/schemas/ReadmittedOperationDTO'
+        - $ref: '#/components/schemas/UnsubscribeOperationDTO'
+    TimelineDTO:
+      type: object
+      required:
+        - lastUpdate
+        - operationList
+        - pageNo
+        - pageSize
+        - totalElements
+        - totalPages
+      properties:
+        lastUpdate:
+          type: string
+          description: 'ENG: Date of the last update - IT: Data dell''ultimo aggiornamento'
+          format: date-time
+        operationList:
+          type: array
+          items:
+            $ref: '#/components/schemas/OperationListDTO'
+          description: >-
+            ENG: The list of transactions and operations of an initiative of a
+            citizen - IT: La lista di transazioni e operazioni di una iniziativa
+            di un cittadino
+        pageNo:
+          type: integer
+          format: int32
+          description: 'ENG: Number of pages - IT: Numero di pagine'
+        pageSize:
+          type: integer
+          format: int32
+          description: >-
+            ENG: Number of elements in the page - IT: Numero di elementi
+            all'interno della pagina
+        totalElements:
+          type: integer
+          format: int32
+          description: 'ENG: Number of total elements - IT: Numero totali di elementi'
+        totalPages:
+          type: integer
+          format: int32
+          description: 'ENG: Number of total pages - IT: Numero totali di pagine'
+    OperationListDTO:
+      description: Complex type for items in the operation list
+      oneOf:
+        - $ref: '#/components/schemas/TransactionOperationDTO'
+        - $ref: '#/components/schemas/InstrumentOperationDTO'
+        - $ref: '#/components/schemas/RejectedInstrumentOperationDTO'
+        - $ref: '#/components/schemas/IbanOperationDTO'
+        - $ref: '#/components/schemas/OnboardingOperationDTO'
+        - $ref: '#/components/schemas/RefundOperationDTO'
+        - $ref: '#/components/schemas/SuspendOperationDTO'
+        - $ref: '#/components/schemas/ReadmittedOperationDTO'
+        - $ref: '#/components/schemas/UnsubscribeOperationDTO'
+    RejectedInstrumentOperationDTO:
+      type: object
+      required:
+        - operationId
+        - operationType
+        - operationDate
+        - channel
+      properties:
+        operationId:
+          type: string
+          description: 'ENG: Id of operation - IT: Identificativo dell''operazione'
+        operationType:
+          enum:
+            - REJECTED_ADD_INSTRUMENT
+            - REJECTED_DELETE_INSTRUMENT
+          description: >-
+            ENG: Operation type [REJECTED_ADD_INSTRUMENT: Rejected add
+            instrument, REJECTED_DELETE_INSTRUMENT: Rejected delete instrument]
+            - IT: Tipologia di operazione [REJECTED_ADD_INSTRUMENT: Respinto
+            l'inserimento dello strumento, REJECTED_DELETE_INSTRUMENT: Respinta
+            la cancellazione dello strumento]
+          type: string
+        operationDate:
+          type: string
+          format: date-time
+          description: 'ENG: Operation date - IT: Data dell''operazione'
+        brandLogo:
+          type: string
+          description: >-
+            ENG: Card's brand logo URL - IT: URL del logo del marchio della
+            carta
+        brand:
+          type: string
+          description: >-
+            ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
+            carta come mastercard, visa, ecc...
+        instrumentId:
+          type: string
+          description: 'ENG: Id instrument - IT: Identificativo dello strumento'
+        maskedPan:
+          type: string
+          description: 'ENG: masked PAN - IT: masked PAN'
+        channel:
+          type: string
+          description: >-
+            ENG: Channel from which the operation takes place - IT: Canale da
+            cui avviene l'operazione
+        instrumentType:
+          type: string
+          enum:
+            - CARD
+            - IDPAYCODE
+    TransactionDetailDTO:
+      type: object
+      required:
+        - operationId
+        - operationType
+        - operationDate
+        - accruedCents
+        - status
+      properties:
+        operationId:
+          type: string
+          description: 'ENG: Id of the operation - IT: Identificativo dell''operazione'
+        operationType:
+          enum:
+            - TRANSACTION
+            - REVERSAL
+          type: string
+          description: 'ENG: Operation type - IT: Tipologia di operazione'
+        eventId:
+          type: string
+        brandLogo:
+          type: string
+          description: >-
+            ENG: Card's brand logo URL - IT: URL del logo del marchio della
+            carta
+        brand:
+          type: string
+          description: >-
+            ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
+            carta come mastercard, visa, ecc...
+        maskedPan:
+          type: string
+          description: 'ENG: Masked Pan - IT: Masked Pan'
+        amountCents:
+          type: integer
+          format: int64
+          description: 'ENG: Transaction amount - IT: Importo della transazione'
+        accruedCents:
+          type: integer
+          format: int64
+          description: 'ENG: Transaction accrued - IT: Importo accumulato'
+        operationDate:
+          type: string
+          format: date-time
+          description: 'ENG: Operation date - IT: Data dell''operazione'
+        circuitType:
+          type: string
+          description: >-
+            ENG: Circuit type - IT: Tipologia del circuito 00-> Bancomat,
+            01->Visa, 02->Mastercard, 03->Amex, 04->JCB, 05->UnionPay,
+            06->Diners, 07->PostePay, 08->BancomatPay, 09->Satispay,
+            10->PrivateCircuit
+        idTrxIssuer:
+          type: string
+          description: >-
+            ENG: Transaction issuer ID - IT: Identificativo della transazione
+            rispetto all'issuer
+        idTrxAcquirer:
+          type: string
+          description: >-
+            ENG: Transaction acquirer ID- IT: Identificativo della transazione
+            rispetto all'acquirer
+        status:
+          type: string
+          enum:
+            - AUTHORIZED
+            - REWARDED
+            - CANCELLED
+          description: >-
+            ENG: Transaction status [AUTHORIZED: Transaction authorize,
+            REWARDED: Transaction rewarded, CANCELLED: Transaction cancelled]  -
+            IT: Stato della transazione [AUTHORIZED: Transazione autorizzata,
+            REWARDED: Transazione premiata, CANCELLED: transazione cancellata]
+        channel:
+          type: string
+          enum:
+            - RTD
+            - QRCODE
+            - IDPAYCODE
+            - BARCODE
+          description: >-
+            ENG: Channel from which the transaction takes place - IT: Canale da
+            cui avviene la transazione
+        businessName:
+          type: string
+    InstrumentOperationDTO:
+      type: object
+      required:
+        - operationId
+        - operationType
+        - operationDate
+        - instrumentType
+        - channel
+      properties:
+        operationId:
+          type: string
+          description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
+        operationType:
+          enum:
+            - ADD_INSTRUMENT
+            - DELETE_INSTRUMENT
+          type: string
+          description: 'ENG: Operation type - IT: Tipologia di operazione'
+        operationDate:
+          type: string
+          format: date-time
+          description: 'ENG: Operation date - IT: Data dell''operazione'
+        brandLogo:
+          type: string
+          description: >-
+            ENG: Card's brand logo URL - IT: URL del logo del marchio della
+            carta
+        brand:
+          type: string
+          description: >-
+            ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
+            carta come mastercard, visa, ecc...
+        maskedPan:
+          type: string
+          description: 'ENG: Masked Pan - IT: Masked Pan'
+        channel:
+          type: string
+          description: >-
+            ENG: Channel from which the operation takes place - IT: Canale da
+            cui avviene l'operazione
+        instrumentType:
+          type: string
+          enum:
+            - CARD
+            - IDPAYCODE
+    IbanOperationDTO:
+      type: object
+      required:
+        - operationId
+        - operationType
+        - operationDate
+        - iban
+        - channel
+      properties:
+        operationId:
+          type: string
+          description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
+        operationType:
+          enum:
+            - ADD_IBAN
+          type: string
+          description: 'ENG: Operation type - IT: Tipologia dell''operazione'
+        operationDate:
+          type: string
+          format: date-time
+          description: 'ENG: Operation date - IT: Data dell''operazione'
+        iban:
+          type: string
+          description: 'ENG: IBAN of the citizen - IT: IBAN del cittadino'
+        channel:
+          type: string
+          description: >-
+            ENG: Channel from which the operation takes place - IT: Canale da
+            cui avviene l'operazione
+    OnboardingOperationDTO:
+      type: object
+      required:
+        - operationId
+        - operationType
+        - operationDate
+      properties:
+        operationId:
+          type: string
+          description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
+        operationType:
+          enum:
+            - ONBOARDING
+          type: string
+          description: 'ENG: Operaztion type - IT: Tipologia dell''operazione'
+        operationDate:
+          type: string
+          format: date-time
+          description: 'ENG: Operation date - IT: Data dell''operazione'
+    RefundOperationDTO:
+      type: object
+      required:
+        - operationId
+        - operationType
+        - eventId
+        - operationDate
+        - amountCents
+      properties:
+        operationId:
+          type: string
+          description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
+        eventId:
+          type: string
+          description: 'ENG: Event ID - IT: Identificativo dell''evento'
+        operationType:
+          enum:
+            - PAID_REFUND
+            - REJECTED_REFUND
+          type: string
+          description: >-
+            ENG: Operation type [PAID_REFUND: Paid refund, REJECTED_REFUND:
+            Rejected refund] - IT: Tipologia dell'operazione [PAID_REFUND:
+            Rimborso pagato, REJECTED_REFUND: Rimborso rifiutato]
+        operationDate:
+          type: string
+          format: date-time
+          description: 'ENG: Operation date - IT: Data dell''operazione'
+        amountCents:
+          type: integer
+          format: int64
+          description: 'ENG: Refund amount - IT: Importo da rimborsare'
+    TransactionOperationDTO:
+      type: object
+      required:
+        - operationId
+        - operationType
+        - operationDate
+        - accruedCents
+        - status
+      properties:
+        operationId:
+          type: string
+          description: 'ENG: Id of the operation - IT: Identificativo dell''operazione'
+        operationType:
+          enum:
+            - TRANSACTION
+            - REVERSAL
+          type: string
+          description: 'ENG: Operation type - IT: Tipologia dell''operazione'
+        eventId:
+          type: string
+          description: 'ENG: Event ID - IT: Identificativo dell''evento'
+        operationDate:
+          type: string
+          format: date-time
+          description: 'ENG: Operation date - IT: Data dell''operazione'
+        brandLogo:
+          type: string
+          description: >-
+            ENG: Card's brand logo URL - IT: URL del logo del marchio della
+            carta
+        brand:
+          type: string
+          description: >-
+            ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
+            carta come mastercard, visa, ecc...
+        maskedPan:
+          type: string
+          description: 'ENG: Masked PAN - IT: Masked PAN'
+        amountCents:
+          type: integer
+          format: int64
+          description: 'ENG: Transaction amount - IT: Importo della transazione'
+        accruedCents:
+          type: integer
+          format: int64
+          description: 'ENG: Accrued amount - IT: Importo accumulato'
+        circuitType:
+          type: string
+          description: >-
+            ENG: Circuit type - IT: Tipologia di circuito 00-> Bancomat,
+            01->Visa, 02->Mastercard, 03->Amex, 04->JCB, 05->UnionPay,
+            06->Diners, 07->PostePay, 08->BancomatPay, 09->Satispay,
+            10->PrivateCircuit
+        status:
+          type: string
+          enum:
+            - AUTHORIZED
+            - REWARDED
+            - CANCELLED
+          description: 'ENG: Transaction status  - IT: Stato della transazione'
+        channel:
+          type: string
+          enum:
+            - RTD
+            - QRCODE
+            - IDPAYCODE
+            - BARCODE
+          description: >-
+            ENG: Channel from which the transaction takes place - IT: Canale da
+            cui avviene la transazione
+        businessName:
+          type: string
+    SuspendOperationDTO:
+      type: object
+      required:
+        - operationId
+        - operationType
+        - operationDate
+      properties:
+        operationId:
+          type: string
+          description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
+        operationType:
+          enum:
+            - SUSPENDED
+          type: string
+          description: >-
+            ENG: Operation type [SUSPENDED: Suspended] - IT: Tipologia
+            dell'operazione [SUSPENDED: sospeso]
+        operationDate:
+          type: string
+          format: date-time
+          description: 'ENG: Operation date - IT: Data dell''operazione'
+    RefundDetailDTO:
+      type: object
+      required:
+        - operationId
+        - operationType
+        - eventId
+        - operationDate
+        - amountCents
+      properties:
+        operationId:
+          type: string
+          description: 'ENG: Operation ID - IT: Identificativo dell''operazione'
+        operationType:
+          enum:
+            - PAID_REFUND
+            - REJECTED_REFUND
+          type: string
+          description: >-
+            ENG: Operation type [PAID_REFUND: Paid refund, REJECTED_REFUND:
+            Rejected refund] - IT: Tipologia dell'operazione [PAID_REFUND:
+            Rimborso pagato, REJECTED_REFUND: Rimborso rifiutato]
+        eventId:
+          type: string
+          description: 'ENG: Event ID - IT: Identificativo dell''evento'
+        iban:
+          type: string
+          description: 'ENG: IBAN - IT: IBAN'
+        operationDate:
+          type: string
+          format: date-time
+          description: 'ENG: Operation date - IT: Data dell''operazione'
+        amountCents:
+          type: integer
+          format: int64
+          description: 'ENG: Refund amount - IT: Importo da rimborsare'
+        status:
+          type: string
+          description: 'ENG: Refund status - IT: Stato del rimborso'
+        refundType:
+          type: string
+          description: 'ENG: Refund type - IT: Tipologia di rimborso'
+        startDate:
+          type: string
+          format: date
+          description: 'ENG: Start date - IT: Data di inizio'
+        endDate:
+          type: string
+          format: date
+          description: 'ENG: End date - IT Data di fine'
+        transferDate:
+          type: string
+          format: date
+          description: 'ENG: Transfer date - IT: Data della trasferenza'
+        userNotificationDate:
+          type: string
+          format: date
+          description: 'ENG: User notification date - IT: Data di notificazione all''utente'
+        cro:
+          type: string
+          description: >-
+            ENG: Code that identifies a bank transaction/credit transfer - IT:
+            Codice che identifica una transazione bancaria/bonifico
+    ReadmittedOperationDTO:
+      type: object
+      required:
+        - operationId
+        - operationType
+        - operationDate
+      properties:
+        operationId:
+          type: string
+          description: 'ENG: Id of the operation - IT: Identificativo dell''operazione'
+        operationType:
+          enum:
+            - READMITTED
+          type: string
+          description: 'ENG: Operation type - IT: Tipologia dell''operazione'
+        operationDate:
+          type: string
+          format: date-time
+          description: 'ENG: Operation date - IT: Data dell''operazione'
+    TimelineErrorDTO:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - TIMELINE_DETAIL_NOT_FOUND
+            - TIMELINE_USER_NOT_FOUND
+            - TIMELINE_REFUNDS_NOT_FOUND
+            - TIMELINE_INVALID_REQUEST
+            - TIMELINE_TOO_MANY_REQUESTS
+            - TIMELINE_GENERIC_ERROR
+          description: >-
+            "ENG: Error code: TIMELINE_DETAIL_NOT_FOUND: Detail of Timeline not
+            found,
+             TIMELINE_USER_NOT_FOUND: Timeline for the current user not found,
+             TIMELINE_REFUNDS_NOT_FOUND: Refund for current initiative not found,
+             TIMELINE_INVALID_REQUEST: Something went wrong handling request,
+             TIMELINE_TOO_MANY_REQUESTS: Too many requests,
+             TIMELINE_GENERIC_ERROR: Application Error - IT: Codice di errore:
+             TIMELINE_DETAIL_NOT_FOUND: Dettaglio della Timeline non trovato,
+             TIMELINE_USER_NOT_FOUND: Timeline per utente corrente non trovata,
+             TIMELINE_REFUNDS_NOT_FOUND:  Rimborso per la corrente iniziativa non trovato,
+             TIMELINE_INVALID_REQUEST: Qualcosa è andato storto durante l'invio della richiesta,
+             TIMELINE_TOO_MANY_REQUESTS: Troppe richieste,
+             TIMELINE_GENERIC_ERROR: Errore generico"
+        message:
+          type: string
+          description: 'ENG: Error message - IT: Messaggio di errore'
+    UnsubscribeOperationDTO:
+      type: object
+      required:
+        - operationId
+        - operationType
+        - operationDate
+      properties:
+        operationId:
+          type: string
+          description: 'ENG: Id of the operation - IT: Identificativo dell''operazione'
+        operationType:
+          enum:
+            - UNSUBSCRIBED
+          type: string
+          description: 'ENG: Operation type - IT: Tipologia dell''operazione'
+        operationDate:
+          type: string
+          format: date-time
+          description: 'ENG: Operation date - IT: Data dell''operazione'
+    CheckEnrollmentDTO:
+      type: object
+      properties:
+        isIdPayCodeEnabled:
+          type: boolean
+    GenerateCodeReqDTO:
+      title: GenerateCodeDTO
+      type: object
+      properties:
+        initiativeId:
+          type: string
+          description: >-
+            ENG: Unique identifier of the subscribed initiative - IT:
+            Identificativo univoco dell'iniziativa sottoscritta
+    GenerateCodeRespDTO:
+      type: object
+      properties:
+        idpayCode:
+          type: string
+          description: 'ENG: Numeric code - IT: codice numerico'
+    IbanPutDTO:
+      title: IbanPutDTO
+      type: object
+      required:
+        - iban
+        - description
+      properties:
+        iban:
+          type: string
+          description: 'ENG: IBAN of the citizen - IT: IBAN del cittadino'
+        description:
+          type: string
+          description: >-
+            ENG: Further information about the iban - IT: Ulteriori informazioni
+            sull'iban
+    WalletStatusDTO:
+      title: WalletStatusDTO
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          enum:
+            - NOT_REFUNDABLE_ONLY_IBAN
+            - NOT_REFUNDABLE_ONLY_INSTRUMENT
+            - REFUNDABLE
+            - NOT_REFUNDABLE
+            - UNSUBSCRIBED
+            - SUSPENDED
+          type: string
+          description: >-
+            ENG: Actual status of the citizen wallet for an initiative - IT:
+            Stato attuale del portafoglio di un cittadino per un'iniziativa
+    WalletDTO:
+      type: object
+      required:
+        - initiativeList
+      properties:
+        initiativeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/InitiativeDTO'
+          description: >-
+            ENG: The list of active initiatives of a citizen - IT: Lista delle
+            iniziative attive di un cittadino
+    InstrumentListDTO:
+      type: object
+      required:
+        - instrumentList
+      properties:
+        instrumentList:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstrumentDTO'
+          description: >-
+            "ENG: The list of payment instruments associated to the initiative
+            by the citizen - IT: Lista degli strumenti di pagamenti di un
+            cittadino associati ad una iniziativa"
+    InstrumentDTO:
+      title: InstrumentDTO
+      type: object
+      required:
+        - instrumentId
+        - instrumentType
+      properties:
+        idWallet:
+          type: string
+          description: >-
+            ENG: Wallet's id provided by the Payment manager - IT:
+            Identificativo del portafoglio fornito dal gestore di pagamenti
+        instrumentId:
+          type: string
+          description: >-
+            ENG: Payment instrument id - IT: Identificativo dello strumento di
+            pagamento
+        maskedPan:
+          type: string
+          description: 'ENG: Masked Pan - IT: Masked Pan'
+        channel:
+          type: string
+          description: 'ENG: Channel - IT: Canale di richiesta'
+        brandLogo:
+          type: string
+          description: >-
+            ENG: Card's brand logo URL - IT: URL del logo del marchio della
+            carta
+        brand:
+          type: string
+          description: >-
+            ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
+            carta come mastercard, visa, ecc...
+        status:
+          enum:
+            - ACTIVE
+            - PENDING_ENROLLMENT_REQUEST
+            - PENDING_DEACTIVATION_REQUEST
+          type: string
+          description: 'ENG: The status of the instrument - IT: Stato dello strumento'
+        instrumentType:
+          type: string
+          enum:
+            - CARD
+            - APP_IO_PAYMENT
+            - IDPAYCODE
+        activationDate:
+          type: string
+          format: date-time
+          description: >-
+            ENG: Activation date of the instrument - IT: Data di attivazione
+            dello strumento
+    InitiativeDTO:
+      type: object
+      required:
+        - initiativeId
+        - status
+        - endDate
+        - nInstr
+      properties:
+        familyId:
+          type: string
+          description: 'ENG: Id of the family unit - IT: Identificativo del nucleo familiare'
+        initiativeId:
+          type: string
+          description: 'ENG: Id initiative - IT: Identificativo dell''iniziativa'
+        initiativeName:
+          type: string
+          description: 'ENG: Name of the initiative - IT: Nome dell''iniziativa'
+        status:
+          enum:
+            - NOT_REFUNDABLE_ONLY_IBAN
+            - NOT_REFUNDABLE_ONLY_INSTRUMENT
+            - REFUNDABLE
+            - NOT_REFUNDABLE
+            - UNSUBSCRIBED
+            - SUSPENDED
+          type: string
+          description: 'ENG: The status of the initiative - IT: Stato dell''iniziativa'
+        endDate:
+          type: string
+          format: date
+          description: >-
+            ENG: End date for the time window in which it is possible to use the
+            initiative's rewards - IT: Data che indica la fine del periodo di
+            fruizione dell'iniziativa
+        amountCents:
+          type: integer
+          format: int64
+          description: 'ENG: Initiative total amount - IT: Importo totale dell''iniziativa'
+        accruedCents:
+          type: integer
+          format: int64
+          description: >-
+            ENG: Initiative accrued amount IT: Importo accumulato
+            dell'iniziativa
+        refundedCents:
+          type: integer
+          format: int64
+          description: >-
+            ENG: Refunded amount of the initiative - IT: Importo rimborsato
+            dell'iniziativa
+        lastCounterUpdate:
+          type: string
+          format: date-time
+          description: >-
+            ENG: Date of the last update of the counters - IT: Data dell'ultimo
+            aggiornamento dei contatori
+        iban:
+          type: string
+          description: 'ENG: IBAN - IT: IBAN'
+        nInstr:
+          type: integer
+          format: int32
+          description: 'ENG: Number of instruments - IT: Numero di strumenti'
+        initiativeRewardType:
+          enum:
+            - DISCOUNT
+            - REFUND
+            - EXPENSE
+          type: string
+          description: >-
+            ENG: Reward type of the initiative - IT: Tipologia di premio
+            dell'iniziativa
+        logoURL:
+          type: string
+          description: 'ENG: Url of the logo - IT: Url del logo'
+        organizationName:
+          type: string
+          description: 'ENG: Organization name - IT: Nome dell''organizzazione'
+        nTrx:
+          type: integer
+          format: int64
+          description: 'ENG:Number of transaction - IT: Numero di transazione'
+    InitiativesWithInstrumentDTO:
+      type: object
+      required:
+        - idWallet
+        - maskedPan
+        - brand
+        - initiativeList
+      properties:
+        idWallet:
+          type: string
+          description: 'ENG: Id of the wallet - IT: Identificativo del portafoglio'
+        maskedPan:
+          type: string
+          description: 'ENG: Masked Pan - IT: Masked Pan'
+        brand:
+          type: string
+          description: >-
+            ENG: Card's brand as mastercard, visa, ecc. - IT: Marchio della
+            carta come mastercard, visa, ecc...
+        initiativeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/InitiativesStatusDTO'
+          description: >-
+            ENG: The list of the initiatives status related to a payment
+            instrument - IT: Lista degli stati delle iniziative associate ad un
+            instrumento di pagamento
+    InitiativesStatusDTO:
+      type: object
+      required:
+        - initiativeId
+        - initiativeName
+        - status
+      properties:
+        initiativeId:
+          type: string
+          description: 'ENG: Initiative ID - IT: Identificativo dell''iniziativa'
+        initiativeName:
+          type: string
+          description: 'ENG: Name of the initiative - IT: Nome dell''iniziativa'
+        idInstrument:
+          type: string
+          description: 'ENG: Instrument ID - IT: Identificativo dello strumento'
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+            - PENDING_ENROLLMENT_REQUEST
+            - PENDING_DEACTIVATION_REQUEST
+          description: >-
+            ENG: Status of the initiative [ACTIVE: Active, INACTIVE: Inactive,
+            PENDING_ENROLLMENT_REQUEST: Richiesta di adesione in attesa,
+            PENDING_DEACTIVATION_REQUEST: Pending deactivation request] - IT:
+            Stato dell'iniziativa [ACTIVE: Iniziativa attiva, INACTIVE:
+            Iniziativa inactive, PENDING_ENROLLMENT_REQUEST: Pending enrollment
+            request, PENDING_DEACTIVATION_REQUEST: Richiesta di disattivazione
+            in attesa]
+    InitiativeDetailDTO:
+      type: object
+      properties:
+        initiativeName:
+          type: string
+          description: 'ENG: Name of the initiative - IT: Nome dell''iniziativa'
+        status:
+          type: string
+          description: 'ENG: Status of the initiative - IT: Stato dell''iniziativa'
+        description:
+          type: string
+          description: 'ENG: Description of the initiative - IT: Descrizione dell''iniziativa'
+        ruleDescription:
+          type: string
+          description: 'ENG: Description of the rules - IT: Descrizione delle regole'
+        onboardingStartDate:
+          type: string
+          format: date
+          description: >-
+            ENG: Start date for the initiative's onboarding time window - IT:
+            Data di inizio della finestra temporale in cui si può aderire
+            all'iniziativa
+        onboardingEndDate:
+          type: string
+          format: date
+          description: >-
+            ENG: End date for the initiative's onboarding time window - IT: Data
+            di fine della finestra temporale in cui si può aderire
+            all'iniziativa
+        fruitionStartDate:
+          type: string
+          format: date
+          description: >-
+            ENG: Start date of the time window in which it is possible to use
+            the initiative's rewards - IT: Data di inizio della finestra
+            temporale in cui si usufruire dei premi dell'iniziativa
+        fruitionEndDate:
+          type: string
+          format: date
+          description: >-
+            ENG: End date of the time window in which it is possible to use the
+            initiative's rewards - IT: Data di fine della finestra temporale in
+            cui si usufruire dei premi dell'iniziativa
+        rewardRule:
+          $ref: '#/components/schemas/RewardValueDTO'
+        refundRule:
+          $ref: '#/components/schemas/InitiativeRefundRuleDTO'
+        privacyLink:
+          type: string
+          description: >-
+            ENG: URL that redirects to the privacy policy - IT: URL che
+            reindirizza all informativa della privacy
+        tcLink:
+          type: string
+          description: >-
+            ENG: URL that redirects to the terms and conditions - IT: URL che
+            porta ai termini e condizioni
+        logoURL:
+          type: string
+          description: 'ENG: Url of the logo - IT: Url del logo'
+        updateDate:
+          type: string
+          format: date-time
+          description: 'ENG: Update date - IT: Data di aggiornamento dell''iniziativa'
+        serviceId:
+          type: string
+          description: 'ENG: The service ID - IT: Identificativo del service'
+    InitiativeRefundRuleDTO:
+      type: object
+      properties:
+        accumulatedAmount:
+          $ref: '#/components/schemas/AccumulatedAmountDTO'
+        timeParameter:
+          $ref: '#/components/schemas/TimeParameterDTO'
+    AccumulatedAmountDTO:
+      required:
+        - accumulatedType
+      type: object
+      properties:
+        accumulatedType:
+          type: string
+          enum:
+            - BUDGET_EXHAUSTED
+            - THRESHOLD_REACHED
+          description: >-
+            ENG: Accumulated type [BUDGET_EXHAUSTED: budget exhausted,
+            THRESHOLD_REACHED: threshold reached] - IT: Tipologia di
+            accumulazione [BUDGET_EXHAUSTED: Budget esaurito, THRESHOLD_REACHED:
+            Soglia raggiunta]
+        refundThreshold:
+          type: number
+          description: 'ENG: Refund threshold - IT: Soglia di rimborso'
+    TimeParameterDTO:
+      required:
+        - timeType
+      type: object
+      properties:
+        timeType:
+          type: string
+          enum:
+            - CLOSED
+            - DAILY
+            - WEEKLY
+            - MONTHLY
+            - QUARTERLY
+          description: >-
+            ENG: Time type [CLOSED: At the end of the initiative, DAILY: Daily,
+            WEEKLY: Weekly, MONTHLY: Monthly, QUARTERLY: Quarterly] - IT:
+            Tipologia di tesmpistiche di rimborso [CLOSED: Alla chiusura
+            dell'iniziativa, DAILY: Giornaliero, WEEKLY: Settimanale, MONTHLY:
+            Mensile, QUARTERLY: Trimestrale]
+    RewardValueDTO:
+      required:
+        - rewardValueType
+        - rewardValue
+      type: object
+      properties:
+        rewardValueType:
+          type: string
+          enum:
+            - PERCENTAGE
+            - ABSOLUTE
+          description: >-
+            ENG: Reward value type [PERCENTAGE: Percentage, ABSOLUTE: Absolute]-
+            IT: Tipologia di premio [PERCENTAGE: Percentuale, ABSOLUTE:
+            Assoluto]
+        rewardValue:
+          type: number
+          description: 'ENG: Reward value - IT: Valore di reward'
+    WalletErrorDTO:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - WALLET_USER_UNSUBSCRIBED
+            - WALLET_ENROLL_INSTRUMENT_NOT_ALLOWED_FOR_DISCOUNT_INITIATIVE
+            - WALLET_ENROLL_IBAN_NOT_ALLOWED_FOR_DISCOUNT_INITIATIVE
+            - WALLET_ENROLL_INSTRUMENT_NOT_ALLOWED_FOR_REFUND_INITIATIVE
+            - WALLET_INITIATIVE_ENDED
+            - WALLET_USER_NOT_ONBOARDED
+            - WALLET_IBAN_NOT_ITALIAN
+            - WALLET_INSTRUMENT_ALREADY_ASSOCIATED
+            - WALLET_INSTRUMENT_DELETE_NOT_ALLOWED
+            - WALLET_INSTRUMENT_IDPAYCODE_NOT_FOUND
+            - WALLET_SUSPENSION_NOT_ALLOWED_FOR_USER_STATUS
+            - WALLET_READMISSION_NOT_ALLOWED_FOR_USER_STATUS
+            - WALLET_INSTRUMENT_NOT_FOUND
+            - WALLET_GENERIC_ERROR
+            - WALLET_INVALID_REQUEST
+            - WALLET_TOO_MANY_REQUESTS
+          description: >-
+            "ENG: Error code: WALLET_USER_UNSUBSCRIBED: The user has
+            unsubscribed from initiative,
+            WALLET_ENROLL_INSTRUMENT_NOT_ALLOWED_FOR_DISCOUNT_INITIATIVE: It is
+            not possible to enroll a payment instrument for a discount
+            initiative, WALLET_ENROLL_IBAN_NOT_ALLOWED_FOR_DISCOUNT_INITIATIVE:
+            It is not possible enroll an iban for a discount type initiative,
+            WALLET_ENROLL_INSTRUMENT_NOT_ALLOWED_FOR_REFUND_INITIATIVE: It is
+            not possible to enroll a IDPayCode for a refund type initiative,
+            WALLET_INITIATIVE_ENDED: The operation is not allowed because the
+            initiative has already ended, WALLET_USER_NOT_ONBOARDED: User not
+            onboarded on this initiative, WALLET_IBAN_NOT_ITALIAN: Iban is not
+            italian, WALLET_INSTRUMENT_ALREADY_ASSOCIATED: Payment Instrument is
+            already associated to another user,
+            WALLET_INSTRUMENT_DELETE_NOT_ALLOWED: It's not possible to delete an
+            instrument of AppIO payment types,
+            WALLET_INSTRUMENT_IDPAYCODE_NOT_FOUND: idpayCode is not found for
+            the current user, WALLET_SUSPENSION_NOT_ALLOWED_FOR_USER_STATUS: It
+            is not possible to suspend the user on initiative,
+            WALLET_READMISSION_NOT_ALLOWED_FOR_USER_STATUS: It is not possible
+            to readmit the user on initiative, WALLET_INSTRUMENT_NOT_FOUND: The
+            selected payment instrument has not been found for the current user,
+            WALLET_GENERIC_ERROR: Application error, WALLET_INVALID_REQUEST:
+            Something went wrong handling the request, WALLET_TOO_MANY_REQUESTS:
+            Too many requests on the ms - IT: Codice di errore:
+            WALLET_USER_UNSUBSCRIBED: L'utente si è disiscritto dall'iniziativa,
+            WALLET_ENROLL_INSTRUMENT_NOT_ALLOWED_FOR_DISCOUNT_INITIATIVE: Non è
+            possibile associare uno strumento di pagamento per un'iniziativa di
+            tipo a sconto,
+            WALLET_ENROLL_IBAN_NOT_ALLOWED_FOR_DISCOUNT_INITIATIVE: Non è
+            possibile associare un iban per un'iniziativa di tipo a sconto,
+            WALLET_ENROLL_INSTRUMENT_NOT_ALLOWED_FOR_REFUND_INITIATIVE: Non è
+            possibile associare un IDPayCode per una iniziativa di tipo a
+            rimborso, WALLET_INITIATIVE_ENDED: L'operazione non è consentita
+            perché l'iniziativa è scaduta, WALLET_USER_NOT_ONBOARDED: Utente non
+            onboardato all'inziativa, WALLET_IBAN_NOT_ITALIAN: L'Iban non è
+            italiano, WALLET_INSTRUMENT_ALREADY_ASSOCIATED: Lo strumento di
+            pagamento è già associato ad un altro utente,
+            WALLET_INSTRUMENT_DELETE_NOT_ALLOWED: Non è possibile eliminare uno
+            strumento di tipo AppIO, WALLET_INSTRUMENT_IDPAYCODE_NOT_FOUND:
+            L'idpayCode non è stato trovato per l'utente corrente,
+            WALLET_SUSPENSION_NOT_ALLOWED_FOR_USER_STATUS: Non è possibile
+            sospendere l'utente dall'iniziativa,
+            WALLET_READMISSION_NOT_ALLOWED_FOR_USER_STATUS: Non è possibile
+            riammettere l'utente all'iniziativa, WALLET_INSTRUMENT_NOT_FOUND: Lo
+            strumento di pagamento selezionato non è stato trovato per l'utente
+            corrente, WALLET_GENERIC_ERROR: Errore generico,
+            WALLET_INVALID_REQUEST: Qualcosa è andato storto durante l'invio
+            della richiesta, WALLET_TOO_MANY_REQUESTS: Troppe richieste"
+        message:
+          type: string
+          description: 'ENG: Error message- IT: Messaggio di errore'
+    PaymentInstrumentErrorDTO:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - PAYMENT_INSTRUMENT_PIN_LENGTH_NOT_VALID
+            - PAYMENT_INSTRUMENT_INVALID_REQUEST
+            - PAYMENT_INSTRUMENT_ALREADY_ASSOCIATED
+            - PAYMENT_INSTRUMENT_DELETE_NOT_ALLOWED
+            - PAYMENT_INSTRUMENT_ENCRYPTION_ERROR
+            - PAYMENT_INSTRUMENT_DECRYPTION_ERROR
+            - PAYMENT_INSTRUMENT_ENROLL_NOT_ALLOWED_FOR_REFUND_INITIATIVE
+            - PAYMENT_INSTRUMENT_INITIATIVE_ENDED
+            - PAYMENT_INSTRUMENT_USER_UNSUBSCRIBED
+            - PAYMENT_INSTRUMENT_NOT_FOUND
+            - PAYMENT_INSTRUMENT_IDPAYCODE_NOT_FOUND
+            - PAYMENT_INSTRUMENT_USER_NOT_ONBOARDED
+            - PAYMENT_INSTRUMENT_TOO_MANY_REQUESTS
+            - PAYMENT_INSTRUMENT_GENERIC_ERROR
+          description: >-
+            "ENG: Error code: PAYMENT_INSTRUMENT_PIN_LENGTH_NOT_VALID: Pin
+            length is not valid, PAYMENT_INSTRUMENT_INVALID_REQUEST: Something
+            went wrong handling the request,
+            PAYMENT_INSTRUMENT_ALREADY_ASSOCIATED: Payment Instrument is already
+            associated to another user, PAYMENT_INSTRUMENT_DELETE_NOT_ALLOWED:
+            It's not possible to delete an instrument of AppIO payment types,
+            PAYMENT_INSTRUMENT_ENCRYPTION_ERROR: Something went wrong creating
+            SHA256 digest, PAYMENT_INSTRUMENT_DECRYPTION_ERROR: Something gone
+            wrong while extracting datablock from pinblock,
+            PAYMENT_INSTRUMENT_ENROLL_NOT_ALLOWED_FOR_REFUND_INITIATIVE: It is
+            not possible to enroll a idpayCode for a refund type initiative,
+            PAYMENT_INSTRUMENT_INITIATIVE_ENDED: The operation is not allowed
+            because the initiative has already ended,
+            PAYMENT_INSTRUMENT_USER_UNSUBSCRIBED: The user has unsubscribed from
+            initiative, PAYMENT_INSTRUMENT_NOT_FOUND: The selected payment
+            instrument has not been found for the current user,
+            PAYMENT_INSTRUMENT_IDPAYCODE_NOT_FOUND: idpayCode is not found for
+            the current user, PAYMENT_INSTRUMENT_USER_NOT_ONBOARDED: The current
+            user is not onboarded on initiative,
+            PAYMENT_INSTRUMENT_TOO_MANY_REQUESTS: Too many requests,
+            PAYMENT_INSTRUMENT_GENERIC_ERROR Application error: - IT: Codice di
+            errore: PAYMENT_INSTRUMENT_PIN_LENGTH_NOT_VALID: Lunghezza del pin
+            non valida, PAYMENT_INSTRUMENT_INVALID_REQUEST: Qualcosa è andato
+            storto durante l'invio della richiesta,
+            PAYMENT_INSTRUMENT_ALREADY_ASSOCIATED: Lo strumento di pagamento è
+            già associato ad un altro utente,
+            PAYMENT_INSTRUMENT_DELETE_NOT_ALLOWED: Non è possibile eliminare uno
+            strumento di pagamento di tipo AppIO,
+            PAYMENT_INSTRUMENT_ENCRYPTION_ERROR: Qualcosa è andato storto
+            durante la creazione del digest SHA256,
+            PAYMENT_INSTRUMENT_DECRYPTION_ERROR: Qualcosa è andato storto
+            durante l'estrazione del datablock dal pinblock,
+            PAYMENT_INSTRUMENT_ENROLL_NOT_ALLOWED_FOR_REFUND_INITIATIVE: Non è
+            possibile enrollare un idpayCode per un'iniziativa di tipo a
+            rimborso, PAYMENT_INSTRUMENT_INITIATIVE_ENDED: L'operazione non è
+            consentita perché l'iniziativa è scaduta,
+            PAYMENT_INSTRUMENT_USER_UNSUBSCRIBED: L'utente si è disiscritto
+            dall'iniziativa, PAYMENT_INSTRUMENT_NOT_FOUND:  Lo strumento di
+            pagamento selezionato non è stato trovato per l'utente corrente,
+            PAYMENT_INSTRUMENT_IDPAYCODE_NOT_FOUND: L'idpayCode non è stato
+            trovato per l'utente corrente,
+            PAYMENT_INSTRUMENT_USER_NOT_ONBOARDED: L'utente corrente non è
+            onboardato all'iniziativa, PAYMENT_INSTRUMENT_TOO_MANY_REQUESTS:
+            Troppe richieste, PAYMENT_INSTRUMENT_GENERIC_ERROR: Errore generico"
+        message:
+          type: string
+          description: 'ENG: Error message- IT: Messaggio di errore'
+    AuthPaymentResponseDTO:
+      type: object
+      required:
+        - id
+        - trxCode
+        - initiativeId
+        - status
+        - amountCents
+      properties:
+        id:
+          type: string
+          description: 'ENG: Id of the payment - IT: Identificativo del pagamento'
+        trxCode:
+          type: string
+          description: 'ENG: Transaction code - IT: Codice della transazione'
+        trxDate:
+          type: string
+          format: date-time
+          description: 'ENG: Transaction date - IT: Data della transazione'
+        initiativeId:
+          type: string
+          description: 'ENG: Id of the initiative - IT: Identificativo dell''iniziativa'
+        initiativeName:
+          type: string
+          description: 'ENG: Name of the initiative - IT: Nome della iniziativa'
+        businessName:
+          type: string
+          description: 'ENG: Business name - IT: Nome dell''esercente'
+        status:
+          type: string
+          enum:
+            - CREATED
+            - IDENTIFIED
+            - AUTHORIZATION_REQUESTED
+            - AUTHORIZED
+          description: >-
+            ENG: Status of the payment [CREATED: Created, IDENTIFIED: User
+            related, AUTHORIZATION_REQUESTED: Authorization Requested,
+            AUTHORIZED: authorized] - IT: Stato del pagamento [CREATED: Creato,
+            IDENTIFIED: Utente associato, AUTHORIZATION_REQUESTED:
+            autorizzazione richiesta, AUTHORIZED: autorizzato]
+        rewardCents:
+          type: integer
+          format: int64
+          description: 'ENG: Reward - IT: Premio generato'
+        amountCents:
+          type: integer
+          format: int64
+          description: 'ENG: Amount cents - IT: Importo in centessimi'
+        residualBudgetCents:
+          type: integer
+          format: int64
+          description: 'ENG: Residual budget - IT: Budget residuo'
+    TransactionErrorDTO:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - PAYMENT_NOT_FOUND_OR_EXPIRED
+            - PAYMENT_TRANSACTION_EXPIRED
+            - PAYMENT_INITIATIVE_NOT_FOUND
+            - PAYMENT_INITIATIVE_INVALID_DATE
+            - PAYMENT_INITIATIVE_NOT_DISCOUNT
+            - PAYMENT_ALREADY_AUTHORIZED
+            - PAYMENT_ALREADY_CANCELLED
+            - PAYMENT_BUDGET_EXHAUSTED
+            - PAYMENT_GENERIC_REJECTED
+            - PAYMENT_TOO_MANY_REQUESTS
+            - PAYMENT_GENERIC_ERROR
+            - PAYMENT_USER_SUSPENDED
+            - PAYMENT_USER_NOT_ONBOARDED
+            - PAYMENT_USER_UNSUBSCRIBED
+            - PAYMENT_ALREADY_ASSIGNED
+            - PAYMENT_NOT_ALLOWED_FOR_TRX_STATUS
+            - PAYMENT_NOT_ALLOWED_MISMATCHED_MERCHANT
+            - PAYMENT_USER_NOT_ASSOCIATED
+            - PAYMENT_DELETE_NOT_ALLOWED_FOR_TRX_STATUS
+            - PAYMENT_UNRELATE_NOT_ALLOWED_FOR_TRX_STATUS
+            - PAYMENT_AMOUNT_NOT_VALID
+            - PAYMENT_MERCHANT_NOT_ONBOARDED
+            - PAYMENT_INVALID_REQUEST
+            - PAYMENT_TRANSACTION_VERSION_PENDING
+          description: >-
+            "ENG: Error code: PAYMENT_NOT_FOUND_OR_EXPIRED: transaction not
+            found or expired, PAYMENT_TRANSACTION_EXPIRED: transaction expired,
+            PAYMENT_INITIATIVE_NOT_FOUND: initiative not found,
+            PAYMENT_INITIATIVE_INVALID_DATE: initiative invalid date,
+            PAYMENT_INITIATIVE_NOT_DISCOUNT: initiative is not of discount type,
+            PAYMENT_ALREADY_AUTHORIZED: transaction already authorized,
+            PAYMENT_ALREADY_CANCELLED: transaction already cancelled,
+            PAYMENT_BUDGET_EXHAUSTED: budget exhausted,
+            PAYMENT_GENERIC_REJECTED: generic rejected error (transaction
+            rejected), PAYMENT_TOO_MANY_REQUESTS: too many request, retry,
+            PAYMENT_GENERIC_ERROR: application error (connection microservice
+            error), PAYMENT_USER_SUSPENDED: the user has been suspended on the
+            initiative, PAYMENT_USER_NOT_ONBOARDED: user not onboarded,
+            PAYMENT_USER_UNSUBSCRIBED: user unsubscribed,
+            PAYMENT_ALREADY_ASSIGNED:  transaction already assigned,
+            PAYMENT_NOT_ALLOWED_FOR_TRX_STATUS: operation on transaction not
+            allowed due to status, PAYMENT_NOT_ALLOWED_MISMATCHED_MERCHANT:
+            operation on transaction not allowed due to merchant mismatched,
+            PAYMENT_USER_NOT_ASSOCIATED: user not associated to the transaction,
+            PAYMENT_DELETE_NOT_ALLOWED_FOR_TRX_STATUS: cancellation of
+            transaction not allowed due to status,
+            PAYMENT_UNRELATE_NOT_ALLOWED_FOR_TRX_STATUS: unrelate transaction
+            not allowed due to status, PAYMENT_AMOUNT_NOT_VALID: amount of
+            transaction not valid, PAYMENT_MERCHANT_NOT_ONBOARDED: the merchant
+            is not onboarded, PAYMENT_INVALID_REQUEST: request validation error,
+            PAYMENT_TRANSACTION_VERSION_PENDING: The transaction version is
+            actually locked, - IT: Codice di errore:
+            PAYMENT_NOT_FOUND_OR_EXPIRED: transazione non trovata oppure
+            scaduta, PAYMENT_TRANSACTION_EXPIRED: transazione scaduta,
+            PAYMENT_INITIATIVE_NOT_FOUND: iniziativa non trovata,
+            PAYMENT_INITIATIVE_INVALID_DATE: iniziativa con data invalida,
+            PAYMENT_INITIATIVE_NOT_DISCOUNT: iniziativa non è di tipo a sconto,
+            PAYMENT_ALREADY_AUTHORIZED: transazione già autorizzata,
+            PAYMENT_ALREADY_CANCELLED: transazione già cancellata,
+            PAYMENT_BUDGET_EXHAUSTED: budget esaurito, PAYMENT_GENERIC_REJECTED:
+            errore generico, transazione rigettata, PAYMENT_TOO_MANY_REQUESTS:
+            troppe richieste, riprovare, PAYMENT_GENERIC_ERROR: errore generico
+            (errore nella connessione ad un microservizio),
+            PAYMENT_USER_SUSPENDED: l'utente è stato sospeso dall'iniziativa,
+            PAYMENT_USER_NOT_ONBOARDED: utente non onboardato all'iniziativa,
+            PAYMENT_USER_UNSUBSCRIBED: utente disiscritto dall'iniziativa,
+            PAYMENT_ALREADY_ASSIGNED:  transazione già assegnata,
+            PAYMENT_NOT_ALLOWED_FOR_TRX_STATUS: transazione non consentita a
+            causa dello stato della transazione,
+            PAYMENT_NOT_ALLOWED_MISMATCHED_MERCHANT: transazione non consentita
+            a causa della mancata corrispondenza del merchant,
+            PAYMENT_USER_NOT_ASSOCIATED: utente non associato alla transazione,
+            PAYMENT_DELETE_NOT_ALLOWED_FOR_TRX_STATUS: annullamento della
+            transazione non consentito a causa dello stato della transazione,
+            PAYMENT_UNRELATE_NOT_ALLOWED_FOR_TRX_STATUS: disassociazione non
+            consentita a causa dello stato della transazione,
+            PAYMENT_AMOUNT_NOT_VALID: importo nella transazione non valido,
+            PAYMENT_MERCHANT_NOT_ONBOARDED: il merchant non è onboardato,
+            PAYMENT_INVALID_REQUEST: errore di validazione della richiesta,
+            PAYMENT_TRANSACTION_VERSION_PENDING: La versione del contatore è
+            attualmente bloccata"
+        message:
+          type: string
+          description: 'ENG: Error message- IT: Messaggio di errore'
+    TransactionBarCodeRequest:
+      type: object
+      required:
+        - initiativeId
+      properties:
+        initiativeId:
+          type: string
+          description: 'ENG: Initiative ID - IT: Identificativo dell''iniziativa'
+    TransactionBarCodeResponse:
+      type: object
+      required:
+        - id
+        - trxCode
+        - initiativeId
+        - initiativeName
+        - trxDate
+        - trxExpirationSeconds
+        - residualBudgetCents
+        - status
+      properties:
+        id:
+          type: string
+          description: 'ENG: Id of the payment - IT: Identificativo del pagamento'
+        trxCode:
+          type: string
+          description: 'ENG: Transaction code - IT: Codice della transazione'
+        initiativeId:
+          type: string
+          description: 'ENG: Id of the initiative - IT: Identificativo dell''iniziativa'
+        initiativeName:
+          type: string
+          description: 'ENG: Name of the initiative - IT: Nome dell''iniziativa'
+        trxDate:
+          type: string
+          format: date-time
+          description: 'ENG: Transaction date - IT: Data della transazione'
+        trxExpirationSeconds:
+          type: number
+          description: >-
+            ENG: Expiration time of the transaction, in seconds - IT: Scadenza
+            della transazione, in secondi
+        residualBudgetCents:
+          type: integer
+          format: int64
+          description: 'ENG: Residual budget in cents - IT: Budget residuo in centesimi'
+        status:
+          type: string
+          enum:
+            - CREATED
+          description: >-
+            ENG: Status of the payment [CREATED: Created] - IT: Stato del
+            pagamento [CREATED: Creato]
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
