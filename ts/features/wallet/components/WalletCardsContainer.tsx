@@ -30,11 +30,11 @@ import {
 } from "../store/selectors";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { withWalletCategoryFilter } from "../utils";
+import { useItwReviewRequest } from "../../itwallet/common/hooks/useItwReviewRequest";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
-import { useItwReviewRequest } from "../../itwallet/common/hooks/useItwReviewRequest";
 
 const EID_INFO_BOTTOM_PADDING = 128;
 
