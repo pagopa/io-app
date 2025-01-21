@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import * as React from "react";
 import { SliderComponent } from "@react-native-community/slider";
 import { H6, IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../../i18n";

@@ -3,7 +3,8 @@ import {
   useScaleAnimation,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { PropsWithChildren } from "react";
+
 import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 
@@ -14,7 +15,7 @@ export const CardPressableBase = ({
   testID,
   accessibilityLabel,
   children
-}: React.PropsWithChildren<CardPressableBaseProps>) => {
+}: PropsWithChildren<CardPressableBaseProps>) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
 
   if (onPress === undefined) {

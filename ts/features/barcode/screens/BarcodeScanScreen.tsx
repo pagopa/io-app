@@ -5,7 +5,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes

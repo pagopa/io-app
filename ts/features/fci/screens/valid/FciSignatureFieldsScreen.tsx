@@ -11,8 +11,13 @@ import { Route, StackActions, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
-import * as React from "react";
-import { ComponentProps } from "react";
+import {
+  useState,
+  useContext,
+  useMemo,
+  useEffect,
+  ComponentProps
+} from "react";
 import { ScrollView, SectionList, View } from "react-native";
 import {
   Clause,
@@ -75,12 +80,12 @@ const FciSignatureFieldsScreen = () => {
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const [isClausesChecked, setIsClausesChecked] = React.useState(false);
-  const [isError, setIsError] = React.useState(false);
-  const { showModal, hideModal } = React.useContext(LightModalContext);
+  const [isClausesChecked, setIsClausesChecked] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const { showModal, hideModal } = useContext(LightModalContext);
 
   // get signatureFields for the current document
-  const docSignatures = React.useMemo(
+  const docSignatures = useMemo(
     () =>
       pipe(
         documentsSignaturesSelector,
@@ -91,12 +96,12 @@ const FciSignatureFieldsScreen = () => {
 
   // get required signatureFields for the current document
   // that user should check to sign the document
-  const requiredFields = React.useMemo(
+  const requiredFields = useMemo(
     () => getRequiredSignatureFields(signatureFieldsSelector),
     [signatureFieldsSelector]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     // get the required signature fields for the current document,
     // which the user has previously checked to sign it
     const res = pipe(

@@ -3,7 +3,6 @@ import {
   useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
-import * as React from "react";
 import { Alert } from "react-native";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../i18n";

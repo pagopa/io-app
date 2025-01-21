@@ -1,4 +1,3 @@
-import React from "react";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";

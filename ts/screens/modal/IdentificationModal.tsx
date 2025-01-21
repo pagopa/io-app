@@ -15,7 +15,6 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
-import * as React from "react";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import {
   Alert,

@@ -4,7 +4,6 @@ import {
   IOVisualCostants,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { ListItemMessageStandardHeight } from "./ListItemMessage";

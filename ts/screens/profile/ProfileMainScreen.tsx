@@ -8,7 +8,8 @@ import {
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import React, {
+import {
+  useContext,
   ComponentProps,
   memo,
   useCallback,
@@ -48,7 +49,7 @@ const ListItem = memo(ListItemNav);
  * A screen to show all the options related to the user profile
  */
 const ProfileMainScreenFC = () => {
-  const { hideModal } = React.useContext(LightModalContext);
+  const { hideModal } = useContext(LightModalContext);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const { show } = useIOToast();

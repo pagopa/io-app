@@ -1,4 +1,3 @@
-import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { ServiceDetailsScreen } from "../../details/screens/ServiceDetailsScreen";

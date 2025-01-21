@@ -1,5 +1,5 @@
 import { HeaderActionProps, IOStyles } from "@pagopa/io-app-design-system";
-import React, { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";

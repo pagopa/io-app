@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react-native";
-import * as React from "react";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { ItwCredentialCard } from "../ItwCredentialCard";
 

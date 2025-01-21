@@ -7,8 +7,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import { useCallback, useMemo } from "react";
 import { constFalse, pipe } from "fp-ts/lib/function";
-import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
@@ -60,7 +60,7 @@ const WalletCardOnboardingScreen = () => {
 
   useFocusEffect(trackShowCredentialsList);
 
-  const isItwSectionVisible = React.useMemo(
+  const isItwSectionVisible = useMemo(
     // IT Wallet credential catalog should be visible if
     () =>
       isItwValid && // An eID has ben obtained and wallet is valid
@@ -145,7 +145,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
   const isCgnLoading = useIOSelector(isCgnDetailsLoading);
   const isCgnActive = useIOSelector(isCgnInformationAvailableSelector);
 
-  const startCgnActiviation = React.useCallback(() => {
+  const startCgnActiviation = useCallback(() => {
     trackStartAddNewCredential("CGN");
     dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
@@ -158,7 +158,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
     });
   };
 
-  const cgnModule = React.useMemo(
+  const cgnModule = useMemo(
     () =>
       isCgnLoading ? (
         <ModuleCredential testID="cgnModuleLoadingTestID" isLoading={true} />

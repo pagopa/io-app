@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import * as React from "react";
 import { useEffect } from "react";
 import { Dispatch } from "../../store/actions/types";
 import { logoutRequest } from "../../store/actions/authentication";

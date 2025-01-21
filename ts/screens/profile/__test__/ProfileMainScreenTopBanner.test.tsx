@@ -1,18 +1,18 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import React, { PropsWithChildren } from "react";
-import { createStore } from "redux";
+import { PropsWithChildren, ReactElement } from "react";
 import { Provider } from "react-redux";
-import * as profileBannerImport from "../../../features/profileSettings/store/selectors";
-import { GlobalState } from "../../../store/reducers/types";
-import { ProfileMainScreenTopBanner } from "../ProfileMainScreenTopBanner";
-import * as settingsNavigate from "../../../features/pushNotifications/utils";
-import ROUTES from "../../../navigation/routes";
-import TypedI18n from "../../../i18n";
+import { createStore } from "redux";
 import { setShowProfileBanner } from "../../../features/profileSettings/store/actions";
-import { mockAccessibilityInfo } from "../../../utils/testAccessibility";
+import * as profileBannerImport from "../../../features/profileSettings/store/selectors";
 import * as analytics from "../../../features/pushNotifications/analytics";
-import { appReducer } from "../../../store/reducers";
+import * as settingsNavigate from "../../../features/pushNotifications/utils";
+import TypedI18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
+import { GlobalState } from "../../../store/reducers/types";
+import { mockAccessibilityInfo } from "../../../utils/testAccessibility";
+import { ProfileMainScreenTopBanner } from "../ProfileMainScreenTopBanner";
 
 jest.spyOn(settingsNavigate, "openSystemNotificationSettingsScreen");
 const mockNavigate = jest.fn();
@@ -148,7 +148,7 @@ describe("ProfileMainScreenTopBanner", () => {
   });
 });
 
-export const renderComponent = (component: React.ReactElement) => {
+export const renderComponent = (component: ReactElement) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
 

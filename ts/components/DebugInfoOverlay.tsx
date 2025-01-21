@@ -6,8 +6,8 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
-import { useState } from "react";
+
+import { FunctionComponent, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
+const DebugInfoOverlay: FunctionComponent<Props> = (props: Props) => {
   const theme = useIOTheme();
   const appVersion = getAppVersion();
   const [showRootName, setShowRootName] = useState(true);

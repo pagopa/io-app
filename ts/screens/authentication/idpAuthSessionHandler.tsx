@@ -10,7 +10,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
-import * as React from "react";
 import { useCallback, useEffect, useMemo } from "react";
 import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
 import I18n from "../../i18n";
@@ -30,6 +29,8 @@ import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
+import { setNativeLoginRequestInfo } from "../../features/spidLogin/store/actions";
+import { nativeLoginRequestInfoSelector } from "../../features/spidLogin/store/selectors";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import NavigationService from "../../navigation/NavigationService";
@@ -48,6 +49,7 @@ import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import themeVariables from "../../theme/variables";
 import { SessionToken } from "../../types/SessionToken";
 import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
+import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import {
   extractLoginResult,
   getEitherLoginResult,
@@ -58,9 +60,6 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
-import { nativeLoginRequestInfoSelector } from "../../features/spidLogin/store/selectors";
-import { setNativeLoginRequestInfo } from "../../features/spidLogin/store/actions";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -360,7 +359,7 @@ export const AuthSessionPage = () => {
   const navigation = useIONavigation();
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       navigation.setOptions({
         gestureEnabled: isBackButtonEnabled(requestInfo)
       });

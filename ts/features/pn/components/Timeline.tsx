@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
 import { Caption, H6, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 

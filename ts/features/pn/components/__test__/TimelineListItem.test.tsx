@@ -1,4 +1,3 @@
-import React from "react";
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 import { appReducer } from "../../../../store/reducers";
