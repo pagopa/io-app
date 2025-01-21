@@ -156,8 +156,7 @@ export const useItwFailureSupportModal = ({
 
     return [
       pipe(
-        contactMethods.mobile,
-        O.fromNullable,
+        O.fromNullable(contactMethods.mobile),
         O.fold(constNull, value => (
           <ListItemAction
             testID="contact-method-mobile"
@@ -171,8 +170,7 @@ export const useItwFailureSupportModal = ({
         ))
       ),
       pipe(
-        contactMethods.email,
-        O.fromNullable,
+        O.fromNullable(contactMethods.email),
         O.fold(constNull, value => (
           <ListItemAction
             testID="contact-method-email"
@@ -184,8 +182,7 @@ export const useItwFailureSupportModal = ({
         ))
       ),
       pipe(
-        contactMethods.website,
-        O.fromNullable,
+        O.fromNullable(contactMethods.website),
         O.fold(constNull, value => (
           <ListItemAction
             testID="contact-method-website"
@@ -197,8 +194,7 @@ export const useItwFailureSupportModal = ({
         ))
       ),
       pipe(
-        contactMethods.landline,
-        O.fromNullable,
+        O.fromNullable(contactMethods.landline),
         O.fold(constNull, value => (
           <ListItemInfo
             testID="contact-method-landline"
