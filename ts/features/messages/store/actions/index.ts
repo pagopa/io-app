@@ -15,6 +15,7 @@ import { MessageListCategory } from "../../types/messageListCategory";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
+  loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   scheduledPreconditionStatusAction,
   shownPreconditionStatusAction,
@@ -316,6 +317,7 @@ export type MessagesActions = ActionType<
   | typeof removeCachedAttachment
   | typeof errorPreconditionStatusAction
   | typeof idlePreconditionStatusAction
+  | typeof loadingContentPreconditionStatusAction
   | typeof retrievingDataPreconditionStatusAction
   | typeof scheduledPreconditionStatusAction
   | typeof shownPreconditionStatusAction

@@ -4,11 +4,13 @@ import { UIMessageId } from "../../../types";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
+  loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   scheduledPreconditionStatusAction,
   shownPreconditionStatusAction,
   toErrorPayload,
   toIdlePayload,
+  toLoadingContentPayload,
   toRetrievingDataPayload,
   toScheduledPayload,
   toShownPayload,
@@ -26,6 +28,15 @@ describe("Action payload generators", () => {
   it("should generate proper payload with 'toIdlePayload'", () => {
     const idlePayload = toIdlePayload();
     expect(idlePayload.nextStatus).toStrictEqual("idle");
+  });
+  it("should generate proper payload with 'toLoadingContentPayload'", () => {
+    const content: ThirdPartyMessagePrecondition = {
+      title: "The title",
+      markdown: "The content"
+    };
+    const loadingContentPayload = toLoadingContentPayload(content);
+    expect(loadingContentPayload.nextStatus).toStrictEqual("loadingContent");
+    expect(loadingContentPayload.content).toStrictEqual(content);
   });
   it("should generate proper payload with 'toRetrievingDataPayload'", () => {
     const retrievingDataPayload = toRetrievingDataPayload();
@@ -66,6 +77,19 @@ describe("Action generators", () => {
     const idlePSA = idlePreconditionStatusAction(idlePayload);
     expect(idlePSA.type).toStrictEqual("TO_IDLE_PRECONDITION_STATUS");
     expect(idlePSA.payload).toStrictEqual(idlePayload);
+  });
+  it("should return the proper action data for 'loadingContentPreconditionStatusAction'", () => {
+    const loadingContentPayload = toLoadingContentPayload({
+      title: "",
+      markdown: ""
+    });
+    const loadingContentPSA = loadingContentPreconditionStatusAction(
+      loadingContentPayload
+    );
+    expect(loadingContentPSA.type).toStrictEqual(
+      "TO_LOADING_CONTENT_PRECONDITION_STATUS"
+    );
+    expect(loadingContentPSA.payload).toStrictEqual(loadingContentPayload);
   });
   it("should return the proper action data for 'retrievingDataPreconditionStatusAction'", () => {
     const retrievingDatPayload = toRetrievingDataPayload();
