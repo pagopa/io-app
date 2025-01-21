@@ -4,9 +4,10 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useState, useLayoutEffect, memo } from "react";
+import { useState, useLayoutEffect, memo, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
@@ -21,6 +22,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton";
+import { CREDENTIALS_MAP, trackCredentialCardModal } from "../../analytics";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
@@ -44,6 +46,12 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
 
   usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
+
+  useFocusEffect(
+    useCallback(() => {
+      trackCredentialCardModal(CREDENTIALS_MAP[credential.credentialType]);
+    }, [credential.credentialType])
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
