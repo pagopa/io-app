@@ -27,6 +27,7 @@ export type PaymentAnalyticsProps = {
   payment_method_selected_flag: PaymentAnalyticsSelectedMethodFlag;
   preselected_psp_flag: PaymentAnalyticsPreselectedPspFlag;
   selected_psp_flag: PaymentAnalyticsSelectedPspFlag;
+  psp_selected: string;
   editing: PaymentAnalyticsEditingType;
 };
 

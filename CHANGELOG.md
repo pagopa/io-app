@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.81.0-rc.5](https://github.com/pagopa/io-app/compare/2.81.0-rc.4...2.81.0-rc.5) (2025-01-20)
+
+
+### Bug Fixes
+
+* [[IOPAE-1688](https://pagopa.atlassian.net/browse/IOPAE-1688)] Fix infinite scroll on the services home page ([#6613](https://github.com/pagopa/io-app/issues/6613)) ([c2c7654](https://github.com/pagopa/io-app/commit/c2c765430b38b794c8bcc57b16c1598a8804e60e))
+
+
+### Chores
+
+* [[IOBP-1141](https://pagopa.atlassian.net/browse/IOBP-1141)] Added `psp_selected` mixpanel property for the payment flow ([#6616](https://github.com/pagopa/io-app/issues/6616)) ([d78090d](https://github.com/pagopa/io-app/commit/d78090d53ff73d98610e72fe9f6483103c849784))
+
 ## [2.81.0-rc.4](https://github.com/pagopa/io-app/compare/2.81.0-rc.3...2.81.0-rc.4) (2025-01-17)
 
 
