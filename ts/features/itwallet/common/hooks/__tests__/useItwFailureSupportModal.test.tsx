@@ -1,7 +1,6 @@
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { render } from "@testing-library/react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useItwFailureSupportModal } from "../useItwFailureSupportModal";
 import {
   IssuanceFailure,
@@ -102,11 +101,7 @@ const renderHook = (params: Params) => {
   };
   return render(
     <Provider store={mockStore(initialState)}>
-      <SafeAreaProvider
-        initialSafeAreaInsets={{ top: 0, right: 0, bottom: 0, left: 0 }}
-      >
-        <Component />
-      </SafeAreaProvider>
+      <Component />
     </Provider>
   );
 };
