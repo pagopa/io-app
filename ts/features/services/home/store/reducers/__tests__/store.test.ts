@@ -1,15 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import MockDate from "mockdate";
 import { Action, createStore } from "redux";
 import {
   featuredInstitutionsSelector,
   featuredServicesSelector,
   isErrorFeaturedInstitutionsSelector,
   isErrorFeaturedServicesSelector,
-  isErrorPaginatedInstitutionsSelector,
   isLoadingFeaturedInstitutionsSelector,
   isLoadingFeaturedServicesSelector,
-  isLoadingPaginatedInstitutionsSelector,
-  isUpdatingPaginatedInstitutionsSelector,
   paginatedInstitutionsCurrentPageSelector,
   paginatedInstitutionsLastPageSelector,
   paginatedInstitutionsSelector
@@ -81,6 +79,9 @@ const MOCK_NETWORK_ERROR: NetworkError = {
   value: new Error("response status code 500")
 };
 
+const MOCKED_DATE = new Date();
+MockDate.set(MOCKED_DATE);
+
 describe("Services home paginatedInstitutions reducer", () => {
   it("should have initial state", () => {
     const state = appReducer(undefined, applicationChangeState("active"));
@@ -129,7 +130,10 @@ describe("Services home paginatedInstitutions reducer", () => {
           offset: 0,
           limit: 3
         },
-        MOCK_NETWORK_ERROR
+        {
+          reason: MOCK_NETWORK_ERROR,
+          time: MOCKED_DATE
+        }
       )
     );
   });
@@ -198,7 +202,10 @@ describe("Services home paginatedInstitutions reducer", () => {
           offset: 3,
           limit: 3
         },
-        MOCK_NETWORK_ERROR
+        {
+          reason: MOCK_NETWORK_ERROR,
+          time: MOCKED_DATE
+        }
       )
     );
   });
@@ -251,128 +258,6 @@ describe("Services home paginatedInstitutions selectors", () => {
           )
         )
       ).toBeUndefined();
-    });
-  });
-
-  describe("isLoadingPaginatedInstitutionsSelector", () => {
-    it("should return true when pot.loading", () => {
-      const isLoading = isLoadingPaginatedInstitutionsSelector(
-        appReducer(
-          {} as GlobalState,
-          paginatedInstitutionsGet.request({ offset: 0, limit: 3 })
-        )
-      );
-      expect(isLoading).toStrictEqual(true);
-    });
-
-    it("should return false when not pot.loading", () => {
-      expect(
-        isLoadingPaginatedInstitutionsSelector(
-          appReducer(undefined, {} as Action)
-        )
-      ).toStrictEqual(false);
-
-      expect(
-        isLoadingPaginatedInstitutionsSelector(
-          appReducer(
-            {} as GlobalState,
-            paginatedInstitutionsGet.success({
-              institutions: MOCK_INSTITUTIONS,
-              count: 23,
-              offset: 0,
-              limit: 3
-            })
-          )
-        )
-      ).toStrictEqual(false);
-    });
-  });
-
-  describe("isUpdatingPaginatedInstitutionsSelector", () => {
-    it("should return true when pot.updating", () => {
-      const state = appReducer(undefined, applicationChangeState("active"));
-      const store = createStore(appReducer, state as any);
-
-      store.dispatch(
-        paginatedInstitutionsGet.success({
-          institutions: MOCK_INSTITUTIONS,
-          count: 23,
-          offset: 0,
-          limit: 3
-        })
-      );
-      store.dispatch(paginatedInstitutionsGet.request({ offset: 3, limit: 3 }));
-
-      const isUpdating = isUpdatingPaginatedInstitutionsSelector(
-        store.getState()
-      );
-
-      expect(isUpdating).toStrictEqual(true);
-    });
-
-    it("should return false when not pot.updating", () => {
-      expect(
-        isUpdatingPaginatedInstitutionsSelector(
-          appReducer(undefined, {} as Action)
-        )
-      ).toStrictEqual(false);
-
-      expect(
-        isUpdatingPaginatedInstitutionsSelector(
-          appReducer(
-            {} as GlobalState,
-            paginatedInstitutionsGet.request({ offset: 0, limit: 3 })
-          )
-        )
-      ).toStrictEqual(false);
-
-      expect(
-        isUpdatingPaginatedInstitutionsSelector(
-          appReducer(
-            {} as GlobalState,
-            paginatedInstitutionsGet.success({
-              institutions: MOCK_INSTITUTIONS,
-              count: 23,
-              offset: 0,
-              limit: 3
-            })
-          )
-        )
-      ).toStrictEqual(false);
-    });
-  });
-
-  describe("isErrorPaginatedInstitutionsSelector", () => {
-    it("should return true when pot.error", () => {
-      const isError = isErrorPaginatedInstitutionsSelector(
-        appReducer(
-          {} as GlobalState,
-          paginatedInstitutionsGet.failure(MOCK_NETWORK_ERROR)
-        )
-      );
-      expect(isError).toStrictEqual(true);
-    });
-
-    it("should return false when not pot.error", () => {
-      expect(
-        isErrorPaginatedInstitutionsSelector(
-          appReducer(undefined, {} as Action)
-        )
-      ).toStrictEqual(false);
-
-      expect(
-        isErrorPaginatedInstitutionsSelector(
-          appReducer(
-            {} as GlobalState,
-            paginatedInstitutionsGet.success({
-              institutions: MOCK_INSTITUTIONS,
-              count: 23,
-              offset: 0,
-              limit: 3
-            })
-          )
-        )
-      ).toStrictEqual(false);
     });
   });
 
