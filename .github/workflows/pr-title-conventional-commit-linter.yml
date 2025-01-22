@@ -19,9 +19,9 @@ jobs:
     steps:
       - name: Check PR Title Format
         id: lint
-        run: |
-          # Escaping backticks in PR title
-          PR_TITLE=$(echo "${{ github.event.pull_request.title }}" | sed 's/`/\\`/g')
+        run: |          
+          # Escape backticks for safe processing          
+          PR_TITLE=$(printf '%q' "${{ github.event.pull_request.title }}")
           echo "Sanitized PR title: $PR_TITLE"
           if [[ "$PR_TITLE" =~ ^([a-z]+)(\(([ a-zA-Z0-9_-]+)\))?:[[:space:]]*(.+)$ ]]; then
             TYPE=${BASH_REMATCH[1]}
