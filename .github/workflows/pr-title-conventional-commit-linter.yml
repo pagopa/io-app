@@ -21,7 +21,7 @@ jobs:
         id: lint
         run: |          
           # Escape backticks for safe processing          
-          PR_TITLE=$(printf '%q' "${{ github.event.pull_request.title }}")
+          PR_TITLE="${PR_TITLE//\`/}"
           echo "Sanitized PR title: $PR_TITLE"
           if [[ "$PR_TITLE" =~ ^([a-z]+)(\(([ a-zA-Z0-9_-]+)\))?:[[:space:]]*(.+)$ ]]; then
             TYPE=${BASH_REMATCH[1]}
