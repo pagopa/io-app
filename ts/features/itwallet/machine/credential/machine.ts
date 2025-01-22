@@ -60,7 +60,7 @@ export const itwCredentialIssuanceMachine = setup({
     isDeferredIssuance: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
     isStatusError: notImplemented,
-    isWalletValid: notImplemented,
+    isEidExpired: notImplemented,
     isSkipNavigation: notImplemented
   }
 }).createMachine({
@@ -75,7 +75,7 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "select-credential": [
           {
-            guard: and([not("isWalletValid"), "isSkipNavigation"]),
+            guard: and(["isEidExpired", "isSkipNavigation"]),
             actions: "navigateToEidVerificationExpiredScreen",
             target: "Idle"
           },

@@ -127,7 +127,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const hasValidWalletInstanceAttestation = jest.fn();
   const isStatusError = jest.fn();
   const isSkipNavigation = jest.fn();
-  const isWalletValid = jest.fn();
+  const isEidExpired = jest.fn();
 
   const mockedMachine = itwCredentialIssuanceMachine.provide({
     actions: {
@@ -167,14 +167,14 @@ describe("itwCredentialIssuanceMachine", () => {
       hasValidWalletInstanceAttestation,
       isStatusError,
       isSkipNavigation,
-      isWalletValid
+      isEidExpired
     }
   });
 
   beforeEach(() => {
     onInit.mockImplementation(() => ({ walletInstanceAttestation: undefined }));
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
-    isWalletValid.mockImplementation(() => true);
+    isEidExpired.mockImplementation(() => false);
     isSkipNavigation.mockImplementation(() => true);
   });
 
