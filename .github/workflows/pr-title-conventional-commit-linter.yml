@@ -1,0 +1,68 @@
+name: "Check for conventional commit change type inside the PR title"
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+jobs:
+  lint:
+    name: Validate PR Title
+    runs-on: ubuntu-22.04
+    env:
+      VALID_TYPES: "feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert"
+    steps:
+      - name: Check PR Title Format
+        id: lint
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          if [[ "$PR_TITLE" =~ ^([a-z]+)(\(([ a-zA-Z0-9_-]+)\))?:[[:space:]]*(.+)$ ]]; then
+            TYPE=${BASH_REMATCH[1]}
+            CONTEXT=${BASH_REMATCH[3]}
+            DESCRIPTION=${BASH_REMATCH[4]}
+            echo fix: $TYPE
+            echo context: $CONTEXT
+            echo description: $DESCRIPTION
+            echo "PR_TYPE=$TYPE" >> $GITHUB_ENV
+            echo "PR_CONTEXT=$CONTEXT" >> $GITHUB_ENV
+            echo "PR_DESCRIPTION=$DESCRIPTION" >> $GITHUB_ENV
+            if [[ ! "$TYPE" =~ ^($VALID_TYPES)$ ]]; then
+              echo "VALIDATION_RESULT=warning" >> $GITHUB_ENV
+            else
+              echo "VALIDATION_RESULT=success" >> $GITHUB_ENV
+            fi
+          else
+            echo "VALIDATION_RESULT=failure" >> $GITHUB_ENV
+          fi
+
+      - name: Find Existing Comment
+        uses: peter-evans/find-comment@81e2da3af01c92f83cb927cf3ace0e085617c556
+        id: find_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: "github-actions[bot]"
+          body-regex: "^## PR Title Validation for conventional commit type.*"
+
+      - name: Add Validation Comment
+        uses: peter-evans/create-or-update-comment@5adcb0bb0f9fb3f95ef05400558bdb3f329ee808
+        with:
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## PR Title Validation for conventional commit type
+            ${{ env.VALIDATION_MESSAGE }}
+          edit-mode: replace
+        env:
+          VALIDATION_MESSAGE: |
+            ${{ env.VALIDATION_RESULT == 'success' && ':white_check_mark: All good! PR title follows conventional commit type.' || 
+                env.VALIDATION_RESULT == 'warning' && ':warning: PR title is valid but uses an unconventional type.' || 
+                ':x: PR title is invalid.<br />It must follow the format `type(context): description`.<br/>Valid types are: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert.' }}
+
+      - name: Fail if Title Invalid
+        if: env.VALIDATION_RESULT == 'failure'
+        run: |
+          echo "Pull request title (${{ github.event.pull_request.title }}) is not properly formatted."
+          exit 1
