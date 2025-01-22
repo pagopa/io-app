@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useRef } from "react";
 import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 
 import Animated, { FadeOut } from "react-native-reanimated";
@@ -8,7 +8,7 @@ import { paymentsPayPalBannerSetIsClosedAction } from "../store/actions";
 import { walletPayPalBannerClosedSelector } from "../store/selectors";
 
 const PaymentsMethodPspPayPalBanner = () => {
-  const bannerViewRef = React.useRef(null);
+  const bannerViewRef = useRef(null);
   const dispatch = useIODispatch();
   const bannerClosed = useIOSelector(walletPayPalBannerClosedSelector);
 

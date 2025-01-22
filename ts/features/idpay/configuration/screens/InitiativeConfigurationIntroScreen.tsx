@@ -9,7 +9,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
-import React from "react";
+import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -43,7 +43,7 @@ export const InitiativeConfigurationIntroScreen = () => {
   };
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (!!initiativeId && !!mode) {
         machine.send({
           type: "start-configuration",

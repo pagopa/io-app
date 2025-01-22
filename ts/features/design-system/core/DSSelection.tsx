@@ -16,8 +16,7 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
-import { useState } from "react";
+import { ComponentProps, useState } from "react";
 import { Alert, Text, View } from "react-native";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -346,7 +345,7 @@ const NativeSwitchShowroom = () => {
 };
 
 type ListItemSwitchSampleProps = Pick<
-  React.ComponentProps<typeof ListItemSwitch>,
+  ComponentProps<typeof ListItemSwitch>,
   "label" | "description" | "value" | "icon" | "paymentLogo" | "action"
 >;
 

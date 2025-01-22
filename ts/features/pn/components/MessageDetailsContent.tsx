@@ -1,4 +1,3 @@
-import React from "react";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
 
 type MessageDetailsContentProps = {

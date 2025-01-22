@@ -4,9 +4,10 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { useState, useLayoutEffect, memo, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
@@ -21,6 +22,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton";
+import { CREDENTIALS_MAP, trackCredentialCardModal } from "../../analytics";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
@@ -39,13 +41,19 @@ type Props = IOStackNavigationRouteProps<
 const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const { credential, status } = route.params;
   const safeAreaInsets = useSafeAreaInsets();
-  const [isFlipped, setFlipped] = React.useState(false);
+  const [isFlipped, setFlipped] = useState(false);
   const theme = useIOTheme();
 
   usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
-  React.useLayoutEffect(() => {
+  useFocusEffect(
+    useCallback(() => {
+      trackCredentialCardModal(CREDENTIALS_MAP[credential.credentialType]);
+    }, [credential.credentialType])
+  );
+
+  useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
@@ -119,7 +127,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwPresentationCredentialCardModal = React.memo(
+const MemoizedItwPresentationCredentialCardModal = memo(
   ItwPresentationCredentialCardModal
 );
 

@@ -1,5 +1,5 @@
 import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
-import React, { useMemo } from "react";
+import { memo, ReactNode, useMemo } from "react";
 import { Alert, View } from "react-native";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
@@ -17,9 +17,11 @@ import {
   trackItwCredentialDelete,
   trackWalletCredentialSupport
 } from "../../analytics";
-import { itwIsIPatenteCtaEnabledSelector } from "../../common/store/selectors/remoteConfig";
+import { itwIPatenteCtaConfigSelector } from "../../common/store/selectors/remoteConfig";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove } from "../../credentials/store/actions";
+import { trackAuthenticationStart } from "../../../fims/common/analytics";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -120,7 +122,7 @@ const ItwPresentationDetailsFooter = ({
 /**
  * Returns custom CTAs for a credential
  */
-const getCredentialActions = (credentialType: string): React.ReactNode =>
+const getCredentialActions = (credentialType: string): ReactNode =>
   ({
     MDL: [<IPatenteListItemAction key="iPatenteActionMdl" />],
     EuropeanHealthInsuranceCard: [],
@@ -131,15 +133,25 @@ const getCredentialActions = (credentialType: string): React.ReactNode =>
  * Renders the IPatente service action item
  */
 const IPatenteListItemAction = () => {
-  const isIPatenteEnabled = useIOSelector(itwIsIPatenteCtaEnabledSelector);
+  const ctaConfig = useIOSelector(itwIPatenteCtaConfigSelector);
 
-  if (!isIPatenteEnabled) {
+  if (!ctaConfig?.visibility) {
     return null;
   }
 
   const label = I18n.t(
     "features.itWallet.presentation.credentialDetails.actions.openIPatente"
   );
+
+  const trackIPatenteAuthenticationStart = (label: string) =>
+    trackAuthenticationStart(
+      ctaConfig.service_id as ServiceId,
+      ctaConfig.service_name,
+      ctaConfig.service_organization_name,
+      ctaConfig.service_organization_fiscal_code,
+      label,
+      "credential_detail"
+    );
 
   return (
     <ListItemAction
@@ -148,11 +160,12 @@ const IPatenteListItemAction = () => {
       icon="externalLink"
       label={label}
       onPress={() => {
+        trackIPatenteAuthenticationStart(label);
         NavigationService.navigate(FIMS_ROUTES.MAIN, {
           screen: FIMS_ROUTES.CONSENTS,
           params: {
             ctaText: label,
-            ctaUrl: "https://licences.ipatente.io.pagopa.it/licences"
+            ctaUrl: ctaConfig.url
           }
         });
       }}
@@ -160,8 +173,6 @@ const IPatenteListItemAction = () => {
   );
 };
 
-const MemoizedItwPresentationDetailsFooter = React.memo(
-  ItwPresentationDetailsFooter
-);
+const MemoizedItwPresentationDetailsFooter = memo(ItwPresentationDetailsFooter);
 
 export { MemoizedItwPresentationDetailsFooter as ItwPresentationDetailsFooter };

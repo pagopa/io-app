@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.81.0-rc.6](https://github.com/pagopa/io-app/compare/2.81.0-rc.5...2.81.0-rc.6) (2025-01-21)
+
+
+### Features
+
+* [[IOAPPX-465](https://pagopa.atlassian.net/browse/IOAPPX-465)] Add PR title linter workflow about conventional commit type ([#6618](https://github.com/pagopa/io-app/issues/6618)) ([d4c52c8](https://github.com/pagopa/io-app/commit/d4c52c801a07a2be381b5cd2423127a7a9c55c84))
+
+## [2.81.0-rc.5](https://github.com/pagopa/io-app/compare/2.81.0-rc.4...2.81.0-rc.5) (2025-01-20)
+
+
+### Bug Fixes
+
+* [[IOPAE-1688](https://pagopa.atlassian.net/browse/IOPAE-1688)] Fix infinite scroll on the services home page ([#6613](https://github.com/pagopa/io-app/issues/6613)) ([c2c7654](https://github.com/pagopa/io-app/commit/c2c765430b38b794c8bcc57b16c1598a8804e60e))
+
+
+### Chores
+
+* [[IOBP-1141](https://pagopa.atlassian.net/browse/IOBP-1141)] Added `psp_selected` mixpanel property for the payment flow ([#6616](https://github.com/pagopa/io-app/issues/6616)) ([d78090d](https://github.com/pagopa/io-app/commit/d78090d53ff73d98610e72fe9f6483103c849784))
+
+## [2.81.0-rc.4](https://github.com/pagopa/io-app/compare/2.81.0-rc.3...2.81.0-rc.4) (2025-01-17)
+
+
+### Features
+
+* [[PE-882](https://pagopa.atlassian.net/browse/PE-882)] CGN new discounts count ([#6607](https://github.com/pagopa/io-app/issues/6607)) ([93bd0a8](https://github.com/pagopa/io-app/commit/93bd0a83b8285cc91184c8bc43f546534a6c5add))
+
+
+### Chores
+
+* [[IOAPPX-405](https://pagopa.atlassian.net/browse/IOAPPX-405)] Removing unused react imports ([#6562](https://github.com/pagopa/io-app/issues/6562)) ([b84f0d1](https://github.com/pagopa/io-app/commit/b84f0d1ff6a18c700421f9b9135c6c580449afb9))
+* [[IOBP-1122](https://pagopa.atlassian.net/browse/IOBP-1122)] Remove PSP preselection logic based on the onUs field ([#6612](https://github.com/pagopa/io-app/issues/6612)) ([2d7127a](https://github.com/pagopa/io-app/commit/2d7127a0b4a201184e31cc55a0f8f06e8b9d9f98))
+
 ## [2.81.0-rc.3](https://github.com/pagopa/io-app/compare/2.81.0-rc.2...2.81.0-rc.3) (2025-01-16)
 
 

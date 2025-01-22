@@ -1,6 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
 import { constUndefined } from "fp-ts/lib/function";
-import React from "react";
 import { createStore } from "redux";
 
 import I18n from "../../../../i18n";

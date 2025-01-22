@@ -1,4 +1,4 @@
-import * as React from "react";
+import { ReactElement } from "react";
 import { createStore } from "redux";
 import { constUndefined } from "fp-ts/lib/function";
 import { fireEvent } from "@testing-library/react-native";
@@ -58,7 +58,7 @@ describe("settingsDiscoveryBanner", () => {
   });
 });
 
-const renderComponent = (component: React.ReactElement) => {
+const renderComponent = (component: ReactElement) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => component,

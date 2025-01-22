@@ -1,5 +1,4 @@
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 
 export const DSHeaderSecondLevelWithSectionTitle = () => (

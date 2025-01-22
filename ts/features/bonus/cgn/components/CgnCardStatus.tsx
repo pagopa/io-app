@@ -1,5 +1,5 @@
 import { LabelMini, Tag } from "@pagopa/io-app-design-system";
-import React from "react";
+import { Fragment } from "react";
 import { Card } from "../../../../../definitions/cgn/Card";
 import { CardActivated } from "../../../../../definitions/cgn/CardActivated";
 import { CardExpired } from "../../../../../definitions/cgn/CardExpired";
@@ -9,7 +9,7 @@ import { formatDateAsShortFormat } from "../../../../utils/dates";
 
 export function CgnCardStatus({ card }: { card: Card }) {
   return (
-    <React.Fragment>
+    <Fragment>
       {CardRevoked.is(card) && (
         <Tag
           testID="card-status-revoked"
@@ -35,6 +35,6 @@ export function CgnCardStatus({ card }: { card: Card }) {
           })}
         </LabelMini>
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }

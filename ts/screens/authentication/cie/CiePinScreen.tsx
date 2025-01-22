@@ -15,13 +15,8 @@ import {
   useIsFocused,
   useNavigation
 } from "@react-navigation/native";
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
+
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -186,7 +181,7 @@ const CiePinScreen = () => {
   }, [pin, showModal]);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
     }, [])
   );
