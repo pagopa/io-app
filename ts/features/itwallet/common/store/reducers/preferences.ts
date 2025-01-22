@@ -8,6 +8,7 @@ import {
   itwUnflagCredentialAsRequested,
   itwReviewRequested
 } from "../actions/preferences";
+import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 
 export type ItwPreferencesState = {
   // Date until which the feedback banner should be hidden
@@ -25,13 +26,13 @@ export type ItwPreferencesState = {
   reviewRequested?: boolean;
 };
 
-const INITIAL_STATE: ItwPreferencesState = {
+export const itwPreferencesInitialState: ItwPreferencesState = {
   requestedCredentials: {},
   reviewRequested: undefined
 };
 
 const reducer = (
-  state: ItwPreferencesState = INITIAL_STATE,
+  state: ItwPreferencesState = itwPreferencesInitialState,
   action: Action
 ): ItwPreferencesState => {
   switch (action.type) {
@@ -78,6 +79,9 @@ const reducer = (
         reviewRequested: action.payload
       };
     }
+
+    case getType(itwLifecycleStoresReset):
+      return { ...itwPreferencesInitialState };
 
     default:
       return state;
