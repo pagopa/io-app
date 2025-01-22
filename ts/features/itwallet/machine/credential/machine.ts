@@ -1,4 +1,4 @@
-import { and, assign, fromPromise, not, setup } from "xstate";
+import { assign, fromPromise, not, setup } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
@@ -75,7 +75,7 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "select-credential": [
           {
-            guard: and(["isEidExpired", "isSkipNavigation"]),
+            guard: "isEidExpired",
             actions: "navigateToEidVerificationExpiredScreen",
             target: "Idle"
           },

@@ -3,8 +3,9 @@ import * as O from "fp-ts/lib/Option";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { useIOStore } from "../../../../store/hooks";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
-import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
+import {
+  itwCredentialsEidStatusSelector
+} from "../../credentials/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 import { CredentialIssuanceFailureType } from "./failure";
@@ -32,13 +33,8 @@ export const createCredentialIssuanceGuardsImplementation = (
     event.type === "select-credential" && event.skipNavigation === true,
 
   isEidExpired: () => {
-    const eid = itwCredentialsEidSelector(store.getState());
+    const eidStatus = itwCredentialsEidStatusSelector(store.getState());
 
-    return pipe(
-      eid,
-      O.map(getCredentialStatus),
-      O.map(status => status === "jwtExpired"),
-      O.getOrElse(() => false)
-    );
+    return eidStatus === "jwtExpired";
   }
 });
