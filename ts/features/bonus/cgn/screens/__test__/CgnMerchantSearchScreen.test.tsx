@@ -1,4 +1,3 @@
-import React from "react";
 import { applyMiddleware, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { fireEvent } from "@testing-library/react-native";

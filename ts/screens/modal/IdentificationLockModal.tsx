@@ -1,6 +1,5 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as React from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { View, Modal, StyleSheet, SafeAreaView } from "react-native";
 import {
   ContentWrapper,
@@ -76,7 +75,7 @@ export const IdentificationLockModal = (props: Props) => {
   const timerTiming = Math.round((countdownInMs as number) / 1000);
 
   const dispatch = useIODispatch();
-  const hideModal = React.useCallback(() => {
+  const hideModal = useCallback(() => {
     dispatch(identificationHideLockModal());
   }, [dispatch]);
 

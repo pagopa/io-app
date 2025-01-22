@@ -6,7 +6,7 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import React from "react";
+import { useCallback, useMemo } from "react";
 import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -58,7 +58,7 @@ export const IdPayDiscountInstrumentsScreen = () => {
     isLoadingDiscountInitiativeInstrumentsSelector
   );
 
-  const idPayCodeInstrument = React.useMemo(
+  const idPayCodeInstrument = useMemo(
     () =>
       initiativeInstruments.find(
         initiative => initiative.instrumentType === InstrumentTypeEnum.IDPAYCODE
@@ -76,7 +76,7 @@ export const IdPayDiscountInstrumentsScreen = () => {
   const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
-  const getInstruments = React.useCallback(() => {
+  const getInstruments = useCallback(() => {
     dispatch(
       idPayInitiativeInstrumentsRefreshStart({
         initiativeId

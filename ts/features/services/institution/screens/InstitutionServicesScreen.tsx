@@ -8,7 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,

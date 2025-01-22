@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { H2, H6, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
@@ -34,7 +34,7 @@ export const IdPayInstrumentInitiativesScreen = () => {
   const dispatch = useIODispatch();
   const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(
       idPayInitiativesFromInstrumentRefreshStart({
         idWallet

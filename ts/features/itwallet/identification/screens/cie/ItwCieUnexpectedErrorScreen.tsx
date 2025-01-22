@@ -1,7 +1,7 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
-import * as React from "react";
+import { useCallback } from "react";
 import I18n from "../../../../../i18n";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
@@ -16,11 +16,11 @@ export const ItwCieUnexpectedErrorScreen = () => {
 
   useOnFirstRender(() => trackItWalletCieCardReadingFailure({ reason: "KO" }));
 
-  const handleRetry = React.useCallback(() => {
+  const handleRetry = useCallback(() => {
     machineRef.send({ type: "back" });
   }, [machineRef]);
 
-  const handleClose = React.useCallback(() => {
+  const handleClose = useCallback(() => {
     machineRef.send({ type: "close" });
   }, [machineRef]);
 

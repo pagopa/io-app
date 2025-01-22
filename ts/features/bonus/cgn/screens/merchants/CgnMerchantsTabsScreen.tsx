@@ -1,21 +1,20 @@
-import * as React from "react";
-import { useContext, useState } from "react";
-import { connect } from "react-redux";
-import { SafeAreaView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { Dispatch } from "../../../../../store/actions/types";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { FunctionComponent, useContext, useState } from "react";
+import { SafeAreaView } from "react-native";
+import { connect } from "react-redux";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import I18n from "../../../../../i18n";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { navigateToCgnMerchantDetail } from "../../navigation/actions";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../../../components/ui/LightModal";
+import I18n from "../../../../../i18n";
+import { Dispatch } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import CgnMerchantsFilters from "../../components/merchants/CgnMerchantsFilters";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -54,7 +53,7 @@ type Props = ReturnType<typeof mapStateToProps> &
  *  @param props
  * @constructor
  */
-const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (_: Props) => {
+const CgnMerchantsTabsScreen: FunctionComponent<Props> = (_: Props) => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
   const [selectedTab, __] = useState<"online" | "places">("online");
 

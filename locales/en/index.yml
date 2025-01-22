@@ -653,15 +653,17 @@ authentication:
     privacyLink: Privacy
     nospid: Don't have SPID? Find out more
     nospid-nocie: Don't have SPID or CIE? Find out more
-    card1-title: All messages in one place
-    card1-content: Display all the incoming communications from Public Administrations
-    card2-title: Use your favourite payment methods
-    card2-content: You can pay a tax or a penalty by your bank account and your cards
-    card3-title: Quickly pay a physical notice
-    card3-content: You can pay a notice also by scanning the QR code on the physical notice
-    card5-title: Welcome to IO!
-    card5-content: What can you do?
-    card5-content-accessibility: Select previous item to open a chat with the IO team if something is not working.
+    card0-title: Welcome to IO!
+    card0-content: Swipe left to see what you can do in the app
+    card0-content-accessibility:  Select the previous item to open a chat with the IO team if something is not working as it should.
+    card1-title: Keep your personal documents safe
+    card1-content: With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips
+    card2-title: Receive communications, also with legal value
+    card2-content: "Read incoming communications from organisations: by activating the SEND service, you will also receive communications with legal value and save on notification costs."
+    card3-title: Pay pagoPA notice by the method you prefer
+    card3-content: On IO, you can view and download receipts for your pagoPA payments, even if you have not paid in the app
+    card4-title: Access to the services you are most interested in
+    card4-content: Direct access to government services related to health, education, mobility, work and more
     expiredCardTitle: The CIE verification failed
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
@@ -1894,7 +1896,7 @@ wallet:
       defaultName: Gestore
       pspTitle: Gestore
       pspSortButton: Ordina
-      featuredReason: Perché sei già cliente
+      featuredReason: Sei già cliente
       continueButton: Continua
       sortBottomSheet:
         default: Default

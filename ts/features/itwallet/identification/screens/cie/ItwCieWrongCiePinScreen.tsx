@@ -1,7 +1,7 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
-import * as React from "react";
+import { useCallback, useMemo } from "react";
 import { Route, useRoute } from "@react-navigation/native";
 import { IOPictograms } from "@pagopa/io-app-design-system";
 import { Linking } from "react-native";
@@ -71,30 +71,30 @@ export const ItwCieWrongCiePinScreen = () => {
     }
   };
 
-  const handleRetry = React.useCallback(() => {
+  const handleRetry = useCallback(() => {
     trackItWalletCieRetryPin();
     machineRef.send({ type: "back" });
   }, [machineRef]);
 
-  const handleClose = React.useCallback(() => {
+  const handleClose = useCallback(() => {
     machineRef.send({ type: "close" });
   }, [machineRef]);
 
-  const didYouForgetPin = React.useCallback(() => {
+  const didYouForgetPin = useCallback(() => {
     trackItWalletCiePinForgotten();
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/"
     ).catch(constNull);
   }, []);
 
-  const didYouForgetPuk = React.useCallback(() => {
+  const didYouForgetPuk = useCallback(() => {
     trackItWalletCiePukForgotten();
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/recupero-puk/"
     ).catch(constNull);
   }, []);
 
-  const createMessageAction = React.useCallback(
+  const createMessageAction = useCallback(
     <T extends string>({
       label,
       onPress
@@ -110,7 +110,7 @@ export const ItwCieWrongCiePinScreen = () => {
     []
   );
 
-  const messages: Messages = React.useMemo(
+  const messages: Messages = useMemo(
     () => ({
       2: {
         pictogram: "attention",
@@ -166,7 +166,7 @@ export const ItwCieWrongCiePinScreen = () => {
   // This should never happen,
   // but it's a good practice to have a default message
   // in case of unexpected values of `remainingCount`.
-  const defaultMessageThatShouldNeverHappen: Message = React.useMemo(
+  const defaultMessageThatShouldNeverHappen: Message = useMemo(
     () => ({
       pictogram: "attention",
       title: I18n.t("global.genericError"),
@@ -183,7 +183,7 @@ export const ItwCieWrongCiePinScreen = () => {
     [createMessageAction, handleClose, handleRetry, remainingCount]
   );
 
-  const getMessage = React.useCallback(
+  const getMessage = useCallback(
     (key: number) => {
       handleTrackPinErrors(key);
       return key in messages

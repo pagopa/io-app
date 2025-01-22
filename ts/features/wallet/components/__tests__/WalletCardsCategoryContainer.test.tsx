@@ -1,4 +1,3 @@
-import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";

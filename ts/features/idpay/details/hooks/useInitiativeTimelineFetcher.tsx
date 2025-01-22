@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   idpayOperationListSelector,
@@ -28,9 +28,9 @@ export const useInitiativeTimelineFetcher = (
   const isUpdating = pot.isUpdating(paginatedTimelinePot);
   const isError = pot.isError(paginatedTimelinePot);
 
-  const [isRefreshing, setIsRefreshing] = React.useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (currentPage >= 0 && isRefreshing) {
       setIsRefreshing(false);
     }

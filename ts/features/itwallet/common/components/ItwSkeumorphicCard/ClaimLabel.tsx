@@ -2,7 +2,8 @@ import {
   IOFontWeight,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { FunctionComponent, PropsWithChildren } from "react";
+
 import { Text, TextStyle, useWindowDimensions } from "react-native";
 
 export type ClaimLabelProps = {
@@ -14,8 +15,8 @@ export type ClaimLabelProps = {
 /**
  * Custom component to display text claim components on skeumorphic credential cards
  */
-export const ClaimLabel: React.FunctionComponent<
-  React.PropsWithChildren<ClaimLabelProps>
+export const ClaimLabel: FunctionComponent<
+  PropsWithChildren<ClaimLabelProps>
 > = ({
   fontSize = 11,
   fontWeight = "Semibold",

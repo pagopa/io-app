@@ -1,4 +1,3 @@
-import React from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { AuthenticationParamsList } from "../../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../../navigation/routes";
