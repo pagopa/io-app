@@ -41,5 +41,4 @@ export const createCredentialIssuanceGuardsImplementation = (
       O.getOrElse(() => false)
     );
   }
-
 });
