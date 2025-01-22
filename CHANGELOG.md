@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.81.0-rc.6](https://github.com/pagopa/io-app/compare/2.81.0-rc.5...2.81.0-rc.6) (2025-01-21)
+
+
+### Features
+
+* [[IOAPPX-465](https://pagopa.atlassian.net/browse/IOAPPX-465)] Add PR title linter workflow about conventional commit type ([#6618](https://github.com/pagopa/io-app/issues/6618)) ([d4c52c8](https://github.com/pagopa/io-app/commit/d4c52c801a07a2be381b5cd2423127a7a9c55c84))
+
 ## [2.81.0-rc.5](https://github.com/pagopa/io-app/compare/2.81.0-rc.4...2.81.0-rc.5) (2025-01-20)
 
 
