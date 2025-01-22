@@ -167,7 +167,9 @@ const IdPayInitiativeDetailsScreen = () => {
               return [
                 {
                   type: "Value",
-                  label: "Rimborso richiesto",
+                  label: I18n.t(
+                    "idpay.initiative.details.initiativeCard.refundRequestedAmount"
+                  ),
                   value: formatNumberCentsToAmount(accruedAmount, true, "right")
                 }
               ];
@@ -309,7 +311,7 @@ const IdPayInitiativeDetailsScreen = () => {
         return {
           type: "SingleButton",
           primary: {
-            label: "Aggiungi spesa",
+            label: I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
             onPress: discountBottomSheet.present
           }
         };
