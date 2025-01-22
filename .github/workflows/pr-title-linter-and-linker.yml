@@ -10,7 +10,7 @@ on:
 
 jobs:
   lint:
-    name: Validate PR title and Link Jira Issue
+    name: Validate PR Title And Link Jira Issue
     runs-on: ubuntu-22.04
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
