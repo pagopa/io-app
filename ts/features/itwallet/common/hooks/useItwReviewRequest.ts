@@ -1,5 +1,5 @@
-import { useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { itwReviewRequestedSelector } from "../store/selectors/preferences";
 import { itwReviewRequested } from "../store/actions/preferences";
@@ -12,13 +12,14 @@ import { requestAppReview } from "../../../../utils/storeReview";
 export const useItwReviewRequest = () => {
   const reviewRequested = useSelector(itwReviewRequestedSelector);
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
 
-  useFocusEffect(
+  useEffect(
     useCallback(() => {
-      if (reviewRequested) {
+      if (reviewRequested && isFocused) {
         requestAppReview();
         dispatch(itwReviewRequested(false));
       }
-    }, [reviewRequested, dispatch])
+    }, [reviewRequested, dispatch, isFocused])
   );
 };
