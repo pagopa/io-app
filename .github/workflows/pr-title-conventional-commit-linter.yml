@@ -1,5 +1,9 @@
 name: "Check for conventional commit change type inside the PR title"
 
+permissions:
+  pull-requests: write
+  contents: read
+
 on:
   pull_request:
     types:
@@ -14,6 +18,8 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       VALID_TYPES: "feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert"
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      COMMENT_TITLE: "## PR Title Validation for conventional commit type"
     steps:
       - name: Check PR Title Format
         id: lint
@@ -39,30 +45,48 @@ jobs:
           fi
 
       - name: Find Existing Comment
-        uses: peter-evans/find-comment@81e2da3af01c92f83cb927cf3ace0e085617c556
         id: find_comment
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
-          body-regex: "^## PR Title Validation for conventional commit type.*"
+        run: |
+          EXISTING_COMMENT=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            --jq ".[] | select(.body | startswith(\"${{ env.COMMENT_TITLE }}\")) | .id")
+          echo "EXISTING_COMMENT_ID=$EXISTING_COMMENT" >> $GITHUB_ENV
 
-      - name: Add Validation Comment
-        uses: peter-evans/create-or-update-comment@5adcb0bb0f9fb3f95ef05400558bdb3f329ee808
-        with:
-          comment-id: ${{ steps.find_comment.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ## PR Title Validation for conventional commit type
-            ${{ env.VALIDATION_MESSAGE }}
-          edit-mode: replace
-        env:
-          VALIDATION_MESSAGE: |
-            ${{ env.VALIDATION_RESULT == 'success' && ':white_check_mark: All good! PR title follows conventional commit type.' || 
-                env.VALIDATION_RESULT == 'warning' && ':warning: PR title is valid but uses an unconventional type.' || 
-                ':x: PR title is invalid.<br />It must follow the format `type(context): description`.<br/>Valid types are: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert.' }}
+      - name: Add or Update Comment
+        run: |
+          COMMENT_BODY="${{ env.COMMENT_TITLE }}"$'\n\n'
+          if [[ "${{ env.VALIDATION_RESULT }}" == "success" ]]; then
+            COMMENT_BODY+=":white_check_mark: **All good!** PR title follows the conventional commit type."
+          elif [[ "${{ env.VALIDATION_RESULT }}" == "warning" ]]; then
+            COMMENT_BODY+=":warning: **PR title is valid**, but uses an unconventional type."
+          else
+            COMMENT_BODY+=":x: **PR title is invalid.**"$'\n'
+            COMMENT_BODY+="It must follow the format \`type(context): description\`."$'\n\n'
+            COMMENT_BODY+="**Valid types:**"$'\n'
+            COMMENT_BODY+="- \`feat\`"$'\n'
+            COMMENT_BODY+="- \`fix\`"$'\n'
+            COMMENT_BODY+="- \`docs\`"$'\n'
+            COMMENT_BODY+="- \`style\`"$'\n'
+            COMMENT_BODY+="- \`refactor\`"$'\n'
+            COMMENT_BODY+="- \`perf\`"$'\n'
+            COMMENT_BODY+="- \`test\`"$'\n'
+            COMMENT_BODY+="- \`build\`"$'\n'
+            COMMENT_BODY+="- \`ci\`"$'\n'
+            COMMENT_BODY+="- \`chore\`"$'\n'
+            COMMENT_BODY+="- \`revert\`"
+          fi
+
+          if [[ -n "${{ env.EXISTING_COMMENT_ID }}" ]]; then
+            # Update the existing comment
+            gh api repos/${{ github.repository }}/issues/comments/${{ env.EXISTING_COMMENT_ID }} \
+              -X PATCH -F body="$COMMENT_BODY"
+          else
+            # Create a new comment
+            gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+              -X POST -F body="$COMMENT_BODY"
+          fi
 
       - name: Fail if Title Invalid
-        if: env.VALIDATION_RESULT == 'failure'
+        if: ${{ env.VALIDATION_RESULT == 'failure' }}
         run: |
           echo "Pull request title (${{ github.event.pull_request.title }}) is not properly formatted."
           exit 1
