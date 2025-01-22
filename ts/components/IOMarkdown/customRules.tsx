@@ -34,10 +34,17 @@ const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
 export const generateMessagesAndServicesRules = (
   linkTo: (path: string) => void
 ): Partial<IOMarkdownRenderRules> => ({
-  Header(header: TxtHeaderNode, render: Renderer) {
+  Header(
+    header: TxtHeaderNode,
+    render: Renderer,
+    screenReaderEnabled: boolean
+  ) {
     const Heading = HEADINGS_MAP[header.depth];
 
-    const allLinkData = extractAllLinksFromRootNode(header);
+    const allLinkData = extractAllLinksFromRootNode(
+      header,
+      screenReaderEnabled
+    );
     const nodeKey = getTxtNodeKey(header);
 
     return (
@@ -46,7 +53,8 @@ export const generateMessagesAndServicesRules = (
         {generateAccesibilityLinkViewsIfNeeded(
           allLinkData,
           nodeKey,
-          (url: string) => handleOpenLink(linkTo, url)
+          (url: string) => handleOpenLink(linkTo, url),
+          screenReaderEnabled
         )}
       </Fragment>
     );

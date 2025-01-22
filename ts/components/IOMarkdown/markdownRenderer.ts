@@ -18,11 +18,18 @@ import { AnyTxtNodeWithSpacer, IOMarkdownRenderRules, Renderer } from "./types";
  * @param rules The `markdown` render rules.
  * @returns A render function for the individual node that applies the provided rendering rules.
  */
-export function getRenderMarkdown(rules: IOMarkdownRenderRules): Renderer {
+export function getRenderMarkdown(
+  rules: IOMarkdownRenderRules,
+  screenReaderEnabled: boolean
+): Renderer {
   return (content: AnyTxtNodeWithSpacer) =>
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    rules[content.type]?.(content, getRenderMarkdown(rules)) ?? null;
+    rules[content.type]?.(
+      content,
+      getRenderMarkdown(rules, screenReaderEnabled),
+      screenReaderEnabled
+    ) ?? null;
 }
 
 /**
@@ -156,10 +163,11 @@ export type LinkData = {
 };
 
 export const extractAllLinksFromRootNode = (
-  node: TxtHeaderNode | TxtListNode | TxtParagraphNode
+  node: TxtHeaderNode | TxtListNode | TxtParagraphNode,
+  screenReaderEnabled: boolean
 ): ReadonlyArray<LinkData> => {
   const allLinkData: Array<LinkData> = [];
-  if (node.parent?.type === "Document" && isIos) {
+  if (node.parent?.type === "Document" && isIos && screenReaderEnabled) {
     extractAllLinksFromNodeWithChildren(node, allLinkData);
   }
   return allLinkData;

@@ -1,5 +1,7 @@
 import { memo } from "react";
 import { View } from "react-native";
+import { useIOSelector } from "../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
 import { IOMarkdownRenderRules } from "./types";
 import {
   getRenderMarkdown,
@@ -25,12 +27,16 @@ type Props = {
  * It's possible to override every single rule by passing a custom `rules` object.
  */
 const IOMarkdown = ({ content, rules }: Props) => {
+  const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const sanitizedMarkdown = sanitizeMarkdownForImages(content);
   const parsedContent = parse(sanitizedMarkdown);
-  const renderMarkdown = getRenderMarkdown({
-    ...DEFAULT_RULES,
-    ...(rules || {})
-  });
+  const renderMarkdown = getRenderMarkdown(
+    {
+      ...DEFAULT_RULES,
+      ...(rules || {})
+    },
+    screenReaderEnabled
+  );
 
   return <View>{parsedContent.map(renderMarkdown)}</View>;
 };

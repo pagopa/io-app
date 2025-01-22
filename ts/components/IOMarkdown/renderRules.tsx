@@ -114,9 +114,10 @@ export function getTxtNodeKey(txtNode: AnyTxtNode): string {
 export const generateAccesibilityLinkViewsIfNeeded = (
   allLinkData: ReadonlyArray<LinkData>,
   nodeKey: string,
-  onPress: (url: string) => void
+  onPress: (url: string) => void,
+  screenReaderEnabled: boolean
 ) => {
-  if (allLinkData.length === 0 || isAndroid) {
+  if (allLinkData.length === 0 || isAndroid || !screenReaderEnabled) {
     return undefined;
   }
   return allLinkData.map((link, index) => (
@@ -149,13 +150,29 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @param render The renderer function.
    * @returns A component ranging from `H1` to `H6`, inclusive, depending on the `header.depth` value..
    */
-  Header(header: TxtHeaderNode, render: Renderer) {
+  Header(
+    header: TxtHeaderNode,
+    render: Renderer,
+    screenReaderEnabled: boolean
+  ) {
     const Heading = HEADINGS_MAP[header.depth];
 
+    const allLinkData = extractAllLinksFromRootNode(
+      header,
+      screenReaderEnabled
+    );
+    const nodeKey = getTxtNodeKey(header);
+
     return (
-      <Heading key={getTxtNodeKey(header)}>
-        {header.children.map(render)}
-      </Heading>
+      <Fragment key={nodeKey}>
+        <Heading>{header.children.map(render)}</Heading>
+        {generateAccesibilityLinkViewsIfNeeded(
+          allLinkData,
+          nodeKey,
+          handleOpenLink,
+          screenReaderEnabled
+        )}
+      </Fragment>
     );
   },
   /**
@@ -163,7 +180,11 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @param render The renderer function.
    * @returns The rendered component.
    */
-  Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
+  Paragraph(
+    paragraph: TxtParagraphNode,
+    render: Renderer,
+    screenReaderEnabled: boolean
+  ) {
     if (
       paragraph.children.length > 0 &&
       paragraph.children[0].type === "Image"
@@ -175,7 +196,10 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
       );
     }
 
-    const allLinkData = extractAllLinksFromRootNode(paragraph);
+    const allLinkData = extractAllLinksFromRootNode(
+      paragraph,
+      screenReaderEnabled
+    );
     const nodeKey = getTxtNodeKey(paragraph);
 
     return (
@@ -184,7 +208,8 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
         {generateAccesibilityLinkViewsIfNeeded(
           allLinkData,
           nodeKey,
-          handleOpenLink
+          handleOpenLink,
+          screenReaderEnabled
         )}
       </Fragment>
     );
@@ -282,7 +307,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @param render The renderer function.
    * @returns The rendered component.
    */
-  List(list: TxtListNode, render: Renderer) {
+  List(list: TxtListNode, render: Renderer, screenReaderEnabled: boolean) {
     const isOrdered = list.ordered;
     const nestingLevel = getNodeNestingLevel(list, "List");
     const bulletItem =
@@ -297,7 +322,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
       return <Body>{bulletItem}</Body>;
     }
 
-    const allLinkData = extractAllLinksFromRootNode(list);
+    const allLinkData = extractAllLinksFromRootNode(list, screenReaderEnabled);
     const nodeKey = getTxtNodeKey(list);
 
     return (
@@ -329,7 +354,8 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
         {generateAccesibilityLinkViewsIfNeeded(
           allLinkData,
           nodeKey,
-          handleOpenLink
+          handleOpenLink,
+          screenReaderEnabled
         )}
       </Fragment>
     );
