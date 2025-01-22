@@ -1,8 +1,8 @@
-import { H6 } from "@pagopa/io-app-design-system";
+import { Text } from "react-native";
 export const FimsHistorySuccessListItem = () => (
-  <H6 testID="success">SUCCESS_LIST_ITEM</H6>
+  <Text testID="success">SUCCESS_LIST_ITEM</Text>
 );
 
 export const FimsHistoryFailureListItem = () => (
-  <H6 testID="failure">FAILURE_LIST_ITEM</H6>
+  <Text testID="failure">FAILURE_LIST_ITEM</Text>
 );

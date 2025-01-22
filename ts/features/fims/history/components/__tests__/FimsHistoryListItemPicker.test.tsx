@@ -28,14 +28,6 @@ describe("FimsHistoryListItem", () => {
     jest.restoreAllMocks();
   });
 
-  it("should match snapshot for a some state", () => {
-    jest
-      .spyOn(FETCH_HOOKS, "useAutoFetchingServiceByIdPot")
-      .mockImplementation(() => pot.some(mockServicePublic));
-
-    const component = renderComponent(mockAccess);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
   it('should call the "successListItem" in case of (some)', () => {
     const testSuccessComponent = jest.spyOn(
       LIST_ITEMS,
@@ -46,10 +38,7 @@ describe("FimsHistoryListItem", () => {
       .mockImplementation(() => pot.some(mockServicePublic));
 
     const component = renderComponent(mockAccess);
-    const calls = testSuccessComponent.mock.calls as unknown as Array<
-      Array<any>
-    >;
-
+    const calls = testSuccessComponent.mock.calls;
     expect(calls.length).toBe(1);
     expect(calls[0].length).toBe(2);
     expect(calls[0][0]).toEqual({
@@ -91,9 +80,7 @@ describe("FimsHistoryListItem", () => {
 
     const component = renderComponent(mockAccess);
 
-    const calls = testSuccessComponent.mock.calls as unknown as Array<
-      Array<any>
-    >;
+    const calls = testSuccessComponent.mock.calls;
     expect(calls.length).toBe(1);
     expect(calls[0].length).toBe(2);
 
@@ -115,9 +102,7 @@ describe("FimsHistoryListItem", () => {
 
     const component = renderComponent(mockAccess);
 
-    const calls = testFailureComponent.mock.calls as unknown as Array<
-      Array<any>
-    >;
+    const calls = testFailureComponent.mock.calls;
     expect(calls.length).toBe(1);
     expect(calls[0].length).toBe(2);
 

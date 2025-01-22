@@ -1,3 +1,3 @@
-import { H6 } from "@pagopa/io-app-design-system";
+import { Text } from "react-native";
 
-export const LoadingFimsHistoryListItem = () => <H6>LOADING_LIST_ITEM</H6>;
+export const LoadingFimsHistoryListItem = () => <Text>LOADING_LIST_ITEM</Text>;
