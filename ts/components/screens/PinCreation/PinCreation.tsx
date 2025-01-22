@@ -33,6 +33,7 @@ import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { ContextualHelpPropsMarkdown } from "../BaseScreenComponent";
 import { PIN_LENGTH_SIX } from "../../../utils/constants";
+import { usePreventScreenCapture } from "../../../utils/hooks/usePreventScreenCapture";
 import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
 import { PinCaouselItemProps, PinCarouselItem } from "./PinCarouselItem";
 
@@ -56,6 +57,7 @@ type PinMode = "creation" | "confirmation";
  * This component will allow the user to create a new pin or change the existing one.
  */
 export const PinCreation = ({ isOnboarding = false }: Props) => {
+  usePreventScreenCapture();
   const navigation = useIONavigation();
   const [pin, setPin] = useState("");
   const [pinConfirmation, setPinConfirmation] = useState("");
