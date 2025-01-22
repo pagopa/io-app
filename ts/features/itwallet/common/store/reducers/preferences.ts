@@ -7,6 +7,7 @@ import {
   itwFlagCredentialAsRequested,
   itwUnflagCredentialAsRequested
 } from "../actions/preferences";
+import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 
 export type ItwPreferencesState = {
   // Date until which the feedback banner should be hidden
@@ -19,12 +20,12 @@ export type ItwPreferencesState = {
   requestedCredentials: { [credentialType: string]: string };
 };
 
-const INITIAL_STATE: ItwPreferencesState = {
+export const itwPreferencesInitialState: ItwPreferencesState = {
   requestedCredentials: {}
 };
 
 const reducer = (
-  state: ItwPreferencesState = INITIAL_STATE,
+  state: ItwPreferencesState = itwPreferencesInitialState,
   action: Action
 ): ItwPreferencesState => {
   switch (action.type) {
@@ -64,6 +65,9 @@ const reducer = (
       }
       return state;
     }
+
+    case getType(itwLifecycleStoresReset):
+      return { ...itwPreferencesInitialState };
 
     default:
       return state;

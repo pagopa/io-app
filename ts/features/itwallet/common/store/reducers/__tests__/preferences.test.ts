@@ -7,7 +7,11 @@ import {
   itwFlagCredentialAsRequested,
   itwUnflagCredentialAsRequested
 } from "../../actions/preferences";
-import reducer, { ItwPreferencesState } from "../preferences";
+import reducer, {
+  ItwPreferencesState,
+  itwPreferencesInitialState
+} from "../preferences";
+import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 
 describe("IT Wallet preferences reducer", () => {
   const INITIAL_STATE: ItwPreferencesState = {
@@ -86,5 +90,12 @@ describe("IT Wallet preferences reducer", () => {
       requestedCredentials: {}
     });
     MockDate.reset();
+  });
+
+  it("should handle itwLifecycleStoresReset action", () => {
+    const action = itwLifecycleStoresReset();
+    const newState = reducer(INITIAL_STATE, action);
+
+    expect(newState).toEqual(itwPreferencesInitialState);
   });
 });
