@@ -18,6 +18,10 @@ const DESC_NUMBER_SEQUENCE = Array.from({ length: PIN_LENGTH_SIX }, (_, i) =>
   String(i + 1)
 );
 
+jest.mock("../../../utils/hooks/usePreventScreenCapture", () => ({
+  usePreventScreenCapture: jest.fn()
+}));
+
 const invalidPinCases = [
   REPEATED_NUMBERS,
   ASC_NUMBERS_SEQUENCE,

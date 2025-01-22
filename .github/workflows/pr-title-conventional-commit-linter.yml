@@ -19,10 +19,13 @@ jobs:
         id: lint
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
-          if [[ "$PR_TITLE" =~ ^([a-z]+)(\(([a-zA-Z0-9_-]+)\))?:[[:space:]]*(.+)$ ]]; then
+          if [[ "$PR_TITLE" =~ ^([a-z]+)(\(([ a-zA-Z0-9_-]+)\))?:[[:space:]]*(.+)$ ]]; then
             TYPE=${BASH_REMATCH[1]}
             CONTEXT=${BASH_REMATCH[3]}
             DESCRIPTION=${BASH_REMATCH[4]}
+            echo fix: $TYPE
+            echo context: $CONTEXT
+            echo description: $DESCRIPTION
             echo "PR_TYPE=$TYPE" >> $GITHUB_ENV
             echo "PR_CONTEXT=$CONTEXT" >> $GITHUB_ENV
             echo "PR_DESCRIPTION=$DESCRIPTION" >> $GITHUB_ENV

@@ -1,16 +1,16 @@
-import { all, put, select } from "typed-redux-saga/macro";
-import { identity, pipe } from "fp-ts/lib/function";
+import { deleteKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { deleteKey } from "@pagopa/io-react-native-crypto";
-import { itwCredentialsSelector } from "../../credentials/store/selectors";
-import { itwLifecycleStoresReset } from "../store/actions";
-import { walletRemoveCardsByType } from "../../../wallet/store/actions/cards";
-import { isIos } from "../../../../utils/platform";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { updatePropertiesWalletRevoked } from "../../analytics";
+import { identity, pipe } from "fp-ts/lib/function";
+import { all, put, select } from "typed-redux-saga/macro";
 import { GlobalState } from "../../../../store/reducers/types";
+import { isIos } from "../../../../utils/platform";
+import { walletRemoveCardsByCategory } from "../../../wallet/store/actions/cards";
+import { updatePropertiesWalletRevoked } from "../../analytics";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { itwCredentialsSelector } from "../../credentials/store/selectors";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwLifecycleStoresReset } from "../store/actions";
 
 const getKeyTag = (credential: O.Option<StoredCredential>) =>
   pipe(
@@ -24,7 +24,7 @@ export function* handleWalletInstanceResetSaga() {
   const { eid, credentials } = yield* select(itwCredentialsSelector);
 
   yield* put(itwLifecycleStoresReset());
-  yield* put(walletRemoveCardsByType("itw"));
+  yield* put(walletRemoveCardsByCategory("itw"));
 
   // Remove all keys within the wallet.
   // On iOS skip the integrity key tag as it is managed by the App Attest service.
