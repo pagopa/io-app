@@ -34,7 +34,7 @@ describe("Action payload generators", () => {
       title: "The title",
       markdown: "The content"
     };
-    const loadingContentPayload = toLoadingContentPayload(content);
+    const loadingContentPayload = toLoadingContentPayload(content, false);
     expect(loadingContentPayload.nextStatus).toStrictEqual("loadingContent");
     expect(loadingContentPayload.content).toStrictEqual(content);
   });
@@ -51,13 +51,8 @@ describe("Action payload generators", () => {
     expect(scheduledPayload.categoryTag).toStrictEqual(categoryTag);
   });
   it("should generate proper payload with 'toShownPayload'", () => {
-    const content: ThirdPartyMessagePrecondition = {
-      title: "A title",
-      markdown: "A markdown"
-    };
-    const shownPayload = toShownPayload(content);
+    const shownPayload = toShownPayload();
     expect(shownPayload.nextStatus).toStrictEqual("shown");
-    expect(shownPayload.content).toBe(content);
   });
   it("should generate proper payload with 'toUpdateRequiredPayload'", () => {
     const updateRequiredPayload = toUpdateRequiredPayload();
@@ -79,10 +74,13 @@ describe("Action generators", () => {
     expect(idlePSA.payload).toStrictEqual(idlePayload);
   });
   it("should return the proper action data for 'loadingContentPreconditionStatusAction'", () => {
-    const loadingContentPayload = toLoadingContentPayload({
-      title: "",
-      markdown: ""
-    });
+    const loadingContentPayload = toLoadingContentPayload(
+      {
+        title: "",
+        markdown: ""
+      },
+      false
+    );
     const loadingContentPSA = loadingContentPreconditionStatusAction(
       loadingContentPayload
     );
@@ -110,11 +108,7 @@ describe("Action generators", () => {
     expect(scheduledPSA.payload).toStrictEqual(scheduledPayload);
   });
   it("should return the proper action data for 'shownPreconditionStatusAction'", () => {
-    const content: ThirdPartyMessagePrecondition = {
-      title: "A title",
-      markdown: "A markdown"
-    };
-    const shownPayload = toShownPayload(content);
+    const shownPayload = toShownPayload();
     const shownPSA = shownPreconditionStatusAction(shownPayload);
     expect(shownPSA.type).toStrictEqual("TO_SHOWN_PRECONDITION_STATUS");
     expect(shownPSA.payload).toStrictEqual(shownPayload);

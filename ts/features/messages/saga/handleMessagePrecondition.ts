@@ -11,10 +11,10 @@ import { trackDisclaimerLoadError } from "../analytics";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
+  loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
-  shownPreconditionStatusAction,
   toErrorPayload,
-  toShownPayload
+  toLoadingContentPayload
 } from "../store/actions/preconditions";
 import { UIMessageId } from "../types";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
@@ -22,6 +22,7 @@ import {
   preconditionsCategoryTagSelector,
   preconditionsMessageIdSelector
 } from "../store/reducers/messagePrecondition";
+import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../store/reducers/persistedPreferences";
 
 export function* handleMessagePrecondition(
   getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
@@ -62,7 +63,14 @@ function* messagePreconditionWorker(
     if (E.isRight(result)) {
       if (result.right.status === 200) {
         const content = result.right.value;
-        yield* put(shownPreconditionStatusAction(toShownPayload(content)));
+        const isIOMarkdownEnabled = yield* select(
+          isIOMarkdownEnabledOnMessagesAndServicesSelector
+        );
+        yield* put(
+          loadingContentPreconditionStatusAction(
+            toLoadingContentPayload(content, isIOMarkdownEnabled)
+          )
+        );
         return;
       }
       throw Error(`response status ${result.right.status}`);

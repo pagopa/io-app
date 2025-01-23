@@ -112,12 +112,21 @@ export const preconditionReducer = (
         () => state,
         () => state,
         () => state,
-        retrievingDataStatus =>
-          toLoadingContentMPS(
-            retrievingDataStatus.messageId,
-            retrievingDataStatus.categoryTag,
-            action.payload.content
-          ), // From Retrieving Data to Loading Content
+        retrievingDataStatus => {
+          if (action.payload.skipLoading) {
+            return toShownMPS(
+              retrievingDataStatus.messageId,
+              retrievingDataStatus.categoryTag,
+              action.payload.content
+            ); // From Retrieving Data to Shown
+          } else {
+            return toLoadingContentMPS(
+              retrievingDataStatus.messageId,
+              retrievingDataStatus.categoryTag,
+              action.payload.content
+            ); // From Retrieving Data to Loading Content
+          }
+        },
         () => state,
         () => state,
         () => state
@@ -158,12 +167,7 @@ export const preconditionReducer = (
             loadingContentStatus.categoryTag,
             loadingContentStatus.content
           ), // From Loading Content to Shown
-        retrievingDataStatus =>
-          toShownMPS(
-            retrievingDataStatus.messageId,
-            retrievingDataStatus.categoryTag,
-            action.payload.content
-          ), // From Retrieving Data to Shown
+        () => state,
         () => state,
         () => state,
         () => state

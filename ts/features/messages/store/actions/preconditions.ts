@@ -14,6 +14,7 @@ export type NPSIdle = {
 export type NPSLoadingContent = {
   nextStatus: "loadingContent";
   content: ThirdPartyMessagePrecondition;
+  skipLoading: boolean;
 };
 export type NPSRetrievingData = {
   nextStatus: "retrievingData";
@@ -24,7 +25,6 @@ export type NPSScheduled = {
   categoryTag: MessageCategory["tag"];
 };
 export type NPSShown = {
-  content: ThirdPartyMessagePrecondition;
   nextStatus: "shown";
 };
 export type NPSUpdateRequired = {
@@ -39,10 +39,12 @@ export const toIdlePayload = (): NPSIdle => ({
   nextStatus: "idle"
 });
 export const toLoadingContentPayload = (
-  content: ThirdPartyMessagePrecondition
+  content: ThirdPartyMessagePrecondition,
+  skipLoading: boolean
 ): NPSLoadingContent => ({
   nextStatus: "loadingContent",
-  content
+  content,
+  skipLoading
 });
 export const toRetrievingDataPayload = (): NPSRetrievingData => ({
   nextStatus: "retrievingData"
@@ -55,10 +57,7 @@ export const toScheduledPayload = (
   messageId,
   categoryTag
 });
-export const toShownPayload = (
-  content: ThirdPartyMessagePrecondition
-): NPSShown => ({
-  content,
+export const toShownPayload = (): NPSShown => ({
   nextStatus: "shown"
 });
 export const toUpdateRequiredPayload = (): NPSUpdateRequired => ({

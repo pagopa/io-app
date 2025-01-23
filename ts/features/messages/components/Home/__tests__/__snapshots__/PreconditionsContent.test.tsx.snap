@@ -334,27 +334,54 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
                         }
                       }
                     >
-                      <View>
-                        <Text
-                          allowFontScaling={false}
-                          dynamicTypeRamp="body"
-                          maxFontSizeMultiplier={1.25}
+                      <View
+                        style={
+                          [
+                            {
+                              "flex": 1,
+                              "overflow": "hidden",
+                            },
+                            undefined,
+                          ]
+                        }
+                      >
+                        <RNCWebView
+                          allowsPictureInPictureMediaPlayback={true}
+                          cacheEnabled={true}
+                          fraudulentWebsiteWarningEnabled={true}
+                          hasOnFileDownload={false}
+                          hasOnOpenWindowEvent={false}
+                          injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
+                          injectedJavaScriptForMainFrameOnly={true}
+                          javaScriptEnabled={true}
+                          messagingEnabled={false}
+                          messagingModuleName=""
+                          onContentProcessDidTerminate={[Function]}
+                          onHttpError={[Function]}
+                          onLoadingError={[Function]}
+                          onLoadingFinish={[Function]}
+                          onLoadingProgress={[Function]}
+                          onLoadingStart={[Function]}
+                          onMessage={[Function]}
+                          onShouldStartLoadWithRequest={[Function]}
                           style={
                             [
-                              {},
                               {
-                                "color": "#555C70",
-                                "fontFamily": "Titillium Sans Pro",
-                                "fontSize": 16,
-                                "fontStyle": "normal",
-                                "fontWeight": "400",
-                                "lineHeight": 24,
+                                "flex": 1,
+                                "overflow": "hidden",
                               },
+                              {
+                                "backgroundColor": "#ffffff",
+                              },
+                              undefined,
                             ]
                           }
+                          testID="preconditions_content_message_markdown"
+                          textInteractionEnabled={true}
+                          useSharedProcessPool={true}
                         >
-                          A markdown content
-                        </Text>
+                          Mock Message Markdown
+                        </RNCWebView>
                       </View>
                     </View>
                   </View>

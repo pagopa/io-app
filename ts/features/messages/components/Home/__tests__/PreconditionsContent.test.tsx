@@ -10,6 +10,8 @@ import * as messagePreconditions from "../../../store/reducers/messagePreconditi
 import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
+jest.mock("../../MessageDetail/MessageMarkdown");
+
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
   ...jest.requireActual<typeof import("react-redux")>("react-redux"),
