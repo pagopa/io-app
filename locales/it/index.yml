@@ -2906,6 +2906,9 @@ bonus:
         seconds:
           one: 1 secondo
           other: "{{seconds}} secondi"
+  cdc:
+    serviceEntryPoint:
+      notAvailable: "Il servizio non è disponibile in questo momento. Riprova più tardi."
 features:
   messages:
     pushNotifications:
