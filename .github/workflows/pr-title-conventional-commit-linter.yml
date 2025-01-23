@@ -46,7 +46,7 @@ jobs:
         id: find_comment
         run: |
           EXISTING_COMMENT=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-            --jq ".[] | select(.body | startswith(\"${{ env.COMMENT_TITLE }}\")) | .id")
+            --jq ".[] | select(.body | startswith(\"$COMMENT_TITLE\")) | .id")
           echo "EXISTING_COMMENT_ID=$EXISTING_COMMENT" >> $GITHUB_ENV
 
       - name: Add or Update Comment
