@@ -124,10 +124,7 @@ const usePaymentFailureSupportModal = ({
       zendeskSupportStart({
         startingRoute: "n/a",
         assistanceType: {
-          payment: true,
-          card: false,
-          fci: false,
-          itWallet: false
+          payment: true
         }
       })
     );

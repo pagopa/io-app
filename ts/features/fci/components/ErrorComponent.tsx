@@ -61,10 +61,7 @@ const ErrorComponent = (props: Props) => {
       zendeskSupportStart({
         startingRoute: "n/a",
         assistanceType: {
-          fci: true,
-          payment: false,
-          card: false,
-          itWallet: false
+          fci: true
         }
       })
     );

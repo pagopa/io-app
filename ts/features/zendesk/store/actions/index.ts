@@ -14,12 +14,12 @@ import {
 import { NetworkError } from "../../../../utils/errors";
 import { FAQsCategoriesType } from "../../../../utils/faq";
 
-export type ZendeskAssistanceType = {
+export type ZendeskAssistanceType = Partial<{
   payment: boolean;
   card: boolean;
   fci: boolean;
   itWallet: boolean;
-};
+}>;
 
 export type ZendeskStartPayload = {
   contextualHelp?: ContextualHelpProps;

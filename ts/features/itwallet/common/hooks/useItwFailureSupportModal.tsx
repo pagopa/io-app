@@ -117,10 +117,7 @@ export const useItwFailureSupportModal = ({
       zendeskSupportStart({
         startingRoute: "n/a",
         assistanceType: {
-          itWallet: true,
-          payment: false,
-          card: false,
-          fci: false
+          itWallet: true
         }
       })
     );
