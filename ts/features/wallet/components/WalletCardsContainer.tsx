@@ -7,6 +7,7 @@ import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import {
   isWalletEmptySelector,
@@ -21,7 +22,6 @@ import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
-import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 
 /**
  * A component which renders the wallet cards container
