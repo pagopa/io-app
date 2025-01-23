@@ -3,9 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { useIOStore } from "../../../../store/hooks";
-import {
-  itwCredentialsEidStatusSelector
-} from "../../credentials/store/selectors";
+import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 import { CredentialIssuanceFailureType } from "./failure";
