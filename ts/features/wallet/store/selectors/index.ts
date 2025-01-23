@@ -168,7 +168,12 @@ export const shouldRenderWalletCategorySelector = createSelector(
 
 /**
  * Determines whether the IT Wallet cards section is rendered in the wallet screen.
+ * The section is rendered if:
+ * - the IT Wallet feature flag is enabled
+ * - the IT Wallet is in a valid lifecycle state
+ * - the IT Wallet WI does not have an error
  */
 export const shouldRenderItwCardsContainerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
+  itwLifecycleIsValidSelector(state) &&
   !itwIsWalletInstanceStatusFailureSelector(state);
