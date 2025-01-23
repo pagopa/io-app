@@ -84,7 +84,7 @@ const InitiativeRulesInfoBoxSkeleton = () => (
 
 const styles = StyleSheet.create({
   infoBox: {
-    borderColor: IOColors.bluegreyLight,
+    borderColor: IOColors["grey-200"],
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 16,

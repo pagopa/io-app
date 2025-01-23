@@ -63,7 +63,7 @@ export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
   },
   unknown: {
     variant: "custom",
-    icon: { name: "infoFilled", color: "grey" },
+    icon: { name: "infoFilled", color: "grey-450" },
     text: I18n.t("features.itWallet.card.status.unknown")
   }
 };

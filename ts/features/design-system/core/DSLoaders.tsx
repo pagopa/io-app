@@ -106,7 +106,7 @@ const CircularProgressViewerBox = () => (
     progress={10}
     size={imgDimension}
     strokeWidth={circleBorderWidth}
-    strokeBgColor={IOColors.greyLight}
+    strokeBgColor={IOColors["grey-100"]}
     strokeColor={IOColors.blue}
   >
     <View style={styles.imgWrapper}>

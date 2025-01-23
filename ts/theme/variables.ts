@@ -52,16 +52,12 @@ const customVariables = {
     Add them to IOColors object, instead.
   */
   brandPrimary: IOColors.blue,
-  brandDanger: IOColors.red,
-  colorHighlight: IOColors.aqua,
 
-  btnLightBorderColor: IOColors.grey,
+  btnLightBorderColor: IOColors["grey-450"],
 
   cardShadow: IOColors.black,
 
-  calendarExpirableColor: IOColors.red,
-
-  itemSeparator: IOColors.bluegreyLight,
+  itemSeparator: IOColors["grey-200"],
 
   toastColor: IOColors.aquaUltraLight,
 
@@ -124,7 +120,7 @@ const customVariables = {
   textLinkWeight: "600" as FontWeight,
 
   // Skeleton/Placeholder
-  colorSkeleton: IOColors.bluegreyLight,
+  colorSkeleton: IOColors["grey-200"],
 
   // Label
   // TODO: Delete the following line after refactor using
@@ -150,7 +146,7 @@ const customVariables = {
   borderRadiusBase: 4,
 
   // Tabs
-  tabUnderlineColor: IOColors.greyUltraLight,
+  tabUnderlineColor: IOColors["grey-50"],
   tabUnderlineHeight: 2,
 
   // Animations

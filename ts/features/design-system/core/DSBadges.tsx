@@ -120,7 +120,7 @@ const renderTag = () => (
         variant="custom"
         icon={{
           name: "categTravel",
-          color: "grey"
+          color: "grey-450"
         }}
       />
     </DSComponentViewerBox>

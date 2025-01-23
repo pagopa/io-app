@@ -126,7 +126,7 @@ export default class ListItemComponent extends Component<Props> {
                     styles.listItemText,
                     {
                       color: this.props.isItemDisabled
-                        ? IOColors.grey
+                        ? IOColors["grey-450"]
                         : IOColors.bluegreyDark
                     }
                   ]}

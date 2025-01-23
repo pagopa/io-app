@@ -19,7 +19,7 @@ export const DistanceSlider = (props: Props) => (
       <H6 color={"bluegrey"}>
         {I18n.t("bonus.cgn.merchantsList.filter.sliderLabel")}
       </H6>
-      <H6 color={"grey"}>
+      <H6 color={"grey-450"}>
         {`${props.value} ${I18n.t(
           "bonus.cgn.merchantsList.filter.sliderUnit"
         )}`}
@@ -36,7 +36,7 @@ export const DistanceSlider = (props: Props) => (
       minimumTrackTintColor={
         props.disabled ? IOColors.bluegreyDark : IOColors.blue
       }
-      maximumTrackTintColor={IOColors.grey}
+      maximumTrackTintColor={IOColors["grey-450"]}
     />
   </>
 );

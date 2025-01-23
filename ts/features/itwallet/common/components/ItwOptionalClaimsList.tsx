@@ -91,7 +91,7 @@ export const ItwOptionalClaimsList = ({ claims, onClaimSelected }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: IOColors.greyUltraLight,
+    backgroundColor: IOColors["grey-50"],
     borderRadius: 8,
     paddingHorizontal: HORIZONTAL_SPACING
   },

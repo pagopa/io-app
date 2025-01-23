@@ -110,7 +110,7 @@ const LegacyTextFields = () => {
           autoCapitalize: "none",
           keyboardType: "default"
         }}
-        overrideBorderColor={IOColors.green}
+        overrideBorderColor={IOColors["success-500"]}
       />
 
       <VSpacer size={24} />
@@ -125,7 +125,7 @@ const LegacyTextFields = () => {
           autoCapitalize: "none",
           keyboardType: "default"
         }}
-        overrideBorderColor={IOColors.red}
+        overrideBorderColor={IOColors["error-600"]}
       />
 
       <VSpacer size={24} />
@@ -188,7 +188,7 @@ const LegacyTextFields = () => {
           iconColor={"red"}
           iconPosition="right"
           isValid={false}
-          overrideBorderColor={IOColors.red}
+          overrideBorderColor={IOColors["error-600"]}
           testID="PinFieldWarning"
         />
         <View

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 10,
     paddingBottom: 10,
-    borderColor: IOColors.greyLight
+    borderColor: IOColors["grey-100"]
   },
   borderedItem: {
     paddingTop: 20,

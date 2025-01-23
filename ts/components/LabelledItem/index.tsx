@@ -84,10 +84,10 @@ export type Props = WithTestID<CommonProp>;
 
 /* TODO: Replace this generated color variable with a value from IOCOlors
 Or Alias Token from variables.ts */
-const brandGrayDarken = color(IOColors.greyUltraLight).darken(0.2).string();
+const brandGrayDarken = color(IOColors["grey-50"]).darken(0.2).string();
 
-type DescriptionColor = "bluegreyLight" | "bluegreyDark" | "red";
-type LabelColor = Exclude<DescriptionColor, "red">;
+type DescriptionColor = "grey-200" | "grey-850" | "error-500";
+type LabelColor = Exclude<DescriptionColor, "error">;
 type ColorByProps = {
   borderColor: string | undefined;
   descriptionColor: DescriptionColor;
@@ -110,19 +110,19 @@ function getColorsByProps({
 }): ColorByProps {
   if (isDisabledTextInput) {
     return {
-      borderColor: IOColors.greyLight,
-      descriptionColor: "bluegreyLight",
-      iconColor: iconColor ?? "bluegreyLight",
-      labelColor: "bluegreyLight",
+      borderColor: IOColors["grey-100"],
+      descriptionColor: "grey-200",
+      iconColor: iconColor ?? "grey-200",
+      labelColor: "grey-200",
       placeholderTextColor: IOColors.bluegreyLight
     };
   }
   return {
     borderColor: hasFocus && isEmpty ? IOColors.bluegrey : undefined,
-    descriptionColor: isValid === false ? "red" : "bluegreyDark",
+    descriptionColor: isValid === false ? "error-500" : "grey-850",
     iconColor: iconColor ?? "bluegrey",
     placeholderTextColor: brandGrayDarken,
-    labelColor: "bluegreyDark"
+    labelColor: "grey-850"
   };
 }
 
