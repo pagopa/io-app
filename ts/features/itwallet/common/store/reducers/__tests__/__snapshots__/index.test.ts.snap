@@ -16,7 +16,6 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
   "lifecycle": 0,
   "preferences": {
     "requestedCredentials": {},
-    "reviewRequested": undefined,
   },
   "walletInstance": {
     "attestation": undefined,
