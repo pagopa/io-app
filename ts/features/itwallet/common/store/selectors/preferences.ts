@@ -51,7 +51,7 @@ export const itwRequestedCredentialsSelector = createSelector(
 );
 
 /**
- * Returns if the review request should be shown.
+ * Returns whether the app review modal should be shown.
  */
-export const itwReviewRequestedSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.reviewRequested;
+export const itwIsPendingReviewSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isPendingReview;

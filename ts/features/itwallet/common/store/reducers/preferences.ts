@@ -6,7 +6,7 @@ import {
   itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
   itwUnflagCredentialAsRequested,
-  itwReviewRequested
+  itwSetReviewPending
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 
@@ -20,7 +20,7 @@ export type ItwPreferencesState = {
   // the date of the last issuance request.
   requestedCredentials: { [credentialType: string]: string };
   // Indicates whether the user should see the modal to review the app.
-  reviewRequested?: boolean;
+  isPendingReview?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -69,10 +69,10 @@ const reducer = (
       return state;
     }
 
-    case getType(itwReviewRequested): {
+    case getType(itwSetReviewPending): {
       return {
         ...state,
-        reviewRequested: action.payload
+        isPendingReview: action.payload
       };
     }
 

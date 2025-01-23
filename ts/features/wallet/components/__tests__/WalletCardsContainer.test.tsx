@@ -489,7 +489,7 @@ describe("OtherWalletCardsContainer", () => {
       .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
 
     jest
-      .spyOn(itwPreferencesSelectors, "itwReviewRequestedSelector")
+      .spyOn(itwPreferencesSelectors, "itwIsPendingReviewSelector")
       .mockImplementation(() => true);
 
     const { queryByTestId } = renderComponent(ItwWalletCardsContainer);

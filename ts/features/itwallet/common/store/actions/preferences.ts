@@ -16,13 +16,13 @@ export const itwUnflagCredentialAsRequested = createStandardAction(
   "ITW_UNFLAG_CREDENTIAL_AS_REQUESTED"
 )<string>();
 
-export const itwReviewRequested = createStandardAction("ITW_REVIEW_REQUESTED")<
-  boolean | undefined
->();
+export const itwSetReviewPending = createStandardAction(
+  "ITW_SET_REVIEW_PENDING"
+)<boolean>();
 
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
   | ActionType<typeof itwFlagCredentialAsRequested>
   | ActionType<typeof itwUnflagCredentialAsRequested>
-  | ActionType<typeof itwReviewRequested>;
+  | ActionType<typeof itwSetReviewPending>;

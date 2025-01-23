@@ -38,8 +38,8 @@ import ItwCredentialNotFound from "../../common/components/ItwCredentialNotFound
 import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { itwReviewRequested } from "../../common/store/actions/preferences";
-import { itwReviewRequestedSelector } from "../../common/store/selectors/preferences";
+import { itwSetReviewPending } from "../../common/store/actions/preferences";
+import { itwIsPendingReviewSelector } from "../../common/store/selectors/preferences";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -59,21 +59,21 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
   );
-  const reviewRequested = useIOSelector(itwReviewRequestedSelector);
+  const isPendingReview = useIOSelector(itwIsPendingReviewSelector);
 
   useFocusEffect(
     React.useCallback(() => {
-      /* The initial state of reviewRequested is undefined,
+      /* The initial state of isPendingReview is undefined,
        * it means the driving license detail has never been viewed.
        * It is set to true only the first time the driving license detail is viewed.
        */
       if (
         credentialType === CredentialType.DRIVING_LICENSE &&
-        reviewRequested === undefined
+        isPendingReview === undefined
       ) {
-        dispatch(itwReviewRequested(true));
+        dispatch(itwSetReviewPending(true));
       }
-    }, [credentialType, reviewRequested, dispatch])
+    }, [credentialType, isPendingReview, dispatch])
   );
 
   if (O.isNone(credentialOption)) {
