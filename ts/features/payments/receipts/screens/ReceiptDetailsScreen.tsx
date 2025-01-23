@@ -32,6 +32,7 @@ import {
 export type ReceiptDetailsScreenParams = {
   transactionId: string;
   isPayer?: boolean;
+  isCart?: boolean;
 };
 
 export type ReceiptDetailsScreenProps = RouteProp<
@@ -61,7 +62,7 @@ const ReceiptDetailsScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute<ReceiptDetailsScreenProps>();
-  const { transactionId, isPayer } = route.params;
+  const { transactionId, isPayer, isCart } = route.params;
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const transactionDetailsPot = useIOSelector(walletReceiptDetailsPotSelector);
   const transactionReceiptPot = useIOSelector(walletReceiptPotSelector);
@@ -151,12 +152,15 @@ const ReceiptDetailsScreen = () => {
     );
   }
 
+  const showGenerateReceiptButton =
+    transactionDetails?.infoNotice?.origin !== OriginEnum.PM && !isCart;
+
   return (
     <IOScrollView
       includeContentMargins={false}
       animatedRef={animatedScrollViewRef}
       actions={
-        transactionDetails?.infoNotice?.origin !== OriginEnum.PM
+        showGenerateReceiptButton
           ? {
               type: "SingleButton",
               primary: {
@@ -181,6 +185,7 @@ const ReceiptDetailsScreen = () => {
         />
         <WalletTransactionInfoSection
           transaction={transactionDetails}
+          showUnavailableReceiptBanner={!showGenerateReceiptButton}
           loading={isLoading}
         />
         <HideReceiptButton transactionId={transactionId} />
