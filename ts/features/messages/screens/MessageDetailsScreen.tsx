@@ -34,6 +34,7 @@ import { MessageDetailsHeader } from "../components/MessageDetail/MessageDetails
 import I18n from "../../../i18n";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
+import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
 import { cleanMarkdownFromCTAs, getMessageCTA } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
@@ -48,8 +49,10 @@ import {
   trackPNOptInMessageOpened
 } from "../../pn/analytics";
 import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { generateMessagesAndServicesRules } from "../../../components/IOMarkdown/customRules";
+import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../store/reducers/persistedPreferences";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -77,6 +80,10 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const scrollViewRef = useRef<ScrollView>(null);
+
+  const useIOMarkdown = useIOSelector(
+    isIOMarkdownEnabledOnMessagesAndServicesSelector
+  );
 
   const message = pipe(
     useIOSelector(state => getPaginatedMessageById(state, messageId)),
@@ -211,10 +218,22 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               messageId={messageId}
               title={subject}
             />
-            <IOMarkdown
-              content={markdownWithNoCTA}
-              rules={generateMessagesAndServicesRules(linkTo)}
-            />
+            {useIOMarkdown ? (
+              <IOMarkdown
+                content={markdownWithNoCTA}
+                rules={generateMessagesAndServicesRules(linkTo)}
+              />
+            ) : (
+              <MessageMarkdown
+                onLoadEnd={() => {
+                  setTimeout(() => {
+                    setAccessibilityFocus(scrollViewRef);
+                  }, 100);
+                }}
+              >
+                {markdownWithNoCTA}
+              </MessageMarkdown>
+            )}
             <MessageDetailsPayment
               messageId={messageId}
               serviceId={serviceId}
