@@ -94,7 +94,12 @@ export const preconditionReducer = (
             action.payload.reason
           ), // From Retrieving Data to Error
         () => state,
-        () => state,
+        shownStatus =>
+          toErrorMPS(
+            shownStatus.messageId,
+            shownStatus.categoryTag,
+            action.payload.reason
+          ), // From Retrieving Data to Error,
         () => state
       )(state);
     case getType(idlePreconditionStatusAction):

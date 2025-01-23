@@ -73,7 +73,7 @@ const PreconditionsContentMarkdown = () => {
     return null;
   }
   return useIOMarkdown ? (
-    <IOMarkdown content={markdown} />
+    <IOMarkdown content={markdown} onError={onErrorCallback} />
   ) : (
     <MessageMarkdown
       loadingLines={7}
