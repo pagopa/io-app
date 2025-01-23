@@ -43,7 +43,7 @@ jobs:
             PR_TITLE="$TITLE"
             ISSUES_STR=$(awk -F'\\[|\\]' '{print $2}' <<< "$PR_TITLE" | sed "s/#//g")
             IFS=',' read -ra ISSUES <<< "$ISSUES_STR"
-            JIRA_COMMENT_MARKDOWN="${{ env.COMMENT_TITLE }}"$'\n\n'
+            JIRA_COMMENT_MARKDOWN="$COMMENT_TITLE"$'\n\n'
             JIRA_COMMENT_MARKDOWN+="This Pull Request refers to Jira issues:"$'\n'
 
             for ISSUE in "${ISSUES[@]}"; do
