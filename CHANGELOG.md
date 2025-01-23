@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.81.0-rc.7](https://github.com/pagopa/io-app/compare/2.81.0-rc.6...2.81.0-rc.7) (2025-01-22)
+
+
+### Features
+
+* **privacy:** [[IOPID-2609](https://pagopa.atlassian.net/browse/IOPID-2609)] Disable screenshots and recordings in PinCreation and CiePinScreen components ([#6628](https://github.com/pagopa/io-app/issues/6628)) ([8395b5d](https://github.com/pagopa/io-app/commit/8395b5d594ee6c4e40b19e5b3e661cbdecf5674b))
+
+
+### Bug Fixes
+
+* **C r o s s:** [[IOAPPX-464](https://pagopa.atlassian.net/browse/IOAPPX-464)] Context space handling inside PR Title ([#6626](https://github.com/pagopa/io-app/issues/6626)) ([7667aac](https://github.com/pagopa/io-app/commit/7667aacb0bc0e69bf7c31408363cf19ce91ad056))
+* **IT Wallet:** [[SIW-1959](https://pagopa.atlassian.net/browse/SIW-1959)] Remove ITW credentials placeholders from wallet ([#6620](https://github.com/pagopa/io-app/issues/6620)) ([f808e29](https://github.com/pagopa/io-app/commit/f808e29389d0a1ea6ab31cf4738fb676b0576114))
+* **IT Wallet:** [[SIW-1986](https://pagopa.atlassian.net/browse/SIW-1986)] Persist ITW store after logout ([#6619](https://github.com/pagopa/io-app/issues/6619)) ([3409b7a](https://github.com/pagopa/io-app/commit/3409b7ad53d2fdb67941dd8b1d0915a9fe06402c))
+
 ## [2.81.0-rc.6](https://github.com/pagopa/io-app/compare/2.81.0-rc.5...2.81.0-rc.6) (2025-01-21)
 
 
