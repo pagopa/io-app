@@ -26,6 +26,7 @@ const WebviewComponent = (props: Props) => {
     setLoading(true);
     if (ref.current) {
       ref.current.reload();
+      ref.current.clearCache?.(true);
     }
   };
 
