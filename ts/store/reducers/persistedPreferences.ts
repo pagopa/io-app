@@ -206,8 +206,9 @@ export const isIdPayTestEnabledSelector = (state: GlobalState) =>
 export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled ?? false;
 
-export const isIOMarkdownEnabledOnMessagesAndServices = (state: GlobalState) =>
-  state.persistedPreferences.isIOMarkdownEnabledOnMessagesAndServices;
+export const isIOMarkdownEnabledOnMessagesAndServicesSelector = (
+  state: GlobalState
+) => state.persistedPreferences.isIOMarkdownEnabledOnMessagesAndServices;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

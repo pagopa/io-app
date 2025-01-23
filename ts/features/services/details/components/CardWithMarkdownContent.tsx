@@ -5,6 +5,15 @@ import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { generateMessagesAndServicesRules } from "../../../../components/IOMarkdown/customRules";
+import { useIOSelector } from "../../../../store/hooks";
+import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../../store/reducers/persistedPreferences";
+import { Markdown } from "../../../../components/ui/Markdown/Markdown";
+
+const CSS_STYLE = `
+  body {
+    line-height: 1.5;
+  }
+`;
 
 const styles = StyleSheet.create({
   card: {
@@ -41,14 +50,24 @@ const CardWithMarkdownContent = memo(
   ({ content }: CardWithMarkdownContentProps) => {
     const linkTo = useLinkTo();
 
-    return (
-      <CardWrapper>
-        <IOMarkdown
-          content={content}
-          rules={generateMessagesAndServicesRules(linkTo)}
-        />
-      </CardWrapper>
+    const isIOMarkdownEnabledOnMessagesAndServices = useIOSelector(
+      isIOMarkdownEnabledOnMessagesAndServicesSelector
     );
+
+    const renderContent = () => {
+      if (isIOMarkdownEnabledOnMessagesAndServices) {
+        return (
+          <IOMarkdown
+            content={content}
+            rules={generateMessagesAndServicesRules(linkTo)}
+          />
+        );
+      }
+
+      return <Markdown cssStyle={CSS_STYLE}>{content}</Markdown>;
+    };
+
+    return <CardWrapper>{renderContent()}</CardWrapper>;
   }
 );
 

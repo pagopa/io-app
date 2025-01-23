@@ -44,7 +44,7 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayTestEnabledSelector,
-  isIOMarkdownEnabledOnMessagesAndServices,
+  isIOMarkdownEnabledOnMessagesAndServicesSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -306,7 +306,7 @@ const DesignSystemSection = () => {
   const { themeType, setTheme } = useIOThemeContext();
 
   const ioMarkdownEnabledOnMessagesAndServices = useIOSelector(
-    isIOMarkdownEnabledOnMessagesAndServices
+    isIOMarkdownEnabledOnMessagesAndServicesSelector
   );
 
   return (
