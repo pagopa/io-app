@@ -51,7 +51,7 @@ jobs:
 
       - name: Add or Update Comment
         run: |
-          COMMENT_BODY="${{ env.COMMENT_TITLE }}"$'\n\n'
+          COMMENT_BODY="$COMMENT_TITLE"$'\n\n'
           if [[ "${{ env.VALIDATION_RESULT }}" == "success" ]]; then
             COMMENT_BODY+=":white_check_mark: **All good!** PR title follows the conventional commit type."
           elif [[ "${{ env.VALIDATION_RESULT }}" == "warning" ]]; then
