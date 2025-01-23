@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { itwIsPendingReviewSelector } from "../store/selectors/preferences";
 import { itwSetReviewPending } from "../store/actions/preferences";
 import { requestAppReview } from "../../../../utils/storeReview";
-import { Alert } from "react-native";
 
 /**
  * Hook to monitor isPendingReview state and request an app review if needed.
@@ -15,12 +14,9 @@ export const useItwPendingReviewRequest = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
-  console.log("useItwPendingReviewRequest", isPendingReview, isFocused);
-
   useEffect(() => {
     if (isPendingReview && isFocused) {
-      Alert.alert("Review requested");
-      //requestAppReview();
+      requestAppReview();
       dispatch(itwSetReviewPending(false));
     }
   }, [isPendingReview, dispatch, isFocused]);
