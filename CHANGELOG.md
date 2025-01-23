@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.81.0-rc.8](https://github.com/pagopa/io-app/compare/2.81.0-rc.7...2.81.0-rc.8) (2025-01-23)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1958](https://pagopa.atlassian.net/browse/SIW-1958),[SIW-1974](https://pagopa.atlassian.net/browse/SIW-1974)] Issuance failure support bottom sheet with Zendesk integration ([#6605](https://github.com/pagopa/io-app/issues/6605)) ([d72920c](https://github.com/pagopa/io-app/commit/d72920c83b3dc8f0d0de53324a78654f655e4b01))
+
+
+### Bug Fixes
+
+* **ITWallet:** [[SIW-1985](https://pagopa.atlassian.net/browse/SIW-1985)] Fix "ladybug" debugging tool issues ([#6611](https://github.com/pagopa/io-app/issues/6611)) ([6575527](https://github.com/pagopa/io-app/commit/65755274ccb80d23a2d276c6b45816435afe4e69))
+
+
+### Chores
+
+* **CGN:** [[PE-916](https://pagopa.atlassian.net/browse/PE-916)] Clear cache when reloading CGN webview component ([#6632](https://github.com/pagopa/io-app/issues/6632)) ([d5ae637](https://github.com/pagopa/io-app/commit/d5ae637661f68ece3742124f2e408afcd47ac02c))
+* [[IOBP-1149](https://pagopa.atlassian.net/browse/IOBP-1149)] Hide download receipt button if the transaction is of cart type ([#6629](https://github.com/pagopa/io-app/issues/6629)) ([bb33c2f](https://github.com/pagopa/io-app/commit/bb33c2fe14ad7c0d45e636da6ec715a0ade14bb4))
+* [[IOBP-1151](https://pagopa.atlassian.net/browse/IOBP-1151)] Move tests and snapshots to the correct folder ([#6631](https://github.com/pagopa/io-app/issues/6631)) ([7f5ccee](https://github.com/pagopa/io-app/commit/7f5ccee2cd8ea419c526f0825df85807ae5e2955))
+
+## [2.81.0-rc.7](https://github.com/pagopa/io-app/compare/2.81.0-rc.6...2.81.0-rc.7) (2025-01-22)
+
+
+### Features
+
+* **privacy:** [[IOPID-2609](https://pagopa.atlassian.net/browse/IOPID-2609)] Disable screenshots and recordings in PinCreation and CiePinScreen components ([#6628](https://github.com/pagopa/io-app/issues/6628)) ([8395b5d](https://github.com/pagopa/io-app/commit/8395b5d594ee6c4e40b19e5b3e661cbdecf5674b))
+
+
+### Bug Fixes
+
+* **C r o s s:** [[IOAPPX-464](https://pagopa.atlassian.net/browse/IOAPPX-464)] Context space handling inside PR Title ([#6626](https://github.com/pagopa/io-app/issues/6626)) ([7667aac](https://github.com/pagopa/io-app/commit/7667aacb0bc0e69bf7c31408363cf19ce91ad056))
+* **IT Wallet:** [[SIW-1959](https://pagopa.atlassian.net/browse/SIW-1959)] Remove ITW credentials placeholders from wallet ([#6620](https://github.com/pagopa/io-app/issues/6620)) ([f808e29](https://github.com/pagopa/io-app/commit/f808e29389d0a1ea6ab31cf4738fb676b0576114))
+* **IT Wallet:** [[SIW-1986](https://pagopa.atlassian.net/browse/SIW-1986)] Persist ITW store after logout ([#6619](https://github.com/pagopa/io-app/issues/6619)) ([3409b7a](https://github.com/pagopa/io-app/commit/3409b7ad53d2fdb67941dd8b1d0915a9fe06402c))
+
 ## [2.81.0-rc.6](https://github.com/pagopa/io-app/compare/2.81.0-rc.5...2.81.0-rc.6) (2025-01-21)
 
 

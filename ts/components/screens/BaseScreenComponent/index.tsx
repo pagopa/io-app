@@ -102,9 +102,12 @@ const BaseScreenComponent = ({
               contextualHelp,
               contextualHelpMarkdown,
               startingRoute: currentScreenName,
-              assistanceForPayment: false,
-              assistanceForCard: false,
-              assistanceForFci: false
+              assistanceType: {
+                payment: false,
+                card: false,
+                fci: false,
+                itWallet: false
+              }
             })
           );
         };
