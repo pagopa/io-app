@@ -30,7 +30,8 @@ import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
   IssuanceFailureType.UNEXPECTED,
-  IssuanceFailureType.WALLET_PROVIDER_GENERIC
+  IssuanceFailureType.WALLET_PROVIDER_GENERIC,
+  IssuanceFailureType.UNSUPPORTED_DEVICE
 ];
 
 export const ItwIssuanceEidFailureScreen = () => {
@@ -123,29 +124,37 @@ const ContentView = ({ failure }: ContentViewProps) => {
         case IssuanceFailureType.UNSUPPORTED_DEVICE:
           return {
             title: I18n.t("features.itWallet.unsupportedDevice.error.title"),
-            subtitle: I18n.t("features.itWallet.unsupportedDevice.error.body"),
+            subtitle: [
+              {
+                text: I18n.t("features.itWallet.unsupportedDevice.error.body")
+              },
+              {
+                text: I18n.t(
+                  "features.itWallet.unsupportedDevice.error.primaryAction"
+                ),
+                asLink: true,
+                weight: "Semibold",
+                onPress: () => {
+                  openWebUrl(FAQ_URL, () =>
+                    toast.error(I18n.t("global.jserror.title"))
+                  );
+                }
+              }
+            ],
             pictogram: "workInProgress",
-            action: {
+            action: supportModalAction,
+            secondaryAction: {
               label: I18n.t(
-                "features.itWallet.unsupportedDevice.error.primaryAction"
+                "features.itWallet.unsupportedDevice.error.secondaryAction"
               ),
               onPress: () =>
                 closeIssuance({
                   reason: failure.reason,
                   cta_category: "custom_1",
                   cta_id: I18n.t(
-                    "features.itWallet.unsupportedDevice.error.primaryAction"
+                    "features.itWallet.unsupportedDevice.error.secondaryAction"
                   )
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-            },
-            secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.unsupportedDevice.error.secondaryAction"
-              ),
-              onPress: () =>
-                openWebUrl(FAQ_URL, () =>
-                  toast.error(I18n.t("global.jserror.title"))
-                )
             }
           };
         case IssuanceFailureType.NOT_MATCHING_IDENTITY:
