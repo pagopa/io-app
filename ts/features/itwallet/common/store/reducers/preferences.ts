@@ -24,8 +24,7 @@ export type ItwPreferencesState = {
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
-  requestedCredentials: {},
-  reviewRequested: undefined
+  requestedCredentials: {}
 };
 
 const reducer = (
