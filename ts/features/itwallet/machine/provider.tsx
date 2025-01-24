@@ -38,7 +38,7 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
   });
 
   const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({
-    guards: createCredentialIssuanceGuardsImplementation(),
+    guards: createCredentialIssuanceGuardsImplementation(store),
     actions: createCredentialIssuanceActionsImplementation(
       navigation,
       store,
