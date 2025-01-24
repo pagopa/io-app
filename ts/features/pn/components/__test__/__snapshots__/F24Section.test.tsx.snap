@@ -335,6 +335,8 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                       }
                     >
                       <View
+                        accessibilityLabel="Modelli F24"
+                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -344,6 +346,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -360,9 +363,9 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                             }
                           >
                             <View
-                              accessibilityLabel="Modelli F24"
-                              accessibilityRole="header"
+                              accessibilityElementsHidden={false}
                               accessible={true}
+                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
@@ -2414,6 +2417,8 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                       }
                     >
                       <View
+                        accessibilityLabel="Modelli F24"
+                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -2423,6 +2428,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -2439,9 +2445,9 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Modelli F24"
-                              accessibilityRole="header"
+                              accessibilityElementsHidden={false}
                               accessible={true}
+                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}

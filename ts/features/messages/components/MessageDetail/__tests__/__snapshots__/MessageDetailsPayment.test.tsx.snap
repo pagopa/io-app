@@ -688,6 +688,8 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                         }
                       />
                       <View
+                        accessibilityLabel="pagoPA notices"
+                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -697,6 +699,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -713,9 +716,9 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                             }
                           >
                             <View
-                              accessibilityLabel="pagoPA notices"
-                              accessibilityRole="header"
+                              accessibilityElementsHidden={false}
                               accessible={true}
+                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}

@@ -681,6 +681,8 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                       }
                     >
                       <View
+                        accessibilityLabel="Avvisi pagoPA"
+                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -690,6 +692,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -706,9 +709,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             }
                           >
                             <View
-                              accessibilityLabel="Avvisi pagoPA"
-                              accessibilityRole="header"
+                              accessibilityElementsHidden={false}
                               accessible={true}
+                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
@@ -2861,6 +2864,8 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                       }
                     >
                       <View
+                        accessibilityLabel="Avvisi pagoPA"
+                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -2870,6 +2875,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -2886,9 +2892,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             }
                           >
                             <View
-                              accessibilityLabel="Avvisi pagoPA"
-                              accessibilityRole="header"
+                              accessibilityElementsHidden={false}
                               accessible={true}
+                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
@@ -5387,6 +5393,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                       }
                     >
                       <View
+                        accessibilityLabel="Avvisi pagoPA"
+                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -5396,6 +5404,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -5412,9 +5421,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             }
                           >
                             <View
-                              accessibilityLabel="Avvisi pagoPA"
-                              accessibilityRole="header"
+                              accessibilityElementsHidden={false}
                               accessible={true}
+                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
@@ -7020,6 +7029,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                       }
                     >
                       <View
+                        accessibilityLabel="Avvisi pagoPA"
+                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -7029,6 +7040,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -7045,9 +7057,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             }
                           >
                             <View
-                              accessibilityLabel="Avvisi pagoPA"
-                              accessibilityRole="header"
+                              accessibilityElementsHidden={false}
                               accessible={true}
+                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
@@ -8653,6 +8665,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                       }
                     >
                       <View
+                        accessibilityLabel="Avvisi pagoPA"
+                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -8662,6 +8676,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -8678,9 +8693,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             }
                           >
                             <View
-                              accessibilityLabel="Avvisi pagoPA"
-                              accessibilityRole="header"
+                              accessibilityElementsHidden={false}
                               accessible={true}
+                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
@@ -10411,6 +10426,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                       }
                     >
                       <View
+                        accessibilityLabel="Avvisi pagoPA"
+                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -10420,6 +10437,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -10436,9 +10454,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             }
                           >
                             <View
-                              accessibilityLabel="Avvisi pagoPA"
-                              accessibilityRole="header"
+                              accessibilityElementsHidden={false}
                               accessible={true}
+                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
@@ -12169,6 +12187,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                       }
                     >
                       <View
+                        accessibilityLabel="Avvisi pagoPA"
+                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -12178,6 +12198,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -12194,9 +12215,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                             }
                           >
                             <View
-                              accessibilityLabel="Avvisi pagoPA"
-                              accessibilityRole="header"
+                              accessibilityElementsHidden={false}
                               accessible={true}
+                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
@@ -12790,6 +12811,8 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                       }
                     >
                       <View
+                        accessibilityLabel="Avvisi pagoPA"
+                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -12799,6 +12822,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -12815,9 +12839,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                             }
                           >
                             <View
-                              accessibilityLabel="Avvisi pagoPA"
-                              accessibilityRole="header"
+                              accessibilityElementsHidden={false}
                               accessible={true}
+                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
