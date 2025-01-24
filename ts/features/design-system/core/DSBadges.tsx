@@ -80,7 +80,7 @@ const renderBadge = () => (
     <DSComponentViewerBox name={"Badge · Contrast variant"}>
       <View
         style={{
-          backgroundColor: IOColors.bluegrey,
+          backgroundColor: IOColors["grey-700"],
           padding: 16,
           borderRadius: 24,
           borderCurve: "continuous"

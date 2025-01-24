@@ -4,6 +4,7 @@ import {
   ContentWrapper,
   GradientBottomActions,
   H2,
+  IOColors,
   IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
@@ -55,7 +56,7 @@ type Props = OwnProps &
 const CSS_STYLE = `
 body {
   font-size: ${customVariables.fontSizeBase}px;
-  color: ${customVariables.textColorDark}
+  color: ${IOColors["grey-850"]}
 }
 
 h4 {
@@ -88,7 +89,7 @@ const getTosFooter = (
               // if tos is defined and the regolation url is not defined
               // return the link (BONUS VACANZE)
               <>
-                <Body color="bluegreyDark">
+                <Body color="grey-850">
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </Body>
                 <Body

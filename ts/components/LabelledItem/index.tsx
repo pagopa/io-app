@@ -114,13 +114,13 @@ function getColorsByProps({
       descriptionColor: "grey-200",
       iconColor: iconColor ?? "grey-200",
       labelColor: "grey-200",
-      placeholderTextColor: IOColors.bluegreyLight
+      placeholderTextColor: IOColors["grey-200"]
     };
   }
   return {
-    borderColor: hasFocus && isEmpty ? IOColors.bluegrey : undefined,
+    borderColor: hasFocus && isEmpty ? IOColors["grey-700"] : undefined,
     descriptionColor: isValid === false ? "error-500" : "grey-850",
-    iconColor: iconColor ?? "bluegrey",
+    iconColor: iconColor ?? "grey-700",
     placeholderTextColor: brandGrayDarken,
     labelColor: "grey-850"
   };

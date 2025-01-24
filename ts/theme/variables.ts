@@ -5,11 +5,10 @@
  * directory).
  */
 
+import { IOColors } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Platform } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
 import { FontWeight, makeFontStyleObject } from "./fonts";
-import { ThemeSimpleValue } from "./types";
 
 export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 
@@ -38,10 +37,6 @@ const customVariables = {
 
   btnBorderRadius: 4,
 
-  get btnLightTextColor(): ThemeSimpleValue {
-    return this.textColor;
-  },
-
   // Inputs (after removing `native-base` dependency)
   // Source: https://docs-v2.nativebase.io/docs/ThemeVariables.html
   inputHeightBase: 50,
@@ -53,13 +48,9 @@ const customVariables = {
   */
   brandPrimary: IOColors.blue,
 
-  btnLightBorderColor: IOColors["grey-450"],
-
   cardShadow: IOColors.black,
 
   itemSeparator: IOColors["grey-200"],
-
-  toastColor: IOColors.aquaUltraLight,
 
   // Font
   ...makeFontStyleObject(Platform.select),
@@ -103,24 +94,16 @@ const customVariables = {
   headerBodyFontSize: 14,
   headerBodyFontWeight: "600" as FontWeight,
 
-  get toolbarTextColor(): ThemeSimpleValue {
-    return this.textColor;
-  },
   androidStatusBarColor: IOColors.white,
 
   // Text
-  textColor: IOColors.bluegrey,
-  textColorDark: IOColors.bluegreyDark,
-  textLinkColor: IOColors.blue,
+  textColor: IOColors["grey-700"],
   textMessageDetailLinkColor: "#0073E6",
   // TODO: Delete the following variables after refactor using
   // the new Text component (not from NativeBase)
   textNormalWeight: "400" as FontWeight,
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
-
-  // Skeleton/Placeholder
-  colorSkeleton: IOColors["grey-200"],
 
   // Label
   // TODO: Delete the following line after refactor using
@@ -144,10 +127,6 @@ const customVariables = {
 
   // Border radius
   borderRadiusBase: 4,
-
-  // Tabs
-  tabUnderlineColor: IOColors["grey-50"],
-  tabUnderlineHeight: 2,
 
   // Animations
   activeOpacity: 0.25,

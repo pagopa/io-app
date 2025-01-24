@@ -123,7 +123,7 @@ const TimelineComponentSkeleton = ({ size = 3 }: Pick<Props, "size">) => (
 const EmptyTimelineComponent = () => (
   <BodySmall
     weight="Regular"
-    color="bluegreyDark"
+    color="grey-850"
     testID="IDPayEmptyTimelineTestID"
   >
     {I18n.t(

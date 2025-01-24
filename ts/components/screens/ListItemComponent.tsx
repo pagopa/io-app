@@ -127,7 +127,7 @@ export default class ListItemComponent extends Component<Props> {
                     {
                       color: this.props.isItemDisabled
                         ? IOColors["grey-450"]
-                        : IOColors.bluegreyDark
+                        : IOColors["grey-850"]
                     }
                   ]}
                   numberOfLines={2}

@@ -19,32 +19,6 @@ import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-// const styles = StyleSheet.create({
-//   tabBarContainer: {
-//     elevation: 0,
-//     height: 40
-//   },
-//   tabBarUnderline: {
-//     borderBottomColor: customVariables.tabUnderlineColor,
-//     borderBottomWidth: customVariables.tabUnderlineHeight
-//   },
-//   tabBarUnderlineActive: {
-//     height: customVariables.tabUnderlineHeight,
-//     // borders do not overlap each other, but stack naturally
-//     marginBottom: -customVariables.tabUnderlineHeight,
-//     backgroundColor: customVariables.contentPrimaryBackground
-//   },
-//   activeTextStyle: {
-//     ...makeFontStyleObject("Semibold"),
-//     fontSize: Platform.OS === "android" ? 16 : undefined,
-//     fontWeight: Platform.OS === "android" ? "normal" : "bold",
-//     color: customVariables.brandPrimary
-//   },
-//   textStyle: {
-//     color: customVariables.textColor
-//   }
-// });
-
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
  *

@@ -27,6 +27,7 @@ import { remarkProcessor } from "../../../utils/markdown";
 import { closeInjectedScript } from "../../../utils/webview";
 import { MarkdownWebviewComponent } from "./MarkdownWebviewComponent";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
+import { IOColors } from "@pagopa/io-app-design-system";
 
 const INJECTED_JAVASCRIPT = `
 ${NOTIFY_LINK_CLICK_SCRIPT}
@@ -86,7 +87,7 @@ a {
 }
 
 div.custom-block.io-demo-block {
-  background-color: ${customVariables.toastColor};
+  background-color: ${IOColors["turquoise-100"]};
   border-radius: 4px;
   margin-bottom: 32px;
   padding: 4px 8px;

@@ -202,9 +202,7 @@ const LegacyTextFields = () => {
         </View>
       </View>
 
-      <H4 color={"bluegrey"} style={{ marginBottom: 12, marginTop: 48 }}>
-        Authentication
-      </H4>
+      <H4 style={{ marginBottom: 12, marginTop: 48 }}>Authentication</H4>
 
       <LabelledItem
         label={"Username"}
@@ -227,9 +225,7 @@ const LegacyTextFields = () => {
         }}
       />
 
-      <H4 color={"bluegrey"} style={{ marginBottom: 12, marginTop: 48 }}>
-        Payments
-      </H4>
+      <H4 style={{ marginBottom: 12, marginTop: 48 }}>Payments</H4>
       <LabelledItem
         label={"Card number"}
         icon={detectedBrand.iconForm}

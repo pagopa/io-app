@@ -620,7 +620,7 @@ const renderListItemTransaction = () => (
         transaction={{
           badge: getBadgePropsByTransactionStatus("refunded")
         }}
-        paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
+        paymentLogoIcon={<Icon name="refund" />}
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>

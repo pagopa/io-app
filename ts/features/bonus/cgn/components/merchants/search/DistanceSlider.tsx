@@ -16,9 +16,7 @@ const MIN_VALUE = 1;
 export const DistanceSlider = (props: Props) => (
   <>
     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-      <H6 color={"bluegrey"}>
-        {I18n.t("bonus.cgn.merchantsList.filter.sliderLabel")}
-      </H6>
+      <H6>{I18n.t("bonus.cgn.merchantsList.filter.sliderLabel")}</H6>
       <H6 color={"grey-450"}>
         {`${props.value} ${I18n.t(
           "bonus.cgn.merchantsList.filter.sliderUnit"
@@ -34,7 +32,7 @@ export const DistanceSlider = (props: Props) => (
       step={1}
       onValueChange={props.onValueChange}
       minimumTrackTintColor={
-        props.disabled ? IOColors.bluegreyDark : IOColors.blue
+        props.disabled ? IOColors["grey-850"] : IOColors.blue
       }
       maximumTrackTintColor={IOColors["grey-450"]}
     />

@@ -213,10 +213,10 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
               numberOfLines={1}
               accessible={true}
               accessibilityRole={"header"}
-              color={titleColor === "white" ? "white" : "bluegrey"}
+              color={titleColor === "white" ? "white" : "grey-700"}
             >
               {/* TODO: titleColor prop is pretty useless because
-              we have two colors: dark (bluegrey) and light (white).
+              we have two colors: dark (grey-700) and light (white).
               We don't have any color values other than these two. */}
               {l}
             </Body>
@@ -249,7 +249,7 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
           backgroundColor
             ? backgroundColor
             : dark
-            ? IOColors.bluegrey
+            ? IOColors["grey-700"]
             : primary
             ? IOColors.blue
             : IOColors.white
