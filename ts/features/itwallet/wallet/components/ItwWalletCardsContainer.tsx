@@ -91,6 +91,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             <ItwWalletReadyBanner />
             <ItwEidLifecycleAlert
               lifecycleStatus={["jwtExpiring", "jwtExpired"]}
+              navigation={navigation}
             />
           </>
         }
