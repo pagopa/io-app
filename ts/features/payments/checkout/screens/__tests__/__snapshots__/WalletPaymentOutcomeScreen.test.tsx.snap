@@ -600,8 +600,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -611,7 +609,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -628,9 +625,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -833,8 +830,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -844,7 +839,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -861,9 +855,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -896,7 +890,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -2757,8 +2751,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -2768,7 +2760,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -2785,9 +2776,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -2990,8 +2981,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -3001,7 +2990,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -3018,9 +3006,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -3053,7 +3041,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -4895,8 +4883,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -4906,7 +4892,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -4923,9 +4908,9 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -5128,8 +5113,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -5139,7 +5122,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -5156,9 +5138,9 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -5191,7 +5173,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -7018,8 +7000,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -7029,7 +7009,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -7046,9 +7025,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -7251,8 +7230,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -7262,7 +7239,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -7279,9 +7255,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -7314,7 +7290,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -9155,8 +9131,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -9166,7 +9140,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -9183,9 +9156,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -9388,8 +9361,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -9399,7 +9370,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -9416,9 +9386,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -9451,7 +9421,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -11360,8 +11330,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -11371,7 +11339,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -11388,9 +11355,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -11593,8 +11560,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -11604,7 +11569,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -11621,9 +11585,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -11656,7 +11620,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -13537,8 +13501,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -13548,7 +13510,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -13565,9 +13526,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -13770,8 +13731,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -13781,7 +13740,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -13798,9 +13756,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -13833,7 +13791,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -15660,8 +15618,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -15671,7 +15627,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -15688,9 +15643,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -15893,8 +15848,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -15904,7 +15857,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -15921,9 +15873,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -15956,7 +15908,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -17733,8 +17685,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -17744,7 +17694,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -17761,9 +17710,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -17966,8 +17915,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -17977,7 +17924,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -17994,9 +17940,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -18029,7 +17975,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -19890,8 +19836,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -19901,7 +19845,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -19918,9 +19861,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -20123,8 +20066,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -20134,7 +20075,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -20151,9 +20091,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -20186,7 +20126,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -22027,8 +21967,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -22038,7 +21976,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -22055,9 +21992,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -22260,8 +22197,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -22271,7 +22206,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -22288,9 +22222,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -22323,7 +22257,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -24184,8 +24118,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -24195,7 +24127,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -24212,9 +24143,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -24417,8 +24348,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -24428,7 +24357,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -24445,9 +24373,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -24480,7 +24408,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -26389,8 +26317,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -26400,7 +26326,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -26417,9 +26342,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -26622,8 +26547,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -26633,7 +26556,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -26650,9 +26572,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -26685,7 +26607,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -28546,8 +28468,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -28557,7 +28477,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -28574,9 +28493,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -28779,8 +28698,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -28790,7 +28707,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -28807,9 +28723,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -28842,7 +28758,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -30703,8 +30619,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -30714,7 +30628,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -30731,9 +30644,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -30936,8 +30849,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -30947,7 +30858,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -30964,9 +30874,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -30999,7 +30909,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -32868,8 +32778,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -32879,7 +32787,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -32896,9 +32803,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -33101,8 +33008,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -33112,7 +33017,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -33129,9 +33033,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -33164,7 +33068,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -35005,8 +34909,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -35016,7 +34918,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -35033,9 +34934,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -35238,8 +35139,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -35249,7 +35148,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -35266,9 +35164,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -35301,7 +35199,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -37212,8 +37110,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -37223,7 +37119,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -37240,9 +37135,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -37445,8 +37340,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -37456,7 +37349,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -37473,9 +37365,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -37508,7 +37400,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -39349,8 +39241,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -39360,7 +39250,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -39377,9 +39266,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -39582,8 +39471,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -39593,7 +39480,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -39610,9 +39496,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -39645,7 +39531,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -41604,8 +41490,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -41615,7 +41499,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -41632,9 +41515,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -41837,8 +41720,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -41848,7 +41729,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -41865,9 +41745,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -41900,7 +41780,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -43895,8 +43775,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -43906,7 +43784,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -43923,9 +43800,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -44128,8 +44005,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -44139,7 +44014,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -44156,9 +44030,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -44191,7 +44065,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -46103,8 +45977,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -46114,7 +45986,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -46131,9 +46002,9 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -46336,8 +46207,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -46347,7 +46216,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -46364,9 +46232,9 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -46399,7 +46267,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -48372,8 +48240,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -48383,7 +48249,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -48400,9 +48265,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -48605,8 +48470,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -48616,7 +48479,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -48633,9 +48495,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -48668,7 +48530,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -50495,8 +50357,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -50506,7 +50366,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -50523,9 +50382,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -50728,8 +50587,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -50739,7 +50596,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -50756,9 +50612,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -50791,7 +50647,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -52660,8 +52516,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -52671,7 +52525,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -52688,9 +52541,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -52893,8 +52746,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -52904,7 +52755,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -52921,9 +52771,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -52956,7 +52806,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -54797,8 +54647,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -54808,7 +54656,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -54825,9 +54672,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -55030,8 +54877,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -55041,7 +54886,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -55058,9 +54902,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -55093,7 +54937,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
@@ -56954,8 +56798,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Contatta l'assistenza"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -56965,7 +56807,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -56982,9 +56823,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Contatta l'assistenza"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -57187,8 +57028,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               />
                               <View
-                                accessibilityLabel="Dati aggiuntivi"
-                                accessible={false}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -57198,7 +57037,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 }
                               >
                                 <View
-                                  importantForAccessibility="auto"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -57215,9 +57053,9 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      importantForAccessibility="no-hide-descendants"
+                                      accessibilityLabel="Dati aggiuntivi"
+                                      accessibilityRole="header"
+                                      accessible={true}
                                     >
                                       <Text
                                         allowFontScaling={false}
@@ -57250,7 +57088,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Dati aggiuntivi; undefined"
+                                      accessibilityLabel="Copia tutti"
                                       accessibilityRole="button"
                                       accessibilityState={
                                         {
