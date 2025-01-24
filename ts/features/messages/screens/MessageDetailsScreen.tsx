@@ -52,7 +52,7 @@ import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBa
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { generateMessagesAndServicesRules } from "../../../components/IOMarkdown/customRules";
-import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../store/reducers/persistedPreferences";
+import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../common/store/reducers";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {

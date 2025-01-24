@@ -23,7 +23,7 @@ import {
 } from "../../store/actions/preconditions";
 import { trackDisclaimerLoadError } from "../../analytics";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../../store/reducers/persistedPreferences";
+import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../common/store/reducers";
 import { PreconditionsFeedback } from "./PreconditionsFeedback";
 
 export const PreconditionsContent = () => {

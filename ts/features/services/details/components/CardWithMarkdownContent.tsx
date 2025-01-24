@@ -6,8 +6,8 @@ import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { generateMessagesAndServicesRules } from "../../../../components/IOMarkdown/customRules";
 import { useIOSelector } from "../../../../store/hooks";
-import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../../store/reducers/persistedPreferences";
 import { Markdown } from "../../../../components/ui/Markdown/Markdown";
+import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../common/store/reducers";
 
 const CSS_STYLE = `
   body {

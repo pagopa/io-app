@@ -22,7 +22,7 @@ import {
   preconditionsCategoryTagSelector,
   preconditionsMessageIdSelector
 } from "../store/reducers/messagePrecondition";
-import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../store/reducers/persistedPreferences";
+import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../common/store/reducers";
 
 export function* handleMessagePrecondition(
   getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
