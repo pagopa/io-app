@@ -16,9 +16,20 @@ import {
 } from "../../analytics";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { isCIEAuthenticationSupportedSelector } from "../../machine/eid/selectors";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig";
 
-export const ItwIdentificationModeSelectionScreen = () => {
+export type ItwIdentificationModeSelectionScreenNavigationParams = {
+  eidReissuing?: boolean;
+};
+
+type ScreenProps = IOStackNavigationRouteProps<
+  ItwParamsList,
+  "ITW_IDENTIFICATION_MODE_SELECTION"
+>;
+
+export const ItwIdentificationModeSelectionScreen = (params: ScreenProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isCieAuthenticationSupported = ItwEidIssuanceMachineContext.useSelector(
     isCIEAuthenticationSupportedSelector
@@ -43,6 +54,16 @@ export const ItwIdentificationModeSelectionScreen = () => {
   const isCieSupported = useMemo(
     () => cieFlowForDevServerEnabled || isCieAuthenticationSupported,
     [isCieAuthenticationSupported]
+  );
+
+  const { eidReissuing } = params.route.params;
+
+  useFocusEffect(
+    useCallback(() => {
+      if (eidReissuing) {
+        machineRef.send({ type: "start-reissuing" });
+      }
+    }, [eidReissuing, machineRef])
   );
 
   useFocusEffect(trackItWalletIDMethod);
