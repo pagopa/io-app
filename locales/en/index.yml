@@ -3250,6 +3250,17 @@ features:
         verificationExpired: Verifica
         unknown: Non disponibile
       digital: Versione digitale
+    support:
+      button: "Mostra dettagli"
+      supportTitle: Contatta l'assistenza
+      supportDescription: Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
+      phone: Chiama {{phoneNumber}}
+      landline: Da telefono fisso
+      chat: Chiedi aiuto in chat
+      email: Scrivi una mail
+      website: Visita il sito
+      additionalDataTitle: "Dati aggiuntivi"
+      errorCode: Codice errore
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
@@ -3421,9 +3432,9 @@ features:
       moreInfo: More info
       error:
         title: Il tuo dispositivo non supporta Documenti su IO
-        body: Il tuo dispositivo non ha i requisiti di sicurezza necessari per questa funzionalità.
-        primaryAction: Chiudi
-        secondaryAction: Scopri di più
+        body: "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi "
+        primaryAction: Scopri di più
+        secondaryAction: Chiudi
     presentation:
       alerts:
         statusAction: Cosa posso fare?
