@@ -1130,8 +1130,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                     onLayout={[Function]}
                                   >
                                     <View
-                                      accessibilityLabel="Notifica"
-                                      accessible={true}
                                       style={
                                         {
                                           "marginHorizontal": -24,
@@ -1141,7 +1139,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       }
                                     >
                                       <View
-                                        importantForAccessibility="no-hide-descendants"
                                         style={
                                           {
                                             "alignItems": "center",
@@ -1158,9 +1155,9 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           }
                                         >
                                           <View
-                                            accessibilityElementsHidden={false}
+                                            accessibilityLabel="Notifica"
+                                            accessibilityRole="header"
                                             accessible={true}
-                                            importantForAccessibility="yes"
                                           >
                                             <Text
                                               allowFontScaling={false}
@@ -1446,8 +1443,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       </View>
                                     </View>
                                     <View
-                                      accessibilityLabel="Message"
-                                      accessible={true}
                                       style={
                                         {
                                           "marginHorizontal": -24,
@@ -1457,7 +1452,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       }
                                     >
                                       <View
-                                        importantForAccessibility="no-hide-descendants"
                                         style={
                                           {
                                             "alignItems": "center",
@@ -1474,9 +1468,9 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           }
                                         >
                                           <View
-                                            accessibilityElementsHidden={false}
+                                            accessibilityLabel="Message"
+                                            accessibilityRole="header"
                                             accessible={true}
-                                            importantForAccessibility="yes"
                                           >
                                             <Text
                                               allowFontScaling={false}

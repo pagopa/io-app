@@ -664,8 +664,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                             />
                             <View
-                              accessibilityLabel="Attachments"
-                              accessible={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -675,7 +673,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                             >
                               <View
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "alignItems": "center",
@@ -758,9 +755,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   }
                                 >
                                   <View
-                                    accessibilityElementsHidden={false}
+                                    accessibilityLabel="Attachments"
+                                    accessibilityRole="header"
                                     accessible={true}
-                                    importantForAccessibility="yes"
                                   >
                                     <Text
                                       allowFontScaling={false}
@@ -1684,8 +1681,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     onLayout={[Function]}
                                   >
                                     <View
-                                      accessibilityLabel="Notifica"
-                                      accessible={true}
                                       style={
                                         {
                                           "marginHorizontal": -24,
@@ -1695,7 +1690,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       }
                                     >
                                       <View
-                                        importantForAccessibility="no-hide-descendants"
                                         style={
                                           {
                                             "alignItems": "center",
@@ -1712,9 +1706,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           }
                                         >
                                           <View
-                                            accessibilityElementsHidden={false}
+                                            accessibilityLabel="Notifica"
+                                            accessibilityRole="header"
                                             accessible={true}
-                                            importantForAccessibility="yes"
                                           >
                                             <Text
                                               allowFontScaling={false}
@@ -2000,8 +1994,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       </View>
                                     </View>
                                     <View
-                                      accessibilityLabel="Message"
-                                      accessible={true}
                                       style={
                                         {
                                           "marginHorizontal": -24,
@@ -2011,7 +2003,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       }
                                     >
                                       <View
-                                        importantForAccessibility="no-hide-descendants"
                                         style={
                                           {
                                             "alignItems": "center",
@@ -2028,9 +2019,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           }
                                         >
                                           <View
-                                            accessibilityElementsHidden={false}
+                                            accessibilityLabel="Message"
+                                            accessibilityRole="header"
                                             accessible={true}
-                                            importantForAccessibility="yes"
                                           >
                                             <Text
                                               allowFontScaling={false}

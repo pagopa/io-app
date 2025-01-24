@@ -2,7 +2,6 @@
 // disabled in order to allows comments between the switch
 import { getType } from "typesafe-actions";
 
-import trackCdc from "../../features/bonus/cdc/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
 import trackFciAction from "../../features/fci/analytics";
@@ -191,7 +190,6 @@ export const actionTracking =
       void trackContentAction(mixpanel)(action);
       void trackServicesAction(mixpanel)(action);
       void trackZendesk(mixpanel)(action);
-      void trackCdc(mixpanel)(action);
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(mixpanel, fciEnvironment)(action);
