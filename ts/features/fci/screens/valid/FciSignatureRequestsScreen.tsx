@@ -40,9 +40,9 @@ const FciSignatureRequestsScreen = () => {
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
-        assistanceForPayment: false,
-        assistanceForCard: false,
-        assistanceForFci: true
+        assistanceType: {
+          fci: true
+        }
       })
     );
     dispatch(zendeskSelectedCategory(zendeskFCICategory));
