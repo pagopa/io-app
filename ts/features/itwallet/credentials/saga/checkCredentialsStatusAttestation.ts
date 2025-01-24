@@ -16,6 +16,10 @@ import { itwCredentialsStore } from "../store/actions";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
+import {
+  CREDENTIALS_MAP,
+  trackItwStatusCredentialAttestationFailure
+} from "../../analytics";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
@@ -37,6 +41,10 @@ export function* updateCredentialStatusAttestationSaga(
     };
   } catch (e) {
     if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
+      trackItwStatusCredentialAttestationFailure(
+        CREDENTIALS_MAP[credential.credentialType]
+      );
+
       return {
         ...credential,
         storedStatusAttestation: {

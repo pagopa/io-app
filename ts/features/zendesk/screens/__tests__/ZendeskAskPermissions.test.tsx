@@ -239,7 +239,7 @@ function renderComponent(
   return renderScreenWithNavigationStoreContext<GlobalState>(
     ZendeskAskPermissions,
     ROUTES.MAIN,
-    { assistanceForPayment },
+    { assistanceType: { payment: assistanceForPayment } },
     store
   );
 }

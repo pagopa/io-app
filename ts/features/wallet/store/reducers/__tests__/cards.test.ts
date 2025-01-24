@@ -7,6 +7,7 @@ import {
   walletAddCards,
   walletHideCards,
   walletRemoveCards,
+  walletRemoveCardsByCategory,
   walletRemoveCardsByType,
   walletRestoreCards,
   walletUpsertCard
@@ -125,6 +126,24 @@ describe("Wallet cards reducer", () => {
     );
 
     store.dispatch(walletRemoveCardsByType("payment"));
+
+    expect(store.getState().features.wallet.cards).toStrictEqual({
+      [T_CARD_1.key]: T_CARD_1
+    });
+  });
+
+  it("should remove cards of the same category from the store", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(
+      appReducer,
+      _.set(globalState, "features.wallet.cards", {
+        [T_CARD_1.key]: T_CARD_1,
+        [T_CARD_2.key]: T_CARD_2,
+        [T_CARD_3.key]: T_CARD_3
+      }) as any
+    );
+
+    store.dispatch(walletRemoveCardsByCategory("payment"));
 
     expect(store.getState().features.wallet.cards).toStrictEqual({
       [T_CARD_1.key]: T_CARD_1
