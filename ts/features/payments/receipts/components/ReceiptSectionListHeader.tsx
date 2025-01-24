@@ -1,4 +1,4 @@
-import * as React from "react";
+import { memo } from "react";
 import { H2, VSpacer } from "@pagopa/io-app-design-system";
 import { LayoutChangeEvent, View } from "react-native";
 import I18n from "../../../../i18n";
@@ -11,7 +11,7 @@ type Props = {
   onCategorySelected: (category: ReceiptsCategoryFilter) => void;
 };
 
-export const ReceiptSectionListHeader = React.memo(
+export const ReceiptSectionListHeader = memo(
   ({ onLayout, selectedCategory, onCategorySelected }: Props) => (
     <View onLayout={onLayout}>
       <H2

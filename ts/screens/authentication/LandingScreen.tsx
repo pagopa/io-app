@@ -13,7 +13,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
-import React, {
+import {
   useState,
   useEffect,
   useMemo,
@@ -356,12 +356,12 @@ export const LandingScreen = () => {
         {
           id: 0,
           pictogramName: "hello",
-          title: I18n.t("authentication.landing.card5-title"),
-          content: I18n.t("authentication.landing.card5-content"),
+          title: I18n.t("authentication.landing.card0-title"),
+          content: I18n.t("authentication.landing.card0-content"),
           accessibilityLabel: `${I18n.t(
             "authentication.landing.accessibility.carousel.label"
-          )}. ${I18n.t("authentication.landing.card5-title")}. ${I18n.t(
-            "authentication.landing.card5-content-accessibility"
+          )}. ${I18n.t("authentication.landing.card0-title")}. ${I18n.t(
+            "authentication.landing.card0-content-accessibility"
           )}`,
           accessibilityHint: I18n.t(
             "authentication.landing.accessibility.carousel.hint"
@@ -369,7 +369,7 @@ export const LandingScreen = () => {
         },
         {
           id: 1,
-          pictogramName: "star",
+          pictogramName: "itWallet",
           title: I18n.t("authentication.landing.card1-title"),
           content: I18n.t("authentication.landing.card1-content"),
           accessibilityLabel: `${I18n.t(
@@ -378,7 +378,7 @@ export const LandingScreen = () => {
         },
         {
           id: 2,
-          pictogramName: "cardFavourite",
+          pictogramName: "message",
           title: I18n.t("authentication.landing.card2-title"),
           content: I18n.t("authentication.landing.card2-content"),
           accessibilityLabel: `${I18n.t(
@@ -387,12 +387,21 @@ export const LandingScreen = () => {
         },
         {
           id: 3,
-          pictogramName: "doc",
+          pictogramName: "payments",
           title: I18n.t("authentication.landing.card3-title"),
           content: I18n.t("authentication.landing.card3-content"),
           accessibilityLabel: `${I18n.t(
             "authentication.landing.card3-title"
           )}. ${I18n.t("authentication.landing.card3-content")}`
+        },
+        {
+          id: 4,
+          pictogramName: "searchLens",
+          title: I18n.t("authentication.landing.card4-title"),
+          content: I18n.t("authentication.landing.card4-content"),
+          accessibilityLabel: `${I18n.t(
+            "authentication.landing.card4-title"
+          )}. ${I18n.t("authentication.landing.card4-content")}`
         }
       ],
       []

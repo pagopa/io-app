@@ -12,7 +12,8 @@ import { PushNotificationsContentTypeEnum } from "../../../../../definitions/bac
 import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
 import {
   trackNotificationsOptInPreviewStatus,
-  trackNotificationsOptInReminderStatus
+  trackNotificationsOptInReminderStatus,
+  trackPushNotificationSystemPopupShown
 } from "../../analytics";
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
@@ -21,6 +22,7 @@ import {
   updateNotificationPermissionsIfNeeded
 } from "../common";
 import { setPushPermissionsRequestDuration } from "../../store/actions/environment";
+import { hasUserSeenSystemNotificationsPromptSelector } from "../../store/selectors";
 
 const generateUserProfile = (
   hasDoneNotificationOptIn: boolean,
@@ -83,8 +85,12 @@ describe("checkNotificationsPreferencesSaga", () => {
       .call(requestNotificationPermissions)
       .next(true)
       .call(performance.now)
-      .next(10)
-      .put(setPushPermissionsRequestDuration(10))
+      .next(1000)
+      .put(setPushPermissionsRequestDuration(1000))
+      .next()
+      .select(hasUserSeenSystemNotificationsPromptSelector)
+      .next(true)
+      .call(trackPushNotificationSystemPopupShown)
       .next()
       .call(updateNotificationPermissionsIfNeeded, true)
       .next()
@@ -134,6 +140,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(10)
       .put(setPushPermissionsRequestDuration(10))
       .next()
+      .select(hasUserSeenSystemNotificationsPromptSelector)
+      .next(false)
       .call(updateNotificationPermissionsIfNeeded, false)
       .next()
       .call(
@@ -207,8 +215,12 @@ describe("checkNotificationsPreferencesSaga", () => {
       .call(requestNotificationPermissions)
       .next(true)
       .call(performance.now)
-      .next(10)
-      .put(setPushPermissionsRequestDuration(10))
+      .next(1000)
+      .put(setPushPermissionsRequestDuration(1000))
+      .next()
+      .select(hasUserSeenSystemNotificationsPromptSelector)
+      .next(true)
+      .call(trackPushNotificationSystemPopupShown)
       .next()
       .call(updateNotificationPermissionsIfNeeded, true)
       .next()
@@ -235,6 +247,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(10)
       .put(setPushPermissionsRequestDuration(10))
       .next()
+      .select(hasUserSeenSystemNotificationsPromptSelector)
+      .next(false)
       .call(updateNotificationPermissionsIfNeeded, false)
       .next()
       .select()
@@ -293,8 +307,12 @@ describe("checkNotificationsPreferencesSaga", () => {
       .call(requestNotificationPermissions)
       .next(true)
       .call(performance.now)
-      .next(10)
-      .put(setPushPermissionsRequestDuration(10))
+      .next(1000)
+      .put(setPushPermissionsRequestDuration(1000))
+      .next()
+      .select(hasUserSeenSystemNotificationsPromptSelector)
+      .next(true)
+      .call(trackPushNotificationSystemPopupShown)
       .next()
       .call(updateNotificationPermissionsIfNeeded, true)
       .next()
@@ -344,6 +362,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(10)
       .put(setPushPermissionsRequestDuration(10))
       .next()
+      .select(hasUserSeenSystemNotificationsPromptSelector)
+      .next(false)
       .call(updateNotificationPermissionsIfNeeded, false)
       .next()
       .call(
@@ -417,8 +437,12 @@ describe("checkNotificationsPreferencesSaga", () => {
       .call(requestNotificationPermissions)
       .next(true)
       .call(performance.now)
-      .next(10)
-      .put(setPushPermissionsRequestDuration(10))
+      .next(1000)
+      .put(setPushPermissionsRequestDuration(1000))
+      .next()
+      .select(hasUserSeenSystemNotificationsPromptSelector)
+      .next(true)
+      .call(trackPushNotificationSystemPopupShown)
       .next()
       .call(updateNotificationPermissionsIfNeeded, true)
       .next()
@@ -445,6 +469,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(10)
       .put(setPushPermissionsRequestDuration(10))
       .next()
+      .select(hasUserSeenSystemNotificationsPromptSelector)
+      .next(false)
       .call(updateNotificationPermissionsIfNeeded, false)
       .next()
       .select()

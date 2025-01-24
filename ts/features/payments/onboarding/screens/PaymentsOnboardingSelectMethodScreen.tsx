@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
@@ -12,8 +11,11 @@ import { PaymentsOnboardingRoutes } from "../navigation/routes";
 import { paymentsOnboardingGetMethodsAction } from "../store/actions";
 import { selectPaymentOnboardingMethods } from "../store/selectors";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 const PaymentsOnboardingSelectMethodScreen = () => {
+  usePreventScreenCapture();
+
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 

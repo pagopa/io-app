@@ -6,7 +6,6 @@ import {
   IOStyles,
   ListItemNav
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { Keyboard, Text, View, StyleSheet } from "react-native";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";

@@ -3,8 +3,11 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import * as ALL_PAGINATED from "../../../../messages/store/reducers/allPaginated";
 import { UIMessage } from "../../../../messages/types";
 import {
+  isForceDismissAndNotUnreadMessagesHiddenSelector,
+  pushNotificationsBannerForceDismissionDateSelector,
   shouldResetNotificationBannerDismissStateSelector,
-  timesPushNotificationBannerDismissedSelector
+  timesPushNotificationBannerDismissedSelector,
+  unreadMessagesCountAfterForceDismissionSelector
 } from "../notificationsBannerDismissed";
 import { UserBehaviourState } from "../../reducers/userBehaviour";
 
@@ -48,6 +51,22 @@ const readMessage = {
   createdAt: new Date("2100-01-01")
 } as unknown as UIMessage;
 
+describe("pushNotificationsBannerForceDismissionDateSelector", () => {
+  it("should return undefined when 'pushNotificationBannerForceDismissionDate' has no value", () => {
+    const dismissionDate = pushNotificationsBannerForceDismissionDateSelector(
+      getTestState({})
+    );
+    expect(dismissionDate).toBe(undefined);
+  });
+  it("should return proper value when 'pushNotificationBannerForceDismissionDate' is defined", () => {
+    const dismissionDateUE = new Date().getTime();
+    const dismissionDate = pushNotificationsBannerForceDismissionDateSelector(
+      getTestState({ forceDismissionDate: dismissionDateUE })
+    );
+    expect(dismissionDate).toBe(dismissionDateUE);
+  });
+});
+
 describe("timesPushNotificationsBannerDismissedSelector", () => {
   it("should return timesPushNotificationsBannerDismissed", () => {
     expect(
@@ -58,37 +77,76 @@ describe("timesPushNotificationsBannerDismissedSelector", () => {
   });
 });
 
-describe("shouldResetNotificationsBannerDismissStateSelector", () => {
+describe("unreadMessagesCountAfterForceDismissionSelector, isForceDismissAndNotUnreadMessagesHiddenSelector, shouldResetNotificationBannerDismissStateSelector", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
   });
-  it("should return false if 'messageList' is undefined", () => {
-    expect(
-      shouldResetNotificationBannerDismissStateSelector(getTestState({}))
-    ).toBe(false);
+  describe(`if 'messageList' is undefined`, () => {
+    const noMessageListTestState = getTestState({
+      forceDismissionDate: 1,
+      timesDismissed: 3
+    });
+    it("unreadMessagesCountAfterForceDismissionSelector should return 'undefined'", () => {
+      expect(
+        unreadMessagesCountAfterForceDismissionSelector(noMessageListTestState)
+      ).toBeUndefined();
+    });
+    it("isForceDismissAndNotUnreadMessagesHiddenSelector should return 'false'", () => {
+      expect(
+        isForceDismissAndNotUnreadMessagesHiddenSelector(noMessageListTestState)
+      ).toBe(false);
+    });
+    it("shouldResetNotificationBannerDismissStateSelector should return 'false'", () => {
+      expect(
+        shouldResetNotificationBannerDismissStateSelector(
+          noMessageListTestState
+        )
+      ).toBe(false);
+    });
   });
-  it("should return false if 'forceDismissDate' is undefined", () => {
-    expect(
-      shouldResetNotificationBannerDismissStateSelector(
-        getTestState({ forceDismissionDate: undefined })
-      )
-    ).toBe(false);
+  describe("if 'forceDismissDate' is 'undefined'", () => {
+    const noForceDismissDateTestState = getTestState({
+      messages: [unreadMessage, unreadMessage, unreadMessage, unreadMessage],
+      timesDismissed: 3
+    });
+    it("unreadMessagesCountAfterForceDismissionSelector should return 'undefined'", () => {
+      expect(
+        unreadMessagesCountAfterForceDismissionSelector(
+          noForceDismissDateTestState
+        )
+      ).toBeUndefined();
+    });
+    it("isForceDismissAndNotUnreadMessagesHiddenSelector should return 'false'", () => {
+      expect(
+        isForceDismissAndNotUnreadMessagesHiddenSelector(
+          noForceDismissDateTestState
+        )
+      ).toBe(false);
+    });
+    it("shouldResetNotificationBannerDismissStateSelector should return 'false' ", () => {
+      expect(
+        shouldResetNotificationBannerDismissStateSelector(
+          noForceDismissDateTestState
+        )
+      ).toBe(false);
+    });
   });
 
-  it.each`
-    unread   | moreThanFour | isNew    | expected
-    ${true}  | ${true}      | ${true}  | ${true}
-    ${true}  | ${true}      | ${false} | ${false}
-    ${true}  | ${false}     | ${true}  | ${false}
-    ${true}  | ${false}     | ${false} | ${false}
-    ${false} | ${true}      | ${true}  | ${false}
-    ${false} | ${true}      | ${false} | ${false}
-    ${false} | ${false}     | ${true}  | ${false}
-    ${false} | ${false}     | ${false} | ${false}
+  describe.each`
+    unread   | moreThanFour | isNew    | unreadCount | expected
+    ${true}  | ${true}      | ${true}  | ${5}        | ${true}
+    ${true}  | ${true}      | ${false} | ${0}        | ${false}
+    ${true}  | ${false}     | ${true}  | ${2}        | ${false}
+    ${true}  | ${false}     | ${false} | ${0}        | ${false}
+    ${false} | ${true}      | ${true}  | ${0}        | ${false}
+    ${false} | ${true}      | ${false} | ${0}        | ${false}
+    ${false} | ${false}     | ${true}  | ${0}        | ${false}
+    ${false} | ${false}     | ${false} | ${0}        | ${false}
   `(
-    "should return $expected when messageListForCategorySelector returns a list with {more than 4? $moreThanFour, unread? $unread, new? $isNew} messages",
-    ({ unread, moreThanFour, isNew, expected }) => {
+    `when 'messageListForCategorySelector' returns a list with {more than 4? $moreThanFour, unread? $unread, unreadCount? $unreadCount new? $isNew} messages`,
+    // `should return '$unreadCount' '!$expected' '$expected' when messageListForCategorySelector returns a list with {more than 4? $moreThanFour, unread? $unread, unreadCount? $unreadCount new? $isNew} messages`,
+    ({ unread, moreThanFour, isNew, unreadCount, expected }) => {
       const messageList = unread
         ? [
             unreadMessage,
@@ -106,16 +164,27 @@ describe("shouldResetNotificationsBannerDismissStateSelector", () => {
       jest
         .spyOn(ALL_PAGINATED, "messageListForCategorySelector")
         .mockImplementation(() => messageList);
-      expect(
-        shouldResetNotificationBannerDismissStateSelector(
-          getTestState({
-            messages: messageList,
-            forceDismissionDate: isNew
-              ? new Date("2000-1-1").getTime()
-              : new Date("2500-1-1").getTime()
-          })
-        )
-      ).toBe(expected);
+      const testState = getTestState({
+        messages: messageList,
+        forceDismissionDate: isNew
+          ? new Date("2000-1-1").getTime()
+          : new Date("2500-1-1").getTime()
+      });
+      it(`unreadMessagesCountAfterForceDismissionSelector should return '${unreadCount}'`, () => {
+        expect(unreadMessagesCountAfterForceDismissionSelector(testState)).toBe(
+          unreadCount
+        );
+      });
+      it(`isForceDismissAndNotUnreadMessagesHiddenSelector should return '${!expected}'`, () => {
+        expect(
+          isForceDismissAndNotUnreadMessagesHiddenSelector(testState)
+        ).toBe(!expected);
+      });
+      it(`shouldResetNotificationBannerDismissStateSelector should return '${expected}'`, () => {
+        expect(
+          shouldResetNotificationBannerDismissStateSelector(testState)
+        ).toBe(expected);
+      });
     }
   );
 });

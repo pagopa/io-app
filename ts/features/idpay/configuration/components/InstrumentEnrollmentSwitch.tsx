@@ -8,7 +8,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { default as React } from "react";
 import { StatusEnum as InstrumentStatusEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import { CreditCardType, Wallet } from "../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../common/labels";

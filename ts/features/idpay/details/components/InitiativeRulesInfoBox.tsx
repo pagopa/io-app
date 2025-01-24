@@ -8,13 +8,12 @@ import {
   Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 type Props = {
   content: string;
@@ -25,7 +24,7 @@ const InitiativeRulesInfoBox = (props: Props) => {
 
   const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal(
     {
-      component: <LegacyMarkdown>{content}</LegacyMarkdown>,
+      component: <IOMarkdown content={content} />,
       title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
       footer: (
         <ContentWrapper>

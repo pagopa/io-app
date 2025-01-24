@@ -110,7 +110,6 @@ global:
       open:
         label: "Kontextbezogene Hilfe"
         hint: "Greif auf Informationen über den Inhalt des aktuellen Bildschirms zu"
-  ioWebSite: "https://io.italia.it"
   symbols:
     question: "?"
     asterisk: "*"
@@ -278,8 +277,8 @@ inbox:
   enableButton: "Posteingang aktivieren"
   disableButton: "Posteingang deaktivieren"
   enableCallToActionDescription: "Aktiviere den Posteingang, um Mitteilungen anzusehen"
-settings: 
-  informativeBanner: 
+settings:
+  informativeBanner:
     content: "Suchst du dein Profil? Wir haben es verschoben, es befindet sich jetzt in der oberen rechten Ecke!"
     action: "Geh zu den Einstellungen"
 profile:
@@ -443,7 +442,7 @@ profile:
           body: "Wenn du dies bestätigst, können wir dir nicht gezielt helfen, da uns möglicherweise die notwendigen Daten zur Lösung des Problems fehlen."
         whyBottomSheet:
           title: "Warum wir Daten erfassen"
-          body: "Wir sammeln keine Daten für Marketingzwecke. \n\nWir verwenden Tools, die es uns ermöglichen, Daten darüber aufzuzeichnen, wie du die App nutzt, um **dir einen besseren Service zu bieten** und **dich bei Bedarf zu unterstützen**."        
+          body: "Wir sammeln keine Daten für Marketingzwecke. \n\nWir verwenden Tools, die es uns ermöglichen, Daten darüber aufzuzeichnen, wie du die App nutzt, um **dir einen besseren Service zu bieten** und **dich bei Bedarf zu unterstützen**."
         securityBottomSheet:
           title: "Was ist eine Pseudonymisierung?"
           body: "Sie ist die Verarbeitung personenbezogener Daten in einer Weise, dass die personenbezogener Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer bestimmten betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Maßnahmen unterliegen, die gewährleisten, dass diese personenbezogener Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden können."
@@ -610,15 +609,6 @@ authentication:
     privacyLink: "Datenschutzerklärung"
     nospid: "Du hast keinen SPID? Erfahre mehr"
     nospid-nocie: "Du hast keinen SPID und keine CIE? Erfahre mehr"
-    card1-title: "Alle Mitteilungen an einem Ort"
-    card1-content: "Zeige alle erhaltenen Mitteilungen von öffentlichen Körperschaften an"
-    card2-title: "Verwende deine bevorzugten Zahlungsmethoden"
-    card2-content: "Du kannst eine Steuer oder eine Strafe über dein Bankkonto oder mit deiner Bankkarte bezahlen"
-    card3-title: "Bezahle schnell eine Aufforderung in Papierform"
-    card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsmitteilung in Papierform bezahlen"
-    card5-title: "Willkommen in IO!"
-    card5-content: "Lass uns gemeinsam herausfinden, was du machen kannst"
-    card5-content-accessibility: "Wähle das vorherige Element, um einen Chat mit dem IO-Team zu beginnen, wenn etwas nicht so funktioniert, wie es sollte."
     expiredCardTitle: "CIE-Verifizierung fehlgeschlagen"
     expiredCardHeaderTitle: "Anmeldung mit CIE"
     expiredCardContent: "Die verwendete Karte ist möglicherweise abgelaufen oder nicht mehr gültig. Versuche dich mit SPID bei der App anzumelden."
@@ -2711,9 +2701,9 @@ features:
         delete:
           successful: "Die Quittung wurde ausgeblendet"
           failed: "Es ist ein Fehler aufgetreten, bitte versuche es erneut"
-        hideBanner: 
+        hideBanner:
           title: "Möchtest du diese Quittung aus deiner Liste ausblenden?"
-          content: "Dieser Vorgang ist unwiderruflich. Die Quittung wird nicht mehr in deiner Quittungsliste angezeigt."    
+          content: "Dieser Vorgang ist unwiderruflich. Die Quittung wird nicht mehr in deiner Quittungsliste angezeigt."
           accept: "Ja, ausblenden"
       details:
         totalFeeUnknown: "Der Gesamtbetrag enthält keine Provisionskosten: du findest diese in dem Dokument, das du von {{pspName}} erhalten hast."
@@ -2731,7 +2721,7 @@ features:
         empty:
           title: "Keine Quittung gefunden"
           subtitle: "Wenn du eine Quittung für eine pagoPA-Zahlungsmitteilung suchst, die du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
-        emptyPayer: 
+        emptyPayer:
           title: "Hier findest du Quittungen für Zahlungen, die mit der App getätigt wurden."
     details:
       payPal:
@@ -3023,13 +3013,12 @@ features:
           content: "Dies ist ein notwendiger Sicherheitsschritt, um das Dokument '{{credentialName}}' in IO weiter zu verwenden."
           primaryAction: "Start"
       ctas:
+        trustmark: "Echtheitszertifikat anzeigen"
         openPdf: "Dokument anzeigen"
         shareButton: "Speichern oder freigeben"
         fiscalCode: "Deine Steuernummer"
     trustmark:
-      cta: "Echtheitszertifikat anzeigen"
       description: "Zeige den QR-Code vor, um die Echtheit des Dokuments zu bestätigen, wenn du dazu aufgefordert wirst."
-      expiration: "Der QR-Code erneuert sich in"
       qrCode: "QR-Code zur Authentizität von Dokumenten"
     walletRevocation:
       cta: "Dokumente in IO deaktivieren"
@@ -3053,7 +3042,7 @@ features:
         cta: "Mehr erfahren"
         closeButton: "Schließen"
         closeButtonAlt: "Verstanden"
-        revokedByWalletProvider: 
+        revokedByWalletProvider:
           title: "Dokumente in IO wurde deaktiviert"
           content: "Um die Voraussetzungen für die weitere Nutzung der Funktionen auf deinem Gerät zu prüfen, tippe auf 'Mehr erfahren'."
         newWalletInstanceCreated:

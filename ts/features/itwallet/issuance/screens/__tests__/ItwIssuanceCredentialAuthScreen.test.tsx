@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -8,6 +7,10 @@ import { itwCredentialIssuanceMachine } from "../../../machine/credential/machin
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../ItwIssuanceCredentialTrustIssuerScreen";
+
+jest.mock("../../../../../utils/hooks/usePreventScreenCapture", () => ({
+  usePreventScreenCapture: jest.fn()
+}));
 
 describe("ItwIssuanceCredentialTrustIssuerScreen", () => {
   it("it should render the screen correctly", () => {

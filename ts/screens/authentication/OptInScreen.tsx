@@ -1,4 +1,4 @@
-import React from "react";
+import { useRef } from "react";
 import { Dimensions, View } from "react-native";
 import {
   Badge,
@@ -69,7 +69,7 @@ const OptInScreen = () => {
     contextualHelpMarkdown
   });
 
-  const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
+  const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const dispatch = useIODispatch();
   const {
     securitySuggestionBottomSheet,

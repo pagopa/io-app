@@ -7,10 +7,11 @@ import {
   BodySmall,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { useLayoutEffect, memo, useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -19,6 +20,8 @@ import {
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid
 } from "../../credentials/store/selectors";
+import { trackCredentialCardModal } from "../../analytics";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 /**
  * This magic number is the lenght of the encoded fiscal code in a CODE39 barcode.
@@ -72,9 +75,16 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
   const nameSurname = useIOSelector(selectNameSurnameFromEid);
   const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
 
+  usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
-  React.useLayoutEffect(() => {
+  useFocusEffect(
+    useCallback(() => {
+      trackCredentialCardModal("ITW_TS_V2");
+    }, [])
+  );
+
+  useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
@@ -139,7 +149,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwPresentationCredentialFiscalCodeModal = React.memo(
+const MemoizedItwPresentationCredentialFiscalCodeModal = memo(
   ItwPresentationCredentialFiscalCodeModal
 );
 

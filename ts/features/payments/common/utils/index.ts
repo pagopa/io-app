@@ -152,7 +152,7 @@ export const getSortedPspList = (
       return _.orderBy(
         pspList,
         ["onUs", "taxPayerFee", "pspBusinessName"],
-        ["desc", "asc", "asc"]
+        ["asc", "asc", "asc"]
       );
   }
 };

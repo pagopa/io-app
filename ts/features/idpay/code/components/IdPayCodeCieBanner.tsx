@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useRef, useEffect } from "react";
 import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 
@@ -17,7 +17,7 @@ export type IdPayCodeCIEBannerParams = {
 };
 
 const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
-  const bannerViewRef = React.useRef(null);
+  const bannerViewRef = useRef(null);
   const navigation =
     useNavigation<IOStackNavigationProp<IdPayCodeParamsList>>();
   const dispatch = useIODispatch();
@@ -26,7 +26,7 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
     isLoadingDiscountInitiativeInstrumentsSelector
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (initiativeId) {
       dispatch(
         idpayInitiativeInstrumentsGet.request({

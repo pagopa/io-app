@@ -1,6 +1,7 @@
-import * as O from "fp-ts/lib/Option";
 import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLanguage";
 import { Locales } from "../../locales/locales";
 import I18n, {
   availableTranslations,
@@ -9,7 +10,6 @@ import I18n, {
   localeToPreferredLanguageMapping,
   LocalizedMessageKeys
 } from "../i18n";
-import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLanguage";
 /**
  * Helpers for handling locales
  */
@@ -84,3 +84,10 @@ export const fromPreferredLanguageToLocale = (
     O.fromNullable,
     O.getOrElseW(() => localeFallback.locale)
   );
+
+// This function is for the case where the localized message key is not available. When german translation is not available, we use italian as a fallback.
+// This function will be removed when the german translation will be available for all the keys.
+export const fallbackForLocalizedMessageKeys = (
+  locale: LocalizedMessageKeys
+): Exclude<LocalizedMessageKeys, "de-DE"> =>
+  locale === "de-DE" ? "it-IT" : locale;

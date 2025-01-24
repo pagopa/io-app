@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PushNotificationsBanner should render correctly 1`] = `
+exports[`PushNotificationsBanner should render correctly and call 'trackPushNotificationsBannerVisualized' 1`] = `
 <View
   style={
     {

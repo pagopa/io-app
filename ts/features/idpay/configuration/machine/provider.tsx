@@ -2,7 +2,8 @@ import { createActorContext } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+
+import { ReactNode } from "react";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { PaymentManagerClient } from "../../../../api/pagopa";
 import {
@@ -32,7 +33,7 @@ import { createActorsImplementation } from "./actors";
 import { idPayConfigurationMachine } from "./machine";
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export const IdPayConfigurationMachineContext = createActorContext(

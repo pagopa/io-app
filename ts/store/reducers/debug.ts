@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import _ from "lodash";
 import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import {
   resetDebugData,
@@ -12,7 +12,7 @@ import { GlobalState } from "./types";
 
 type DebugState = Readonly<{
   isDebugModeEnabled: boolean;
-  debugData: Record<string, any>;
+  debugData: Record<string, unknown>;
 }>;
 
 const INITIAL_STATE: DebugState = {
@@ -38,7 +38,10 @@ function debugReducer(
     case getType(setDebugData):
       return {
         ...state,
-        debugData: _.merge(state.debugData, action.payload)
+        debugData: {
+          ...state.debugData,
+          ...action.payload
+        }
       };
     case getType(resetDebugData):
       return {
@@ -74,4 +77,15 @@ export const debugPersistor = persistReducer<DebugState, Action>(
 // Selector
 export const isDebugModeEnabledSelector = (state: GlobalState) =>
   state.debug.isDebugModeEnabled;
-export const debugDataSelector = (state: GlobalState) => state.debug.debugData;
+
+/**
+ * Selector that returns the debug data without the undefined values
+ * avoiding to display empty values in the DebugInfoOverlay
+ */
+export const debugDataSelector = createSelector(
+  (state: GlobalState) => state.debug.debugData,
+  debugData =>
+    Object.fromEntries(
+      Object.entries(debugData).filter(([_, value]) => value !== undefined)
+    )
+);

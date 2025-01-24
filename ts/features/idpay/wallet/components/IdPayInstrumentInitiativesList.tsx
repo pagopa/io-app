@@ -2,7 +2,7 @@ import { Badge, Divider, ListItemSwitch } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { useCallback, Fragment } from "react";
 import {
   InitiativesStatusDTO,
   StatusEnum
@@ -30,10 +30,10 @@ export const IdPayInstrumentInitiativesList = ({
 }: Props) => (
   <>
     {initiatives.map((item, index) => (
-      <React.Fragment key={item.initiativeId}>
+      <Fragment key={item.initiativeId}>
         <IdPayInitiativeListItemSwitch item={item} idWallet={idWallet} />
         {index < initiatives.length - 1 && <Divider />}
-      </React.Fragment>
+      </Fragment>
     ))}
   </>
 );
@@ -54,7 +54,7 @@ const IdPayInitiativeListItemSwitch = ({
     idPayInitiativeFromInstrumentPotSelector(item.initiativeId)
   );
 
-  const handleSwitchValueChange = React.useCallback(
+  const handleSwitchValueChange = useCallback(
     (item: InitiativesStatusDTO) => {
       const { status, idInstrument, initiativeId } = item;
       const isItemActiveAndValid =

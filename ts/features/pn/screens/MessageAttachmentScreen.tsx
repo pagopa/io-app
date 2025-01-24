@@ -1,4 +1,3 @@
-import React from "react";
 import { UIMessageId } from "../../messages/types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { PnParamsList } from "../navigation/params";

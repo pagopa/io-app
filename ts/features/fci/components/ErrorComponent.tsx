@@ -1,4 +1,3 @@
-import * as React from "react";
 import { View } from "react-native";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import {
@@ -61,9 +60,9 @@ const ErrorComponent = (props: Props) => {
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
-        assistanceForPayment: false,
-        assistanceForCard: false,
-        assistanceForFci: true
+        assistanceType: {
+          fci: true
+        }
       })
     );
     dispatch(zendeskSelectedCategory(zendeskFCICategory));
@@ -103,7 +102,7 @@ const ErrorComponent = (props: Props) => {
 
   /**
    * Render the footer buttons as vertical stacked buttons
-   * @returns {React.ReactElement}
+   * @returns {ReactElement}
    */
   const footerButtons = () => {
     if (props.retry && props.assistance) {

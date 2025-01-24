@@ -1,5 +1,4 @@
 /* eslint-disable no-bitwise */
-import React from "react";
 import { createStore } from "redux";
 import { ProfileNotificationSettings } from "../ProfileNotificationsSettings";
 import { appReducer } from "../../../../store/reducers";

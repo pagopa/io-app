@@ -1,9 +1,10 @@
 import { IOColors } from "@pagopa/io-app-design-system";
-import React from "react";
+
+import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 type LoadingProps = {
   isLoading: true;
@@ -11,7 +12,7 @@ type LoadingProps = {
 
 type BaseProps = {
   isLoading?: never;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export type BonusCardStatus = LoadingProps | BaseProps;

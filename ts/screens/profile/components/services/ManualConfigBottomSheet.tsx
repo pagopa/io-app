@@ -1,12 +1,13 @@
 import { FooterActionsInline, VSpacer } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { ReactElement } from "react";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 
 const SNAP_POINT_VALUE = 250;
 
-const ManualConfigConfirm = (): React.ReactElement => (
+const ManualConfigConfirm = (): ReactElement => (
   <>
     <VSpacer size={16} />
     <LegacyMarkdown>

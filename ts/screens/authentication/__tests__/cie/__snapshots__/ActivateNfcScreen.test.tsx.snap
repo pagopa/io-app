@@ -412,8 +412,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             }
                           />
                           <View
-                            accessibilityLabel="How to do it::"
-                            accessible={true}
                             style={
                               {
                                 "marginHorizontal": -24,
@@ -423,7 +421,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             }
                           >
                             <View
-                              importantForAccessibility="no-hide-descendants"
                               style={
                                 {
                                   "alignItems": "center",
@@ -440,9 +437,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 }
                               >
                                 <View
-                                  accessibilityElementsHidden={false}
+                                  accessibilityLabel="How to do it::"
+                                  accessibilityRole="header"
                                   accessible={true}
-                                  importantForAccessibility="yes"
                                 >
                                   <Text
                                     allowFontScaling={true}

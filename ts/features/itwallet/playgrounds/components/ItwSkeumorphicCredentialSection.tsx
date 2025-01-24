@@ -1,5 +1,5 @@
 import { H3, VStack } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useState } from "react";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
@@ -37,7 +37,7 @@ const ItwSkeumorphicCredentialItem = ({
   credential: StoredCredential;
 }) => {
   const navigation = useIONavigation();
-  const [isFlipped, setFlipped] = React.useState(false);
+  const [isFlipped, setFlipped] = useState(false);
   const { status = "valid" } = getCredentialStatusObject(credential);
 
   const handleOnPress = () => {

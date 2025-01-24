@@ -4,7 +4,7 @@ import {
   ContentWrapper,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import I18n from "../../i18n";
 import { loadBonusBeforeRemoveAccount } from "../../store/actions/profile";
 import { useIODispatch } from "../../store/hooks";

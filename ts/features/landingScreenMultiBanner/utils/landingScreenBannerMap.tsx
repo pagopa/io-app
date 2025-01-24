@@ -1,4 +1,4 @@
-import * as React from "react";
+import { ReactElement } from "react";
 import { SettingsDiscoveryBanner } from "../../../screens/profile/components/SettingsDiscoveryBanner";
 import { GlobalState } from "../../../store/reducers/types";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
@@ -7,9 +7,7 @@ import { hasUserAcknowledgedSettingsBannerSelector } from "../../profileSettings
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
 
-type ComponentWithCloseHandler = (
-  closeHandler: () => void
-) => React.ReactElement;
+type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
 type ComponentAndLogic = {
   component: ComponentWithCloseHandler;
   isRenderableSelector: (state: GlobalState) => boolean;

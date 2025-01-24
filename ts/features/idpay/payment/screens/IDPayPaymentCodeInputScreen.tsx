@@ -12,9 +12,9 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useState } from "react";
 import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
@@ -30,7 +30,7 @@ const IDPayPaymentCodeInputScreen = () => {
   const { useActorRef, useSelector } = IdPayPaymentMachineContext;
   const machine = useActorRef();
 
-  const [inputState, setInputState] = React.useState<InputState>({
+  const [inputState, setInputState] = useState<InputState>({
     value: undefined,
     code: O.none
   });
@@ -46,8 +46,15 @@ const IDPayPaymentCodeInputScreen = () => {
       O.map(trxCode => machine.send({ type: "authorize-payment", trxCode }))
     );
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.payment.manualInput.title"),
+    canGoBack: true,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   return (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+    <>
       <StatusBar
         barStyle={"dark-content"}
         translucent={false}
@@ -94,7 +101,7 @@ const IDPayPaymentCodeInputScreen = () => {
           }}
         />
       </SafeAreaView>
-    </BaseScreenComponent>
+    </>
   );
 };
 

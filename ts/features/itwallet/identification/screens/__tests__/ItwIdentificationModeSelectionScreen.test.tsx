@@ -1,7 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
-import React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -15,6 +14,8 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
 
 jest.mock("../../../../../config", () => ({
   itwEnabled: true
@@ -128,10 +129,29 @@ describe("ItwIdentificationModeSelectionScreen", () => {
       }
     });
 
+    const mockNavigation = new Proxy(
+      {},
+      {
+        get: _ => jest.fn()
+      }
+    ) as unknown as IOStackNavigationProp<
+      ItwParamsList,
+      "ITW_IDENTIFICATION_MODE_SELECTION"
+    >;
+
+    const route = {
+      key: "ITW_IDENTIFICATION_MODE_SELECTION",
+      name: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+      params: {}
+    };
+
     return renderScreenWithNavigationStoreContext<GlobalState>(
       () => (
         <ItwEidIssuanceMachineContext.Provider logic={logic}>
-          <ItwIdentificationModeSelectionScreen />
+          <ItwIdentificationModeSelectionScreen
+            navigation={mockNavigation}
+            route={route}
+          />
         </ItwEidIssuanceMachineContext.Provider>
       ),
       ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,

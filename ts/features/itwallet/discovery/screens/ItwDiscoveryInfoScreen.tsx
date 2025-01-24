@@ -5,25 +5,24 @@ import {
   H1,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
-import { StyleSheet } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import { StyleSheet } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import ItwMarkdown from "../../common/components/ItwMarkdown";
-import { selectIsLoading } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { tosConfigSelector } from "../../../tos/store/selectors";
 import {
   trackItWalletActivationStart,
   trackItWalletIntroScreen,
   trackOpenItwTos
 } from "../../analytics";
-import { useIOSelector } from "../../../../store/hooks";
-import { isItwActivationDisabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { tosConfigSelector } from "../../../tos/store/selectors";
+import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig";
+import { selectIsLoading } from "../../machine/eid/selectors";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -36,7 +35,7 @@ const ItwDiscoveryInfoScreen = () => {
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const itwActivationDisabled = useIOSelector(isItwActivationDisabledSelector);
+  const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const tosConfig = useIOSelector(tosConfigSelector);
   const privacyAndTosUrl = tosConfig.tos_url;
 

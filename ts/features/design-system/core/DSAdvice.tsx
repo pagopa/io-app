@@ -6,7 +6,6 @@ import {
   bannerBackgroundColours,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { Alert } from "react-native";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";

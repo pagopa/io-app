@@ -6,8 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
-import * as React from "react";
-import { useCallback } from "react";
+import { createRef, useCallback } from "react";
 import { View } from "react-native";
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
@@ -80,7 +79,7 @@ type ErrorButtonProp = {
   onPress: () => void;
 };
 const ErrorButton = (props: ErrorButtonProp) => {
-  const viewRef = React.createRef<View>();
+  const viewRef = createRef<View>();
 
   return (
     <View>

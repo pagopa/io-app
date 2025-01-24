@@ -1,5 +1,5 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
-import React, { ReactElement, useCallback, useMemo } from "react";
+import { ReactElement, useCallback, useMemo } from "react";
 import { SafeAreaView, View } from "react-native";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Platform, View } from "react-native";
 import Share from "react-native-share";
@@ -18,6 +18,7 @@ import {
   FooterActionsMeasurements
 } from "../../../../components/ui/FooterActions";
 import * as analytics from "../analytics";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 export type ReceiptPreviewScreenProps = RouteProp<
   PaymentsReceiptParamsList,
@@ -26,12 +27,13 @@ export type ReceiptPreviewScreenProps = RouteProp<
 
 const ReceiptPreviewScreen = () => {
   const [footerActionsMeasurements, setfooterActionsMeasurements] =
-    React.useState<FooterActionsMeasurements>({
+    useState<FooterActionsMeasurements>({
       actionBlockHeight: 0,
       safeBottomAreaHeight: 0
     });
 
   const transactionReceiptPot = useIOSelector(walletReceiptPotSelector);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   useHeaderSecondLevel({
     title: "",
@@ -43,7 +45,12 @@ const ReceiptPreviewScreen = () => {
     if (!transactionReceiptFileInfo) {
       return;
     }
-    analytics.trackPaymentsSaveAndShareReceipt();
+    analytics.trackPaymentsSaveAndShareReceipt({
+      payment_status: "paid",
+      organization_name: paymentAnalyticsData?.receiptOrganizationName,
+      first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
+      user: paymentAnalyticsData?.receiptUser
+    });
     // The file name is normalized to remove the .pdf extension on Android devices since it's added by default to the Share module
     const normalizedFilename =
       Platform.OS === "ios"

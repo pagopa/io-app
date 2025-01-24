@@ -1,11 +1,20 @@
-import { Body, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  BodySmall,
+  Divider,
+  ListItemHeader,
+  ListItemInfo,
+  ListItemTransaction,
+  VSpacer,
+  WithTestID
+} from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ReactNode } from "react";
+import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
   InitiativeDTO,
@@ -17,7 +26,6 @@ import {
   RewardValueDTO,
   RewardValueTypeEnum
 } from "../../../../../definitions/idpay/RewardValueDTO";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
@@ -25,13 +33,17 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { format } from "../../../../utils/dates";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
-import { Table, TableRow } from "../../common/components/Table";
 import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
 import { IdPayUnsubscriptionRoutes } from "../../unsubscription/navigation/routes";
 import {
   InitiativeRulesInfoBox,
   InitiativeRulesInfoBoxSkeleton
 } from "./InitiativeRulesInfoBox";
+
+type TableRow = WithTestID<{
+  label: string;
+  value: string | ReactNode;
+}>;
 
 export type BeneficiaryDetailsProps =
   | {
@@ -210,80 +222,95 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     );
   };
 
+  const summaryData = [
+    {
+      label: I18n.t("idpay.initiative.beneficiaryDetails.status"),
+      value: statusString,
+      testID: "statusTestID"
+    },
+    {
+      label: I18n.t("idpay.initiative.beneficiaryDetails.endDate"),
+      value: endDateString,
+      testID: "endDateTestID"
+    },
+    {
+      label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
+      value: formatNumberCurrencyOrDefault(initiativeDetails.amountCents),
+      testID: "amountTestID"
+    },
+    ...getTypeDependantTableRows()
+  ];
+
+  const enrollmentData = [
+    {
+      label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDate"),
+      value: onboardingDateString,
+      testID: "onboardingDateTestID"
+    },
+    {
+      label: I18n.t("idpay.initiative.beneficiaryDetails.protocolNumber"),
+      value: "-",
+      testID: "protocolTestID"
+    }
+  ];
+
+  const spendingRulesData = [
+    {
+      label: I18n.t("idpay.initiative.beneficiaryDetails.spendFrom"),
+      value: fruitionStartDateString,
+      testID: "fruitionStartDateTestID"
+    },
+    {
+      label: I18n.t("idpay.initiative.beneficiaryDetails.spendTo"),
+      value: fruitionEndDateString,
+      testID: "fruitionEndDateTestID"
+    },
+    rewardRuleRow
+  ];
+
+  const renderTableRow = (data: Array<TableRow>) =>
+    data.map((row, i) => (
+      <>
+        <ListItemInfo
+          key={row.testID}
+          label={row.label}
+          value={row.value}
+          testID={row.testID}
+        />
+        {i !== data.length - 1 && <Divider />}
+      </>
+    ));
+
   return (
     <>
       {ruleInfoBox}
-      <Table
-        title={I18n.t("idpay.initiative.beneficiaryDetails.summary")}
-        rows={[
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.status"),
-            value: statusString,
-            testID: "statusTestID"
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.endDate"),
-            value: endDateString,
-            testID: "endDateTestID"
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.amountCents),
-            testID: "amountTestID"
-          },
-          ...getTypeDependantTableRows()
-        ]}
+      <ListItemHeader
+        label={I18n.t("idpay.initiative.beneficiaryDetails.summary")}
       />
+      {renderTableRow(summaryData)}
       <VSpacer size={8} />
       <BodySmall weight="Regular" color="bluegrey">
         {lastUpdateString}
       </BodySmall>
       <VSpacer size={8} />
-      <Table
-        title={I18n.t("idpay.initiative.beneficiaryDetails.spendingRules")}
-        rows={[
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.spendFrom"),
-            value: fruitionStartDateString,
-            testID: "fruitionStartDateTestID"
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.spendTo"),
-            value: fruitionEndDateString,
-            testID: "fruitionEndDateTestID"
-          },
-          rewardRuleRow
-        ]}
+      <ListItemHeader
+        label={I18n.t("idpay.initiative.beneficiaryDetails.spendingRules")}
       />
-      <VSpacer size={8} />
-      <Table
-        title={I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDetails")}
-        rows={[
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDate"),
-            value: onboardingDateString,
-            testID: "onboardingDateTestID"
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.protocolNumber"),
-            value: "-",
-            testID: "protocolTestID"
-          }
-        ]}
+      {renderTableRow(spendingRulesData)}
+      <ListItemHeader
+        label={I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDetails")}
       />
-      <VSpacer size={24} />
-      <View style={styles.linkRow}>
-        <Body weight="Semibold" asLink onPress={handlePrivacyLinkPress}>
-          {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
-        </Body>
-      </View>
-      <View style={styles.linkRow}>
-        <Body weight="Semibold" asLink onPress={handleUnsubscribePress}>
-          {I18n.t("idpay.initiative.beneficiaryDetails.buttons.unsubscribe", {
-            initiativeName
-          })}
-        </Body>
-      </View>
+      {renderTableRow(enrollmentData)}
+      <VSpacer size={16} />
+      <Body weight="Semibold" asLink onPress={handlePrivacyLinkPress}>
+        {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
+      </Body>
+      <VSpacer size={16} />
+      <Body weight="Semibold" asLink onPress={handleUnsubscribePress}>
+        {I18n.t("idpay.initiative.beneficiaryDetails.buttons.unsubscribe", {
+          initiativeName
+        })}
+      </Body>
       <VSpacer size={48} />
     </>
   );
@@ -297,22 +324,17 @@ const BeneficiaryDetailsContentSkeleton = () => (
         <VSpacer size={32} />
         <Placeholder.Box animate="fade" height={24} width={"40%"} radius={4} />
         <VSpacer size={8} />
-        {Array.from({ length: 5 }).map((_, j) => (
+        {Array.from({ length: 2 }).map((_, j) => (
           <View key={j}>
-            <View style={IOStyles.rowSpaceBetween}>
-              <Placeholder.Box
-                animate="fade"
-                height={24}
-                width={100}
-                radius={4}
-              />
-              <Placeholder.Box
-                animate="fade"
-                height={24}
-                width={150}
-                radius={4}
-              />
-            </View>
+            <ListItemTransaction
+              isLoading
+              subtitle=""
+              title=""
+              transaction={{
+                amountAccessibilityLabel: "",
+                amount: "0"
+              }}
+            />
             <VSpacer size={8} />
           </View>
         ))}
@@ -320,11 +342,5 @@ const BeneficiaryDetailsContentSkeleton = () => (
     ))}
   </>
 );
-
-const styles = StyleSheet.create({
-  linkRow: {
-    paddingVertical: 16
-  }
-});
 
 export { BeneficiaryDetailsContent };

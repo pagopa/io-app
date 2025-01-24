@@ -15,13 +15,8 @@ import {
   useIsFocused,
   useNavigation
 } from "@react-navigation/native";
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
+
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -65,6 +60,7 @@ import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../analytics/cieAnalytics";
+import { usePreventScreenCapture } from "../../../utils/hooks/usePreventScreenCapture";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -75,6 +71,7 @@ const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
 const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
 const CiePinScreen = () => {
+  usePreventScreenCapture();
   useOnFirstRender(() => {
     trackLoginCiePinScreen();
   });
@@ -184,7 +181,7 @@ const CiePinScreen = () => {
   }, [pin, showModal]);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
     }, [])
   );

@@ -19,7 +19,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
-import * as React from "react";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Consent } from "../../../../../definitions/fims_sso/Consent";
@@ -62,7 +62,7 @@ export const FimsFlowSuccessBody = ({
     generateBottomSheetProps(privacyUrl)
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (serviceData) {
       const state = store.getState();
       computeAndTrackDataShare(serviceData, state);

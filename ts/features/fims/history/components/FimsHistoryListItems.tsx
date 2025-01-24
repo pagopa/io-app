@@ -1,41 +1,38 @@
 import {
+  BodySmall,
   Caption,
   H6,
   HSpacer,
   Icon,
   IOListItemStyles,
   IOStyles,
-  BodySmall,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { Access } from "../../../../../definitions/fims_history/Access";
 import I18n from "../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
-import { potFoldWithDefault } from "../../../../utils/pot";
-import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
 import { FimsHistorySharedStyles } from "../utils/styles";
-import { LoadingFimsHistoryListItem } from "./FimsHistoryLoaders";
 
 // ------- TYPES
 
-type SuccessListItemProps = {
+export type FimsHistorySuccessListItemProps = {
   serviceData: ServicePublic;
   consent: Access;
 };
-type BaseHistoryListItemProps = {
+export type FimsHistoryBaseListItemProps = {
   item: Access;
 };
 
 // --------- LISTITEMS
 
-const SuccessListItem = ({ serviceData, consent }: SuccessListItemProps) => {
+export const FimsHistorySuccessListItem = ({
+  serviceData,
+  consent
+}: FimsHistorySuccessListItemProps) => {
   const theme = useIOTheme();
-
   return (
     <View style={defaultListItemStyles}>
       <View style={IOStyles.row}>
@@ -59,7 +56,9 @@ const SuccessListItem = ({ serviceData, consent }: SuccessListItemProps) => {
   );
 };
 
-const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
+export const FimsHistoryFailureListItem = ({
+  item
+}: FimsHistoryBaseListItemProps) => {
   const theme = useIOTheme();
 
   return (
@@ -89,22 +88,6 @@ const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
       <Icon name="errorFilled" color="error-600" />
     </View>
   );
-};
-
-// ------- RENDERER
-
-export const FimsHistoryListItem = ({ item }: BaseHistoryListItemProps) => {
-  const serviceData = useAutoFetchingServiceByIdPot(
-    item.service_id as ServiceId
-  );
-
-  return potFoldWithDefault(serviceData, {
-    default: LoadingFimsHistoryListItem,
-    noneError: _ => <FailureListItem item={item} />,
-    some: data => <SuccessListItem serviceData={data} consent={item} />,
-    someError: data => <SuccessListItem serviceData={data} consent={item} />,
-    someLoading: data => <SuccessListItem serviceData={data} consent={item} />
-  });
 };
 
 // ------------ STYLES

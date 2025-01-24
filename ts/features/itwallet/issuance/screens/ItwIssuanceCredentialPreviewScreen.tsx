@@ -8,7 +8,7 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
@@ -33,6 +33,7 @@ import {
   selectCredentialOption,
   selectCredentialTypeOption
 } from "../../machine/credential/selectors";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -45,6 +46,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
     selectCredentialOption
   );
 
+  usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 

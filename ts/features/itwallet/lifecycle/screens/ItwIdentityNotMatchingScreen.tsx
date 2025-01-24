@@ -1,4 +1,3 @@
-import React from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { Banner, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";

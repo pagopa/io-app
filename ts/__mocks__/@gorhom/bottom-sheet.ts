@@ -7,7 +7,7 @@
  *
  * reference: https://github.com/gorhom/react-native-bottom-sheet/blob/master/mock.js
  */
-import React, { PropsWithChildren } from "react";
+import { Component, PropsWithChildren } from "react";
 
 const NOOP = () => {};
 const NOOP_VALUE = { value: 0, set: NOOP, get: () => 0 };
@@ -18,7 +18,7 @@ const BottomSheetBackdrop = NOOP;
 
 const BottomSheetComponent = (props: PropsWithChildren) => props.children;
 
-class BottomSheetModal extends React.Component<PropsWithChildren> {
+class BottomSheetModal extends Component<PropsWithChildren> {
   snapToIndex() {}
   snapToPosition() {}
   expand() {}
@@ -33,7 +33,7 @@ class BottomSheetModal extends React.Component<PropsWithChildren> {
   }
 }
 
-class BottomSheet extends React.Component<PropsWithChildren> {
+class BottomSheet extends Component<PropsWithChildren> {
   snapToIndex() {}
   snapToPosition() {}
   expand() {}

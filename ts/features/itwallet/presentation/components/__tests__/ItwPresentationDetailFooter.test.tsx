@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -12,25 +11,33 @@ import { itwCredentialIssuanceMachine } from "../../../machine/credential/machin
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter";
+import * as remoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 
-describe("ItwPresentationAlertsSection", () => {
-  test.each([
-    CredentialType.DRIVING_LICENSE,
-    CredentialType.EUROPEAN_DISABILITY_CARD,
-    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-  ])(
-    "should render the remove credential action if credential type is %p",
-    credentialType => {
-      const { queryByTestId } = renderComponent(credentialType);
+describe("ItwPresentationDetailsFooter", () => {
+  it("should render actions", () => {
+    const { queryByTestId } = renderComponent(
+      CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+    );
 
-      expect(queryByTestId("removeCredentialActionTestID")).not.toBeNull();
-    }
-  );
+    expect(queryByTestId("requestAssistanceActionTestID")).not.toBeNull();
+    expect(queryByTestId("removeCredentialActionTestID")).not.toBeNull();
+    expect(queryByTestId("openIPatenteActionTestID")).toBeNull();
+  });
 
-  it("should not render the remove credential action if credential is EID", () => {
-    const { queryByTestId } = renderComponent(CredentialType.PID);
+  it("should render iPatente action", () => {
+    jest
+      .spyOn(remoteConfigSelectors, "itwIPatenteCtaConfigSelector")
+      .mockImplementation(() => ({
+        visibility: true,
+        url: "",
+        service_id: ""
+      }));
 
-    expect(queryByTestId("removeCredentialActionTestID")).toBeNull();
+    const { queryByTestId } = renderComponent(CredentialType.DRIVING_LICENSE);
+
+    expect(queryByTestId("requestAssistanceActionTestID")).not.toBeNull();
+    expect(queryByTestId("removeCredentialActionTestID")).not.toBeNull();
+    expect(queryByTestId("openIPatenteActionTestID")).not.toBeNull();
   });
 });
 

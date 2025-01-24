@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Text, View, SafeAreaView, Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
