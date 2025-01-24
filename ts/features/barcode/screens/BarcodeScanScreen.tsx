@@ -1,14 +1,15 @@
 import {
   Divider,
+  IOToast,
   ListItemNav,
-  VSpacer,
-  IOToast
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -23,7 +24,10 @@ import {
 } from "../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
+import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes";
+import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
 import { PaymentsCheckoutRoutes } from "../../payments/checkout/navigation/routes";
 import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
@@ -39,10 +43,6 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
-import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
-import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
-import { FCI_ROUTES } from "../../fci/navigation/routes";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();

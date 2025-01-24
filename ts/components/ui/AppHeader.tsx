@@ -4,9 +4,8 @@
 
 import { IOStyles, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { PropsWithChildren } from "react";
-import { ColorValue, StatusBar, View, ViewProps } from "react-native";
+import { ColorValue, View, ViewProps } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import variables from "../../theme/variables";
 
 type Props = ViewProps & {
   backgroundColor?: ColorValue;
@@ -23,10 +22,6 @@ const AppHeader = (props: PropsWithChildren<Props>) => {
         backgroundColor: props.backgroundColor
       }}
     >
-      <StatusBar
-        barStyle={"dark-content"}
-        backgroundColor={variables.androidStatusBarColor}
-      />
       <View
         style={{
           ...IOStyles.row,
