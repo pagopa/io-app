@@ -1,6 +1,7 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { createRef, PureComponent, Fragment } from "react";
+import { createRef, Fragment, PureComponent } from "react";
 import {
   ActivityIndicator,
   AppState,
@@ -27,7 +28,6 @@ import { remarkProcessor } from "../../../utils/markdown";
 import { closeInjectedScript } from "../../../utils/webview";
 import { MarkdownWebviewComponent } from "./MarkdownWebviewComponent";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
-import { IOColors } from "@pagopa/io-app-design-system";
 
 const INJECTED_JAVASCRIPT = `
 ${NOTIFY_LINK_CLICK_SCRIPT}
