@@ -1,4 +1,4 @@
-import { TextInputValidation } from "@pagopa/io-app-design-system";
+import { ButtonSolid, TextInputValidation } from "@pagopa/io-app-design-system";
 import {
   PaymentNoticeNumberFromString,
   RptId
@@ -9,7 +9,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
 import { useRef, useState } from "react";
-import { Keyboard, View } from "react-native";
+import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import {
@@ -91,49 +91,68 @@ const WalletPaymentInputFiscalCodeScreen = () => {
   });
 
   return (
-    <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("wallet.payment.manual.fiscalCode.title")
-      }}
-      description={I18n.t("wallet.payment.manual.fiscalCode.subtitle")}
-      canGoback
-      contextualHelp={emptyContextualHelp}
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: I18n.t("global.buttons.continue"),
-          onPress: handleContinueClick
-        }
-      }}
-      ref={textInputWrappperRef}
-      includeContentMargins
-    >
-      <TextInputValidation
-        placeholder={I18n.t("wallet.payment.manual.fiscalCode.placeholder")}
-        accessibilityLabel={I18n.t(
-          "wallet.payment.manual.fiscalCode.placeholder"
-        )}
-        errorMessage={I18n.t(
-          "wallet.payment.manual.fiscalCode.validationError"
-        )}
-        value={inputState.fiscalCodeText}
-        icon="fiscalCodeIndividual"
-        onChangeText={value =>
-          setInputState({
-            fiscalCodeText: value,
-            fiscalCode: decodeOrganizationFiscalCode(value)
-          })
-        }
-        onValidate={validateOrganizationFiscalCode}
-        counterLimit={11}
-        textInputProps={{
-          keyboardType: "number-pad",
-          inputMode: "numeric",
-          returnKeyType: "done"
+    <>
+      <IOScrollViewWithLargeHeader
+        title={{
+          label: I18n.t("wallet.payment.manual.fiscalCode.title")
         }}
-        autoFocus
-      />
-    </IOScrollViewWithLargeHeader>
+        description={I18n.t("wallet.payment.manual.fiscalCode.subtitle")}
+        canGoback
+        contextualHelp={emptyContextualHelp}
+        actions={
+          Platform.OS === "android"
+            ? {
+                type: "SingleButton",
+                primary: {
+                  label: I18n.t("global.buttons.continue"),
+                  onPress: handleContinueClick
+                }
+              }
+            : undefined
+        }
+        ref={textInputWrappperRef}
+        includeContentMargins
+      >
+        <TextInputValidation
+          placeholder={I18n.t("wallet.payment.manual.fiscalCode.placeholder")}
+          accessibilityLabel={I18n.t(
+            "wallet.payment.manual.fiscalCode.placeholder"
+          )}
+          errorMessage={I18n.t(
+            "wallet.payment.manual.fiscalCode.validationError"
+          )}
+          value={inputState.fiscalCodeText}
+          icon="fiscalCodeIndividual"
+          onChangeText={value =>
+            setInputState({
+              fiscalCodeText: value,
+              fiscalCode: decodeOrganizationFiscalCode(value)
+            })
+          }
+          onValidate={validateOrganizationFiscalCode}
+          counterLimit={11}
+          textInputProps={{
+            keyboardType: "number-pad",
+            inputMode: "numeric",
+            returnKeyType: "done",
+            inputAccessoryViewID: "fiscalCodeInputAccessoryView"
+          }}
+          autoFocus
+        />
+      </IOScrollViewWithLargeHeader>
+      {Platform.OS === "ios" && (
+        <InputAccessoryView nativeID="fiscalCodeInputAccessoryView">
+          <View style={{ padding: 20 }}>
+            <ButtonSolid
+              fullWidth
+              label={I18n.t("global.buttons.continue")}
+              accessibilityLabel={I18n.t("global.buttons.continue")}
+              onPress={handleContinueClick}
+            />
+          </View>
+        </InputAccessoryView>
+      )}
+    </>
   );
 };
 

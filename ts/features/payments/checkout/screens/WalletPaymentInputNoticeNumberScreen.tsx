@@ -1,10 +1,10 @@
-import { TextInputValidation } from "@pagopa/io-app-design-system";
+import { ButtonSolid, TextInputValidation } from "@pagopa/io-app-design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useRef, useState } from "react";
-import { Keyboard, View } from "react-native";
+import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import {
@@ -67,58 +67,78 @@ const WalletPaymentInputNoticeNumberScreen = () => {
   const textInputWrappperRef = useRef<View>(null);
 
   return (
-    <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("wallet.payment.manual.noticeNumber.title")
-      }}
-      description={I18n.t("wallet.payment.manual.noticeNumber.subtitle")}
-      canGoback={true}
-      contextualHelp={emptyContextualHelp}
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: I18n.t("global.buttons.continue"),
-          onPress: handleContinueClick
-        }
-      }}
-      includeContentMargins
-      ref={textInputWrappperRef}
-    >
-      <TextInputValidation
-        placeholder={I18n.t("wallet.payment.manual.noticeNumber.placeholder")}
-        accessibilityLabel={I18n.t(
-          "wallet.payment.manual.noticeNumber.placeholder"
-        )}
-        errorMessage={I18n.t(
-          "wallet.payment.manual.noticeNumber.validationError"
-        )}
-        value={inputState.noticeNumberText}
-        icon="docPaymentCode"
-        onChangeText={value => {
-          const normalizedValue = trimAndLimitValue(
-            value,
-            MAX_LENGTH_NOTICE_NUMBER
-          );
-
-          setInputState({
-            noticeNumberText: normalizedValue,
-            noticeNumber: decodePaymentNoticeNumber(normalizedValue)
-          });
+    <>
+      <IOScrollViewWithLargeHeader
+        title={{
+          label: I18n.t("wallet.payment.manual.noticeNumber.title")
         }}
-        counterLimit={
-          inputState.noticeNumberText.length >= MAX_LENGTH_NOTICE_NUMBER
-            ? MAX_LENGTH_NOTICE_NUMBER
+        description={I18n.t("wallet.payment.manual.noticeNumber.subtitle")}
+        canGoback={true}
+        contextualHelp={emptyContextualHelp}
+        headerActionsProp={{ showHelp: true }}
+        actions={
+          Platform.OS === "android"
+            ? {
+                type: "SingleButton",
+                primary: {
+                  label: I18n.t("global.buttons.continue"),
+                  onPress: handleContinueClick
+                }
+              }
             : undefined
         }
-        onValidate={validatePaymentNoticeNumber}
-        textInputProps={{
-          keyboardType: "number-pad",
-          inputMode: "numeric",
-          returnKeyType: "done"
-        }}
-        autoFocus
-      />
-    </IOScrollViewWithLargeHeader>
+        includeContentMargins
+        ref={textInputWrappperRef}
+      >
+        <TextInputValidation
+          placeholder={I18n.t("wallet.payment.manual.noticeNumber.placeholder")}
+          accessibilityLabel={I18n.t(
+            "wallet.payment.manual.noticeNumber.placeholder"
+          )}
+          errorMessage={I18n.t(
+            "wallet.payment.manual.noticeNumber.validationError"
+          )}
+          value={inputState.noticeNumberText}
+          icon="docPaymentCode"
+          onChangeText={value => {
+            const normalizedValue = trimAndLimitValue(
+              value,
+              MAX_LENGTH_NOTICE_NUMBER
+            );
+
+            setInputState({
+              noticeNumberText: normalizedValue,
+              noticeNumber: decodePaymentNoticeNumber(normalizedValue)
+            });
+          }}
+          counterLimit={
+            inputState.noticeNumberText.length >= MAX_LENGTH_NOTICE_NUMBER
+              ? MAX_LENGTH_NOTICE_NUMBER
+              : undefined
+          }
+          onValidate={validatePaymentNoticeNumber}
+          textInputProps={{
+            keyboardType: "number-pad",
+            inputMode: "numeric",
+            returnKeyType: "done",
+            inputAccessoryViewID: "noticeNumberInputAccessoryView"
+          }}
+          autoFocus
+        />
+      </IOScrollViewWithLargeHeader>
+      {Platform.OS === "ios" && (
+        <InputAccessoryView nativeID="noticeNumberInputAccessoryView">
+          <View style={{ padding: 20 }}>
+            <ButtonSolid
+              fullWidth
+              label={I18n.t("global.buttons.continue")}
+              accessibilityLabel={I18n.t("global.buttons.continue")}
+              onPress={handleContinueClick}
+            />
+          </View>
+        </InputAccessoryView>
+      )}
+    </>
   );
 };
 
