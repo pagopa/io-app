@@ -412,8 +412,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                             }
                           />
                           <View
-                            accessibilityLabel="List Header"
-                            accessible={true}
                             style={
                               {
                                 "marginHorizontal": -24,
@@ -423,7 +421,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                             }
                           >
                             <View
-                              importantForAccessibility="no-hide-descendants"
                               style={
                                 {
                                   "alignItems": "center",
@@ -440,9 +437,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                 }
                               >
                                 <View
-                                  accessibilityElementsHidden={false}
+                                  accessibilityLabel="List Header"
+                                  accessibilityRole="header"
                                   accessible={true}
-                                  importantForAccessibility="yes"
                                 >
                                   <Text
                                     allowFontScaling={false}
@@ -1986,8 +1983,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                             }
                           />
                           <View
-                            accessibilityLabel="List Header"
-                            accessible={true}
                             style={
                               {
                                 "marginHorizontal": -24,
@@ -1997,7 +1992,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                             }
                           >
                             <View
-                              importantForAccessibility="no-hide-descendants"
                               style={
                                 {
                                   "alignItems": "center",
@@ -2014,9 +2008,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                 }
                               >
                                 <View
-                                  accessibilityElementsHidden={false}
+                                  accessibilityLabel="List Header"
+                                  accessibilityRole="header"
                                   accessible={true}
-                                  importantForAccessibility="yes"
                                 >
                                   <Text
                                     allowFontScaling={false}
