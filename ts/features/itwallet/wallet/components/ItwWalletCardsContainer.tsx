@@ -17,6 +17,7 @@ import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAle
 import { ItwFeedbackBanner } from "../../common/components/ItwFeedbackBanner";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
+import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 
 const EID_INFO_BOTTOM_PADDING = 128;
 
@@ -28,6 +29,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const isEidExpired = eidStatus === "jwtExpired";
+
+  useItwPendingReviewRequest();
 
   useDebugInfo({
     itw: {
