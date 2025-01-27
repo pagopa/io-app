@@ -26,6 +26,7 @@ import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomS
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
 import { PaymentsCheckoutRoutes } from "../../payments/checkout/navigation/routes";
 import * as analytics from "../analytics";
+import * as paymentsAnalytics from "../../payments/home/analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import {
@@ -43,11 +44,13 @@ import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes"
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
+import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
@@ -180,6 +183,10 @@ const BarcodeScanScreen = () => {
 
   const handlePagoPACodeInput = () => {
     manualInputModal.dismiss();
+    paymentsAnalytics.trackPaymentStartDataEntry({
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length ?? 0
+    });
     navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
       screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER
     });
