@@ -218,8 +218,7 @@ const reducer = (
     case getType(getPaymentsReceiptDetailsAction.success):
       receiptsAnalytics.trackPaymentsOpenReceipt({
         organization_name: action.payload.carts?.[0]?.payee?.name,
-        organization_fiscal_code:
-          state.analyticsData?.verifiedData?.paFiscalCode,
+        organization_fiscal_code: action.payload.carts?.[0]?.payee?.taxCode,
         payment_status: "paid",
         first_time_opening: state.analyticsData?.receiptFirstTimeOpening,
         user: state.analyticsData?.receiptUser
