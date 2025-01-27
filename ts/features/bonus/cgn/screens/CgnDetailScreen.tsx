@@ -49,7 +49,6 @@ import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
-import { navigateToCgnMerchantsTabs } from "../navigation/actions";
 import { CgnDetailsParamsList } from "../navigation/params";
 import CGN_ROUTES from "../navigation/routes";
 import { cgnDetails } from "../store/actions/details";
@@ -142,11 +141,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
     props.isCgnEnabled && props.cgnDetails?.status === StatusEnum.ACTIVATED;
 
   const onPressShowCgnDiscounts = () => {
-    if (props.isMerchantV2Enabled) {
-      props.navigateToMerchantsTabs();
-    } else {
-      navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES);
-    }
+    navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES);
   };
 
   const footerActions: IOScrollViewActions | undefined = (() => {
@@ -265,8 +260,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   unsubscribe: () => dispatch(cgnUnsubscribe.request()),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
-  loadCgnDetails: () => dispatch(cgnDetails.request()),
-  navigateToMerchantsTabs: () => navigateToCgnMerchantsTabs()
+  loadCgnDetails: () => dispatch(cgnDetails.request())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
