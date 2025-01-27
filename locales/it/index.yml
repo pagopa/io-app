@@ -2907,53 +2907,8 @@ bonus:
           one: 1 secondo
           other: "{{seconds}} secondi"
   cdc:
-    title: "Carta della cultura"
-    serviceCta:
-      activable: "Attiva la carta"
-      pending: "Richiesta inviata"
-      error:
-        status: "Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare."
     serviceEntryPoint:
       notAvailable: "Il servizio non è disponibile in questo momento. Riprova più tardi."
-    bonusRequest:
-      bonusRequested:
-        loading:
-          title: "Stiamo inviando la tua richiesta di attivazione..."
-          subtitle: "Ti ricordiamo che sono valide solo le richieste per gli anni in cui hai dichiarato di essere residente in Italia. Ti preghiamo di attendere"
-        requestCompleted:
-          title: "La tua richiesta è stata inviata!"
-          body: "Riceverai un messaggio su IO quando le graduatorie saranno definitive."
-          cta: "Ho capito!"
-        partiallySuccess:
-          title: "Ecco l’esito delle tue richieste"
-          body:
-            success: "La richiesta per il {{successfulYears}} è andata a buon fine."
-            fail:
-              residenceAbroad: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché non residente in Italia."
-              notEligible: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché non è possibile richiedere Carta della Cultura per l’anno selezionato."
-              alreadyRegistered: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché hai già inviato una richiesta di attivazione per quell’anno."
-              initiativeFinished: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché il periodo di richiesta è terminato."
-        ko:
-          requirementsError:
-            title: "Purtroppo non hai i requisiti per richiedere la Carta della Cultura."
-            body: "La Carta della Cultura è disponibile solo per i cittadini residenti in Italia."
-          wrongFormat:
-            title: "Il servizio Carta della Cultura in questo momento non è disponibile."
-            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
-          genericError:
-            title: "Si è verificato un errore con la tua richiesta"
-            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
-      selectResidence:
-        header: "Residenza"
-        items:
-          residesInItaly: "Risiedo in Italia"
-          residesAbroad: "Risiedo all’estero"
-        info: "Carta della Cultura è disponibile solo per i cittadini residenti in Italia. Indica la tua residenza per ciascun anno."
-      selectYear:
-        header: "Per quale anno vuoi richiedere la Carta della Cultura?"
-        body: "Per ogni anno selezionato, il tuo ISEE non deve superare i 15.000 € e la tua residenza deve essere nel territorio italiano."
-      misc:
-        conjunction: ", "
 features:
   messages:
     pushNotifications:
