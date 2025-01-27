@@ -12,6 +12,7 @@ import { itWalletIssuanceRedirectUri } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useCieIdApp } from "../../hooks/useCieIdApp";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
 const defaultUserAgent =
@@ -37,6 +38,10 @@ const ItwCieIdLoginScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const [isWebViewLoading, setWebViewLoading] = useState(true);
 
+  const dismissalDialog = useItwDismissalDialog(() =>
+    machineRef.send({ type: "back" })
+  );
+
   const {
     authUrl,
     isAppLaunched,
@@ -53,11 +58,6 @@ const ItwCieIdLoginScreen = () => {
     title: I18n.t("features.itWallet.identification.mode.title"),
     supportRequest: false
   });
-
-  const goBack = useCallback(
-    () => machineRef.send({ type: "back" }),
-    [machineRef]
-  );
 
   const onLoadEnd = useCallback(() => {
     // When CieId app-to-app flow is enabled, stop loading only after we got
@@ -143,7 +143,7 @@ const ItwCieIdLoginScreen = () => {
     <LoadingSpinnerOverlay
       isLoading={isWebViewLoading}
       loadingOpacity={1.0}
-      onCancel={isAppLaunched ? goBack : undefined} // This should only be possible when opening CieID through the Linking module
+      onCancel={isAppLaunched ? dismissalDialog.show : undefined} // This should only be possible when opening CieID through the Linking module
     >
       <View style={styles.webViewWrapper}>{content}</View>
     </LoadingSpinnerOverlay>
