@@ -10,6 +10,7 @@ import I18n, {
   localeToPreferredLanguageMapping,
   LocalizedMessageKeys
 } from "../i18n";
+import { LanguageEnum } from "../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
 /**
  * Helpers for handling locales
  */
@@ -91,3 +92,6 @@ export const fallbackForLocalizedMessageKeys = (
   locale: LocalizedMessageKeys
 ): Exclude<LocalizedMessageKeys, "de-DE"> =>
   locale === "de-DE" ? "it-IT" : locale;
+
+export const getLanguageEnumFromPreferredLocale = (): LanguageEnum =>
+  LanguageEnum[I18n.currentLocale().toUpperCase() as keyof typeof LanguageEnum];

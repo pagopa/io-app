@@ -2,6 +2,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo, useRef } from "react";
 import RNScreenshotPrevent from "react-native-screenshot-prevent";
 import uuid from "react-native-uuid";
+import { isDevEnv } from "../environment";
 
 const activeTags: Set<string> = new Set();
 
@@ -37,6 +38,10 @@ export function usePreventScreenCapture(key?: string) {
 
   useFocusEffect(
     useCallback(() => {
+      if (isDevEnv) {
+        return;
+      }
+
       clearTimeout(timeoutRef.current);
 
       preventScreenCapture(tag);
