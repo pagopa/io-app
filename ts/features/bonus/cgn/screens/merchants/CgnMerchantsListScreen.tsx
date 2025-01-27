@@ -17,7 +17,6 @@ import {
   isReady
 } from "../../../../../common/model/RemoteValue";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -46,6 +45,7 @@ export type MerchantsAll = OfflineMerchant | OnlineMerchant;
  */
 const CgnMerchantsListScreen: FunctionComponent<Props> = (props: Props) => {
   const navigator = useIONavigation();
+  const { requestOfflineMerchants, requestOnlineMerchants } = props;
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
   const merchantsAll = useMemo(
@@ -56,8 +56,6 @@ const CgnMerchantsListScreen: FunctionComponent<Props> = (props: Props) => {
       ),
     [props.onlineMerchants, props.offlineMerchants]
   );
-
-  const { requestOfflineMerchants, requestOnlineMerchants } = props;
 
   const initLoadingLists = useCallback(() => {
     requestOfflineMerchants();
@@ -90,7 +88,7 @@ const CgnMerchantsListScreen: FunctionComponent<Props> = (props: Props) => {
           />
         </ContentWrapper>
       )}
-      {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
+      {isReady(props.onlineMerchants) && isReady(props.offlineMerchants) && (
         <FlatList
           data={merchantsAll}
           keyExtractor={item => item.id}
@@ -106,23 +104,16 @@ const CgnMerchantsListScreen: FunctionComponent<Props> = (props: Props) => {
             />
           }
         />
-      ) : (
-        <LoadingSpinnerOverlay
-          isLoading={
-            isLoading(props.offlineMerchants) ||
-            isLoading(props.onlineMerchants)
-          }
-          loadingCaption={I18n.t("global.remoteStates.loading")}
-        >
-          <OperationResultScreenContent
-            title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
-            pictogram="umbrellaNew"
-            action={{
-              label: I18n.t("global.buttons.retry"),
-              onPress: initLoadingLists
-            }}
-          />
-        </LoadingSpinnerOverlay>
+      )}
+      {(isError(props.onlineMerchants) || isError(props.offlineMerchants)) && (
+        <OperationResultScreenContent
+          title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
+          pictogram="umbrellaNew"
+          action={{
+            label: I18n.t("global.buttons.retry"),
+            onPress: initLoadingLists
+          }}
+        />
       )}
     </SafeAreaView>
   );
