@@ -1,28 +1,30 @@
-import { FunctionComponent, useCallback, useMemo } from "react";
-import { FlatList, RefreshControl, SafeAreaView } from "react-native";
-import { connect } from "react-redux";
 import {
   ContentWrapper,
   Divider,
   ListItemHeader
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import { FunctionComponent, useCallback, useMemo } from "react";
+import { FlatList, RefreshControl, SafeAreaView } from "react-native";
+import { connect } from "react-redux";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import I18n from "../../../../../i18n";
-import { Dispatch } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import {
   getValueOrElse,
   isError,
   isLoading,
   isReady
 } from "../../../../../common/model/RemoteValue";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../../../i18n";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { Dispatch } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
-import { navigateToCgnMerchantDetail } from "../../navigation/actions";
+import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnOfflineMerchants,
   cgnOnlineMerchants
@@ -43,8 +45,7 @@ export type MerchantsAll = OfflineMerchant | OnlineMerchant;
  * @constructor
  */
 const CgnMerchantsListScreen: FunctionComponent<Props> = (props: Props) => {
-  const { navigateToMerchantDetail } = props;
-
+  const navigator = useIONavigation();
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
   const merchantsAll = useMemo(
@@ -66,10 +67,13 @@ const CgnMerchantsListScreen: FunctionComponent<Props> = (props: Props) => {
   useFocusEffect(initLoadingLists);
 
   const onItemPress = useCallback(
-    (id: Merchant["id"]) => {
-      navigateToMerchantDetail(id);
+    (merchantID: Merchant["id"]) => {
+      navigator.navigate(CGN_ROUTES.DETAILS.MAIN, {
+        screen: CGN_ROUTES.DETAILS.MERCHANTS.DETAIL,
+        params: { merchantID }
+      });
     },
-    [navigateToMerchantDetail]
+    [navigator]
   );
 
   const renderItem = useMemo(
@@ -103,14 +107,22 @@ const CgnMerchantsListScreen: FunctionComponent<Props> = (props: Props) => {
           }
         />
       ) : (
-        <LoadingErrorComponent
+        <LoadingSpinnerOverlay
           isLoading={
             isLoading(props.offlineMerchants) ||
             isLoading(props.onlineMerchants)
           }
           loadingCaption={I18n.t("global.remoteStates.loading")}
-          onRetry={initLoadingLists}
-        />
+        >
+          <OperationResultScreenContent
+            title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
+            pictogram="umbrellaNew"
+            action={{
+              label: I18n.t("global.buttons.retry"),
+              onPress: initLoadingLists
+            }}
+          />
+        </LoadingSpinnerOverlay>
       )}
     </SafeAreaView>
   );
@@ -123,9 +135,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestOnlineMerchants: () => dispatch(cgnOnlineMerchants.request({})),
-  requestOfflineMerchants: () => dispatch(cgnOfflineMerchants.request({})),
-  navigateToMerchantDetail: (id: Merchant["id"]) =>
-    navigateToCgnMerchantDetail({ merchantID: id })
+  requestOfflineMerchants: () => dispatch(cgnOfflineMerchants.request({}))
 });
 
 export default connect(
