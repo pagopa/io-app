@@ -3,7 +3,7 @@ import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import Color from "color";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import {
-  borderColorByStatus,
+  useBorderColorByStatus,
   getCredentialNameFromType,
   tagPropsByStatus,
   validCredentialStatuses
@@ -65,6 +65,7 @@ export const ItwCredentialCard = ({
   status = "valid",
   credentialType
 }: ItwCredentialCard) => {
+  const borderColorMap = useBorderColorByStatus();
   const styleProps = getStyleProps(credentialType, status);
 
   const statusTagProps = tagPropsByStatus[status];
@@ -102,9 +103,7 @@ export const ItwCredentialCard = ({
         credentialType={credentialType}
         colorScheme={styleProps.tagColorScheme}
       />
-      <View
-        style={[styles.border, { borderColor: borderColorByStatus[status] }]}
-      />
+      <View style={[styles.border, { borderColor: borderColorMap[status] }]} />
     </View>
   );
 };
@@ -155,6 +154,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     borderRadius: 8,
+    borderCurve: "continuous",
     borderWidth: 2
   },
   header: {
