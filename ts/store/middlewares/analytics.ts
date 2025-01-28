@@ -14,6 +14,7 @@ import {
 } from "../actions/analytics";
 import { applicationChangeState } from "../actions/application";
 import {
+  clearCurrentSession,
   idpLoginUrlChanged,
   idpSelected,
   loginFailure,
@@ -124,6 +125,8 @@ const trackAction =
         return mp.track(action.type, {
           idp: action.payload.idp
         });
+      case getType(clearCurrentSession):
+        return mp.track(action.type, buildEventProperties("TECH", undefined));
       case getType(analyticsAuthenticationStarted):
       case getType(analyticsAuthenticationCompleted):
       case getType(sessionInformationLoadSuccess):
