@@ -24,16 +24,14 @@ export const PaymentsCheckoutNavigator = () => (
       name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER}
       component={WalletPaymentInputNoticeNumberScreen}
       options={{
-        gestureEnabled: isGestureEnabled,
-        headerShown: false
+        gestureEnabled: isGestureEnabled
       }}
     />
     <Stack.Screen
       name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_FISCAL_CODE}
       component={WalletPaymentInputFiscalCodeScreen}
       options={{
-        gestureEnabled: isGestureEnabled,
-        headerShown: false
+        gestureEnabled: isGestureEnabled
       }}
     />
     <Stack.Screen

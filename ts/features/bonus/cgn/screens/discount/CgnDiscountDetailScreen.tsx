@@ -257,15 +257,14 @@ const CgnDiscountDetailScreen = () => {
     return (
       <>
         <Animated.ScrollView
-          style={{ flexGrow: 1, backgroundColor: IOColors.white }}
+          style={{ flexGrow: 1 }}
           onScroll={scrollHandler}
           scrollEventThrottle={8}
           snapToOffsets={[0, titleHeight]}
           snapToEnd={false}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: gradientAreaHeight,
-            backgroundColor: IOColors.white
+            paddingBottom: gradientAreaHeight
           }}
         >
           {Platform.OS === "ios" && (
