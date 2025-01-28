@@ -21,8 +21,14 @@ import * as USEIO from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import {
+  fimsHistoryExport,
+  resetFimsHistoryExportState
+} from "../../store/actions";
+import { FimsHistoryState } from "../../store/reducer";
 import { useFimsHistoryExport } from "../useFimsHistoryResultToasts";
-import { resetFimsHistoryExportState } from "../../store/actions";
+import { FIMS_ROUTES } from "../../../common/navigation";
+import * as ANALYTICS from "../../../common/analytics";
 
 // eslint-disable-next-line functional/no-let
 let testingHandleExportOnPress = () => {
@@ -95,9 +101,16 @@ describe("useFimsHistoryResultToast", () => {
     expect(mockFailureToast).toHaveBeenCalledTimes(0);
     expect(mockAlert).toHaveBeenCalledTimes(1);
   });
-  it("should not display a new alert if is already processing before exporting", async () => {
+  it("should not display a new alert if is already processing before exporting, should also correctly dispatch request and tracking actions on alert click", async () => {
     const mockAlert = jest.spyOn(Alert, "alert");
     jest.spyOn(USEIO, "useIODispatch").mockImplementation(() => jest.fn());
+
+    const mockDispatch = jest.fn();
+    jest.spyOn(USEIO, "useIODispatch").mockImplementation(() => mockDispatch);
+
+    const mockTrackHistory = jest
+      .spyOn(ANALYTICS, "trackExportHistory")
+      .mockImplementation(jest.fn());
 
     renderHook(loadingState);
 
@@ -112,6 +125,9 @@ describe("useFimsHistoryResultToast", () => {
     expect(alert![1].onPress).toBeDefined();
 
     alert![1].onPress!(); // start export
+
+    expect(mockTrackHistory).toHaveBeenCalled();
+    expect(mockDispatch).toHaveBeenCalledWith(fimsHistoryExport.request());
 
     testingHandleExportOnPress(); // second export, now throttling
     expect(mockAlert).toHaveBeenCalledTimes(1); // still one alert, because the second export is throttled
@@ -129,13 +145,15 @@ describe("useFimsHistoryResultToast", () => {
 
 // ----------- UTILS -------------
 
-const successState = remoteReady("SUCCESS");
-const throttleState = remoteReady("ALREADY_EXPORTING");
+type ExportState = FimsHistoryState["historyExportState"];
+
+const successState: ExportState = remoteReady("SUCCESS");
+const throttleState: ExportState = remoteReady("ALREADY_EXPORTING");
 const errorState = remoteError(null);
 const loadingState = remoteLoading;
 const undefinedState = remoteUndefined;
 
-const renderHook = (exportState: any) => {
+const renderHook = (exportState: ExportState) => {
   const Component = () => {
     const { handleExportOnPress } = useFimsHistoryExport();
     testingHandleExportOnPress = handleExportOnPress;
@@ -155,7 +173,7 @@ const renderHook = (exportState: any) => {
   );
   return renderScreenWithNavigationStoreContext(
     Component,
-    "TEST",
+    FIMS_ROUTES.HISTORY,
     {},
     createStore(appReducer, globalState as any)
   );
