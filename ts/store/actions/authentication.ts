@@ -86,6 +86,10 @@ export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
 export const sessionInvalid = createStandardAction("SESSION_INVALID")();
 
+export const clearCurrentSession = createStandardAction(
+  "CLEAR_CURRENT_SESSION"
+)();
+
 export type AuthenticationActions =
   | ActionType<typeof idpSelected>
   | ActionType<typeof idpLoginUrlChanged>
@@ -101,5 +105,6 @@ export type AuthenticationActions =
   | ActionType<typeof checkCurrentSession>
   | ActionType<typeof sessionExpired>
   | ActionType<typeof sessionInvalid>
+  | ActionType<typeof clearCurrentSession>
   | ActionType<typeof resetAuthenticationState>
   | ActionType<typeof disableNativeAuthentication>;
