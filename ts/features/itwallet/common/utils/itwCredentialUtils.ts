@@ -30,17 +30,19 @@ export const getCredentialNameFromType = (
     O.getOrElse(() => withDefault)
   );
 
-export const useBorderColorByStatus: () => { [key in ItwCredentialStatus]: string } = () => {
+export const useBorderColorByStatus: () => {
+  [key in ItwCredentialStatus]: string;
+} = () => {
   const theme = useIOTheme();
 
   return {
-  valid: IOColors[theme["appBackground-primary"]],
-  invalid: IOColors["error-600"],
-  expired: IOColors["error-600"],
-  expiring: IOColors["warning-700"],
-  jwtExpired: IOColors["error-600"],
-  jwtExpiring: IOColors["warning-700"],
-  unknown: IOColors["grey-300"]
+    valid: IOColors[theme["appBackground-primary"]],
+    invalid: IOColors["error-600"],
+    expired: IOColors["error-600"],
+    expiring: IOColors["warning-700"],
+    jwtExpired: IOColors["error-600"],
+    jwtExpiring: IOColors["warning-700"],
+    unknown: IOColors["grey-300"]
   };
 };
 
