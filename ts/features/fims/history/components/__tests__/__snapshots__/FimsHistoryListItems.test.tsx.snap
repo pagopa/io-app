@@ -440,9 +440,9 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="caption1"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {
@@ -471,9 +471,9 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -991,9 +991,9 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1022,9 +1022,9 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                           }
                         />
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="headline"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},
@@ -1042,9 +1042,9 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                           TEST
                         </Text>
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="footnote"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},
