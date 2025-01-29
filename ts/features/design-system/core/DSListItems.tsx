@@ -1,8 +1,8 @@
 import {
   Badge,
   Divider,
-  H6,
   H4,
+  H6,
   Icon,
   ListItemAction,
   ListItemHeader,
