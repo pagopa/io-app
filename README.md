@@ -378,7 +378,7 @@ $ bundle install
 
 # Install dependencies 
 # Run this only during the first setup and when JS dependencies change
-$ yarn install
+$ yarn && yarn setup
 
 # Install podfiles when targeting iOS (ignore this step for Android)
 # Run this only during the first setup and when Pods dependencies change
