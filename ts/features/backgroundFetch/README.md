@@ -17,11 +17,17 @@ The hook-based configuration provides a clean way to handle background fetch eve
 
 ## Usage
 
-### Automatic Background Fetch
+### Background Fetch
 
 The feature automatically configures a periodic background fetch that runs at intervals defined by `backgroundFetchIntervalMinutes` in the app's config. This default task uses the `REACT_NATIVE_BACKGROUND_FETCH` env variable.
 
-### Scheduling Custom Tasks
+### Custom Tasks
+
+> [!NOTE]
+> On iOS, scheduled task are designed for low-priority task. They tend to be **unrealiable for mission-critical task**. They run when > the device is plugged into the power and stops when the user terminates the app.
+> For a more reliable approach use the default fetch event.
+
+#### Scheduling a Custom Task
 
 To schedule a custom background task:
 
@@ -72,7 +78,7 @@ export function handleBackgroundFetchEventSaga(action: ActionType<typeof backgro
 ```
 
 
-### Canceling Tasks
+#### Canceling a Custom Tasks
 
 To cancel a scheduled task:
 
