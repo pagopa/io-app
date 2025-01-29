@@ -51,8 +51,6 @@ import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { isCieIDLocalFeatureEnabledSelector } from "../../features/cieLogin/store/selectors";
-import { cieIDFeatureSetEnabled } from "../../features/cieLogin/store/actions";
 import { requestAppReview } from "../../utils/storeReview";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
@@ -443,9 +441,6 @@ const DeveloperTestEnvironmentSection = ({
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isCieIDFeatureEnabled = useIOSelector(
-    isCieIDLocalFeatureEnabledSelector
-  );
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -492,9 +487,6 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
     handleShowModal();
   };
-  const onCieIDFeatureToggle = (enabled: boolean) => {
-    dispatch(cieIDFeatureSetEnabled({ isCieIDFeatureEnabled: enabled }));
-  };
 
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
@@ -513,11 +505,6 @@ const DeveloperTestEnvironmentSection = ({
       description: I18n.t("profile.main.idpay.idpayTestAlert"),
       value: isIdPayTestEnabled,
       onSwitchValueChange: onIdPayTestToggle
-    },
-    {
-      label: I18n.t("profile.main.cieID.cieIdTest.title"),
-      value: isCieIDFeatureEnabled,
-      onSwitchValueChange: onCieIDFeatureToggle
     }
   ];
 

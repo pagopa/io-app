@@ -16,7 +16,6 @@ import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredO
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
-import CieNotSupported from "../components/cie/CieNotSupported";
 import RootedDeviceModal from "../screens/modal/RootedDeviceModal";
 import { isGestureEnabled } from "../utils/navigation";
 import CieUnexpectedErrorScreen from "../screens/authentication/cie/CieUnexpectedErrorScreen";
@@ -207,11 +206,6 @@ const AuthenticationStackNavigator = () => (
         headerShown: true
       }}
     >
-      <Stack.Screen
-        name={ROUTES.CIE_NOT_SUPPORTED}
-        component={CieNotSupported}
-      />
-
       <Stack.Screen
         options={{ headerShown: true }}
         name={ROUTES.CIE_ACTIVATE_NFC_SCREEN}

@@ -32,7 +32,6 @@ import SectionStatusComponent from "../../components/SectionStatus";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import {
-  isCieIDFFEnabledSelector,
   isCieIDTourGuideEnabledSelector,
   isCieLoginUatEnabledSelector
 } from "../../features/cieLogin/store/selectors";
@@ -80,7 +79,6 @@ export const LandingScreen = () => {
   const isCieIDTourGuideEnabled = useIOSelector(
     isCieIDTourGuideEnabledSelector
   );
-  const isCieIDFFEnabled = useIOSelector(isCieIDFFEnabledSelector);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
     navigateToIdpSelection,
@@ -236,35 +234,15 @@ export const LandingScreen = () => {
     }
   }, [hasTabletCompatibilityAlertAlreadyShown]);
 
-  const handleLegacyCieLogin = useCallback(() => {
-    if (isCieSupported) {
-      handleNavigateToCiePinScreen();
-    } else {
-      navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.CIE_NOT_SUPPORTED
-      });
-    }
-  }, [isCieSupported, navigation, handleNavigateToCiePinScreen]);
-
   const navigateToCiePinScreen = useCallback(() => {
     void trackCieLoginSelected();
-    if (isCieIDFFEnabled) {
-      if (isCieSupported) {
-        void trackCieBottomSheetScreenView();
-        present();
-      } else {
-        handleNavigateToCieIdLoginScreen();
-      }
+    if (isCieSupported) {
+      void trackCieBottomSheetScreenView();
+      present();
     } else {
-      handleLegacyCieLogin();
+      handleNavigateToCieIdLoginScreen();
     }
-  }, [
-    present,
-    isCieSupported,
-    isCieIDFFEnabled,
-    handleLegacyCieLogin,
-    handleNavigateToCieIdLoginScreen
-  ]);
+  }, [present, isCieSupported, handleNavigateToCieIdLoginScreen]);
 
   const navigateToPrivacyUrl = useCallback(() => {
     trackMethodInfo();
@@ -320,7 +298,7 @@ export const LandingScreen = () => {
       />
     );
 
-    if (isCieIDFFEnabled || isCieSupported) {
+    if (isCieSupported) {
       return [loginCieButton, loginSpidButton];
     }
 
@@ -330,7 +308,6 @@ export const LandingScreen = () => {
     isCieUatEnabled,
     navigateToCiePinScreen,
     navigateToIdpSelection,
-    isCieIDFFEnabled,
     isCieSupported,
     dispatch
   ]);
