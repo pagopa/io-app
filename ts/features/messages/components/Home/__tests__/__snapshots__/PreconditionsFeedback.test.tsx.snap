@@ -523,9 +523,9 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
                           }
                         />
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="title2"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},
@@ -1082,9 +1082,9 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                           }
                         />
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="title2"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},
@@ -1112,9 +1112,9 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                           }
                         />
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="footnote"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},

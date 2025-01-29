@@ -10,11 +10,15 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useCallback, useRef, useState } from "react";
-import { View, Alert as NativeAlert, Dimensions, Platform } from "react-native";
+import { Alert as NativeAlert, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { defaultPin } from "../../../config";
 import { isValidPinNumber } from "../../../features/fastLogin/utils/pinPolicy";
+import { useCreatePin } from "../../../hooks/useCreatePin";
+import { useDetectSmallScreen } from "../../../hooks/useDetectSmallScreen";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import {
   trackPinError,
   trackPinScreen
@@ -22,20 +26,17 @@ import {
 import { useIOSelector } from "../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 import { PinString } from "../../../types/PinString";
-import { getFlowType } from "../../../utils/analytics";
-import { isDevEnv } from "../../../utils/environment";
-import { useCreatePin } from "../../../hooks/useCreatePin";
-import { Carousel } from "../../Carousel";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { ContextualHelpPropsMarkdown } from "../BaseScreenComponent";
+import { getFlowType } from "../../../utils/analytics";
 import { PIN_LENGTH_SIX } from "../../../utils/constants";
+import { isDevEnv } from "../../../utils/environment";
+import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { usePreventScreenCapture } from "../../../utils/hooks/usePreventScreenCapture";
-import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
+import { Carousel } from "../../Carousel";
+import { ContextualHelpPropsMarkdown } from "../BaseScreenComponent";
 import { PinCaouselItemProps, PinCarouselItem } from "./PinCarouselItem";
+import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
 
 const CREATION_INDEX = 0;
 const CONFIRMATION_INDEX = 1;
@@ -70,7 +71,8 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const { present, bottomSheet } = usePinValidationBottomSheet();
   const { showAlert } = useOnboardingAbortAlert();
-  const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 780;
+
+  const { isDeviceScreenSmall } = useDetectSmallScreen();
 
   useOnFirstRender(() => {
     trackPinScreen(getFlowType(isOnboarding, isFirstOnBoarding));
@@ -225,16 +227,11 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   return (
     <View testID="pin-creation-screen" style={IOStyles.flex}>
       <View style={[IOStyles.flex, IOStyles.centerJustified]}>
-        <VSpacer size={8} />
         {/*
-          If the device height is less than MIN_HEIGHT_TO_SHOW_FULL_RENDER and the OS is
-          Android, then the pictogram will not be visible.
-          Otherwise, the pictogram will be visible.
+          If the device height is less than MIN_HEIGHT_TO_SHOW_FULL_RENDER,
+          then the pictogram will not be visible.
           */}
-        {!(
-          Dimensions.get("screen").height < MIN_HEIGHT_TO_SHOW_FULL_RENDER &&
-          Platform.OS === "android"
-        ) && (
+        {!isDeviceScreenSmall && (
           <View style={IOStyles.selfCenter}>
             <Pictogram name="key" size={64} />
             <VSpacer size={8} />
