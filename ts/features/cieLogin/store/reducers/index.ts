@@ -7,7 +7,7 @@ import {
   PersistedState,
   persistReducer
 } from "redux-persist";
-import { merge, omit } from "lodash";
+import { omit } from "lodash";
 import {
   cieIDDisableTourGuide,
   cieIDSetSelectedSecurityLevel,
@@ -62,10 +62,10 @@ const cieLoginReducer = (
 const CURRENT_REDUX_CIE_LOGIN_STORE_VERSION = 1;
 
 const migrations: MigrationManifest = {
-  "0": (state: PersistedState) =>
-    merge(state, {
-      isCieIDTourGuideEnabled: true
-    }),
+  "0": (state: PersistedState) => ({
+    ...state,
+    isCieIDTourGuideEnabled: true
+  }),
   /**
    * @param state The slice state
    * Removes `isCieIDFeatureEnabled` from the persist rehydration actions
