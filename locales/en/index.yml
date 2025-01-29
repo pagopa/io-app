@@ -3439,7 +3439,7 @@ features:
       alerts:
         statusAction: Cosa posso fare?
         mdl:
-          content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
+          content: "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine."
         ehc:
           content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
         edc:
