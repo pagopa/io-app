@@ -1,5 +1,7 @@
 import {
+  Badge,
   Divider,
+  H6,
   H4,
   Icon,
   ListItemAction,
@@ -14,7 +16,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Fragment } from "react";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import I18n from "../../../i18n";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -104,9 +106,37 @@ const renderListItemNav = () => (
       />
       <Divider />
       <ListItemNav
-        value="A looong looooong looooooooong looooooooooong title"
+        value="A looong looooong looooooooooong loooooooooooooong title"
         description="Description"
         onPress={onButtonPress}
+      />
+      <Divider />
+      <ListItemNav
+        icon={"categLearning"}
+        value={
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center"
+            }}
+          >
+            <H6>Nome del valoreeeeee eeeeeeeeee</H6>
+            <Badge text={"3"} variant="purple" />
+          </View>
+        }
+        onPress={onButtonPress}
+      />
+      <Divider />
+      <ListItemNav
+        avatarProps={{
+          logoUri: {
+            uri: "https://assets.cdn.io.italia.it/logos/organizations/82003830161.png"
+          }
+        }}
+        description="Description"
+        onPress={onButtonPress}
+        value={"Value"}
       />
       <Divider />
       <ListItemNav value={"Value"} icon="gallery" onPress={onButtonPress} />
