@@ -190,7 +190,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
       paragraph.children[0].type === "Image"
     ) {
       return (
-        <View key={getTxtNodeKey(paragraph)}>
+        <View key={getTxtNodeKey(paragraph)} style={{ marginVertical: 16 }}>
           {paragraph.children.map(render)}
         </View>
       );

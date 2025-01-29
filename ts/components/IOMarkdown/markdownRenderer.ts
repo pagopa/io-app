@@ -91,10 +91,8 @@ export const sanitizeMarkdownForImages = (
   let match: RegExpExecArray | null;
   while ((match = markdownImageRegex.exec(inputMarkdownContent)) !== null) {
     // eslint-disable-next-line functional/immutable-data
-    reversedMatches.push(match);
+    reversedMatches.unshift(match);
   }
-  // eslint-disable-next-line functional/immutable-data
-  reversedMatches.reverse();
 
   return reversedMatches.reduce(
     (sanitizedMarkdownContent, innerMatch) =>

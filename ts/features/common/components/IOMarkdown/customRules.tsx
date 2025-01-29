@@ -1,16 +1,19 @@
 import { Fragment } from "react";
 import { TxtHeaderNode, TxtLinkNode } from "@textlint/ast-node-types";
 import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
-import { isIoInternalLink } from "../ui/Markdown/handlers/link";
-import { handleInternalLink } from "../../utils/internalLink";
-import { openWebUrl } from "../../utils/url";
-import I18n from "../../i18n";
+import { isIoInternalLink } from "../../../../components/ui/Markdown/handlers/link";
+import { handleInternalLink } from "../../../../utils/internalLink";
+import { openWebUrl } from "../../../../utils/url";
+import I18n from "../../../../i18n";
 import {
   generateAccesibilityLinkViewsIfNeeded,
   getTxtNodeKey
-} from "./renderRules";
-import { IOMarkdownRenderRules, Renderer } from "./types";
-import { extractAllLinksFromRootNode } from "./markdownRenderer";
+} from "../../../../components/IOMarkdown/renderRules";
+import {
+  IOMarkdownRenderRules,
+  Renderer
+} from "../../../../components/IOMarkdown/types";
+import { extractAllLinksFromRootNode } from "../../../../components/IOMarkdown/markdownRenderer";
 
 const HEADINGS_MAP = {
   1: MdH1,

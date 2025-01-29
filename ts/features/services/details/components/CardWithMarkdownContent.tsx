@@ -4,7 +4,7 @@ import { useLinkTo } from "@react-navigation/native";
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { generateMessagesAndServicesRules } from "../../../../components/IOMarkdown/customRules";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { useIOSelector } from "../../../../store/hooks";
 import { Markdown } from "../../../../components/ui/Markdown/Markdown";
 import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../common/store/reducers";
