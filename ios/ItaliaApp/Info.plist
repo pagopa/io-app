@@ -56,7 +56,7 @@
       <key>NSAllowsArbitraryLoads</key>
       <false/>
       <key>NSAllowsLocalNetworking</key>
-      <true/>
+			<true/>
       <key>NSExceptionDomains</key>
       <dict>
         <key>localhost</key>
@@ -170,5 +170,9 @@
     <string>UIStatusBarStyleLightContent</string>
     <key>UIUserInterfaceStyle</key>
     <string>Light</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	  <array>
+	    <string>it.pagopa.app.io.itw-wallet-instance-check</string>
+	  </array>
   </dict>
 </plist>
