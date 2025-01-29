@@ -4,10 +4,10 @@ import { Context, InitialContext } from "./context";
 import { mapEventToFailure } from "./failure";
 
 export const itwRemotePresentationMachine = setup({
-    types: {
-        context: {} as Context,
-        events: {} as RemotePresentationEvents
-      },
+  types: {
+    context: {} as Context,
+    events: {} as RemotePresentationEvents
+  },
   actions: {
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) }))
   },

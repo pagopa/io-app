@@ -1,12 +1,12 @@
 import { RemotePresentationEvents } from "./events";
 
 export enum RemotePresentationFailureType {
-  UNEXPECTED = "UNEXPECTED" 
+  UNEXPECTED = "UNEXPECTED"
 }
 
 export type RemotePresentationFailure = {
   type: RemotePresentationFailureType;
-  reason: unknown; 
+  reason: unknown;
 };
 
 /**
@@ -15,18 +15,20 @@ export type RemotePresentationFailure = {
  * @param event - The event to map
  * @returns A failure object which can be used to handle errors appropriately.
  */
-export const mapEventToFailure = (event: RemotePresentationEvents): RemotePresentationFailure => {
+export const mapEventToFailure = (
+  event: RemotePresentationEvents
+): RemotePresentationFailure => {
   if ("error" in event) {
     const { error } = event;
 
     return {
       type: RemotePresentationFailureType.UNEXPECTED,
-      reason: String(error) 
+      reason: String(error)
     };
   }
 
   return {
     type: RemotePresentationFailureType.UNEXPECTED,
-    reason: event 
+    reason: event
   };
 };

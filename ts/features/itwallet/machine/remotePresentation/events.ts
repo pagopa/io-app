@@ -1,7 +1,6 @@
 // This file is a placeholder for future implementation
 export type PlaceHolder = {
-    type: "PLACEHOLDER";
-  };
+  type: "PLACEHOLDER";
+};
 
-export type RemotePresentationEvents =
-  | PlaceHolder;
+export type RemotePresentationEvents = PlaceHolder;
