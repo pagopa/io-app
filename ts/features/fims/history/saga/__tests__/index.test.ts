@@ -6,7 +6,6 @@ import { fimsHistoryExport, fimsHistoryGet } from "../../store/actions";
 import { handleExportFimsHistorySaga } from "../handleExportFimsHistorySaga";
 
 const apiUrlPrefix = "mock-api-url-prefix";
-const mockBearerToken = "mockBearerToken";
 jest.mock("../../../../../config", () => ({
   apiUrlPrefix
 }));
@@ -17,6 +16,7 @@ describe("watchFimsHistorySaga", () => {
       getAccessHistory: jest.fn(),
       requestExport: jest.fn()
     };
+    const mockBearerToken = "mockBearerToken";
 
     testSaga(watchFimsHistorySaga, mockBearerToken)
       .next()
