@@ -1,5 +1,5 @@
 import { StateFrom } from "xstate";
-import { ItwTags } from "../tags";
+import { ItwTags } from "../../machine/tags";
 import { ItwRemotePresentationMachine } from "./machine";
 
 type MachineSnapshot = StateFrom<ItwRemotePresentationMachine>;

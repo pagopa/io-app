@@ -11,10 +11,6 @@ import { createEidIssuanceActorsImplementation } from "./eid/actors";
 import { createEidIssuanceGuardsImplementation } from "./eid/guards";
 import { itwEidIssuanceMachine } from "./eid/machine";
 import { createCredentialIssuanceGuardsImplementation } from "./credential/guards";
-import { itwRemotePresentationMachine } from "./remotePresentation/machine";
-import { createRemotePresentationActorsImplementation } from "./remotePresentation/actors";
-import { createRemotePresentationGuardsImplementation } from "./remotePresentation/guards";
-import { createRemotePresentationActionsImplementation } from "./remotePresentation/actions";
 
 type Props = {
   children: JSX.Element;
@@ -26,10 +22,6 @@ export const ItwEidIssuanceMachineContext = createActorContext(
 
 export const ItwCredentialIssuanceMachineContext = createActorContext(
   itwCredentialIssuanceMachine
-);
-
-export const ItwRemotePresentationMachine = createActorContext(
-  itwRemotePresentationMachine
 );
 
 export const ItWalletIssuanceMachineProvider = (props: Props) => {
@@ -55,22 +47,12 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
     actors: createCredentialIssuanceActorsImplementation(store)
   });
 
-  const remotePresentationMachine = itwRemotePresentationMachine.provide({
-    guards: createRemotePresentationGuardsImplementation(),
-    actions: createRemotePresentationActionsImplementation(),
-    actors: createRemotePresentationActorsImplementation()
-  });
-
   return (
     <ItwEidIssuanceMachineContext.Provider logic={eidIssuanceMachine}>
       <ItwCredentialIssuanceMachineContext.Provider
         logic={credentialIssuanceMachine}
       >
-        <ItwRemotePresentationMachine.Provider
-          logic={remotePresentationMachine}
-        >
-          {props.children}
-        </ItwRemotePresentationMachine.Provider>
+        {props.children}
       </ItwCredentialIssuanceMachineContext.Provider>
     </ItwEidIssuanceMachineContext.Provider>
   );
