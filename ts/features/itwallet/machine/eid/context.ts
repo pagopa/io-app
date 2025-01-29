@@ -41,6 +41,7 @@ export type Context = {
   authenticationContext: AuthenticationContext | undefined;
   eid: StoredCredential | undefined;
   failure: IssuanceFailure | undefined;
+  isReissuing: boolean;
 };
 
 export const InitialContext: Context = {
@@ -50,5 +51,6 @@ export const InitialContext: Context = {
   identification: undefined,
   authenticationContext: undefined,
   eid: undefined,
-  failure: undefined
+  failure: undefined,
+  isReissuing: false
 };

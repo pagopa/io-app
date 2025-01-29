@@ -2,7 +2,6 @@
 // disabled in order to allows comments between the switch
 import { getType } from "typesafe-actions";
 
-import trackCdc from "../../features/bonus/cdc/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
 import trackFciAction from "../../features/fci/analytics";
@@ -15,6 +14,7 @@ import {
 } from "../actions/analytics";
 import { applicationChangeState } from "../actions/application";
 import {
+  clearCurrentSession,
   idpLoginUrlChanged,
   idpSelected,
   loginFailure,
@@ -125,6 +125,8 @@ const trackAction =
         return mp.track(action.type, {
           idp: action.payload.idp
         });
+      case getType(clearCurrentSession):
+        return mp.track(action.type, buildEventProperties("TECH", undefined));
       case getType(analyticsAuthenticationStarted):
       case getType(analyticsAuthenticationCompleted):
       case getType(sessionInformationLoadSuccess):
@@ -191,7 +193,6 @@ export const actionTracking =
       void trackContentAction(mixpanel)(action);
       void trackServicesAction(mixpanel)(action);
       void trackZendesk(mixpanel)(action);
-      void trackCdc(mixpanel)(action);
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(mixpanel, fciEnvironment)(action);

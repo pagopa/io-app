@@ -20,9 +20,8 @@ import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
-import { apiUrlPrefix, cdcEnabled, zendeskEnabled } from "../config";
+import { apiUrlPrefix, zendeskEnabled } from "../config";
 import { watchBackgroundFetchSaga } from "../features/backgroundFetch/saga";
-import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { shouldTrackLevelSecurityMismatchSaga } from "../features/cieLogin/sagas/trackLevelSecuritySaga";
 import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
@@ -555,10 +554,6 @@ export function* initializeApplicationSaga(
 
   // Here we can be sure that the session information is loaded and valid
   const bpdToken = maybeSessionInformation.value.bpdToken as string;
-  if (cdcEnabled) {
-    // Start watching for cdc actions
-    yield* fork(watchBonusCdcSaga, bpdToken);
-  }
 
   // Start watching for cgn actions
   yield* fork(watchBonusCgnSaga, sessionToken);
