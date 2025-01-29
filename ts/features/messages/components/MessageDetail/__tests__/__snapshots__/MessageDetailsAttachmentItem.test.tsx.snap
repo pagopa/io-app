@@ -379,9 +379,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={2}
                               style={
                                 [
@@ -406,11 +406,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 24,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 8,
-                                    "paddingVertical": 4,
+                                  },
+                                  {
+                                    "borderRadius": 36,
+                                    "paddingHorizontal": 12,
+                                    "paddingVertical": 6,
                                   },
                                   {
                                     "backgroundColor": "#F4F5F8",
@@ -419,9 +421,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1059,9 +1061,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={2}
                                 style={
                                   [
@@ -1086,11 +1088,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 4,
+                                    },
+                                    {
+                                      "borderRadius": 36,
+                                      "paddingHorizontal": 12,
+                                      "paddingVertical": 6,
                                     },
                                     {
                                       "backgroundColor": "#F4F5F8",
@@ -1099,9 +1103,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1583,9 +1587,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={2}
                               style={
                                 [
@@ -1610,11 +1614,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 24,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 8,
-                                    "paddingVertical": 4,
+                                  },
+                                  {
+                                    "borderRadius": 36,
+                                    "paddingHorizontal": 12,
+                                    "paddingVertical": 6,
                                   },
                                   {
                                     "backgroundColor": "#F4F5F8",
@@ -1623,9 +1629,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2154,9 +2160,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={2}
                                 style={
                                   [
@@ -2181,11 +2187,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 4,
+                                    },
+                                    {
+                                      "borderRadius": 36,
+                                      "paddingHorizontal": 12,
+                                      "paddingVertical": 6,
                                     },
                                     {
                                       "backgroundColor": "#F4F5F8",
@@ -2194,9 +2202,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [

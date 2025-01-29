@@ -5,9 +5,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
   style={{}}
 >
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="largeTitle"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -47,9 +47,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="title1"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -89,9 +89,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="title2"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -131,9 +131,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="title3"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -173,9 +173,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="subheadline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {
@@ -218,9 +218,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -260,9 +260,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -395,9 +395,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
         If you need bold use 
       </Text>
       <Text
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         style={
           [
             {},
@@ -458,9 +458,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
       <Text
         accessibilityRole="link"
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         numberOfLines={1}
         onPress={[Function]}
         style={
@@ -525,9 +525,9 @@ exports[`ItwMarkdown should match snapshot 1`] = `
       </Text>
       <Text
         accessibilityRole="link"
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         numberOfLines={1}
         onPress={[Function]}
         style={
