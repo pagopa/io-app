@@ -8,7 +8,7 @@ type Props = {
   children: JSX.Element;
 };
 
-export const ItwRemotePresentationMachine = createActorContext(
+export const ItwRemotePresentationMachineContext = createActorContext(
   itwRemotePresentationMachine
 );
 
@@ -20,8 +20,10 @@ export const ItwRemotePresentationMachineProvider = (props: Props) => {
   });
 
   return (
-    <ItwRemotePresentationMachine.Provider logic={remotePresentationMachine}>
+    <ItwRemotePresentationMachineContext.Provider
+      logic={remotePresentationMachine}
+    >
       {props.children}
-    </ItwRemotePresentationMachine.Provider>
+    </ItwRemotePresentationMachineContext.Provider>
   );
 };
