@@ -9,7 +9,7 @@ export const itwRemotePresentationMachine = setup({
         events: {} as RemotePresentationEvents
       },
   actions: {
-    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) }))
   },
   actors: {},
   guards: {}
