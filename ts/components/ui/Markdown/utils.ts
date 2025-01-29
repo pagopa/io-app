@@ -76,6 +76,26 @@ body {
   hyphens: auto;
 }
 
+/* Code blocks either overflow horizontally or cause 
+ * the webview height to be reported with a wrong 
+ * value. This styling forces code blocks to render as
+ * standard paragraphs, resolving both problems. A
+ * 'pre' tag normally includes a 'code' block inside */
+pre {
+  font-family: 'Titillium SansPro';
+  margin-block-start: 0;
+  white-space: pre-wrap;
+}
+
+/* This block is normally contained into a 'pre' block.
+ * The custom styling on the 'pre' block forces it to
+ * render as a standard paragraph but the 'code' block
+ * needs to customise the 'font-family', otherwise the
+ * the text appearance will be 'monospace' */
+code {
+  font-family: 'Titillium SansPro';
+}
+
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.3333em;
 }
