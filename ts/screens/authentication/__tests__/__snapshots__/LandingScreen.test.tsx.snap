@@ -379,10 +379,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="title2"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -410,10 +410,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -665,10 +665,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="title2"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -696,10 +696,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -942,10 +942,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="title2"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -973,10 +973,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1124,10 +1124,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="title2"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1155,10 +1155,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1303,10 +1303,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="title2"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1334,10 +1334,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1524,13 +1524,15 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                 }
                               >
                                 <View
-                                  entering={[Function]}
                                   style={
                                     [
                                       {
                                         "alignItems": "center",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
                                       },
                                       false,
                                     ]
@@ -1541,10 +1543,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    bbHeight={20}
-                                    bbWidth={20}
+                                    bbHeight={30}
+                                    bbWidth={30}
                                     focusable={false}
-                                    height={20}
+                                    height={30}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -1560,15 +1562,15 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 20,
-                                          "width": 20,
+                                          "height": 30,
+                                          "width": 30,
                                         },
                                       ]
                                     }
                                     tintColor="#FFFFFF"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={20}
+                                    width={30}
                                   >
                                     <RNSVGGroup
                                       color="#FFFFFF"
@@ -1597,20 +1599,13 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       />
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
-                                  <View
-                                    style={
-                                      {
-                                        "width": 8,
-                                      }
-                                    }
-                                  />
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1707,13 +1702,15 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -1724,10 +1721,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  bbHeight={20}
-                                  bbWidth={20}
+                                  bbHeight={30}
+                                  bbWidth={30}
                                   focusable={false}
-                                  height={20}
+                                  height={30}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -1743,15 +1740,15 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 20,
-                                        "width": 20,
+                                        "height": 30,
+                                        "width": 30,
                                       },
                                     ]
                                   }
                                   tintColor="#FFFFFF"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={20}
+                                  width={30}
                                 >
                                   <RNSVGGroup
                                     color="#FFFFFF"
@@ -1780,20 +1777,13 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     />
                                   </RNSVGGroup>
                                 </RNSVGSvgView>
-                                <View
-                                  style={
-                                    {
-                                      "width": 8,
-                                    }
-                                  }
-                                />
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1893,6 +1883,9 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -1900,10 +1893,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1914,11 +1907,16 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -2028,67 +2026,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           }
                                         }
                                       >
-                                        <RNSVGSvgView
-                                          accessibilityElementsHidden={true}
-                                          accessibilityLabel=""
-                                          accessible={false}
-                                          align="xMidYMid"
-                                          bbHeight={24}
-                                          bbWidth={24}
-                                          focusable={false}
-                                          height={24}
-                                          importantForAccessibility="no-hide-descendants"
-                                          meetOrSlice={0}
-                                          minX={0}
-                                          minY={0}
-                                          style={
-                                            [
-                                              {
-                                                "backgroundColor": "transparent",
-                                                "borderWidth": 0,
-                                              },
-                                              {
-                                                "color": "#BBC2D6",
-                                              },
-                                              {
-                                                "flex": 0,
-                                                "height": 24,
-                                                "width": 24,
-                                              },
-                                            ]
-                                          }
-                                          tintColor="#BBC2D6"
-                                          vbHeight={24}
-                                          vbWidth={24}
-                                          width={24}
-                                        >
-                                          <RNSVGGroup
-                                            color="#BBC2D6"
-                                            fill={
-                                              {
-                                                "payload": 4278190080,
-                                                "type": 0,
-                                              }
-                                            }
-                                          >
-                                            <RNSVGPath
-                                              clipRule={0}
-                                              d="M20 4H4c-1.10457 0-2 .89543-2 2v12c0 1.1046.89543 2 2 2h16c1.1046 0 2-.8954 2-2V6c0-1.10457-.8954-2-2-2ZM4 2C1.79086 2 0 3.79086 0 6v12c0 2.2091 1.79086 4 4 4h16c2.2091 0 4-1.7909 4-4V6c0-2.20914-1.7909-4-4-4H4Zm9.9991 8c0-.55228.4477-1 1-1h2c.5523 0 1 .44772 1 1 0 .5523-.4477 1-1 1h-2c-.5523 0-1-.4477-1-1Zm1 3c-.5523 0-1 .4477-1 1s.4477 1 1 1h4c.5523 0 1-.4477 1-1s-.4477-1-1-1h-4Zm-5.06166-.5003c.45246-.4779.72986-1.123.72986-1.833C10.6673 9.19391 9.47341 8 8.00065 8c-1.47276 0-2.66667 1.19391-2.66667 2.6667 0 .7097.27729 1.3547.72943 1.8325-1.13883.6314-1.93712 1.8023-2.04973 3.1676-.01513.1834.13556.3332.31965.3332h7.33337c.1841 0 .3347-.1498.3196-.3332-.1126-1.365-.9105-2.5357-2.04886-3.1671Z"
-                                              fill={
-                                                {
-                                                  "type": 2,
-                                                }
-                                              }
-                                              fillRule={0}
-                                              propList={
-                                                [
-                                                  "fill",
-                                                  "fillRule",
-                                                ]
-                                              }
-                                            />
-                                          </RNSVGGroup>
-                                        </RNSVGSvgView>
                                         <View
                                           style={
                                             {
@@ -2097,10 +2034,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             dynamicTypeRamp="footnote"
                                             lineBreakMode="middle"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={2}
                                             style={
                                               [
@@ -2122,9 +2059,9 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                             Login with CIE + PIN
                                           </Text>
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             dynamicTypeRamp="footnote"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             style={
                                               [
                                                 {},
@@ -2298,64 +2235,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           }
                                         }
                                       >
-                                        <RNSVGSvgView
-                                          accessibilityElementsHidden={true}
-                                          accessibilityLabel=""
-                                          accessible={false}
-                                          align="xMidYMid"
-                                          bbHeight={24}
-                                          bbWidth={24}
-                                          focusable={false}
-                                          height={24}
-                                          importantForAccessibility="no-hide-descendants"
-                                          meetOrSlice={0}
-                                          minX={0}
-                                          minY={0}
-                                          style={
-                                            [
-                                              {
-                                                "backgroundColor": "transparent",
-                                                "borderWidth": 0,
-                                              },
-                                              {
-                                                "color": "#BBC2D6",
-                                              },
-                                              {
-                                                "flex": 0,
-                                                "height": 24,
-                                                "width": 24,
-                                              },
-                                            ]
-                                          }
-                                          tintColor="#BBC2D6"
-                                          vbHeight={24}
-                                          vbWidth={24}
-                                          width={24}
-                                        >
-                                          <RNSVGGroup
-                                            color="#BBC2D6"
-                                            fill={
-                                              {
-                                                "payload": 4278190080,
-                                                "type": 0,
-                                              }
-                                            }
-                                          >
-                                            <RNSVGPath
-                                              d="M9 0C6.23858 0 4 2.23858 4 5v14c0 2.7614 2.23858 5 5 5h6c2.7614 0 5-2.2386 5-5V5c0-2.76142-2.2386-5-5-5H9ZM6 5c0-1.65685 1.34315-3 3-3h6c1.6569 0 3 1.34315 3 3v14c0 1.6569-1.3431 3-3 3H9c-1.65685 0-3-1.3431-3-3V5Zm6 15c.5523 0 1-.4477 1-1s-.4477-1-1-1-1 .4477-1 1 .4477 1 1 1Z"
-                                              fill={
-                                                {
-                                                  "type": 2,
-                                                }
-                                              }
-                                              propList={
-                                                [
-                                                  "fill",
-                                                ]
-                                              }
-                                            />
-                                          </RNSVGGroup>
-                                        </RNSVGSvgView>
                                         <View
                                           style={
                                             {
@@ -2364,10 +2243,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             dynamicTypeRamp="footnote"
                                             lineBreakMode="middle"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={2}
                                             style={
                                               [
@@ -2389,9 +2268,9 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                             Login with CieID
                                           </Text>
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             dynamicTypeRamp="footnote"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             style={
                                               [
                                                 {},
@@ -2417,11 +2296,13 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
                                             },
                                             {
                                               "backgroundColor": "#DBF9FA",
@@ -2430,9 +2311,9 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
@@ -2540,9 +2421,9 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="headline"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         style={
                                           [
                                             {},
@@ -2584,10 +2465,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         <Text
                                           accessibilityElementsHidden={true}
                                           accessible={false}
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
                                           importantForAccessibility="no-hide-descendants"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
@@ -2828,8 +2709,8 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2857,14 +2738,12 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -2928,10 +2807,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -2947,15 +2826,15 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
