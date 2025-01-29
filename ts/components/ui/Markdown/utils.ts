@@ -91,7 +91,7 @@ pre {
  * The custom styling on the 'pre' block forces it to
  * render as a standard paragraph but the 'code' block
  * needs to customise the 'font-family', otherwise the
- * the text appearance will be 'monospace' */
+ * text appearance will be 'monospace' */
 code {
   font-family: 'Titillium SansPro';
 }
