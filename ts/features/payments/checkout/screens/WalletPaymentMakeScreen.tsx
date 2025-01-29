@@ -1,5 +1,5 @@
 import { IOStyles } from "@pagopa/io-app-design-system";
-import React, { useLayoutEffect } from "react";
+import { useRef, useEffect, useLayoutEffect } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -12,10 +12,10 @@ import { WalletPaymentPickPspScreen } from "./WalletPaymentPickPspScreen";
 
 const WalletPaymentMakeScreen = () => {
   const navigation = useIONavigation();
-  const ref = React.useRef<PagerView>(null);
+  const ref = useRef<PagerView>(null);
   const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
 
-  React.useEffect(() => {
+  useEffect(() => {
     ref.current?.setPage(currentStep - 1);
   }, [ref, currentStep]);
 

@@ -1,13 +1,6 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  default as React,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import {
   IOScrollView,

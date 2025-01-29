@@ -119,7 +119,6 @@ global:
       open:
         label: Aiuto contestuale
         hint: Accedi alle informazioni sul contenuto della schermata corrente
-  ioWebSite: https://io.italia.it
   symbols:
     question: "?"
     asterisk: "*"
@@ -654,15 +653,17 @@ authentication:
     privacyLink: Informativa privacy
     nospid: Non hai SPID? Scopri di più
     nospid-nocie: Non hai SPID o CIE? Scopri di più
-    card1-title: Tutti i messaggi in un solo posto
-    card1-content: Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni Pubbliche
-    card2-title: Usa i tuoi metodi di pagamento preferiti
-    card2-content: Puoi pagare un tributo o una multa con il tuo conto corrente e le tue carte
-    card3-title: Paga velocemente un avviso cartaceo
-    card3-content: Tramite la scansione del QR code puoi velocemente pagare anche un avviso cartaceo
-    card5-title: Ti diamo il benvenuto su IO!
-    card5-content: Vediamo insieme cosa puoi fare
-    card5-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card0-title: Ti diamo il benvenuto su IO!
+    card0-content: Scorri per sapere cosa puoi fare in app.
+    card0-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card1-title: Conserva al sicuro i tuoi documenti personali
+    card1-content: Con Documenti su IO hai sempre a portata di mano la versione digitale dei tuoi documenti, come Patente e Tessera Sanitaria
+    card2-title: Ricevi comunicazioni, anche a valore legale
+    card2-content: "Leggi le comunicazioni in arrivo dagli enti: se attivi il servizio SEND, ricevi anche quelle a valore legale e risparmi sui costi di notifica"
+    card3-title: Paga gli avvisi pagoPA con il metodo che preferisci
+    card3-content: Su IO consulti e scarichi le ricevute dei tuoi pagamenti pagoPA, anche se non hai pagato in app
+    card4-title: Accedi ai servizi che più ti interessano
+    card4-content: Accedi direttamente a servizi della Pubblica Amministrazone dedicati a salute, educazione, mobilità, lavoro e molto altro
     expiredCardTitle: La verifica della CIE non è andata a buon fine
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
@@ -1895,7 +1896,7 @@ wallet:
       defaultName: Gestore
       pspTitle: Gestore
       pspSortButton: Ordina
-      featuredReason: Perché sei già cliente
+      featuredReason: Sei già cliente
       continueButton: Continua
       sortBottomSheet:
         default: Default
@@ -2906,53 +2907,8 @@ bonus:
           one: 1 secondo
           other: "{{seconds}} secondi"
   cdc:
-    title: "Carta della cultura"
-    serviceCta:
-      activable: "Attiva la carta"
-      pending: "Richiesta inviata"
-      error:
-        status: "Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare."
     serviceEntryPoint:
       notAvailable: "Il servizio non è disponibile in questo momento. Riprova più tardi."
-    bonusRequest:
-      bonusRequested:
-        loading:
-          title: "Stiamo inviando la tua richiesta di attivazione..."
-          subtitle: "Ti ricordiamo che sono valide solo le richieste per gli anni in cui hai dichiarato di essere residente in Italia. Ti preghiamo di attendere"
-        requestCompleted:
-          title: "La tua richiesta è stata inviata!"
-          body: "Riceverai un messaggio su IO quando le graduatorie saranno definitive."
-          cta: "Ho capito!"
-        partiallySuccess:
-          title: "Ecco l’esito delle tue richieste"
-          body:
-            success: "La richiesta per il {{successfulYears}} è andata a buon fine."
-            fail:
-              residenceAbroad: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché non residente in Italia."
-              notEligible: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché non è possibile richiedere Carta della Cultura per l’anno selezionato."
-              alreadyRegistered: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché hai già inviato una richiesta di attivazione per quell’anno."
-              initiativeFinished: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché il periodo di richiesta è terminato."
-        ko:
-          requirementsError:
-            title: "Purtroppo non hai i requisiti per richiedere la Carta della Cultura."
-            body: "La Carta della Cultura è disponibile solo per i cittadini residenti in Italia."
-          wrongFormat:
-            title: "Il servizio Carta della Cultura in questo momento non è disponibile."
-            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
-          genericError:
-            title: "Si è verificato un errore con la tua richiesta"
-            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
-      selectResidence:
-        header: "Residenza"
-        items:
-          residesInItaly: "Risiedo in Italia"
-          residesAbroad: "Risiedo all’estero"
-        info: "Carta della Cultura è disponibile solo per i cittadini residenti in Italia. Indica la tua residenza per ciascun anno."
-      selectYear:
-        header: "Per quale anno vuoi richiedere la Carta della Cultura?"
-        body: "Per ogni anno selezionato, il tuo ISEE non deve superare i 15.000 € e la tua residenza deve essere nel territorio italiano."
-      misc:
-        conjunction: ", "
 features:
   messages:
     pushNotifications:
@@ -3294,6 +3250,17 @@ features:
         verificationExpired: Verifica
         unknown: Non disponibile
       digital: Versione digitale
+    support:
+      button: "Mostra dettagli"
+      supportTitle: Contatta l'assistenza
+      supportDescription: Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
+      phone: Chiama {{phoneNumber}}
+      landline: Da telefono fisso
+      chat: Chiedi aiuto in chat
+      email: Scrivi una mail
+      website: Visita il sito
+      additionalDataTitle: "Dati aggiuntivi"
+      errorCode: Codice errore
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
@@ -3465,14 +3432,14 @@ features:
       moreInfo: More info
       error:
         title: Il tuo dispositivo non supporta Documenti su IO
-        body: Il tuo dispositivo non ha i requisiti di sicurezza necessari per questa funzionalità.
-        primaryAction: Chiudi
-        secondaryAction: Scopri di più
+        body: "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi "
+        primaryAction: Scopri di più
+        secondaryAction: Chiudi
     presentation:
       alerts:
         statusAction: Cosa posso fare?
         mdl:
-          content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
+          content: "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine."
         ehc:
           content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
         edc:
@@ -3495,6 +3462,7 @@ features:
             valid: L'ultima verifica è del {{date}}.
             expiring: Verifica la tua identità entro il {{date}}.
             expired: È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.
+            action: Inizia
         MDL:
           expiring:
             title: "Patente su IO: documento in scadenza"
@@ -3533,6 +3501,7 @@ features:
           requestAssistance: "Qualcosa non torna?"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
+          openIPatente: "Vai al saldo punti patente"
         dialogs:
           remove:
             title: Vuoi rimuovere il documento dal Portafoglio?
@@ -3549,6 +3518,13 @@ features:
         openPdf: "Mostra documento"
         shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
+      eid: 
+        verificationExpired:
+          title: Verifica la tua identità
+          contentStart: "È un passaggio di sicurezza necessario per continuare ad usare "
+          contentBold: Documenti su IO
+          contentEnd: "."
+          primaryAction: Inizia
       statusAttestationUnknown:
         title: Non siamo riusciti a caricare {{credentialName}}
         content: Chiudi e riapri l'app per riprovare.

@@ -4,7 +4,7 @@ import {
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { Fragment } from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const onButtonPress = () => {
@@ -18,7 +18,7 @@ export const DSFooterActionsNotFixed = () => {
     <View style={styles.container}>
       <ScrollView>
         {[...Array(9)].map((_el, i) => (
-          <React.Fragment key={`view-${i}`}>
+          <Fragment key={`view-${i}`}>
             <View
               style={[
                 styles.block,
@@ -30,7 +30,7 @@ export const DSFooterActionsNotFixed = () => {
               </Text>
             </View>
             <VSpacer size={4} />
-          </React.Fragment>
+          </Fragment>
         ))}
         <FooterActions
           fixed={false}

@@ -6,7 +6,6 @@ import {
   ListItemInfoCopy
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import * as React from "react";
 import { ScrollView } from "react-native";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { UserDetail } from "../../../../../definitions/pagopa/biz-events/UserDetail";

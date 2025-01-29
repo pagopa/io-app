@@ -1,5 +1,5 @@
 import { Banner } from "@pagopa/io-app-design-system";
-import React from "react";
+import { memo } from "react";
 import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -41,6 +41,6 @@ const ItwFeedbackBanner = () => {
   );
 };
 
-const MemoizedItwFeedbackBanner = React.memo(ItwFeedbackBanner);
+const MemoizedItwFeedbackBanner = memo(ItwFeedbackBanner);
 
 export { MemoizedItwFeedbackBanner as ItwFeedbackBanner };

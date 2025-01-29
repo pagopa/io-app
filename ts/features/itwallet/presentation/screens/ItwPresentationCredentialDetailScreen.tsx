@@ -1,4 +1,4 @@
-import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import React from "react";
@@ -8,7 +8,7 @@ import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   CREDENTIALS_MAP,
   trackCredentialDetail,
@@ -37,6 +37,9 @@ import { ItwCredentialTrustmark } from "../../trustmark/components/ItwCredential
 import ItwCredentialNotFound from "../../common/components/ItwCredentialNotFound";
 import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { itwSetReviewPending } from "../../common/store/actions/preferences";
+import { itwIsPendingReviewSelector } from "../../common/store/selectors/preferences";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -51,9 +54,26 @@ type Props = IOStackNavigationRouteProps<
  * Component that renders the credential detail screen.
  */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
+  const dispatch = useIODispatch();
   const { credentialType } = route.params;
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
+  );
+  const isPendingReview = useIOSelector(itwIsPendingReviewSelector);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      /* The initial state of isPendingReview is undefined,
+       * it means the driving license detail has never been viewed.
+       * It is set to true only the first time the driving license detail is viewed.
+       */
+      if (
+        credentialType === CredentialType.DRIVING_LICENSE &&
+        isPendingReview === undefined
+      ) {
+        dispatch(itwSetReviewPending(true));
+      }
+    }, [credentialType, isPendingReview, dispatch])
   );
 
   if (O.isNone(credentialOption)) {
@@ -109,19 +129,18 @@ const ItwPresentationCredentialDetail = ({
       credential={credential}
       ctaProps={ctaProps}
     >
-      <VStack space={16}>
-        <ItwPresentationDetailsHeader credential={credential} />
-        <ContentWrapper>
-          <VStack space={16}>
-            <ItwPresentationAdditionalInfoSection credential={credential} />
-            <ItwPresentationCredentialStatusAlert credential={credential} />
-            <ItwPresentationCredentialInfoAlert credential={credential} />
-            <ItwPresentationClaimsSection credential={credential} />
-            <ItwCredentialTrustmark credential={credential} />
-          </VStack>
-        </ContentWrapper>
-        <ItwPresentationDetailsFooter credential={credential} />
-      </VStack>
+      <ItwPresentationDetailsHeader credential={credential} />
+      <VSpacer size={24} />
+      <ContentWrapper>
+        <VStack space={24}>
+          <ItwPresentationAdditionalInfoSection credential={credential} />
+          <ItwPresentationCredentialStatusAlert credential={credential} />
+          <ItwPresentationCredentialInfoAlert credential={credential} />
+          <ItwPresentationClaimsSection credential={credential} />
+          <ItwCredentialTrustmark credential={credential} />
+          <ItwPresentationDetailsFooter credential={credential} />
+        </VStack>
+      </ContentWrapper>
     </ItwPresentationDetailsScreenBase>
   );
 };

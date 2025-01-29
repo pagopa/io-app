@@ -1,6 +1,5 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { createActorContext } from "@xstate/react";
-import * as React from "react";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../store/hooks";
 import { itwBypassIdentityMatch } from "../../../config";
@@ -39,7 +38,7 @@ export const ItWalletIssuanceMachineProvider = (props: Props) => {
   });
 
   const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({
-    guards: createCredentialIssuanceGuardsImplementation(),
+    guards: createCredentialIssuanceGuardsImplementation(store),
     actions: createCredentialIssuanceActionsImplementation(
       navigation,
       store,

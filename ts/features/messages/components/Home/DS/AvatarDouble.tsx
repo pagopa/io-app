@@ -6,7 +6,7 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import React, { useCallback } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   Image,
   ImageRequireSource,
@@ -80,13 +80,13 @@ const getImageState = (
  */
 export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
   const theme = useIOTheme();
-  const indexValue = React.useRef<number>(0);
+  const indexValue = useRef<number>(0);
 
   const imageInitialState = useCallback(
     () => getImageState(backgroundLogoUri),
     [backgroundLogoUri]
   );
-  const [imageSource, setImageSource] = React.useState(imageInitialState);
+  const [imageSource, setImageSource] = useState(imageInitialState);
 
   const onError = () => {
     if (

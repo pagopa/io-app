@@ -7,7 +7,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+
+import { ReactElement } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { Card } from "../../../../../definitions/cgn/Card";
@@ -48,7 +49,6 @@ import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
-import { navigateToCgnMerchantsTabs } from "../navigation/actions";
 import { CgnDetailsParamsList } from "../navigation/params";
 import CGN_ROUTES from "../navigation/routes";
 import { cgnDetails } from "../store/actions/details";
@@ -83,7 +83,7 @@ function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
 /**
  * Screen to display all the information about the active CGN
  */
-const CgnDetailScreen = (props: Props): React.ReactElement => {
+const CgnDetailScreen = (props: Props): ReactElement => {
   const navigation =
     useNavigation<IOStackNavigationProp<CgnDetailsParamsList, "CGN_DETAILS">>();
 
@@ -141,11 +141,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     props.isCgnEnabled && props.cgnDetails?.status === StatusEnum.ACTIVATED;
 
   const onPressShowCgnDiscounts = () => {
-    if (props.isMerchantV2Enabled) {
-      props.navigateToMerchantsTabs();
-    } else {
-      navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES);
-    }
+    navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES);
   };
 
   const footerActions: IOScrollViewActions | undefined = (() => {
@@ -264,8 +260,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   unsubscribe: () => dispatch(cgnUnsubscribe.request()),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
-  loadCgnDetails: () => dispatch(cgnDetails.request()),
-  navigateToMerchantsTabs: () => navigateToCgnMerchantsTabs()
+  loadCgnDetails: () => dispatch(cgnDetails.request())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);

@@ -1,31 +1,16 @@
-import {
-  Body,
-  ButtonSolid,
-  ContentWrapper,
-  H2,
-  IOStyles,
-  TextInputValidation,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ButtonSolid, TextInputValidation } from "@pagopa/io-app-design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  View
-} from "react-native";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useRef, useState } from "react";
+import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import themeVariables from "../../../../theme/variables";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -46,7 +31,7 @@ const MAX_LENGTH_NOTICE_NUMBER = 18;
 
 const WalletPaymentInputNoticeNumberScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const [inputState, setInputState] = React.useState<InputState>({
+  const [inputState, setInputState] = useState<InputState>({
     noticeNumberText: "",
     noticeNumber: O.none
   });
@@ -79,76 +64,81 @@ const WalletPaymentInputNoticeNumberScreen = () => {
     analytics.trackPaymentNoticeDataEntry();
   });
 
-  const textInputWrappperRef = React.useRef<View>(null);
+  const textInputWrappperRef = useRef<View>(null);
 
   return (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-      <SafeAreaView style={IOStyles.flex}>
-        <View style={{ flex: 1, flexGrow: 1 }}>
-          <ContentWrapper>
-            <H2>{I18n.t("wallet.payment.manual.noticeNumber.title")}</H2>
-            <VSpacer size={16} />
-            <Body>{I18n.t("wallet.payment.manual.noticeNumber.subtitle")}</Body>
-            <VSpacer size={16} />
-            <View accessible ref={textInputWrappperRef}>
-              <TextInputValidation
-                placeholder={I18n.t(
-                  "wallet.payment.manual.noticeNumber.placeholder"
-                )}
-                accessibilityLabel={I18n.t(
-                  "wallet.payment.manual.noticeNumber.placeholder"
-                )}
-                errorMessage={I18n.t(
-                  "wallet.payment.manual.noticeNumber.validationError"
-                )}
-                value={inputState.noticeNumberText}
-                icon="docPaymentCode"
-                onChangeText={value => {
-                  const normalizedValue = trimAndLimitValue(
-                    value,
-                    MAX_LENGTH_NOTICE_NUMBER
-                  );
-
-                  setInputState({
-                    noticeNumberText: normalizedValue,
-                    noticeNumber: decodePaymentNoticeNumber(normalizedValue)
-                  });
-                }}
-                counterLimit={
-                  inputState.noticeNumberText.length >= MAX_LENGTH_NOTICE_NUMBER
-                    ? MAX_LENGTH_NOTICE_NUMBER
-                    : undefined
+    <>
+      <IOScrollViewWithLargeHeader
+        title={{
+          label: I18n.t("wallet.payment.manual.noticeNumber.title")
+        }}
+        description={I18n.t("wallet.payment.manual.noticeNumber.subtitle")}
+        canGoback={true}
+        contextualHelp={emptyContextualHelp}
+        headerActionsProp={{ showHelp: true }}
+        actions={
+          Platform.OS === "android"
+            ? {
+                type: "SingleButton",
+                primary: {
+                  label: I18n.t("global.buttons.continue"),
+                  onPress: handleContinueClick
                 }
-                onValidate={validatePaymentNoticeNumber}
-                textInputProps={{
-                  keyboardType: "number-pad",
-                  inputMode: "numeric",
-                  returnKeyType: "done"
-                }}
-                autoFocus
-              />
-            </View>
-          </ContentWrapper>
-        </View>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "android" ? undefined : "padding"}
-          keyboardVerticalOffset={Platform.select({
-            ios: 110 + 16,
-            android: themeVariables.contentPadding
-          })}
-        >
-          <ContentWrapper>
+              }
+            : undefined
+        }
+        includeContentMargins
+        ref={textInputWrappperRef}
+      >
+        <TextInputValidation
+          placeholder={I18n.t("wallet.payment.manual.noticeNumber.placeholder")}
+          accessibilityLabel={I18n.t(
+            "wallet.payment.manual.noticeNumber.placeholder"
+          )}
+          errorMessage={I18n.t(
+            "wallet.payment.manual.noticeNumber.validationError"
+          )}
+          value={inputState.noticeNumberText}
+          icon="docPaymentCode"
+          onChangeText={value => {
+            const normalizedValue = trimAndLimitValue(
+              value,
+              MAX_LENGTH_NOTICE_NUMBER
+            );
+
+            setInputState({
+              noticeNumberText: normalizedValue,
+              noticeNumber: decodePaymentNoticeNumber(normalizedValue)
+            });
+          }}
+          counterLimit={
+            inputState.noticeNumberText.length >= MAX_LENGTH_NOTICE_NUMBER
+              ? MAX_LENGTH_NOTICE_NUMBER
+              : undefined
+          }
+          onValidate={validatePaymentNoticeNumber}
+          textInputProps={{
+            keyboardType: "number-pad",
+            inputMode: "numeric",
+            returnKeyType: "done",
+            inputAccessoryViewID: "noticeNumberInputAccessoryView"
+          }}
+          autoFocus
+        />
+      </IOScrollViewWithLargeHeader>
+      {Platform.OS === "ios" && (
+        <InputAccessoryView nativeID="noticeNumberInputAccessoryView">
+          <View style={{ padding: 20 }}>
             <ButtonSolid
-              label="Continua"
-              accessibilityLabel="Continua"
+              fullWidth
+              label={I18n.t("global.buttons.continue")}
+              accessibilityLabel={I18n.t("global.buttons.continue")}
               onPress={handleContinueClick}
-              fullWidth={true}
             />
-            <VSpacer size={16} />
-          </ContentWrapper>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </BaseScreenComponent>
+          </View>
+        </InputAccessoryView>
+      )}
+    </>
   );
 };
 

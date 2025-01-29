@@ -683,7 +683,7 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                       <View
                         style={
                           {
-                            "marginBottom": 8,
+                            "marginBottom": 24,
                             "marginTop": 16,
                           }
                         }

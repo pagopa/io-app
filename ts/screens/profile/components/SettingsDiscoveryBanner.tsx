@@ -1,11 +1,16 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
-import React, { createRef } from "react";
+import { createRef, useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import { setHasUserAcknowledgedSettingsBanner } from "../../../features/profileSettings/store/actions";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch } from "../../../store/hooks";
-import { setHasUserAcknowledgedSettingsBanner } from "../../../features/profileSettings/store/actions";
+import {
+  trackSettingsDiscoverBannerClosure,
+  trackSettingsDiscoverBannerTap,
+  trackSettingsDiscoverBannerVisualized
+} from "../analytics";
 
 type SettingsDiscoveryBannerProps = {
   handleOnClose: () => void;
@@ -22,14 +27,20 @@ export const SettingsDiscoveryBanner = ({
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const handleOnPress = () => {
+    trackSettingsDiscoverBannerTap();
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.SETTINGS_MAIN
     });
   };
-  const closeHandler = React.useCallback(() => {
+  const closeHandler = useCallback(() => {
+    trackSettingsDiscoverBannerClosure();
     dispatch(setHasUserAcknowledgedSettingsBanner(true));
     handleOnClose();
   }, [dispatch, handleOnClose]);
+
+  useEffect(() => {
+    trackSettingsDiscoverBannerVisualized();
+  }, []);
 
   return (
     <View style={styles.margins}>
@@ -43,6 +54,7 @@ export const SettingsDiscoveryBanner = ({
         onClose={closeHandler}
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}
+        testID="settingsDiscoveryBannerCTA"
       />
     </View>
   );

@@ -1,7 +1,6 @@
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import React from "react";
 import WebviewComponent from "../WebviewComponent";
 import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";

@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
+
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../i18n";
@@ -21,6 +22,7 @@ import {
 } from "../../../utils/supportAssistance";
 import { ZendeskParamsList } from "../navigation/params";
 import {
+  ZendeskAssistanceType,
   zendeskRequestTicketNumber,
   zendeskStopPolling,
   zendeskSupportCompleted
@@ -32,9 +34,7 @@ import {
 import { handleContactSupport } from "../utils";
 
 export type ZendeskSeeReportsRoutersNavigationParams = {
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
-  assistanceForFci: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -52,8 +52,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   const dispatch = useIODispatch();
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const ticketNumber = useIOSelector(zendeskTicketNumberSelector);
-  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
-    props.route.params;
+  const { assistanceType } = props.route.params;
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
 
@@ -77,22 +76,9 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     dispatch(zendeskRequestTicketNumber.request());
   }, [dispatch, zendeskToken]);
 
-  const handleContactSupportPress = React.useCallback(
-    () =>
-      handleContactSupport(
-        navigation,
-        assistanceForPayment,
-        assistanceForCard,
-        assistanceForFci,
-        zendeskRemoteConfig
-      ),
-    [
-      navigation,
-      assistanceForPayment,
-      assistanceForCard,
-      assistanceForFci,
-      zendeskRemoteConfig
-    ]
+  const handleContactSupportPress = useCallback(
+    () => handleContactSupport(navigation, assistanceType, zendeskRemoteConfig),
+    [navigation, assistanceType, zendeskRemoteConfig]
   );
 
   useEffect(() => {

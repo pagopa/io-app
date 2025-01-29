@@ -110,7 +110,6 @@ global:
       open:
         label: "Kontextbezogene Hilfe"
         hint: "Greif auf Informationen über den Inhalt des aktuellen Bildschirms zu"
-  ioWebSite: "https://io.italia.it"
   symbols:
     question: "?"
     asterisk: "*"
@@ -610,15 +609,6 @@ authentication:
     privacyLink: "Datenschutzerklärung"
     nospid: "Du hast keinen SPID? Erfahre mehr"
     nospid-nocie: "Du hast keinen SPID und keine CIE? Erfahre mehr"
-    card1-title: "Alle Mitteilungen an einem Ort"
-    card1-content: "Zeige alle erhaltenen Mitteilungen von öffentlichen Körperschaften an"
-    card2-title: "Verwende deine bevorzugten Zahlungsmethoden"
-    card2-content: "Du kannst eine Steuer oder eine Strafe über dein Bankkonto oder mit deiner Bankkarte bezahlen"
-    card3-title: "Bezahle schnell eine Aufforderung in Papierform"
-    card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsmitteilung in Papierform bezahlen"
-    card5-title: "Willkommen in IO!"
-    card5-content: "Lass uns gemeinsam herausfinden, was du machen kannst"
-    card5-content-accessibility: "Wähle das vorherige Element, um einen Chat mit dem IO-Team zu beginnen, wenn etwas nicht so funktioniert, wie es sollte."
     expiredCardTitle: "CIE-Verifizierung fehlgeschlagen"
     expiredCardHeaderTitle: "Anmeldung mit CIE"
     expiredCardContent: "Die verwendete Karte ist möglicherweise abgelaufen oder nicht mehr gültig. Versuche dich mit SPID bei der App anzumelden."

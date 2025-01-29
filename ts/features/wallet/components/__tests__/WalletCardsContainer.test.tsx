@@ -1,8 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
-import * as React from "react";
+
+import { ComponentType } from "react";
 import configureMockStore from "redux-mock-store";
-import { Alert } from "react-native";
+import { Alert, Pressable } from "react-native";
+import { requestReview } from "react-native-store-review";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -17,6 +19,7 @@ import { ItwJwtCredentialStatus } from "../../../itwallet/common/utils/itwTypesU
 import * as itwCredentialsSelectors from "../../../itwallet/credentials/store/selectors";
 import * as itwLifecycleSelectors from "../../../itwallet/lifecycle/store/selectors";
 import * as itwWalletInstanceSelectors from "../../../itwallet/walletInstance/store/selectors";
+import * as itwPreferencesSelectors from "../../../itwallet/common/store/selectors/preferences";
 import { WalletCardsState } from "../../store/reducers/cards";
 import * as walletSelectors from "../../store/selectors";
 import { WalletCard } from "../../types";
@@ -26,6 +29,7 @@ import {
   WalletCardsContainer
 } from "../WalletCardsContainer";
 import I18n from "../../../../i18n";
+import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 
 jest.spyOn(Alert, "alert");
 jest.mock("react-native-reanimated", () => ({
@@ -34,6 +38,21 @@ jest.mock("react-native-reanimated", () => ({
   Layout: {
     duration: jest.fn()
   }
+}));
+
+jest.mock("react-native-store-review", () => ({
+  requestReview: jest.fn()
+}));
+
+const mockNavigate = jest.fn();
+
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual<typeof import("@react-navigation/native")>(
+    "@react-navigation/native"
+  ),
+  useNavigation: () => ({
+    navigate: mockNavigate
+  })
 }));
 
 jest.mock("../../../../config", () => ({
@@ -457,9 +476,46 @@ describe("OtherWalletCardsContainer", () => {
       ]
     );
   });
+
+  it("should request app review when driving license credential is viewed", async () => {
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "selectWalletCardsByCategory")
+      .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
+
+    jest
+      .spyOn(itwPreferencesSelectors, "itwIsPendingReviewSelector")
+      .mockImplementation(() => true);
+
+    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+    expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
+
+    const mDLCredential = queryByTestId(`walletCardTestID_itw_itw_4`);
+
+    if (mDLCredential) {
+      const pressableComponent = mDLCredential.findByType(Pressable);
+      pressableComponent.props.onPress();
+    }
+
+    expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+      params: {
+        credentialType: CredentialType.DRIVING_LICENSE
+      }
+    });
+
+    expect(requestReview).toHaveBeenCalledTimes(1);
+  });
 });
 
-const renderComponent = (component: React.ComponentType<any>) => {
+const renderComponent = (component: ComponentType<any>) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();

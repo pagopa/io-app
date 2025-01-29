@@ -14,9 +14,9 @@ import { RouteProp, useFocusEffect } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import Animated, { Layout } from "react-native-reanimated";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
@@ -93,7 +93,7 @@ const IdPayInitiativeDetailsScreen = () => {
   const discountBottomSheet = useIdPayDiscountDetailsBottomSheet(initiativeId);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       dispatch(idpayInitiativeGet.request({ initiativeId }));
       dispatch(
         idpayTimelinePageGet.request({ initiativeId, page: 0, pageSize: 5 })
@@ -203,18 +203,15 @@ const IdPayInitiativeDetailsScreen = () => {
             case InitiativeRewardTypeEnum.DISCOUNT:
               return (
                 <ContentWrapper>
-                  <VSpacer size={8} />
                   <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
-                  <Animated.View layout={Layout.duration(200)}>
+                  <Animated.View layout={LinearTransition.duration(200)}>
                     <InitiativeTimelineComponent
                       initiativeId={initiative.initiativeId}
                       size={5}
                     />
-                    <VSpacer size={32} />
                     <InitiativeDiscountSettingsComponent
                       initiative={initiative}
                     />
-                    <VSpacer size={16} />
                   </Animated.View>
                 </ContentWrapper>
               );
@@ -303,6 +300,7 @@ const IdPayInitiativeDetailsScreen = () => {
 
   return (
     <BonusCardScreenComponent
+      title={initiativeName ?? ""}
       headerAction={{
         icon: "info",
         onPress: navigateToBeneficiaryDetails,

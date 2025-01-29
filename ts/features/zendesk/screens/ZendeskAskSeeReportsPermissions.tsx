@@ -11,7 +11,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { zendeskPrivacyUrl } from "../../../config";
@@ -29,12 +29,11 @@ import {
 } from "../../../store/reducers/profile";
 import { openWebUrl } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
+import { type ZendeskAssistanceType } from "../store/actions";
 import { ItemPermissionProps } from "./ZendeskAskPermissions";
 
 export type ZendeskAskSeeReportsPermissionsNavigationParams = {
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
-  assistanceForFci: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -48,8 +47,7 @@ type Props = IOStackNavigationRouteProps<
  */
 const ZendeskAskSeeReportsPermissions = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
-    props.route.params;
+  const { assistanceType } = props.route.params;
 
   /* Get user's profile data */
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
@@ -110,11 +108,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
       onPress: () => {
         navigation.navigate("ZENDESK_MAIN", {
           screen: "ZENDESK_SEE_REPORTS_ROUTERS",
-          params: {
-            assistanceForPayment,
-            assistanceForCard,
-            assistanceForFci
-          }
+          params: { assistanceType }
         });
       }
     }

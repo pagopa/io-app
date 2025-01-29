@@ -1,4 +1,3 @@
-import * as React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStyles } from "@pagopa/io-app-design-system";
 import { PinCreation } from "../../components/screens/PinCreation/PinCreation";

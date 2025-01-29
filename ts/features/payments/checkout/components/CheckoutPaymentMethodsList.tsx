@@ -9,7 +9,7 @@ import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import _, { capitalize } from "lodash";
-import React, { useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import I18n from "../../../../i18n";
@@ -32,7 +32,7 @@ const CheckoutPaymentMethodsList = () => {
   const dispatch = useIODispatch();
 
   const [shouldShowWarningBanner, setShouldShowWarningBanner] =
-    React.useState<boolean>(false);
+    useState<boolean>(false);
 
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const allPaymentMethods = useIOSelector(walletPaymentAllMethodsSelector);

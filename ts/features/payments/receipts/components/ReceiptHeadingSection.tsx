@@ -5,7 +5,6 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
 import { View } from "react-native";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";

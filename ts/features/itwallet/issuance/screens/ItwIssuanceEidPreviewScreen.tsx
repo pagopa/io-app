@@ -10,7 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { useMemo } from "react";
+import { useLayoutEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
@@ -116,7 +116,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
     );
   };
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
       header: () => (

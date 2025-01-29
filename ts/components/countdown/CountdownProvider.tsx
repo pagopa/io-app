@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  useRef
-} from "react";
+import { createContext, useContext, useState, ReactNode, useRef } from "react";
 import BackgroundTimer from "react-native-background-timer";
 
 type CountdownContextType = {

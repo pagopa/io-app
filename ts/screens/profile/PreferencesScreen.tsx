@@ -2,7 +2,7 @@
  * Implements the preferences screen where the user can see and update his
  * preferences about notifications, calendar, services, messages and languages
  */
-import React, { ComponentProps, useCallback } from "react";
+import { ComponentProps, useCallback } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 import {
   Divider,

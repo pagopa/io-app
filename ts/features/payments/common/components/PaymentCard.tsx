@@ -8,7 +8,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import { capitalize } from "lodash";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder, { BoxProps } from "rn-placeholder";
 import BPayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.svg";
@@ -205,6 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors["grey-100"],
     borderRadius: 8,
     borderWidth: 1,
+    borderCurve: "continuous",
     borderColor: IOColors["grey-200"]
   },
   expiredCard: {

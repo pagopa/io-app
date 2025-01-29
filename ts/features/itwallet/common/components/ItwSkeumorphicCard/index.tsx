@@ -1,5 +1,6 @@
 import { Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
-import React, { ReactNode, useMemo } from "react";
+import { memo, ReactNode, useMemo } from "react";
+
 import {
   AccessibilityProps,
   Pressable,
@@ -12,7 +13,7 @@ import Animated from "react-native-reanimated";
 import I18n from "../../../../../i18n";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
-  borderColorByStatus,
+  useBorderColorByStatus,
   getCredentialNameFromType,
   tagPropsByStatus,
   validCredentialStatuses
@@ -64,7 +65,7 @@ const ItwSkeumorphicCard = ({
     [credential, status]
   );
 
-  const accessibilityProps = React.useMemo(
+  const accessibilityProps = useMemo(
     () =>
       ({
         accessible: true,
@@ -118,8 +119,10 @@ type CardSideBaseProps = {
 };
 
 const CardSideBase = ({ status, children }: CardSideBaseProps) => {
+  const borderColorMap = useBorderColorByStatus();
+
   const statusTagProps = tagPropsByStatus[status];
-  const borderColor = borderColorByStatus[status];
+  const borderColor = borderColorMap[status];
 
   const dynamicStyle: StyleProp<ViewStyle> = {
     borderColor,
@@ -163,6 +166,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwSkeumorphicCard = React.memo(ItwSkeumorphicCard);
+const MemoizedItwSkeumorphicCard = memo(ItwSkeumorphicCard);
 
 export { MemoizedItwSkeumorphicCard as ItwSkeumorphicCard };

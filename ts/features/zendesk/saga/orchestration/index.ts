@@ -22,10 +22,9 @@ function* zendeskSupportWorkUnit(
   zendeskStart: ActionType<typeof zendeskSupportStart>
 ) {
   const isLoggedinUser = yield* select(s => isLoggedIn(s.authentication));
-  const needToNavigateInAskPermissionScreen =
-    zendeskStart.payload.assistanceForPayment ||
-    zendeskStart.payload.assistanceForCard ||
-    zendeskStart.payload.assistanceForFci;
+  const needToNavigateInAskPermissionScreen = Object.values(
+    zendeskStart.payload.assistanceType
+  ).some(Boolean);
 
   if (needToNavigateInAskPermissionScreen && isLoggedinUser) {
     yield* put(getZendeskToken.request());

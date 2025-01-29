@@ -1,19 +1,26 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { sequenceS } from "fp-ts/lib/Apply";
-import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import { constNull, pipe } from "fp-ts/lib/function";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import {
+  fallbackForLocalizedMessageKeys,
+  getFullLocale
+} from "../../../../utils/locale";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackWalletCreationFailed } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/selectors/remoteConfig";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import {
   CredentialIssuanceFailure,
@@ -26,13 +33,12 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
-import { useIOSelector } from "../../../../store/hooks";
-import { itwDeferredIssuanceScreenContentSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import {
-  fallbackForLocalizedMessageKeys,
-  getFullLocale
-} from "../../../../utils/locale";
-import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
+
+// Errors that allow a user to send a support request to Zendesk
+const zendeskAssistanceErrors = [
+  CredentialIssuanceFailureType.UNEXPECTED,
+  CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC
+];
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -78,12 +84,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
     issuerConf
   });
 
-  const closeIssuance = (cta_id: string) => {
+  const closeIssuance = () => {
     machineRef.send({ type: "close" });
     trackWalletCreationFailed({
       reason: failure.reason,
       cta_category: "custom_2",
-      cta_id
+      cta_id: "close_issuance"
     });
   };
   const closeAsyncIssuance = () => {
@@ -95,29 +101,38 @@ const ContentView = ({ failure }: ContentViewProps) => {
   useDebugInfo({
     failure: serializeFailureReason(failure)
   });
+  const supportModal = useItwFailureSupportModal({
+    failure,
+    credentialType: O.toUndefined(credentialType),
+    supportChatEnabled: zendeskAssistanceErrors.includes(failure.type)
+  });
+
+  const supportModalAction = {
+    label: I18n.t("features.itWallet.support.button"),
+    onPress: supportModal.present
+  };
 
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
         case CredentialIssuanceFailureType.UNEXPECTED:
         case CredentialIssuanceFailureType.ISSUER_GENERIC:
-        case CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC:
+        case CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC: {
+          const closeAction = {
+            label: I18n.t(
+              "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
+            ),
+            onPress: closeIssuance
+          };
           return {
             title: I18n.t("features.itWallet.issuance.genericError.title"),
             subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
             pictogram: "umbrellaNew",
-            action: {
-              label: I18n.t(
-                "features.itWallet.issuance.genericError.primaryAction"
-              ),
-              onPress: () =>
-                closeIssuance(
-                  I18n.t(
-                    "features.itWallet.issuance.genericError.primaryAction"
-                  )
-                )
-            }
+            ...(supportModal.hasContactMethods
+              ? { action: supportModalAction, secondaryAction: closeAction }
+              : { action: closeAction, secondaryAction: supportModalAction })
           };
+        }
         // NOTE: only the mDL supports the async flow, so this error message is specific to mDL
         case CredentialIssuanceFailureType.ASYNC_ISSUANCE:
           return {
@@ -136,7 +151,13 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         // Dynamic errors extracted from the entity configuration, with fallback
-        case CredentialIssuanceFailureType.INVALID_STATUS:
+        case CredentialIssuanceFailureType.INVALID_STATUS: {
+          const closeAction = {
+            label: I18n.t(
+              "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
+            ),
+            onPress: closeIssuance
+          };
           return {
             title:
               invalidStatusDetails.message?.title ??
@@ -145,18 +166,11 @@ const ContentView = ({ failure }: ContentViewProps) => {
               invalidStatusDetails.message?.description ??
               defaultInvalidStatusMessage.description,
             pictogram: "accessDenied",
-            action: {
-              label: I18n.t(
-                "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
-              ),
-              onPress: () =>
-                closeIssuance(
-                  I18n.t(
-                    "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
-                  )
-                )
-            }
+            ...(supportModal.hasContactMethods
+              ? { action: supportModalAction, secondaryAction: closeAction }
+              : { action: closeAction, secondaryAction: supportModalAction })
           };
+        }
       }
     };
 
@@ -168,10 +182,13 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const resultScreenProps = getOperationResultScreenContentProps();
   return (
-    <OperationResultScreenContent
-      {...resultScreenProps}
-      subtitleProps={{ textBreakStrategy: "simple" }}
-    />
+    <>
+      <OperationResultScreenContent
+        {...resultScreenProps}
+        subtitleProps={{ textBreakStrategy: "simple" }}
+      />
+      {supportModal.bottomSheet}
+    </>
   );
 };
 
