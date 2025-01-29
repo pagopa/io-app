@@ -2,9 +2,9 @@
 
 exports[`Test LinkedText component should render a LinkedText component with props correctly 1`] = `
 <Text
-  allowFontScaling={false}
+  allowFontScaling={true}
   dynamicTypeRamp="title3"
-  maxFontSizeMultiplier={1.25}
+  maxFontSizeMultiplier={1.5}
   style={
     [
       {},
@@ -20,9 +20,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
   }
 >
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -38,9 +38,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -58,9 +58,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     C
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -78,9 +78,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     l
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -98,9 +98,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     a
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -118,9 +118,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     u
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -138,9 +138,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     s
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -158,9 +158,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     e
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -178,9 +178,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
      
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -198,9 +198,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     t
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -218,9 +218,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     i
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -238,9 +238,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     t
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -258,9 +258,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     l
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -278,9 +278,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     e
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -298,9 +298,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
      
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -318,9 +318,9 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     1
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},

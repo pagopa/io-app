@@ -491,9 +491,9 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -511,9 +511,9 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             You have a new message
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1036,9 +1036,9 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1056,9 +1056,9 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             You have a notice due tomorrow
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1581,9 +1581,9 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1601,9 +1601,9 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             Comune di Ipazia
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -2126,9 +2126,9 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -2146,9 +2146,9 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             You have a notice due soon
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
