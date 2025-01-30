@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.81.1-rc.0](https://github.com/pagopa/io-app/compare/2.81.0-rc.8...2.81.1-rc.0) (2025-01-30)
+
+
+### Bug Fixes
+
+* [[IOBP-1169](https://pagopa.atlassian.net/browse/IOBP-1169)] Psp order logic ([#6658](https://github.com/pagopa/io-app/issues/6658)) ([630621c](https://github.com/pagopa/io-app/commit/630621c8de48f8a73a19205d32b7f283134cd7da))
+
 ## [2.81.0-rc.8](https://github.com/pagopa/io-app/compare/2.81.0-rc.7...2.81.0-rc.8) (2025-01-23)
 
 
