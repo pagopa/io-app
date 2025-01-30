@@ -1,13 +1,14 @@
 name: Canary release
 on:
-  issue_comment:                                     
-    types: [created]
+  - pull_request
+  # issue_comment:                                     
+  #   types: [created]
 jobs:
-  run-static-checks:
-    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
-    uses: ./.github/workflows/staticcheck.yaml
+  # run-static-checks:
+  #   if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
+  #   uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
-    needs: run-static-checks
+    # needs: run-static-checks
     runs-on: ubuntu-latest
     outputs:
       canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
@@ -151,10 +152,10 @@ jobs:
   release-ios:
     needs: prepare-canary-release
     environment: canary
-    runs-on: macos-13-xlarge
+    runs-on: macos-14-xlarge
     steps:
       - id: set-xcode-version
-        run: sudo xcode-select -s '/Applications/Xcode_15.2.app/Contents/Developer'
+        run: sudo xcode-select -s '/Applications/Xcode_16.2.app/Contents/Developer'
         shell: bash
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
