@@ -96,8 +96,6 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
     return;
   }
 
-  yield* put(fimsSignAndRetrieveInAppBrowserUrlAction.success());
-  yield* call(deallocateFimsResourcesAndNavigateBack);
   yield* call(computeAndTrackInAppBrowserOpening);
 
   try {
@@ -109,6 +107,9 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
     );
   } catch (error: unknown) {
     yield* call(handleInAppBrowserErrorIfNeeded, error);
+  } finally {
+    yield* put(fimsSignAndRetrieveInAppBrowserUrlAction.success());
+    yield* call(deallocateFimsResourcesAndNavigateBack);
   }
 }
 
