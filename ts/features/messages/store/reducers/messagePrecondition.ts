@@ -94,7 +94,12 @@ export const preconditionReducer = (
             action.payload.reason
           ), // From Retrieving Data to Error
         () => state,
-        () => state,
+        shownStatus =>
+          toErrorMPS(
+            shownStatus.messageId,
+            shownStatus.categoryTag,
+            action.payload.reason
+          ), // From Retrieving Data to Error,
         () => state
       )(state);
     case getType(idlePreconditionStatusAction):
@@ -112,12 +117,21 @@ export const preconditionReducer = (
         () => state,
         () => state,
         () => state,
-        retrievingDataStatus =>
-          toLoadingContentMPS(
-            retrievingDataStatus.messageId,
-            retrievingDataStatus.categoryTag,
-            action.payload.content
-          ), // From Retrieving Data to Loading Content
+        retrievingDataStatus => {
+          if (action.payload.skipLoading) {
+            return toShownMPS(
+              retrievingDataStatus.messageId,
+              retrievingDataStatus.categoryTag,
+              action.payload.content
+            ); // From Retrieving Data to Shown
+          } else {
+            return toLoadingContentMPS(
+              retrievingDataStatus.messageId,
+              retrievingDataStatus.categoryTag,
+              action.payload.content
+            ); // From Retrieving Data to Loading Content
+          }
+        },
         () => state,
         () => state,
         () => state
