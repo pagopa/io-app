@@ -1,6 +1,7 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { differenceInHours } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { flow } from "fp-ts/lib/function";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils";
@@ -29,3 +30,22 @@ export const itwWalletInstanceStatusSelector = (state: GlobalState) =>
  */
 export const itwIsWalletInstanceStatusFailureSelector = (state: GlobalState) =>
   pot.isError(state.features.itWallet.walletInstance.status);
+
+/**
+ * Selector to get the last status update date
+ */
+export const itwLastStatusUpdateDateSelector = (state: GlobalState) =>
+  state.features.itWallet.walletInstance.lastStatusUpdateDate;
+
+/**
+ * Selector to get the last status update date
+ */
+export const itwNeedWalletInstanceStatusCheck = (state: GlobalState) => {
+  const lastStatusUpdateDate =
+    state.features.itWallet.walletInstance.lastStatusUpdateDate;
+  if (!lastStatusUpdateDate) {
+    return true;
+  }
+  // Check if 24 hours have passed since the last status update
+  return differenceInHours(new Date(), new Date(lastStatusUpdateDate)) >= 24;
+};

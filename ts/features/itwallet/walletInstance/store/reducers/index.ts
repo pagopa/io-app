@@ -21,11 +21,13 @@ import { isDevEnv } from "../../../../../utils/environment";
 export type ItwWalletInstanceState = {
   attestation: string | undefined;
   status: pot.Pot<WalletInstanceStatus, NetworkError>;
+  lastStatusUpdateDate: string | undefined;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
-  status: pot.none
+  status: pot.none,
+  lastStatusUpdateDate: undefined
 };
 
 const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 0;
@@ -36,6 +38,7 @@ const migrations: MigrationManifest = {
     const prevState = state as PersistedState & {
       attestation: string | undefined;
       status: WalletInstanceStatus | undefined;
+      lastStatusUpdateDate: string | undefined;
     };
     return {
       ...prevState,
@@ -52,14 +55,16 @@ const reducer = (
     case getType(itwWalletInstanceAttestationStore): {
       return {
         status: pot.none,
-        attestation: action.payload
+        attestation: action.payload,
+        lastStatusUpdateDate: new Date().toISOString()
       };
     }
 
     case getType(itwUpdateWalletInstanceStatus.success): {
       return {
         ...state,
-        status: pot.some(action.payload)
+        status: pot.some(action.payload),
+        lastStatusUpdateDate: new Date().toISOString()
       };
     }
 

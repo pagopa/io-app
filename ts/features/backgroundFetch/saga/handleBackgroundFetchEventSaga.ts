@@ -1,9 +1,10 @@
 import BackgroundFetch from "react-native-background-fetch";
-import { call } from "typed-redux-saga/macro";
+import { call, select, takeLeading } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { checkWalletInstanceAndCredentialsValiditySaga } from "../../itwallet/common/saga";
 import { backgroundFetchEvent } from "../store/actions";
 import { BackgroundFetchTaskId } from "../utils/tasks";
+import { itwNeedWalletInstanceStatusCheck } from "../../itwallet/walletInstance/store/selectors";
 
 /**
  * Saga responsible for handling background fetch events triggered by the react-native-background-fetch package.
@@ -17,8 +18,12 @@ export function* handleBackgroundFetchEventSaga(
   switch (action.payload) {
     // This event is called by the react-native-background-fetch package
     // with the interval configured in useBackgroundFetch hook
+    // DO NOT FORK SAGAS! Or they may risk to continue running after the task is signaled as finished and be terminated
     case BackgroundFetchTaskId.REACT_NATIVE_BACKGROUND_FETCH:
-      yield* call(checkWalletInstanceAndCredentialsValiditySaga);
+      const needCheck = yield* select(itwNeedWalletInstanceStatusCheck);
+      if (needCheck) {
+        yield* call(checkWalletInstanceAndCredentialsValiditySaga);
+      }
       break;
   }
 
