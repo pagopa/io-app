@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
+import I18n from "../../i18n";
 
 type LoadingSkeletonProps = {
   lines?: number;

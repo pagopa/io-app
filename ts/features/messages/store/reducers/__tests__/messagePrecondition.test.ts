@@ -64,6 +64,7 @@ const messagePreconditionStatusesGenerator = (
   toUpdateRequiredMPS()
 ];
 
+// eslint-disable-next-line complexity
 const computeExpectedOutput = (
   fromStatus: MessagePreconditionStatus,
   withAction: ActionType<
@@ -145,6 +146,17 @@ const computeExpectedOutput = (
       }
       break;
     case "shown":
+      switch (withAction.type) {
+        case "TO_IDLE_PRECONDITION_STATUS":
+          return toIdleMPS();
+        case "TO_ERROR_PRECONDITION_STATUS":
+          return toErrorMPS(
+            fromStatus.messageId,
+            fromStatus.categoryTag,
+            withAction.payload.reason
+          );
+      }
+      break;
     case "updateRequired":
       switch (withAction.type) {
         case "TO_IDLE_PRECONDITION_STATUS":
@@ -159,7 +171,9 @@ describe("messagePrecondition reducer", () => {
   const changeStatusActions = [
     errorPreconditionStatusAction(toErrorPayload(errorReason)),
     idlePreconditionStatusAction(toIdlePayload()),
-    loadingContentPreconditionStatusAction(toLoadingContentPayload(content)),
+    loadingContentPreconditionStatusAction(
+      toLoadingContentPayload(content, false)
+    ),
     retrievingDataPreconditionStatusAction(toRetrievingDataPayload()),
     scheduledPreconditionStatusAction(
       toScheduledPayload(messageId, categoryTag)
