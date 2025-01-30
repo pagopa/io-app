@@ -31,7 +31,7 @@ export const useItwDismissalDialog = (handleDismiss?: () => void) => {
 
   useHardwareBackButton(() => {
     show();
-    return false;
+    return true;
   });
 
   return { show };
