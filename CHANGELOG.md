@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.82.0-rc.1](https://github.com/pagopa/io-app/compare/2.82.0-rc.0...2.82.0-rc.1) (2025-01-29)
+
+
+### Features
+
+* [[IOPLT-810](https://pagopa.atlassian.net/browse/IOPLT-810)] Enable `allowFontScaling` by default for all citizens ([#6561](https://github.com/pagopa/io-app/issues/6561)) ([70c97d9](https://github.com/pagopa/io-app/commit/70c97d9383987c4932a9f13ebed33defb1db7873))
+
+
+### Bug Fixes
+
+* [[IOAPPX-462](https://pagopa.atlassian.net/browse/IOAPPX-462)] Fix flickering behaviour in the search screens (Messages, Services) on iOS ([#6603](https://github.com/pagopa/io-app/issues/6603)) ([24129e7](https://github.com/pagopa/io-app/commit/24129e7cd4bb8a90ff1b7fd338d3218317833459))
+
+
+### Chores
+
+* [[IOPLT-944](https://pagopa.atlassian.net/browse/IOPLT-944)] Upgrade reactotron to last version ([#6648](https://github.com/pagopa/io-app/issues/6648)) ([dad76de](https://github.com/pagopa/io-app/commit/dad76de68f50c3b7bc804de09d3adb5bda6933ab))
+* [[PE-786](https://pagopa.atlassian.net/browse/PE-786)] CGN update support fields optional ([#6647](https://github.com/pagopa/io-app/issues/6647)) ([724ef17](https://github.com/pagopa/io-app/commit/724ef17be7c4354e7cfcb856f5e6ddb0ee9c6be6))
+
 ## [2.82.0-rc.0](https://github.com/pagopa/io-app/compare/2.81.0-rc.8...2.82.0-rc.0) (2025-01-29)
 
 
