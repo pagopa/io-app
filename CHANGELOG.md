@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.82.0-canary.6653](https://github.com/pagopa/io-app/compare/2.82.0-rc.1...2.82.0-canary.6653) (2025-01-30)
+
+
+### Bug Fixes
+
+* [[IOBP-1169](https://pagopa.atlassian.net/browse/IOBP-1169)] Psp order logic ([#6658](https://github.com/pagopa/io-app/issues/6658)) ([bbc03d2](https://github.com/pagopa/io-app/commit/bbc03d27fa3eb8dd46f8623e0c5e04ee6cb1e27a))
+
 ## [2.82.0-rc.1](https://github.com/pagopa/io-app/compare/2.82.0-rc.0...2.82.0-rc.1) (2025-01-29)
 
 
