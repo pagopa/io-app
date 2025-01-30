@@ -13,7 +13,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
+import IOMarkdown from "../../components/IOMarkdown";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
@@ -41,7 +41,7 @@ const RootedDeviceModal = () => {
     bottomSheet: learnMoreBottomSheet
   } = useIOBottomSheetAutoresizableModal({
     title: I18n.t("rooted.learnMoreBottomsheet.title"),
-    component: <LegacyMarkdown>{body}</LegacyMarkdown>
+    component: <IOMarkdown content={body} />
   });
 
   return (

@@ -57,6 +57,7 @@ export const PDNDPrerequisitesScreen = () => {
         />
       ),
       footer: (
+        // TODO: Replace this chunk of code using `FooterActions`
         <ContentWrapper>
           <VSpacer size={16} />
           <ButtonSolid
