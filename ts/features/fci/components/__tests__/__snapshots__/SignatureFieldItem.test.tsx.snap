@@ -188,7 +188,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                       "width": 36,
                     },
                     {
-                      "borderColor": "#475A6D",
+                      "borderColor": "#555C70",
                     },
                   ]
                 }
