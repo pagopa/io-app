@@ -687,7 +687,7 @@ const renderListItemTransaction = () => (
           amount: "",
           amountAccessibilityLabel: ""
         }}
-        paymentLogoIcon={<Icon name="notice" color="red" />}
+        paymentLogoIcon={<Icon name="notice" color="error-500" />}
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>

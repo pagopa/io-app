@@ -185,7 +185,7 @@ const LegacyTextFields = () => {
             contextMenuHidden: true
           }}
           icon={"notice"}
-          iconColor={"red"}
+          iconColor={"error-500"}
           iconPosition="right"
           isValid={false}
           overrideBorderColor={IOColors["error-600"]}
@@ -196,7 +196,7 @@ const LegacyTextFields = () => {
           accessibilityElementsHidden={true}
           importantForAccessibility="no-hide-descendants"
         >
-          <BodySmall weight="Regular" color="red">
+          <BodySmall weight="Regular" color="error-500">
             With two lines, this custom description breaks everything ¯\_(ツ)_/¯
           </BodySmall>
         </View>

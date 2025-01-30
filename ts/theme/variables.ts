@@ -46,7 +46,7 @@ const customVariables = {
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
   */
-  brandPrimary: IOColors.blue,
+  brandPrimary: IOColors["blue-500"],
 
   cardShadow: IOColors.black,
 
@@ -67,7 +67,7 @@ const customVariables = {
   contentPadding: 24,
   contentPaddingLarge: 48,
   contentBackground: IOColors.white,
-  contentPrimaryBackground: IOColors.blue,
+  contentPrimaryBackground: IOColors["blue-500"],
 
   // Footer
   footerBackground: IOColors.white,

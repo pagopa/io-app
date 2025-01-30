@@ -251,7 +251,7 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
             : dark
             ? IOColors["grey-700"]
             : primary
-            ? IOColors.blue
+            ? IOColors["blue-500"]
             : IOColors.white
         }
       >
@@ -360,7 +360,7 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
   private renderAppLogo = () => {
     const { primary, dark } = this.props;
 
-    const iconColor: IOColors = primary || dark ? "white" : "blue";
+    const iconColor: IOColors = primary || dark ? "white" : "blue-500";
     return (
       <View
         accessible={true}

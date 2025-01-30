@@ -6,7 +6,8 @@ import {
   HSpacer,
   IOColors,
   Icon,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
@@ -21,6 +22,7 @@ type Props = {
 
 const InitiativeRulesInfoBox = (props: Props) => {
   const { content } = props;
+  const theme = useIOTheme();
 
   const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal(
     {
@@ -57,7 +59,7 @@ const InitiativeRulesInfoBox = (props: Props) => {
         </Body>
         <VSpacer size={16} />
         <View style={IOStyles.row}>
-          <Icon name="categLearning" color="blue" />
+          <Icon name="categLearning" color={theme["interactiveElem-default"]} />
           <HSpacer size={8} />
           <Body weight="Semibold" asLink onPress={() => present()}>
             {I18n.t("idpay.initiative.beneficiaryDetails.infobox.rulesButton")}

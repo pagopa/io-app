@@ -5,9 +5,9 @@ import * as RNFS from "react-native-fs";
 const textColor = IOColors["grey-700"];
 const fontSizeBase = 16;
 const textLinkWeight = "600" as IOFontWeightNumeric;
-const textMessageDetailLinkColor = IOColors.blue;
+const textMessageDetailLinkColor = IOColors["blue-500"];
 const toastColor = IOColors["turquoise-100"];
-const brandPrimary = IOColors.blue;
+const brandPrimary = IOColors["blue-500"];
 
 const OLD_DEMO_TAG_MARKDOWN_REGEX = /^\[demo\]([\s\S]+?)\[\/demo\]\s*\n{2,}/;
 export const convertOldDemoMarkdownTag = (markdown: string) =>

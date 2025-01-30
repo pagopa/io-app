@@ -22,7 +22,7 @@ const OrderOption = ({ text, value, onPress, checked }: Props) => (
     <Icon
       name={checked ? "legRadioOn" : "legRadioOff"}
       size={24}
-      color={checked ? "blue" : "grey-700"}
+      color={checked ? "blue-500" : "grey-700"}
     />
   </Pressable>
 );

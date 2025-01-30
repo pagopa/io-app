@@ -160,7 +160,7 @@ export default class ListItemComponent extends Component<Props> {
                   <Icon
                     name="chevronRightListItem"
                     size={ICON_SIZE}
-                    color="blue"
+                    color="blue-500"
                   />
                 ))}
             </View>
@@ -188,7 +188,7 @@ export default class ListItemComponent extends Component<Props> {
                   size={
                     this.props.smallIconSize ? ICON_SIZE : ICON_SIZE_DEFAULT
                   }
-                  color="blue"
+                  color="blue-500"
                 />
               </View>
             )}
