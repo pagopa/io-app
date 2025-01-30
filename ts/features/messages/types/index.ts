@@ -20,7 +20,7 @@ export type WithUIMessageId<T> = T & {
 };
 
 /**
- * Domain-specific representation of a Message with aggregated data.
+ * Domain-specific representation of a Message with aggregated data
  */
 export type UIMessage = WithUIMessageId<{
   fiscalCode: FiscalCode;
