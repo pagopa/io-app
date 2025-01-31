@@ -2,44 +2,44 @@ import { ContentWrapper, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import React from "react";
-import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import I18n from "../../../../i18n";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
+import I18n from "../../../../../i18n.ts";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
-} from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+} from "../../../../../navigation/params/AppParamsList.ts";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import {
   CREDENTIALS_MAP,
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE
-} from "../../analytics";
-import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+} from "../../../analytics";
+import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialByTypeSelector,
   itwCredentialStatusSelector
-} from "../../credentials/store/selectors";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection";
-import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
-import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert";
-import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert";
-import { ItwPresentationCredentialVerificationExpired } from "../components/ItwPresentationCredentialVerificationExpired";
-import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter";
-import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader";
+} from "../../../credentials/store/selectors";
+import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
+import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection.tsx";
+import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection.tsx";
+import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert.tsx";
+import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert.tsx";
+import { ItwPresentationCredentialVerificationExpired } from "../components/ItwPresentationCredentialVerificationExpired.tsx";
+import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter.tsx";
+import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader.tsx";
 import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
-} from "../components/ItwPresentationDetailsScreenBase";
-import { ItwCredentialTrustmark } from "../../trustmark/components/ItwCredentialTrustmark";
-import ItwCredentialNotFound from "../../common/components/ItwCredentialNotFound";
-import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus";
-import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { itwSetReviewPending } from "../../common/store/actions/preferences";
-import { itwIsPendingReviewSelector } from "../../common/store/selectors/preferences";
+} from "../components/ItwPresentationDetailsScreenBase.tsx";
+import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
+import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
+import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus.tsx";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
+import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
+import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
