@@ -2,6 +2,7 @@ import {
   Body,
   ButtonSolid,
   ContentWrapper,
+  FooterActions,
   H6,
   HSpacer,
   IOColors,
@@ -27,21 +28,17 @@ const InitiativeRulesInfoBox = (props: Props) => {
       component: <IOMarkdown content={content} />,
       title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
       footer: (
-        // TODO: Replace this chunk of code using `FooterActions`
-        <ContentWrapper>
-          <VSpacer size={24} />
-          <ButtonSolid
-            label={I18n.t(
-              "idpay.initiative.beneficiaryDetails.infoModal.button"
-            )}
-            onPress={() => dismiss()}
-            accessibilityLabel={I18n.t(
-              "idpay.initiative.beneficiaryDetails.infoModal.button"
-            )}
-            fullWidth={true}
-          />
-          <VSpacer size={24} />
-        </ContentWrapper>
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
+              label: I18n.t(
+                "idpay.initiative.beneficiaryDetails.infoModal.button"
+              ),
+              onPress: () => dismiss()
+            }
+          }}
+        />
       )
     },
     170
