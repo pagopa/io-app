@@ -1,15 +1,16 @@
-import { useState } from "react";
 import { ContentWrapper, H2, VSpacer } from "@pagopa/io-app-design-system";
+import { useState } from "react";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { trackOpenItwTosAccepted } from "../../analytics";
-import ItwMarkdown from "../../common/components/ItwMarkdown";
-import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
-import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOSelector } from "../../../../store/hooks";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
+import { trackOpenItwTosAccepted } from "../../analytics";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,28 +39,41 @@ const ItwIpzsPrivacyScreen = () => {
   });
 
   return (
-    <LoadingSpinnerOverlay isLoading={isLoading}>
-      <ContentWrapper>
-        <H2
-          accessible={true}
-          accessibilityRole="header"
-          testID="screen-content-header-title"
-        >
-          {I18n.t("features.itWallet.ipzsPrivacy.title")}
-        </H2>
-        <VSpacer size={16} />
-        <ItwMarkdown>
-          {I18n.t("features.itWallet.ipzsPrivacy.warning")}
-        </ItwMarkdown>
-      </ContentWrapper>
-      <ItwPrivacyWebViewComponent
-        source={{
-          uri: privacyUrl
+    <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
+      <IOScrollView
+        includeContentMargins={false}
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("features.itWallet.ipzsPrivacy.button.label"),
+            accessibilityLabel: I18n.t(
+              "features.itWallet.ipzsPrivacy.button.label"
+            ),
+            onPress: handleContinuePress
+          }
         }}
-        onAcceptTos={handleContinuePress}
-        onLoadEnd={onLoadEnd}
-        onError={onError}
-      />
+      >
+        <ContentWrapper>
+          <H2
+            accessible={true}
+            accessibilityRole="header"
+            testID="screen-content-header-title"
+          >
+            {I18n.t("features.itWallet.ipzsPrivacy.title")}
+          </H2>
+          <VSpacer size={16} />
+          <IOMarkdown
+            content={I18n.t("features.itWallet.ipzsPrivacy.warning")}
+          />
+        </ContentWrapper>
+        <ItwPrivacyWebViewComponent
+          source={{
+            uri: privacyUrl
+          }}
+          onLoadEnd={onLoadEnd}
+          onError={onError}
+        />
+      </IOScrollView>
     </LoadingSpinnerOverlay>
   );
 };
