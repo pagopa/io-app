@@ -1,5 +1,5 @@
 import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard/ItwCredentialCard";
+import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";

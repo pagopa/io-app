@@ -10,8 +10,8 @@ import {
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
-import { ItwDigitalVersionBadge } from "./ItwDigitalVersionBadge";
 import { CardBackground } from "./CardBackground";
+import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
 
 export type ItwCredentialCard = {
@@ -86,7 +86,7 @@ export const ItwCredentialCard = ({
           {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
         </HStack>
       </View>
-      <ItwDigitalVersionBadge
+      <DigitalVersionBadge
         credentialType={credentialType}
         colorScheme={colorScheme}
       />

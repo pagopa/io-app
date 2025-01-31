@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Alert, Pressable, ScrollView } from "react-native";
 import { CgnCard } from "../../bonus/cgn/components/CgnCard";
 import { IdPayCard } from "../../idpay/wallet/components/IdPayCard";
-import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard/ItwCredentialCard";
+import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard";
 import {
   ItwSkeumorphicCard,
   ItwSkeumorphicCardProps

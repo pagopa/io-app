@@ -56,7 +56,7 @@ const getColorPropsByScheme = (
   return baseColorProps;
 };
 
-const ItwDigitalVersionBadge = ({
+const DigitalVersionBadge = ({
   credentialType,
   colorScheme = "default"
 }: DigitalVersionBadgeProps) => {
@@ -128,6 +128,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwDigitalVersionBadge = memo(ItwDigitalVersionBadge);
+const MemoizedDigitalVersionBadge = memo(DigitalVersionBadge);
 
-export { MemoizedItwDigitalVersionBadge as ItwDigitalVersionBadge };
+export { MemoizedDigitalVersionBadge as DigitalVersionBadge };
