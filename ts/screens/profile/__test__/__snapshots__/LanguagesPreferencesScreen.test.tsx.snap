@@ -494,7 +494,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                     "width": 36,
                                                   },
                                                   {
-                                                    "borderColor": "#475A6D",
+                                                    "borderColor": "#555C70",
                                                   },
                                                 ]
                                               }
@@ -710,7 +710,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                     "width": 36,
                                                   },
                                                   {
-                                                    "borderColor": "#475A6D",
+                                                    "borderColor": "#555C70",
                                                   },
                                                 ]
                                               }
@@ -926,7 +926,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                     "width": 36,
                                                   },
                                                   {
-                                                    "borderColor": "#475A6D",
+                                                    "borderColor": "#555C70",
                                                   },
                                                 ]
                                               }

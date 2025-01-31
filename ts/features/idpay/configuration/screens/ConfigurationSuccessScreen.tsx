@@ -80,7 +80,7 @@ export const ConfigurationSuccessScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="completed"
+      pictogram="success"
       title={I18n.t("idpay.configuration.associationSuccess.title")}
       isHeaderVisible
       subtitle={[
