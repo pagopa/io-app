@@ -1,0 +1,76 @@
+diff --git a/node_modules/@pagopa/io-react-native-zendesk/ios/ReactNativeZendesk.m b/node_modules/@pagopa/io-react-native-zendesk/ios/ReactNativeZendesk.m
+index d047b6a..33ade6b 100644
+--- a/node_modules/@pagopa/io-react-native-zendesk/ios/ReactNativeZendesk.m
++++ b/node_modules/@pagopa/io-react-native-zendesk/ios/ReactNativeZendesk.m
+@@ -2,7 +2,6 @@
+ #import <AnswerBotSDK/AnswerBotSDK.h>
+ #import <MessagingSDK/MessagingSDK.h>
+ #import <MessagingAPI/MessagingAPI.h>
+-#import <SDKConfigurations/SDKConfigurations.h>
+ #import <AnswerBotProvidersSDK/AnswerBotProvidersSDK.h>
+ #import <ChatSDK/ChatSDK.h>
+ #import <ChatProvidersSDK/ChatProvidersSDK.h>
+@@ -205,37 +204,6 @@ - (UIColor *)colorFromHexString:(NSString *)hexString {
+     [scanner scanHexInt:&rgbValue];
+     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+ }
+-- (void) showHelpCenterFunction:(NSDictionary *)options {
+-    NSError *error = nil;
+-    NSArray *engines = @[];
+-    NSString *botName = @"ChatBot";
+-    if (options[@"botName"]) {
+-      botName = options[@"botName"];
+-    }
+-    if (options[@"withChat"]) {
+-      engines = @[(id <ZDKEngine>) [ZDKChatEngine engineAndReturnError:&error]];
+-    }
+-    ZDKHelpCenterUiConfiguration* helpCenterUiConfig = [ZDKHelpCenterUiConfiguration new];
+-    helpCenterUiConfig.objcEngines = engines;
+-    ZDKArticleUiConfiguration* articleUiConfig = [ZDKArticleUiConfiguration new];
+-    articleUiConfig.objcEngines = engines;
+-     if (options[@"disableTicketCreation"]) {
+-         helpCenterUiConfig.showContactOptions = NO;
+-         articleUiConfig.showContactOptions = NO;
+-    }
+-    UIViewController* controller = [ZDKHelpCenterUi buildHelpCenterOverviewUiWithConfigs: @[helpCenterUiConfig, articleUiConfig]];
+-    // controller.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle: @"Close"
+-    //                                                                                    style: UIBarButtonItemStylePlain
+-    //                                                                                   target: self
+-    //                                                                                   action: @selector(chatClosedClicked)];
+-    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+-    while (topController.presentedViewController) {
+-        topController = topController.presentedViewController;
+-    }
+-    currentController = topController;
+-    UINavigationController *navControl = [[UINavigationController alloc] initWithRootViewController: controller];
+-    [topController presentViewController:navControl animated:YES completion:nil];
+-}
+ - (void) openTicketFunction:(RCTResponseSenderBlock)onClose {
+     [self initGlobals];
+     if(logId != nil){
+@@ -271,13 +239,6 @@ - (void) showTicketsFunction:(RCTResponseSenderBlock)onClose {
+ 
+     [topController presentViewController:navControl animated:YES completion:nil];
+   }
+-- (void) chatClosedClicked {
+-    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+-    while (topController.presentedViewController) {
+-        topController = topController.presentedViewController;
+-    }
+-    [topController dismissViewControllerAnimated:TRUE completion:NULL];
+-}
+ - (void) registerForNotifications:(NSData *)deviceToken {
+    [ZDKChat registerPushToken:deviceToken];
+ }
+diff --git a/node_modules/@pagopa/io-react-native-zendesk/pagopa-react-native-zendesk.podspec b/node_modules/@pagopa/io-react-native-zendesk/pagopa-react-native-zendesk.podspec
+index e8665ad..f00336e 100644
+--- a/node_modules/@pagopa/io-react-native-zendesk/pagopa-react-native-zendesk.podspec
++++ b/node_modules/@pagopa/io-react-native-zendesk/pagopa-react-native-zendesk.podspec
+@@ -19,7 +19,6 @@ Pod::Spec.new do |s|
+   s.dependency 'ZendeskAnswerBotSDK'
+   s.dependency 'ZendeskSupportSDK'
+   s.dependency 'ZendeskChatSDK'
+-  s.dependency 'ZendeskMessagingAPISDK'
+ 
+   # Use install_modules_dependencies helper to install the dependencies if React Native version >=0.71.0.
+   # See https://github.com/facebook/react-native/blob/febf6b7f33fdb4904669f99d795eba4c0f95d7bf/scripts/cocoapods/new_architecture.rb#L79.
