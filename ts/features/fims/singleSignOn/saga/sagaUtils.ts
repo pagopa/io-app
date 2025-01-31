@@ -192,12 +192,7 @@ export function* deallocateFimsAndRenewFastLoginSession() {
   );
 }
 
-export function* deallocateFimsResourcesAndNavigateBack() {
-  yield* call(handleFimsResourcesDeallocation);
-  yield* call(NavigationService.dispatchNavigationAction, StackActions.pop());
-}
-
-function* handleFimsResourcesDeallocation() {
+export function* handleFimsResourcesDeallocation() {
   const oidcProviderDomain = yield* select(oidcProviderDomainSelector);
   const relyingPartyDomain = yield* select(fimsRelyingPartyDomainSelector);
   if (oidcProviderDomain) {
@@ -207,4 +202,8 @@ function* handleFimsResourcesDeallocation() {
     yield* call(removeAllCookiesForDomain, relyingPartyDomain);
   }
   yield* call(deallocate);
+}
+
+export function* handleFimsBackNavigation() {
+  yield* call(NavigationService.dispatchNavigationAction, StackActions.pop());
 }
