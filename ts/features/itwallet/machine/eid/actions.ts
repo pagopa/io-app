@@ -27,6 +27,7 @@ import {
 } from "../../analytics";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
+import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -219,6 +220,13 @@ export const createEidIssuanceActionsImplementation = (
 
   trackWalletInstanceRevocation: () => {
     trackItwDeactivated(store.getState());
+  },
+
+  storeAuthLevel: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    // Save the auth level in the preferences
+    store.dispatch(itwSetAuthLevel(context.identification?.level));
   },
 
   onInit: assign<Context, EidIssuanceEvents, unknown, EidIssuanceEvents, any>(

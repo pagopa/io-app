@@ -6,6 +6,7 @@ import { buildEventProperties } from "../../../utils/analytics";
 import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
 import { ItwCredentialStatus } from "../common/utils/itwTypesUtils";
+import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -795,13 +796,18 @@ export const trackItwRequestSuccess = ({
 // #region PROFILE AND SUPER PROPERTIES UPDATE
 
 export const updateITWStatusAndIDProperties = (state: GlobalState) => {
+  const authLevel = itwAuthLevelSelector(state);
+  if (!authLevel) {
+    return;
+  }
+
   void updateMixpanelProfileProperties(state, {
     property: "ITW_STATUS_V2",
-    value: "L2"
+    value: authLevel
   });
   void updateMixpanelSuperProperties(state, {
     property: "ITW_STATUS_V2",
-    value: "L2"
+    value: authLevel
   });
   void updateMixpanelProfileProperties(state, {
     property: "ITW_ID_V2",

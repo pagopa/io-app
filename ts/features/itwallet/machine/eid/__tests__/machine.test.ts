@@ -64,6 +64,7 @@ describe("itwEidIssuanceMachine", () => {
   const trackWalletInstanceCreation = jest.fn();
   const trackWalletInstanceRevocation = jest.fn();
   const revokeWalletInstance = jest.fn();
+  const storeAuthLevel = jest.fn();
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
@@ -94,6 +95,7 @@ describe("itwEidIssuanceMachine", () => {
       resetWalletInstance,
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
+      storeAuthLevel,
       onInit: assign(onInit),
       setIsReissuing: assign({
         isReissuing: true
@@ -236,6 +238,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "spid",
+        level: "L2",
         idpId: idps[0].id
       }
     });
@@ -287,6 +290,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "spid",
+        level: "L2",
         idpId: idps[0].id
       },
       authenticationContext: expect.objectContaining({
@@ -345,6 +349,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "cieId",
+        level: "L2",
         abortController: new AbortController()
       }
     });
@@ -446,6 +451,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "ciePin",
+        level: "L3",
         pin: "12345678"
       },
       cieContext: {
@@ -537,6 +543,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "ciePin",
+        level: "L3",
         pin: "12345678"
       },
       cieContext: {
@@ -565,6 +572,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "ciePin",
+        level: "L3",
         pin: "12345678"
       },
       cieContext: {
@@ -1061,6 +1069,7 @@ describe("itwEidIssuanceMachine", () => {
       isReissuing: true,
       identification: {
         mode: "spid",
+        level: "L2",
         idpId: idps[0].id
       }
     });
@@ -1114,6 +1123,7 @@ describe("itwEidIssuanceMachine", () => {
       isReissuing: true,
       identification: {
         mode: "spid",
+        level: "L2",
         idpId: idps[0].id
       },
       authenticationContext: expect.objectContaining({

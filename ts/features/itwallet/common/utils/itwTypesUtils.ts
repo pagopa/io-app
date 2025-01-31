@@ -103,3 +103,5 @@ export type ItwCredentialStatus =
   | "expiring"
   | "expired"
   | ItwJwtCredentialStatus;
+
+export type ItwAuthLevel = undefined | "L2" | "L3";

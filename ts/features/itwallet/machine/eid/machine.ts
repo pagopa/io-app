@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { and, assertEvent, assign, fromPromise, not, setup } from "xstate";
-import { assert } from "../../../../utils/assert";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
+import { assert } from "../../../../utils/assert.ts";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
@@ -54,6 +54,7 @@ export const itwEidIssuanceMachine = setup({
     resetWalletInstance: notImplemented,
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
+    storeAuthLevel: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     onInit: notImplemented,
     /**
@@ -353,7 +354,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: "completeUserIdentification"
+                  actions: ["completeUserIdentification", "storeAuthLevel"]
                 },
                 error: {
                   actions: "setFailure",
@@ -430,7 +431,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: "completeUserIdentification"
+                  actions: ["completeUserIdentification", "storeAuthLevel"]
                 },
                 back: {
                   target: "IdpSelection"
@@ -535,7 +536,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: "completeUserIdentification"
+                  actions: ["completeUserIdentification", "storeAuthLevel"]
                 },
                 close: {
                   target: "#itwEidIssuanceMachine.UserIdentification"

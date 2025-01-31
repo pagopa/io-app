@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export const itwCloseFeedbackBanner = createStandardAction(
   "ITW_CLOSE_FEEDBACK_BANNER"
@@ -20,9 +21,13 @@ export const itwSetReviewPending = createStandardAction(
   "ITW_SET_REVIEW_PENDING"
 )<boolean>();
 
+export const itwSetAuthLevel =
+  createStandardAction("ITW_SET_AUTH_LEVEL")<ItwAuthLevel>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
   | ActionType<typeof itwFlagCredentialAsRequested>
   | ActionType<typeof itwUnflagCredentialAsRequested>
-  | ActionType<typeof itwSetReviewPending>;
+  | ActionType<typeof itwSetReviewPending>
+  | ActionType<typeof itwSetAuthLevel>;
