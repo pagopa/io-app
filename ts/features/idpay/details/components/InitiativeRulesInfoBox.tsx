@@ -1,7 +1,5 @@
 import {
   Body,
-  ButtonSolid,
-  ContentWrapper,
   FooterActions,
   H6,
   HSpacer,

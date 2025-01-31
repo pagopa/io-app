@@ -24,7 +24,7 @@ const InnerNavigation = () => {
     <IdPayPaymentMachineProvider>
       <Stack.Navigator
         initialRouteName={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
-        screenOptions={{ gestureEnabled: false, headerShown: false }}
+        screenOptions={{ gestureEnabled: false }}
         screenListeners={{
           beforeRemove: () => {
             // Read more on https://reactnavigation.org/docs/preventing-going-back/
@@ -42,10 +42,12 @@ const InnerNavigation = () => {
         <Stack.Screen
           name={IdPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION}
           component={IDPayPaymentAuthorizationScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name={IdPayPaymentRoutes.IDPAY_PAYMENT_RESULT}
           component={IDPayPaymentResultScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </IdPayPaymentMachineProvider>
