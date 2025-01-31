@@ -1,13 +1,13 @@
 import { memo } from "react";
 import { Alert } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
+import I18n from "../../../../../i18n.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
   ItwCredentialStatus,
   StoredCredential
-} from "../../common/utils/itwTypesUtils";
+} from "../../../common/utils/itwTypesUtils.ts";
 
 type Props = {
   credential: StoredCredential;
