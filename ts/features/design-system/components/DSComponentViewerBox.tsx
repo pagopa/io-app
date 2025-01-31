@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     fontSize: 10
   },
   componenentLabelDark: {
-    color: IOColors.greyLight
+    color: IOColors["grey-100"]
   }
 });
 
