@@ -1,6 +1,12 @@
-// This file is a placeholder for future implementation
-export type PlaceHolder = {
-  type: "PLACEHOLDER";
+import { ItwRemoteQRCodePayload } from "../../../common/utils/itwTypesUtils";
+
+export type Start = {
+  type: "start";
+  qrCodePayload: ItwRemoteQRCodePayload;
 };
 
-export type RemoteEvents = PlaceHolder;
+export type Back = {
+  type: "back";
+};
+
+export type RemoteEvents = Start | Back;

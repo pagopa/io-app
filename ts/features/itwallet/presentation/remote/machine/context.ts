@@ -1,4 +1,18 @@
-// This file is a placeholder for future implementation
-export type Context = object;
+import { ItwRemoteQRCodePayload } from "../../../common/utils/itwTypesUtils.ts";
+import { RemoteFailure } from "./failure.ts";
 
-export const InitialContext: Context = {};
+export type Context = {
+  /**
+   * The QRCode payload for the remote presentation
+   */
+  qrCodePayload: ItwRemoteQRCodePayload | undefined;
+  /**
+   * The failure of the remote presentation machine
+   */
+  failure?: RemoteFailure;
+};
+
+export const InitialContext: Context = {
+  qrCodePayload: undefined,
+  failure: undefined
+};

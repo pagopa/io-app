@@ -11,6 +11,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
+import { ItwRemoteQRCodePayload } from "../../itwallet/common/utils/itwTypesUtils.ts";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -48,6 +49,10 @@ export type DecodedIOBarcode =
   | {
       type: "FCI";
       signatureRequestId: SignatureRequestDetailView["id"];
+    }
+  | {
+      type: "ITW_REMOTE";
+      itwRemoteQRCodePayload: ItwRemoteQRCodePayload;
     };
 
 // Barcode decoder function which is used to determine the type and content of a barcode
@@ -107,6 +112,31 @@ const decodeFciBarcode: IOBarcodeDecoderFn = (data: string) =>
     }))
   );
 
+const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
+  pipe(
+    O.fromNullable(data.match(/^https:\/\/continua\.io\.pagopa\.it.*$/)),
+    O.chain(() => O.tryCatch(() => new URLSearchParams(data.split("?")[1]))),
+    O.chain(params =>
+      pipe(
+        O.fromNullable(params.get("client_id")),
+        O.bindTo("clientId"),
+        O.bind("requestUri", () => O.fromNullable(params.get("request_uri"))),
+        O.map(({ clientId, requestUri }) => {
+          const state = params.get("state");
+          return {
+            type: "ITW_REMOTE",
+            itwRemoteQRCodePayload: {
+              clientId,
+              requestUri,
+              ...(state && { state }),
+              requestUriMethod: params.get("request_uri_method") ?? "GET"
+            }
+          };
+        })
+      )
+    )
+  );
+
 // Each type comes with its own decoded function which is used to identify the barcode content
 // To add a new barcode type, add a new entry to this object
 //
@@ -120,7 +150,8 @@ const decodeFciBarcode: IOBarcodeDecoderFn = (data: string) =>
 export const IOBarcodeDecoders: IOBarcodeDecodersType = {
   IDPAY: decodeIdPayBarcode,
   PAGOPA: decodePagoPABarcode,
-  FCI: decodeFciBarcode
+  FCI: decodeFciBarcode,
+  ITW_REMOTE: decodeItwRemoteBarcode
 };
 
 type DecodeOptions = {

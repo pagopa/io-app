@@ -45,6 +45,7 @@ import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
+import { ITW_REMOTE_ROUTES } from "../../itwallet/presentation/remote/navigation/routes.ts";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -152,6 +153,14 @@ const BarcodeScanScreen = () => {
           screen: FCI_ROUTES.ROUTER,
           params: {
             signatureRequestId: barcode.signatureRequestId
+          }
+        });
+        break;
+      case "ITW_REMOTE":
+        navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
+          screen: ITW_REMOTE_ROUTES.EID_CLAIMS_SELECTION,
+          params: {
+            itwRemoteQRCodePayload: barcode.itwRemoteQRCodePayload
           }
         });
         break;
