@@ -1,10 +1,10 @@
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
+import I18n from "../../../../../i18n.ts";
+import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider.tsx";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 
 type Props = {
   credential: StoredCredential;

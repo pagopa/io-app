@@ -1,8 +1,8 @@
 import { BodyProps } from "@pagopa/io-app-design-system";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
+import I18n from "../../../../../i18n.ts";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
 export const ItwPresentationEidVerificationExpiredScreen = () => {
   const navigation = useIONavigation();

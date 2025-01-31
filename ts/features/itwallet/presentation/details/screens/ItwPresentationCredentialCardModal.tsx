@@ -8,22 +8,22 @@ import { useState, useLayoutEffect, memo, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { useMaxBrightness } from "../../../../utils/brightness";
+import I18n from "../../../../../i18n.ts";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
+import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import {
   ItwSkeumorphicCard,
   SKEUMORPHIC_CARD_ASPECT_RATIO
-} from "../../common/components/ItwSkeumorphicCard";
-import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
+} from "../../../common/components/ItwSkeumorphicCard";
+import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import {
   ItwCredentialStatus,
   StoredCredential
-} from "../../common/utils/itwTypesUtils";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton";
-import { CREDENTIALS_MAP, trackCredentialCardModal } from "../../analytics";
-import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
+} from "../../../common/utils/itwTypesUtils.ts";
+import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
+import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton.tsx";
+import { CREDENTIALS_MAP, trackCredentialCardModal } from "../../../analytics";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
   credential: StoredCredential;
