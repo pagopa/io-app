@@ -379,7 +379,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                       },
                                       {
                                         "flex": 0,
@@ -389,13 +389,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     ]
                                   }
                                   testID="attachment-tag"
-                                  tintColor="#475A6D"
+                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={16}
                                 >
                                   <RNSVGGroup
-                                    color="#475A6D"
+                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -660,8 +660,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                             />
                             <View
-                              accessibilityLabel="Attachments"
-                              accessible={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -671,7 +669,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                             >
                               <View
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "alignItems": "center",
@@ -688,9 +685,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   }
                                 >
                                   <View
-                                    accessibilityElementsHidden={false}
+                                    accessibilityLabel="Attachments"
+                                    accessibilityRole="header"
                                     accessible={true}
-                                    importantForAccessibility="yes"
                                   >
                                     <Text
                                       allowFontScaling={true}
@@ -1608,8 +1605,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     onLayout={[Function]}
                                   >
                                     <View
-                                      accessibilityLabel="Notifica"
-                                      accessible={true}
                                       style={
                                         {
                                           "marginHorizontal": -24,
@@ -1619,7 +1614,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       }
                                     >
                                       <View
-                                        importantForAccessibility="no-hide-descendants"
                                         style={
                                           {
                                             "alignItems": "center",
@@ -1636,9 +1630,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           }
                                         >
                                           <View
-                                            accessibilityElementsHidden={false}
+                                            accessibilityLabel="Notifica"
+                                            accessibilityRole="header"
                                             accessible={true}
-                                            importantForAccessibility="yes"
                                           >
                                             <Text
                                               allowFontScaling={true}
@@ -1850,8 +1844,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       </View>
                                     </View>
                                     <View
-                                      accessibilityLabel="Message"
-                                      accessible={true}
                                       style={
                                         {
                                           "marginHorizontal": -24,
@@ -1861,7 +1853,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       }
                                     >
                                       <View
-                                        importantForAccessibility="no-hide-descendants"
                                         style={
                                           {
                                             "alignItems": "center",
@@ -1878,9 +1869,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           }
                                         >
                                           <View
-                                            accessibilityElementsHidden={false}
+                                            accessibilityLabel="Message"
+                                            accessibilityRole="header"
                                             accessible={true}
-                                            importantForAccessibility="yes"
                                           >
                                             <Text
                                               allowFontScaling={true}
@@ -2713,7 +2704,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -2732,7 +2722,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}

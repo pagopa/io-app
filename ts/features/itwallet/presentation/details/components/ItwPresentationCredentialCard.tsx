@@ -2,16 +2,16 @@ import { IOSpacingScale, VStack } from "@pagopa/io-app-design-system";
 
 import { PropsWithChildren, useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
-import { CREDENTIALS_MAP, trackWalletShowBack } from "../../analytics";
-import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
-import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
-import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { CREDENTIALS_MAP, trackWalletShowBack } from "../../../analytics";
+import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCard";
+import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
+import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
+import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
   credential: StoredCredential;
