@@ -34,7 +34,7 @@ describe("Action payload generators", () => {
       title: "The title",
       markdown: "The content"
     };
-    const loadingContentPayload = toLoadingContentPayload(content);
+    const loadingContentPayload = toLoadingContentPayload(content, false);
     expect(loadingContentPayload.nextStatus).toStrictEqual("loadingContent");
     expect(loadingContentPayload.content).toStrictEqual(content);
   });
@@ -74,10 +74,13 @@ describe("Action generators", () => {
     expect(idlePSA.payload).toStrictEqual(idlePayload);
   });
   it("should return the proper action data for 'loadingContentPreconditionStatusAction'", () => {
-    const loadingContentPayload = toLoadingContentPayload({
-      title: "",
-      markdown: ""
-    });
+    const loadingContentPayload = toLoadingContentPayload(
+      {
+        title: "",
+        markdown: ""
+      },
+      false
+    );
     const loadingContentPSA = loadingContentPreconditionStatusAction(
       loadingContentPayload
     );

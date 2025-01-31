@@ -1,10 +1,10 @@
 import {
   Body,
+  BodySmall,
   Divider,
   H6,
-  BodySmall,
-  VSpacer,
-  ListItemHeader
+  ListItemHeader,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
@@ -94,18 +94,24 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
   );
 };
 
-const TimelineHeaderComponent = (props: { onShowMorePress?: () => void }) => (
+const TimelineHeaderComponent = ({
+  onShowMorePress
+}: {
+  onShowMorePress?: () => void;
+}) => (
   <View style={[IOStyles.row, IOStyles.rowSpaceBetween]}>
     <H6>
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
       )}
     </H6>
-    <Body weight="Semibold" color="blue" onPress={props.onShowMorePress}>
-      {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
-      )}
-    </Body>
+    {onShowMorePress && (
+      <Body weight="Semibold" asLink onPress={onShowMorePress}>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
+        )}
+      </Body>
+    )}
   </View>
 );
 
@@ -123,7 +129,7 @@ const TimelineComponentSkeleton = ({ size = 3 }: Pick<Props, "size">) => (
 const EmptyTimelineComponent = () => (
   <BodySmall
     weight="Regular"
-    color="bluegreyDark"
+    color="grey-850"
     testID="IDPayEmptyTimelineTestID"
   >
     {I18n.t(
