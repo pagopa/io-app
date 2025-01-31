@@ -1,7 +1,7 @@
 import { ButtonLink } from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "../../../../../i18n.ts";
 
 type ItwPresentationCredentialCardFlipButtonProps = {
   isFlipped: boolean;
