@@ -393,3 +393,21 @@ export const landingScreenBannerOrderSelector = (state: GlobalState) =>
     O.chainNullableK(banners => banners.priority_order),
     O.getOrElse(() => emptyArray)
   );
+
+/**
+ * The 'disabledForMessagesAndServices' on the 'ioMarkdown' is used to
+ * remotely disable the IO Markdown feature for messages and services,
+ * bypassing the local feature flag (in the relative selector).
+ * @param state The global redux state
+ * @returns true if IOMarkdown has to be disabled for messages and services
+ */
+export const isIOMarkdownDisabledForMessagesAndServices = (
+  state: GlobalState
+): boolean =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.chainNullableK(config => config.ioMarkdown),
+    O.chainNullableK(ioMarkdown => ioMarkdown.disabledForMessagesAndServices),
+    O.getOrElse(() => false)
+  );
