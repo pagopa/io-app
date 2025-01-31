@@ -2,8 +2,10 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { PureComponent } from "react";
 import {
+  AccessibilityInfo,
   AppState,
   AppStateStatus,
+  EmitterSubscription,
   NativeEventSubscription,
   StatusBar
 } from "react-native";
@@ -27,6 +29,7 @@ import {
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
 import { ReactNavigationInstrumentation } from "./App";
+import { setScreenReaderEnabled } from "./store/actions/preferences";
 
 type Props = ReturnType<typeof mapStateToProps> &
   typeof mapDispatchToProps & {
@@ -43,6 +46,7 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 class RootContainer extends PureComponent<Props> {
   private subscription: NativeEventSubscription | undefined;
+  private accessibilitySubscription: EmitterSubscription | undefined;
   constructor(props: Props) {
     super(props);
     /* Configure the application to receive push notifications */
@@ -52,6 +56,11 @@ class RootContainer extends PureComponent<Props> {
   private handleApplicationActivity = (activity: AppStateStatus) =>
     this.props.applicationChangeState(activity);
 
+  private handleScreenReaderEnabled = (isScreenReaderEnabled: boolean) =>
+    this.props.setScreenReaderEnabled({
+      screenReaderEnabled: isScreenReaderEnabled
+    });
+
   public componentDidMount() {
     // boot: send the status of the application
     this.handleApplicationActivity(AppState.currentState);
@@ -60,6 +69,14 @@ class RootContainer extends PureComponent<Props> {
       "change",
       this.handleApplicationActivity
     );
+    // eslint-disable-next-line functional/immutable-data
+    this.accessibilitySubscription = AccessibilityInfo.addEventListener(
+      "screenReaderChanged",
+      this.handleScreenReaderEnabled
+    );
+    AccessibilityInfo.isScreenReaderEnabled()
+      .then(this.handleScreenReaderEnabled)
+      .catch(() => undefined);
 
     this.updateLocale();
     // Hide splash screen
@@ -80,6 +97,7 @@ class RootContainer extends PureComponent<Props> {
 
   public componentWillUnmount() {
     this.subscription?.remove();
+    this.accessibilitySubscription?.remove();
   }
 
   public componentDidUpdate() {
@@ -134,7 +152,8 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = {
   applicationChangeState,
   navigateBack,
-  setDebugCurrentRouteName
+  setDebugCurrentRouteName,
+  setScreenReaderEnabled
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);

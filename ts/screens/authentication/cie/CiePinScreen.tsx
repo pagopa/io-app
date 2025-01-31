@@ -35,7 +35,7 @@ import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../components/ui/LightModal";
-import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
+import IOMarkdown from "../../../components/IOMarkdown";
 import { pinPukHelpUrl } from "../../../config";
 import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../../features/cieLogin/utils";
@@ -60,6 +60,7 @@ import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../analytics/cieAnalytics";
+import { usePreventScreenCapture } from "../../../utils/hooks/usePreventScreenCapture";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -70,6 +71,7 @@ const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
 const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
 const CiePinScreen = () => {
+  usePreventScreenCapture();
   useOnFirstRender(() => {
     trackLoginCiePinScreen();
   });
@@ -106,9 +108,7 @@ const CiePinScreen = () => {
   const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
     component: (
       <View>
-        <LegacyMarkdown avoidTextSelection>
-          {I18n.t("bottomSheets.ciePin.content")}
-        </LegacyMarkdown>
+        <IOMarkdown content={I18n.t("bottomSheets.ciePin.content")} />
         <VSpacer size={24} />
         <Body weight="Semibold" asLink onPress={onOpenForgotPinPage}>
           {I18n.t("authentication.cie.pin.bottomSheetCTA")}

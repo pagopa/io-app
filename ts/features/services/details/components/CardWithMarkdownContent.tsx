@@ -1,8 +1,19 @@
 import { memo, ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
+import { useLinkTo } from "@react-navigation/native";
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
+import { useIOSelector } from "../../../../store/hooks";
 import { Markdown } from "../../../../components/ui/Markdown/Markdown";
-import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
+import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../common/store/reducers";
+
+const CSS_STYLE = `
+  body {
+    line-height: 1.5;
+  }
+`;
 
 const styles = StyleSheet.create({
   card: {
@@ -16,12 +27,6 @@ const styles = StyleSheet.create({
 export type CardWithMarkdownContentProps = {
   content: string;
 };
-
-const CSS_STYLE = `
-  body {
-    line-height: 1.5;
-  }
-`;
 
 const CardWrapper = ({ children }: { children: ReactNode }) => {
   const theme = useIOTheme();
@@ -42,11 +47,28 @@ const CardWrapper = ({ children }: { children: ReactNode }) => {
 };
 
 const CardWithMarkdownContent = memo(
-  ({ content }: CardWithMarkdownContentProps) => (
-    <CardWrapper>
-      <Markdown cssStyle={CSS_STYLE}>{content}</Markdown>
-    </CardWrapper>
-  )
+  ({ content }: CardWithMarkdownContentProps) => {
+    const linkTo = useLinkTo();
+
+    const isIOMarkdownEnabledOnMessagesAndServices = useIOSelector(
+      isIOMarkdownEnabledOnMessagesAndServicesSelector
+    );
+
+    const renderContent = () => {
+      if (isIOMarkdownEnabledOnMessagesAndServices) {
+        return (
+          <IOMarkdown
+            content={content}
+            rules={generateMessagesAndServicesRules(linkTo)}
+          />
+        );
+      }
+
+      return <Markdown cssStyle={CSS_STYLE}>{content}</Markdown>;
+    };
+
+    return <CardWrapper>{renderContent()}</CardWrapper>;
+  }
 );
 
 const CardWithMarkdownContentSkeleton = () => (
