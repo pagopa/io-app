@@ -37,7 +37,8 @@ import {
   computeAndTrackAuthenticationError,
   absoluteRedirectUrlFromHttpClientResponse,
   isRedirectStatusCode,
-  deallocateFimsResourcesAndNavigateBack
+  handleFimsResourcesDeallocation,
+  handleFimsBackNavigation
 } from "./sagaUtils";
 
 // note: IAB => InAppBrowser
@@ -96,6 +97,8 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
     return;
   }
 
+  yield* put(fimsSignAndRetrieveInAppBrowserUrlAction.success());
+  yield* call(handleFimsResourcesDeallocation);
   yield* call(computeAndTrackInAppBrowserOpening);
 
   try {
@@ -105,11 +108,10 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
       "iossoapi",
       true
     );
-    yield* put(fimsSignAndRetrieveInAppBrowserUrlAction.success());
   } catch (error: unknown) {
     yield* call(handleInAppBrowserErrorIfNeeded, error);
   } finally {
-    yield* call(deallocateFimsResourcesAndNavigateBack);
+    yield* call(handleFimsBackNavigation);
   }
 }
 

@@ -12,7 +12,8 @@ import {
 import { fimsSignAndRetrieveInAppBrowserUrlAction } from "../../store/actions";
 import {
   computeAndTrackAuthenticationError,
-  deallocateFimsResourcesAndNavigateBack
+  handleFimsBackNavigation,
+  handleFimsResourcesDeallocation
 } from "../sagaUtils";
 
 describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
@@ -41,6 +42,10 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(redirectToRelyingPartyWithAuthorizationCodeFlow, actionPayload)
         .next(relyingPartyOutput)
+        .put(fimsSignAndRetrieveInAppBrowserUrlAction.success())
+        .next()
+        .call(handleFimsResourcesDeallocation)
+        .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
         .call(
@@ -50,9 +55,7 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
           true
         )
         .next()
-        .put(fimsSignAndRetrieveInAppBrowserUrlAction.success())
-        .next()
-        .call(deallocateFimsResourcesAndNavigateBack)
+        .call(handleFimsBackNavigation)
         .next()
         .isDone();
     });
@@ -80,6 +83,10 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(postToRelyingPartyWithImplicitCodeFlow, actionPayload)
         .next(relyingPartyOutput)
+        .put(fimsSignAndRetrieveInAppBrowserUrlAction.success())
+        .next()
+        .call(handleFimsResourcesDeallocation)
+        .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
         .call(
@@ -89,9 +96,7 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
           true
         )
         .next()
-        .put(fimsSignAndRetrieveInAppBrowserUrlAction.success())
-        .next()
-        .call(deallocateFimsResourcesAndNavigateBack)
+        .call(handleFimsBackNavigation)
         .next()
         .isDone();
     });
@@ -218,6 +223,10 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(redirectToRelyingPartyWithAuthorizationCodeFlow, actionPayload)
         .next(relyingPartyOutput)
+        .put(fimsSignAndRetrieveInAppBrowserUrlAction.success())
+        .next()
+        .call(handleFimsResourcesDeallocation)
+        .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
         .call(
@@ -229,7 +238,7 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .throw(inAppBrowserOpeningError)
         .call(handleInAppBrowserErrorIfNeeded, inAppBrowserOpeningError)
         .next()
-        .call(deallocateFimsResourcesAndNavigateBack)
+        .call(handleFimsBackNavigation)
         .next()
         .isDone();
     });
