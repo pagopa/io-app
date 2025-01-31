@@ -9,11 +9,11 @@ import { memo } from "react";
 import { Dimensions, Pressable, StyleSheet } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import Animated from "react-native-reanimated";
-import I18n from "../../../../i18n";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
-import { selectFiscalCodeFromEid } from "../../credentials/store/selectors";
-import { ITW_ROUTES } from "../../navigation/routes";
+import I18n from "../../../../../i18n.ts";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { selectFiscalCodeFromEid } from "../../../credentials/store/selectors";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
 /**
  * This magic number is the lenght of the encoded fiscal code in a CODE39 barcode.
