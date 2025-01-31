@@ -42,6 +42,7 @@ const WebviewComponent = (props: Props) => {
     <>
       {hasError ? (
         <OperationResultScreenContent
+          testID="webview-error"
           pictogram="umbrellaNew"
           title={I18n.t("wallet.errors.GENERIC_ERROR")}
           isHeaderVisible
@@ -54,6 +55,7 @@ const WebviewComponent = (props: Props) => {
       ) : (
         <LoadingSpinnerOverlay isLoading={loading}>
           <WebView
+            testID="webview"
             androidCameraAccessDisabled={true}
             androidMicrophoneAccessDisabled={true}
             allowsInlineMediaPlayback={true}
