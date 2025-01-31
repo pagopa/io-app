@@ -25,23 +25,24 @@ export const CardBackground = ({
   credentialType,
   colorScheme
 }: ItwCredentialCardBackgroundProps) => {
-  const [size, setSize] = useState({ width: 400, height: 250 });
+  const [size, setSize] = useState({ width: 0, height: 0 });
   const image = useImage(credentialCardBackgrounds[credentialType]);
-  const opacity = useSharedValue(1);
+  const loadingOverlayOpacity = useSharedValue(1);
 
-  const opacityTransition = useAnimatedStyle(() => ({
-    opacity: withTiming(opacity.value, {
+  const loadingOverlayOpacityTransition = useAnimatedStyle(() => ({
+    opacity: withTiming(loadingOverlayOpacity.value, {
       duration: 200,
       easing: Easing.ease
     })
   }));
 
   useEffect(() => {
-    if (image) {
+    // Set loading ended only if we have an image and a size defined
+    if (image && size.width > 0 && size.height > 0) {
       // eslint-disable-next-line functional/immutable-data
-      opacity.value = 0;
+      loadingOverlayOpacity.value = 0;
     }
-  }, [image, opacity]);
+  }, [image, loadingOverlayOpacity, size]);
 
   return (
     <View
@@ -71,7 +72,7 @@ export const CardBackground = ({
       </Canvas>
       <Animated.View
         style={[
-          opacityTransition,
+          loadingOverlayOpacityTransition,
           StyleSheet.absoluteFillObject,
           { backgroundColor: IOColors["grey-100"] }
         ]}
