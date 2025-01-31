@@ -35,11 +35,11 @@ const getStyleProps = (
   const isValid = validCredentialStatuses.includes(status);
 
   const theme = getThemeColorByCredentialType(credentialType);
-  const [on, off, na] = credentialCardBackgrounds[credentialType];
+  const cardBackgroundSource = credentialCardBackgrounds[credentialType];
 
   if (status === "unknown") {
     return {
-      cardBackgroundSource: na,
+      cardBackgroundSource,
       titleColor: Color(theme.textColor).grayscale().hex(),
       titleOpacity: 0.5,
       tagColorScheme: "greyscale"
@@ -47,14 +47,14 @@ const getStyleProps = (
   }
   if (isValid) {
     return {
-      cardBackgroundSource: on,
+      cardBackgroundSource,
       titleColor: theme.textColor,
       titleOpacity: 1,
       tagColorScheme: "default"
     };
   }
   return {
-    cardBackgroundSource: off,
+    cardBackgroundSource,
     titleColor: theme.textColor,
     titleOpacity: 0.5,
     tagColorScheme: "faded"
@@ -109,27 +109,11 @@ export const ItwCredentialCard = ({
 };
 
 const credentialCardBackgrounds: {
-  [type: string]: [
-    ImageSourcePropType,
-    ImageSourcePropType,
-    ImageSourcePropType
-  ];
+  [type: string]: ImageSourcePropType;
 } = {
-  [CredentialType.EUROPEAN_DISABILITY_CARD]: [
-    require("../../../../../img/features/itWallet/cards/dc.png"),
-    require("../../../../../img/features/itWallet/cards/dc_off.png"),
-    require("../../../../../img/features/itWallet/cards/dc_na.png")
-  ],
-  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: [
-    require("../../../../../img/features/itWallet/cards/ts.png"),
-    require("../../../../../img/features/itWallet/cards/ts_off.png"),
-    require("../../../../../img/features/itWallet/cards/ts_na.png")
-  ],
-  [CredentialType.DRIVING_LICENSE]: [
-    require("../../../../../img/features/itWallet/cards/mdl.png"),
-    require("../../../../../img/features/itWallet/cards/mdl_off.png"),
-    require("../../../../../img/features/itWallet/cards/mdl_na.png")
-  ]
+  [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../img/features/itWallet/cards/dc.png"),
+  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: require("../../../../../img/features/itWallet/cards/ts.png"),
+  [CredentialType.DRIVING_LICENSE]: require("../../../../../img/features/itWallet/cards/mdl.png")
 };
 
 const styles = StyleSheet.create({
