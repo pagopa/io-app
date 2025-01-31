@@ -1,7 +1,7 @@
 import { Prettify } from "../../../types/helpers";
 import { CgnWalletCardProps } from "../../bonus/cgn/components/CgnWalletCard";
 import { IdPayWalletCardProps } from "../../idpay/wallet/components/IdPayWalletCard";
-import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard";
+import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard/ItwCredentialCard";
 import { PaymentWalletCardProps } from "../../payments/wallet/components/PaymentWalletCard";
 
 // Used to group the cards in the wallet. **DO NOT CHANGE THE ITEMS ORDER**
