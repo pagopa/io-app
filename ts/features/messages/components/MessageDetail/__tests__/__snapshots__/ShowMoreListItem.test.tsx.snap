@@ -1097,8 +1097,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Section 1 title"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -1108,7 +1106,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -1125,9 +1122,9 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Section 1 title"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={true}
@@ -1712,8 +1709,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Section 1 title"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -1723,7 +1718,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -1740,9 +1734,9 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Section 1 title"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={true}
@@ -2511,8 +2505,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Section 1 title"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -2522,7 +2514,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -2539,9 +2530,9 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Section 1 title"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={true}
@@ -3310,8 +3301,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Section 1 title"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -3321,7 +3310,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -3338,9 +3326,9 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Section 1 title"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={true}
@@ -4301,8 +4289,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Section 1 title"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -4312,7 +4298,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -4329,9 +4314,9 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Section 1 title"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={true}
@@ -5292,8 +5277,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Section 1 title"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -5303,7 +5286,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -5320,9 +5302,9 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Section 1 title"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={true}
@@ -5534,8 +5516,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 </View>
                               </View>
                               <View
-                                accessibilityLabel="Section 2 title"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -5545,7 +5525,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -5562,9 +5541,9 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Section 2 title"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={true}
@@ -5968,8 +5947,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 </View>
                               </View>
                               <View
-                                accessibilityLabel="Section 3 title"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -5979,7 +5956,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -5996,9 +5972,9 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Section 3 title"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={true}
@@ -7151,8 +7127,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                               onLayout={[Function]}
                             >
                               <View
-                                accessibilityLabel="Section 1 title"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -7162,7 +7136,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -7179,9 +7152,9 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Section 1 title"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={true}
@@ -7393,8 +7366,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 </View>
                               </View>
                               <View
-                                accessibilityLabel="Section 2 title"
-                                accessible={true}
                                 style={
                                   {
                                     "marginHorizontal": -24,
@@ -7404,7 +7375,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 }
                               >
                                 <View
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "alignItems": "center",
@@ -7421,9 +7391,9 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     }
                                   >
                                     <View
-                                      accessibilityElementsHidden={false}
+                                      accessibilityLabel="Section 2 title"
+                                      accessibilityRole="header"
                                       accessible={true}
-                                      importantForAccessibility="yes"
                                     >
                                       <Text
                                         allowFontScaling={true}

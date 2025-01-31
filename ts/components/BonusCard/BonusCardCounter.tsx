@@ -75,7 +75,7 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
 
   const progressBarColor = isDesignSystemEnabled
     ? IOColors["blueItalia-500"]
-    : IOColors.blue;
+    : IOColors["blue-500"];
 
   const width = useSharedValue(100);
   useEffect(() => {

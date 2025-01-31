@@ -1582,7 +1582,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                   "height": 40,
                                 },
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                 },
                                 false,
                                 false,
