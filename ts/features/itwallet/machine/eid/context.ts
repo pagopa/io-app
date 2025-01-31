@@ -8,9 +8,17 @@ import { IssuanceFailure } from "./failure";
 type WithAbortController<T> = T & { abortController?: AbortController };
 
 export type IdentificationContext =
-  | WithAbortController<{ mode: "cieId" }>
-  | WithAbortController<{ mode: "ciePin"; pin: string }>
-  | WithAbortController<{ mode: "spid"; idpId: string }>;
+  | WithAbortController<{ mode: "cieId"; level: "L2" }>
+  | WithAbortController<{
+      mode: "ciePin";
+      level: "L3";
+      pin: string;
+    }>
+  | WithAbortController<{
+      mode: "spid";
+      level: "L2";
+      idpId: string;
+    }>;
 
 /**
  * When authenticating with CIE + PIN the flow is interrupted

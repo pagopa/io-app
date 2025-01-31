@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { assertEvent, assign, fromPromise, not, setup, and } from "xstate";
+import { and, assertEvent, assign, fromPromise, not, setup } from "xstate";
 import { assert } from "../../../../utils/assert";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
@@ -301,6 +301,7 @@ export const itwEidIssuanceMachine = setup({
                 actions: assign(() => ({
                   identification: {
                     mode: "cieId",
+                    level: "L2",
                     abortController: new AbortController()
                   }
                 })),
@@ -386,7 +387,11 @@ export const itwEidIssuanceMachine = setup({
                 "select-spid-idp": {
                   target: "StartingSpidAuthFlow",
                   actions: assign(({ event }) => ({
-                    identification: { mode: "spid", idpId: event.idp.id }
+                    identification: {
+                      mode: "spid",
+                      level: "L2",
+                      idpId: event.idp.id
+                    }
                   }))
                 },
                 back: {
@@ -456,14 +461,22 @@ export const itwEidIssuanceMachine = setup({
                     guard: "isNFCEnabled",
                     target: "StartingCieAuthFlow",
                     actions: assign(({ event }) => ({
-                      identification: { mode: "ciePin", pin: event.pin }
+                      identification: {
+                        mode: "ciePin",
+                        level: "L3",
+                        pin: event.pin
+                      }
                     }))
                   },
                   {
                     target:
                       "#itwEidIssuanceMachine.UserIdentification.CiePin.RequestingNfcActivation",
                     actions: assign(({ event }) => ({
-                      identification: { mode: "ciePin", pin: event.pin }
+                      identification: {
+                        mode: "ciePin",
+                        level: "L3",
+                        pin: event.pin
+                      }
                     }))
                   }
                 ],

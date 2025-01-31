@@ -773,13 +773,19 @@ export const trackItwRequest = (ITW_ID_method?: ItwIdMethod) => {
   }
 };
 
-export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
+export const trackItwRequestSuccess = ({
+  ITW_ID_method,
+  ITW_ID_status
+}: {
+  ITW_ID_method: ItwIdMethod;
+  ITW_ID_status: ItwStatus;
+}) => {
   if (ITW_ID_method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST_SUCCESS,
       buildEventProperties("TECH", undefined, {
         ITW_ID_method,
-        ITW_ID_V2: "L2"
+        ITW_ID_V2: ITW_ID_status
       })
     );
   }
