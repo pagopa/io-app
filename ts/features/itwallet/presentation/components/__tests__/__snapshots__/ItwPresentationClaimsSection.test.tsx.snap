@@ -1713,7 +1713,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                   }
                                 >
-                                  <View>
+                                  <View
+                                    style={
+                                      {
+                                        "display": "flex",
+                                        "flexDirection": "column",
+                                        "gap": 8,
+                                      }
+                                    }
+                                  >
                                     <Text
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
@@ -1734,16 +1742,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     >
                                       Chi è?
                                     </Text>
-                                    <View
-                                      style={
-                                        {
-                                          "height": 8,
-                                        }
-                                      }
-                                    />
-                                    <View
-                                      style={{}}
-                                    >
+                                    <View>
                                       <Text
                                         allowFontScaling={true}
                                         dynamicTypeRamp="body"
@@ -1762,27 +1761,12 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           ]
                                         }
                                       >
-                                        <Text
-                                          style={{}}
-                                        >
-                                          <Text
-                                            style={
-                                              [
-                                                {
-                                                  "fontSize": 16,
-                                                },
-                                                {},
-                                              ]
-                                            }
-                                          >
-                                            È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
-                                          </Text>
-                                        </Text>
+                                        È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
                                       </Text>
                                       <View
                                         style={
                                           {
-                                            "height": 24,
+                                            "height": 8,
                                           }
                                         }
                                       />
@@ -1804,79 +1788,33 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           ]
                                         }
                                       >
+                                        Per sapere come tratta i tuoi dati consulta l’
                                         <Text
-                                          style={{}}
-                                        >
-                                          <Text
-                                            style={
-                                              [
-                                                {
-                                                  "fontSize": 16,
-                                                },
-                                                {},
-                                              ]
-                                            }
-                                          >
-                                            Per sapere come tratta i tuoi dati consulta l’
-                                          </Text>
-                                          <Text
-                                            accessibilityRole="link"
-                                            allowFontScaling={true}
-                                            dynamicTypeRamp="body"
-                                            maxFontSizeMultiplier={1.5}
-                                            numberOfLines={1}
-                                            onPress={[Function]}
-                                            style={
-                                              [
-                                                {
-                                                  "textDecorationLine": "underline",
-                                                },
-                                                {
-                                                  "color": "#0B3EE3",
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontSize": 16,
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                  "lineHeight": 24,
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            <Text
-                                              style={
-                                                [
-                                                  {
-                                                    "fontSize": 16,
-                                                    "textDecorationLine": "underline",
-                                                  },
-                                                  {},
-                                                ]
-                                              }
-                                            >
-                                              Informativa Privacy
-                                            </Text>
-                                          </Text>
-                                          <Text
-                                            style={
-                                              [
-                                                {
-                                                  "fontSize": 16,
-                                                },
-                                                {},
-                                              ]
-                                            }
-                                          >
-                                            .
-                                          </Text>
-                                        </Text>
-                                      </Text>
-                                      <View
-                                        style={
-                                          {
-                                            "height": 24,
+                                          accessibilityRole="link"
+                                          allowFontScaling={true}
+                                          dynamicTypeRamp="body"
+                                          maxFontSizeMultiplier={1.5}
+                                          onPress={[Function]}
+                                          style={
+                                            [
+                                              {
+                                                "textDecorationLine": "underline",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 16,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 24,
+                                              },
+                                            ]
                                           }
-                                        }
-                                      />
+                                        >
+                                          Informativa Privacy
+                                        </Text>
+                                        .
+                                      </Text>
                                     </View>
                                   </View>
                                   <View
@@ -3669,7 +3607,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                   }
                                 >
-                                  <View>
+                                  <View
+                                    style={
+                                      {
+                                        "display": "flex",
+                                        "flexDirection": "column",
+                                        "gap": 8,
+                                      }
+                                    }
+                                  >
                                     <Text
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
@@ -3690,16 +3636,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     >
                                       Chi è?
                                     </Text>
-                                    <View
-                                      style={
-                                        {
-                                          "height": 8,
-                                        }
-                                      }
-                                    />
-                                    <View
-                                      style={{}}
-                                    >
+                                    <View>
                                       <Text
                                         allowFontScaling={true}
                                         dynamicTypeRamp="body"
@@ -3718,27 +3655,12 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           ]
                                         }
                                       >
-                                        <Text
-                                          style={{}}
-                                        >
-                                          <Text
-                                            style={
-                                              [
-                                                {
-                                                  "fontSize": 16,
-                                                },
-                                                {},
-                                              ]
-                                            }
-                                          >
-                                            È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
-                                          </Text>
-                                        </Text>
+                                        È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
                                       </Text>
                                       <View
                                         style={
                                           {
-                                            "height": 24,
+                                            "height": 8,
                                           }
                                         }
                                       />
@@ -3760,79 +3682,33 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           ]
                                         }
                                       >
+                                        Per sapere come tratta i tuoi dati consulta l’
                                         <Text
-                                          style={{}}
-                                        >
-                                          <Text
-                                            style={
-                                              [
-                                                {
-                                                  "fontSize": 16,
-                                                },
-                                                {},
-                                              ]
-                                            }
-                                          >
-                                            Per sapere come tratta i tuoi dati consulta l’
-                                          </Text>
-                                          <Text
-                                            accessibilityRole="link"
-                                            allowFontScaling={true}
-                                            dynamicTypeRamp="body"
-                                            maxFontSizeMultiplier={1.5}
-                                            numberOfLines={1}
-                                            onPress={[Function]}
-                                            style={
-                                              [
-                                                {
-                                                  "textDecorationLine": "underline",
-                                                },
-                                                {
-                                                  "color": "#0B3EE3",
-                                                  "fontFamily": "Titillium Sans Pro",
-                                                  "fontSize": 16,
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                  "lineHeight": 24,
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            <Text
-                                              style={
-                                                [
-                                                  {
-                                                    "fontSize": 16,
-                                                    "textDecorationLine": "underline",
-                                                  },
-                                                  {},
-                                                ]
-                                              }
-                                            >
-                                              Informativa Privacy
-                                            </Text>
-                                          </Text>
-                                          <Text
-                                            style={
-                                              [
-                                                {
-                                                  "fontSize": 16,
-                                                },
-                                                {},
-                                              ]
-                                            }
-                                          >
-                                            .
-                                          </Text>
-                                        </Text>
-                                      </Text>
-                                      <View
-                                        style={
-                                          {
-                                            "height": 24,
+                                          accessibilityRole="link"
+                                          allowFontScaling={true}
+                                          dynamicTypeRamp="body"
+                                          maxFontSizeMultiplier={1.5}
+                                          onPress={[Function]}
+                                          style={
+                                            [
+                                              {
+                                                "textDecorationLine": "underline",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 16,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 24,
+                                              },
+                                            ]
                                           }
-                                        }
-                                      />
+                                        >
+                                          Informativa Privacy
+                                        </Text>
+                                        .
+                                      </Text>
                                     </View>
                                   </View>
                                   <View
