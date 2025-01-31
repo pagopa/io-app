@@ -151,7 +151,6 @@ const AuthorizationScreenContent = ({
     <VSpacer size={24} />
     <ListItemHeader
       label={I18n.t("idpay.payment.authorization.infoDivider")}
-      iconColor="bluegrey"
       iconName="initiatives"
     />
     <ListItemInfo
