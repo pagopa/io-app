@@ -213,10 +213,10 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
               numberOfLines={1}
               accessible={true}
               accessibilityRole={"header"}
-              color={titleColor === "white" ? "white" : "bluegrey"}
+              color={titleColor === "white" ? "white" : "grey-700"}
             >
               {/* TODO: titleColor prop is pretty useless because
-              we have two colors: dark (bluegrey) and light (white).
+              we have two colors: dark (grey-700) and light (white).
               We don't have any color values other than these two. */}
               {l}
             </Body>
@@ -249,9 +249,9 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
           backgroundColor
             ? backgroundColor
             : dark
-            ? IOColors.bluegrey
+            ? IOColors["grey-700"]
             : primary
-            ? IOColors.blue
+            ? IOColors["blue-500"]
             : IOColors.white
         }
       >
@@ -360,7 +360,7 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
   private renderAppLogo = () => {
     const { primary, dark } = this.props;
 
-    const iconColor: IOColors = primary || dark ? "white" : "blue";
+    const iconColor: IOColors = primary || dark ? "white" : "blue-500";
     return (
       <View
         accessible={true}
