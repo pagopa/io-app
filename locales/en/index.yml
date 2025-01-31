@@ -883,6 +883,13 @@ authentication:
     recoverDescription: If you're missing your password, you can recover it by tapping on the following button.
     dualRecoverDescription: If you're missing your credentials, you can recover them by tapping on the following buttons.
     recoverPassword: Recover the password
+    poste_id:
+      bottom_sheet:
+        title: Accedi senza password!
+        description: "Se hai l’app Poste ID, segui questi passaggi:"
+        feature_1: Tocca su **"Accedi più rapidamente"** nella fascia grigia al centro della schermata
+        feature_2: Inserisci il codice PosteID o usa il biometrico
+        feature_3: Quando vedrai apparire **Autorizzazione concessa**, torna su IO e premi **Acconsento**
   idp_login_success:
     contentTitle: Hi, {{name}}!
   errors:
