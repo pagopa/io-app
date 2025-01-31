@@ -56,7 +56,8 @@ const ItwCieIdLoginScreen = () => {
 
   useHeaderSecondLevel({
     title: I18n.t("features.itWallet.identification.mode.title"),
-    supportRequest: false
+    supportRequest: false,
+    goBack: dismissalDialog.show
   });
 
   const onLoadEnd = useCallback(() => {
