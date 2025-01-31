@@ -1091,7 +1091,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
                           align="xMidYMid"
                           bbHeight={120}
                           bbWidth={120}
-                          color="#00C5CA"
                           focusable={false}
                           height={120}
                           meetOrSlice={0}
@@ -1110,7 +1109,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
                               },
                             ]
                           }
-                          tintColor="#00C5CA"
                           vbHeight={240}
                           vbWidth={240}
                           width={120}
@@ -2268,7 +2266,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
                           align="xMidYMid"
                           bbHeight={120}
                           bbWidth={120}
-                          color="#00C5CA"
                           focusable={false}
                           height={120}
                           meetOrSlice={0}
@@ -2287,7 +2284,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
                               },
                             ]
                           }
-                          tintColor="#00C5CA"
                           vbHeight={240}
                           vbWidth={240}
                           width={120}

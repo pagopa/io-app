@@ -60,8 +60,8 @@ const WalletDetailsPaymentMethodInitiatives = (
       <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
         <H6 color={"grey-700"}>{I18n.t("wallet.capability.title")}</H6>
         <Body
+          asLink
           weight="Semibold"
-          color="blue"
           onPress={navigateToPairableInitiativesList}
         >
           {I18n.t("idpay.wallet.preview.showAll")}

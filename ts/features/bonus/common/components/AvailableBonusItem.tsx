@@ -79,7 +79,7 @@ export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {
     >
       <View style={styles.columnLeft}>
         <View style={[IOStyles.row, IOStyles.alignCenter, disabledStyle]}>
-          <H6 color="bluegreyDark">{bonusTypeLocalizedContent.name}</H6>
+          <H6 color="grey-850">{bonusTypeLocalizedContent.name}</H6>
           <HSpacer size={8} />
           {renderBadge(state)}
         </View>
