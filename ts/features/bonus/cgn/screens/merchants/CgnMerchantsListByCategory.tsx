@@ -157,7 +157,7 @@ const CgnMerchantsListByCategory = () => {
     secondAction: {
       icon: "search",
       onPress() {
-        navigate("CGN_MERCHANTS_SEARCH");
+        navigate(CGN_ROUTES.DETAILS.MERCHANTS.SEARCH);
       },
       accessibilityLabel: I18n.t(
         "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
