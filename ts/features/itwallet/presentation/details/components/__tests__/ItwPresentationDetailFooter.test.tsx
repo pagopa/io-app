@@ -1,17 +1,17 @@
 import { createStore } from "redux";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { applicationChangeState } from "../../../../../../store/actions/application.ts";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types.ts";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
-} from "../../../common/utils/itwMocksUtils";
-import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter";
-import * as remoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
+} from "../../../../common/utils/itwMocksUtils.ts";
+import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine.ts";
+import { ItwCredentialIssuanceMachineContext } from "../../../../machine/provider.tsx";
+import { ITW_ROUTES } from "../../../../navigation/routes.ts";
+import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter.tsx";
+import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig.ts";
 
 describe("ItwPresentationDetailsFooter", () => {
   it("should render actions", () => {

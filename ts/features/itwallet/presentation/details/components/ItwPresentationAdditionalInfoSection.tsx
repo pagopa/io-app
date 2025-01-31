@@ -1,7 +1,7 @@
 import { memo } from "react";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ItwPresentationFiscalCode } from "./ItwPresentationFiscalCode";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { ItwPresentationFiscalCode } from "./ItwPresentationFiscalCode.tsx";
 
 type Props = {
   credential: StoredCredential;

@@ -1,27 +1,27 @@
 import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
 import { memo, ReactNode, useMemo } from "react";
 import { Alert, View } from "react-native";
-import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
-import I18n from "../../../../i18n";
-import NavigationService from "../../../../navigation/NavigationService";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";
+import I18n from "../../../../../i18n.ts";
+import NavigationService from "../../../../../navigation/NavigationService.ts";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
-} from "../../../../store/hooks";
-import { FIMS_ROUTES } from "../../../fims/common/navigation";
+} from "../../../../../store/hooks.ts";
+import { FIMS_ROUTES } from "../../../../fims/common/navigation";
 import {
   CREDENTIALS_MAP,
   trackCredentialDeleteProperties,
   trackItwCredentialDelete,
   trackWalletCredentialSupport
-} from "../../analytics";
-import { itwIPatenteCtaConfigSelector } from "../../common/store/selectors/remoteConfig";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { itwCredentialsRemove } from "../../credentials/store/actions";
-import { trackAuthenticationStart } from "../../../fims/common/analytics";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+} from "../../../analytics";
+import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { itwCredentialsRemove } from "../../../credentials/store/actions";
+import { trackAuthenticationStart } from "../../../../fims/common/analytics";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId.ts";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
