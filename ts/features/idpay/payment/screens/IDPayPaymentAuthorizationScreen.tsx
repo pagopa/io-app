@@ -148,6 +148,7 @@ const AuthorizationScreenContent = ({
       value={formatDateOrDefault(data.trxDate)}
       accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
     />
+
     <VSpacer size={24} />
     <ListItemHeader
       label={I18n.t("idpay.payment.authorization.infoDivider")}
@@ -198,7 +199,6 @@ const AuthorizationScreenSkeleton = () => (
     <VSpacer size={24} />
     <ListItemHeader
       label={I18n.t("idpay.payment.authorization.infoDivider")}
-      iconColor="bluegrey"
       iconName="initiatives"
     />
     <VSpacer size={16} />

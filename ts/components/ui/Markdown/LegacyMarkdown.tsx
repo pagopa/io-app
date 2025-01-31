@@ -1,6 +1,7 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { createRef, PureComponent, Fragment } from "react";
+import { createRef, Fragment, PureComponent } from "react";
 import {
   ActivityIndicator,
   AppState,
@@ -86,7 +87,7 @@ a {
 }
 
 div.custom-block.io-demo-block {
-  background-color: ${customVariables.toastColor};
+  background-color: ${IOColors["turquoise-100"]};
   border-radius: 4px;
   margin-bottom: 32px;
   padding: 4px 8px;
