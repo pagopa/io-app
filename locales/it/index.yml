@@ -3518,7 +3518,7 @@ features:
         openPdf: "Mostra documento"
         shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
-      eid: 
+      eid:
         verificationExpired:
           title: Verifica la tua identità
           contentStart: "È un passaggio di sicurezza necessario per continuare ad usare "
@@ -3529,6 +3529,10 @@ features:
         title: Non siamo riusciti a caricare {{credentialName}}
         content: Chiudi e riapri l'app per riprovare.
         primaryAction: Ho capito
+      remote:
+        loadingScreen:
+          title: Stiamo facendo alcune verifiche di sicurezza...
+          subtitle: Attendi qualche secondo
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale
