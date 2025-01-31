@@ -114,9 +114,9 @@ const decodeFciBarcode: IOBarcodeDecoderFn = (data: string) =>
 
 const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
   pipe(
-    O.fromNullable(data.match(
-      /^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/
-    )),
+    O.fromNullable(
+      data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)
+    ),
     O.chain(() => O.tryCatch(() => new URLSearchParams(data.split("?")[1]))),
     O.chain(params =>
       pipe(
