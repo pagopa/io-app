@@ -5,12 +5,12 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useMemo, memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
+import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
+import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = { credential: StoredCredential };
 
