@@ -42,7 +42,6 @@ const InnerNavigation = () => {
         <Stack.Screen
           name={IdPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION}
           component={IDPayPaymentAuthorizationScreen}
-          options={{ headerShown: false }}
         />
         <Stack.Screen
           name={IdPayPaymentRoutes.IDPAY_PAYMENT_RESULT}
