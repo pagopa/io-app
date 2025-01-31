@@ -4,8 +4,7 @@ import {
   FooterActionsInline,
   H2,
   H6,
-  HSpacer,
-  Icon,
+  ListItemHeader,
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -160,24 +159,15 @@ const AuthorizationScreenContent = ({
       value={formatDateOrDefault(data.trxDate)}
       accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
     />
+
     <VSpacer size={24} />
+
     {/* TODO:: will be removed in favor of LIST_GROUP_HEADING in future updates */}
-    <View style={[IOStyles.row, IOStyles.alignCenter]}>
-      <Icon name="initiatives" size={24} color="bluegrey" />
-      <HSpacer size={16} />
-      <H6
-        color="bluegrey"
-        style={{
-          // this should not happen, but the current typography adds 4
-          // to paddingBottom because of line height
-          // so we add 4 to paddingTop to compensate, else the text would not be centered
-          // (this was temporarily approved by @dmnplb)
-          paddingTop: 4
-        }}
-      >
-        {I18n.t("idpay.payment.authorization.infoDivider")}
-      </H6>
-    </View>
+    <ListItemHeader
+      label={I18n.t("idpay.payment.authorization.infoDivider")}
+      iconName="initiatives"
+    />
+
     <VSpacer size={16} />
 
     <ListItemInfo
@@ -223,19 +213,10 @@ const AuthorizationScreenSkeleton = () => (
       accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
     />
     <VSpacer size={24} />
-    <View style={[IOStyles.row, IOStyles.alignCenter]}>
-      <Icon name="initiatives" size={24} color="bluegrey" />
-      <HSpacer size={16} />
-      <H6
-        color="bluegrey"
-        style={{
-          // see previous comment
-          paddingTop: 4
-        }}
-      >
-        {I18n.t("idpay.payment.authorization.infoDivider")}
-      </H6>
-    </View>
+    <ListItemHeader
+      label={I18n.t("idpay.payment.authorization.infoDivider")}
+      iconName="initiatives"
+    />
     <VSpacer size={16} />
     <ListItemInfo
       label={I18n.t("idpay.payment.authorization.initiativeName")}

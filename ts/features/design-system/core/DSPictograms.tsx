@@ -4,7 +4,6 @@ import {
   IOColors,
   IOPictograms,
   IOPictogramsBleed,
-  IOPictogramsLegacy,
   IOPictogramsObject,
   Pictogram,
   PictogramBleed,
@@ -68,10 +67,7 @@ const filterPictogramSet = (
   );
 
 const filteredIOPictograms = filterPictogramSet(
-  {
-    ...IOPictogramsObject,
-    ...IOPictogramsLegacy
-  },
+  IOPictogramsObject,
   IOPictograms
 );
 
