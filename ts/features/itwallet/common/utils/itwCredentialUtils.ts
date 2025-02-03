@@ -82,17 +82,3 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
   "expiring",
   "jwtExpiring"
 ];
-
-/**
- * Map for each credential type specifying the attributes that can be copied
- * in the credential details.
- */
-export const copyableAttributesByCredentialType: {
-  [type: string]: Set<string>;
-} = {
-  [CredentialType.DRIVING_LICENSE]: new Set([
-    "restrictions_conditions",
-    "document_number"
-  ]),
-  [CredentialType.EUROPEAN_DISABILITY_CARD]: new Set(["document_number"])
-};
