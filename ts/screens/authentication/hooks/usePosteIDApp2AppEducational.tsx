@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import IOMarkdown from "../../../components/IOMarkdown";
@@ -17,6 +17,7 @@ export const usePosteIDApp2AppEducational = ({
   selectedIdp,
   requestState
 }: Props) => {
+  const presentedRef = useRef(false);
   const bottomSheetContent = useMemo(
     () => (
       <View>
@@ -62,16 +63,23 @@ export const usePosteIDApp2AppEducational = ({
     []
   );
 
+  const handleOnDismiss = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    presentedRef.current = true;
+  }, []);
+
   const { bottomSheet, present } = useIOBottomSheetAutoresizableModal({
     title: I18n.t("authentication.idp_login.poste_id.bottom_sheet.title"),
-    component: bottomSheetContent
+    component: bottomSheetContent,
+    onDismiss: handleOnDismiss
   });
 
   useEffect(() => {
     if (
       selectedIdp?.id === "posteid" &&
       !pot.isError(requestState) &&
-      !pot.isLoading(requestState)
+      !pot.isLoading(requestState) &&
+      !presentedRef.current
     ) {
       present();
     }
