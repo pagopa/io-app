@@ -2,21 +2,19 @@ jest.mock("../../../common/analytics");
 import * as E from "fp-ts/Either";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { trackExportSucceeded } from "../../../common/analytics";
 import { FimsHistoryClient } from "../../api/client";
 import { fimsHistoryExport } from "../../store/actions";
 import { handleExportFimsHistorySaga } from "../handleExportFimsHistorySaga";
-import { trackExportSucceeded } from "../../../common/analytics";
-
-type ResponseType = Awaited<ReturnType<FimsHistoryClient["requestExport"]>>;
-
-const mockBearerToken = "mockBearerToken";
-const mockAction = fimsHistoryExport.request();
 
 describe("handleExportFimsHistorySaga", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
   });
+  type ResponseType = Awaited<ReturnType<FimsHistoryClient["requestExport"]>>;
+  const mockBearerToken = "mockBearerToken";
+  const mockAction = fimsHistoryExport.request();
 
   it("should correctly pass the bearerToken to the client, dispatch success with payload 'SUCCESS' and track the export success when status is 202", () => {
     const response = E.right({ status: 202 }) as ResponseType;
