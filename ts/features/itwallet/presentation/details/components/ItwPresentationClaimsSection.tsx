@@ -31,13 +31,9 @@ export const ItwPresentationClaimsSection = ({
     [credential]
   );
 
-  const claims = parseClaims(
-    credential.parsedCredential,
-    {
-      exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
-    },
-    credential.credentialType
-  );
+  const claims = parseClaims(credential.parsedCredential, {
+    exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
+  });
 
   const renderHideValuesToggle = () => (
     <View
