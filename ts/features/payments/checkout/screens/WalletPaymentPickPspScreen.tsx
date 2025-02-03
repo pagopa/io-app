@@ -1,6 +1,5 @@
 import {
   Body,
-  GradientScrollView,
   H2,
   ListItemHeader,
   RadioGroup,
@@ -35,6 +34,7 @@ import {
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
 import { FaultCodeCategoryEnum } from "../types/PspPaymentMethodNotAvailableProblemJson";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 
 const WalletPaymentPickPspScreen = () => {
   const dispatch = useIODispatch();
@@ -189,15 +189,18 @@ const WalletPaymentPickPspScreen = () => {
   );
 
   return (
-    <GradientScrollView
-      primaryActionProps={
+    <IOScrollView
+      actions={
         canContinue
           ? {
-              label: I18n.t("wallet.payment.psp.continueButton"),
-              accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
-              onPress: handleContinue,
-              disabled: isLoading,
-              loading: isLoading
+              type: "SingleButton",
+              primary: {
+                label: I18n.t("wallet.payment.psp.continueButton"),
+                accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
+                onPress: handleContinue,
+                disabled: isLoading,
+                loading: isLoading
+              }
             }
           : undefined
       }
@@ -213,7 +216,7 @@ const WalletPaymentPickPspScreen = () => {
       )}
       {isLoading && <WalletPspListSkeleton />}
       {sortPspBottomSheet}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 

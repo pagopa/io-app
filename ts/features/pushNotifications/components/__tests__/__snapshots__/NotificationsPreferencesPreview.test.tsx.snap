@@ -408,7 +408,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#475A6D",
+                                  "color": "#555C70",
                                 },
                                 {
                                   "flex": 0,
@@ -417,13 +417,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 },
                               ]
                             }
-                            tintColor="#475A6D"
+                            tintColor="#555C70"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
                           >
                             <RNSVGGroup
-                              color="#475A6D"
+                              color="#555C70"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -524,9 +524,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="headline"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -544,9 +544,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               You have a new message
                             </Text>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -987,7 +987,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#475A6D",
+                                  "color": "#555C70",
                                 },
                                 {
                                   "flex": 0,
@@ -996,13 +996,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 },
                               ]
                             }
-                            tintColor="#475A6D"
+                            tintColor="#555C70"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
                           >
                             <RNSVGGroup
-                              color="#475A6D"
+                              color="#555C70"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1103,9 +1103,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="headline"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -1123,9 +1123,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                               You have a notice due tomorrow
                             </Text>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -1566,7 +1566,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#475A6D",
+                                  "color": "#555C70",
                                 },
                                 {
                                   "flex": 0,
@@ -1575,13 +1575,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                 },
                               ]
                             }
-                            tintColor="#475A6D"
+                            tintColor="#555C70"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
                           >
                             <RNSVGGroup
-                              color="#475A6D"
+                              color="#555C70"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1682,9 +1682,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="headline"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -1702,9 +1702,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               Comune di Ipazia
                             </Text>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -2145,7 +2145,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#475A6D",
+                                  "color": "#555C70",
                                 },
                                 {
                                   "flex": 0,
@@ -2154,13 +2154,13 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                 },
                               ]
                             }
-                            tintColor="#475A6D"
+                            tintColor="#555C70"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
                           >
                             <RNSVGGroup
-                              color="#475A6D"
+                              color="#555C70"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -2261,9 +2261,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="headline"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -2281,9 +2281,9 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                               You have a notice due soon
                             </Text>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},

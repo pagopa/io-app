@@ -20,7 +20,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   primaryBlockLegacy: {
-    backgroundColor: IOColors.blue,
+    backgroundColor: IOColors["blue-500"],
     padding: 16,
     borderRadius: 8
   },

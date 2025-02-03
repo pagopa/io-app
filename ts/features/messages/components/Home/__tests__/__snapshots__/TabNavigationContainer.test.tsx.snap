@@ -523,9 +523,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -685,9 +685,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1259,9 +1259,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1421,9 +1421,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},

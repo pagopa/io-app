@@ -765,9 +765,9 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -792,9 +792,9 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -836,10 +836,10 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -875,7 +875,6 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                   align="xMidYMid"
                                   bbHeight={80}
                                   bbWidth={80}
-                                  color="#00C5CA"
                                   focusable={false}
                                   height={80}
                                   meetOrSlice={0}
@@ -894,7 +893,6 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={80}

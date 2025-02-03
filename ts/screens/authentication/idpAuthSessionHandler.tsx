@@ -394,7 +394,7 @@ export const AuthSessionPage = () => {
         {requestInfo.requestState === "AUTHORIZING" && (
           <SafeAreaView style={IOStyles.flex}>
             <View style={styles.errorContainer}>
-              <Pictogram name={"processing"} size={120} />
+              <Pictogram name="timing" size={120} />
               <VSpacer size={16} />
               <H6 style={styles.title}>{I18n.t("spid.pending_login.title")}</H6>
               <VSpacer size={16} />

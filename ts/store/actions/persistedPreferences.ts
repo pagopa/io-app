@@ -49,6 +49,10 @@ export const preferencesDesignSystemSetEnabled = createStandardAction(
   "PREFERENCES_DESIGN_SYSTEM_SET_ENABLED"
 )<{ isDesignSystemEnabled: boolean }>();
 
+export const setIOMarkdownEnabledOnMessagesAndServices = createStandardAction(
+  "PREFERENCES_IO_MARKDOWN_ON_MESSAGES_AND_SERVICES_SET"
+)<{ enabledOnMessagesAndServices: boolean }>();
+
 export type PersistedPreferencesActions = ActionType<
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
@@ -61,4 +65,5 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesPnTestEnvironmentSetEnabled
   | typeof preferencesIdPayTestSetEnabled
   | typeof preferencesDesignSystemSetEnabled
+  | typeof setIOMarkdownEnabledOnMessagesAndServices
 >;

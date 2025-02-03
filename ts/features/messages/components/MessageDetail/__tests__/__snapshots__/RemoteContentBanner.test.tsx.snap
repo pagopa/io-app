@@ -413,9 +413,9 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -457,10 +457,10 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -496,7 +496,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               align="xMidYMid"
                               bbHeight={80}
                               bbWidth={80}
-                              color="#00C5CA"
                               focusable={false}
                               height={80}
                               meetOrSlice={0}
@@ -515,7 +514,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={80}
@@ -716,9 +714,9 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               onLayout={[Function]}
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -737,9 +735,9 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -757,9 +755,9 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   It's a message that the sender can edit 
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -777,9 +775,9 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   after you've received it
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -799,9 +797,9 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
 The sender can edit the information in a dynamic message only 
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -819,9 +817,9 @@ The sender can edit the information in a dynamic message only
                                   specific cases
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
