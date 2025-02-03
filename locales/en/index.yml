@@ -534,7 +534,7 @@ profile:
         subtitle: Receive message previews
       appearance:
         title: Appearance
-        subtitle: Choose how to customise the app
+        subtitle: Customize the app to your needs
         typefaceStyle:
           title: Typeface style
           comfortable:
