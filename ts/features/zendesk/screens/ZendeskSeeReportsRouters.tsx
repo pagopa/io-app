@@ -22,6 +22,7 @@ import {
 } from "../../../utils/supportAssistance";
 import { ZendeskParamsList } from "../navigation/params";
 import {
+  ZendeskAssistanceType,
   zendeskRequestTicketNumber,
   zendeskStopPolling,
   zendeskSupportCompleted
@@ -33,9 +34,7 @@ import {
 import { handleContactSupport } from "../utils";
 
 export type ZendeskSeeReportsRoutersNavigationParams = {
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
-  assistanceForFci: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -53,8 +52,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   const dispatch = useIODispatch();
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const ticketNumber = useIOSelector(zendeskTicketNumberSelector);
-  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
-    props.route.params;
+  const { assistanceType } = props.route.params;
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
 
@@ -79,21 +77,8 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   }, [dispatch, zendeskToken]);
 
   const handleContactSupportPress = useCallback(
-    () =>
-      handleContactSupport(
-        navigation,
-        assistanceForPayment,
-        assistanceForCard,
-        assistanceForFci,
-        zendeskRemoteConfig
-      ),
-    [
-      navigation,
-      assistanceForPayment,
-      assistanceForCard,
-      assistanceForFci,
-      zendeskRemoteConfig
-    ]
+    () => handleContactSupport(navigation, assistanceType, zendeskRemoteConfig),
+    [navigation, assistanceType, zendeskRemoteConfig]
   );
 
   useEffect(() => {

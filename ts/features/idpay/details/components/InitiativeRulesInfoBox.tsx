@@ -1,19 +1,19 @@
 import {
   Body,
-  ButtonSolid,
-  ContentWrapper,
+  FooterActions,
   H6,
   HSpacer,
   IOColors,
   Icon,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import IOMarkdown from "../../../../components/IOMarkdown";
 
 type Props = {
   content: string;
@@ -21,26 +21,24 @@ type Props = {
 
 const InitiativeRulesInfoBox = (props: Props) => {
   const { content } = props;
+  const theme = useIOTheme();
 
   const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal(
     {
       component: <IOMarkdown content={content} />,
       title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
       footer: (
-        <ContentWrapper>
-          <VSpacer size={24} />
-          <ButtonSolid
-            label={I18n.t(
-              "idpay.initiative.beneficiaryDetails.infoModal.button"
-            )}
-            onPress={() => dismiss()}
-            accessibilityLabel={I18n.t(
-              "idpay.initiative.beneficiaryDetails.infoModal.button"
-            )}
-            fullWidth={true}
-          />
-          <VSpacer size={24} />
-        </ContentWrapper>
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
+              label: I18n.t(
+                "idpay.initiative.beneficiaryDetails.infoModal.button"
+              ),
+              onPress: () => dismiss()
+            }
+          }}
+        />
       )
     },
     170
@@ -56,7 +54,7 @@ const InitiativeRulesInfoBox = (props: Props) => {
         </Body>
         <VSpacer size={16} />
         <View style={IOStyles.row}>
-          <Icon name="categLearning" color="blue" />
+          <Icon name="categLearning" color={theme["interactiveElem-default"]} />
           <HSpacer size={8} />
           <Body weight="Semibold" asLink onPress={() => present()}>
             {I18n.t("idpay.initiative.beneficiaryDetails.infobox.rulesButton")}
@@ -84,7 +82,7 @@ const InitiativeRulesInfoBoxSkeleton = () => (
 
 const styles = StyleSheet.create({
   infoBox: {
-    borderColor: IOColors.bluegreyLight,
+    borderColor: IOColors["grey-200"],
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 16,

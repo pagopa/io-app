@@ -20,7 +20,6 @@ export type ProfileParamsList = {
   [ROUTES.EMAIL_VERIFICATION_SCREEN]: SendEmailValidationScreenProp;
   [ROUTES.PIN_SCREEN]: undefined;
   [ROUTES.PROFILE_DOWNLOAD_DATA]: undefined;
-  [ROUTES.MARKDOWN_PLAYGROUND]: undefined;
   [ROUTES.DESIGN_SYSTEM]: undefined;
   [ROUTES.LOLLIPOP_PLAYGROUND]: undefined;
   [ROUTES.PROFILE_REMOVE_ACCOUNT_INFO]: undefined;

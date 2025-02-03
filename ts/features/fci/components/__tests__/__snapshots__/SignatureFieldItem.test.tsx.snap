@@ -4,7 +4,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
 <View
   style={
     {
-      "borderBottomColor": "#E6E9F2",
+      "borderBottomColor": "#E8EBF1",
       "borderBottomWidth": 1,
       "marginBottom": 16,
       "paddingBottom": 8,
@@ -92,15 +92,16 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                   "flexDirection": "row",
                 },
                 {
+                  "columnGap": 18,
                   "flexShrink": 1,
                 },
               ]
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="headline"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
@@ -165,8 +166,8 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
               onStartShouldSetResponder={[Function]}
               style={
                 {
-                  "height": 24,
-                  "width": 24,
+                  "height": 36,
+                  "width": 36,
                 }
               }
               testID="AnimatedCheckboxInput"
@@ -176,16 +177,18 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                   [
                     {
                       "borderCurve": "continuous",
-                      "borderRadius": 5,
                       "borderWidth": 2,
-                      "height": 24,
                       "left": 0,
                       "position": "absolute",
                       "top": 0,
-                      "width": 24,
                     },
                     {
-                      "borderColor": "#475A6D",
+                      "borderRadius": 7.5,
+                      "height": 36,
+                      "width": 36,
+                    },
+                    {
+                      "borderColor": "#555C70",
                     },
                   ]
                 }
@@ -195,12 +198,14 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                   [
                     {
                       "borderCurve": "continuous",
-                      "borderRadius": 5,
-                      "height": 24,
                       "left": 0,
                       "position": "absolute",
                       "top": 0,
-                      "width": 24,
+                    },
+                    {
+                      "borderRadius": 7.5,
+                      "height": 36,
+                      "width": 36,
                     },
                     {
                       "backgroundColor": "#0073E6",
@@ -239,9 +244,9 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       accessibilityHint="Go to the page that displays the signature field"
       accessibilityLabel="See on document"
       accessibilityRole="link"
-      allowFontScaling={false}
+      allowFontScaling={true}
       dynamicTypeRamp="body"
-      maxFontSizeMultiplier={1.25}
+      maxFontSizeMultiplier={1.5}
       onPress={[MockFunction]}
       style={
         [

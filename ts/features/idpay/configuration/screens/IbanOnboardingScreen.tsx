@@ -1,16 +1,9 @@
-import {
-  BodySmall,
-  HSpacer,
-  Icon,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useState } from "react";
-import { View } from "react-native";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { LabelledItem } from "../../../../components/LabelledItem";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -91,21 +84,10 @@ export const IbanOnboardingScreen = () => {
         }}
       />
       <VSpacer size={16} />
-      <View
-        style={[
-          IOStyles.row,
-          {
-            justifyContent: "center",
-            alignItems: "center"
-          }
-        ]}
-      >
-        <Icon name="profile" size={30} color="bluegrey" />
-        <HSpacer size={16} />
-        <BodySmall color="bluegrey" weight="Regular">
-          {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
-        </BodySmall>
-      </View>
+      <FeatureInfo
+        iconName="profile"
+        body={I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
+      />
     </IOScrollViewWithLargeHeader>
   );
 };

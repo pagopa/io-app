@@ -309,7 +309,12 @@ export const baseRawBackendStatus: BackendStatus = {
       feedback_banner_visible: true,
       disabled_identification_methods: [],
       disabled_credentials: [],
-      ipatente_cta_visible: true
+      ipatente_cta_visible: true,
+      ipatente_cta_config: {
+        visibility: true,
+        url: "",
+        service_id: ""
+      }
     }
   }
 };
@@ -406,6 +411,11 @@ export const baseBackendConfig: Config = {
     feedback_banner_visible: true,
     disabled_credentials: [],
     disabled_identification_methods: [],
-    ipatente_cta_visible: true
+    ipatente_cta_visible: true,
+    ipatente_cta_config: {
+      visibility: true,
+      url: "",
+      service_id: ""
+    }
   }
 };

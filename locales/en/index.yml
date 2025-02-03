@@ -653,15 +653,17 @@ authentication:
     privacyLink: Privacy
     nospid: Don't have SPID? Find out more
     nospid-nocie: Don't have SPID or CIE? Find out more
-    card1-title: All messages in one place
-    card1-content: Display all the incoming communications from Public Administrations
-    card2-title: Use your favourite payment methods
-    card2-content: You can pay a tax or a penalty by your bank account and your cards
-    card3-title: Quickly pay a physical notice
-    card3-content: You can pay a notice also by scanning the QR code on the physical notice
-    card5-title: Welcome to IO!
-    card5-content: What can you do?
-    card5-content-accessibility: Select previous item to open a chat with the IO team if something is not working.
+    card0-title: Welcome to IO!
+    card0-content: Swipe left to see what you can do in the app
+    card0-content-accessibility:  Select the previous item to open a chat with the IO team if something is not working as it should.
+    card1-title: Keep your personal documents safe
+    card1-content: With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips
+    card2-title: Receive communications, also with legal value
+    card2-content: "Read incoming communications from organisations: by activating the SEND service, you will also receive communications with legal value and save on notification costs."
+    card3-title: Pay pagoPA notice by the method you prefer
+    card3-content: On IO, you can view and download receipts for your pagoPA payments, even if you have not paid in the app
+    card4-title: Access to the services you are most interested in
+    card4-content: Direct access to government services related to health, education, mobility, work and more
     expiredCardTitle: The CIE verification failed
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
@@ -2905,53 +2907,8 @@ bonus:
           one: 1 second
           other: "{{seconds}} seconds"
   cdc:
-    title: "Carta della cultura"
-    serviceCta:
-      activable: "Request your card"
-      pending: "Request sent"
-      error:
-        status: "The necessary information could not be retrieved. Please, try again."
-    serviceEntryPoint:
+   serviceEntryPoint:
       notAvailable: "The service is not available at this time. Try later."
-    bonusRequest:
-      bonusRequested:
-        loading:
-          title: "We are sending your request..."
-          subtitle: "We remind you that only the requests for when your residency was in Italy are valid. Please wait."
-        requestCompleted:
-          title: "Your request was sent!"
-          body: "You will receive a message on IO when the rankings are final."
-          cta: "I got it!"
-        partiallySuccess:
-          title: "Here is the result of your requests"
-          body:
-            success: "The request for {{successfulYears}} was successful."
-            fail:
-              residenceAbroad: "The request for {{failedYears}} could not be sent because you are not a resident of Italy."
-              notEligible: "The request for {{failedYears}} could not be sent because you cannot apply for Carta della Cultura for the selected year."
-              alreadyRegistered: "The request for {{failedYears}} could not be sent because you have already submitted a request for that year."
-              initiativeFinished: "The request for {{failedYears}} could not be sent because the request period is over."
-        ko:
-          requirementsError:
-            title: "Unfortunately you don't have the requirements to apply for Carta della Cultura."
-            body: "Carta della Cultura is only available for citizens residing in Italy."
-          wrongFormat:
-            title: "Carta della Cultura is not available at the moment."
-            body: "We apologize for the inconvenience.\nPlease try again later."
-          genericError:
-            title: "There was an error with your request"
-            body: "We apologize for the inconvenience.\nPlease try again later."
-      selectResidence:
-        header: "Residency"
-        items:
-          residesInItaly: "Italy"
-          residesAbroad: "Abroad"
-        info: "Carta della Cultura is only available for citizens residing in Italy. Please, select your residency for each year."
-      selectYear:
-        header: "Select for what years you want to request the Carta della Cultura"
-        body: "For each selected year, your ISEE needs to be below € 15,000 and your residency must be in Italy."
-      misc:
-        conjunction: " and "
 features:
   messages:
     pushNotifications:
@@ -3293,6 +3250,17 @@ features:
         verificationExpired: Verifica
         unknown: Non disponibile
       digital: Versione digitale
+    support:
+      button: "Mostra dettagli"
+      supportTitle: Contatta l'assistenza
+      supportDescription: Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
+      phone: Chiama {{phoneNumber}}
+      landline: Da telefono fisso
+      chat: Chiedi aiuto in chat
+      email: Scrivi una mail
+      website: Visita il sito
+      additionalDataTitle: "Dati aggiuntivi"
+      errorCode: Codice errore
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
@@ -3464,14 +3432,14 @@ features:
       moreInfo: More info
       error:
         title: Il tuo dispositivo non supporta Documenti su IO
-        body: Il tuo dispositivo non ha i requisiti di sicurezza necessari per questa funzionalità.
-        primaryAction: Chiudi
-        secondaryAction: Scopri di più
+        body: "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi "
+        primaryAction: Scopri di più
+        secondaryAction: Chiudi
     presentation:
       alerts:
         statusAction: Cosa posso fare?
         mdl:
-          content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
+          content: "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine."
         ehc:
           content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
         edc:
@@ -3494,6 +3462,7 @@ features:
             valid: L'ultima verifica è del {{date}}.
             expiring: Verifica la tua identità entro il {{date}}.
             expired: È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.
+            action: Inizia
         MDL:
           expiring:
             title: "Patente su IO: documento in scadenza"
@@ -3549,6 +3518,13 @@ features:
         openPdf: Show document
         shareButton: Save or share
         fiscalCode: Your Fiscal Code
+      eid: 
+        verificationExpired:
+          title: Verifica la tua identità
+          contentStart: "È un passaggio di sicurezza necessario per continuare ad usare "
+          contentBold: Documenti su IO
+          contentEnd: "."
+          primaryAction: Inizia
       statusAttestationUnknown:
         title: Non siamo riusciti a caricare {{credentialName}}
         content: Chiudi e riapri l'app per riprovare.

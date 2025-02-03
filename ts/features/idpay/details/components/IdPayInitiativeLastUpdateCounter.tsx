@@ -27,7 +27,6 @@ const IdPayInitiativeLastUpdateCounter = (props: Props) => {
   return (
     <BodySmall
       style={styles.lastUpdate}
-      color="bluegrey"
       weight="Regular"
       testID={"IDPayDetailsLastUpdatedTestID"}
     >

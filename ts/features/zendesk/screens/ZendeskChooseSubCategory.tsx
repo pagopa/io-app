@@ -16,15 +16,14 @@ import {
 } from "../../../utils/supportAssistance";
 import { ZendeskParamsList } from "../navigation/params";
 import {
+  ZendeskAssistanceType,
   zendeskSelectedSubcategory,
   zendeskSupportFailure
 } from "../store/actions";
 import { zendeskSelectedCategorySelector } from "../store/reducers";
 
 export type ZendeskChooseSubCategoryNavigationParams = {
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
-  assistanceForFci: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -39,8 +38,7 @@ type Props = IOStackNavigationRouteProps<
 const ZendeskChooseSubCategory = (props: Props) => {
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useIODispatch();
-  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
-    props.route.params;
+  const { assistanceType } = props.route.params;
   const selectedSubcategory = (subcategory: ZendeskSubCategory) =>
     dispatch(zendeskSelectedSubcategory(subcategory));
   const zendeskWorkUnitFailure = (reason: string) =>
@@ -77,9 +75,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
         // Set sub-category as custom field
         addTicketCustomField(subCategoriesId, subCategory.value);
         props.navigation.navigate("ZENDESK_ASK_PERMISSIONS", {
-          assistanceForPayment,
-          assistanceForCard,
-          assistanceForFci
+          assistanceType
         });
       }}
     />

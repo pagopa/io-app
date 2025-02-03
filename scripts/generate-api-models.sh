@@ -1,8 +1,8 @@
 #!/bin/bash
 
-IO_BACKEND_VERSION=v16.7.3-RELEASE
+IO_BACKEND_VERSION=v16.7.4-RELEASE
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.55
+IO_SERVICES_METADATA_VERSION=1.0.57
 
 declare -a apis=(
   # Backend APIs
@@ -37,8 +37,6 @@ declare -a apis=(
   "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn_operator_search.yaml"
   # PN APIs
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
-  # CDC APIs
-  "./definitions/cdc assets/CdcSwagger.yml"
   # FCI APIs
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
 )

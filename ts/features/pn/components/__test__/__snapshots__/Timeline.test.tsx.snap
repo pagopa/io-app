@@ -356,9 +356,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -376,9 +376,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             1
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -411,7 +411,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -442,7 +442,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -460,9 +460,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -487,9 +487,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -533,9 +533,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -553,9 +553,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             3
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -588,7 +588,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -617,7 +617,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -635,9 +635,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -662,9 +662,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -708,9 +708,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -728,9 +728,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             6
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -763,7 +763,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -792,7 +792,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -810,9 +810,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -837,9 +837,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -883,9 +883,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -903,9 +903,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             9
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -938,7 +938,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -967,7 +967,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -985,9 +985,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1012,9 +1012,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1058,9 +1058,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1078,9 +1078,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             11
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1113,7 +1113,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1142,7 +1142,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1160,9 +1160,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1187,9 +1187,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1233,9 +1233,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1253,9 +1253,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             14
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1288,7 +1288,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1317,7 +1317,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1335,9 +1335,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1362,9 +1362,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1408,9 +1408,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1428,9 +1428,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             15
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1463,7 +1463,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1492,7 +1492,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1510,9 +1510,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1537,9 +1537,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1583,9 +1583,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1603,9 +1603,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             18
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1638,7 +1638,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1667,7 +1667,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1685,9 +1685,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1712,9 +1712,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1758,9 +1758,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1778,9 +1778,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             21
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1813,7 +1813,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1842,7 +1842,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1860,9 +1860,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1887,9 +1887,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1933,9 +1933,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1953,9 +1953,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             24
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1988,7 +1988,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -2017,7 +2017,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -2035,9 +2035,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -2062,9 +2062,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -2108,9 +2108,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -2128,9 +2128,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             27
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -2163,7 +2163,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -2192,7 +2192,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -2210,9 +2210,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -2237,9 +2237,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -2283,9 +2283,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -2303,9 +2303,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             30
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -2338,7 +2338,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -2367,7 +2367,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -2387,9 +2387,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -2414,9 +2414,9 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {

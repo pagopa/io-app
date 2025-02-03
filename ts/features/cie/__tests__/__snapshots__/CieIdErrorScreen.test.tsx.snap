@@ -55,7 +55,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
           align="xMidYMid"
           bbHeight={120}
           bbWidth={120}
-          color="#00C5CA"
           focusable={false}
           height={120}
           meetOrSlice={0}
@@ -74,7 +73,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
               },
             ]
           }
-          tintColor="#00C5CA"
           vbHeight={240}
           vbWidth={240}
           width={120}
@@ -182,9 +180,9 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
         />
       </View>
       <Text
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="title2"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         style={
           [
             {},
@@ -212,9 +210,9 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
         }
       />
       <Text
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         style={
           [
             {},
@@ -318,13 +316,15 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
               }
             >
               <View
-                entering={[Function]}
                 style={
                   [
                     {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "justifyContent": "center",
+                    },
+                    {
+                      "columnGap": 8,
                     },
                     false,
                   ]
@@ -333,10 +333,10 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                 <Text
                   accessibilityElementsHidden={true}
                   accessible={false}
-                  allowFontScaling={false}
+                  allowFontScaling={true}
                   ellipsizeMode="tail"
                   importantForAccessibility="no-hide-descendants"
-                  maxFontSizeMultiplier={1.25}
+                  maxFontSizeMultiplier={1.5}
                   numberOfLines={1}
                   style={
                     [
@@ -440,6 +440,9 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "columnGap": 8,
                   },
                   {},
+                  {
+                    "columnGap": 8,
+                  },
                   false,
                 ]
               }
@@ -447,10 +450,10 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
               <Text
                 accessibilityElementsHidden={true}
                 accessible={false}
-                allowFontScaling={false}
+                allowFontScaling={true}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
-                maxFontSizeMultiplier={1.25}
+                maxFontSizeMultiplier={1.5}
                 numberOfLines={1}
                 style={
                   [
@@ -461,11 +464,16 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                       "fontSize": 16,
                       "fontStyle": "normal",
                       "fontWeight": "600",
-                      "lineHeight": undefined,
+                      "lineHeight": 20,
                     },
-                    {
-                      "color": undefined,
-                    },
+                    [
+                      {
+                        "color": undefined,
+                      },
+                      {
+                        "textAlign": "auto",
+                      },
+                    ],
                   ]
                 }
               >
@@ -535,7 +543,6 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
           align="xMidYMid"
           bbHeight={120}
           bbWidth={120}
-          color="#00C5CA"
           focusable={false}
           height={120}
           meetOrSlice={0}
@@ -554,7 +561,6 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
               },
             ]
           }
-          tintColor="#00C5CA"
           vbHeight={240}
           vbWidth={240}
           width={120}
@@ -662,9 +668,9 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
         />
       </View>
       <Text
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="title2"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         style={
           [
             {},
@@ -692,9 +698,9 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
         }
       />
       <Text
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         style={
           [
             {},
@@ -800,13 +806,15 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
               }
             >
               <View
-                entering={[Function]}
                 style={
                   [
                     {
                       "alignItems": "center",
                       "flexDirection": "row",
                       "justifyContent": "center",
+                    },
+                    {
+                      "columnGap": 8,
                     },
                     false,
                   ]
@@ -815,10 +823,10 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                 <Text
                   accessibilityElementsHidden={true}
                   accessible={false}
-                  allowFontScaling={false}
+                  allowFontScaling={true}
                   ellipsizeMode="tail"
                   importantForAccessibility="no-hide-descendants"
-                  maxFontSizeMultiplier={1.25}
+                  maxFontSizeMultiplier={1.5}
                   numberOfLines={1}
                   style={
                     [
@@ -922,6 +930,9 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "columnGap": 8,
                   },
                   {},
+                  {
+                    "columnGap": 8,
+                  },
                   false,
                 ]
               }
@@ -929,10 +940,10 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
               <Text
                 accessibilityElementsHidden={true}
                 accessible={false}
-                allowFontScaling={false}
+                allowFontScaling={true}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
-                maxFontSizeMultiplier={1.25}
+                maxFontSizeMultiplier={1.5}
                 numberOfLines={1}
                 style={
                   [
@@ -943,11 +954,16 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                       "fontSize": 16,
                       "fontStyle": "normal",
                       "fontWeight": "600",
-                      "lineHeight": undefined,
+                      "lineHeight": 20,
                     },
-                    {
-                      "color": undefined,
-                    },
+                    [
+                      {
+                        "color": undefined,
+                      },
+                      {
+                        "textAlign": "auto",
+                      },
+                    ],
                   ]
                 }
               >

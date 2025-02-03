@@ -10,72 +10,68 @@ on:
 
 jobs:
   lint:
-    name: Validate PR title And link Jira Issue
+    name: Validate PR Title And Link Jira Issue
     runs-on: ubuntu-22.04
     env:
-      JIRA_COMMENT_REGEX: "^.*Jira.*"
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      COMMENT_TITLE: "## Jira Pull Request Link"
+      # https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+      TITLE: ${{ github.event.pull_request.title }}
     steps:
-      - uses: Slashgear/action-check-pr-title@860e8dc639f8e60335a6f5e8936ba67ed2536890 #v4.3.0
+      - name: Validate PR Title Format
         id: lint
-        with:
-          regexp: "\\[(#?[A-Z]*-[0-9]*,?){1,}\\]" # Regex the title should match.
-        continue-on-error: true
-
-      - name: Find Jira Comment
-        uses: peter-evans/find-comment@81e2da3af01c92f83cb927cf3ace0e085617c556 #v2
-        id: fc
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
-          body-regex: "${{ env.JIRA_COMMENT_REGEX }}"
-
-      - name: Extract Jira Issue to Link
-        id: extract_jira_issue
-        if: steps.lint.outcome == 'success'
         run: |
-          PR_TITLE=$(echo "${{ github.event.pull_request.title }}")
-          ISSUES_STR=$(awk -F'\\[|\\]' '{print $2}' <<< "$PR_TITLE" | sed "s/#//g")
-          IFS=',' read -ra ISSUES <<< "$ISSUES_STR"
-          JIRA_ISSUE=$(echo "${ISSUES[-1]}" | sed 's/^ *//;s/ *$//')
-          MARKDOWN_CARRIAGE_RETURN="<br>"
-          MARKDOWN_PREFIX="- Link to"
-          JIRA_COMMENT_MARKDOWN="This Pull Request refers to Jira issues:<br>"
-          if [[ ${#ISSUES[@]} -eq 1 ]]; then
-            JIRA_COMMENT_MARKDOWN="This Pull Request refers to the following Jira issue"
-            MARKDOWN_PREFIX=""
+          PR_TITLE="$TITLE"
+          if [[ "$PR_TITLE" =~ \[(#?[A-Z]*-[0-9]*,?){1,}\] ]]; then
+            echo "PR title is valid."
+            echo "VALIDATION_RESULT=success" >> $GITHUB_ENV
+          else
+            echo "PR title is invalid."
+            echo "VALIDATION_RESULT=failure" >> $GITHUB_ENV
           fi
 
-          for ISSUE in "${ISSUES[@]}"; do
-            ISSUE=$(echo "$ISSUE" | sed 's/^ *//;s/ *$//') # Trim spaces
-            JIRA_COMMENT_MARKDOWN+="$MARKDOWN_PREFIX [$ISSUE](https://pagopa.atlassian.net/browse/$ISSUE) $MARKDOWN_CARRIAGE_RETURN"
-          done
+      - name: Find Existing Jira Comment
+        id: find_comment
+        run: |
+          EXISTING_COMMENT=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            --jq ".[] | select(.body | startswith(\"$COMMENT_TITLE\")) | .id")          
+          echo "EXISTING_COMMENT_ID=$EXISTING_COMMENT" >> $GITHUB_ENV
 
-          echo "JIRA_ISSUE=$JIRA_ISSUE" >> $GITHUB_ENV
-          echo "JIRA_COMMENT_MARKDOWN=$JIRA_COMMENT_MARKDOWN" >> $GITHUB_ENV
+      - name: Create or Update Jira Link Comment
+        run: |
+          if [[ "${{ env.VALIDATION_RESULT }}" == "success" ]]; then
+            PR_TITLE="$TITLE"
+            ISSUES_STR=$(awk -F'\\[|\\]' '{print $2}' <<< "$PR_TITLE" | sed "s/#//g")
+            IFS=',' read -ra ISSUES <<< "$ISSUES_STR"
+            JIRA_COMMENT_MARKDOWN="$COMMENT_TITLE"$'\n\n'
+            JIRA_COMMENT_MARKDOWN+="This Pull Request refers to Jira issues:"$'\n'
 
-      - name: Create Jira Link comment
-        if: steps.lint.outcome == 'success'
-        uses: peter-evans/create-or-update-comment@5adcb0bb0f9fb3f95ef05400558bdb3f329ee808 #v2
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ## Jira Pull Request Link ##
-            ${{ env.JIRA_COMMENT_MARKDOWN }}
-          edit-mode: replace
-      - name: Create Empty Jira Link comment
-        if: steps.lint.outcome != 'success'
-        uses: peter-evans/create-or-update-comment@5adcb0bb0f9fb3f95ef05400558bdb3f329ee808 #v2
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ## Jira Pull request Link ##
-            It seems this Pull Request has no issues that refers to Jira!!!
-            Please check it out.
-          edit-mode: replace
+            for ISSUE in "${ISSUES[@]}"; do
+              ISSUE=$(echo "$ISSUE" | sed 's/^ *//;s/ *$//') # Trim spaces
+              JIRA_COMMENT_MARKDOWN+="- [$ISSUE](https://pagopa.atlassian.net/browse/$ISSUE)"$'\n'
+            done
+
+            echo "Gira comment markdown: $JIRA_COMMENT_MARKDOWN"          
+            COMMENT_BODY=$JIRA_COMMENT_MARKDOWN
+          else 
+            COMMENT_BODY="${{ env.COMMENT_TITLE }}"$'\n\n'
+            COMMENT_BODY+=":x: It seems this Pull Request has no issues that refers to Jira!!!"$'\n'
+            COMMENT_BODY+="Please check it out."
+          fi
+
+          echo "Comment body: $COMMENT_BODY"
+
+          if [[ -n "${{ env.EXISTING_COMMENT_ID }}" ]]; then
+            echo Update existing comment
+            gh api repos/${{ github.repository }}/issues/comments/${{ env.EXISTING_COMMENT_ID }} \
+              -X PATCH -F body="$COMMENT_BODY"
+          else
+            gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+              -X POST -F body="$COMMENT_BODY"
+          fi
+
       - name: Failure message
-        if: steps.lint.outcome != 'success'
+        if: env.VALIDATION_RESULT != 'success'
         run: |
           echo "Pull request title (${{ github.event.pull_request.title }}) is not properly formatted or it is not related to any Jira issue"
           exit 1

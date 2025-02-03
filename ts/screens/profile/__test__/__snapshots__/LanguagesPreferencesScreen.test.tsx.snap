@@ -248,9 +248,9 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                 <Text
                                   accessibilityLabel="Favourite language"
                                   accessibilityRole="header"
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title1"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -283,9 +283,9 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -398,20 +398,17 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       >
                                         <View
                                           style={
-                                            [
-                                              {
-                                                "flexDirection": "row",
-                                              },
-                                              {
-                                                "flexShrink": 1,
-                                              },
-                                            ]
+                                            {
+                                              "columnGap": 18,
+                                              "flexDirection": "row",
+                                              "flexShrink": 1,
+                                            }
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             dynamicTypeRamp="headline"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             style={
                                               [
                                                 {},
@@ -476,8 +473,8 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             onStartShouldSetResponder={[Function]}
                                             style={
                                               {
-                                                "height": 24,
-                                                "width": 24,
+                                                "height": 36,
+                                                "width": 36,
                                               }
                                             }
                                             testID="AnimatedRadioInput"
@@ -486,16 +483,18 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               style={
                                                 [
                                                   {
-                                                    "borderRadius": 12,
                                                     "borderWidth": 2,
-                                                    "height": 24,
                                                     "left": 0,
                                                     "position": "absolute",
                                                     "top": 0,
-                                                    "width": 24,
                                                   },
                                                   {
-                                                    "borderColor": "#475A6D",
+                                                    "borderRadius": 18,
+                                                    "height": 36,
+                                                    "width": 36,
+                                                  },
+                                                  {
+                                                    "borderColor": "#555C70",
                                                   },
                                                 ]
                                               }
@@ -504,12 +503,14 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               style={
                                                 [
                                                   {
-                                                    "borderRadius": 12,
-                                                    "height": 24,
                                                     "left": 0,
                                                     "position": "absolute",
                                                     "top": 0,
-                                                    "width": 24,
+                                                  },
+                                                  {
+                                                    "borderRadius": 18,
+                                                    "height": 36,
+                                                    "width": 36,
                                                   },
                                                   {
                                                     "backgroundColor": "#0073E6",
@@ -613,20 +614,17 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       >
                                         <View
                                           style={
-                                            [
-                                              {
-                                                "flexDirection": "row",
-                                              },
-                                              {
-                                                "flexShrink": 1,
-                                              },
-                                            ]
+                                            {
+                                              "columnGap": 18,
+                                              "flexDirection": "row",
+                                              "flexShrink": 1,
+                                            }
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             dynamicTypeRamp="headline"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             style={
                                               [
                                                 {},
@@ -691,8 +689,8 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             onStartShouldSetResponder={[Function]}
                                             style={
                                               {
-                                                "height": 24,
-                                                "width": 24,
+                                                "height": 36,
+                                                "width": 36,
                                               }
                                             }
                                             testID="AnimatedRadioInput"
@@ -701,16 +699,18 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               style={
                                                 [
                                                   {
-                                                    "borderRadius": 12,
                                                     "borderWidth": 2,
-                                                    "height": 24,
                                                     "left": 0,
                                                     "position": "absolute",
                                                     "top": 0,
-                                                    "width": 24,
                                                   },
                                                   {
-                                                    "borderColor": "#475A6D",
+                                                    "borderRadius": 18,
+                                                    "height": 36,
+                                                    "width": 36,
+                                                  },
+                                                  {
+                                                    "borderColor": "#555C70",
                                                   },
                                                 ]
                                               }
@@ -719,12 +719,14 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               style={
                                                 [
                                                   {
-                                                    "borderRadius": 12,
-                                                    "height": 24,
                                                     "left": 0,
                                                     "position": "absolute",
                                                     "top": 0,
-                                                    "width": 24,
+                                                  },
+                                                  {
+                                                    "borderRadius": 18,
+                                                    "height": 36,
+                                                    "width": 36,
                                                   },
                                                   {
                                                     "backgroundColor": "#0073E6",
@@ -828,20 +830,17 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       >
                                         <View
                                           style={
-                                            [
-                                              {
-                                                "flexDirection": "row",
-                                              },
-                                              {
-                                                "flexShrink": 1,
-                                              },
-                                            ]
+                                            {
+                                              "columnGap": 18,
+                                              "flexDirection": "row",
+                                              "flexShrink": 1,
+                                            }
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             dynamicTypeRamp="headline"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             style={
                                               [
                                                 {},
@@ -906,8 +905,8 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                             onStartShouldSetResponder={[Function]}
                                             style={
                                               {
-                                                "height": 24,
-                                                "width": 24,
+                                                "height": 36,
+                                                "width": 36,
                                               }
                                             }
                                             testID="AnimatedRadioInput"
@@ -916,16 +915,18 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               style={
                                                 [
                                                   {
-                                                    "borderRadius": 12,
                                                     "borderWidth": 2,
-                                                    "height": 24,
                                                     "left": 0,
                                                     "position": "absolute",
                                                     "top": 0,
-                                                    "width": 24,
                                                   },
                                                   {
-                                                    "borderColor": "#475A6D",
+                                                    "borderRadius": 18,
+                                                    "height": 36,
+                                                    "width": 36,
+                                                  },
+                                                  {
+                                                    "borderColor": "#555C70",
                                                   },
                                                 ]
                                               }
@@ -934,12 +935,14 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               style={
                                                 [
                                                   {
-                                                    "borderRadius": 12,
-                                                    "height": 24,
                                                     "left": 0,
                                                     "position": "absolute",
                                                     "top": 0,
-                                                    "width": 24,
+                                                  },
+                                                  {
+                                                    "borderRadius": 18,
+                                                    "height": 36,
+                                                    "width": 36,
                                                   },
                                                   {
                                                     "backgroundColor": "#0073E6",
@@ -1083,10 +1086,10 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -1102,15 +1105,15 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
                                   tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
                                     color="#0E0F13"
@@ -1157,8 +1160,8 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1188,14 +1191,12 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -1259,10 +1260,10 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -1278,15 +1279,15 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"

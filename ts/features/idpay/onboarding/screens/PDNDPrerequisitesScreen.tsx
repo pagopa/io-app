@@ -1,6 +1,5 @@
 import {
-  ButtonSolid,
-  ContentWrapper,
+  FooterActions,
   ModuleSummary,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -57,20 +56,17 @@ export const PDNDPrerequisitesScreen = () => {
         />
       ),
       footer: (
-        <ContentWrapper>
-          <VSpacer size={16} />
-          <ButtonSolid
-            fullWidth
-            label={I18n.t(
-              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
-            )}
-            accessibilityLabel={I18n.t(
-              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
-            )}
-            onPress={() => dismiss()}
-          />
-          <VSpacer size={16} />
-        </ContentWrapper>
+        <FooterActions
+          actions={{
+            primary: {
+              label: I18n.t(
+                "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
+              ),
+              onPress: () => dismiss()
+            },
+            type: "SingleButton"
+          }}
+        />
       )
     },
     162

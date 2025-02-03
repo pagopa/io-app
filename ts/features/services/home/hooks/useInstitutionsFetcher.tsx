@@ -1,27 +1,30 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useState } from "react";
 import { ScopeTypeEnum } from "../../../../../definitions/services/ScopeType";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paginatedInstitutionsGet } from "../store/actions";
 import {
-  isErrorPaginatedInstitutionsSelector,
-  isLoadingPaginatedInstitutionsSelector,
-  isUpdatingPaginatedInstitutionsSelector,
   paginatedInstitutionsCurrentPageSelector,
   paginatedInstitutionsLastPageSelector,
-  paginatedInstitutionsSelector
+  paginatedInstitutionsPotSelector
 } from "../store/reducers";
 
 const LIMIT: number = 10;
+const NEXT_PAGE_LOADING_WAIT_MILLISECONDS: number = 1000;
 
 export const useInstitutionsFetcher = () => {
   const dispatch = useIODispatch();
 
-  const paginatedInstitutions = useIOSelector(paginatedInstitutionsSelector);
+  const paginatedInstitutionsPot = useIOSelector(
+    paginatedInstitutionsPotSelector
+  );
   const currentPage = useIOSelector(paginatedInstitutionsCurrentPageSelector);
   const isLastPage = useIOSelector(paginatedInstitutionsLastPageSelector);
-  const isLoading = useIOSelector(isLoadingPaginatedInstitutionsSelector);
-  const isUpdating = useIOSelector(isUpdatingPaginatedInstitutionsSelector);
-  const isError = useIOSelector(isErrorPaginatedInstitutionsSelector);
+
+  const paginatedInstitutions = pot.toUndefined(paginatedInstitutionsPot);
+  const isError = pot.isError(paginatedInstitutionsPot);
+  const isLoading = pot.isLoading(paginatedInstitutionsPot);
+  const isUpdating = pot.isUpdating(paginatedInstitutionsPot);
 
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
@@ -51,10 +54,22 @@ export const useInstitutionsFetcher = () => {
       if (isLastPage) {
         return;
       }
+      // If there was an error in the last page-loading, we prevent
+      // the page from reloading continuosly when the server endpoint keeps
+      // replying with an error. In such case we block the call and wait for
+      // a little bit before the request can be sent again
+      if (isError) {
+        const millisecondsAfterLastError =
+          new Date().getTime() - paginatedInstitutionsPot.error.time.getTime();
+
+        if (millisecondsAfterLastError < NEXT_PAGE_LOADING_WAIT_MILLISECONDS) {
+          return;
+        }
+      }
 
       fetchPage(page);
     },
-    [isLastPage, fetchPage]
+    [isError, isLastPage, paginatedInstitutionsPot, fetchPage]
   );
 
   const refresh = useCallback(() => {

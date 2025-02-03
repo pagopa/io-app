@@ -1,5 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { WalletCard, WalletCardType } from "../../types";
+import { WalletCard, WalletCardCategory, WalletCardType } from "../../types";
 
 export const walletUpsertCard =
   createStandardAction("WALLET_UPSERT_CARD")<WalletCard>();
@@ -15,6 +15,10 @@ export const walletRemoveCardsByType = createStandardAction(
   "WALLET_REMOVE_CARDS_BY_TYPE"
 )<WalletCardType>();
 
+export const walletRemoveCardsByCategory = createStandardAction(
+  "WALLET_REMOVE_CARDS_BY_CATEGORY"
+)<WalletCardCategory>();
+
 export const walletHideCards =
   createStandardAction("WALLET_HIDE_CARDS")<ReadonlyArray<WalletCard["key"]>>();
 
@@ -27,5 +31,6 @@ export type WalletCardsActions =
   | ActionType<typeof walletAddCards>
   | ActionType<typeof walletRemoveCards>
   | ActionType<typeof walletRemoveCardsByType>
+  | ActionType<typeof walletRemoveCardsByCategory>
   | ActionType<typeof walletHideCards>
   | ActionType<typeof walletRestoreCards>;
