@@ -19,11 +19,6 @@ import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
-  primaryBlockLegacy: {
-    backgroundColor: IOColors["blue-500"],
-    padding: 16,
-    borderRadius: 8
-  },
   primaryBlock: {
     backgroundColor: IOColors["blueIO-500"],
     padding: 16,
@@ -213,9 +208,7 @@ const renderButtonSolid = (isExperimental: boolean) => (
       </VStack>
     </DSComponentViewerBox>
 
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <VStack space={buttonBlockMargin}>
         <DSComponentViewerBox
           name="ButtonSolid · Contrast variant"
@@ -439,9 +432,7 @@ const renderButtonOutline = (isExperimental: boolean) => (
       </>
     )}
 
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <VStack space={buttonBlockMargin}>
         <DSComponentViewerBox
           name="ButtonOutline · Contrast variant"
@@ -569,9 +560,7 @@ const renderButtonLink = (isExperimental: boolean) => (
       </VStack>
     </DSComponentViewerBox>
 
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <VStack space={buttonBlockMargin}>
         <DSComponentViewerBox
           name="ButtonLink · Contrast variant"
@@ -691,9 +680,7 @@ const renderIconButton = (isExperimental: boolean) => (
         />
       </HStack>
     </DSComponentViewerBox>
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <DSComponentViewerBox
         name="IconButton · Contrast variant"
         colorMode="dark"
@@ -746,9 +733,7 @@ const renderIconButtonSolid = (isExperimental: boolean) => (
         />
       </HStack>
     </DSComponentViewerBox>
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <DSComponentViewerBox
         name="IconButtonSolid · Contrast variant, large"
         colorMode="dark"
@@ -810,9 +795,7 @@ const renderIconButtonContained = (isExperimental: boolean) => (
         />
       </HStack>
     </DSComponentViewerBox>
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <DSComponentViewerBox
         name="IconButtonContained · Contrast variant"
         colorMode="dark"
