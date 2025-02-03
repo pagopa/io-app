@@ -1,4 +1,4 @@
-import { ItwRemoteQRCodePayload } from "../../../common/utils/itwTypesUtils.ts";
+import { ItwRemoteQRCodePayload } from "../Utils/itwRemoteTypeUtils.ts";
 import { RemoteFailure } from "./failure.ts";
 
 export type Context = {

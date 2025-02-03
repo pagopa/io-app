@@ -15,7 +15,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
-import { ItwRemoteQRCodePayload } from "../../../common/utils/itwTypesUtils.ts";
+import { ItwRemoteQRCodePayload } from "../Utils/itwRemoteTypeUtils.ts";
 import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
 import { selectIsLoading } from "../machine/selectors.ts";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";

@@ -1,4 +1,4 @@
-import { ItwRemoteQRCodePayload } from "../../../common/utils/itwTypesUtils";
+import { ItwRemoteQRCodePayload } from "../Utils/itwRemoteTypeUtils";
 
 export type Start = {
   type: "start";
