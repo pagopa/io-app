@@ -111,7 +111,7 @@ const ReceiptPreviewScreen = () => {
   }
   return (
     <OperationResultScreenContent
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       title={I18n.t("global.genericError")}
     />
   );

@@ -42,7 +42,7 @@ const FastLoginModals = (
   if (tokenRefreshing.kind === "transient-error") {
     return (
       <AskUserInteractionScreen
-        pictogramName="umbrellaNew"
+        pictogramName="umbrella"
         title={I18n.t(
           "fastLogin.userInteraction.sessionExpired.transientError.title"
         )}

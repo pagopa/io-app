@@ -28,7 +28,7 @@ const renderComponent = (subtitle: string | undefined = undefined) => {
   return renderScreenWithNavigationStoreContext(
     () => (
       <PreconditionsFeedback
-        pictogram="umbrellaNew"
+        pictogram="umbrella"
         title="The title"
         subtitle={subtitle}
       />

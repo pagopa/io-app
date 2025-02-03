@@ -87,7 +87,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   };
 
   const genericErrorProps: OperationResultScreenContentProps = {
-    pictogram: "umbrellaNew",
+    pictogram: "umbrella",
     title: I18n.t("wallet.payment.failure.GENERIC_ERROR.title"),
     subtitle: I18n.t("wallet.payment.failure.GENERIC_ERROR.subtitle"),
     action: closeAction,
@@ -170,7 +170,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         };
       case "PAYMENT_VERIFY_GENERIC_ERROR":
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           title: I18n.t(
             "wallet.payment.failure.PAYMENT_VERIFY_GENERIC_ERROR.title"
           ),
@@ -193,7 +193,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         };
       case "PAYMENT_SLOWDOWN_ERROR":
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           title: I18n.t("wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.title"),
           subtitle: I18n.t(
             "wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.subtitle"

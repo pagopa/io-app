@@ -7,7 +7,7 @@ const CGNDiscountExpiredScreen = () => {
   const onPress = () => navigate.pop();
   return (
     <OperationResultScreenContent
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       title={I18n.t("bonus.cgn.merchantDetail.discount.error")}
       isHeaderVisible={false}
       action={{

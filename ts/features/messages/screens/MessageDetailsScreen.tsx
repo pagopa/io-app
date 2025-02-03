@@ -179,7 +179,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   if (message === undefined || messageDetails === undefined) {
     return (
       <OperationResultScreenContent
-        pictogram={"umbrellaNew"}
+        pictogram={"umbrella"}
         title={I18n.t("global.genericError")}
         subtitle={I18n.t("messageDetails.submitBugText")}
       />

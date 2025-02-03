@@ -88,7 +88,7 @@ const PreconditionsContentMarkdown = () => {
 
 const PreconditionsContentError = () => (
   <PreconditionsFeedback
-    pictogram="umbrellaNew"
+    pictogram="umbrella"
     title={I18n.t("global.genericError")}
   />
 );
@@ -127,7 +127,7 @@ const PreconditionsContentUpdate = () => {
   const pnMinAppVersion = useIOSelector(pnMinAppVersionSelector);
   return (
     <PreconditionsFeedback
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       title={I18n.t("features.messages.updateBottomSheet.title")}
       subtitle={I18n.t("features.messages.updateBottomSheet.subtitle", {
         value: pnMinAppVersion

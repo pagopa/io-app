@@ -3707,7 +3707,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * [[IOAPPFD0-98](https://pagopa.atlassian.net/browse/IOAPPFD0-98)] Add the new `Banner` component ([#4607](https://github.com/pagopa/io-app/issues/4607)) ([d9a5670](https://github.com/pagopa/io-app/commit/d9a567056ece1a2a6d3bdf7857f59ca076ae6774))
 * **Firma con IO:** [[SFEQS-1706](https://pagopa.atlassian.net/browse/SFEQS-1706)] Refactor ErrorComponent to use pictograms ([#4666](https://github.com/pagopa/io-app/issues/4666)) ([77014f5](https://github.com/pagopa/io-app/commit/77014f5e924eac4f15fab3d3129b26cec5f75b8c))
-* [[IOAPPFD0-106](https://pagopa.atlassian.net/browse/IOAPPFD0-106)] Add the new `emptyArchive` and `umbrellaNew` pictograms ([#4660](https://github.com/pagopa/io-app/issues/4660)) ([7b1e33b](https://github.com/pagopa/io-app/commit/7b1e33bd7d67672f279ad0789650a9a724913e5e))
+* [[IOAPPFD0-106](https://pagopa.atlassian.net/browse/IOAPPFD0-106)] Add the new `emptyArchive` and `umbrella` pictograms ([#4660](https://github.com/pagopa/io-app/issues/4660)) ([7b1e33b](https://github.com/pagopa/io-app/commit/7b1e33bd7d67672f279ad0789650a9a724913e5e))
 * [[IOAPPFD0-107](https://pagopa.atlassian.net/browse/IOAPPFD0-107)] Update main app grid with new side margin ([#4661](https://github.com/pagopa/io-app/issues/4661)) ([770992c](https://github.com/pagopa/io-app/commit/770992ce399020320060968d93da8518f77d3552))
 * [[IOAPPFD0-99](https://pagopa.atlassian.net/browse/IOAPPFD0-99)] Make the entire `Alert` pressable when `action` is set ([#4616](https://github.com/pagopa/io-app/issues/4616)) ([1c5b07c](https://github.com/pagopa/io-app/commit/1c5b07c09790555d20b243a543d4cc0b8f9cd5e4))
 
