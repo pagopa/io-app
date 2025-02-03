@@ -41,7 +41,7 @@ export const AlertModal = ({ message }: AlertModalProps) => {
       backgroundColor={opaqueBgColor}
       foreground={
         <View style={styles.container}>
-          <Body color="bluegreyDark">{message}</Body>
+          <Body color="grey-850">{message}</Body>
         </View>
       }
     />

@@ -336,9 +336,9 @@ exports[`FimsHistoryHeaderComponent should match snapshot 1`] = `
                     >
                       <View>
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="title1"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},
@@ -363,9 +363,9 @@ exports[`FimsHistoryHeaderComponent should match snapshot 1`] = `
                           }
                         />
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="body"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},

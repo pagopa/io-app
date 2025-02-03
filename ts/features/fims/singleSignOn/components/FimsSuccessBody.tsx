@@ -2,15 +2,18 @@ import {
   Avatar,
   Body,
   ButtonLink,
+  FooterActions,
   ForceScrollDownView,
   H2,
   H6,
   hexToRgba,
-  HSpacer,
+  HStack,
   Icon,
   IOColors,
   IOStyles,
+  IOVisualCostants,
   ListItemHeader,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -20,8 +23,7 @@ import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Consent } from "../../../../../definitions/fims_sso/Consent";
-import { FooterActions } from "../../../../components/ui/FooterActions";
-import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
+import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -43,6 +45,7 @@ export const FimsFlowSuccessBody = ({
   consents,
   onAbort
 }: FimsSuccessBodyProps) => {
+  const theme = useIOTheme();
   const dispatch = useIODispatch();
   const store = useIOStore();
   const serviceId = consents.service_id as ServiceId;
@@ -111,15 +114,19 @@ export const FimsFlowSuccessBody = ({
         ]}
       >
         <VSpacer size={24} />
-        <View style={styles.rowAlignCenter}>
+        <HStack space={8} style={{ alignItems: "center" }}>
+          {/* TODO: We need to add a variant of `Avatar` that
+          lets you set a custom icon with a custom colour. */}
           <View style={styles.outlineContainer}>
-            <Icon name="productIOApp" size={30} color="blueIO-500" />
+            <Icon
+              name="productIOApp"
+              size={"100%"}
+              color={theme["interactiveElem-default"]}
+            />
           </View>
-          <HSpacer size={8} />
           <Icon name="transactions" color="grey-450" />
-          <HSpacer size={8} />
           <Avatar logoUri={serviceLogo} size={"small"} />
-        </View>
+        </HStack>
 
         <VSpacer size={24} />
         <H2>{I18n.t("FIMS.consentsScreen.title")}</H2>
@@ -195,10 +202,14 @@ const generateBottomSheetProps = (
 
 const styles = StyleSheet.create({
   outlineContainer: {
-    padding: 6,
     borderWidth: 1,
+    padding: 8,
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 8,
-    borderColor: hexToRgba(IOColors.black, 0.1)
-  },
-  rowAlignCenter: { flexDirection: "row", alignItems: "center" }
+    borderColor: hexToRgba(IOColors.black, 0.1),
+    borderCurve: "continuous",
+    width: IOVisualCostants.avatarSizeSmall,
+    height: IOVisualCostants.avatarSizeSmall
+  }
 });

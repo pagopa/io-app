@@ -9,7 +9,6 @@ import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import { LandingScreen } from "../screens/authentication/LandingScreen";
 import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
-import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
 import { CieCardReaderScreenWrapper } from "../screens/authentication/cie/CieCardReaderScreenWrapper";
 import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
@@ -122,11 +121,6 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.CIE_LOGIN_CONFIG_SCREEN}
       component={CieLoginConfigScreen}
-    />
-
-    <Stack.Screen
-      name={ROUTES.CIE_AUTHORIZE_USAGE_SCREEN}
-      component={CieAuthorizeDataUsageScreen}
     />
 
     <Stack.Screen

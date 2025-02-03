@@ -440,9 +440,9 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="caption1"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {
@@ -471,9 +471,9 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -942,7 +942,7 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#475A6D",
+                                  "color": "#555C70",
                                 },
                                 {
                                   "flex": 0,
@@ -951,13 +951,13 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                                 },
                               ]
                             }
-                            tintColor="#475A6D"
+                            tintColor="#555C70"
                             vbHeight={24}
                             vbWidth={24}
                             width={16}
                           >
                             <RNSVGGroup
-                              color="#475A6D"
+                              color="#555C70"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -991,9 +991,9 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="caption1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {
@@ -1022,9 +1022,9 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                           }
                         />
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="headline"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},
@@ -1042,9 +1042,9 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                           TEST
                         </Text>
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="footnote"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},

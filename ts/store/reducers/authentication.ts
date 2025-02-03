@@ -5,6 +5,7 @@ import { isActionOf } from "typesafe-actions";
 import { PublicSession } from "../../../definitions/session_manager/PublicSession";
 import { SessionToken } from "../../types/SessionToken";
 import {
+  clearCurrentSession,
   idpSelected,
   loginSuccess,
   logoutFailure,
@@ -281,6 +282,10 @@ const reducer = (
         ? "SESSION_EXPIRED"
         : "NOT_LOGGED_IN"
     };
+  }
+
+  if (isActionOf(clearCurrentSession, action)) {
+    return INITIAL_STATE;
   }
 
   if (isActionOf(resetAuthenticationState, action) && isSessionExpired(state)) {

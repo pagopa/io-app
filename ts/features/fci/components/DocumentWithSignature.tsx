@@ -41,7 +41,7 @@ type Props = WithTestID<{
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors.bluegrey
+    backgroundColor: IOColors["grey-700"]
   },
   header: {
     alignItems: "center",
@@ -188,9 +188,7 @@ const DocumentWithSignature = (props: Props) => {
     >
       <View style={[IOStyles.horizontalContentPadding, styles.header]}>
         <HSpacer />
-        <H5 color={"bluegrey"} style={styles.headerTitle}>
-          {I18n.t("messagePDFPreview.title")}
-        </H5>
+        <H5 style={styles.headerTitle}>{I18n.t("messagePDFPreview.title")}</H5>
         <IconButton
           color="neutral"
           accessibilityLabel={I18n.t("global.buttons.close")}

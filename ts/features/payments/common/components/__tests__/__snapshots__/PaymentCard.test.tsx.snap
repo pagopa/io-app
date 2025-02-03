@@ -7,6 +7,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
       "aspectRatio": 1.6,
       "backgroundColor": "#E8EBF1",
       "borderColor": "#D2D6E3",
+      "borderCurve": "continuous",
       "borderRadius": 8,
       "borderWidth": 1,
       "padding": 16,

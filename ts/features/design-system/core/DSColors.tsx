@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   smallCapsLightMode: {
-    color: IOColors.bluegrey
+    color: IOColors["grey-700"]
   },
   smallCapsDarkMode: {
     color: IOColors["grey-450"]

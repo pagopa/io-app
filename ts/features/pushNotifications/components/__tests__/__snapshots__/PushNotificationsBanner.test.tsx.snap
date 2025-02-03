@@ -416,9 +416,9 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -443,9 +443,9 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -487,10 +487,10 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -526,7 +526,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 align="xMidYMid"
                                 bbHeight={80}
                                 bbWidth={80}
-                                color="#00C5CA"
                                 fill="none"
                                 focusable={false}
                                 height={80}
@@ -546,7 +545,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={80}
@@ -731,10 +729,10 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -750,15 +748,15 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
@@ -829,9 +827,9 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                           >
                             <View>
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},

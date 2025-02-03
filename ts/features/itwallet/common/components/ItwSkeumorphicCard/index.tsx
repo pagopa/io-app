@@ -13,7 +13,7 @@ import Animated from "react-native-reanimated";
 import I18n from "../../../../../i18n";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
-  borderColorByStatus,
+  useBorderColorByStatus,
   getCredentialNameFromType,
   tagPropsByStatus,
   validCredentialStatuses
@@ -119,8 +119,10 @@ type CardSideBaseProps = {
 };
 
 const CardSideBase = ({ status, children }: CardSideBaseProps) => {
+  const borderColorMap = useBorderColorByStatus();
+
   const statusTagProps = tagPropsByStatus[status];
-  const borderColor = borderColorByStatus[status];
+  const borderColor = borderColorMap[status];
 
   const dynamicStyle: StyleProp<ViewStyle> = {
     borderColor,

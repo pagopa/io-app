@@ -157,7 +157,7 @@ const CgnMerchantsListByCategory = () => {
     secondAction: {
       icon: "search",
       onPress() {
-        navigate("CGN_MERCHANTS_SEARCH");
+        navigate(CGN_ROUTES.DETAILS.MERCHANTS.SEARCH);
       },
       accessibilityLabel: I18n.t(
         "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
@@ -272,15 +272,14 @@ const CgnMerchantsListByCategory = () => {
         />
       ) : (
         <Animated.FlatList
-          style={{ flexGrow: 1, backgroundColor: IOColors.white }}
+          style={{ flexGrow: 1 }}
           onScroll={scrollHandler}
           scrollEventThrottle={8}
           snapToOffsets={[0, titleHeight]}
           snapToEnd={false}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: getPaddingBottom(),
-            backgroundColor: IOColors.white
+            paddingBottom: getPaddingBottom()
           }}
           refreshControl={refreshControl}
           data={merchantsAll}

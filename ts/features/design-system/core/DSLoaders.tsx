@@ -100,20 +100,24 @@ const ProgressLoaderViewerBox = () => {
   );
 };
 
-const CircularProgressViewerBox = () => (
-  <CircularProgress
-    radius={imgDimension / 2}
-    progress={10}
-    size={imgDimension}
-    strokeWidth={circleBorderWidth}
-    strokeBgColor={IOColors.greyLight}
-    strokeColor={IOColors.blue}
-  >
-    <View style={styles.imgWrapper}>
-      <Pictogram size={"100%"} name={"nfcScaniOS"} />
-    </View>
-  </CircularProgress>
-);
+const CircularProgressViewerBox = () => {
+  const theme = useIOTheme();
+
+  return (
+    <CircularProgress
+      radius={imgDimension / 2}
+      progress={10}
+      size={imgDimension}
+      strokeWidth={circleBorderWidth}
+      strokeBgColor={IOColors["grey-100"]}
+      strokeColor={IOColors[theme["interactiveElem-default"]]}
+    >
+      <View style={styles.imgWrapper}>
+        <Pictogram size={"100%"} name={"nfcScaniOS"} />
+      </View>
+    </CircularProgress>
+  );
+};
 
 const sectionMargin = 40;
 const sectionTitleMargin = 16;
@@ -126,11 +130,11 @@ export const DSLoaders = () => {
       <VStack space={sectionMargin}>
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Activity Indicator</H4>
-          <SpinnerViewerBox name="ActivityIndicator · Large size, primary legacy color">
+          <SpinnerViewerBox name="ActivityIndicator · Large size, primary color">
             <ActivityIndicator
               animating={true}
               size={"large"}
-              color={IOColors.blue}
+              color={IOColors[theme["interactiveElem-default"]]}
               accessible={true}
               accessibilityHint={I18n.t(
                 "global.accessibility.activityIndicator.hint"
