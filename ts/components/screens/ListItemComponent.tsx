@@ -24,7 +24,6 @@ import {
 import customVariables from "../../theme/variables";
 import { makeFontStyleObject } from "../core/fonts";
 import { IOStyles } from "../core/variables/IOStyles";
-import { BadgeComponent } from "./BadgeComponent";
 
 type Props = Readonly<{
   title: string;
@@ -34,7 +33,6 @@ type Props = Readonly<{
   subTitle?: string;
   isFirstItem?: boolean;
   isLastItem?: boolean;
-  hasBadge?: boolean;
   iconName?: IOIcons;
   smallIconSize?: boolean;
   iconOnTop?: boolean;
@@ -69,10 +67,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 24,
     ...makeFontStyleObject("Semibold", undefined, "TitilliumSansPro")
-  },
-  spacingBase: {
-    paddingTop: 6,
-    paddingRight: customVariables.spacingBase
   },
   flexRow2: {
     flexDirection: "row",
@@ -115,12 +109,6 @@ export default class ListItemComponent extends Component<Props> {
           <View style={styles.flexColumn}>
             <View style={IOStyles.rowSpaceBetween}>
               <View style={styles.flexRow2}>
-                {this.props.hasBadge && (
-                  <View style={styles.spacingBase}>
-                    <BadgeComponent />
-                  </View>
-                )}
-
                 <Text
                   style={[
                     styles.listItemText,
@@ -160,7 +148,7 @@ export default class ListItemComponent extends Component<Props> {
                   <Icon
                     name="chevronRightListItem"
                     size={ICON_SIZE}
-                    color="blue-500"
+                    color="blueIO-500"
                   />
                 ))}
             </View>
@@ -188,7 +176,7 @@ export default class ListItemComponent extends Component<Props> {
                   size={
                     this.props.smallIconSize ? ICON_SIZE : ICON_SIZE_DEFAULT
                   }
-                  color="blue-500"
+                  color="blueIO-500"
                 />
               </View>
             )}

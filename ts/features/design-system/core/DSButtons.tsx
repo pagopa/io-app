@@ -10,7 +10,6 @@ import {
   IconButtonSolid,
   ListItemSwitch,
   VStack,
-  useIOExperimentalDesign,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
@@ -37,7 +36,6 @@ const buttonBlockInnerSpacing = 8;
 const buttonBlockInnerSpacingLoose = 16;
 
 export const DSButtons = () => {
-  const { isExperimental } = useIOExperimentalDesign();
   const theme = useIOTheme();
 
   return (
@@ -45,41 +43,41 @@ export const DSButtons = () => {
       <VStack space={sectionMargin}>
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ButtonSolid</H4>
-          {renderButtonSolid(isExperimental)}
+          {renderButtonSolid()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ButtonOutline</H4>
-          {renderButtonOutline(isExperimental)}
+          {renderButtonOutline()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ButtonLink</H4>
-          {renderButtonLink(isExperimental)}
+          {renderButtonLink()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>IconButton</H4>
-          {renderIconButton(isExperimental)}
+          {renderIconButton()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>IconButtonSolid</H4>
-          {renderIconButtonSolid(isExperimental)}
+          {renderIconButtonSolid()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>
             IconButtonContained (Icebox)
           </H4>
-          {renderIconButtonContained(isExperimental)}
+          {renderIconButtonContained()}
         </VStack>
       </VStack>
     </DesignSystemScreen>
   );
 };
 
-const renderButtonSolid = (isExperimental: boolean) => (
+const renderButtonSolid = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="ButtonSolid · Primary variant">
       <VStack space={buttonBlockInnerSpacing}>
@@ -303,7 +301,7 @@ const renderButtonSolid = (isExperimental: boolean) => (
   </VStack>
 );
 
-const renderButtonOutline = (isExperimental: boolean) => (
+const renderButtonOutline = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="ButtonOutline · Primary variant">
       <VStack space={buttonBlockInnerSpacing}>
@@ -364,73 +362,6 @@ const renderButtonOutline = (isExperimental: boolean) => (
         />
       </VStack>
     </DSComponentViewerBox>
-
-    {!isExperimental && (
-      <>
-        <DSComponentViewerBox name="ButtonOutline · Danger variant">
-          <VStack space={buttonBlockInnerSpacing}>
-            <ButtonOutline
-              color="danger"
-              label={"Danger button"}
-              onPress={onButtonPress}
-              accessibilityLabel="Tap to trigger test alert"
-            />
-
-            <ButtonOutline
-              color="danger"
-              label={"Danger button"}
-              icon="trashcan"
-              accessibilityLabel="Tap to trigger test alert"
-              onPress={onButtonPress}
-            />
-
-            <ButtonOutline
-              color="danger"
-              label={"Danger button"}
-              icon="trashcan"
-              iconPosition="end"
-              accessibilityLabel="Tap to trigger test alert"
-              onPress={onButtonPress}
-            />
-          </VStack>
-        </DSComponentViewerBox>
-        <DSComponentViewerBox name="ButtonOutline · Danger, full width">
-          <ButtonOutline
-            fullWidth
-            color="danger"
-            accessibilityLabel="Tap to trigger test alert"
-            label={"Danger button (full width)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
-          />
-        </DSComponentViewerBox>
-
-        <DSComponentViewerBox name="ButtonOutline · Danger, disabled">
-          <VStack space={buttonBlockInnerSpacing}>
-            <ButtonOutline
-              color="danger"
-              disabled
-              accessibilityLabel="Tap to trigger test alert"
-              label={"Danger button (disabled)"}
-              onPress={() => {
-                alert("Action triggered");
-              }}
-            />
-            <ButtonOutline
-              color="danger"
-              disabled
-              fullWidth
-              accessibilityLabel="Tap to trigger test alert"
-              label={"Danger Button (full width, disabled)"}
-              onPress={() => {
-                alert("Action triggered");
-              }}
-            />
-          </VStack>
-        </DSComponentViewerBox>
-      </>
-    )}
 
     <View style={styles.primaryBlock}>
       <VStack space={buttonBlockMargin}>
@@ -506,7 +437,7 @@ const renderButtonOutline = (isExperimental: boolean) => (
   </VStack>
 );
 
-const renderButtonLink = (isExperimental: boolean) => (
+const renderButtonLink = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="ButtonLink · Primary variant">
       <VStack space={buttonBlockInnerSpacingLoose}>
@@ -631,7 +562,7 @@ const renderButtonLink = (isExperimental: boolean) => (
   </VStack>
 );
 
-const renderIconButton = (isExperimental: boolean) => (
+const renderIconButton = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="IconButton · Primary variant">
       <HStack space={buttonBlockInnerSpacingLoose}>
@@ -713,7 +644,7 @@ const renderIconButton = (isExperimental: boolean) => (
   </VStack>
 );
 
-const renderIconButtonSolid = (isExperimental: boolean) => (
+const renderIconButtonSolid = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="IconButtonSolid · Primary variant, large">
       <HStack space={buttonBlockInnerSpacingLoose}>
@@ -759,7 +690,7 @@ const renderIconButtonSolid = (isExperimental: boolean) => (
   </VStack>
 );
 
-const renderIconButtonContained = (isExperimental: boolean) => (
+const renderIconButtonContained = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="IconButtonContained · Primary variant">
       <HStack space={buttonBlockInnerSpacing}>

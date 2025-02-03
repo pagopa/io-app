@@ -8,7 +8,7 @@ import {
   Icon,
   Tag,
   VSpacer,
-  useIOExperimentalDesign,
+  useIOTheme,
   useScaleAnimation
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -63,7 +63,7 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
   ) : null;
 };
 export const CgnModuleDiscount = ({ onPress, discount }: Props) => {
-  const { isExperimental } = useIOExperimentalDesign();
+  const theme = useIOTheme();
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
 
@@ -121,7 +121,7 @@ export const CgnModuleDiscount = ({ onPress, discount }: Props) => {
           </View>
           <Icon
             name="chevronRightListItem"
-            color={isExperimental ? "blueIO-500" : "blue"}
+            color={theme["interactiveElem-default"]}
             size={24}
           />
         </View>

@@ -8,7 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 
 import { PropsWithChildren, useState } from "react";
-import { LayoutChangeEvent, StyleSheet, View } from "react-native";
+import { ColorValue, LayoutChangeEvent, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
@@ -17,8 +17,6 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useIOSelector } from "../../../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import {
   PaymentCard,
   PaymentCardComponentProps
@@ -37,16 +35,13 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   headerTitle = "",
   children
 }: PropsWithChildren<Props>) => {
-  const isDSenabled = useIOSelector(isDesignSystemEnabledSelector);
   const insets = useSafeAreaInsets();
   const translationY = useSharedValue(0);
   const [titleHeight, setTitleHeight] = useState(0);
 
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];
-  const blueHeaderColor = isDSenabled
-    ? IOColors["blueIO-600"]
-    : IOColors["blue-500"];
+  const blueHeaderColor: ColorValue = IOColors["blueIO-600"];
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({

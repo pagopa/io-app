@@ -1,6 +1,6 @@
 import { H3, IOColors, LabelMini, VSpacer } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { ColorValue, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -71,11 +71,7 @@ type BonusProgressBarProps = {
 };
 
 const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-
-  const progressBarColor = isDesignSystemEnabled
-    ? IOColors["blueItalia-500"]
-    : IOColors["blue-500"];
+  const progressBarColor: ColorValue = IOColors["blueItalia-500"];
 
   const width = useSharedValue(100);
   useEffect(() => {
