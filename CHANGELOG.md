@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.82.0-rc.3](https://github.com/pagopa/io-app/compare/2.82.0-rc.2...2.82.0-rc.3) (2025-01-31)
+
+
+### Features
+
+* [[IOCOM-1921](https://pagopa.atlassian.net/browse/IOCOM-1921)] FIMS - Back navigation upon InApp Browser closing ([#6659](https://github.com/pagopa/io-app/issues/6659)) ([63ff6c2](https://github.com/pagopa/io-app/commit/63ff6c2c74eb4ec85bb22194b515597cc7033586))
+* **IT Wallet:** [[SIW-1993](https://pagopa.atlassian.net/browse/SIW-1993)] Create scaffold for remote presentation machine ([#6649](https://github.com/pagopa/io-app/issues/6649)) ([66e44b8](https://github.com/pagopa/io-app/commit/66e44b822e3e1ca735d3e0539878a135a736c8a6))
+
+
+### Chores
+
+* [[IOAPPX-467](https://pagopa.atlassian.net/browse/IOAPPX-467)] Remove legacy color palette ([#6635](https://github.com/pagopa/io-app/issues/6635)) ([dad09b8](https://github.com/pagopa/io-app/commit/dad09b829a798a7f0d8d516ef0b0c055017cbc60))
+
 ## [2.82.0-rc.2](https://github.com/pagopa/io-app/compare/2.82.0-rc.1...2.82.0-rc.2) (2025-01-30)
 
 

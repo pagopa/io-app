@@ -4,7 +4,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
 <View
   style={
     {
-      "borderBottomColor": "#E6E9F2",
+      "borderBottomColor": "#E8EBF1",
       "borderBottomWidth": 1,
       "marginBottom": 16,
       "paddingBottom": 8,
@@ -188,7 +188,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                       "width": 36,
                     },
                     {
-                      "borderColor": "#475A6D",
+                      "borderColor": "#555C70",
                     },
                   ]
                 }
