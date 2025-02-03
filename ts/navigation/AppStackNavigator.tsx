@@ -7,7 +7,7 @@ import {
 } from "@react-navigation/native";
 import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
 
-import { View } from "react-native";
+import { StatusBar, View } from "react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
@@ -165,6 +165,9 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         routeNameRef.current = currentRouteName;
       }}
     >
+      <StatusBar
+        barStyle={themeType === "dark" ? "light-content" : "dark-content"}
+      />
       {props.children}
     </NavigationContainer>
   );
