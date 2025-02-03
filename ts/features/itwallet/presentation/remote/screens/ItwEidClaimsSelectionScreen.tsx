@@ -15,7 +15,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
-import { ItwRemoteQRCodePayload } from "../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
 import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
 import { selectIsLoading } from "../machine/selectors.ts";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
@@ -25,7 +25,7 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 
 export type ItwEidClaimsSelectionScreenNavigationParams = {
-  itwRemoteQRCodePayload: ItwRemoteQRCodePayload;
+  itwRemoteRequestPayload: ItwRemoteRequestPayload;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -56,17 +56,17 @@ const ItwEidClaimsSelectionScreen = (params: ScreenProps) => {
 
   const isMachineLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
 
-  const itwRemoteQRCodePayload = params.route.params.itwRemoteQRCodePayload;
+  const itwRemoteRequestPayload = params.route.params.itwRemoteRequestPayload;
 
   useFocusEffect(
     useCallback(() => {
-      if (itwRemoteQRCodePayload) {
+      if (itwRemoteRequestPayload) {
         machineRef.send({
           type: "start",
-          qrCodePayload: itwRemoteQRCodePayload
+          remoteRequestPayload: itwRemoteRequestPayload
         });
       }
-    }, [itwRemoteQRCodePayload, machineRef])
+    }, [itwRemoteRequestPayload, machineRef])
   );
 
   if (isMachineLoading) {

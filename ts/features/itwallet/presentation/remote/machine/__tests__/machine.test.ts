@@ -23,21 +23,21 @@ describe("itwRemoteMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
   });
 
-  it("should transition from Idle to QRCodeValidation when receiving start event", () => {
+  it("should transition from Idle to RemoteRequestValidation when receiving start event", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
     actor.send({
       type: "start",
-      qrCodePayload: {
+      remoteRequestPayload: {
         clientId: T_CLIENT_ID,
         requestUri: T_REQUEST_URI,
         state: T_STATE
       }
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("QRCodeValidation");
-    expect(actor.getSnapshot().context.qrCodePayload).toStrictEqual({
+    expect(actor.getSnapshot().value).toStrictEqual("RemoteRequestValidation");
+    expect(actor.getSnapshot().context.remoteRequestPayload).toStrictEqual({
       clientId: T_CLIENT_ID,
       requestUri: T_REQUEST_URI,
       state: T_STATE

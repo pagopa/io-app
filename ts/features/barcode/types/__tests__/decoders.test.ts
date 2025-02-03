@@ -97,7 +97,7 @@ describe("test decodeIOBarcode function", () => {
       expect(output).toStrictEqual(
         O.some({
           type: "ITW_REMOTE",
-          itwRemoteQRCodePayload: {
+          itwRemoteRequestPayload: {
             clientId: "abc123xy",
             requestUri: "https://example.com/callback",
             state: "hyqizm592",
@@ -116,7 +116,7 @@ describe("test decodeIOBarcode function", () => {
       expect(output).toStrictEqual(
         O.some({
           type: "ITW_REMOTE",
-          itwRemoteQRCodePayload: {
+          itwRemoteRequestPayload: {
             clientId: "abc123xy",
             requestUri: "https://example.com/callback",
             state: "hyqizm592",

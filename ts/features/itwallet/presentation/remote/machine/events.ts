@@ -1,8 +1,8 @@
-import { ItwRemoteQRCodePayload } from "../Utils/itwRemoteTypeUtils";
+import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
 
 export type Start = {
   type: "start";
-  qrCodePayload: ItwRemoteQRCodePayload;
+  remoteRequestPayload: ItwRemoteRequestPayload;
 };
 
 export type Back = {

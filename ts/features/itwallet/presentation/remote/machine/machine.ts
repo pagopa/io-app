@@ -25,14 +25,14 @@ export const itwRemoteMachine = setup({
       on: {
         start: {
           actions: assign(({ event }) => ({
-            qrCodePayload: event.qrCodePayload
+            remoteRequestPayload: event.remoteRequestPayload
           })),
-          target: "QRCodeValidation"
+          target: "RemoteRequestValidation"
         }
       }
     },
-    QRCodeValidation: {
-      description: "Validating the QR code data before proceeding",
+    RemoteRequestValidation: {
+      description: "Validating the remote request payload before proceeding",
       tags: [ItwTags.Loading]
     },
     Failure: {

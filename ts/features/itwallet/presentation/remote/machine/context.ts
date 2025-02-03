@@ -1,11 +1,11 @@
-import { ItwRemoteQRCodePayload } from "../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
 import { RemoteFailure } from "./failure.ts";
 
 export type Context = {
   /**
-   * The QRCode payload for the remote presentation
+   * The remote request payload for the remote presentation
    */
-  qrCodePayload: ItwRemoteQRCodePayload | undefined;
+  remoteRequestPayload: ItwRemoteRequestPayload | undefined;
   /**
    * The failure of the remote presentation machine
    */
@@ -13,6 +13,6 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
-  qrCodePayload: undefined,
+  remoteRequestPayload: undefined,
   failure: undefined
 };

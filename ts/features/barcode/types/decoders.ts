@@ -12,7 +12,7 @@ import { pipe } from "fp-ts/lib/function";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { ItwRemoteQRCodePayload } from "../../itwallet/presentation/remote/Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/Utils/itwRemoteTypeUtils.ts";
 import { getUrlParam } from "../../itwallet/common/utils/itwUrlUtils.ts";
 import { IOBarcodeType } from "./IOBarcode";
 
@@ -54,7 +54,7 @@ export type DecodedIOBarcode =
     }
   | {
       type: "ITW_REMOTE";
-      itwRemoteQRCodePayload: ItwRemoteQRCodePayload;
+      itwRemoteRequestPayload: ItwRemoteRequestPayload;
     };
 
 // Barcode decoder function which is used to determine the type and content of a barcode
@@ -132,7 +132,7 @@ const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
     ),
     O.map(({ clientId, requestUri, state, requestUriMethod }) => ({
       type: "ITW_REMOTE",
-      itwRemoteQRCodePayload: {
+      itwRemoteRequestPayload: {
         clientId,
         requestUri,
         state,

@@ -160,7 +160,7 @@ const BarcodeScanScreen = () => {
         navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
           screen: ITW_REMOTE_ROUTES.EID_CLAIMS_SELECTION,
           params: {
-            itwRemoteQRCodePayload: barcode.itwRemoteQRCodePayload
+            itwRemoteRequestPayload: barcode.itwRemoteRequestPayload
           }
         });
         break;
