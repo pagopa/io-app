@@ -166,7 +166,10 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
                 type: "buttonLink",
                 componentProps: {
                   label: I18n.t("features.payments.transactions.button"),
-                  onPress: handleNavigateToTransactionList
+                  onPress: handleNavigateToTransactionList,
+                  accessibilityLabel: I18n.t(
+                    "features.payments.transactions.button"
+                  )
                 }
               }
             : undefined
