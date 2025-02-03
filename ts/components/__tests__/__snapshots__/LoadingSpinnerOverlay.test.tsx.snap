@@ -315,9 +315,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                 {
                   "borderWidth": 2,
                 },
-                {
-                  "columnGap": 8,
-                },
                 false,
                 {
                   "columnGap": 8,

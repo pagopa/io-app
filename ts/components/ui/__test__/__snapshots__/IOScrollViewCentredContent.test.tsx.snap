@@ -1917,9 +1917,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "columnGap": 8,
                                   },
-                                  {
-                                    "columnGap": 8,
-                                  },
                                   false,
                                   {
                                     "backgroundColor": "rgba(231,236,252,0)",
@@ -4844,9 +4841,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "paddingHorizontal": 16,
-                                  },
-                                  {
-                                    "columnGap": 8,
                                   },
                                   {
                                     "columnGap": 8,
@@ -7844,9 +7838,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "columnGap": 8,
                                   },
-                                  {
-                                    "columnGap": 8,
-                                  },
                                   false,
                                   {
                                     "backgroundColor": "rgba(231,236,252,0)",
@@ -10702,9 +10693,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "paddingHorizontal": 16,
-                                  },
-                                  {
-                                    "columnGap": 8,
                                   },
                                   {
                                     "columnGap": 8,

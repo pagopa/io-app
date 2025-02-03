@@ -655,14 +655,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -846,14 +846,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -1983,14 +1983,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -2174,14 +2174,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -3311,14 +3311,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -3502,14 +3502,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -4639,14 +4639,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -4830,14 +4830,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -5967,14 +5967,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -6158,14 +6158,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -7295,14 +7295,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -7486,14 +7486,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -8623,14 +8623,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -8814,14 +8814,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -9951,14 +9951,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -10142,14 +10142,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -11279,14 +11279,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -11470,14 +11470,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -12607,14 +12607,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -12798,14 +12798,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -13935,14 +13935,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -14126,14 +14126,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -15263,14 +15263,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -15454,14 +15454,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -16591,14 +16591,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -16782,14 +16782,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -17919,14 +17919,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -18110,14 +18110,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -19247,14 +19247,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -19438,14 +19438,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -20575,14 +20575,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -20766,14 +20766,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -21903,14 +21903,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -22094,14 +22094,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -23231,14 +23231,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -23422,14 +23422,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>

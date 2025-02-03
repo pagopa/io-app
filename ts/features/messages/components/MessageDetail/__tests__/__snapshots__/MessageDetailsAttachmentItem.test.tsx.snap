@@ -415,11 +415,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                     "paddingVertical": 6,
                                   },
                                   {
-                                    "borderRadius": 36,
-                                    "paddingHorizontal": 12,
-                                    "paddingVertical": 6,
-                                  },
-                                  {
                                     "backgroundColor": "#E7ECFC",
                                   },
                                 ]
@@ -1102,11 +1097,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                       "paddingVertical": 6,
                                     },
                                     {
-                                      "borderRadius": 36,
-                                      "paddingHorizontal": 12,
-                                      "paddingVertical": 6,
-                                    },
-                                    {
                                       "backgroundColor": "#E7ECFC",
                                     },
                                   ]
@@ -1626,11 +1616,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                     "borderCurve": "continuous",
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                  },
-                                  {
-                                    "borderRadius": 36,
-                                    "paddingHorizontal": 12,
-                                    "paddingVertical": 6,
                                   },
                                   {
                                     "borderRadius": 36,
@@ -2204,11 +2189,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                       "borderCurve": "continuous",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                    },
-                                    {
-                                      "borderRadius": 36,
-                                      "paddingHorizontal": 12,
-                                      "paddingVertical": 6,
                                     },
                                     {
                                       "borderRadius": 36,

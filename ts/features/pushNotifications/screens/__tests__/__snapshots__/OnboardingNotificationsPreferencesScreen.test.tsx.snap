@@ -613,14 +613,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -804,14 +804,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -919,8 +919,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <RNSVGSvgView
                                   align="xMidYMid"
-                                  bbHeight={64}
-                                  bbWidth={64}
+                                  bbHeight={80}
+                                  bbWidth={80}
                                   focusable={false}
                                   height={80}
                                   meetOrSlice={0}
@@ -2073,14 +2073,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -2264,14 +2264,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -2379,8 +2379,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <RNSVGSvgView
                                   align="xMidYMid"
-                                  bbHeight={64}
-                                  bbWidth={64}
+                                  bbHeight={80}
+                                  bbWidth={80}
                                   focusable={false}
                                   height={80}
                                   meetOrSlice={0}
@@ -3534,14 +3534,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -3725,14 +3725,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -3840,8 +3840,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <RNSVGSvgView
                                   align="xMidYMid"
-                                  bbHeight={64}
-                                  bbWidth={64}
+                                  bbHeight={80}
+                                  bbWidth={80}
                                   focusable={false}
                                   height={80}
                                   meetOrSlice={0}
@@ -4995,14 +4995,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -5186,14 +5186,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -5301,8 +5301,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <RNSVGSvgView
                                   align="xMidYMid"
-                                  bbHeight={64}
-                                  bbWidth={64}
+                                  bbHeight={80}
+                                  bbWidth={80}
                                   focusable={false}
                                   height={80}
                                   meetOrSlice={0}
@@ -7054,8 +7054,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               >
                                 <RNSVGSvgView
                                   align="xMidYMid"
-                                  bbHeight={64}
-                                  bbWidth={64}
+                                  bbHeight={80}
+                                  bbWidth={80}
                                   focusable={false}
                                   height={80}
                                   meetOrSlice={0}

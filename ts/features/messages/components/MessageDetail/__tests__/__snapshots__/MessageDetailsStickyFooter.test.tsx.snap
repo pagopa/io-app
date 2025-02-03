@@ -1148,9 +1148,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 {
                                   "columnGap": 8,
                                 },
-                                {
-                                  "columnGap": 8,
-                                },
                                 false,
                                 {
                                   "backgroundColor": "rgba(231,236,252,0)",

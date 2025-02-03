@@ -1589,6 +1589,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                 },
                                 {
                                   "backgroundColor": "#D2D6E3",
+                                  "opacity": 0.5,
                                 },
                                 false,
                                 false,

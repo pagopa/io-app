@@ -836,11 +836,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "paddingVertical": 6,
                                           },
                                           {
-                                            "borderRadius": 36,
-                                            "paddingHorizontal": 12,
-                                            "paddingVertical": 6,
-                                          },
-                                          {
                                             "backgroundColor": "#E7ECFC",
                                           },
                                         ]
@@ -1061,11 +1056,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "borderCurve": "continuous",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
-                                          },
-                                          {
-                                            "borderRadius": 36,
-                                            "paddingHorizontal": 12,
-                                            "paddingVertical": 6,
                                           },
                                           {
                                             "borderRadius": 36,

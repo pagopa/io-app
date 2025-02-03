@@ -494,7 +494,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                     "width": 36,
                                                   },
                                                   {
-                                                    "borderColor": "#555C70",
+                                                    "borderColor": "#636B82",
                                                   },
                                                 ]
                                               }
@@ -506,11 +506,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                     "left": 0,
                                                     "position": "absolute",
                                                     "top": 0,
-                                                  },
-                                                  {
-                                                    "borderRadius": 18,
-                                                    "height": 36,
-                                                    "width": 36,
                                                   },
                                                   {
                                                     "borderRadius": 18,
@@ -715,7 +710,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                     "width": 36,
                                                   },
                                                   {
-                                                    "borderColor": "#555C70",
+                                                    "borderColor": "#636B82",
                                                   },
                                                 ]
                                               }
@@ -727,11 +722,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                     "left": 0,
                                                     "position": "absolute",
                                                     "top": 0,
-                                                  },
-                                                  {
-                                                    "borderRadius": 18,
-                                                    "height": 36,
-                                                    "width": 36,
                                                   },
                                                   {
                                                     "borderRadius": 18,
@@ -936,7 +926,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                     "width": 36,
                                                   },
                                                   {
-                                                    "borderColor": "#555C70",
+                                                    "borderColor": "#636B82",
                                                   },
                                                 ]
                                               }
@@ -948,11 +938,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                     "left": 0,
                                                     "position": "absolute",
                                                     "top": 0,
-                                                  },
-                                                  {
-                                                    "borderRadius": 18,
-                                                    "height": 36,
-                                                    "width": 36,
                                                   },
                                                   {
                                                     "borderRadius": 18,
