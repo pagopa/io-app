@@ -1,25 +1,16 @@
-import {
-  Body,
-  ButtonOutline,
-  H6,
-  IOPictograms,
-  IOStyles,
-  Pictogram,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { IOPictograms } from "@pagopa/io-app-design-system";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import themeVariables from "../../../../theme/variables";
-import { isFailureSelector } from "../store/selectors";
 import { idPayUnsubscribeAction } from "../store/actions";
+import { isFailureSelector } from "../store/selectors";
 
 type ScreenContentType = {
   pictogram: IOPictograms;
   title: string;
-  content: string;
+  subtitle: string;
   buttonLabel: string;
 };
 
@@ -28,18 +19,18 @@ const UnsubscriptionResultScreen = () => {
   const navigation = useIONavigation();
   const isFailure = useIOSelector(isFailureSelector);
 
-  const { pictogram, title, content, buttonLabel }: ScreenContentType =
+  const { pictogram, title, subtitle, buttonLabel }: ScreenContentType =
     isFailure
       ? {
           pictogram: "umbrellaNew",
           title: I18n.t("idpay.unsubscription.failure.title"),
-          content: I18n.t("idpay.unsubscription.failure.content"),
+          subtitle: I18n.t("idpay.unsubscription.failure.content"),
           buttonLabel: I18n.t("idpay.unsubscription.failure.button")
         }
       : {
           pictogram: "success",
           title: I18n.t("idpay.unsubscription.success.title"),
-          content: I18n.t("idpay.unsubscription.success.content"),
+          subtitle: I18n.t("idpay.unsubscription.success.content"),
           buttonLabel: I18n.t("idpay.unsubscription.success.button")
         };
 
@@ -57,37 +48,16 @@ const UnsubscriptionResultScreen = () => {
   };
 
   return (
-    <SafeAreaView style={[IOStyles.flex, { flexGrow: 1 }]}>
-      <View style={[styles.wrapper, IOStyles.horizontalContentPadding]}>
-        <View style={styles.content}>
-          <Pictogram name={pictogram} size={80} />
-          <VSpacer size={16} />
-          <H6>{title}</H6>
-          <VSpacer size={16} />
-          <Body style={{ textAlign: "center" }}>{content}</Body>
-        </View>
-        <ButtonOutline
-          color="primary"
-          label={buttonLabel}
-          accessibilityLabel={buttonLabel}
-          onPress={handleButtonPress}
-          fullWidth={true}
-        />
-      </View>
-    </SafeAreaView>
+    <OperationResultScreenContent
+      pictogram={pictogram}
+      title={title}
+      subtitle={subtitle}
+      action={{
+        label: buttonLabel,
+        onPress: handleButtonPress
+      }}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flexGrow: 1
-  },
-  content: {
-    flexGrow: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: themeVariables.contentPadding
-  }
-});
 
 export default UnsubscriptionResultScreen;
