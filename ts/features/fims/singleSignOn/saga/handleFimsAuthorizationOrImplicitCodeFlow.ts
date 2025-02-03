@@ -37,7 +37,8 @@ import {
   computeAndTrackAuthenticationError,
   absoluteRedirectUrlFromHttpClientResponse,
   isRedirectStatusCode,
-  deallocateFimsResourcesAndNavigateBack
+  handleFimsResourcesDeallocation,
+  handleFimsBackNavigation
 } from "./sagaUtils";
 
 // note: IAB => InAppBrowser
@@ -97,7 +98,7 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
   }
 
   yield* put(fimsSignAndRetrieveInAppBrowserUrlAction.success());
-  yield* call(deallocateFimsResourcesAndNavigateBack);
+  yield* call(handleFimsResourcesDeallocation);
   yield* call(computeAndTrackInAppBrowserOpening);
 
   try {
@@ -109,6 +110,8 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
     );
   } catch (error: unknown) {
     yield* call(handleInAppBrowserErrorIfNeeded, error);
+  } finally {
+    yield* call(handleFimsBackNavigation);
   }
 }
 
@@ -125,12 +128,12 @@ const getLollipopParamsFromUrlString = (url: string) => {
   }
 };
 
-type RelyingPartyOutput = {
+export type RelyingPartyOutput = {
   relyingPartyUrl: string;
   response: HttpClientResponse;
 };
 
-function* postToRelyingPartyWithImplicitCodeFlow(
+export function* postToRelyingPartyWithImplicitCodeFlow(
   rpTextHtmlResponse: HttpClientSuccessResponse
 ): Generator<ReduxSagaEffect, RelyingPartyOutput | undefined, any> {
   const formPostDataEither = yield* call(
@@ -194,7 +197,7 @@ function* postToRelyingPartyWithImplicitCodeFlow(
   return output;
 }
 
-function* redirectToRelyingPartyWithAuthorizationCodeFlow(
+export function* redirectToRelyingPartyWithAuthorizationCodeFlow(
   rpRedirectResponse: HttpClientSuccessResponse
 ): Generator<ReduxSagaEffect, RelyingPartyOutput | undefined, any> {
   const relyingPartyRedirectUrl = rpRedirectResponse.headers.location;
@@ -377,7 +380,7 @@ const validateAndProcessExtractedFormData = (
   });
 };
 
-function* computeAndTrackInAppBrowserOpening() {
+export function* computeAndTrackInAppBrowserOpening() {
   const serviceId = yield* select(relyingPartyServiceIdSelector);
   const service = serviceId
     ? yield* select(serviceByIdSelector, serviceId)
@@ -393,7 +396,7 @@ function* computeAndTrackInAppBrowserOpening() {
   );
 }
 
-function* handleInAppBrowserErrorIfNeeded(error: unknown) {
+export function* handleInAppBrowserErrorIfNeeded(error: unknown) {
   if (!isInAppBrowserClosedError(error)) {
     const debugMessage = `InApp Browser opening failed: ${inAppBrowserErrorToHumanReadable(
       error

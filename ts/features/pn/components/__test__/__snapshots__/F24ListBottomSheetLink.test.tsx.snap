@@ -609,6 +609,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
+                                              },
+                                              {
                                                 "backgroundColor": "#E7ECFC",
                                               },
                                             ]
@@ -829,6 +834,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "borderCurve": "continuous",
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "borderRadius": 36,
@@ -1063,6 +1073,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
+                                              },
+                                              {
                                                 "backgroundColor": "#E7ECFC",
                                               },
                                             ]
@@ -1283,6 +1298,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "borderCurve": "continuous",
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "borderRadius": 36,
@@ -1517,6 +1537,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
+                                              },
+                                              {
                                                 "backgroundColor": "#E7ECFC",
                                               },
                                             ]
@@ -1737,6 +1762,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "borderCurve": "continuous",
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "borderRadius": 36,
@@ -1971,6 +2001,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
+                                              },
+                                              {
                                                 "backgroundColor": "#E7ECFC",
                                               },
                                             ]
@@ -2191,6 +2226,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "borderCurve": "continuous",
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "borderRadius": 36,
@@ -2425,6 +2465,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
+                                              },
+                                              {
                                                 "backgroundColor": "#E7ECFC",
                                               },
                                             ]
@@ -2645,6 +2690,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "borderCurve": "continuous",
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "borderRadius": 36,
@@ -3874,6 +3924,11 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                                 "borderCurve": "continuous",
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "borderRadius": 36,

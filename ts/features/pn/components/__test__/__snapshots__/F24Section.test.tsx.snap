@@ -691,6 +691,11 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
+                                              },
+                                              {
                                                 "backgroundColor": "#E7ECFC",
                                               },
                                             ]
@@ -911,6 +916,11 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                                 "borderCurve": "continuous",
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "borderRadius": 36,
@@ -2610,6 +2620,11 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                       "borderCurve": "continuous",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "borderRadius": 36,
+                                      "paddingHorizontal": 12,
+                                      "paddingVertical": 6,
                                     },
                                     {
                                       "borderRadius": 36,

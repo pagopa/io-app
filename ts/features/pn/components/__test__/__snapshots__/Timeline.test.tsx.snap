@@ -411,7 +411,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -442,7 +442,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -588,7 +588,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -617,7 +617,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -763,7 +763,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -792,7 +792,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -938,7 +938,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -967,7 +967,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1113,7 +1113,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1142,7 +1142,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1288,7 +1288,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1317,7 +1317,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1463,7 +1463,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1492,7 +1492,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1638,7 +1638,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1667,7 +1667,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1813,7 +1813,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1842,7 +1842,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -1988,7 +1988,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -2017,7 +2017,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -2163,7 +2163,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -2192,7 +2192,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -2338,7 +2338,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },
@@ -2367,7 +2367,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                             style={
                               [
                                 {
-                                  "backgroundColor": "#CCD4DC",
+                                  "backgroundColor": "#D2D6E3",
                                   "flexGrow": 1,
                                   "width": 2,
                                 },

@@ -5814,6 +5814,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "paddingVertical": 6,
                                       },
                                       {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
                                         "backgroundColor": "#E7ECFC",
                                       },
                                     ]
@@ -6067,6 +6072,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "paddingVertical": 6,
                                       },
                                       {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
                                         "backgroundColor": "#E7ECFC",
                                       },
                                     ]
@@ -6313,6 +6323,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "borderRadius": 36,
@@ -7447,6 +7462,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "paddingVertical": 6,
                                       },
                                       {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
                                         "backgroundColor": "#E7ECFC",
                                       },
                                     ]
@@ -7700,6 +7720,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "paddingVertical": 6,
                                       },
                                       {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
                                         "backgroundColor": "#E7ECFC",
                                       },
                                     ]
@@ -7946,6 +7971,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "borderRadius": 36,
@@ -9080,6 +9110,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "paddingVertical": 6,
                                       },
                                       {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
                                         "backgroundColor": "#E7ECFC",
                                       },
                                     ]
@@ -9333,6 +9368,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "paddingVertical": 6,
                                       },
                                       {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
                                         "backgroundColor": "#E7ECFC",
                                       },
                                     ]
@@ -9579,6 +9619,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "borderRadius": 36,
@@ -10838,6 +10883,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "paddingVertical": 6,
                                       },
                                       {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
                                         "backgroundColor": "#E7ECFC",
                                       },
                                     ]
@@ -11091,6 +11141,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "paddingVertical": 6,
                                       },
                                       {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
                                         "backgroundColor": "#E7ECFC",
                                       },
                                     ]
@@ -11337,6 +11392,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "borderRadius": 36,

@@ -874,7 +874,6 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                   align="xMidYMid"
                                   bbHeight={80}
                                   bbWidth={80}
-                                  color="#00C5CA"
                                   focusable={false}
                                   height={80}
                                   meetOrSlice={0}
@@ -893,7 +892,6 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={80}

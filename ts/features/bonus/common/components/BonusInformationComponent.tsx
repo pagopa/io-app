@@ -13,7 +13,7 @@ import {
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useContext, useMemo, ComponentProps } from "react";
+import { ComponentProps, useContext, useMemo } from "react";
 import { Image } from "react-native";
 import Animated, {
   Easing,
@@ -25,12 +25,11 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
-import { Markdown } from "../../../../components/ui/Markdown/Markdown";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { getRemoteLocale } from "../../../messages/utils/messages";
 import TosBonusComponent from "./TosBonusComponent";
@@ -52,24 +51,6 @@ type Props = OwnProps &
     "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
 
-const CSS_STYLE = `
-body {
-  font-size: ${customVariables.fontSizeBase}px;
-  color: ${customVariables.textColorDark}
-}
-
-h4 {
-  font-size: ${customVariables.fontSize2}px;
-}
-
-img {
-  width: 100%;
-}
-`;
-
-// for long content markdown computed height should be not enough
-const extraMarkdownBodyHeight = 20;
-
 const getTosFooter = (
   maybeBonusTos: O.Option<string>,
   maybeRegulationUrl: O.Option<{ url: string; name: string }>,
@@ -88,7 +69,7 @@ const getTosFooter = (
               // if tos is defined and the regolation url is not defined
               // return the link (BONUS VACANZE)
               <>
-                <Body color="bluegreyDark">
+                <Body color="grey-850">
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </Body>
                 <Body
@@ -104,16 +85,13 @@ const getTosFooter = (
             // if tos and regulation url is defined
             // return a markdown footer including both links reference (BPD)
             rU => (
-              <Markdown
-                cssStyle={CSS_STYLE}
-                extraBodyHeight={extraMarkdownBodyHeight}
-              >
-                {I18n.t("bonus.termsAndConditionFooter", {
+              <IOMarkdown
+                content={I18n.t("bonus.termsAndConditionFooter", {
                   ctaText,
                   regulationLink: rU.url,
                   tosUrl: bT
                 })}
-              </Markdown>
+              />
             )
           )
         )
@@ -260,14 +238,13 @@ const BonusInformationComponent = (props: Props) => {
         <ContentWrapper>
           <H2 accessibilityRole="header">{bonusTypeLocalizedContent.title}</H2>
           <VSpacer size={16} />
-          <Markdown
-            cssStyle={CSS_STYLE}
-            extraBodyHeight={extraMarkdownBodyHeight}
-          >
-            {bonusTypeLocalizedContent.subtitle +
+          <IOMarkdown
+            content={
+              bonusTypeLocalizedContent.subtitle +
               "\n" +
-              bonusTypeLocalizedContent.content}
-          </Markdown>
+              bonusTypeLocalizedContent.content
+            }
+          />
           <VSpacer size={40} />
           {getTosFooter(
             maybeBonusTos,

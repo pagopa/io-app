@@ -432,6 +432,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             style={
                               [
                                 false,
+                                false,
                                 {
                                   "flex": 1,
                                 },
@@ -458,7 +459,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                     {},
                                     {
                                       "color": "#614C15",
-                                      "fontFamily": "Titillio",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -918,6 +919,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             style={
                               [
                                 false,
+                                false,
                                 {
                                   "flex": 1,
                                 },
@@ -944,7 +946,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                     {},
                                     {
                                       "color": "#614C15",
-                                      "fontFamily": "Titillio",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -1404,6 +1406,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             style={
                               [
                                 false,
+                                false,
                                 {
                                   "flex": 1,
                                 },
@@ -1430,7 +1433,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                     {},
                                     {
                                       "color": "#614C15",
-                                      "fontFamily": "Titillio",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -1890,6 +1893,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             style={
                               [
                                 false,
+                                false,
                                 {
                                   "flex": 1,
                                 },
@@ -1916,7 +1920,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                     {},
                                     {
                                       "color": "#614C15",
-                                      "fontFamily": "Titillio",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -2376,6 +2380,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             style={
                               [
                                 false,
+                                false,
                                 {
                                   "flex": 1,
                                 },
@@ -2402,7 +2407,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                     {},
                                     {
                                       "color": "#614C15",
-                                      "fontFamily": "Titillio",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -2862,6 +2867,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             style={
                               [
                                 false,
+                                false,
                                 {
                                   "flex": 1,
                                 },
@@ -2888,7 +2894,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                     {},
                                     {
                                       "color": "#614C15",
-                                      "fontFamily": "Titillio",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -3348,6 +3354,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             style={
                               [
                                 false,
+                                false,
                                 {
                                   "flex": 1,
                                 },
@@ -3374,7 +3381,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                     {},
                                     {
                                       "color": "#614C15",
-                                      "fontFamily": "Titillio",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -3834,6 +3841,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             style={
                               [
                                 false,
+                                false,
                                 {
                                   "flex": 1,
                                 },
@@ -3860,7 +3868,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                     {},
                                     {
                                       "color": "#614C15",
-                                      "fontFamily": "Titillio",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -4320,6 +4328,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             style={
                               [
                                 false,
+                                false,
                                 {
                                   "flex": 1,
                                 },
@@ -4346,7 +4355,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                     {},
                                     {
                                       "color": "#614C15",
-                                      "fontFamily": "Titillio",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",

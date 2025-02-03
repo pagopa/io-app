@@ -801,6 +801,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                             style={
                               [
                                 false,
+                                false,
                                 {
                                   "flex": 1,
                                 },
@@ -827,7 +828,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                                     {},
                                     {
                                       "color": "#614C15",
-                                      "fontFamily": "Titillio",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",

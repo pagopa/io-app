@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors["grey-100"],
     borderRadius: 8,
     borderWidth: 1,
+    borderCurve: "continuous",
     borderColor: IOColors["grey-200"]
   },
   expiredCard: {

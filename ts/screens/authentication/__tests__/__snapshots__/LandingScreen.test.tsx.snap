@@ -241,7 +241,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -260,7 +259,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -474,7 +472,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -493,7 +490,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -760,7 +756,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -779,7 +774,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -1037,7 +1031,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -1056,7 +1049,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -1124,10 +1116,10 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="title2"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1155,10 +1147,10 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1219,7 +1211,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -1238,7 +1229,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -2507,9 +2497,8 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     >
                                       <RNSVGSvgView
                                         align="xMidYMid"
-                                        bbHeight={80}
-                                        bbWidth={80}
-                                        color="#00C5CA"
+                                        bbHeight={64}
+                                        bbWidth={64}
                                         focusable={false}
                                         height={80}
                                         meetOrSlice={0}
@@ -2528,7 +2517,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                             },
                                           ]
                                         }
-                                        tintColor="#00C5CA"
                                         vbHeight={240}
                                         vbWidth={240}
                                         width={80}
@@ -3139,7 +3127,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -3158,7 +3145,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -3372,7 +3358,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -3391,7 +3376,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -3658,7 +3642,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -3677,7 +3660,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -3935,7 +3917,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -3954,7 +3935,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -4022,10 +4002,10 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="title2"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -4053,10 +4033,10 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     }
                                   />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
                                     importantForAccessibility="no"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -4117,7 +4097,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -4136,7 +4115,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -5405,9 +5383,8 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     >
                                       <RNSVGSvgView
                                         align="xMidYMid"
-                                        bbHeight={80}
-                                        bbWidth={80}
-                                        color="#00C5CA"
+                                        bbHeight={64}
+                                        bbWidth={64}
                                         focusable={false}
                                         height={80}
                                         meetOrSlice={0}
@@ -5426,7 +5403,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                             },
                                           ]
                                         }
-                                        tintColor="#00C5CA"
                                         vbHeight={240}
                                         vbWidth={240}
                                         width={80}

@@ -187,7 +187,7 @@ const BarcodeExpiredContent = ({
 
 const LoadingScreen = () => (
   <SafeAreaView style={styles.loadingWrapper}>
-    <LoadingIndicator size={48} color="aqua" />
+    <LoadingIndicator />
     <VSpacer size={24} />
     <H3>{I18n.t("idpay.barCode.resultScreen.loading.body")}</H3>
     <VSpacer size={8} />

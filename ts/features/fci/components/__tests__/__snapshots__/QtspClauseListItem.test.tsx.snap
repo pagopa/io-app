@@ -556,7 +556,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                         "width": 36,
                                       },
                                       {
-                                        "borderColor": "#636B82",
+                                        "borderColor": "#555C70",
                                       },
                                     ]
                                   }
@@ -569,6 +569,11 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                         "left": 0,
                                         "position": "absolute",
                                         "top": 0,
+                                      },
+                                      {
+                                        "borderRadius": 7.5,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                       {
                                         "borderRadius": 7.5,

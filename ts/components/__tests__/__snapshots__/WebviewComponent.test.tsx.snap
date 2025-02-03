@@ -322,6 +322,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
             },
           ]
         }
+        testID="webview"
         textInteractionEnabled={true}
         useSharedProcessPool={true}
       />

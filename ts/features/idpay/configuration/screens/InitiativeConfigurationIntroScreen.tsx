@@ -75,9 +75,7 @@ export const InitiativeConfigurationIntroScreen = () => {
       }}
     >
       <LoadingSpinnerOverlay isLoading={isLoading}>
-        <H6 color="bluegrey">
-          {I18n.t("idpay.configuration.intro.requiredData.title")}
-        </H6>
+        <H6>{I18n.t("idpay.configuration.intro.requiredData.title")}</H6>
         <VSpacer size={8} />
         <RequiredDataItem
           icon="creditCard"
@@ -120,10 +118,8 @@ const RequiredDataItem = (props: RequiredDataItemProps) => {
         </View>
       )}
       <View>
-        <H6 color="bluegreyDark">{props.title}</H6>
-        <BodySmall weight="Regular" color="bluegrey">
-          {props.subTitle}
-        </BodySmall>
+        <H6 color="grey-850">{props.title}</H6>
+        <BodySmall weight="Regular">{props.subTitle}</BodySmall>
       </View>
     </View>
   );

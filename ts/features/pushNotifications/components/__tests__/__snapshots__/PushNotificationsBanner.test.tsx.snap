@@ -525,7 +525,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 align="xMidYMid"
                                 bbHeight={80}
                                 bbWidth={80}
-                                color="#00C5CA"
                                 fill="none"
                                 focusable={false}
                                 height={80}
@@ -545,7 +544,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={80}

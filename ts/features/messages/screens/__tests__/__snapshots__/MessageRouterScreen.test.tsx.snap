@@ -1939,7 +1939,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -1958,7 +1957,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}

@@ -49,3 +49,9 @@ export const itwRequestedCredentialsSelector = createSelector(
       .filter(([_, requestedAt]) => isFuture(addHours(requestedAt, 24)))
       .map(([credentialType]) => credentialType)
 );
+
+/**
+ * Returns whether the app review modal should be shown.
+ */
+export const itwIsPendingReviewSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isPendingReview;

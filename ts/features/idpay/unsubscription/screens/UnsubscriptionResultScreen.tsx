@@ -37,7 +37,7 @@ const UnsubscriptionResultScreen = () => {
           buttonLabel: I18n.t("idpay.unsubscription.failure.button")
         }
       : {
-          pictogram: "completed",
+          pictogram: "success",
           title: I18n.t("idpay.unsubscription.success.title"),
           content: I18n.t("idpay.unsubscription.success.content"),
           buttonLabel: I18n.t("idpay.unsubscription.success.button")

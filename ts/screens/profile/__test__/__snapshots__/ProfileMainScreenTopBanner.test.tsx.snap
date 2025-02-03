@@ -147,6 +147,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           style={
             [
               false,
+              false,
               {
                 "flex": 1,
               },
@@ -173,7 +174,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                   {},
                   {
                     "color": "#5D1313",
-                    "fontFamily": "Titillio",
+                    "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
@@ -194,7 +195,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                   {},
                   {
                     "color": "#5D1313",
-                    "fontFamily": "Titillio",
+                    "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
@@ -383,7 +384,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           align="xMidYMid"
           bbHeight={80}
           bbWidth={80}
-          color="#00C5CA"
           focusable={false}
           height={80}
           meetOrSlice={0}
@@ -402,7 +402,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               },
             ]
           }
-          tintColor="#00C5CA"
           vbHeight={240}
           vbWidth={240}
           width={80}

@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 8,
     marginBottom: 16,
-    borderBottomColor: IOColors.greyLight,
+    borderBottomColor: IOColors["grey-100"],
     borderBottomWidth: 1
   },
   details: {

@@ -1538,6 +1538,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                               style={
                                 [
                                   false,
+                                  false,
                                   {
                                     "flex": 1,
                                   },
@@ -1564,7 +1565,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                       {},
                                       {
                                         "color": "#614C15",
-                                        "fontFamily": "Titillio",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1585,7 +1586,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                       {},
                                       {
                                         "color": "#614C15",
-                                        "fontFamily": "Titillio",
+                                        "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2047,6 +2048,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                             style={
                               [
                                 false,
+                                false,
                                 {
                                   "flex": 1,
                                 },
@@ -2073,7 +2075,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                     {},
                                     {
                                       "color": "#614C15",
-                                      "fontFamily": "Titillio",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",

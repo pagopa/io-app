@@ -44,7 +44,9 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
 
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];
-  const blueHeaderColor = isDSenabled ? IOColors["blueIO-600"] : IOColors.blue;
+  const blueHeaderColor = isDSenabled
+    ? IOColors["blueIO-600"]
+    : IOColors["blue-500"];
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({

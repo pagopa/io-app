@@ -377,7 +377,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -396,7 +395,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -1312,7 +1310,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -1331,7 +1328,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -1921,6 +1917,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "columnGap": 8,
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                   {
                                     "backgroundColor": "rgba(231,236,252,0)",
@@ -2479,7 +2478,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -2498,7 +2496,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -3533,7 +3530,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -3552,7 +3548,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -4357,7 +4352,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -4376,7 +4370,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -4851,6 +4844,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "columnGap": 8,
                                   },
                                   {
                                     "columnGap": 8,
@@ -5413,7 +5409,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -5432,7 +5427,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -6356,7 +6350,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -6375,7 +6368,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -7268,7 +7260,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -7287,7 +7278,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -7854,6 +7844,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "columnGap": 8,
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                   {
                                     "backgroundColor": "rgba(231,236,252,0)",
@@ -8412,7 +8405,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -8431,7 +8423,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -9443,7 +9434,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -9462,7 +9452,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -10244,7 +10233,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -10263,7 +10251,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -10715,6 +10702,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "columnGap": 8,
                                   },
                                   {
                                     "columnGap": 8,
@@ -11277,7 +11267,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -11296,7 +11285,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}

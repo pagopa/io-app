@@ -1537,6 +1537,11 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                         "paddingVertical": 6,
                                       },
                                       {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
                                         "backgroundColor": "#E7ECFC",
                                       },
                                     ]
