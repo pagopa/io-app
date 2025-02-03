@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: IOColors.white,
     flexDirection: "row",
-    borderColor: IOColors.bluegreyLight,
+    borderColor: IOColors["grey-200"],
     alignItems: "center",
     paddingTop: 12,
     paddingBottom: 14

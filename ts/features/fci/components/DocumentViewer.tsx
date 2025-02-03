@@ -27,7 +27,7 @@ import LoadingComponent from "./LoadingComponent";
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors.bluegrey
+    backgroundColor: IOColors["grey-700"]
   }
 });
 

@@ -10,12 +10,12 @@ type Props = {
 
 const styles = StyleSheet.create({
   progressBar: {
-    backgroundColor: IOColors.greyLight,
+    backgroundColor: IOColors["grey-100"],
     height: 4
   },
   fillBar: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: IOColors.blue
+    backgroundColor: IOColors["blue-500"]
   }
 });
 
