@@ -13,7 +13,7 @@ import {
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useContext, useMemo, ComponentProps } from "react";
+import { ComponentProps, useContext, useMemo } from "react";
 import { Image } from "react-native";
 import Animated, {
   Easing,
@@ -25,13 +25,13 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import { getRemoteLocale } from "../../../messages/utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
-import IOMarkdown from "../../../../components/IOMarkdown";
+import { getRemoteLocale } from "../../../messages/utils/messages";
 import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
@@ -69,7 +69,7 @@ const getTosFooter = (
               // if tos is defined and the regolation url is not defined
               // return the link (BONUS VACANZE)
               <>
-                <Body color="bluegreyDark">
+                <Body color="grey-850">
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </Body>
                 <Body

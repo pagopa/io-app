@@ -7,19 +7,19 @@ import { useFocusEffect } from "@react-navigation/native";
 import {
   FooterActions,
   FooterActionsMeasurements
-} from "../../../../components/ui/FooterActions";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+} from "../../../../../components/ui/FooterActions.tsx";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
+import I18n from "../../../../../i18n.ts";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
+import { ItwGenericErrorContent } from "../../../common/components/ItwGenericErrorContent.tsx";
 import {
   getClaimsFullLocale,
   PdfClaim
-} from "../../common/utils/itwClaimsUtils";
-import { ParsedCredential } from "../../common/utils/itwTypesUtils";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { trackWalletCredentialFAC_SIMILE } from "../../analytics";
-import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
+} from "../../../common/utils/itwClaimsUtils.ts";
+import { ParsedCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
+import { trackWalletCredentialFAC_SIMILE } from "../../../analytics";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 
 // We currently only support PDF files, extend this if needed
 type SupportedAttachmentType = "application/pdf";

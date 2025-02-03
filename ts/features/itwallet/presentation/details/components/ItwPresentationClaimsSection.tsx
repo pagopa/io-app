@@ -6,13 +6,16 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Fragment, useMemo, useState } from "react";
 import { View } from "react-native";
-import I18n from "../../../../i18n";
-import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
-import { ItwIssuanceMetadata } from "../../common/components/ItwIssuanceMetadata";
-import { ItwQrCodeClaimImage } from "../../common/components/ItwQrCodeClaimImage";
-import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
-import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import I18n from "../../../../../i18n.ts";
+import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim.tsx";
+import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata.tsx";
+import { ItwQrCodeClaimImage } from "../../../common/components/ItwQrCodeClaimImage.tsx";
+import {
+  parseClaims,
+  WellKnownClaim
+} from "../../../common/utils/itwClaimsUtils.ts";
+import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils.ts";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 
 type ItwPresentationClaimsSectionProps = {
   credential: StoredCredential;

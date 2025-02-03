@@ -1,12 +1,12 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwPresentationClaimsSection } from "../ItwPresentationClaimsSection";
+import { applicationChangeState } from "../../../../../../store/actions/application.ts";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types.ts";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
+import { ItwStoredCredentialsMocks } from "../../../../common/utils/itwMocksUtils.ts";
+import { ITW_ROUTES } from "../../../../navigation/routes.ts";
+import { ItwPresentationClaimsSection } from "../ItwPresentationClaimsSection.tsx";
 
 describe("ItwPresentationClaimsSection", () => {
   it("should match the snapshot when claims are visible", () => {
