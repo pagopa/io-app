@@ -94,7 +94,9 @@ export const FimsFlowHandlerScreen = (
   }
   if (loadingState !== undefined) {
     const subtitle =
-      loadingState === "in-app-browser-loading" || loadingState === "abort" ? (
+      loadingState === "in-app-browser-loading" ||
+      loadingState === "abort" ||
+      loadingState === "idle" ? (
         <View style={IOStyles.alignCenter}>
           <Body color="grey-650">{I18n.t(`FIMS.loadingScreen.subtitle`)}</Body>
         </View>

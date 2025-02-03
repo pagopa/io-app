@@ -175,7 +175,8 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
                 type: "buttonLink",
                 componentProps: {
                   label: I18n.t("features.payments.methods.button"),
-                  onPress: handleOnAddMethodPress
+                  onPress: handleOnAddMethodPress,
+                  accessibilityLabel: I18n.t("features.payments.methods.button")
                 }
               }
             : undefined
