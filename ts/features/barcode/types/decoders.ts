@@ -9,9 +9,11 @@ import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { sequenceS } from "fp-ts/lib/Apply";
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { ItwRemoteQRCodePayload } from "../../itwallet/common/utils/itwTypesUtils.ts";
+import { ItwRemoteQRCodePayload } from "../../itwallet/presentation/remote/Utils/itwRemoteTypeUtils.ts";
+import { getUrlParam } from "../../itwallet/common/utils/itwUrlUtils.ts";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -117,26 +119,26 @@ const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
     O.fromNullable(
       data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)
     ),
-    O.chain(() => O.tryCatch(() => new URLSearchParams(data.split("?")[1]))),
-    O.chain(params =>
-      pipe(
-        O.fromNullable(params.get("client_id")),
-        O.bindTo("clientId"),
-        O.bind("requestUri", () => O.fromNullable(params.get("request_uri"))),
-        O.map(({ clientId, requestUri }) => {
-          const state = params.get("state");
-          return {
-            type: "ITW_REMOTE",
-            itwRemoteQRCodePayload: {
-              clientId,
-              requestUri,
-              ...(state && { state }),
-              requestUriMethod: params.get("request_uri_method") ?? "GET"
-            }
-          };
-        })
-      )
-    )
+    O.chain(([url]) =>
+      sequenceS(O.Monad)({
+        clientId: getUrlParam(url, "client_id"),
+        requestUri: getUrlParam(url, "request_uri"),
+        state: getUrlParam(url, "state"),
+        requestUriMethod: pipe(
+          getUrlParam(url, "request_uri_method"),
+          O.alt(() => O.some("GET"))
+        )
+      })
+    ),
+    O.map(({ clientId, requestUri, state, requestUriMethod }) => ({
+      type: "ITW_REMOTE",
+      itwRemoteQRCodePayload: {
+        clientId,
+        requestUri,
+        state,
+        requestUriMethod
+      }
+    }))
   );
 
 // Each type comes with its own decoded function which is used to identify the barcode content

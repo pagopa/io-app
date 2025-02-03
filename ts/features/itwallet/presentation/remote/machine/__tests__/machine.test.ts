@@ -3,6 +3,7 @@ import { itwRemoteMachine } from "../machine.ts";
 
 const T_CLIENT_ID = "clientId";
 const T_REQUEST_URI = "https://example.com";
+const T_STATE = "state";
 
 describe("itwRemoteMachine", () => {
   const mockedMachine = itwRemoteMachine.provide({
@@ -28,13 +29,18 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      qrCodePayload: { clientId: T_CLIENT_ID, requestUri: T_REQUEST_URI }
+      qrCodePayload: {
+        clientId: T_CLIENT_ID,
+        requestUri: T_REQUEST_URI,
+        state: T_STATE
+      }
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("QRCodeValidation");
     expect(actor.getSnapshot().context.qrCodePayload).toStrictEqual({
       clientId: T_CLIENT_ID,
-      requestUri: T_REQUEST_URI
+      requestUri: T_REQUEST_URI,
+      state: T_STATE
     });
   });
 });
