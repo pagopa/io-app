@@ -375,7 +375,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 "borderWidth": 0,
                               },
                               {
-                                "color": "#475A6D",
+                                "color": "#555C70",
                               },
                               {
                                 "flex": 0,
@@ -384,13 +384,13 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               },
                             ]
                           }
-                          tintColor="#475A6D"
+                          tintColor="#555C70"
                           vbHeight={24}
                           vbWidth={24}
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#475A6D"
+                            color="#555C70"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -920,7 +920,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 "borderWidth": 0,
                               },
                               {
-                                "color": "#475A6D",
+                                "color": "#555C70",
                               },
                               {
                                 "flex": 0,
@@ -929,13 +929,13 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               },
                             ]
                           }
-                          tintColor="#475A6D"
+                          tintColor="#555C70"
                           vbHeight={24}
                           vbWidth={24}
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#475A6D"
+                            color="#555C70"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -1465,7 +1465,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 "borderWidth": 0,
                               },
                               {
-                                "color": "#475A6D",
+                                "color": "#555C70",
                               },
                               {
                                 "flex": 0,
@@ -1474,13 +1474,13 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               },
                             ]
                           }
-                          tintColor="#475A6D"
+                          tintColor="#555C70"
                           vbHeight={24}
                           vbWidth={24}
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#475A6D"
+                            color="#555C70"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -2010,7 +2010,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 "borderWidth": 0,
                               },
                               {
-                                "color": "#475A6D",
+                                "color": "#555C70",
                               },
                               {
                                 "flex": 0,
@@ -2019,13 +2019,13 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               },
                             ]
                           }
-                          tintColor="#475A6D"
+                          tintColor="#555C70"
                           vbHeight={24}
                           vbWidth={24}
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#475A6D"
+                            color="#555C70"
                             fill={
                               {
                                 "payload": 4278190080,

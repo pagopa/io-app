@@ -152,8 +152,8 @@ export const getSortedPspList = (
     default:
       return _.orderBy(
         pspList,
-        ["onUs", "taxPayerFee", "pspBusinessName"],
-        ["asc", "asc", "asc"]
+        [psp => (psp.onUs ? 1 : 0), "taxPayerFee", "pspBusinessName"],
+        ["desc", "asc", "asc"]
       );
   }
 };

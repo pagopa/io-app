@@ -520,7 +520,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                       },
                                       {
                                         "flex": 0,
@@ -530,13 +530,13 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                     ]
                                   }
                                   testID="attachment-tag"
-                                  tintColor="#475A6D"
+                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={16}
                                 >
                                   <RNSVGGroup
-                                    color="#475A6D"
+                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1116,8 +1116,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                     onLayout={[Function]}
                                   >
                                     <View
-                                      accessibilityLabel="Notifica"
-                                      accessible={true}
                                       style={
                                         {
                                           "marginHorizontal": -24,
@@ -1127,7 +1125,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       }
                                     >
                                       <View
-                                        importantForAccessibility="no-hide-descendants"
                                         style={
                                           {
                                             "alignItems": "center",
@@ -1144,9 +1141,9 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           }
                                         >
                                           <View
-                                            accessibilityElementsHidden={false}
+                                            accessibilityLabel="Notifica"
+                                            accessibilityRole="header"
                                             accessible={true}
-                                            importantForAccessibility="yes"
                                           >
                                             <Text
                                               allowFontScaling={true}
@@ -1358,8 +1355,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       </View>
                                     </View>
                                     <View
-                                      accessibilityLabel="Message"
-                                      accessible={true}
                                       style={
                                         {
                                           "marginHorizontal": -24,
@@ -1369,7 +1364,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       }
                                     >
                                       <View
-                                        importantForAccessibility="no-hide-descendants"
                                         style={
                                           {
                                             "alignItems": "center",
@@ -1386,9 +1380,9 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           }
                                         >
                                           <View
-                                            accessibilityElementsHidden={false}
+                                            accessibilityLabel="Message"
+                                            accessibilityRole="header"
                                             accessible={true}
-                                            importantForAccessibility="yes"
                                           >
                                             <Text
                                               allowFontScaling={true}

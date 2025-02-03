@@ -1,18 +1,18 @@
 import { memo } from "react";
 import { Alert, Body } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import I18n from "../../../../../i18n.ts";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import {
   getClaimsFullLocale,
   getCredentialExpireDays
-} from "../../common/utils/itwClaimsUtils";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { useIOSelector } from "../../../../store/hooks";
-import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
-import { format } from "../../../../utils/dates";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { type CredentialType } from "../../common/utils/itwMocksUtils";
+} from "../../../common/utils/itwClaimsUtils.ts";
+import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet.tsx";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import { format } from "../../../../../utils/dates.ts";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider.tsx";
+import IOMarkdown from "../../../../../components/IOMarkdown";
+import { type CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 
 type Props = {
   credential: StoredCredential;
