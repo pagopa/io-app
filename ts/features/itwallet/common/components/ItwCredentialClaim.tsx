@@ -71,13 +71,16 @@ const BoolClaimItem = ({ label, claim }: { label: string; claim: boolean }) => {
  * Component which renders a generic text type claim.
  * @param label - the label of the claim
  * @param claim - the claim value
+ * @param isCopyable - a flag to enable the copy of the claim value
  */
 const PlainTextClaimItem = ({
   label,
-  claim
+  claim,
+  isCopyable
 }: {
   label: string;
   claim: string;
+  isCopyable?: boolean;
 }) => {
   const safeValue = getSafeText(claim);
   return (
@@ -85,7 +88,9 @@ const PlainTextClaimItem = ({
       numberOfLines={2}
       label={label}
       value={safeValue}
-      onLongPress={() => clipboardSetStringWithFeedback(safeValue)}
+      onLongPress={
+        isCopyable ? () => clipboardSetStringWithFeedback(safeValue) : undefined
+      }
       accessibilityLabel={`${label} ${
         claim === HIDDEN_CLAIM
           ? I18n.t(
@@ -364,7 +369,13 @@ export const ItwCredentialClaim = ({
           if (hidden && EmptyStringClaim.is(_decoded)) {
             return null;
           }
-          return <PlainTextClaimItem label={claim.label} claim={decoded} />; // must be the last one to be checked due to overlap with IPatternStringTag
+          return (
+            <PlainTextClaimItem
+              label={claim.label}
+              claim={decoded}
+              isCopyable={isPreview}
+            />
+          ); // must be the last one to be checked due to overlap with IPatternStringTag
         } else {
           return <UnknownClaimItem label={claim.label} _claim={decoded} />;
         }
