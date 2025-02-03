@@ -1,9 +1,9 @@
 import {
+  BodySmall,
   ButtonLink,
-  ButtonOutline,
+  ButtonSolid,
   ContentWrapper,
   H3,
-  BodySmall,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -75,7 +75,7 @@ const RootedDeviceModal = () => {
           </View>
           <VSpacer size={24} />
           <View style={IOStyles.selfCenter}>
-            <ButtonOutline
+            <ButtonSolid
               color="danger"
               label={I18n.t("global.buttons.continue")}
               accessibilityLabel={I18n.t("global.buttons.continue")}
