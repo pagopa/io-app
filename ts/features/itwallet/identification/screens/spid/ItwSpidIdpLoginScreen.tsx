@@ -1,22 +1,23 @@
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { memo, useCallback, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
+import { itWalletIssuanceRedirectUri } from "../../../../../config";
+import {
+  HeaderSecondLevelHookProps,
+  useHeaderSecondLevel
+} from "../../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../../i18n";
+import { originSchemasWhiteList } from "../../../../../screens/authentication/originSchemasWhiteList";
+import { getIntentFallbackUrl } from "../../../../../utils/login";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import {
   selectAuthUrlOption,
   selectIsLoading
 } from "../../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
-import I18n from "../../../../../i18n";
-import { originSchemasWhiteList } from "../../../../../screens/authentication/originSchemasWhiteList";
-import { itWalletIssuanceRedirectUri } from "../../../../../config";
-import { getIntentFallbackUrl } from "../../../../../utils/login";
-import {
-  HeaderSecondLevelHookProps,
-  useHeaderSecondLevel
-} from "../../../../../hooks/useHeaderSecondLevel";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 
 const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
@@ -38,6 +39,8 @@ const ItwSpidIdpLoginScreen = () => {
     ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const [isWebViewLoading, setWebViewLoading] = useState(true);
+
+  const dismissalDialog = useItwDismissalDialog();
 
   const onLoadEnd = useCallback(() => {
     setWebViewLoading(false);
@@ -91,7 +94,8 @@ const ItwSpidIdpLoginScreen = () => {
   // Setup header properties
   const headerProps: HeaderSecondLevelHookProps = {
     title: I18n.t("features.itWallet.identification.mode.title"),
-    supportRequest: false
+    supportRequest: false,
+    goBack: dismissalDialog.show
   };
 
   useHeaderSecondLevel(headerProps);

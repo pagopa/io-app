@@ -1,7 +1,5 @@
 import {
-  ContentWrapper,
   Divider,
-  FooterActionsInline,
   H2,
   H6,
   ListItemHeader,
@@ -12,10 +10,10 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useEffect } from "react";
-import { SafeAreaView, View } from "react-native";
+import { View } from "react-native";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
@@ -91,40 +89,31 @@ const IDPayPaymentAuthorizationScreen = () => {
     return <AuthorizationScreenSkeleton />;
   };
 
-  useHeaderSecondLevel({
-    title: "Autorizza operazione",
-    canGoBack: false,
-    contextualHelp: emptyContextualHelp,
-    supportRequest: true
-  });
-
   return (
-    <>
-      <SafeAreaView style={IOStyles.flex}>
-        <View style={IOStyles.flex}>
-          <ContentWrapper>
-            <H2>{I18n.t("idpay.payment.authorization.header")}</H2>
-            <VSpacer size={24} />
-            {renderContent()}
-          </ContentWrapper>
-        </View>
-      </SafeAreaView>
-      <FooterActionsInline
-        startAction={{
-          color: "primary",
-          label: isCancelling ? "" : I18n.t("global.buttons.deny"),
-          onPress: handleCancel,
-          disabled: isLoading
-        }}
-        endAction={{
-          color: "primary",
+    <IOScrollViewWithLargeHeader
+      canGoback={false}
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{ showHelp: true }}
+      title={{
+        label: I18n.t("idpay.payment.authorization.header")
+      }}
+      actions={{
+        type: "TwoButtons",
+        primary: {
           label: I18n.t("global.buttons.confirm"),
           onPress: handleConfirm,
-          loading: isAuthorizing,
-          disabled: isLoading
-        }}
-      />
-    </>
+          disabled: isLoading || isAuthorizing
+        },
+        secondary: {
+          label: I18n.t("global.buttons.deny"),
+          onPress: handleCancel,
+          disabled: isLoading || isCancelling
+        }
+      }}
+      includeContentMargins
+    >
+      {renderContent()}
+    </IOScrollViewWithLargeHeader>
   );
 };
 
@@ -161,15 +150,10 @@ const AuthorizationScreenContent = ({
     />
 
     <VSpacer size={24} />
-
-    {/* TODO:: will be removed in favor of LIST_GROUP_HEADING in future updates */}
     <ListItemHeader
       label={I18n.t("idpay.payment.authorization.infoDivider")}
       iconName="initiatives"
     />
-
-    <VSpacer size={16} />
-
     <ListItemInfo
       label={I18n.t("idpay.payment.authorization.initiativeName")}
       value={data.initiativeName || "-"}
