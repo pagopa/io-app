@@ -57,7 +57,7 @@ const renderFooter = (url: string, filePath: string) => {
     accessibilityLabel: I18n.t("global.buttons.share")
   };
 
-  const saveButtonProps: ButtonSolidProps = {
+  const saveButtonProps = {
     onPress: () => {
       ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
         {
