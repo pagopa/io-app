@@ -1,11 +1,8 @@
 import {
-  Avatar,
   ContentWrapper,
   FeatureInfo,
   ForceScrollDownView,
   H2,
-  HSpacer,
-  Icon,
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -13,7 +10,6 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
-import { StyleSheet, View } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -57,6 +53,7 @@ import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScree
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -161,19 +158,9 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     <ForceScrollDownView onThresholdCrossed={trackScrollToBottom}>
       <ContentWrapper>
         <VSpacer size={24} />
-        <View style={styles.header}>
-          <Avatar
-            size="small"
-            logoUri={require("../../../../../img/features/itWallet/issuer/IPZS.png")}
-          />
-          <HSpacer size={8} />
-          <Icon name={"transactions"} color={"grey-450"} size={24} />
-          <HSpacer size={8} />
-          <Avatar
-            size="small"
-            logoUri={require("../../../../../img/app/app-logo-inverted.png")}
-          />
-        </View>
+        <ItwDataExchangeIcons
+          requesterLogoUri={require("../../../../../img/features/itWallet/issuer/IPZS.png")}
+        />
         <VSpacer size={24} />
         <H2>
           {I18n.t("features.itWallet.issuance.credentialAuth.title", {
@@ -236,12 +223,5 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     </ForceScrollDownView>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    alignItems: "center"
-  }
-});
 
 export { ItwIssuanceCredentialTrustIssuerScreen };
