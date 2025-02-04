@@ -15,6 +15,8 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -42,6 +44,7 @@ A malformed link [Error](httssdps://www.error.com) that show toast error.
  * @returns a screen with a list of playgrounds for the ITW
  */
 const ItwPlayground = () => {
+  const navigation = useIONavigation();
   const credentialMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
 
@@ -67,6 +70,16 @@ const ItwPlayground = () => {
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <ContentWrapper>
+        <ListItemNav
+          value="Offline wallet"
+          accessibilityLabel={"Offline wallet"}
+          description="Navigate to the offline version of the wallet"
+          onPress={() =>
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.OFFLINE.WALLET
+            })
+          }
+        />
         {/* Issuing Playground */}
         <ListItemHeader label="Credentials issuing" />
         <ListItemNav
