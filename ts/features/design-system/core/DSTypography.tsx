@@ -195,7 +195,7 @@ export const BodySmallRow = () => {
     <>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <BodySmall>Body small</BodySmall>
-        <BodySmall color={"red"}>Body small</BodySmall>
+        <BodySmall color={theme.errorText}>Body small</BodySmall>
         <View
           style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
         >
@@ -207,7 +207,7 @@ export const BodySmallRow = () => {
       </HStack>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <BodySmall weight="Semibold">Body small SB</BodySmall>
-        <BodySmall weight="Semibold" color={"red"}>
+        <BodySmall weight="Semibold" color={theme.errorText}>
           Body small SB
         </BodySmall>
         <View
@@ -223,7 +223,7 @@ export const BodySmallRow = () => {
       </HStack>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <BodySmall weight="Regular">Body small Regular</BodySmall>
-        <BodySmall weight="Regular" color={"red"}>
+        <BodySmall weight="Regular" color={theme.errorText}>
           Body small Regular
         </BodySmall>
         <View
@@ -248,7 +248,7 @@ export const LabelMiniRow = () => {
     <>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <LabelMini>Label mini</LabelMini>
-        <LabelMini color={"red"}>Label mini</LabelMini>
+        <LabelMini color={theme.errorText}>Label mini</LabelMini>
         <View
           style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
         >
@@ -257,7 +257,7 @@ export const LabelMiniRow = () => {
       </HStack>
       <HStack space={typographicStyleMargin}>
         <LabelMini weight="Semibold">Label mini SB</LabelMini>
-        <LabelMini weight="Semibold" color={"red"}>
+        <LabelMini weight="Semibold" color={theme.errorText}>
           Label mini SB
         </LabelMini>
         <View
@@ -270,7 +270,7 @@ export const LabelMiniRow = () => {
       </HStack>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <LabelMini weight="Regular">Label mini Regular</LabelMini>
-        <LabelMini weight="Regular" color={"red"}>
+        <LabelMini weight="Regular" color={theme.errorText}>
           Label mini Regular
         </LabelMini>
         <View

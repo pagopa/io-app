@@ -336,7 +336,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                       },
                                       {
                                         "flex": 0,
@@ -345,13 +345,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
+                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#475A6D"
+                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -613,14 +613,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#F4F5F8",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#F4F5F8"
                                     value={true}
                                   />
                                 </View>
@@ -804,14 +804,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#F4F5F8",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#F4F5F8"
                                     value={true}
                                   />
                                 </View>
@@ -922,7 +922,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={64}
                                   bbWidth={64}
-                                  color="#00C5CA"
                                   focusable={false}
                                   height={64}
                                   meetOrSlice={0}
@@ -941,7 +940,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={64}
@@ -1796,7 +1794,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                       },
                                       {
                                         "flex": 0,
@@ -1805,13 +1803,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
+                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#475A6D"
+                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2073,14 +2071,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#F4F5F8",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#F4F5F8"
                                     value={false}
                                   />
                                 </View>
@@ -2264,14 +2262,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#F4F5F8",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#F4F5F8"
                                     value={false}
                                   />
                                 </View>
@@ -2382,7 +2380,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={64}
                                   bbWidth={64}
-                                  color="#00C5CA"
                                   focusable={false}
                                   height={64}
                                   meetOrSlice={0}
@@ -2401,7 +2398,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={64}
@@ -3257,7 +3253,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                       },
                                       {
                                         "flex": 0,
@@ -3266,13 +3262,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
+                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#475A6D"
+                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3534,14 +3530,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#F4F5F8",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#F4F5F8"
                                     value={false}
                                   />
                                 </View>
@@ -3725,14 +3721,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#F4F5F8",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#F4F5F8"
                                     value={true}
                                   />
                                 </View>
@@ -3843,7 +3839,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={64}
                                   bbWidth={64}
-                                  color="#00C5CA"
                                   focusable={false}
                                   height={64}
                                   meetOrSlice={0}
@@ -3862,7 +3857,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={64}
@@ -4718,7 +4712,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                       },
                                       {
                                         "flex": 0,
@@ -4727,13 +4721,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
+                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#475A6D"
+                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4995,14 +4989,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#F4F5F8",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#F4F5F8"
                                     value={true}
                                   />
                                 </View>
@@ -5186,14 +5180,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#F4F5F8",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#F4F5F8"
                                     value={false}
                                   />
                                 </View>
@@ -5304,7 +5298,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={64}
                                   bbWidth={64}
-                                  color="#00C5CA"
                                   focusable={false}
                                   height={64}
                                   meetOrSlice={0}
@@ -5323,7 +5316,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={64}
@@ -6179,7 +6171,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                       },
                                       {
                                         "flex": 0,
@@ -6188,13 +6180,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
+                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#475A6D"
+                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7057,7 +7049,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   align="xMidYMid"
                                   bbHeight={64}
                                   bbWidth={64}
-                                  color="#00C5CA"
                                   focusable={false}
                                   height={64}
                                   meetOrSlice={0}
@@ -7076,7 +7067,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={64}
