@@ -23,14 +23,14 @@ export const useServicesHomeBottomSheet = () => {
   const navigation = useIONavigation();
 
   const handleNavigateToServicesPreferencesScreen = useCallback(() => {
-    analytics.trackServicesPreferencesSelected("profile_main");
+    analytics.trackServicesPreferencesSelected("preferences_services");
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.PROFILE_PREFERENCES_SERVICES
     });
   }, [navigation]);
 
   const handleNavigateToSettingsScreen = useCallback(() => {
-    analytics.trackServicesPreferencesSelected("preferences_services");
+    analytics.trackServicesPreferencesSelected("profile_main");
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.SETTINGS_MAIN
     });
