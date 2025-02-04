@@ -1,8 +1,8 @@
 #!/bin/bash
 
-IO_BACKEND_VERSION=v16.7.3-RELEASE
+IO_BACKEND_VERSION=v16.7.4-RELEASE
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.56
+IO_SERVICES_METADATA_VERSION=1.0.57
 
 declare -a apis=(
   # Backend APIs
@@ -17,7 +17,7 @@ declare -a apis=(
   "./definitions/pagopa/cobadge/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/cobadge/abi_definitions.yml"
   "./definitions/pagopa/privative/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/privative/definitions.yml"
   # IDPay APIs
-  "./definitions/idpay idpay-temp.yaml"
+  "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v11.7.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml"
   # Services APIs
   "./definitions/services https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_services_app_backend.yaml"
   # Lollipop APIs
@@ -37,8 +37,6 @@ declare -a apis=(
   "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn_operator_search.yaml"
   # PN APIs
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
-  # CDC APIs
-  "./definitions/cdc assets/CdcSwagger.yml"
   # FCI APIs
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
 )

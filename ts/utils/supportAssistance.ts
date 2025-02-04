@@ -115,6 +115,7 @@ export const zendeskidentityProviderId = "4414310934673";
 export const zendeskCurrentAppVersionId = "4414316660369";
 export const zendeskVersionsHistoryId = "4419641151505";
 export const zendeskFciId = "14874226407825";
+export const zendeskItWalletFailureCode = "31775197295633";
 
 export const defaultZendeskPaymentCategory: ZendeskCategory = {
   value: "io_pagamenti_pagopa",
@@ -139,6 +140,14 @@ export const zendeskFCICategory: ZendeskCategory = {
     "it-IT": "Firma con IO",
     "en-EN": "Firma con IO",
     "de-DE": "Firma con IO"
+  }
+};
+export const zendeskItWalletCategory: ZendeskCategory = {
+  value: "it_wallet",
+  description: {
+    "it-IT": "Documenti su IO",
+    "en-EN": "Documenti su IO",
+    "de-DE": "Dokumente in IO"
   }
 };
 

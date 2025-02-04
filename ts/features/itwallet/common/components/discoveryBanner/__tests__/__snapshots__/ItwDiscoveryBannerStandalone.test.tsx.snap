@@ -683,7 +683,7 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                       <View
                         style={
                           {
-                            "marginBottom": 8,
+                            "marginBottom": 24,
                             "marginTop": 16,
                           }
                         }
@@ -765,9 +765,9 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -792,9 +792,9 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                   }
                                 />
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -836,10 +836,10 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [

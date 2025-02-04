@@ -123,10 +123,9 @@ const usePaymentFailureSupportModal = ({
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
-        assistanceForIdPay: false,
-        assistanceForPayment: true,
-        assistanceForCard: false,
-        assistanceForFci: false
+        assistanceType: {
+          payment: true
+        }
       })
     );
     dispatch(zendeskSelectedCategory(defaultZendeskPaymentCategory));

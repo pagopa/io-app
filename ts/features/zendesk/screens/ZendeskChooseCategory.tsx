@@ -19,16 +19,14 @@ import {
 import { ZendeskParamsList } from "../navigation/params";
 import ZENDESK_ROUTES from "../navigation/routes";
 import {
+  ZendeskAssistanceType,
   zendeskSelectedCategory,
   zendeskSupportFailure
 } from "../store/actions";
 import { zendeskConfigSelector } from "../store/reducers";
 
 export type ZendeskChooseCategoryNavigationParams = {
-  assistanceForPayment: boolean;
-  assistanceForIdPay: boolean;
-  assistanceForCard: boolean;
-  assistanceForFci: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -41,12 +39,7 @@ type Props = IOStackNavigationRouteProps<
  */
 const ZendeskChooseCategory = (props: Props) => {
   const dispatch = useIODispatch();
-  const {
-    assistanceForPayment,
-    assistanceForCard,
-    assistanceForFci,
-    assistanceForIdPay
-  } = props.route.params;
+  const { assistanceType } = props.route.params;
   const zendeskConfig = useIOSelector(zendeskConfigSelector);
   const selectedCategory = (category: ZendeskCategory) =>
     dispatch(zendeskSelectedCategory(category));
@@ -86,17 +79,11 @@ const ZendeskChooseCategory = (props: Props) => {
         addTicketCustomField(categoriesId, category.value);
         if (hasSubCategories(category)) {
           props.navigation.navigate(ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY, {
-            assistanceForIdPay,
-            assistanceForPayment,
-            assistanceForCard,
-            assistanceForFci
+            assistanceType
           });
         } else {
           props.navigation.navigate(ZENDESK_ROUTES.ASK_PERMISSIONS, {
-            assistanceForIdPay,
-            assistanceForPayment,
-            assistanceForCard,
-            assistanceForFci
+            assistanceType
           });
         }
       }}

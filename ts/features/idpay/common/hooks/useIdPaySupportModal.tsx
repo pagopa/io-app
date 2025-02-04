@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -13,7 +12,6 @@ import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
-import { idpayInitiativeDetailsSelector } from "../../details/store";
 
 type PaymentFailureSupportModal = {
   startIdPaySupport: (startingRoute?: string) => void;
@@ -22,8 +20,6 @@ type PaymentFailureSupportModal = {
 const useIdPaySupportModal = (): PaymentFailureSupportModal => {
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-  const initiativeDetailsPot = useIOSelector(idpayInitiativeDetailsSelector);
-  const initiative = pot.toUndefined(initiativeDetailsPot);
 
   const dispatch = useIODispatch();
 
@@ -35,10 +31,9 @@ const useIdPaySupportModal = (): PaymentFailureSupportModal => {
     dispatch(
       zendeskSupportStart({
         startingRoute: startingRoute ?? "n/a",
-        assistanceForIdPay: true,
-        assistanceForPayment: false,
-        assistanceForCard: false,
-        assistanceForFci: false
+        assistanceType: {
+          idPay: true
+        }
       })
     );
     dispatch(zendeskSelectedCategory(defaultIdPayCategory));

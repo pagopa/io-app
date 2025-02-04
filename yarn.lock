@@ -3753,9 +3753,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:4.3.0":
-  version: 4.3.0
-  resolution: "@pagopa/io-app-design-system@npm:4.3.0"
+"@pagopa/io-app-design-system@npm:4.4.6":
+  version: 4.4.6
+  resolution: "@pagopa/io-app-design-system@npm:4.4.6"
   dependencies:
     "@testing-library/jest-native": ^5.4.2
     "@types/react-test-renderer": ^18.0.0
@@ -3779,7 +3779,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: f139ca05d783292fd4d1816698c56028d27ce58ece7d4acf1f5547757abb78d01019f6c4b29a697feb433e593771c9b4ee0cce8779c031bc84ef31d185572d09
+  checksum: e9e3c148bae36132da1721a9002bb648671120b80cb4cf7a5bd1949720d452dfc7a9e27d47bdf3e3b615a2e313039e17b6b92811e87b117bb4935510e0925d94
   languageName: node
   linkType: hard
 
@@ -13657,7 +13657,7 @@ __metadata:
     "@babel/runtime": ^7.20.0
     "@gorhom/bottom-sheet": ^4.1.5
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 4.3.0
+    "@pagopa/io-app-design-system": 4.4.6
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.0.1
@@ -13824,8 +13824,8 @@ __metadata:
     react-native-xml2js: ^1.0.3
     react-redux: 8.1.3
     react-test-renderer: 18.3.1
-    reactotron-react-native: ^5.1.10
-    reactotron-redux: ^3.1.10
+    reactotron-react-native: ^5.1.12
+    reactotron-redux: ^3.1.11
     redux: 4.1.1
     redux-logger: 3.0.6
     redux-mock-store: ^1.5.4
@@ -19686,41 +19686,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reactotron-core-client@npm:2.9.6":
-  version: 2.9.6
-  resolution: "reactotron-core-client@npm:2.9.6"
+"reactotron-core-client@npm:2.9.7":
+  version: 2.9.7
+  resolution: "reactotron-core-client@npm:2.9.7"
   dependencies:
-    reactotron-core-contract: 0.2.4
-  checksum: 4d09b501cbcac44cd06f1c7210429b6acc486e348ca0dd9e2e4268d635cec11a22e101e306395066bd769f470a8cea9b44a26c0d285fc907479aef5b4eb3350e
+    reactotron-core-contract: 0.2.5
+  checksum: 6149ad998c5cd8dccc41f9b93a21d96e44e1cde04eda2b5e0697327f7aa7d5366cbdf900d61846be269b281342de8d4b09ee8ba1d64aa2d613082e66c914178d
   languageName: node
   linkType: hard
 
-"reactotron-core-contract@npm:0.2.4":
-  version: 0.2.4
-  resolution: "reactotron-core-contract@npm:0.2.4"
-  checksum: b3c3e21f3137202d3089b00eda409ec1fb72b8ec296d710883dca07dfb98fa8c48564347854b40b031adcbeb17842730adebac53890f516a5304d03d90d1c1c7
+"reactotron-core-contract@npm:0.2.5":
+  version: 0.2.5
+  resolution: "reactotron-core-contract@npm:0.2.5"
+  checksum: 54b56322ba05559a9faa1d94407a45c6777c9e50f2efb2a1759eead2acf17e053f68c27e5c4338ac6f7f2d6eb649b4ad375153288659d836ef931df44859047a
   languageName: node
   linkType: hard
 
-"reactotron-react-native@npm:^5.1.10":
-  version: 5.1.10
-  resolution: "reactotron-react-native@npm:5.1.10"
+"reactotron-react-native@npm:^5.1.12":
+  version: 5.1.12
+  resolution: "reactotron-react-native@npm:5.1.12"
   dependencies:
     mitt: ^3.0.1
-    reactotron-core-client: 2.9.6
+    reactotron-core-client: 2.9.7
   peerDependencies:
     react-native: ">=0.40.0"
-  checksum: d6f52c23b8c636aee456627aaaa8ce5630b25c90921d2eb7e2d28cb1367a2471d4f4ef35db91a5d518614289b5f0950100b5580b25b4f2179b1e8423575b7cb8
+  checksum: 073a7ef85f39b731a1e54ada487a25c5ee75b1161ce2957e226a24acf4ebf6e8911478e5e94981c3eebe4f7ab1d95da70deae79cc94557593780763806bc0948
   languageName: node
   linkType: hard
 
-"reactotron-redux@npm:^3.1.10":
-  version: 3.1.10
-  resolution: "reactotron-redux@npm:3.1.10"
+"reactotron-redux@npm:^3.1.11":
+  version: 3.1.11
+  resolution: "reactotron-redux@npm:3.1.11"
   peerDependencies:
     reactotron-core-client: "*"
     redux: ">=4.0.0"
-  checksum: 5922ba94240bb6d221e58e798a30aff35f5de3b4e3bfc0a8ae7d4e9554b6328a4a33e771fd6a9ca8c0fdfc65cd16fd82b583361c41b7e17aa823c3850947392b
+  checksum: c9eb31da0f55b96708f79cc95ae2a375bc8225f92b3c0858d99b8c7f4a9b8d8a635b72ee866ab5adb53e8ef803590d01fcd749f638144068e2a12c7f4c62192f
   languageName: node
   linkType: hard
 
