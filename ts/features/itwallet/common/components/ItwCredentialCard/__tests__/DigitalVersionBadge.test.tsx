@@ -1,10 +1,8 @@
 import { render } from "@testing-library/react-native";
-import {
-  ItwDigitalVersionBadge,
-  TagColorScheme
-} from "../ItwDigitalVersionBadge";
+import { DigitalVersionBadge } from "../DigitalVersionBadge";
+import { CardColorScheme } from "../types";
 
-describe("ItwDigitalVersionBadge", () => {
+describe("DigitalVersionBadge", () => {
   it.each([
     ["MDL", "default"],
     ["MDL", "faded"],
@@ -20,9 +18,9 @@ describe("ItwDigitalVersionBadge", () => {
     "should render correctly %s in state %s",
     (credentialType, colorScheme) => {
       const component = render(
-        <ItwDigitalVersionBadge
+        <DigitalVersionBadge
           credentialType={credentialType}
-          colorScheme={colorScheme as TagColorScheme}
+          colorScheme={colorScheme as CardColorScheme}
         />
       ).toJSON();
       expect(component).toMatchSnapshot();
