@@ -373,7 +373,7 @@ export const ItwCredentialClaim = ({
             <PlainTextClaimItem
               label={claim.label}
               claim={decoded}
-              isCopyable={isPreview}
+              isCopyable={!isPreview}
             />
           ); // must be the last one to be checked due to overlap with IPatternStringTag
         } else {
