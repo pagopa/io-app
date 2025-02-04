@@ -514,6 +514,9 @@ The authentication flow is as follows:
 
 ## Deep linking
 
+> [!note]
+> For an improved user experience, we recommend using the App/Universal Link `https://continua.io.pagopa.it` instead of the custom scheme `ioit://`.
+
 The application is able to manage _deep links_. [Deep linking](https://reactnavigation.org/docs/5.x/deep-linking) allows opening the app or a specific screen once a user clicks on specific URL. The URL scheme for io-app is: `ioit://`.
 <details>
     <summary>Supported URLs</summary>
