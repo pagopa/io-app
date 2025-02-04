@@ -20,7 +20,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       {
         "alignItems": "center",
         "backgroundColor": "#FFFFFF",
-        "borderColor": "#CCD4DC",
+        "borderColor": "#D2D6E3",
         "flexDirection": "row",
         "paddingBottom": 14,
         "paddingTop": 12,

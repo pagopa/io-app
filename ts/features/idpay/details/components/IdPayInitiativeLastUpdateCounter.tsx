@@ -1,4 +1,4 @@
-import { LabelMini } from "@pagopa/io-app-design-system";
+import { BodySmall } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { StyleSheet, View } from "react-native";
@@ -25,9 +25,8 @@ const IdPayInitiativeLastUpdateCounter = (props: Props) => {
   );
 
   return (
-    <LabelMini
+    <BodySmall
       style={styles.lastUpdate}
-      color="grey-700"
       weight="Regular"
       testID={"IDPayDetailsLastUpdatedTestID"}
     >
@@ -35,7 +34,7 @@ const IdPayInitiativeLastUpdateCounter = (props: Props) => {
         "idpay.initiative.details.initiativeDetailsScreen.configured.lastUpdated"
       )}
       {lastUpdateString}
-    </LabelMini>
+    </BodySmall>
   );
 };
 

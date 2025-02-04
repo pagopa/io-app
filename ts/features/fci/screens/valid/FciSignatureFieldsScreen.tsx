@@ -177,9 +177,7 @@ const FciSignatureFieldsScreen = () => {
           flexDirection: "row"
         }}
       >
-        <H4 color="bluegrey" style={IOStyles.flex}>
-          {clauseLabel}
-        </H4>
+        <H4 style={IOStyles.flex}>{clauseLabel}</H4>
 
         {/*
           Show info icon and signature field info only for unfair clauses
