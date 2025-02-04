@@ -1911,7 +1911,7 @@ wallet:
         title: "L’Ente Creditore sta avendo problemi nella risposta"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       PAYMENT_ONGOING:
-        title: "C’è già un pagamento in corso, riprova più tardi"
+        title: "C’è già un’operazione in corso, riprova più tardi"
         subtitle: "Se il problema persiste, puoi aprire una segnalazione."
       PAYMENT_EXPIRED:
         title: "L’avviso è scaduto e non è più possibile pagarlo"
@@ -1925,10 +1925,10 @@ wallet:
         title: "Non riusciamo a verificare lo stato di questo avviso"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       GENERIC_ERROR:
-        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        title: "Stiamo riscontrando alcuni problemi sui sistemi di pagamento"
         subtitle: "Riprova più tardi."
       PAYMENT_SLOWDOWN_ERROR:
-        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        title: "Stiamo riscontrando alcuni problemi sui sistemi di pagamento"
         subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
@@ -2007,7 +2007,7 @@ wallet:
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, modifica il limite di spesa o usa un altro metodo di pagamento.
       BE_NODE_KO:
         title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
-        subtitle: Verifica l’esito del pagamento nella sezione Pagamenti, altrimenti attendi qualche minuto prima di riprovare.
+        subtitle: Riprova più tardi.
       PSP_ERROR:
         title: Il pagamento non è andato a buon fine
         subtitle: "Non è stato addebitato alcun importo.\nSe il problema persiste, prova a usare un altro metodo o gestore del pagamento."
