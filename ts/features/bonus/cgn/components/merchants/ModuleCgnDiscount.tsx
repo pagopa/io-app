@@ -49,6 +49,7 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
   return O.isSome(categorySpecs) ? (
     <Tag
       text={I18n.t(categorySpecs.value.nameKey)}
+      forceLightMode
       variant="custom"
       icon={{
         name: categorySpecs.value.icon,
