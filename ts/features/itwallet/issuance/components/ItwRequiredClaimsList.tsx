@@ -3,7 +3,8 @@ import {
   H6,
   Icon,
   IOColors,
-  BodySmall
+  BodySmall,
+  ListItemCheckbox
 } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
@@ -36,11 +37,48 @@ type ItwRequiredClaimsListProps = {
   items: ReadonlyArray<RequiredClaim>;
 };
 
+type ItwSelectableClaimsListProps = {
+  items: ReadonlyArray<RequiredClaim>;
+  selectedIds: Array<string>;
+  onSelectionChange: (id: string, selected: boolean) => void;
+};
+
+const ItwSelectableClaimList = ({
+  items,
+  selectedIds,
+  onSelectionChange
+}: ItwSelectableClaimsListProps) => (
+  <View style={styles.container}>
+    {pipe(
+      items,
+      RA.mapWithIndex((index, { claim, source }) => {
+        const displayValue = getClaimDisplayValue(claim);
+        return (
+          <View key={`${index}-${claim.label}-${source}`}>
+            {/* Add a separator view between sections */}
+            {index !== 0 && <Divider />}
+            <ListItemCheckbox
+              value={claim.label}
+              description={I18n.t(
+                "features.itWallet.generic.dataSource.single",
+                {
+                  credentialSource: source
+                }
+              )}
+              selected={selectedIds.includes(claim.id)}
+              onValueChange={selected => onSelectionChange(claim.id, selected)}
+            />
+          </View>
+        );
+      })
+    )}
+  </View>
+);
+
 const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
   <View style={styles.container}>
     {pipe(
       items,
-      RA.map(a => a),
       RA.mapWithIndex((index, { claim, source }) => (
         <View key={`${index}-${claim.label}-${source}`}>
           {/* Add a separator view between sections */}
@@ -132,4 +170,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export { ItwRequiredClaimsList as ItwRequestedClaimsList };
+export {
+  ItwRequiredClaimsList as ItwRequestedClaimsList,
+  ItwSelectableClaimList
+};
