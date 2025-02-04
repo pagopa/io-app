@@ -44,7 +44,9 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
 
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];
-  const blueHeaderColor = isDSenabled ? IOColors["blueIO-600"] : IOColors.blue;
+  const blueHeaderColor = isDSenabled
+    ? IOColors["blueIO-600"]
+    : IOColors["blue-500"];
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({
@@ -53,7 +55,6 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
     variant: "contrast",
     faqCategories: ["wallet_methods"],
     supportRequest: true,
-    transparent: true,
     scrollValues: {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
@@ -114,8 +115,8 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   blueHeader: {
-    paddingTop: "105%",
-    marginTop: "-75%",
+    marginTop: -300,
+    paddingTop: 300,
     marginBottom: "15%"
   }
 });

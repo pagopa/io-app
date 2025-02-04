@@ -11,7 +11,6 @@ export const IdPayUnsubscriptionNavigator = () => (
     initialRouteName={
       IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION
     }
-    screenOptions={{ headerShown: false }}
   >
     <Stack.Screen
       name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION}
@@ -20,6 +19,7 @@ export const IdPayUnsubscriptionNavigator = () => (
     <Stack.Screen
       name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_RESULT}
       component={UnsubscriptionResultScreen}
+      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 );

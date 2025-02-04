@@ -18,11 +18,11 @@ const OrderOption = ({ text, value, onPress, checked }: Props) => (
     }}
     onPress={() => onPress(value)}
   >
-    <H6 color={"bluegreyDark"}>{text}</H6>
+    <H6 color={"grey-850"}>{text}</H6>
     <Icon
       name={checked ? "legRadioOn" : "legRadioOff"}
       size={24}
-      color={checked ? "blue" : "bluegrey"}
+      color={checked ? "blue-500" : "grey-700"}
     />
   </Pressable>
 );
