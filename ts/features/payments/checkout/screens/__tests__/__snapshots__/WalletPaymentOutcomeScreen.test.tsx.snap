@@ -43137,7 +43137,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 ]
                               }
                             >
-                              Verifica l’esito del pagamento nella sezione Pagamenti, altrimenti attendi qualche minuto prima di riprovare.
+                              Riprova più tardi.
                             </Text>
                             <View
                               style={
