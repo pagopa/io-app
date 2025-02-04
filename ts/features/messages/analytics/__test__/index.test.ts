@@ -1,0 +1,69 @@
+import { trackOpenMessage } from "..";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import * as MIXPANEL from "../../../../mixpanel";
+
+describe("index", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+  describe("trackOpenMessage", () => {
+    [false, true].forEach(firstTimeOpening =>
+      [undefined, false, true].forEach(containsPayment =>
+        [false, true].forEach(hasRemoteContent =>
+          [false, true].forEach(containsAttachments =>
+            [false, true].forEach(fromPushNotifications =>
+              [false, true].forEach(hasFIMSCTA =>
+                it(`should have proper values for firstTimeOpening (${firstTimeOpening}) containsPayment (${containsPayment}) hasRemoteContent (${hasRemoteContent}) containsAttachments (${containsAttachments}) fromPushNotifications (${fromPushNotifications}) hasFIMSCTA (${hasFIMSCTA})`, () => {
+                  const spyOnMixpanelTrack = jest
+                    .spyOn(MIXPANEL, "mixpanelTrack")
+                    .mockReturnValue(undefined);
+                  const serviceId = "01JK8TKP8QCNJ689M4D94VA6VG" as ServiceId;
+                  const serviceName = "Service name";
+                  const organizationName = "Organization name";
+                  const organizationFiscalCode = "12345678901";
+                  void trackOpenMessage(
+                    serviceId,
+                    serviceName,
+                    organizationName,
+                    organizationFiscalCode,
+                    firstTimeOpening,
+                    containsPayment,
+                    hasRemoteContent,
+                    containsAttachments,
+                    fromPushNotifications,
+                    hasFIMSCTA
+                  );
+                  expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
+                  expect(spyOnMixpanelTrack.mock.calls[0].length).toBe(2);
+                  expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe(
+                    "OPEN_MESSAGE"
+                  );
+                  expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
+                    event_category: "UX",
+                    event_type: "screen_view",
+                    flow: undefined,
+                    service_id: serviceId,
+                    service_name: serviceName,
+                    organization_name: organizationName,
+                    organization_fiscal_code: organizationFiscalCode,
+                    contains_payment:
+                      containsPayment != null
+                        ? containsPayment
+                          ? "yes"
+                          : "no"
+                        : "unknown",
+                    remote_content: hasRemoteContent ? "yes" : "no",
+                    contains_attachment: containsAttachments ? "yes" : "no",
+                    first_time_opening: firstTimeOpening ? "yes" : "no",
+                    fromPushNotification: fromPushNotifications ? "yes" : "no",
+                    has_fims_callback: hasFIMSCTA ? "yes" : "no"
+                  });
+                })
+              )
+            )
+          )
+        )
+      )
+    );
+  });
+});

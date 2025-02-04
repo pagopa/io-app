@@ -66,11 +66,8 @@ export const trackOpenMessage = (
     service_name: serviceName,
     organization_name: organizationName,
     organization_fiscal_code: organizationFiscalCode,
-    contains_payment: pipe(
-      containsPayment,
-      O.fromNullable,
-      O.fold(() => "unknown" as const, booleanToYesNo)
-    ),
+    contains_payment:
+      containsPayment != null ? booleanToYesNo(containsPayment) : "unknown",
     remote_content: booleanToYesNo(hasRemoteContent),
     contains_attachment: booleanToYesNo(containsAttachments),
     first_time_opening: booleanToYesNo(firstTimeOpening),
