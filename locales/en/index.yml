@@ -885,11 +885,11 @@ authentication:
     recoverPassword: Recover the password
     poste_id:
       bottom_sheet:
-        title: Accedi senza password!
-        description: "Se hai l’app Poste ID, segui questi passaggi:"
-        feature_1: Tocca su **"Accedi più rapidamente"** nella fascia grigia al centro della schermata
-        feature_2: Inserisci il codice PosteID o usa il biometrico
-        feature_3: Quando vedrai apparire **Autorizzazione concessa**, torna su IO e premi **Acconsento**
+        title: Log in without a password!
+        description: "If you have the Poste ID app, follow these steps:"
+        feature_1: Tap on **‘Accedi più rapidamente** in the grey band in the middle of the screen
+        feature_2: Enter your PosteID code or use biometric
+        feature_3: When you see **Autorizzazione concessa** appear, go back to IO and press **Acconsento**
   idp_login_success:
     contentTitle: Hi, {{name}}!
   errors:
