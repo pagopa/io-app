@@ -1,5 +1,4 @@
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
-import * as O from "fp-ts/lib/Option";
 import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
@@ -131,12 +130,12 @@ it:
 some noise`;
 
     const maybeCTA = getMessageCTA(CTA_1 as MessageBodyMarkdown);
-    expect(O.isNone(maybeCTA)).toBeTruthy();
+    expect(maybeCTA).toBeFalsy();
   });
 
   it("should not have a valid CTA, unrelated content", () => {
     const maybeCTA = getMessageCTA("nothing of nothing" as MessageBodyMarkdown);
-    expect(O.isNone(maybeCTA)).toBeTruthy();
+    expect(maybeCTA).toBeFalsy();
   });
 
   it("should not have a valid CTA, invalid content format", () => {
@@ -148,27 +147,26 @@ it:
 --- 
 some noise`;
     const maybeCTA = getMessageCTA(NO_CTA as MessageBodyMarkdown);
-    expect(O.isNone(maybeCTA)).toBeTruthy();
+    expect(maybeCTA).toBeFalsy();
   });
 });
 
 const test2CTA = (
-  maybeCTAS: O.Option<CTAS>,
+  maybeCTAS: CTAS | undefined,
   text1: string,
   action1: string,
   text2: string,
   action2: string
 ) => {
-  expect(O.isSome(maybeCTAS)).toBeTruthy();
-  if (O.isSome(maybeCTAS)) {
-    const ctas = maybeCTAS.value;
-    expect(ctas.cta_1).toBeDefined();
-    expect(ctas.cta_2).toBeDefined();
-    expect(ctas.cta_1.text).toEqual(text1);
-    expect(ctas.cta_1.action).toEqual(action1);
-    if (ctas.cta_2) {
-      expect(ctas.cta_2.text).toEqual(text2);
-      expect(ctas.cta_2.action).toEqual(action2);
+  expect(maybeCTAS).toBeTruthy();
+  if (maybeCTAS != null) {
+    expect(maybeCTAS.cta_1).toBeDefined();
+    expect(maybeCTAS.cta_2).toBeDefined();
+    expect(maybeCTAS.cta_1.text).toEqual(text1);
+    expect(maybeCTAS.cta_1.action).toEqual(action1);
+    if (maybeCTAS.cta_2) {
+      expect(maybeCTAS.cta_2.text).toEqual(text2);
+      expect(maybeCTAS.cta_2.action).toEqual(action2);
     }
   }
 };

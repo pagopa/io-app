@@ -123,11 +123,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     serviceMetadataByIdSelector(state, serviceId)
   );
   const maybeCTAs = useMemo(
-    () =>
-      pipe(
-        getMessageCTA(messageMarkdown, serviceMetadata, serviceId),
-        O.toUndefined
-      ),
+    () => getMessageCTA(messageMarkdown, serviceMetadata, serviceId),
     [messageMarkdown, serviceId, serviceMetadata]
   );
 

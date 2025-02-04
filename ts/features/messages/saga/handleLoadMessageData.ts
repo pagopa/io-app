@@ -21,7 +21,10 @@ import { UIMessage, UIMessageDetails, UIMessageId } from "../types";
 import { serviceByIdPotSelector } from "../../services/details/store/reducers";
 import { loadServiceDetail } from "../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
-import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
+import {
+  extractContentFromMessageSources,
+  thirdPartyFromIdSelector
+} from "../store/reducers/thirdPartyById";
 import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
@@ -38,6 +41,11 @@ import {
 import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import {
+  ctaFromMessageCTA,
+  unsafeMessageCTAFromInput
+} from "../utils/messages";
+import { isIoFIMSLink } from "../../../components/ui/Markdown/handlers/link";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>
@@ -314,11 +322,14 @@ function* dispatchSuccessAction(
 
   const isPnEnabled = yield* select(isPnEnabledSelector);
 
+  const hasFIMSCTA = computeHasFIMSCTA(messageDetails, thirdPartyMessage);
+
   yield* put(
     getMessageDataAction.success({
       containsAttachments: attachmentCount > 0,
       containsPayment,
       firstTimeOpening: !paginatedMessage.isRead,
+      hasFIMSCTA,
       hasRemoteContent: !!thirdPartyMessage,
       isLegacyGreenPass: !!messageDetails.euCovidCertificate?.authCode,
       isPNMessage: isPnEnabled && isPNMessageCategory,
@@ -379,16 +390,38 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
     )
   );
 
+const computeHasFIMSCTA = (
+  messageDetails: UIMessageDetails,
+  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
+) => {
+  const markdownWithCTAs = extractContentFromMessageSources(
+    (messageContent: RemoteContentDetails | UIMessageDetails) =>
+      messageContent.markdown,
+    messageDetails,
+    thirdPartyMessage
+  );
+  const unsafeMessageCTA = unsafeMessageCTAFromInput(markdownWithCTAs);
+  const cta = ctaFromMessageCTA(unsafeMessageCTA);
+  if (cta != null && isIoFIMSLink(cta.cta_1.action)) {
+    return true;
+  }
+  if (cta?.cta_2 != null && isIoFIMSLink(cta.cta_2.action)) {
+    return true;
+  }
+  return false;
+};
+
 export const testable = isTestEnv
   ? {
       commonFailureHandling,
-      loadMessageData,
+      computeHasFIMSCTA,
       decodeAndTrackThirdPartyMessageDetailsIfNeeded,
       dispatchSuccessAction,
-      setMessageReadIfNeeded,
+      getMessageDetails,
       getPaginatedMessage,
       getServiceDetails,
-      getMessageDetails,
-      getThirdPartyDataMessage
+      getThirdPartyDataMessage,
+      loadMessageData,
+      setMessageReadIfNeeded
     }
   : undefined;

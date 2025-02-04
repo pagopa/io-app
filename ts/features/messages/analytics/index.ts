@@ -57,7 +57,8 @@ export const trackOpenMessage = (
   containsPayment: boolean | undefined,
   hasRemoteContent: boolean,
   containsAttachments: boolean,
-  fromPushNotification: boolean
+  fromPushNotification: boolean,
+  hasFIMSCTA: boolean
 ) => {
   const eventName = "OPEN_MESSAGE";
   const props = buildEventProperties("UX", "screen_view", {
@@ -73,7 +74,8 @@ export const trackOpenMessage = (
     remote_content: booleanToYesNo(hasRemoteContent),
     contains_attachment: booleanToYesNo(containsAttachments),
     first_time_opening: booleanToYesNo(firstTimeOpening),
-    fromPushNotification: booleanToYesNo(fromPushNotification)
+    fromPushNotification: booleanToYesNo(fromPushNotification),
+    has_fims_callback: booleanToYesNo(hasFIMSCTA)
   });
   void mixpanelTrack(eventName, props);
 };

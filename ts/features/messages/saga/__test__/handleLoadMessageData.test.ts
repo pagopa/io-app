@@ -399,6 +399,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: true,
       containsPayment: undefined,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: true,
       isLegacyGreenPass: false,
       isPNMessage: true,
@@ -447,6 +448,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: true,
       containsPayment: false,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: true,
       isLegacyGreenPass: false,
       isPNMessage: false,
@@ -493,6 +495,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: false,
       containsPayment: false,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: true,
       isLegacyGreenPass: false,
       isPNMessage: false,
@@ -536,6 +539,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: false,
       containsPayment: false,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: false,
       isLegacyGreenPass: false,
       isPNMessage: false,
@@ -579,6 +583,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: false,
       containsPayment: true,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: false,
       isLegacyGreenPass: false,
       isPNMessage: false,
@@ -625,6 +630,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: false,
       containsPayment: false,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: false,
       isLegacyGreenPass: !!authCode,
       isPNMessage: false,
@@ -643,6 +649,106 @@ describe("dispatchSuccessAction", () => {
       .next()
       .select(isPnEnabledSelector)
       .next(false)
+      .put(getMessageDataAction.success(expectedOutput))
+      .next()
+      .isDone();
+  });
+  it("should properly report a standard message with the FIMS CTA", () => {
+    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceName = "serName";
+    const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
+    const isRead = true;
+    const paginatedMessage = {
+      id: messageId,
+      serviceId,
+      organizationName,
+      organizationFiscalCode,
+      serviceName,
+      isRead,
+      category: { tag: "GENERIC" }
+    } as UIMessage;
+    const messageDetails = {
+      markdown:
+        '---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "iosso://https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "iosso://https://relyingParty.url"\n---'
+    } as UIMessageDetails;
+    const expectedOutput = {
+      containsAttachments: false,
+      containsPayment: false,
+      firstTimeOpening: !isRead,
+      hasFIMSCTA: true,
+      hasRemoteContent: false,
+      isLegacyGreenPass: false,
+      isPNMessage: false,
+      messageId,
+      organizationName,
+      organizationFiscalCode,
+      serviceId,
+      serviceName
+    };
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      undefined
+    )
+      .next()
+      .select(isPnEnabledSelector)
+      .next(false)
+      .put(getMessageDataAction.success(expectedOutput))
+      .next()
+      .isDone();
+  });
+  it("should properly report a Third Party message with FIMS CTA", () => {
+    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceName = "serName";
+    const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
+    const isRead = true;
+    const paginatedMessage = {
+      id: messageId,
+      serviceId,
+      organizationName,
+      organizationFiscalCode,
+      serviceName,
+      isRead,
+      category: { tag: "GENERIC" }
+    } as UIMessage;
+    const messageDetails = {} as UIMessageDetails;
+    const thirdPartyMessage = {
+      third_party_message: {
+        details: {
+          markdown:
+            '---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "iosso://https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "iosso://https://relyingParty.url"\n---',
+          subject: "The subject"
+        }
+      } as ThirdPartyMessage
+    } as ThirdPartyMessageWithContent;
+    const expectedOutput = {
+      containsAttachments: false,
+      containsPayment: false,
+      firstTimeOpening: !isRead,
+      hasFIMSCTA: true,
+      hasRemoteContent: true,
+      isLegacyGreenPass: false,
+      isPNMessage: false,
+      messageId,
+      organizationName,
+      organizationFiscalCode,
+      serviceId,
+      serviceName
+    };
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      thirdPartyMessage
+    )
+      .next()
+      .select(isPnEnabledSelector)
+      .next(true)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
       .isDone();

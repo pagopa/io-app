@@ -1,7 +1,5 @@
 import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -93,7 +91,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   );
 
   const serviceCtas = useMemo(
-    () => pipe(serviceMetadata, getServiceCTA, O.toUndefined),
+    () => getServiceCTA(serviceMetadata),
     [serviceMetadata]
   );
 
