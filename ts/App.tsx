@@ -47,6 +47,7 @@ Sentry.init({
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
   },
+  ignoreErrors: ["HTTPClientError"],
   integrations: integrations => [...integrations, navigationIntegration],
   enabled: !isDevEnv,
   // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-the-message-in-my-error-being-truncated
