@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ItwDigitalVersionBadge should render correctly EuropeanDisabilityCard in state default 1`] = `
+exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in state default 1`] = `
 <View
   style={
     {
@@ -59,7 +59,7 @@ exports[`ItwDigitalVersionBadge should render correctly EuropeanDisabilityCard i
 </View>
 `;
 
-exports[`ItwDigitalVersionBadge should render correctly EuropeanDisabilityCard in state faded 1`] = `
+exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in state faded 1`] = `
 <View
   style={
     {
@@ -132,7 +132,7 @@ exports[`ItwDigitalVersionBadge should render correctly EuropeanDisabilityCard i
 </View>
 `;
 
-exports[`ItwDigitalVersionBadge should render correctly EuropeanDisabilityCard in state greyscale 1`] = `
+exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in state greyscale 1`] = `
 <View
   style={
     {
@@ -205,7 +205,7 @@ exports[`ItwDigitalVersionBadge should render correctly EuropeanDisabilityCard i
 </View>
 `;
 
-exports[`ItwDigitalVersionBadge should render correctly EuropeanHealthInsuranceCard in state default 1`] = `
+exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard in state default 1`] = `
 <View
   style={
     {
@@ -264,7 +264,7 @@ exports[`ItwDigitalVersionBadge should render correctly EuropeanHealthInsuranceC
 </View>
 `;
 
-exports[`ItwDigitalVersionBadge should render correctly EuropeanHealthInsuranceCard in state faded 1`] = `
+exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard in state faded 1`] = `
 <View
   style={
     {
@@ -337,7 +337,7 @@ exports[`ItwDigitalVersionBadge should render correctly EuropeanHealthInsuranceC
 </View>
 `;
 
-exports[`ItwDigitalVersionBadge should render correctly EuropeanHealthInsuranceCard in state greyscale 1`] = `
+exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard in state greyscale 1`] = `
 <View
   style={
     {
@@ -410,9 +410,9 @@ exports[`ItwDigitalVersionBadge should render correctly EuropeanHealthInsuranceC
 </View>
 `;
 
-exports[`ItwDigitalVersionBadge should render correctly InvalidCredentialType in state default 1`] = `null`;
+exports[`DigitalVersionBadge should render correctly InvalidCredentialType in state default 1`] = `null`;
 
-exports[`ItwDigitalVersionBadge should render correctly MDL in state default 1`] = `
+exports[`DigitalVersionBadge should render correctly MDL in state default 1`] = `
 <View
   style={
     {
@@ -471,7 +471,7 @@ exports[`ItwDigitalVersionBadge should render correctly MDL in state default 1`]
 </View>
 `;
 
-exports[`ItwDigitalVersionBadge should render correctly MDL in state faded 1`] = `
+exports[`DigitalVersionBadge should render correctly MDL in state faded 1`] = `
 <View
   style={
     {
@@ -544,7 +544,7 @@ exports[`ItwDigitalVersionBadge should render correctly MDL in state faded 1`] =
 </View>
 `;
 
-exports[`ItwDigitalVersionBadge should render correctly MDL in state greyscale 1`] = `
+exports[`DigitalVersionBadge should render correctly MDL in state greyscale 1`] = `
 <View
   style={
     {
