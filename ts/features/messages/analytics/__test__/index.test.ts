@@ -6,6 +6,7 @@ describe("index", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   describe("trackOpenMessage", () => {
     [false, true].forEach(firstTimeOpening =>
       [undefined, false, true].forEach(containsPayment =>

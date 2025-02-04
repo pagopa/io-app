@@ -1,7 +1,5 @@
 import * as t from "io-ts";
-import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import { pipe } from "fp-ts/lib/function";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
