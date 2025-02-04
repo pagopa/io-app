@@ -58,7 +58,11 @@ const ItwSelectableClaimList = ({
             {/* Add a separator view between sections */}
             {index !== 0 && <Divider />}
             <ListItemCheckbox
-              value={claim.label}
+              value={
+                Array.isArray(displayValue)
+                  ? displayValue.join(", ")
+                  : displayValue
+              } // TODO: temporary
               description={I18n.t(
                 "features.itWallet.generic.dataSource.single",
                 {
