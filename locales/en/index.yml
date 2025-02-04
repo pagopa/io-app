@@ -1600,8 +1600,8 @@ wallet:
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
     amountInfo:
-      title: Do you see a different amount?
-      message: pagoPA updates the amount in real time, so that you can pay without additional charges or interest. This may happen, for instance, when the institution applies notification fees (if it has sent you a notification with legal value) or if you are late with your payment.
+      title: Is the amount different from the one on the pagoPA notice?
+      message: "If the amount changes, it means that the Payee has automatically updated it. In this way, you can be sure that you are always paying the amount that is due. If it is higher, you may have to pay interest, penalties or notification costs.\n\nPlease contact the Payee for further details, as pagoPA does not know the reasons for the update."
       cta: Ok, va bene
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md

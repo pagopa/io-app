@@ -1604,8 +1604,8 @@ wallet:
     fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
     amountInfo:
-      title: Vedi un importo diverso?
-      message: pagoPA aggiorna l'importo in tempo reale, per permetterti di pagare evitando more o interessi aggiuntivi. Può succedere, per esempio, quando l'ente applica dei costi di notifica (se ti ha inviato una comunicazione a valore legale) o se sei in ritardo con il pagamento.
+      title: L’importo è diverso da quello riportato sull’avviso pagoPA?
+      message: "Quando l'importo cambia, significa che l'ente creditore l'ha aggiornato automaticamente. In questo modo, hai sempre la certezza di pagare l’importo dovuto. Se è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nPer ulteriori dettagli contatta l'ente creditore, poiché pagoPA non conosce i motivi dell'aggiornamento."
       cta: Ok, va bene
     contextualHelpTitle: Riepilogo della transazione
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
