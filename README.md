@@ -525,9 +525,6 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
         <tr>
             <td>ioit://main/services</td>
         </tr>
-        <tr>
-            <td>ioit://main/profile</td>
-        </tr>
     </table>
     <h3>wallet</h3>
     <table>
