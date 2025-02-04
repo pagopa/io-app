@@ -8,7 +8,6 @@ import {
   IOStyles,
   Icon,
   WithTestID,
-  useIOExperimentalDesign,
   useIOTheme,
   useListItemAnimation
 } from "@pagopa/io-app-design-system";
@@ -44,7 +43,6 @@ export const ListItemSearchInstitution = memo(
     testID,
     numberOfLines
   }: ListItemSearchInstitution) => {
-    const { isExperimental } = useIOExperimentalDesign();
     const theme = useIOTheme();
 
     const {
@@ -78,10 +76,6 @@ export const ListItemSearchInstitution = memo(
       </>
     );
 
-    const navIconColor = isExperimental
-      ? theme["interactiveElem-default"]
-      : "blue";
-
     const handleOnPress = useCallback(
       (event: GestureResponderEvent) => onPress(event),
       [onPress]
@@ -113,7 +107,7 @@ export const ListItemSearchInstitution = memo(
             </View>
             <Icon
               name="chevronRightListItem"
-              color={navIconColor}
+              color={theme["interactiveElem-default"]}
               size={IOListItemVisualParams.chevronSize}
             />
           </Animated.View>

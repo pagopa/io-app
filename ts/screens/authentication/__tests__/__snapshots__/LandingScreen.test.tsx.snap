@@ -241,7 +241,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -260,7 +259,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -474,7 +472,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -493,7 +490,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -760,7 +756,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -779,7 +774,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -1037,7 +1031,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -1056,7 +1049,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -1219,7 +1211,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -1238,7 +1229,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -2504,7 +2494,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         align="xMidYMid"
                                         bbHeight={64}
                                         bbWidth={64}
-                                        color="#00C5CA"
                                         focusable={false}
                                         height={64}
                                         meetOrSlice={0}
@@ -2523,7 +2512,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                             },
                                           ]
                                         }
-                                        tintColor="#00C5CA"
                                         vbHeight={240}
                                         vbWidth={240}
                                         width={64}
@@ -3134,7 +3122,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -3153,7 +3140,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -3367,7 +3353,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -3386,7 +3371,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -3653,7 +3637,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -3672,7 +3655,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -3930,7 +3912,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -3949,7 +3930,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -4112,7 +4092,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     align="xMidYMid"
                                     bbHeight={180}
                                     bbWidth={180}
-                                    color="#00C5CA"
                                     focusable={false}
                                     height={180}
                                     meetOrSlice={0}
@@ -4131,7 +4110,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         },
                                       ]
                                     }
-                                    tintColor="#00C5CA"
                                     vbHeight={240}
                                     vbWidth={240}
                                     width={180}
@@ -5397,7 +5375,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         align="xMidYMid"
                                         bbHeight={64}
                                         bbWidth={64}
-                                        color="#00C5CA"
                                         focusable={false}
                                         height={64}
                                         meetOrSlice={0}
@@ -5416,7 +5393,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                             },
                                           ]
                                         }
-                                        tintColor="#00C5CA"
                                         vbHeight={240}
                                         vbWidth={240}
                                         width={64}

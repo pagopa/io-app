@@ -84,6 +84,10 @@ const IdPayInitiativeDetailsScreen = () => {
     });
   };
 
+  const onAddExpense = () => {
+    // TODO: Implement the FIMS startup that opens the expense form (https://pagopa.atlassian.net/browse/IOBP-1137)
+  };
+
   const navigateToConfiguration = () => {
     navigation.push(IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR, {
       screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
@@ -312,7 +316,7 @@ const IdPayInitiativeDetailsScreen = () => {
           type: "SingleButton",
           primary: {
             label: I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
-            onPress: discountBottomSheet.present
+            onPress: onAddExpense
           }
         };
       default:
