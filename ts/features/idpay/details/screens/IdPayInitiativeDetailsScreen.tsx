@@ -52,6 +52,8 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
+import NavigationService from "../../../../navigation/NavigationService";
+import { FIMS_ROUTES } from "../../../fims/common/navigation";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -85,6 +87,18 @@ const IdPayInitiativeDetailsScreen = () => {
   };
 
   const onAddExpense = () => {
+    const addExpenseFimsUrl = pot.toUndefined(initiativeDataPot)?.webViewUrl;
+    if (!addExpenseFimsUrl) {
+      return;
+    }
+    NavigationService.navigate(FIMS_ROUTES.MAIN, {
+      screen: FIMS_ROUTES.CONSENTS,
+      params: {
+        ctaText: "Aggiungi spesa",
+        ctaUrl:
+          "iosso://https://prenotasalute.regione.lombardia.it/prenotaonline/"
+      }
+    });
     // TODO: Implement the FIMS startup that opens the expense form (https://pagopa.atlassian.net/browse/IOBP-1137)
   };
 
