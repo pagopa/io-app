@@ -300,9 +300,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             />
             {renderTableRow(summaryData)}
             <VSpacer size={8} />
-            <BodySmall weight="Regular" color="bluegrey">
-              {lastUpdateString}
-            </BodySmall>
+            <BodySmall weight="Regular">{lastUpdateString}</BodySmall>
             <VSpacer size={8} />
             <ListItemHeader
               label={I18n.t(
