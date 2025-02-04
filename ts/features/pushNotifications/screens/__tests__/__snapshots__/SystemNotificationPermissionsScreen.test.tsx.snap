@@ -800,15 +800,14 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,

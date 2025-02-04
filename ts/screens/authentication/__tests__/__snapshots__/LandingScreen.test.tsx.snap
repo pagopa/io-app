@@ -1497,15 +1497,14 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       "textAlignVertical": "center",
                                     },
                                     {
+                                      "backgroundColor": "#0073E6",
                                       "overflow": "hidden",
                                     },
                                     false,
                                     {
                                       "height": 40,
                                     },
-                                    {
-                                      "backgroundColor": "#0073E6",
-                                    },
+                                    {},
                                     false,
                                     {
                                       "backgroundColor": undefined,
@@ -1675,15 +1674,14 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -4378,15 +4376,14 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       "textAlignVertical": "center",
                                     },
                                     {
+                                      "backgroundColor": "#0073E6",
                                       "overflow": "hidden",
                                     },
                                     false,
                                     {
                                       "height": 40,
                                     },
-                                    {
-                                      "backgroundColor": "#0073E6",
-                                    },
+                                    {},
                                     false,
                                     {
                                       "backgroundColor": undefined,
@@ -4556,15 +4553,14 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
