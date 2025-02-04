@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.82.0-rc.4](https://github.com/pagopa/io-app/compare/2.82.0-rc.3...2.82.0-rc.4) (2025-02-03)
+
+
+### Bug Fixes
+
+* [[IOBP-1157](https://pagopa.atlassian.net/browse/IOBP-1157)] Correct `a11y` label in `PAYMENT_NOTICE_SUMMARY` ([#6674](https://github.com/pagopa/io-app/issues/6674)) ([18b5f83](https://github.com/pagopa/io-app/commit/18b5f83992eb0511b37ee51554648c3a4c3f70fb))
+* [[IOBP-1162](https://pagopa.atlassian.net/browse/IOBP-1162)] Add missing `a11y` label in `PAYMENTS_HOME` ([#6669](https://github.com/pagopa/io-app/issues/6669)) ([11a5ba5](https://github.com/pagopa/io-app/commit/11a5ba575c663db85dcf0f55a693345d6ff05e14))
+* [[IOCOM-2040](https://pagopa.atlassian.net/browse/IOCOM-2040)] Handling of code and pre html blocks in old markdown ([#6652](https://github.com/pagopa/io-app/issues/6652)) ([313e6ab](https://github.com/pagopa/io-app/commit/313e6abd4b1e2eca4ce39137dfc55ade06e4ec9c))
+
+
+### Chores
+
+* [[IOBP-1165](https://pagopa.atlassian.net/browse/IOBP-1165)] Remove transparent header in `PAYMENT_METHOD_DETAILS_SCREEN` ([#6675](https://github.com/pagopa/io-app/issues/6675)) ([d3c4a6f](https://github.com/pagopa/io-app/commit/d3c4a6f09b1ea44cad9cf776ae20f64471d465e1))
+* [[IOPLT-946](https://pagopa.atlassian.net/browse/IOPLT-946)] Update the main icon app for iOS + Add support for dark and tinted appearances ([#6655](https://github.com/pagopa/io-app/issues/6655)) ([f4d3907](https://github.com/pagopa/io-app/commit/f4d3907e9504eb2f4744ba1a5080154d21b97f87))
+* **IT Wallet:** [[SIW-1989](https://pagopa.atlassian.net/browse/SIW-1989)] Add dismiss confirmation dialog to IT Wallet identification flows ([#6641](https://github.com/pagopa/io-app/issues/6641)) ([dd98d71](https://github.com/pagopa/io-app/commit/dd98d711a85ec67961b604115e2c9dd83045795a))
+
 ## [2.82.0-rc.3](https://github.com/pagopa/io-app/compare/2.82.0-rc.2...2.82.0-rc.3) (2025-01-31)
 
 
