@@ -497,80 +497,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         </View>
                         <View
                           accessibilityLabel="Place of Birth Hidden"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Place of Birth
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  ******
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Place of Birth
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    ******
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -585,80 +630,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Institution Number (TEAM) Hidden"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Institution Number (TEAM)
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  ******
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Institution Number (TEAM)
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    ******
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -673,80 +763,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Date of Birth Hidden"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Date of Birth
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  ******
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Date of Birth
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    ******
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -761,80 +896,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Province Hidden"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Province
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  ******
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Province
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    ******
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -849,80 +1029,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Nation Hidden"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Nation
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  ******
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Nation
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    ******
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -937,80 +1162,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Sex Hidden"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Sex
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  ******
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Sex
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    ******
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -1025,80 +1295,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Expiry Date Hidden"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Expiry Date
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  ******
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Expiry Date
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    ******
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -1113,80 +1428,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Document Number (TEAM) Hidden"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Document Number (TEAM)
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  ******
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Document Number (TEAM)
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    ******
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -1201,80 +1561,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="First Name Hidden"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  First Name
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  ******
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    First Name
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    ******
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -1289,80 +1694,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Fiscal Code Hidden"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Fiscal Code
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  ******
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Fiscal Code
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    ******
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -1377,80 +1827,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Family Name Hidden"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Family Name
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  ******
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Family Name
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    ******
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -2490,80 +2985,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Institution Number (TEAM) 500001"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Institution Number (TEAM)
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  500001
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Institution Number (TEAM)
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    500001
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -2666,80 +3206,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Province Rome"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Province
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Rome
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Province
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Rome
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -2754,80 +3339,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Nation IT"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Nation
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  IT
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Nation
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    IT
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -2842,80 +3472,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Sex M"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Sex
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  M
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Sex
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    M
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -3069,80 +3744,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Document Number (TEAM) 80380000000000000001"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Document Number (TEAM)
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  80380000000000000001
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Document Number (TEAM)
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    80380000000000000001
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -3157,80 +3877,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="First Name Casimira"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  First Name
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Casimira
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    First Name
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Casimira
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -3333,80 +4098,125 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Family Name Savoia"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": undefined,
                                 },
                               ]
                             }
                           >
                             <View
                               style={
-                                {
-                                  "flex": 1,
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={true}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
+                                <View
+                                  accessible={true}
                                 >
-                                  Family Name
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Savoia
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Family Name
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 17,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Savoia
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
