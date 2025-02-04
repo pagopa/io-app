@@ -2007,7 +2007,7 @@ wallet:
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, modifica il limite di spesa o usa un altro metodo di pagamento.
       BE_NODE_KO:
         title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
-        subtitle: Riprova più tardi.
+        subtitle: Verifica l’esito del pagamento nella sezione Pagamenti, altrimenti attendi qualche minuto prima di riprovare.
       PSP_ERROR:
         title: Il pagamento non è andato a buon fine
         subtitle: "Non è stato addebitato alcun importo.\nSe il problema persiste, prova a usare un altro metodo o gestore del pagamento."
