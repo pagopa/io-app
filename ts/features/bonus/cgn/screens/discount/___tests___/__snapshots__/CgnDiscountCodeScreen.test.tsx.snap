@@ -389,7 +389,6 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -408,7 +407,6 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -544,9 +542,9 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -650,13 +648,15 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
                                             "alignItems": "center",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
                                           },
                                           false,
                                         ]
@@ -665,10 +665,10 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                       <Text
                                         accessibilityElementsHidden={true}
                                         accessible={false}
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -772,6 +772,9 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                           "columnGap": 8,
                                         },
                                         {},
+                                        {
+                                          "columnGap": 8,
+                                        },
                                         false,
                                       ]
                                     }
@@ -779,10 +782,10 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                     <Text
                                       accessibilityElementsHidden={true}
                                       accessible={false}
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
                                         [
@@ -793,11 +796,16 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "lineHeight": 20,
                                           },
-                                          {
-                                            "color": undefined,
-                                          },
+                                          [
+                                            {
+                                              "color": undefined,
+                                            },
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                          ],
                                         ]
                                       }
                                     >

@@ -377,7 +377,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -396,7 +395,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -513,9 +511,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -536,9 +534,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -629,6 +627,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -636,10 +637,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -650,11 +651,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -865,13 +871,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -880,10 +888,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1299,7 +1307,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -1318,7 +1325,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -1435,9 +1441,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -1458,9 +1464,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -1551,6 +1557,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -1558,10 +1567,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1572,11 +1581,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -1787,13 +1801,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -1802,10 +1818,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1889,6 +1905,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "height": 40,
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                   {
                                     "backgroundColor": "rgba(0,115,230,0)",
@@ -1905,10 +1924,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2013,6 +2032,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -2020,10 +2042,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2034,11 +2056,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -2439,7 +2466,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -2458,7 +2484,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -2575,9 +2600,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -2598,9 +2623,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -2691,6 +2716,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -2698,10 +2726,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -2712,11 +2740,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -2927,13 +2960,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -2942,10 +2977,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3046,6 +3081,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -3053,10 +3091,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3067,11 +3105,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -3472,7 +3515,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -3491,7 +3533,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -3608,9 +3649,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -3631,9 +3672,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -3857,13 +3898,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -3872,10 +3915,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -4291,7 +4334,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -4310,7 +4352,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -4427,9 +4468,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -4450,9 +4491,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -4676,13 +4717,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -4691,10 +4734,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -4778,6 +4821,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "height": 40,
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                   {
                                     "backgroundColor": "rgba(0,115,230,0)",
@@ -4794,10 +4840,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4902,6 +4948,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -4909,10 +4958,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -4923,11 +4972,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -5328,7 +5382,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -5347,7 +5400,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -5464,9 +5516,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -5487,9 +5539,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -5713,13 +5765,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -5728,10 +5782,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -5832,6 +5886,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -5839,10 +5896,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -5853,11 +5910,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -6258,7 +6320,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -6277,7 +6338,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -6394,9 +6454,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -6487,6 +6547,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -6494,10 +6557,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -6508,11 +6571,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -6723,13 +6791,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -6738,10 +6808,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -7157,7 +7227,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -7176,7 +7245,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -7293,9 +7361,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -7386,6 +7454,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -7393,10 +7464,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -7407,11 +7478,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -7622,13 +7698,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -7637,10 +7715,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -7724,6 +7802,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "height": 40,
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                   {
                                     "backgroundColor": "rgba(0,115,230,0)",
@@ -7740,10 +7821,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -7848,6 +7929,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -7855,10 +7939,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -7869,11 +7953,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -8274,7 +8363,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -8293,7 +8381,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -8410,9 +8497,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -8503,6 +8590,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -8510,10 +8600,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -8524,11 +8614,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -8739,13 +8834,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -8754,10 +8851,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -8858,6 +8955,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -8865,10 +8965,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -8879,11 +8979,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -9284,7 +9389,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -9303,7 +9407,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -9420,9 +9523,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -9646,13 +9749,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -9661,10 +9766,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -10080,7 +10185,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -10099,7 +10203,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -10216,9 +10319,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -10442,13 +10545,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -10457,10 +10562,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -10544,6 +10649,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "height": 40,
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                   {
                                     "backgroundColor": "rgba(0,115,230,0)",
@@ -10560,10 +10668,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -10668,6 +10776,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -10675,10 +10786,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -10689,11 +10800,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -11094,7 +11210,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -11113,7 +11228,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -11230,9 +11344,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -11456,13 +11570,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -11471,10 +11587,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -11575,6 +11691,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -11582,10 +11701,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -11596,11 +11715,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >

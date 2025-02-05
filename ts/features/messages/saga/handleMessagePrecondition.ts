@@ -22,6 +22,7 @@ import {
   preconditionsCategoryTagSelector,
   preconditionsMessageIdSelector
 } from "../store/reducers/messagePrecondition";
+import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../common/store/reducers";
 
 export function* handleMessagePrecondition(
   getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
@@ -62,9 +63,12 @@ function* messagePreconditionWorker(
     if (E.isRight(result)) {
       if (result.right.status === 200) {
         const content = result.right.value;
+        const isIOMarkdownEnabled = yield* select(
+          isIOMarkdownEnabledOnMessagesAndServicesSelector
+        );
         yield* put(
           loadingContentPreconditionStatusAction(
-            toLoadingContentPayload(content)
+            toLoadingContentPayload(content, isIOMarkdownEnabled)
           )
         );
         return;

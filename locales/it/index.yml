@@ -489,9 +489,6 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
-    cieID:
-      cieIdTest:
-        title: CieID
     trial:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
@@ -1610,8 +1607,8 @@ wallet:
     fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
     amountInfo:
-      title: Vedi un importo diverso?
-      message: pagoPA aggiorna l'importo in tempo reale, per permetterti di pagare evitando more o interessi aggiuntivi. Può succedere, per esempio, quando l'ente applica dei costi di notifica (se ti ha inviato una comunicazione a valore legale) o se sei in ritardo con il pagamento.
+      title: L’importo è diverso da quello riportato sull’avviso pagoPA?
+      message: "Quando l'importo cambia, significa che l'ente creditore l'ha aggiornato automaticamente. In questo modo, hai sempre la certezza di pagare l’importo dovuto. Se è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nPer ulteriori dettagli contatta l'ente creditore, poiché pagoPA non conosce i motivi dell'aggiornamento."
       cta: Ok, va bene
     contextualHelpTitle: Riepilogo della transazione
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
@@ -1917,7 +1914,7 @@ wallet:
         title: "L’Ente Creditore sta avendo problemi nella risposta"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       PAYMENT_ONGOING:
-        title: "C’è già un pagamento in corso, riprova più tardi"
+        title: "C’è già un’operazione in corso, riprova più tardi"
         subtitle: "Se il problema persiste, puoi aprire una segnalazione."
       PAYMENT_EXPIRED:
         title: "L’avviso è scaduto e non è più possibile pagarlo"
@@ -1931,10 +1928,10 @@ wallet:
         title: "Non riusciamo a verificare lo stato di questo avviso"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       GENERIC_ERROR:
-        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        title: "Stiamo riscontrando alcuni problemi sui sistemi di pagamento"
         subtitle: "Riprova più tardi."
       PAYMENT_SLOWDOWN_ERROR:
-        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        title: "Stiamo riscontrando alcuni problemi sui sistemi di pagamento"
         subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
@@ -2913,53 +2910,8 @@ bonus:
           one: 1 secondo
           other: "{{seconds}} secondi"
   cdc:
-    title: "Carta della cultura"
-    serviceCta:
-      activable: "Attiva la carta"
-      pending: "Richiesta inviata"
-      error:
-        status: "Non è stato possibile recuperare le informazioni necessarie. Ti chiediamo di riprovare."
     serviceEntryPoint:
       notAvailable: "Il servizio non è disponibile in questo momento. Riprova più tardi."
-    bonusRequest:
-      bonusRequested:
-        loading:
-          title: "Stiamo inviando la tua richiesta di attivazione..."
-          subtitle: "Ti ricordiamo che sono valide solo le richieste per gli anni in cui hai dichiarato di essere residente in Italia. Ti preghiamo di attendere"
-        requestCompleted:
-          title: "La tua richiesta è stata inviata!"
-          body: "Riceverai un messaggio su IO quando le graduatorie saranno definitive."
-          cta: "Ho capito!"
-        partiallySuccess:
-          title: "Ecco l’esito delle tue richieste"
-          body:
-            success: "La richiesta per il {{successfulYears}} è andata a buon fine."
-            fail:
-              residenceAbroad: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché non residente in Italia."
-              notEligible: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché non è possibile richiedere Carta della Cultura per l’anno selezionato."
-              alreadyRegistered: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché hai già inviato una richiesta di attivazione per quell’anno."
-              initiativeFinished: "Non è stato possibile inviare la richiesta relativa al {{failedYears}}, perché il periodo di richiesta è terminato."
-        ko:
-          requirementsError:
-            title: "Purtroppo non hai i requisiti per richiedere la Carta della Cultura."
-            body: "La Carta della Cultura è disponibile solo per i cittadini residenti in Italia."
-          wrongFormat:
-            title: "Il servizio Carta della Cultura in questo momento non è disponibile."
-            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
-          genericError:
-            title: "Si è verificato un errore con la tua richiesta"
-            body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
-      selectResidence:
-        header: "Residenza"
-        items:
-          residesInItaly: "Risiedo in Italia"
-          residesAbroad: "Risiedo all’estero"
-        info: "Carta della Cultura è disponibile solo per i cittadini residenti in Italia. Indica la tua residenza per ciascun anno."
-      selectYear:
-        header: "Per quale anno vuoi richiedere la Carta della Cultura?"
-        body: "Per ogni anno selezionato, il tuo ISEE non deve superare i 15.000 € e la tua residenza deve essere nel territorio italiano."
-      misc:
-        conjunction: ", "
 features:
   messages:
     pushNotifications:
@@ -3301,6 +3253,17 @@ features:
         verificationExpired: Verifica
         unknown: Non disponibile
       digital: Versione digitale
+    support:
+      button: "Mostra dettagli"
+      supportTitle: Contatta l'assistenza
+      supportDescription: Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
+      phone: Chiama {{phoneNumber}}
+      landline: Da telefono fisso
+      chat: Chiedi aiuto in chat
+      email: Scrivi una mail
+      website: Visita il sito
+      additionalDataTitle: "Dati aggiuntivi"
+      errorCode: Codice errore
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
@@ -3472,14 +3435,14 @@ features:
       moreInfo: More info
       error:
         title: Il tuo dispositivo non supporta Documenti su IO
-        body: Il tuo dispositivo non ha i requisiti di sicurezza necessari per questa funzionalità.
-        primaryAction: Chiudi
-        secondaryAction: Scopri di più
+        body: "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi "
+        primaryAction: Scopri di più
+        secondaryAction: Chiudi
     presentation:
       alerts:
         statusAction: Cosa posso fare?
         mdl:
-          content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
+          content: "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine."
         ehc:
           content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
         edc:
@@ -3502,6 +3465,7 @@ features:
             valid: L'ultima verifica è del {{date}}.
             expiring: Verifica la tua identità entro il {{date}}.
             expired: È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.
+            action: Inizia
         MDL:
           expiring:
             title: "Patente su IO: documento in scadenza"
@@ -3557,6 +3521,13 @@ features:
         openPdf: "Mostra documento"
         shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
+      eid: 
+        verificationExpired:
+          title: Verifica la tua identità
+          contentStart: "È un passaggio di sicurezza necessario per continuare ad usare "
+          contentBold: Documenti su IO
+          contentEnd: "."
+          primaryAction: Inizia
       statusAttestationUnknown:
         title: Non siamo riusciti a caricare {{credentialName}}
         content: Chiudi e riapri l'app per riprovare.
@@ -3723,6 +3694,7 @@ idpay:
     details:
       initiativeCard:
         availableAmount: Disponibile
+        refundRequestedAmount: Rimborso richiesto
         validUntil: Fino al {{expiryDate}}
         expiresOn: Scade il {{expiryDate}}
         toRefund: Da rimborsare
@@ -3784,6 +3756,7 @@ idpay:
         scanQr: Inquadra un codice QR
         generateBarcode: Crea un codice sconto
       authorizeButton: Autorizza un pagamento
+      addExpenseButton: Aggiungi spesa
       IDPayCode:
         banner:
           title: Paga con la tua carta d’identità elettronica

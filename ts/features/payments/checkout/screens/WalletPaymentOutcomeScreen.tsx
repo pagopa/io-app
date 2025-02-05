@@ -283,6 +283,7 @@ const WalletPaymentOutcomeScreen = () => {
       service_name: paymentAnalyticsData?.serviceName,
       attempt: paymentOngoingHistory?.attempt,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      psp_selected: paymentAnalyticsData?.selectedPsp,
       payment_phase:
         outcome === WalletPaymentOutcomeEnum.GENERIC_ERROR
           ? getPaymentPhaseFromStep(currentStep)

@@ -54,7 +54,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 38;
+const CURRENT_REDUX_STORE_VERSION = 39;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -455,7 +455,18 @@ const migrations: MigrationManifest = {
     };
   },
   // Remove old wallets&payments feature and persisted state
-  "38": (state: PersistedState) => omit(state, "payments")
+  "38": (state: PersistedState) => omit(state, "payments"),
+  // Add 'isIOMarkdownEnabledOnMessagesAndServices' to 'persistedPreferences'
+  "39": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...typedState.persistedPreferences,
+        isIOMarkdownEnabledOnMessagesAndServices: false
+      }
+    };
+  }
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;

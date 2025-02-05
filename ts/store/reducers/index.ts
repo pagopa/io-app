@@ -242,8 +242,6 @@ export function createRootReducer(
                 },
                 cieLogin: {
                   ...cieLoginInitialState,
-                  isCieIDFeatureEnabled:
-                    state.features.loginFeatures.cieLogin.isCieIDFeatureEnabled,
                   isCieIDTourGuideEnabled:
                     state.features.loginFeatures.cieLogin
                       .isCieIDTourGuideEnabled,
@@ -259,15 +257,16 @@ export function createRootReducer(
                     .hasUserAcknowledgedSettingsBanner,
                 _persist: state.features.profileSettings._persist
               },
-              _persist: state.features._persist,
-              // IT Wallet must be kept
+              /**
+               * IT Wallet state persists across sessions and is explicitly reset on session changes
+               * via the itwLifecycleStoresReset action to ensure proper cleanup.
+               * We can avoid to replicate the _persist property because itWallet already is a persisted
+               * reducer.
+               */
               itWallet: {
-                issuance: state.features.itWallet.issuance,
-                lifecycle: state.features.itWallet.lifecycle,
-                credentials: state.features.itWallet.credentials,
-
-                _persist: state.features.itWallet._persist
-              }
+                ...state.features.itWallet
+              },
+              _persist: state.features._persist
             },
             identification: {
               ...identificationInitialState,

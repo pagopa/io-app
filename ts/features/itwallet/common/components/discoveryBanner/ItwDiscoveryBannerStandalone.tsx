@@ -26,6 +26,6 @@ export const ItwDiscoveryBannerStandalone = () => {
 const styles = StyleSheet.create({
   wrapper: {
     marginTop: 16,
-    marginBottom: 8
+    marginBottom: 24
   }
 });
