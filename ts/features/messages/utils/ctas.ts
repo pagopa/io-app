@@ -193,11 +193,10 @@ const hasCtaValidActions = (
   serviceMetadata?: ServiceMetadata
 ): boolean => {
   const isCTA1Valid = isCtaActionValid(ctas.cta_1, serviceMetadata);
-  if (ctas.cta_2 === undefined) {
-    return isCTA1Valid;
+  if (isCTA1Valid) {
+    return true;
   }
-  const isCTA2Valid = isCtaActionValid(ctas.cta_2, serviceMetadata);
-  return isCTA1Valid || isCTA2Valid;
+  return ctas.cta_2 != null && isCtaActionValid(ctas.cta_2, serviceMetadata);
 };
 
 /**

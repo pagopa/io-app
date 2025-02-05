@@ -6,7 +6,7 @@ import { MessageContent } from "../../../../../definitions/backend/MessageConten
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
 import { Locales } from "../../../../../locales/locales";
 import { setLocale } from "../../../../i18n";
-import { CTAS } from "../../types/MessageCTA";
+import { CTA, CTAS } from "../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
   getMessageCTA,
@@ -455,7 +455,68 @@ cta_1:
   });
 });
 
-// hasCtaValidActions
+describe("hasCtaValidActions", () => {
+  it("should return true if cta1 action is valid, with undefined cta2", () => {
+    const ctas: CTAS = {
+      cta_1: {
+        action: "ioit://messages",
+        text: "CTA1 text"
+      }
+    };
+
+    const hasValidActions = testable!.hasCtaValidActions(ctas, undefined);
+
+    expect(hasValidActions).toBe(true);
+  });
+  it("should return true if cta1 action is valid, with invalid cta2", () => {
+    const ctas: CTAS = {
+      cta_1: {
+        action: "ioit://messages",
+        text: "CTA1 text"
+      },
+      cta_2: {
+        action: "thisIsInvalid",
+        text: "CTA2 text"
+      }
+    };
+
+    const hasValidActions = testable!.hasCtaValidActions(ctas, undefined);
+
+    expect(hasValidActions).toBe(true);
+  });
+  it("should return true if cta1 action is invalid but cta2 is valid", () => {
+    const ctas: CTAS = {
+      cta_1: {
+        action: "thisIsInvalid",
+        text: "CTA1 text"
+      },
+      cta_2: {
+        action: "ioit://messages",
+        text: "CTA2 text"
+      }
+    };
+
+    const hasValidActions = testable!.hasCtaValidActions(ctas, undefined);
+
+    expect(hasValidActions).toBe(true);
+  });
+  it("should return false if both ctas are invalid", () => {
+    const ctas: CTAS = {
+      cta_1: {
+        action: "thisIsInvalid",
+        text: "CTA1 text"
+      },
+      cta_2: {
+        action: "thisIsInvalid",
+        text: "CTA2 text"
+      }
+    };
+
+    const hasValidActions = testable!.hasCtaValidActions(ctas, undefined);
+
+    expect(hasValidActions).toBe(false);
+  });
+});
 // hasMetadataTokenName
 // internalRoutePredicates
 // isCtaActionValid
