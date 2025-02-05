@@ -166,6 +166,11 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
       }}
     >
       <StatusBar
+        backgroundColor={
+          themeType === "dark"
+            ? IONavigationDarkTheme.colors?.background
+            : IONavigationLightTheme.colors.background
+        }
         barStyle={themeType === "dark" ? "light-content" : "dark-content"}
       />
       {props.children}
