@@ -109,6 +109,7 @@ describe("Test TimelineOperationListItem", () => {
           <TimelineOperationListItem
             operation={T_OPERATION}
             onPress={mockOnPress}
+            pressable
             testID="itemTestID"
           />
         );
@@ -153,6 +154,7 @@ describe("Test TimelineOperationListItem", () => {
           <TimelineOperationListItem
             operation={T_OPERATION}
             onPress={mockOnPress}
+            pressable
             testID="itemTestID"
           />
         );
