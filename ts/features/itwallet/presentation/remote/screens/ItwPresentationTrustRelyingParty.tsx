@@ -12,19 +12,25 @@ import {
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
 import { memo, useState } from "react";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import Animated, {
+  LinearTransition,
+  FadeIn,
+  FadeOut
+} from "react-native-reanimated";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import I18n from "../../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import {
-  ItwRequestedClaimsList,
-  ItwSelectableClaimList,
-  RequiredClaim
-} from "../../../issuance/components/ItwRequiredClaimsList";
+  ItwOptionalClaimsList,
+  ItwRequiredClaimsList,
+  ConsentClaim
+} from "../../../common/components/ItwConsentClaims";
 
 const RP_MOCK_NAME = "Comune di Milano";
 
-const mockedRequiredClaims: Array<RequiredClaim> = [
+const mockedRequiredClaims: Array<ConsentClaim> = [
   {
     claim: { id: "fiscal_code", label: "Codice fiscale", value: "QWERTYUIOP" },
     source: "IPZS"
@@ -39,9 +45,9 @@ const mockedRequiredClaims: Array<RequiredClaim> = [
   }
 ];
 
-const mockedOptionalClaims: Array<RequiredClaim> = [
+const mockedOptionalClaims: Array<ConsentClaim> = [
   {
-    claim: { id: "birthdate", label: "Data di nascita", value: "11/11/11" },
+    claim: { id: "birthdate", label: "Data di nascita", value: "01/01/1970" },
     source: "IPZS"
   },
   {
@@ -50,26 +56,28 @@ const mockedOptionalClaims: Array<RequiredClaim> = [
   }
 ];
 
-const ItwMemoizedRequestedClaimsList = memo(ItwRequestedClaimsList);
+const ItwMemoizedRequiredClaimsList = memo(ItwRequiredClaimsList);
 
-export const ItwSelectiveDisclosureScreen = () => {
-  const [selectedClaimIds, setSelectedClaimIds] = useState<Array<string>>([]);
-  const allSelected = selectedClaimIds.length === mockedOptionalClaims.length;
+export const ItwPresentationTrustRelyingParty = () => {
+  const [selectedOptionalClaims, setSelectedOptionalClaims] = useState<
+    Array<string>
+  >([]);
+  const allOptionalClaimsSelected =
+    selectedOptionalClaims.length === mockedOptionalClaims.length;
 
   const toggleOptionalClaims = (claimId: string) => {
-    if (selectedClaimIds.includes(claimId)) {
-      setSelectedClaimIds(prev => prev.filter(id => id !== claimId));
-    } else {
-      setSelectedClaimIds(prev => [...prev, claimId]);
-    }
+    setSelectedOptionalClaims(prevState =>
+      prevState.includes(claimId)
+        ? prevState.filter(id => id !== claimId)
+        : [...prevState, claimId]
+    );
   };
 
   const toggleSelectAll = () => {
-    if (allSelected) {
-      setSelectedClaimIds([]);
-    } else {
-      setSelectedClaimIds(mockedOptionalClaims.map(c => c.claim.id));
-    }
+    ReactNativeHapticFeedback.trigger("impactLight");
+    setSelectedOptionalClaims(
+      allOptionalClaimsSelected ? [] : mockedOptionalClaims.map(c => c.claim.id)
+    );
   };
 
   useHeaderSecondLevel({ title: "" });
@@ -87,24 +95,32 @@ export const ItwSelectiveDisclosureScreen = () => {
         <View style={styles.claimsSelection}>
           <ButtonLink
             label={I18n.t(
-              `global.buttons.${allSelected ? "deselectAll" : "selectAll"}`
+              `global.buttons.${
+                allOptionalClaimsSelected ? "deselectAll" : "selectAll"
+              }`
             )}
             onPress={toggleSelectAll}
           />
         </View>
       </View>
-      <ItwSelectableClaimList
+      <ItwOptionalClaimsList
         items={mockedOptionalClaims}
-        selectedIds={selectedClaimIds}
+        selectedClaims={selectedOptionalClaims}
         onSelectionChange={toggleOptionalClaims}
       />
-      {!allSelected && (
-        <Alert
-          variant="info"
-          content={I18n.t(
-            "features.itWallet.presentation.selectiveDisclosure.optionalClaimsAlert"
-          )}
-        />
+      {!allOptionalClaimsSelected && (
+        <Animated.View
+          entering={FadeIn.duration(200)}
+          exiting={FadeOut.duration(200)}
+          layout={LinearTransition.duration(200)}
+        >
+          <Alert
+            variant="info"
+            content={I18n.t(
+              "features.itWallet.presentation.selectiveDisclosure.optionalClaimsAlert"
+            )}
+          />
+        </Animated.View>
       )}
     </VStack>
   );
@@ -140,7 +156,7 @@ export const ItwSelectiveDisclosureScreen = () => {
               iconName="security"
               iconColor="grey-700"
             />
-            <ItwMemoizedRequestedClaimsList items={mockedRequiredClaims} />
+            <ItwMemoizedRequiredClaimsList items={mockedRequiredClaims} />
           </View>
 
           {renderOptionalClaims()}
@@ -160,9 +176,7 @@ export const ItwSelectiveDisclosureScreen = () => {
           <IOMarkdown
             content={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.tos",
-              {
-                privacyUrl: "https://rp.privacy.url"
-              }
+              { privacyUrl: "https://rp.privacy.url" }
             )}
           />
         </VStack>
