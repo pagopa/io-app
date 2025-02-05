@@ -32,7 +32,6 @@ import SectionStatusComponent from "../../components/SectionStatus";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import {
-  isCieIDFFEnabledSelector,
   isCieIDTourGuideEnabledSelector,
   isCieLoginUatEnabledSelector
 } from "../../features/cieLogin/store/selectors";
@@ -80,7 +79,6 @@ export const LandingScreen = () => {
   const isCieIDTourGuideEnabled = useIOSelector(
     isCieIDTourGuideEnabledSelector
   );
-  const isCieIDFFEnabled = useIOSelector(isCieIDFFEnabledSelector);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
     navigateToIdpSelection,
@@ -236,35 +234,15 @@ export const LandingScreen = () => {
     }
   }, [hasTabletCompatibilityAlertAlreadyShown]);
 
-  const handleLegacyCieLogin = useCallback(() => {
-    if (isCieSupported) {
-      handleNavigateToCiePinScreen();
-    } else {
-      navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.CIE_NOT_SUPPORTED
-      });
-    }
-  }, [isCieSupported, navigation, handleNavigateToCiePinScreen]);
-
   const navigateToCiePinScreen = useCallback(() => {
     void trackCieLoginSelected();
-    if (isCieIDFFEnabled) {
-      if (isCieSupported) {
-        void trackCieBottomSheetScreenView();
-        present();
-      } else {
-        handleNavigateToCieIdLoginScreen();
-      }
+    if (isCieSupported) {
+      void trackCieBottomSheetScreenView();
+      present();
     } else {
-      handleLegacyCieLogin();
+      handleNavigateToCieIdLoginScreen();
     }
-  }, [
-    present,
-    isCieSupported,
-    isCieIDFFEnabled,
-    handleLegacyCieLogin,
-    handleNavigateToCieIdLoginScreen
-  ]);
+  }, [present, isCieSupported, handleNavigateToCieIdLoginScreen]);
 
   const navigateToPrivacyUrl = useCallback(() => {
     trackMethodInfo();
@@ -278,62 +256,6 @@ export const LandingScreen = () => {
       });
     }
   }, [isCieSupported, navigation]);
-
-  const [firstButton, secondButton] = useMemo((): [
-    JSX.Element,
-    JSX.Element
-  ] => {
-    const loginCieButton = (
-      <Tooltip
-        closeIconAccessibilityLabel={I18n.t("global.buttons.close")}
-        isVisible={isCieIDTourGuideEnabled}
-        onClose={() => dispatch(cieIDDisableTourGuide())}
-        title={I18n.t("authentication.landing.tour_guide.title")}
-        content={I18n.t("authentication.landing.tour_guide.content")}
-      >
-        <ButtonSolid
-          testID="landing-button-login-cie"
-          accessibilityLabel={I18n.t("authentication.landing.loginCie")}
-          fullWidth
-          color={isCieUatEnabled ? "danger" : "primary"}
-          label={I18n.t("authentication.landing.loginCie")}
-          icon="cieLetter"
-          onPress={navigateToCiePinScreen}
-        />
-      </Tooltip>
-    );
-    const loginSpidButton = (
-      <ButtonSolid
-        testID="landing-button-login-spid"
-        fullWidth
-        accessibilityLabel={I18n.t("authentication.landing.loginSpid")}
-        color="primary"
-        // if CIE is not supported, since the new DS has not a
-        // "semi-enabled" state, we leave the button enabled
-        // but we navigate to the CIE unsupported info screen.
-        label={I18n.t("authentication.landing.loginSpid")}
-        icon="spid"
-        onPress={() => {
-          void trackSpidLoginSelected();
-          navigateToIdpSelection();
-        }}
-      />
-    );
-
-    if (isCieIDFFEnabled || isCieSupported) {
-      return [loginCieButton, loginSpidButton];
-    }
-
-    return [loginSpidButton, loginCieButton];
-  }, [
-    isCieIDTourGuideEnabled,
-    isCieUatEnabled,
-    navigateToCiePinScreen,
-    navigateToIdpSelection,
-    isCieIDFFEnabled,
-    isCieSupported,
-    dispatch
-  ]);
 
   const LandingScreenComponent = () => {
     useHeaderSecondLevel({
@@ -431,9 +353,39 @@ export const LandingScreen = () => {
 
         <SectionStatusComponent sectionKey={"login"} />
         <ContentWrapper>
-          {firstButton}
+          <Tooltip
+            closeIconAccessibilityLabel={I18n.t("global.buttons.close")}
+            isVisible={isCieIDTourGuideEnabled}
+            onClose={() => dispatch(cieIDDisableTourGuide())}
+            title={I18n.t("authentication.landing.tour_guide.title")}
+            content={I18n.t("authentication.landing.tour_guide.content")}
+          >
+            <ButtonSolid
+              testID="landing-button-login-cie"
+              accessibilityLabel={I18n.t("authentication.landing.loginCie")}
+              fullWidth
+              color={isCieUatEnabled ? "danger" : "primary"}
+              label={I18n.t("authentication.landing.loginCie")}
+              icon="cieLetter"
+              onPress={navigateToCiePinScreen}
+            />
+          </Tooltip>
           <VSpacer size={SPACE_BETWEEN_BUTTONS} />
-          {secondButton}
+          <ButtonSolid
+            testID="landing-button-login-spid"
+            fullWidth
+            accessibilityLabel={I18n.t("authentication.landing.loginSpid")}
+            color="primary"
+            // if CIE is not supported, since the new DS has not a
+            // "semi-enabled" state, we leave the button enabled
+            // but we navigate to the CIE unsupported info screen.
+            label={I18n.t("authentication.landing.loginSpid")}
+            icon="spid"
+            onPress={() => {
+              void trackSpidLoginSelected();
+              navigateToIdpSelection();
+            }}
+          />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
           <View style={IOStyles.selfCenter}>
             <ButtonLink

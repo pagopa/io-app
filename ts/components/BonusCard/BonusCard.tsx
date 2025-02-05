@@ -75,6 +75,7 @@ const BonusCardContent = (props: BonusCard) => {
       <VSpacer size={4} />
       <BodySmall
         weight="Regular"
+        color="blueItalia-850"
         style={{ textAlign: "center", marginHorizontal: 16 }}
       >
         {organizationName}
