@@ -543,6 +543,22 @@ describe("hasMetadataTokenName", () => {
   });
 });
 
+describe("internalRoutePredicates", () => {
+  it("should match expected values", () => {
+    const map = testable!.internalRoutePredicates;
+
+    expect(map.size).toBe(1);
+
+    const keys = Array.from(map.keys());
+    expect(keys.length).toBe(1);
+    expect(keys[0]).toBe("/services/webview");
+
+    const values = Array.from(map.values());
+    expect(values.length).toBe(1);
+    expect(values[0]).toBe(testable!.hasMetadataTokenName);
+  });
+});
+
 // internalRoutePredicates
 // isCtaActionValid
 
