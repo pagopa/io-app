@@ -84,6 +84,10 @@ const IdPayInitiativeDetailsScreen = () => {
     });
   };
 
+  const onAddExpense = () => {
+    // TODO: Implement the FIMS startup that opens the expense form (https://pagopa.atlassian.net/browse/IOBP-1137)
+  };
+
   const navigateToConfiguration = () => {
     navigation.push(IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR, {
       screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
@@ -163,6 +167,16 @@ const IdPayInitiativeDetailsScreen = () => {
                   progress: amountProgress
                 }
               ];
+            case InitiativeRewardTypeEnum.EXPENSE:
+              return [
+                {
+                  type: "Value",
+                  label: I18n.t(
+                    "idpay.initiative.details.initiativeCard.refundRequestedAmount"
+                  ),
+                  value: formatNumberCentsToAmount(accruedAmount, true, "right")
+                }
+              ];
             case InitiativeRewardTypeEnum.REFUND:
               return [
                 {
@@ -215,7 +229,21 @@ const IdPayInitiativeDetailsScreen = () => {
                   </Animated.View>
                 </ContentWrapper>
               );
-
+            case InitiativeRewardTypeEnum.EXPENSE:
+              return (
+                <ContentWrapper>
+                  <MissingConfigurationAlert
+                    initiativeId={initiativeId}
+                    status={initiative.status}
+                  />
+                  <VSpacer size={8} />
+                  <InitiativeTimelineComponent
+                    initiativeId={initiativeId}
+                    size={3}
+                  />
+                  <VSpacer size={24} />
+                </ContentWrapper>
+              );
             case InitiativeRewardTypeEnum.REFUND:
               if (initiativeNeedsConfiguration) {
                 return (
@@ -281,6 +309,14 @@ const IdPayInitiativeDetailsScreen = () => {
           primary: {
             label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
             onPress: discountBottomSheet.present
+          }
+        };
+      case InitiativeRewardTypeEnum.EXPENSE:
+        return {
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
+            onPress: onAddExpense
           }
         };
       default:
