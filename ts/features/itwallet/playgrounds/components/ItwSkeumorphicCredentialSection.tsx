@@ -4,7 +4,7 @@ import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ItwPresentationCredentialCardFlipButton } from "../../presentation/components/ItwPresentationCredentialCardFlipButton";
+import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";

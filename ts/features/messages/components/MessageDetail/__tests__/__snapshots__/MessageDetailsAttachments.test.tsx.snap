@@ -335,8 +335,6 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                       }
                     >
                       <View
-                        accessibilityLabel="Attachments"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -346,7 +344,6 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -363,9 +360,9 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Attachments"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
@@ -740,8 +737,6 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                       }
                     >
                       <View
-                        accessibilityLabel="Attachments"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -751,7 +746,6 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -768,9 +762,9 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Attachments"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
@@ -1837,8 +1831,6 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                       }
                     >
                       <View
-                        accessibilityLabel="Attachments"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -1848,7 +1840,6 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -1865,9 +1856,9 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Attachments"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}
@@ -2242,8 +2233,6 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                       }
                     >
                       <View
-                        accessibilityLabel="Attachments"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -2253,7 +2242,6 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -2270,9 +2258,9 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Attachments"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
                                 allowFontScaling={true}

@@ -613,7 +613,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -644,7 +644,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -790,7 +790,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -819,7 +819,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -965,7 +965,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -994,7 +994,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1140,7 +1140,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1169,7 +1169,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1315,7 +1315,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1344,7 +1344,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1490,7 +1490,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1519,7 +1519,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1665,7 +1665,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1694,7 +1694,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1840,7 +1840,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -1869,7 +1869,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2015,7 +2015,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2044,7 +2044,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2190,7 +2190,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2219,7 +2219,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2919,7 +2919,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -2950,7 +2950,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3096,7 +3096,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3125,7 +3125,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3271,7 +3271,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3300,7 +3300,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3446,7 +3446,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3475,7 +3475,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3621,7 +3621,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3650,7 +3650,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3796,7 +3796,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3825,7 +3825,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -3971,7 +3971,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4000,7 +4000,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4146,7 +4146,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4175,7 +4175,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4321,7 +4321,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4350,7 +4350,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4496,7 +4496,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },
@@ -4525,7 +4525,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   style={
                                     [
                                       {
-                                        "backgroundColor": "#CCD4DC",
+                                        "backgroundColor": "#D2D6E3",
                                         "flexGrow": 1,
                                         "width": 2,
                                       },

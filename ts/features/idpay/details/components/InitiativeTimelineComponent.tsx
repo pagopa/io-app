@@ -1,10 +1,10 @@
 import {
   Body,
+  BodySmall,
   Divider,
   H6,
-  BodySmall,
-  VSpacer,
-  ListItemHeader
+  ListItemHeader,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
@@ -20,9 +20,11 @@ import { useIOSelector } from "../../../../store/hooks";
 import { useTimelineDetailsBottomSheet } from "../../timeline/components/TimelineDetailsBottomSheet";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
+  idpayInitiativeDetailsSelector,
   idpayOperationListSelector,
   idpayPaginatedTimelineSelector
 } from "../store";
+import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import { TimelineOperationListItem } from "./TimelineOperationListItem";
 
 type Props = {
@@ -38,6 +40,8 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
   const paginatedTimelinePot = useIOSelector(idpayPaginatedTimelineSelector);
   const timeline = useIOSelector(idpayOperationListSelector);
   const isLoading = pot.isLoading(paginatedTimelinePot);
+  const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
+  const initiative = pot.toUndefined(initiativeDataPot);
 
   const navigateToOperationsList = () => {
     navigation.push(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
@@ -63,6 +67,10 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
           <Fragment key={operation.operationId}>
             <TimelineOperationListItem
               operation={operation}
+              pressable={
+                initiative?.initiativeRewardType !==
+                InitiativeRewardTypeEnum.EXPENSE
+              }
               onPress={() => detailsBottomSheet.present(operation)}
             />
             {index < size - 1 ? <Divider /> : undefined}
@@ -94,18 +102,24 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
   );
 };
 
-const TimelineHeaderComponent = (props: { onShowMorePress?: () => void }) => (
+const TimelineHeaderComponent = ({
+  onShowMorePress
+}: {
+  onShowMorePress?: () => void;
+}) => (
   <View style={[IOStyles.row, IOStyles.rowSpaceBetween]}>
     <H6>
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
       )}
     </H6>
-    <Body weight="Semibold" color="blue" onPress={props.onShowMorePress}>
-      {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
-      )}
-    </Body>
+    {onShowMorePress && (
+      <Body weight="Semibold" asLink onPress={onShowMorePress}>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
+        )}
+      </Body>
+    )}
   </View>
 );
 
@@ -123,7 +137,7 @@ const TimelineComponentSkeleton = ({ size = 3 }: Pick<Props, "size">) => (
 const EmptyTimelineComponent = () => (
   <BodySmall
     weight="Regular"
-    color="bluegreyDark"
+    color="grey-850"
     testID="IDPayEmptyTimelineTestID"
   >
     {I18n.t(

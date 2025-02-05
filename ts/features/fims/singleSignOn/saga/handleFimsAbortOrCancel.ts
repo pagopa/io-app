@@ -9,8 +9,9 @@ import { fimsPartialAbortUrl } from "../store/selectors";
 import {
   absoluteRedirectUrl,
   computeAndTrackAuthenticationError,
-  deallocateFimsResourcesAndNavigateBack,
-  formatHttpClientResponseForMixPanel
+  handleFimsBackNavigation,
+  formatHttpClientResponseForMixPanel,
+  handleFimsResourcesDeallocation
 } from "./sagaUtils";
 
 const abortTimeoutMillisecondsGenerator = () => 8000;
@@ -48,5 +49,6 @@ export function* handleFimsAbortOrCancel() {
     }
   }
 
-  yield* call(deallocateFimsResourcesAndNavigateBack);
+  yield* call(handleFimsResourcesDeallocation);
+  yield* call(handleFimsBackNavigation);
 }

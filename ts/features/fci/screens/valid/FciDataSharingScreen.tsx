@@ -2,7 +2,6 @@ import {
   Body,
   FooterActionsInline,
   H2,
-  H6,
   HSpacer,
   IOStyles,
   IconButton,
@@ -104,7 +103,7 @@ const FciDataSharingScreen = (): ReactElement => {
       />
       <HSpacer size={8} />
       <View style={{ flex: 1 }}>
-        <H6 color={"bluegrey"}>
+        <Body weight="Semibold">
           {I18n.t("features.fci.shareDataScreen.alertText")}
           <HSpacer size={8} />
           <Body
@@ -123,7 +122,7 @@ const FciDataSharingScreen = (): ReactElement => {
           >
             {I18n.t("features.fci.shareDataScreen.alertLink")}
           </Body>
-        </H6>
+        </Body>
       </View>
     </View>
   );

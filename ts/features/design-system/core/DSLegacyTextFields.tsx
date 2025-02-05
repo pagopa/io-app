@@ -110,7 +110,7 @@ const LegacyTextFields = () => {
           autoCapitalize: "none",
           keyboardType: "default"
         }}
-        overrideBorderColor={IOColors.green}
+        overrideBorderColor={IOColors["success-500"]}
       />
 
       <VSpacer size={24} />
@@ -125,7 +125,7 @@ const LegacyTextFields = () => {
           autoCapitalize: "none",
           keyboardType: "default"
         }}
-        overrideBorderColor={IOColors.red}
+        overrideBorderColor={IOColors["error-600"]}
       />
 
       <VSpacer size={24} />
@@ -185,10 +185,10 @@ const LegacyTextFields = () => {
             contextMenuHidden: true
           }}
           icon={"notice"}
-          iconColor={"red"}
+          iconColor={"error-500"}
           iconPosition="right"
           isValid={false}
-          overrideBorderColor={IOColors.red}
+          overrideBorderColor={IOColors["error-600"]}
           testID="PinFieldWarning"
         />
         <View
@@ -196,15 +196,13 @@ const LegacyTextFields = () => {
           accessibilityElementsHidden={true}
           importantForAccessibility="no-hide-descendants"
         >
-          <BodySmall weight="Regular" color="red">
+          <BodySmall weight="Regular" color="error-500">
             With two lines, this custom description breaks everything ¯\_(ツ)_/¯
           </BodySmall>
         </View>
       </View>
 
-      <H4 color={"bluegrey"} style={{ marginBottom: 12, marginTop: 48 }}>
-        Authentication
-      </H4>
+      <H4 style={{ marginBottom: 12, marginTop: 48 }}>Authentication</H4>
 
       <LabelledItem
         label={"Username"}
@@ -227,9 +225,7 @@ const LegacyTextFields = () => {
         }}
       />
 
-      <H4 color={"bluegrey"} style={{ marginBottom: 12, marginTop: 48 }}>
-        Payments
-      </H4>
+      <H4 style={{ marginBottom: 12, marginTop: 48 }}>Payments</H4>
       <LabelledItem
         label={"Card number"}
         icon={detectedBrand.iconForm}
