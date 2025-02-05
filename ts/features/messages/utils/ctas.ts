@@ -28,6 +28,7 @@ import {
 } from "../../../utils/internalLink";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { FIMS_ROUTES } from "../../fims/common/navigation";
+import { isTestEnv } from "../../../utils/environment";
 
 export type CTAActionType =
   | "io_handled_link"
@@ -141,6 +142,7 @@ const getCTAIfValid = (
 
   const safeCTAS = ctaFromMessageCTA(unsafeMessageCTA);
   if (safeCTAS == null) {
+    trackMessageCTAFrontMatterDecodingError(serviceId);
     return undefined;
   }
 
@@ -231,3 +233,13 @@ const isCtaActionValid = (
   const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
   return E.isRight(maybeCustomHandledAction);
 };
+
+export const testable = isTestEnv
+  ? {
+      getCTAIfValid,
+      hasCtaValidActions,
+      hasMetadataTokenName,
+      internalRoutePredicates,
+      isCtaActionValid
+    }
+  : undefined;
