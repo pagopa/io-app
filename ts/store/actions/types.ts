@@ -35,6 +35,7 @@ import { IngressScreenActions } from "../../features/ingress/store/actions";
 import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
 import { LandingScreenBannerActions } from "../../features/landingScreenMultiBanner/store/actions";
 import { SpidConfigActions } from "../../features/spidLogin/store/actions";
+import { AppFeedbackActions } from "../../features/appReviews/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -107,7 +108,8 @@ export type Action =
   | IngressScreenActions
   | MixpanelFeatureActions
   | LandingScreenBannerActions
-  | SpidConfigActions;
+  | SpidConfigActions
+  | AppFeedbackActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
