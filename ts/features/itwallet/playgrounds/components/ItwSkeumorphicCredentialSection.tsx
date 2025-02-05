@@ -1,5 +1,6 @@
 import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { useState } from "react";
+import { View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
@@ -15,20 +16,21 @@ const credentialsWithCard: ReadonlyArray<string> = [
 ];
 
 export const ItwSkeumorphicCredentialSection = () => (
-  <VStack space={16}>
+  <View>
     <ListItemHeader label="Skeumorphic credential card" />
-
-    {Object.values(ItwStoredCredentialsMocks)
-      .filter(({ credentialType }) =>
-        credentialsWithCard.includes(credentialType)
-      )
-      .map(credential => (
-        <ItwSkeumorphicCredentialItem
-          key={credential.credentialType}
-          credential={credential}
-        />
-      ))}
-  </VStack>
+    <VStack space={16}>
+      {Object.values(ItwStoredCredentialsMocks)
+        .filter(({ credentialType }) =>
+          credentialsWithCard.includes(credentialType)
+        )
+        .map(credential => (
+          <ItwSkeumorphicCredentialItem
+            key={credential.credentialType}
+            credential={credential}
+          />
+        ))}
+    </VStack>
+  </View>
 );
 
 const ItwSkeumorphicCredentialItem = ({

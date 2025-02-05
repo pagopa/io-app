@@ -28,7 +28,7 @@ const ItwPlayground = () => {
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <ContentWrapper>
-        <VStack space={16}>
+        <VStack space={8}>
           <ListItemSwitch
             label="Enable offline access"
             value={isOfflineAccessEnabled}
