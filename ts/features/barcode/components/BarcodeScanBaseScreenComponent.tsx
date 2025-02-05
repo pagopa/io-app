@@ -57,6 +57,7 @@ import {
   trackBarcodeScanTorch,
   trackZendeskSupport
 } from "../analytics";
+import { useCameraPermissionStatus } from "../hooks/useCameraPermissionStatus";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
 import {
   IOBarcode,
@@ -209,21 +210,20 @@ const BarcodeScanBaseScreenComponent = ({
   };
 
   const {
-    cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
-    openCameraSettings,
-    hasTorch,
-    isTorchOn,
-    toggleTorch
-  } = useIOBarcodeCameraScanner({
-    onBarcodeSuccess,
-    onBarcodeError,
-    barcodeFormats,
-    barcodeTypes,
-    isDisabled: isAppInBackground || !isFocused || isDisabled,
-    isLoading
-  });
+    openCameraSettings
+  } = useCameraPermissionStatus();
+
+  const { cameraComponent, hasTorch, isTorchOn, toggleTorch } =
+    useIOBarcodeCameraScanner({
+      onBarcodeSuccess,
+      onBarcodeError,
+      barcodeFormats,
+      barcodeTypes,
+      isDisabled: isAppInBackground || !isFocused || isDisabled,
+      isLoading
+    });
 
   const customGoBack = (
     <IconButton
@@ -233,11 +233,6 @@ const BarcodeScanBaseScreenComponent = ({
       color="contrast"
     />
   );
-
-  const openAppSetting = useCallback(async () => {
-    // Open the custom settings if the app has one
-    await openCameraSettings();
-  }, [openCameraSettings]);
 
   const cameraView = useMemo(() => {
     if (cameraPermissionStatus === "granted") {
@@ -276,16 +271,16 @@ const BarcodeScanBaseScreenComponent = ({
         action={{
           label: I18n.t("barcodeScan.permissions.denied.action"),
           accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
-          onPress: async () => {
+          onPress: () => {
             trackBarcodeCameraAuthorizedFromSettings();
-            await openAppSetting();
+            openCameraSettings();
           }
         }}
       />
     );
   }, [
     cameraPermissionStatus,
-    openAppSetting,
+    openCameraSettings,
     cameraComponent,
     requestCameraPermission
   ]);
