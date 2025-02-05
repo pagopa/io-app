@@ -1,13 +1,13 @@
-import { H3, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { useState } from "react";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
+import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
-import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
 
 const credentialsWithCard: ReadonlyArray<string> = [
   "MDL",
@@ -16,7 +16,7 @@ const credentialsWithCard: ReadonlyArray<string> = [
 
 export const ItwSkeumorphicCredentialSection = () => (
   <VStack space={16}>
-    <H3>{"Skeumorphic credential card"}</H3>
+    <ListItemHeader label="Skeumorphic credential card" />
 
     {Object.values(ItwStoredCredentialsMocks)
       .filter(({ credentialType }) =>

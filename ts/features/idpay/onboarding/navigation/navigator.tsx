@@ -7,6 +7,7 @@ import {
 import BoolValuePrerequisitesScreen from "../screens/BoolValuePrerequisitesScreen";
 import CompletionScreen from "../screens/CompletionScreen";
 import FailureScreen from "../screens/FailureScreen";
+import InputFormVerificationScreen from "../screens/InputFormVerificationScreen";
 import { InitiativeDetailsScreen } from "../screens/InitiativeDetailsScreen";
 import MultiValuePrerequisitesScreen from "../screens/MultiValuePrerequisitesScreen";
 import PDNDPrerequisitesScreen from "../screens/PDNDPrerequisitesScreen";
@@ -46,6 +47,10 @@ export const InnerNavigator = () => {
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS}
         component={BoolValuePrerequisitesScreen}
+      />
+      <Stack.Screen
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM}
+        component={InputFormVerificationScreen}
       />
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}

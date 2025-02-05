@@ -1,15 +1,15 @@
 import {
   ContentWrapper,
   ListItemSwitch,
-  VSpacer
+  VStack
 } from "@pagopa/io-app-design-system";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
-import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
+import { setItwOfflineAccessEnabled } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isItwOfflineAccessEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { setItwOfflineAccessEnabled } from "../../../../store/actions/persistedPreferences";
+import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
+import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
 
 /**
  * ITW Playground screen
@@ -28,16 +28,17 @@ const ItwPlayground = () => {
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <ContentWrapper>
-        <ListItemSwitch
-          label="Enable offline access"
-          value={isOfflineAccessEnabled}
-          onSwitchValueChange={() => {
-            dispatch(setItwOfflineAccessEnabled(!isOfflineAccessEnabled));
-          }}
-        />
-        <ItwLifecycleSection />
-        <VSpacer size={16} />
-        <ItwSkeumorphicCredentialSection />
+        <VStack space={16}>
+          <ListItemSwitch
+            label="Enable offline access"
+            value={isOfflineAccessEnabled}
+            onSwitchValueChange={() => {
+              dispatch(setItwOfflineAccessEnabled(!isOfflineAccessEnabled));
+            }}
+          />
+          <ItwLifecycleSection />
+          <ItwSkeumorphicCredentialSection />
+        </VStack>
       </ContentWrapper>
     </ScrollView>
   );
