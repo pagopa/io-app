@@ -1,4 +1,3 @@
-import { useIsFocused } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
 import { AppState, Linking } from "react-native";
 import { Camera, CameraPermissionStatus } from "react-native-vision-camera";
@@ -8,8 +7,6 @@ import { isAndroid } from "../../../utils/platform";
  * Hook to handle camera permission status with platform specific behavior
  */
 export const useCameraPermissionStatus = () => {
-  const isFocused = useIsFocused();
-
   const [cameraPermissionStatus, setCameraPermissionStatus] =
     useState<CameraPermissionStatus>("not-determined");
 
@@ -43,7 +40,7 @@ export const useCameraPermissionStatus = () => {
     } else {
       setCameraPermissionStatus(permission);
     }
-  }, [requestCameraPermission, isFocused]);
+  }, [requestCameraPermission]);
 
   /**
    * Setup listener for app state changes to detect if camera permissions were granted
