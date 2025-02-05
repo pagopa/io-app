@@ -4,6 +4,7 @@ import { StatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
 import { OnboardingFailure } from "../types/OnboardingFailure";
+import { SelfDeclarationTextDTO } from "../../../../../definitions/idpay/SelfDeclarationTextDTO";
 
 export type Context = {
   readonly serviceId: string;
@@ -14,6 +15,8 @@ export type Context = {
   readonly selfDeclarationsMultiAnwsers: Record<number, SelfConsentMultiDTO>;
   readonly selfDeclarationsBoolAnswers: Record<string, boolean>;
   readonly failure: O.Option<OnboardingFailure>;
+  readonly activeTextConsentPage: number;
+  readonly selfDeclarationsTextAnswers: Record<string, SelfDeclarationTextDTO>;
 };
 
 export const InitialContext: Context = {
@@ -24,5 +27,7 @@ export const InitialContext: Context = {
   selfDeclarationsMultiPage: 0,
   selfDeclarationsMultiAnwsers: {},
   selfDeclarationsBoolAnswers: {},
-  failure: O.none
+  failure: O.none,
+  activeTextConsentPage: 0,
+  selfDeclarationsTextAnswers: {}
 };

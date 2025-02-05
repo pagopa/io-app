@@ -27,6 +27,11 @@ export const createActionsImplementation = (
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS
     });
+  const navigateToInputFormScreen = () =>
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM
+    });
+
   const navigateToCompletionScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION
@@ -76,6 +81,7 @@ export const createActionsImplementation = (
     navigateToCompletionScreen,
     navigateToFailureScreen,
     navigateToInitiativeMonitoringScreen,
+    navigateToInputFormScreen,
     closeOnboarding,
     handleSessionExpired
   };
