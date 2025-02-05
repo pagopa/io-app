@@ -18,6 +18,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
 import { UIMessageDetails, UIMessageId } from "../../types";
 import { extractContentFromMessageSources } from "../../utils";
+import { isTestEnv } from "../../../../utils/environment";
 
 export type ThirdPartyById = IndexedById<
   pot.Pot<ThirdPartyMessageWithContent, Error>
@@ -112,3 +113,9 @@ const messageContentSelector = <T>(
     thirdPartyMessage
   );
 };
+
+export const testable = isTestEnv
+  ? {
+      messageContentSelector
+    }
+  : undefined;
