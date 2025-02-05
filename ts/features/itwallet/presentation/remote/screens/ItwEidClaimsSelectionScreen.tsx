@@ -63,7 +63,7 @@ const ItwEidClaimsSelectionScreen = (params: ScreenProps) => {
       if (itwRemoteRequestPayload) {
         machineRef.send({
           type: "start",
-          remoteRequestPayload: itwRemoteRequestPayload
+          payload: itwRemoteRequestPayload
         });
       }
     }, [itwRemoteRequestPayload, machineRef])
