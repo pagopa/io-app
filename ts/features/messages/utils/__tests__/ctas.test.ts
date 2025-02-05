@@ -15,6 +15,7 @@ import {
 } from "../ctas";
 import * as ANALYTICS from "../../analytics";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
 
 const messageBody = `### this is a message
 
@@ -517,7 +518,31 @@ describe("hasCtaValidActions", () => {
     expect(hasValidActions).toBe(false);
   });
 });
-// hasMetadataTokenName
+
+describe("hasMetadataTokenName", () => {
+  it("should return false if metadata are undefined", () => {
+    const hasTokenName = testable!.hasMetadataTokenName();
+
+    expect(hasTokenName).toBe(false);
+  });
+  it("should return false if metadata's token_name is undefined", () => {
+    const metadata = {} as ServiceMetadata;
+
+    const hasTokenName = testable!.hasMetadataTokenName(metadata);
+
+    expect(hasTokenName).toBe(false);
+  });
+  it("should return true if metadata's token_name defined", () => {
+    const metadata = {
+      token_name: "a token name"
+    } as ServiceMetadata;
+
+    const hasTokenName = testable!.hasMetadataTokenName(metadata);
+
+    expect(hasTokenName).toBe(true);
+  });
+});
+
 // internalRoutePredicates
 // isCtaActionValid
 
