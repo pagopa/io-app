@@ -3,6 +3,7 @@ import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { itwLifecycleIsValidSelector } from "../lifecycle/store/selectors";
+import { ITW_REMOTE_ROUTES } from "../presentation/remote/navigation/routes.ts";
 import { ITW_ROUTES } from "./routes";
 
 /**
@@ -29,6 +30,14 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
             path: "presentation/credential-detail/:credentialType"
           }
         })
+      }
+    },
+    [ITW_REMOTE_ROUTES.MAIN]: {
+      path: "itw/auth",
+      screens: {
+        [ITW_REMOTE_ROUTES.EID_CLAIMS_SELECTION]: {
+          path: "eid-claims-selection"
+        }
       }
     }
   };

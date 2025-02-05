@@ -97,6 +97,7 @@ describe("test decodeIOBarcode function", () => {
       expect(output).toStrictEqual(
         O.some({
           type: "ITW_REMOTE",
+          baseAuthUrl: "https://continua.io.pagopa.it/itw/auth",
           itwRemoteRequestPayload: {
             clientId: "abc123xy",
             requestUri: "https://example.com/callback",
@@ -116,6 +117,7 @@ describe("test decodeIOBarcode function", () => {
       expect(output).toStrictEqual(
         O.some({
           type: "ITW_REMOTE",
+          baseAuthUrl: "https://continua.io.pagopa.it/itw/auth",
           itwRemoteRequestPayload: {
             clientId: "abc123xy",
             requestUri: "https://example.com/callback",

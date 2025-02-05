@@ -56,7 +56,8 @@ const ItwEidClaimsSelectionScreen = (params: ScreenProps) => {
 
   const isMachineLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
 
-  const itwRemoteRequestPayload = params.route.params.itwRemoteRequestPayload;
+  const itwRemoteRequestPayload = params.route.params
+    ?.itwRemoteRequestPayload as ItwRemoteRequestPayload;
 
   useFocusEffect(
     useCallback(() => {

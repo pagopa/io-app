@@ -13,7 +13,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/Utils/itwRemoteTypeUtils.ts";
-import { getUrlParam } from "../../itwallet/common/utils/itwUrlUtils.ts";
+import { getUrlParam } from "../../itwallet/presentation/remote/Utils/itwRemoteUrlUtils.ts";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -54,6 +54,7 @@ export type DecodedIOBarcode =
     }
   | {
       type: "ITW_REMOTE";
+      baseAuthUrl: string;
       itwRemoteRequestPayload: ItwRemoteRequestPayload;
     };
 
@@ -132,6 +133,7 @@ const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
     ),
     O.map(({ clientId, requestUri, state, requestUriMethod }) => ({
       type: "ITW_REMOTE",
+      baseAuthUrl: data.split("?")[0],
       itwRemoteRequestPayload: {
         clientId,
         requestUri,

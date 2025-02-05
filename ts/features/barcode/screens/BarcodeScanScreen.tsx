@@ -45,7 +45,7 @@ import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
-import { ITW_REMOTE_ROUTES } from "../../itwallet/presentation/remote/navigation/routes.ts";
+import { buildItwRemoteRequestDeepLink } from "../../itwallet/presentation/remote/Utils/itwRemoteUrlUtils.ts";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -157,12 +157,7 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "ITW_REMOTE":
-        navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
-          screen: ITW_REMOTE_ROUTES.EID_CLAIMS_SELECTION,
-          params: {
-            itwRemoteRequestPayload: barcode.itwRemoteRequestPayload
-          }
-        });
+        openDeepLink(buildItwRemoteRequestDeepLink(barcode));
         break;
     }
   };
