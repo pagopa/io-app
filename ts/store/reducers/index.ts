@@ -242,8 +242,6 @@ export function createRootReducer(
                 },
                 cieLogin: {
                   ...cieLoginInitialState,
-                  isCieIDFeatureEnabled:
-                    state.features.loginFeatures.cieLogin.isCieIDFeatureEnabled,
                   isCieIDTourGuideEnabled:
                     state.features.loginFeatures.cieLogin
                       .isCieIDTourGuideEnabled,

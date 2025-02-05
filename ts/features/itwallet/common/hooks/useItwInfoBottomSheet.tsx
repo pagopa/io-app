@@ -1,7 +1,7 @@
+import { H6, IOStyles, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { H6, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import ItwMarkdown from "../components/ItwMarkdown";
 
 /**
  * The type of the content of the bottom sheet.
@@ -28,15 +28,10 @@ export const useItwInfoBottomSheet = ({ title, content }: ItwInfoFlowProps) => {
   const BottomSheetBody = () => (
     <View style={IOStyles.flex}>
       {content.map((item, index) => (
-        <View key={`${index}_${item.title}`}>
-          {item.title && (
-            <>
-              <H6>{item.title}</H6>
-              <VSpacer size={8} />
-            </>
-          )}
-          <ItwMarkdown>{item.body}</ItwMarkdown>
-        </View>
+        <VStack key={`${index}_${item.title}`} space={8}>
+          {item.title && <H6>{item.title}</H6>}
+          <IOMarkdown content={item.body} />
+        </VStack>
       ))}
       <VSpacer size={24} />
     </View>

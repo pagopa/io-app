@@ -62,15 +62,16 @@ export type TimelineOperationListItemProps = WithTestID<
   | {
       isLoading?: false;
       operation: OperationListDTO;
+      pressable?: boolean;
       onPress?: () => void;
     }
-  | { isLoading: true; operation?: never; onPress?: never }
+  | { isLoading: true; operation?: never; onPress?: never; pressable?: never }
 >;
 
 export const TimelineOperationListItem = (
   props: TimelineOperationListItemProps
 ) => {
-  const { isLoading, operation, onPress, testID } = props;
+  const { isLoading, operation, pressable, onPress, testID } = props;
 
   if (isLoading) {
     return (
@@ -88,7 +89,11 @@ export const TimelineOperationListItem = (
   const listItemProps = getOperationProps(operation);
 
   return (
-    <ListItemTransaction {...listItemProps} onPress={onPress} testID={testID} />
+    <ListItemTransaction
+      {...listItemProps}
+      onPress={pressable ? onPress : undefined}
+      testID={testID}
+    />
   );
 };
 
@@ -319,6 +324,7 @@ const getRefundOperationProps = (
     paymentLogoIcon,
     transaction: {
       amount: `${formatAbsNumberAmountCentsOrDefault(amountCents)} €`,
+      refund: true,
       amountAccessibilityLabel: `${getAccessibleAmountText(
         formatAbsNumberAmountCentsOrDefault(amountCents)
       )} €`
