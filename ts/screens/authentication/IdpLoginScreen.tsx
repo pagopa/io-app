@@ -9,7 +9,6 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-
 import _isEqual from "lodash/isEqual";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
@@ -54,12 +53,9 @@ import {
 import { getUrlBasepath } from "../../utils/url";
 import { standardLoginRequestInfoSelector } from "../../features/spidLogin/store/selectors";
 import { setStandardLoginRequestState } from "../../features/spidLogin/store/actions";
+import { ErrorType as SpidLoginErrorType } from "../../features/spidLogin/types";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
-
-enum ErrorType {
-  "LOADING_ERROR" = "LOADING_ERROR",
-  "LOGIN_ERROR" = "LOGIN_ERROR"
-}
+import { usePosteIDApp2AppEducational } from "./hooks/usePosteIDApp2AppEducational";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -104,16 +100,20 @@ const IdpLoginScreen = () => {
     string | undefined
   >(undefined);
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
+  const posteIdBottomsheet = usePosteIDApp2AppEducational({
+    selectedIdp,
+    requestState
+  });
 
   const setRequestState = useCallback(
-    (req: pot.Pot<true, ErrorType>) => {
+    (req: pot.Pot<true, SpidLoginErrorType>) => {
       dispatch(setStandardLoginRequestState(req));
     },
     [dispatch]
   );
 
   const handleOnLollipopCheckFailure = useCallback(() => {
-    setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
+    setRequestState(pot.noneError(SpidLoginErrorType.LOGIN_ERROR));
   }, [setRequestState]);
 
   const idpId = loggedOutWithIdpAuth?.idp.id;
@@ -138,10 +138,10 @@ const IdpLoginScreen = () => {
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
         if (url.includes(apiUrlPrefix) || statusCode !== 403) {
-          setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
+          setRequestState(pot.noneError(SpidLoginErrorType.LOADING_ERROR));
         }
       } else {
-        setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
+        setRequestState(pot.noneError(SpidLoginErrorType.LOADING_ERROR));
       }
     },
     [loggedOutWithIdpAuth?.idp.id, setRequestState]
@@ -173,7 +173,7 @@ const IdpLoginScreen = () => {
       );
 
       handleSendAssistanceLog(choosenTool, logText);
-      setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
+      setRequestState(pot.noneError(SpidLoginErrorType.LOGIN_ERROR));
       setErrorCodeOrMessage(code || message);
     },
     [dispatch, choosenTool, idp, setRequestState]
@@ -363,6 +363,7 @@ const IdpLoginScreen = () => {
     <View style={styles.webViewWrapper}>
       {!hasError && content}
       {renderMask()}
+      {posteIdBottomsheet}
     </View>
   );
 };
