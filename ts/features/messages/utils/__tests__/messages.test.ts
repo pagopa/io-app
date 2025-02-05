@@ -7,11 +7,7 @@ import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLive
 import { Locales } from "../../../../../locales/locales";
 import { setLocale } from "../../../../i18n";
 import { CTAS } from "../../types/MessageCTA";
-import {
-  cleanMarkdownFromCTAs,
-  getMessageCTA,
-  getRemoteLocale
-} from "../messages";
+import { cleanMarkdownFromCTAs, getMessageCTA, getRemoteLocale } from "../ctas";
 
 const messageBody = `### this is a message
 

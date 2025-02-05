@@ -35,7 +35,7 @@ import I18n from "../../../i18n";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
 import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
-import { cleanMarkdownFromCTAs, getMessageCTA } from "../utils/messages";
+import { cleanMarkdownFromCTAs, getMessageCTA } from "../utils/ctas";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
 import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";

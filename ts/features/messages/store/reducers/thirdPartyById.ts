@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { toUndefinedOptional } from "../../../../utils/pot";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
@@ -18,6 +17,7 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
 import { UIMessageDetails, UIMessageId } from "../../types";
+import { extractContentFromMessageSources } from "../../utils";
 
 export type ThirdPartyById = IndexedById<
   pot.Pot<ThirdPartyMessageWithContent, Error>
@@ -111,26 +111,4 @@ const messageContentSelector = <T>(
     messageDetails,
     thirdPartyMessage
   );
-};
-
-export const extractContentFromMessageSources = <T>(
-  extractionFunction: (input: RemoteContentDetails | UIMessageDetails) => T,
-  messageDetails: UIMessageDetails | undefined,
-  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
-): T | undefined => {
-  const thirdPartyMessageDetails =
-    thirdPartyMessage?.third_party_message.details;
-  if (thirdPartyMessageDetails != null) {
-    const decodedThirdPartyMessageDetails = RemoteContentDetails.decode(
-      thirdPartyMessageDetails
-    );
-    if (E.isRight(decodedThirdPartyMessageDetails)) {
-      return extractionFunction(decodedThirdPartyMessageDetails.right);
-    }
-  }
-
-  if (messageDetails != null) {
-    return extractionFunction(messageDetails);
-  }
-  return undefined;
 };

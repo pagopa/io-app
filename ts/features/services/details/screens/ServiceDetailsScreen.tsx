@@ -12,7 +12,7 @@ import {
   CTAActionType,
   getServiceCTA,
   handleCtaAction
-} from "../../../messages/utils/messages";
+} from "../../../messages/utils/ctas";
 import * as analytics from "../../common/analytics";
 import { CtaCategoryType } from "../../common/analytics";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
