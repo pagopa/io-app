@@ -3698,6 +3698,7 @@ idpay:
     details:
       initiativeCard:
         availableAmount: Disponibile
+        refundRequestedAmount: Rimborso richiesto
         validUntil: Fino al {{expiryDate}}
         expiresOn: Scade il {{expiryDate}}
         toRefund: Da rimborsare
@@ -3756,6 +3757,7 @@ idpay:
               UNSUBSCRIBED: "Recesso dall’iniziativa"
     discountDetails:
       authorizeButton: Autorizza un pagamento
+      addExpenseButton: Aggiungi spesa
       bottomSheetOptions:
         scanQr: Inquadra un codice QR
         generateBarcode: Crea un codice sconto
