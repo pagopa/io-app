@@ -1,17 +1,21 @@
+import { Pressable, StyleSheet, View } from "react-native";
+import Animated from "react-native-reanimated";
 import {
+  AnimatedCheckbox,
+  BodySmall,
   Divider,
   H6,
-  Icon,
   IOColors,
-  BodySmall,
-  ListItemCheckbox
+  IOSelectionListItemStyles,
+  IOStyles,
+  Icon,
+  useListItemAnimation
 } from "@pagopa/io-app-design-system";
-import * as E from "fp-ts/Either";
-import * as RA from "fp-ts/lib/ReadonlyArray";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { pipe } from "fp-ts/lib/function";
-import { StyleSheet, View } from "react-native";
-import * as O from "fp-ts/Option";
-import I18n from "../../../../i18n";
+import * as RA from "fp-ts/lib/ReadonlyArray";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import {
   BoolClaim,
   ClaimDisplayFormat,
@@ -25,60 +29,121 @@ import {
   PlaceOfBirthClaim,
   SimpleDateClaim,
   StringClaim
-} from "../../common/utils/itwClaimsUtils";
+} from "../utils/itwClaimsUtils";
+import I18n from "../../../../i18n";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
 
-export type RequiredClaim = {
+export type ConsentClaim = {
   claim: ClaimDisplayFormat;
   source: string;
 };
 
 type ItwRequiredClaimsListProps = {
-  items: ReadonlyArray<RequiredClaim>;
+  items: ReadonlyArray<ConsentClaim>;
 };
 
-type ItwSelectableClaimsListProps = {
-  items: ReadonlyArray<RequiredClaim>;
-  selectedIds: Array<string>;
-  onSelectionChange: (id: string, selected: boolean) => void;
+type ItwOptionalClaimsListProps = {
+  items: ReadonlyArray<ConsentClaim>;
+  selectedClaims: Array<string>;
+  onSelectionChange: (claimId: string) => void;
 };
 
-const ItwSelectableClaimList = ({
+type ItwOptionalClaimProps = {
+  claim: ClaimDisplayFormat;
+  source: string;
+  checked: boolean;
+  onPress: (claimId: string) => void;
+};
+
+/**
+ * Claim with a pressable checkbox, customized from `ListItemCheckbox`.
+ */
+const ItwOptionalClaim = ({
+  claim,
+  source,
+  checked,
+  onPress
+}: ItwOptionalClaimProps) => {
+  const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
+    useListItemAnimation();
+
+  const handleOnPress = () => {
+    ReactNativeHapticFeedback.trigger("impactLight");
+    onPress(claim.id);
+  };
+
+  return (
+    <Pressable
+      onPress={handleOnPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
+      accessibilityRole="checkbox"
+      accessible={true}
+      accessibilityLabel={"accessibilityLabel"}
+      accessibilityHint={"accessibilityHint"}
+      accessibilityState={{ checked }}
+    >
+      <Animated.View
+        style={[IOSelectionListItemStyles.listItem, backgroundAnimatedStyle]}
+        // This is required to avoid opacity inheritance on Android
+        needsOffscreenAlphaCompositing={true}
+      >
+        <Animated.View
+          style={[scaleAnimatedStyle, IOStyles.row, IOStyles.alignCenter]}
+        >
+          <View style={{ marginRight: "auto" }}>
+            <ClaimText claim={claim} />
+            <BodySmall weight="Regular" color="grey-700">
+              {I18n.t("features.itWallet.generic.dataSource.single", {
+                credentialSource: source
+              })}
+            </BodySmall>
+          </View>
+          <View
+            pointerEvents="none"
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+          >
+            <AnimatedCheckbox checked={checked} size={24} />
+          </View>
+        </Animated.View>
+      </Animated.View>
+    </Pressable>
+  );
+};
+
+/**
+ * List of optional claims that can be disclosed for issuance/presentation.
+ * These claims are selectable with a checkbox.
+ */
+const ItwOptionalClaimsList = ({
   items,
-  selectedIds,
+  selectedClaims,
   onSelectionChange
-}: ItwSelectableClaimsListProps) => (
+}: ItwOptionalClaimsListProps) => (
   <View style={styles.container}>
     {pipe(
       items,
-      RA.mapWithIndex((index, { claim, source }) => {
-        const displayValue = getClaimDisplayValue(claim);
-        return (
-          <View key={`${index}-${claim.label}-${source}`}>
-            {/* Add a separator view between sections */}
-            {index !== 0 && <Divider />}
-            <ListItemCheckbox
-              value={
-                Array.isArray(displayValue)
-                  ? displayValue.join(", ")
-                  : displayValue
-              } // TODO: temporary
-              description={I18n.t(
-                "features.itWallet.generic.dataSource.single",
-                {
-                  credentialSource: source
-                }
-              )}
-              selected={selectedIds.includes(claim.id)}
-              onValueChange={selected => onSelectionChange(claim.id, selected)}
-            />
-          </View>
-        );
-      })
+      RA.mapWithIndex((index, { claim, source }) => (
+        <View key={`${index}-${claim.label}-${source}`}>
+          {/* Add a separator view between sections */}
+          {index !== 0 && <Divider />}
+          <ItwOptionalClaim
+            claim={claim}
+            source={source}
+            checked={selectedClaims.includes(claim.id)}
+            onPress={onSelectionChange}
+          />
+        </View>
+      ))
     )}
   </View>
 );
 
+/**
+ * List of required claims that must be disclosed for issuance/presentation.
+ */
 const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
   <View style={styles.container}>
     {pipe(
@@ -174,7 +239,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export {
-  ItwRequiredClaimsList as ItwRequestedClaimsList,
-  ItwSelectableClaimList
-};
+export { ItwRequiredClaimsList, ItwOptionalClaimsList };

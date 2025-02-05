@@ -37,10 +37,6 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import {
-  ItwRequestedClaimsList,
-  RequiredClaim
-} from "../components/ItwRequiredClaimsList";
-import {
   CREDENTIALS_MAP,
   trackIssuanceCredentialScrollToBottom,
   trackItwExit,
@@ -54,6 +50,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
+import { ItwRequiredClaimsList } from "../../common/components/ItwConsentClaims";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -137,13 +134,10 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const claims = parseClaims(eid.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
   });
-  const requiredClaims = claims.map(
-    claim =>
-      ({
-        claim,
-        source: getCredentialNameFromType(eid.credentialType)
-      } as RequiredClaim)
-  );
+  const requiredClaims = claims.map(claim => ({
+    claim,
+    source: getCredentialNameFromType(eid.credentialType)
+  }));
 
   const trackScrollToBottom = (crossed: boolean) => {
     if (crossed) {
@@ -180,7 +174,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           iconName="security"
           iconColor="grey-700"
         />
-        <ItwRequestedClaimsList items={requiredClaims} />
+        <ItwRequiredClaimsList items={requiredClaims} />
         <VSpacer size={24} />
         <FeatureInfo
           iconName="fornitori"
