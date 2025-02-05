@@ -106,51 +106,55 @@ const testServices: ReadonlyArray<TestService> = [
   },
   {
     serviceId: "TESTSRV06",
+    label: "Iniziativa GUIDONIA"
+  },
+  {
+    serviceId: "TESTSRV07",
     label: "KO - Generico",
     willFail: true
   },
   {
-    serviceId: "TESTSRV07",
+    serviceId: "TESTSRV08",
     label: "KO - Iniziativa non iniziata",
     willFail: true
   },
   {
-    serviceId: "TESTSRV08",
+    serviceId: "TESTSRV09",
     label: "KO - Iniziativa conclusa",
     willFail: true
   },
   {
-    serviceId: "TESTSRV09",
+    serviceId: "TESTSRV10",
     label: "KO - Budget terminato",
     willFail: true
   },
   {
-    serviceId: "TESTSRV10",
+    serviceId: "TESTSRV11",
     label: "KO - Requisiti non soddisfatti",
     willFail: true
   },
   {
-    serviceId: "TESTSRV11",
+    serviceId: "TESTSRV12",
     label: "KO - Non in whitelist",
     willFail: true
   },
   {
-    serviceId: "TESTSRV12",
+    serviceId: "TESTSRV13",
     label: "KO - In valutazione",
     willFail: true
   },
   {
-    serviceId: "TESTSRV13",
+    serviceId: "TESTSRV14",
     label: "KO - Non ammissibile",
     willFail: true
   },
   {
-    serviceId: "TESTSRV14",
+    serviceId: "TESTSRV15",
     label: "KO - Utente già ammesso",
     willFail: true
   },
   {
-    serviceId: "TESTSRV15",
+    serviceId: "TESTSRV16",
     label: "KO - Recesso",
     willFail: true
   }

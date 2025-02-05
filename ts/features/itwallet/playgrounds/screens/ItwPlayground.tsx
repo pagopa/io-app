@@ -1,7 +1,6 @@
 import {
   ContentWrapper,
   Divider,
-  H3,
   ListItemHeader,
   ListItemNav,
   VSpacer
@@ -10,32 +9,10 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
-
-// Sample markdown text
-const sampleMarkdown = `
-# I am a Header 1
-
-## I am a Header 2
-
-### I am a Header 3
-
-#### I am a Header 4
-
-##### I am a Header 5
-
-###### I am a Header 6
-
-A simple paragraph.
-Text can be emphasized with *asterisk* or _underscore_.
-If you need bold use **double asterisk**.
-A worked link to [Google](https://www.google.com) with some text.
-A malformed link [Error](httssdps://www.error.com) that show toast error.
-`;
 
 /**
  * ITW Playground screen
@@ -100,10 +77,6 @@ const ItwPlayground = () => {
         <VSpacer size={16} />
         {/* Other Playgrounds */}
         <ListItemHeader label="Miscellaneous" />
-        <H3>{"IT Wallet markdown preview"}</H3>
-        <VSpacer size={8} />
-        <ItwMarkdown>{sampleMarkdown}</ItwMarkdown>
-        <VSpacer size={16} />
         <ItwSkeumorphicCredentialSection />
       </ContentWrapper>
     </ScrollView>
