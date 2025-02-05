@@ -8,7 +8,7 @@ import { isAndroid } from "../../../utils/platform";
  */
 export const useCameraPermissionStatus = () => {
   const [cameraPermissionStatus, setCameraPermissionStatus] =
-    useState<CameraPermissionStatus>("not-determined");
+    useState<CameraPermissionStatus>();
 
   /**
    * Opens the system prompt to ask camera permission

@@ -1,6 +1,7 @@
 import {
   IOColors,
   IconButton,
+  LoadingSpinner,
   TabItem,
   TabNavigation
 } from "@pagopa/io-app-design-system";
@@ -261,23 +262,27 @@ const BarcodeScanBaseScreenComponent = ({
       );
     }
 
-    trackBarcodeCameraAuthorizationDenied();
+    if (cameraPermissionStatus === "denied") {
+      trackBarcodeCameraAuthorizationDenied();
 
-    return (
-      <CameraPermissionView
-        pictogram="cameraDenied"
-        title={I18n.t("barcodeScan.permissions.denied.title")}
-        body={I18n.t("barcodeScan.permissions.denied.label")}
-        action={{
-          label: I18n.t("barcodeScan.permissions.denied.action"),
-          accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
-          onPress: () => {
-            trackBarcodeCameraAuthorizedFromSettings();
-            openCameraSettings();
-          }
-        }}
-      />
-    );
+      return (
+        <CameraPermissionView
+          pictogram="cameraDenied"
+          title={I18n.t("barcodeScan.permissions.denied.title")}
+          body={I18n.t("barcodeScan.permissions.denied.label")}
+          action={{
+            label: I18n.t("barcodeScan.permissions.denied.action"),
+            accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
+            onPress: () => {
+              trackBarcodeCameraAuthorizedFromSettings();
+              openCameraSettings();
+            }
+          }}
+        />
+      );
+    }
+
+    return <LoadingSpinner size={76} color="white" />;
   }, [
     cameraPermissionStatus,
     openCameraSettings,
