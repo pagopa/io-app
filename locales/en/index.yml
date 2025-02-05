@@ -886,6 +886,13 @@ authentication:
     recoverDescription: If you're missing your password, you can recover it by tapping on the following button.
     dualRecoverDescription: If you're missing your credentials, you can recover them by tapping on the following buttons.
     recoverPassword: Recover the password
+    poste_id:
+      bottom_sheet:
+        title: Log in without a password!
+        description: "If you have the Poste ID app, follow these steps:"
+        feature_1: Tap on **‘Accedi più rapidamente** in the grey band in the middle of the screen
+        feature_2: Enter your PosteID code or use biometric
+        feature_3: When you see **Autorizzazione concessa** appear, go back to IO and press **Acconsento**
   idp_login_success:
     contentTitle: Hi, {{name}}!
   errors:

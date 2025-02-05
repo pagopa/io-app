@@ -886,6 +886,13 @@ authentication:
     dualRecoverDescription: Se hai dimenticato le tue credenziali, ti consigliamo di procedere cliccando sui bottoni qui di seguito.
     recoverUsername: Recupera il nome utente
     recoverPassword: Recupera la password
+    poste_id:
+      bottom_sheet:
+        title: Accedi senza password!
+        description: "Se hai l’app Poste ID, segui questi passaggi:"
+        feature_1: Tocca su **"Accedi più rapidamente"** nella fascia grigia al centro della schermata
+        feature_2: Inserisci il codice PosteID o usa il biometrico
+        feature_3: Quando vedrai apparire **Autorizzazione concessa**, torna su IO e premi **Acconsento**
   idp_login_success:
     contentTitle: Ciao {{name}}!
   errors:
