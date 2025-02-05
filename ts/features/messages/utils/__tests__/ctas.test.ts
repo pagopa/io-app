@@ -6,7 +6,7 @@ import { MessageContent } from "../../../../../definitions/backend/MessageConten
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
 import { Locales } from "../../../../../locales/locales";
 import { setLocale } from "../../../../i18n";
-import { CTAS } from "../../types/MessageCTA";
+import { CTA, CTAS } from "../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
   getMessageCTA,
@@ -201,6 +201,17 @@ some noise`;
   });
 });
 
+const ioHandledLinks = [
+  "iosso://https://relyingParty.url",
+  "ioit://whateverHere",
+  "iohandledlink://http://whateverHere",
+  "iohandledlink://https://whateverHere",
+  "iohandledlink://sms://whateverHere",
+  "iohandledlink://tel://whateverHere",
+  "iohandledlink://mailto://whateverHere",
+  "iohandledlink://copy://whateverHere"
+];
+
 describe("getCTAIfValid", () => {
   it("should return CTAS from valid input string with both CTAs", () => {
     const validCTAs = `---
@@ -391,16 +402,7 @@ en:
     expect(spyOnAnalytics.mock.calls[0][0]).toBe(serviceId);
     expect(verifiedCTAOrUndefined).toBeUndefined();
   });
-  [
-    "iosso://https://relyingParty.url",
-    "ioit://whateverHere",
-    "iohandledlink://http://whateverHere",
-    "iohandledlink://https://whateverHere",
-    "iohandledlink://sms://whateverHere",
-    "iohandledlink://tel://whateverHere",
-    "iohandledlink://mailto://whateverHere",
-    "iohandledlink://copy://whateverHere"
-  ].forEach(action => {
+  ioHandledLinks.forEach(action => {
     it(`should return CTAS from valid input string with only CTA 1 and action (${action})`, () => {
       const validCTA1 = `---
 it:
@@ -559,8 +561,81 @@ describe("internalRoutePredicates", () => {
   });
 });
 
-// internalRoutePredicates
-// isCtaActionValid
+describe("isCtaActionValid", () => {
+  it("should return true for ioit://whatever", () => {
+    const cta: CTA = {
+      action: "ioit://whatever",
+      text: "CTA text"
+    };
+
+    const isValid = testable!.isCtaActionValid(cta);
+
+    expect(isValid).toBe(true);
+  });
+  it("should return false for ioit://services/webview with undefined metadata", () => {
+    const cta: CTA = {
+      action: "ioit://services/webview",
+      text: "CTA text"
+    };
+
+    const isValid = testable!.isCtaActionValid(cta);
+
+    expect(isValid).toBe(false);
+  });
+  it("should return false for ioit://services/webview with metadata with undefined token_name", () => {
+    const cta: CTA = {
+      action: "ioit://services/webview",
+      text: "CTA text"
+    };
+    const metadata = {} as ServiceMetadata;
+
+    const isValid = testable!.isCtaActionValid(cta, metadata);
+
+    expect(isValid).toBe(false);
+  });
+  it("should return true for iosso://https://relyingParty.url", () => {
+    const cta: CTA = {
+      action: "iosso://https://relyingParty.url",
+      text: "CTA text"
+    };
+
+    const isValid = testable!.isCtaActionValid(cta);
+
+    expect(isValid).toBe(true);
+  });
+  ioHandledLinks.forEach(ioHandledLink =>
+    it(`should return true for ${ioHandledLink}`, () => {
+      const cta: CTA = {
+        action: ioHandledLink,
+        text: "CTA text"
+      };
+
+      const isValid = testable!.isCtaActionValid(cta);
+
+      expect(isValid).toBe(true);
+    })
+  );
+  it(`should return false for iohandledlink://whatever`, () => {
+    const cta: CTA = {
+      action: "iohandledlink://whatever",
+      text: "CTA text"
+    };
+
+    const isValid = testable!.isCtaActionValid(cta);
+
+    expect(isValid).toBe(false);
+  });
+  it(`should return false for invalid action`, () => {
+    const cta: CTA = {
+      action: "invalid",
+      text: "CTA text"
+    };
+
+    const isValid = testable!.isCtaActionValid(cta);
+
+    expect(isValid).toBe(false);
+  });
+});
 
 // unsafeMessageCTAFromInput
 // ctaFromMessageCTA
