@@ -483,9 +483,6 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
-    cieID:
-      cieIdTest:
-        title: CieID
     trial:
       titleSection: Partecipa alla sperimentazione
     designSystemEnvironment: Design System sperimentale
@@ -3695,6 +3692,7 @@ idpay:
     details:
       initiativeCard:
         availableAmount: Disponibile
+        refundRequestedAmount: Rimborso richiesto
         validUntil: Fino al {{expiryDate}}
         expiresOn: Scade il {{expiryDate}}
         toRefund: Da rimborsare
@@ -3756,6 +3754,7 @@ idpay:
         scanQr: Inquadra un codice QR
         generateBarcode: Crea un codice sconto
       authorizeButton: Autorizza un pagamento
+      addExpenseButton: Aggiungi spesa
       IDPayCode:
         banner:
           title: Paga con la tua carta d’identità elettronica

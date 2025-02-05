@@ -7,10 +7,9 @@ import {
   PersistedState,
   persistReducer
 } from "redux-persist";
-import { merge } from "lodash";
+import { omit } from "lodash";
 import {
   cieIDDisableTourGuide,
-  cieIDFeatureSetEnabled,
   cieIDSetSelectedSecurityLevel,
   cieLoginDisableUat,
   cieLoginEnableUat
@@ -21,14 +20,12 @@ import { SpidLevel } from "../../utils";
 
 export type CieLoginState = {
   useUat: boolean;
-  isCieIDFeatureEnabled: boolean;
   isCieIDTourGuideEnabled: boolean;
   cieIDSelectedSecurityLevel?: SpidLevel;
 };
 
 export const cieLoginInitialState = {
   useUat: false,
-  isCieIDFeatureEnabled: false,
   isCieIDTourGuideEnabled: true
 };
 
@@ -47,11 +44,6 @@ const cieLoginReducer = (
         ...state,
         useUat: false
       };
-    case getType(cieIDFeatureSetEnabled):
-      return {
-        ...state,
-        ...action.payload
-      };
     case getType(cieIDDisableTourGuide):
       return {
         ...state,
@@ -67,11 +59,18 @@ const cieLoginReducer = (
   }
 };
 
-const CURRENT_REDUX_CIE_LOGIN_STORE_VERSION = 0;
+const CURRENT_REDUX_CIE_LOGIN_STORE_VERSION = 1;
 
 const migrations: MigrationManifest = {
-  "0": (state: PersistedState) =>
-    merge(state, "features.loginFeatures.cieLogin.isCieIDTourGuideEnabled")
+  "0": (state: PersistedState) => ({
+    ...state,
+    isCieIDTourGuideEnabled: true
+  }),
+  /**
+   * @param state The slice state
+   * Removes `isCieIDFeatureEnabled` from the persist rehydration actions
+   */
+  "1": (state: PersistedState) => omit(state, "isCieIDFeatureEnabled")
 };
 
 const persistConfig: PersistConfig = {
@@ -79,7 +78,7 @@ const persistConfig: PersistConfig = {
   storage: AsyncStorage,
   migrate: createMigrate(migrations, { debug: isDevEnv }),
   version: CURRENT_REDUX_CIE_LOGIN_STORE_VERSION,
-  whitelist: ["isCieIDFeatureEnabled", "isCieIDTourGuideEnabled"]
+  whitelist: ["isCieIDTourGuideEnabled"]
 };
 
 export const cieLoginPersistor = persistReducer<CieLoginState, Action>(
