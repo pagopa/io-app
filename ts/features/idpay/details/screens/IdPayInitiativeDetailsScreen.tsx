@@ -199,6 +199,8 @@ const IdPayInitiativeDetailsScreen = () => {
                   value: formatNumberCentsToAmount(accruedAmount, true, "right")
                 }
               ];
+            default:
+              return [];
           }
         }
       )
@@ -294,6 +296,8 @@ const IdPayInitiativeDetailsScreen = () => {
                   <VSpacer size={32} />
                 </ContentWrapper>
               );
+            default:
+              return undefined;
           }
         }
       )
