@@ -94,12 +94,10 @@ const IdPayInitiativeDetailsScreen = () => {
     NavigationService.navigate(FIMS_ROUTES.MAIN, {
       screen: FIMS_ROUTES.CONSENTS,
       params: {
-        ctaText: "Aggiungi spesa",
-        ctaUrl:
-          "iosso://https://prenotasalute.regione.lombardia.it/prenotaonline/"
+        ctaText: I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
+        ctaUrl: addExpenseFimsUrl
       }
     });
-    // TODO: Implement the FIMS startup that opens the expense form (https://pagopa.atlassian.net/browse/IOBP-1137)
   };
 
   const navigateToConfiguration = () => {
@@ -213,6 +211,8 @@ const IdPayInitiativeDetailsScreen = () => {
                   value: formatNumberCentsToAmount(accruedAmount, true, "right")
                 }
               ];
+            default:
+              return [];
           }
         }
       )
@@ -308,6 +308,8 @@ const IdPayInitiativeDetailsScreen = () => {
                   <VSpacer size={32} />
                 </ContentWrapper>
               );
+            default:
+              return undefined;
           }
         }
       )
