@@ -1,4 +1,4 @@
-import { render, within } from "@testing-library/react-native";
+import { within } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import {
   InitiativeRewardTypeEnum,
@@ -181,41 +181,6 @@ describe("Test BeneficiaryDetailsContent component", () => {
     expect(component.queryByTestId("refundedTestID")).toBeTruthy();
   });
 });
-
-// const renderComponent = (
-//   initiativeRewardType: InitiativeRewardTypeEnum = InitiativeRewardTypeEnum.REFUND,
-//   rewardValueType: RewardValueTypeEnum = RewardValueTypeEnum.PERCENTAGE
-// ) => {
-//   const props: BeneficiaryDetailsProps = {
-//     initiativeDetails: {
-//       initiativeId: T_INITIATIVE_ID,
-//       status: InitiativeStatusEnum.REFUNDABLE,
-//       nInstr: 2,
-//       endDate: T_END_DATE,
-//       accruedCents: T_ACCRUED,
-//       amountCents: T_AMOUNT,
-//       refundedCents: T_REFUNDED,
-//       iban: T_IBAN,
-//       initiativeName: T_INITIATIVE_NAME,
-//       initiativeRewardType
-//     },
-//     beneficiaryDetails: {
-//       fruitionStartDate: T_FRUITION_START_DATE,
-//       fruitionEndDate: T_FRUITION_END_DATE,
-//       rewardRule: {
-//         rewardValueType,
-//         rewardValue: T_REWARD_VALUE
-//       }
-//     },
-//     onboardingStatus: {
-//       status: OnboardingStatusEnum.ONBOARDING_OK,
-//       statusDate: T_ONBOARDING_STATUS_DATE,
-//       onboardingOkDate: T_ONBOARDING_OK_DATE
-//     }
-//   };
-
-//   return render(<BeneficiaryDetailsContent {...props} />);
-// };
 
 const renderComponent = (
   initiativeRewardType: InitiativeRewardTypeEnum = InitiativeRewardTypeEnum.REFUND,
