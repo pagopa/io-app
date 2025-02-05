@@ -154,6 +154,8 @@ export const isTxtLinkNode = (node: TxtNode): node is TxtLinkNode =>
   node.type === "Link";
 export const isTxtStrNode = (node: TxtNode): node is TxtStrNode =>
   node.type === "Str";
+export const isTxtParagraphNode = (node: TxtNode): node is TxtParagraphNode =>
+  node.type === "Paragraph";
 
 export type LinkData = {
   text: string;
@@ -204,3 +206,15 @@ export const extractLinkDataFromRootNode = (
       extractLinkDataFromRootNode(node, links);
     }
   });
+
+export const isParagraphNodeInHierarchy = (
+  input: TxtNode | undefined
+): boolean => {
+  if (input == null || input.parent == null) {
+    return false;
+  } else if (isTxtParagraphNode(input)) {
+    return true;
+  }
+
+  return isParagraphNodeInHierarchy(input.parent);
+};
