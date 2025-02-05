@@ -144,7 +144,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "loginFeatures": {
     "cieLogin": {
-      "isCieIDFeatureEnabled": false,
       "isCieIDTourGuideEnabled": true,
       "useUat": false,
     },
