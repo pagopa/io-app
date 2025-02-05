@@ -61,39 +61,39 @@ const InputFormVerificationContent = ({
   const goBackOnPress = () => machine.send({ type: "back" });
 
   return (
-    <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
-        section: I18n.t("idpay.onboarding.navigation.header")
-      }}
-      description={[
-        {
-          text: I18n.t("idpay.onboarding.boolPrerequisites.body")
-        },
-        {
-          text: "\n"
-        },
-        {
-          text: I18n.t("idpay.onboarding.boolPrerequisites.link"),
-          weight: "Semibold",
-          asLink: true,
-          onPress: () => openWebUrl(dpr28Dec2000Url)
-        }
-      ]}
-      goBack={goBackOnPress}
-      contextualHelp={emptyContextualHelp}
-      headerActionsProp={{ showHelp: true }}
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: I18n.t("global.buttons.continue"),
-          onPress: handleContinuePress,
-          disabled: value.length === 0
-        }
-      }}
-      includeContentMargins
-    >
-      <LoadingSpinnerOverlay isLoading={isLoading}>
+    <LoadingSpinnerOverlay isLoading={isLoading}>
+      <IOScrollViewWithLargeHeader
+        title={{
+          label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
+          section: I18n.t("idpay.onboarding.navigation.header")
+        }}
+        description={[
+          {
+            text: I18n.t("idpay.onboarding.boolPrerequisites.body")
+          },
+          {
+            text: "\n"
+          },
+          {
+            text: I18n.t("idpay.onboarding.boolPrerequisites.link"),
+            weight: "Semibold",
+            asLink: true,
+            onPress: () => openWebUrl(dpr28Dec2000Url)
+          }
+        ]}
+        goBack={goBackOnPress}
+        contextualHelp={emptyContextualHelp}
+        headerActionsProp={{ showHelp: true }}
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("global.buttons.continue"),
+            onPress: handleContinuePress,
+            disabled: value.length === 0
+          }
+        }}
+        includeContentMargins
+      >
         <H6>{criteria.description}</H6>
         <VSpacer size={16} />
         <TextInput
@@ -105,8 +105,8 @@ const InputFormVerificationContent = ({
           value={value}
         />
         <VSpacer size={16} />
-      </LoadingSpinnerOverlay>
-    </IOScrollViewWithLargeHeader>
+      </IOScrollViewWithLargeHeader>
+    </LoadingSpinnerOverlay>
   );
 };
 
