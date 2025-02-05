@@ -158,10 +158,10 @@ export const useIOBottomSheetModal = ({
     onClose();
   };
 
-  const present = () => {
+  const present = useCallback(() => {
     bottomSheetModalRef.current?.present();
     onOpen();
-  };
+  }, [onOpen]);
 
   // // Add opacity fade effect to backdrop
   const BackdropElement = useCallback(

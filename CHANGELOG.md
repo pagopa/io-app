@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.82.0-rc.5](https://github.com/pagopa/io-app/compare/2.82.0-rc.4...2.82.0-rc.5) (2025-02-04)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1946](https://pagopa.atlassian.net/browse/SIW-1946)] Add hold to copy for credentials text claims ([#6609](https://github.com/pagopa/io-app/issues/6609)) ([e8c6bba](https://github.com/pagopa/io-app/commit/e8c6bba3a3cae4b4a39226aed604558500049d4a))
+
+
+### Chores
+
+* [[IOBP-1171](https://pagopa.atlassian.net/browse/IOBP-1171),[IOBP-1172](https://pagopa.atlassian.net/browse/IOBP-1172),[IOBP-1173](https://pagopa.atlassian.net/browse/IOBP-1173)] Update payment outcome localizations ([#6681](https://github.com/pagopa/io-app/issues/6681)) ([09d4346](https://github.com/pagopa/io-app/commit/09d43469e362898e68a5cfc05668476e3ece1032))
+* [[IOBP-1174](https://pagopa.atlassian.net/browse/IOBP-1174)] Align bottom sheet text with design requirements ([#6682](https://github.com/pagopa/io-app/issues/6682)) ([24cbec0](https://github.com/pagopa/io-app/commit/24cbec0e72fe8a02eba778866087cbb386107623))
+* [[IOPLT-949](https://pagopa.atlassian.net/browse/IOPLT-949)] Filters HttpClientErrors events from Sentry ([#6685](https://github.com/pagopa/io-app/issues/6685)) ([435848a](https://github.com/pagopa/io-app/commit/435848afdb6f9bb8149d9fbbfc12c57fad926da4))
+
 ## [2.82.0-rc.4](https://github.com/pagopa/io-app/compare/2.82.0-rc.3...2.82.0-rc.4) (2025-02-03)
 
 
