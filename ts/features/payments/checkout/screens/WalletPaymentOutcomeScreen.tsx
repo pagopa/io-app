@@ -44,7 +44,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
 import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 import { WalletPaymentStepEnum } from "../types";
-import { requestAppReview } from "../../../../utils/storeReview";
+import { requestAppReview } from "../../../appReviews/utils/storeReview";
 import {
   appFeedbackConfigSelector,
   appFeedbackEnabledSelector

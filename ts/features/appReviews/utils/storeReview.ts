@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import * as StoreReview from "react-native-store-review";
-import I18n from "../i18n";
-import { openWebUrl } from "./url";
+import I18n from "../../../i18n";
+import { openWebUrl } from "../../../utils/url";
 
 export const requestAppReview = (
   isAppFeedbackEnabled: boolean,

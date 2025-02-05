@@ -53,7 +53,7 @@ import { isDevEnv } from "../../utils/environment";
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { isCieIDLocalFeatureEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieIDFeatureSetEnabled } from "../../features/cieLogin/store/actions";
-import { requestAppReview } from "../../utils/storeReview";
+import { requestAppReview } from "../../features/appReviews/utils/storeReview";
 import {
   appFeedbackEnabledSelector,
   appFeedbackConfigSelector
