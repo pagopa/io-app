@@ -12,6 +12,7 @@ import {
   ctaFromMessageCTA,
   getMessageCTA,
   getRemoteLocale,
+  getServiceCTA,
   testable,
   unsafeMessageCTAFromInput
 } from "../ctas";
@@ -1641,7 +1642,26 @@ describe("ctaFromMessageCTA", () => {
   });
 });
 
-// getServiceCTA
-// should return undefined if input is undefined
-// should return undefined if input service has no cta
-// should return the CTA if input service has a proper formatted cta
+describe("getServiceCTA", () => {
+  it("should return undefined if input is undefined", () => {
+    const serviceCTA = getServiceCTA();
+    expect(serviceCTA).toBeUndefined();
+  });
+  it("should return undefined if input service has no cta", () => {
+    const serviceMetadata = {} as ServiceMetadata;
+    const serviceCTA = getServiceCTA(serviceMetadata);
+    expect(serviceCTA).toBeUndefined();
+  });
+  it("should return the CTA if input service has a properly formatted cta", () => {
+    const serviceMetadata = {
+      cta: `---\nit:\n cta_1:\n  action: "ioit://messages"\n  text: "CTA's text"\n---`
+    } as ServiceMetadata;
+    const serviceCTA = getServiceCTA(serviceMetadata);
+    expect(serviceCTA).toEqual({
+      cta_1: {
+        action: "ioit://messages",
+        text: "CTA's text"
+      }
+    });
+  });
+});
