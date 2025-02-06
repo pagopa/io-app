@@ -22,6 +22,7 @@ import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVers
 import { isIdPayTestEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
 import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
+import { TopicKeys } from "../../../features/appReviews/store/actions";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -404,6 +405,18 @@ export const appFeedbackConfigSelector = createSelector(
       O.toUndefined
     )
 );
+
+export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
+  createSelector(
+    appFeedbackConfigSelector,
+    (feedbackConfig): string | undefined =>
+      pipe(
+        feedbackConfig,
+        O.fromNullable,
+        O.map(config => config.feedback_uri[topic]),
+        O.toUndefined
+      )
+  );
 
 export const appFeedbackEnabledSelector = createSelector(
   remoteConfigSelector,

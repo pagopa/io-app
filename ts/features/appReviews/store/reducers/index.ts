@@ -2,19 +2,22 @@ import { getType } from "typesafe-actions";
 import { PersistConfig, persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action } from "../../../../store/actions/types";
-import { AppFeedbackUriFeature } from "../../../../../definitions/content/AppFeedbackUriFeature";
-import { appReviewNegFeedback, appReviewPositiveFeedback } from "../actions";
+import {
+  appReviewNegativeFeedback,
+  appReviewPositiveFeedback,
+  TopicKeys
+} from "../actions";
 
 export type AppFeedbackState = {
-  positiveFeedbackLog: string;
-  negativeFeedback:
-    | Record<keyof AppFeedbackUriFeature, string | undefined>
+  positiveFeedbackDate: string;
+  negativeFeedbackDate:
+    | Record<TopicKeys, string | undefined>
     | Record<string, never>;
 };
 
 export const appFeedbackInitialState: AppFeedbackState = {
-  positiveFeedbackLog: "",
-  negativeFeedback: {}
+  positiveFeedbackDate: "",
+  negativeFeedbackDate: {}
 };
 
 const appFeedbackReducer = (
@@ -25,15 +28,15 @@ const appFeedbackReducer = (
     case getType(appReviewPositiveFeedback):
       return {
         ...state,
-        positiveFeedbackLog: new Date().toISOString()
+        positiveFeedbackDate: new Date().toISOString()
       };
-    case getType(appReviewNegFeedback):
+    case getType(appReviewNegativeFeedback):
       return {
         ...state,
-        negativeFeedback: {
-          ...state.negativeFeedback,
+        negativeFeedbackDate: {
+          ...state.negativeFeedbackDate,
           [action.payload]: new Date().toISOString()
-        } as Record<keyof AppFeedbackUriFeature, string | undefined>
+        } as Record<TopicKeys, string | undefined>
       };
     default:
       return state;

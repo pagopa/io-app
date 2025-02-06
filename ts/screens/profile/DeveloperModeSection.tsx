@@ -53,11 +53,7 @@ import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { requestAppReview } from "../../features/appReviews/utils/storeReview";
-import {
-  appFeedbackEnabledSelector,
-  appFeedbackConfigSelector
-} from "../../store/reducers/backendStatus/remoteConfig";
+import { useAppReviewRequest } from "../../features/appReviews/hooks/useAppReviewRequest";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -87,8 +83,7 @@ type DevActionButton = {
 
 const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
-  const isAppFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
-  const appFeedbackConfig = useIOSelector(appFeedbackConfigSelector);
+  const requestFeedback = useAppReviewRequest("general");
 
   const handleClearCachePress = () => {
     Alert.alert(
@@ -169,8 +164,7 @@ const DeveloperActionsSection = () => {
       condition: true,
       color: "primary",
       label: I18n.t("profile.main.storeReview"),
-      onPress: () =>
-        requestAppReview(isAppFeedbackEnabled, appFeedbackConfig?.feedback_uri)
+      onPress: () => requestFeedback()
     }
   ];
 
