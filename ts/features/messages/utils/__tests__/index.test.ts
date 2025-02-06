@@ -316,3 +316,10 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     });
   });
 });
+
+// extractContentFromMessageSources
+// should return undefined if both input messages are undefined
+// should return standard message content if third party message is undefined
+// should return standard message content if third party message's details are undefined
+// should return standard message content if third party message's details are not valid
+// should return third party message content if it is properly defined and formatted

@@ -11,7 +11,8 @@ import {
   cleanMarkdownFromCTAs,
   getMessageCTA,
   getRemoteLocale,
-  testable
+  testable,
+  unsafeMessageCTAFromInput
 } from "../ctas";
 import * as ANALYTICS from "../../analytics";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -637,6 +638,46 @@ describe("isCtaActionValid", () => {
   });
 });
 
-// unsafeMessageCTAFromInput
+describe("unsafeMessageCTAFromInput", () => {
+  it("should return undefined if input is undefined", () => {
+    const messageCTAOrUndefined = unsafeMessageCTAFromInput(undefined);
+    expect(messageCTAOrUndefined).toBeUndefined();
+  });
+  it("should return undefined if input is not a frontmatter", () => {
+    const input = "This is not a front matter";
+    const messageCTAOrUndefined = unsafeMessageCTAFromInput(input);
+    expect(messageCTAOrUndefined).toBeUndefined();
+  });
+  it("should return undefined if input is not properly formatted", () => {
+    const input = `---it: cta_1: text: "The text" action: "ioit://messages"---`;
+    const messageCTAOrUndefined = unsafeMessageCTAFromInput(input);
+    expect(messageCTAOrUndefined).toBeUndefined();
+  });
+  it("should return undefined if input has invalid sequences (unclosed string)", () => {
+    const input = `---\nit:\n cta_1:\n  text: "The text"\n  action: "ioit://messages\n---`;
+    const messageCTAOrUndefined = unsafeMessageCTAFromInput(input);
+    expect(messageCTAOrUndefined).toBeUndefined();
+  });
+  it("should return a MessageCTA instance if input is properly formatted", () => {
+    const input = `---\nit:\n cta_1:\n  text: "The text"\n  action: "ioit://messages"\n---`;
+    const messageCTAOrUndefined = unsafeMessageCTAFromInput(input);
+    expect(messageCTAOrUndefined).toEqual({
+      it: {
+        cta_1: {
+          text: "The text",
+          action: "ioit://messages"
+        }
+      }
+    });
+  });
+});
+
 // ctaFromMessageCTA
+// should return undefined if input is undefined
+// should return undefined if input does not have the CTA
+// should return CTAS if input is correct
+
 // getServiceCTA
+// should return undefined if input is undefined
+// should return undefined if input service has no cta
+// should return the CTA if input service has a proper formatted cta

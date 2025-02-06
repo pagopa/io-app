@@ -171,7 +171,9 @@ export const unsafeMessageCTAFromInput = (
   }
 };
 
-export const ctaFromMessageCTA = (messageCTA: MessageCTA | undefined) => {
+export const ctaFromMessageCTA = (
+  messageCTA: MessageCTA | undefined
+): CTAS | undefined => {
   if (messageCTA == null) {
     return undefined;
   }
