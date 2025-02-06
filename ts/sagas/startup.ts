@@ -91,7 +91,6 @@ import {
   remoteConfigSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { IdentificationResult } from "../store/reducers/identification";
-import { isIdPayTestEnabledSelector } from "../store/reducers/persistedPreferences";
 import {
   isProfileFirstOnBoarding,
   profileSelector
