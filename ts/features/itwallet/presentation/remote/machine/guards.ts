@@ -1,2 +1,11 @@
-// This file is a placeholder for future implementation
-export const createRemoteGuardsImplementation = () => ({});
+import { useIOStore } from "../../../../../store/hooks.ts";
+import { isItwEnabledSelector } from "../../../common/store/selectors/remoteConfig.ts";
+import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+
+export const createRemoteGuardsImplementation = (
+  store: ReturnType<typeof useIOStore>
+) => ({
+  isItwWalletInactive: () =>
+    !itwLifecycleIsValidSelector(store.getState()) &&
+    isItwEnabledSelector(store.getState())
+});

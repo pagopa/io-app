@@ -3537,6 +3537,11 @@ features:
         loadingScreen:
           title: Stiamo facendo alcune verifiche di sicurezza...
           subtitle: Attendi qualche secondo
+        walletInactiveScreen:
+          title: Attiva Documenti su IO per continuare
+          subtitle: Per accedere con IT Wallet ai servizi online è necessario prima attivare la funzionalità Documenti su IO.
+          continue: Inizia
+          close: Non ora
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale

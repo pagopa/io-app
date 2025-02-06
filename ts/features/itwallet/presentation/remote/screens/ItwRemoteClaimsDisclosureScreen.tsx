@@ -23,6 +23,8 @@ import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwar
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 
 export type ItwRemoteClaimsDisclosureScreenNavigationParams = {
   itwRemoteRequestPayload: ItwRemoteRequestPayload;
@@ -68,6 +70,12 @@ const ItwRemoteClaimsDisclosureScreen = (params: ScreenProps) => {
       }
     }, [itwRemoteRequestPayload, machineRef])
   );
+
+  const dismissDialog = useItwDismissalDialog(() => {
+    machineRef.send({ type: "close" });
+  });
+
+  useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
 
   if (isMachineLoading) {
     return <QRCodeValidationScreen />;
