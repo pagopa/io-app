@@ -5,18 +5,12 @@ import {
   IOColors,
   IOSpacer,
   IOSpacingScale,
-  IOStyles,
   IOVisualCostants,
   VSpacer,
-  hexToRgba
+  hexToRgba,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
-import {
-  ComponentProps,
-  ReactNode,
-  useCallback,
-  useMemo,
-  useState
-} from "react";
+import { ComponentProps, ReactNode, useState } from "react";
 
 import {
   LayoutChangeEvent,
@@ -78,40 +72,39 @@ const contentEndMargin: IOSpacingScale = 32;
 const spaceBetweenActions: IOSpacer = 8;
 /* Margin between ButtonSolid and ButtonLink */
 const spaceBetweenActionAndLink: IOSpacer = 16;
+/* Extra bottom margin for iPhone bottom handle because
+   ButtonLink doesn't have a fixed height */
+const extraSafeAreaMargin: IOSpacingScale = 8;
+
+type PrimaryAction =
+  | ({
+      type: "StandardCta";
+    } & Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">)
+  | ({
+      type: "SpecialCta";
+    } & ComponentProps<typeof ServiceSpecialAction>);
 
 export type ServiceActionsProps =
   | {
       type: "SingleCta";
-      primaryActionProps: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;
+      primaryActionProps: PrimaryAction;
       secondaryActionProps?: never;
-      tertiaryActionProps?: never;
-    }
-  | {
-      type: "SingleCtaCustomFlow";
-      primaryActionProps: ComponentProps<typeof ServiceSpecialAction>;
-      secondaryActionProps?: never;
-      tertiaryActionProps?: never;
-    }
-  | {
-      type: "SingleCtaWithCustomFlow";
-      primaryActionProps: ComponentProps<typeof ServiceSpecialAction>;
-      secondaryActionProps: ComponentProps<typeof ButtonLink>;
       tertiaryActionProps?: never;
     }
   | {
       type: "TwoCtas";
-      primaryActionProps: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;
-      secondaryActionProps: ComponentProps<typeof ButtonLink>;
+      primaryActionProps: PrimaryAction;
+      secondaryActionProps: Omit<ComponentProps<typeof ButtonLink>, "color">;
       tertiaryActionProps?: never;
     }
   | {
-      type: "TwoCtasWithCustomFlow";
-      primaryActionProps: ComponentProps<typeof ServiceSpecialAction>;
+      type: "ThreeCtas";
+      primaryActionProps: PrimaryAction;
       secondaryActionProps: Omit<
         ComponentProps<typeof ButtonOutline>,
-        "fullWidth"
+        "fullWidth" | "color"
       >;
-      tertiaryActionProps: ComponentProps<typeof ButtonLink>;
+      tertiaryActionProps: Omit<ComponentProps<typeof ButtonLink>, "color">;
     };
 
 type ServiceDetailsScreenComponentProps = {
@@ -127,7 +120,7 @@ export const ServiceDetailsScreenComponent = ({
   debugMode = false,
   title = ""
 }: ServiceDetailsScreenComponentProps) => {
-  const safeAreaInsets = useSafeAreaInsets();
+  const theme = useIOTheme();
 
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
@@ -139,40 +132,42 @@ export const ServiceDetailsScreenComponent = ({
     setActionBlockHeight(event.nativeEvent.layout.height);
   };
 
-  const bottomMargin: number = useMemo(
-    () =>
-      safeAreaInsets.bottom === 0
-        ? IOVisualCostants.appMarginDefault
-        : safeAreaInsets.bottom,
-    [safeAreaInsets]
-  );
+  const insets = useSafeAreaInsets();
+  const needSafeAreaMargin = insets.bottom !== 0;
 
-  const safeBackgroundBlockHeight: number = useMemo(
-    () => (bottomMargin + actionBlockHeight) * 0.85,
-    [actionBlockHeight, bottomMargin]
-  );
+  const bottomMargin = !needSafeAreaMargin
+    ? IOVisualCostants.appMarginDefault
+    : insets.bottom;
+
+  /* When the secondary action is visible, add extra margin
+       to avoid little space from iPhone bottom handle */
+  const extraBottomMargin =
+    actionsProps?.secondaryActionProps && needSafeAreaMargin
+      ? extraSafeAreaMargin
+      : 0;
+
+  /* Safe background block. Cover at least 85% of the space
+        to avoid glitchy elements underneath */
+  const safeBackgroundBlockHeight = (bottomMargin + actionBlockHeight) * 0.85;
 
   /* Total height of "Actions + Gradient" area */
-  const gradientAreaHeight: number = useMemo(
-    () => bottomMargin + actionBlockHeight + gradientSafeAreaHeight,
-    [actionBlockHeight, bottomMargin]
-  );
+  const gradientAreaHeight =
+    bottomMargin + actionBlockHeight + gradientSafeAreaHeight;
 
   /* Height of the safe bottom area, applied to the ScrollView:
-     Actions + Content end margin */
-  const safeBottomAreaHeight: number = useMemo(
-    () => bottomMargin + actionBlockHeight + contentEndMargin,
-    [actionBlockHeight, bottomMargin]
-  );
+        Actions + Content end margin */
+  const safeBottomAreaHeight =
+    bottomMargin + actionBlockHeight + contentEndMargin;
 
   useHeaderSecondLevel({
-    title,
-    supportRequest: true,
-    transparent: true,
+    backgroundColor: IOColors[theme["appBackground-secondary"]],
     scrollValues: {
       triggerOffset: scrollTriggerOffsetValue,
       contentOffsetY: scrollTranslationY
-    }
+    },
+    supportRequest: true,
+    title,
+    variant: "neutral"
   });
 
   const footerGradientOpacityTransition = useAnimatedStyle(() => ({
@@ -186,47 +181,6 @@ export const ServiceDetailsScreenComponent = ({
     // eslint-disable-next-line functional/immutable-data
     scrollTranslationY.value = contentOffset.y;
   });
-
-  const renderFooter = useCallback((props: ServiceActionsProps) => {
-    switch (props.type) {
-      case "SingleCta":
-        return <ButtonSolid fullWidth {...props.primaryActionProps} />;
-      case "SingleCtaCustomFlow":
-        return <ServiceSpecialAction {...props.primaryActionProps} />;
-      case "SingleCtaWithCustomFlow":
-        return (
-          <>
-            <ServiceSpecialAction {...props.primaryActionProps} />
-            <VSpacer size={spaceBetweenActionAndLink} />
-            <View style={IOStyles.selfCenter}>
-              <ButtonLink {...props.secondaryActionProps} />
-            </View>
-          </>
-        );
-      case "TwoCtas":
-        return (
-          <>
-            <ButtonSolid fullWidth {...props.primaryActionProps} />
-            <VSpacer size={spaceBetweenActionAndLink} />
-            <View style={IOStyles.selfCenter}>
-              <ButtonLink {...props.secondaryActionProps} />
-            </View>
-          </>
-        );
-      case "TwoCtasWithCustomFlow":
-        return (
-          <>
-            <ServiceSpecialAction {...props.primaryActionProps} />
-            <VSpacer size={spaceBetweenActions} />
-            <ButtonOutline fullWidth {...props.secondaryActionProps} />
-            <VSpacer size={spaceBetweenActionAndLink} />
-            <View style={IOStyles.selfCenter}>
-              <ButtonLink {...props.tertiaryActionProps} />
-            </View>
-          </>
-        );
-    }
-  }, []);
 
   return (
     <>
@@ -290,9 +244,60 @@ export const ServiceDetailsScreenComponent = ({
             pointerEvents="box-none"
             onLayout={getActionBlockHeight}
           >
-            {renderFooter(actionsProps)}
+            {renderActions(actionsProps, extraBottomMargin)}
           </View>
         </View>
+      )}
+    </>
+  );
+};
+
+const renderActions = (
+  actions: ServiceActionsProps,
+  extraBottomMargin: number = 0
+) => {
+  const {
+    type,
+    primaryActionProps,
+    secondaryActionProps,
+    tertiaryActionProps
+  } = actions;
+
+  return (
+    <>
+      {primaryActionProps.type === "StandardCta" ? (
+        <ButtonSolid fullWidth {...primaryActionProps} />
+      ) : (
+        <ServiceSpecialAction {...primaryActionProps} />
+      )}
+
+      {type === "TwoCtas" && (
+        <View
+          style={{
+            alignSelf: "center",
+            marginBottom: extraBottomMargin
+          }}
+        >
+          <VSpacer size={spaceBetweenActionAndLink} />
+          <ButtonLink color="primary" {...secondaryActionProps} />
+        </View>
+      )}
+
+      {type === "ThreeCtas" && (
+        <>
+          <VSpacer size={spaceBetweenActions} />
+          <ButtonOutline fullWidth color="primary" {...secondaryActionProps} />
+
+          <View
+            style={{
+              alignSelf: "center",
+              marginBottom: extraBottomMargin
+            }}
+          >
+            <VSpacer size={spaceBetweenActionAndLink} />
+            <ButtonLink color="primary" {...tertiaryActionProps} />
+          </View>
+        </>
       )}
     </>
   );

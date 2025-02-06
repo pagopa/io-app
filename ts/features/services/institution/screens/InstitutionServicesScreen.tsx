@@ -1,9 +1,11 @@
 import {
   Divider,
+  IOColors,
   IOStyles,
   IOToast,
   IOVisualCostants,
   ListItemNav,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -59,6 +61,7 @@ export const InstitutionServicesScreen = ({
 }: InstitutionServicesScreen) => {
   const { institutionId, institutionName } = route.params;
 
+  const theme = useIOTheme();
   const dispatch = useIODispatch();
   const isFirstRender = useFirstRender();
 
@@ -103,15 +106,16 @@ export const InstitutionServicesScreen = ({
   }, [dispatch, navigation]);
 
   useHeaderSecondLevel({
+    backgroundColor: IOColors[theme["appBackground-secondary"]],
     goBack,
-    title: institutionName,
-    supportRequest: true,
-    transparent: true,
+    headerShown: !!data || !isError,
     scrollValues: {
       triggerOffset: scrollTriggerOffsetValue,
       contentOffsetY: scrollTranslationY
     },
-    headerShown: !!data || !isError
+    supportRequest: true,
+    title: institutionName,
+    variant: "neutral"
   });
 
   const scrollHandler = useAnimatedScrollHandler(event => {
