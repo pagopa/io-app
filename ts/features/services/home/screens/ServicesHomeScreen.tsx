@@ -169,12 +169,13 @@ export const ServicesHomeScreen = () => {
   const renderInstitutionItem = useCallback(
     ({ item }: ListRenderItemInfo<Institution>) => (
       <ListItemNav
-        value={item.name}
-        onPress={() => navigateToInstitution(item)}
         accessibilityLabel={item.name}
         avatarProps={{
           logoUri: getLogoForInstitution(item.fiscal_code)
         }}
+        numberOfLines={2}
+        onPress={() => navigateToInstitution(item)}
+        value={item.name}
       />
     ),
     [navigateToInstitution]
