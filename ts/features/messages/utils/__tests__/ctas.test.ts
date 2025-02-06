@@ -6,9 +6,10 @@ import { MessageContent } from "../../../../../definitions/backend/MessageConten
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
 import { Locales } from "../../../../../locales/locales";
 import { setLocale } from "../../../../i18n";
-import { CTA, CTAS } from "../../types/MessageCTA";
+import { CTA, CTAS, MessageCTA } from "../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
+  ctaFromMessageCTA,
   getMessageCTA,
   getRemoteLocale,
   testable,
@@ -672,10 +673,973 @@ describe("unsafeMessageCTAFromInput", () => {
   });
 });
 
-// ctaFromMessageCTA
-// should return undefined if input is undefined
-// should return undefined if input does not have the CTA
-// should return CTAS if input is correct
+describe("ctaFromMessageCTA", () => {
+  it("should return undefined if input is undefined", () => {
+    const ctas = ctaFromMessageCTA(undefined);
+    expect(ctas).toBeUndefined();
+  });
+  [
+    {},
+    { it: {} },
+    { it: {}, en: {} },
+    { it: {}, en: { cta_1: {} } },
+    { it: {}, en: { cta_1: {}, cta_2: {} } },
+    { it: {}, en: { cta_1: {}, cta_2: { action: "" } } },
+    { it: {}, en: { cta_1: {}, cta_2: { text: "" } } },
+    { it: {}, en: { cta_1: {}, cta_2: { text: "", action: "" } } },
+    { it: {}, en: { cta_1: { text: "" } } },
+    { it: {}, en: { cta_1: { text: "" }, cta_2: {} } },
+    { it: {}, en: { cta_1: { text: "" }, cta_2: { action: "" } } },
+    { it: {}, en: { cta_1: { text: "" }, cta_2: { text: "" } } },
+    { it: {}, en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } } },
+    { it: {}, en: { cta_1: { action: "" } } },
+    { it: {}, en: { cta_1: { action: "" }, cta_2: {} } },
+    { it: {}, en: { cta_1: { action: "" }, cta_2: { action: "" } } },
+    { it: {}, en: { cta_1: { action: "" }, cta_2: { text: "" } } },
+    { it: {}, en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } } },
+    { it: {}, en: { cta_2: {} } },
+    { it: {}, en: { cta_2: { text: "" } } },
+    { it: {}, en: { cta_2: { action: "" } } },
+    { it: {}, en: { cta_2: { action: "", text: "" } } },
+
+    { it: { cta_1: {} } },
+    { it: { cta_1: {} }, en: {} },
+    { it: { cta_1: {} }, en: { cta_1: {} } },
+    { it: { cta_1: {} }, en: { cta_1: {}, cta_2: {} } },
+    { it: { cta_1: {} }, en: { cta_1: {}, cta_2: { action: "" } } },
+    { it: { cta_1: {} }, en: { cta_1: {}, cta_2: { text: "" } } },
+    { it: { cta_1: {} }, en: { cta_1: {}, cta_2: { text: "", action: "" } } },
+    { it: { cta_1: {} }, en: { cta_1: { text: "" } } },
+    { it: { cta_1: {} }, en: { cta_1: { text: "" }, cta_2: {} } },
+    { it: { cta_1: {} }, en: { cta_1: { text: "" }, cta_2: { action: "" } } },
+    { it: { cta_1: {} }, en: { cta_1: { text: "" }, cta_2: { text: "" } } },
+    {
+      it: { cta_1: {} },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: {} }, en: { cta_1: { action: "" } } },
+    { it: { cta_1: {} }, en: { cta_1: { action: "" }, cta_2: {} } },
+    { it: { cta_1: {} }, en: { cta_1: { action: "" }, cta_2: { action: "" } } },
+    { it: { cta_1: {} }, en: { cta_1: { action: "" }, cta_2: { text: "" } } },
+    {
+      it: { cta_1: {} },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: {} }, en: { cta_2: {} } },
+    { it: { cta_1: {} }, en: { cta_2: { text: "" } } },
+    { it: { cta_1: {} }, en: { cta_2: { action: "" } } },
+    { it: { cta_1: {} }, en: { cta_2: { action: "", text: "" } } },
+
+    { it: { cta_1: { action: "" } } },
+    { it: { cta_1: { action: "" } }, en: {} },
+    { it: { cta_1: { action: "" } }, en: { cta_1: {} } },
+    { it: { cta_1: { action: "" } }, en: { cta_1: {}, cta_2: {} } },
+    { it: { cta_1: { action: "" } }, en: { cta_1: {}, cta_2: { action: "" } } },
+    { it: { cta_1: { action: "" } }, en: { cta_1: {}, cta_2: { text: "" } } },
+    {
+      it: { cta_1: { action: "" } },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    { it: { cta_1: { action: "" } }, en: { cta_1: { text: "" } } },
+    { it: { cta_1: { action: "" } }, en: { cta_1: { text: "" }, cta_2: {} } },
+    {
+      it: { cta_1: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { action: "" } }, en: { cta_1: { action: "" } } },
+    { it: { cta_1: { action: "" } }, en: { cta_1: { action: "" }, cta_2: {} } },
+    {
+      it: { cta_1: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { action: "" } }, en: { cta_2: {} } },
+    { it: { cta_1: { action: "" } }, en: { cta_2: { text: "" } } },
+    { it: { cta_1: { action: "" } }, en: { cta_2: { action: "" } } },
+    { it: { cta_1: { action: "" } }, en: { cta_2: { action: "", text: "" } } },
+
+    { it: { cta_1: { text: "" } } },
+    { it: { cta_1: { text: "" } }, en: {} },
+    { it: { cta_1: { text: "" } }, en: { cta_1: {} } },
+    { it: { cta_1: { text: "" } }, en: { cta_1: {}, cta_2: {} } },
+    { it: { cta_1: { text: "" } }, en: { cta_1: {}, cta_2: { action: "" } } },
+    { it: { cta_1: { text: "" } }, en: { cta_1: {}, cta_2: { text: "" } } },
+    {
+      it: { cta_1: { text: "" } },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    { it: { cta_1: { text: "" } }, en: { cta_1: { text: "" } } },
+    { it: { cta_1: { text: "" } }, en: { cta_1: { text: "" }, cta_2: {} } },
+    {
+      it: { cta_1: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { text: "" } }, en: { cta_1: { action: "" } } },
+    { it: { cta_1: { text: "" } }, en: { cta_1: { action: "" }, cta_2: {} } },
+    {
+      it: { cta_1: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { text: "" } }, en: { cta_2: {} } },
+    { it: { cta_1: { text: "" } }, en: { cta_2: { text: "" } } },
+    { it: { cta_1: { text: "" } }, en: { cta_2: { action: "" } } },
+    { it: { cta_1: { text: "" } }, en: { cta_2: { action: "", text: "" } } },
+
+    { it: { cta_1: {}, cta_2: {} } },
+    { it: { cta_1: {}, cta_2: {} }, en: {} },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_1: {} } },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_1: {}, cta_2: {} } },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_1: {}, cta_2: { action: "" } } },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_1: {}, cta_2: { text: "" } } },
+    {
+      it: { cta_1: {}, cta_2: {} },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_1: { text: "" } } },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_1: { text: "" }, cta_2: {} } },
+    {
+      it: { cta_1: {}, cta_2: {} },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: {} },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: {} },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_1: { action: "" } } },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_1: { action: "" }, cta_2: {} } },
+    {
+      it: { cta_1: {}, cta_2: {} },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: {} },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: {} },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_2: {} } },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_2: { text: "" } } },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_2: { action: "" } } },
+    { it: { cta_1: {}, cta_2: {} }, en: { cta_2: { action: "", text: "" } } },
+
+    { it: { cta_1: { action: "" }, cta_2: {} } },
+    { it: { cta_1: { action: "" }, cta_2: {} }, en: {} },
+    { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_1: {} } },
+    { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_1: {}, cta_2: {} } },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_1: {}, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_1: {}, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_1: { text: "" } } },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_1: { text: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_1: { action: "" } } },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_1: { action: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_2: {} } },
+    { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_2: { text: "" } } },
+    { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_2: { action: "" } } },
+    {
+      it: { cta_1: { action: "" }, cta_2: {} },
+      en: { cta_2: { action: "", text: "" } }
+    },
+
+    { it: { cta_1: { text: "" }, cta_2: {} } },
+    { it: { cta_1: { text: "" }, cta_2: {} }, en: {} },
+    { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_1: {} } },
+    { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_1: {}, cta_2: {} } },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_1: {}, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_1: {}, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_1: { text: "" } } },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_1: { text: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_1: { action: "" } } },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_1: { action: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_2: {} } },
+    { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_2: { text: "" } } },
+    { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_2: { action: "" } } },
+    {
+      it: { cta_1: { text: "" }, cta_2: {} },
+      en: { cta_2: { action: "", text: "" } }
+    },
+
+    { it: { cta_1: {}, cta_2: { action: "" } } },
+    { it: { cta_1: {}, cta_2: { action: "" } }, en: {} },
+    { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_1: {} } },
+    { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_1: {}, cta_2: {} } },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_1: {}, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_1: {}, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_1: { text: "" } } },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_1: { action: "" } } },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_2: {} } },
+    { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_2: { text: "" } } },
+    { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_2: { action: "" } } },
+    {
+      it: { cta_1: {}, cta_2: { action: "" } },
+      en: { cta_2: { action: "", text: "" } }
+    },
+
+    { it: { cta_1: { action: "" }, cta_2: { action: "" } } },
+    { it: { cta_1: { action: "" }, cta_2: { action: "" } }, en: {} },
+    { it: { cta_1: { action: "" }, cta_2: { action: "" } }, en: { cta_1: {} } },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: {}, cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: {}, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: {}, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { action: "" }, cta_2: { action: "" } }, en: { cta_2: {} } },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "" } },
+      en: { cta_2: { action: "", text: "" } }
+    },
+
+    { it: { cta_1: { text: "" }, cta_2: { action: "" } } },
+    { it: { cta_1: { text: "" }, cta_2: { action: "" } }, en: {} },
+    { it: { cta_1: { text: "" }, cta_2: { action: "" } }, en: { cta_1: {} } },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: {}, cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: {}, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: {}, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { text: "" }, cta_2: { action: "" } }, en: { cta_2: {} } },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "" } },
+      en: { cta_2: { action: "", text: "" } }
+    },
+
+    { it: { cta_1: {}, cta_2: { text: "" } } },
+    { it: { cta_1: {}, cta_2: { text: "" } }, en: {} },
+    { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_1: {} } },
+    { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_1: {}, cta_2: {} } },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_1: {}, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_1: {}, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_1: { text: "" } } },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_1: { action: "" } } },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_2: {} } },
+    { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_2: { text: "" } } },
+    { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_2: { action: "" } } },
+    {
+      it: { cta_1: {}, cta_2: { text: "" } },
+      en: { cta_2: { action: "", text: "" } }
+    },
+
+    { it: { cta_1: { action: "" }, cta_2: { text: "" } } },
+    { it: { cta_1: { action: "" }, cta_2: { text: "" } }, en: {} },
+    { it: { cta_1: { action: "" }, cta_2: { text: "" } }, en: { cta_1: {} } },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: {}, cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: {}, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: {}, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { action: "" }, cta_2: { text: "" } }, en: { cta_2: {} } },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { text: "" } },
+      en: { cta_2: { action: "", text: "" } }
+    },
+
+    { it: { cta_1: { text: "" }, cta_2: { text: "" } } },
+    { it: { cta_1: { text: "" }, cta_2: { text: "" } }, en: {} },
+    { it: { cta_1: { text: "" }, cta_2: { text: "" } }, en: { cta_1: {} } },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: {}, cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: {}, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: {}, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: { text: "" }, cta_2: { text: "" } }, en: { cta_2: {} } },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { text: "" } },
+      en: { cta_2: { action: "", text: "" } }
+    },
+
+    { it: { cta_1: {}, cta_2: { action: "", text: "" } } },
+    { it: { cta_1: {}, cta_2: { action: "", text: "" } }, en: {} },
+    { it: { cta_1: {}, cta_2: { action: "", text: "" } }, en: { cta_1: {} } },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: {} }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    { it: { cta_1: {}, cta_2: { action: "", text: "" } }, en: { cta_2: {} } },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: {}, cta_2: { action: "", text: "" } },
+      en: { cta_2: { action: "", text: "" } }
+    },
+
+    { it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } } },
+    { it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }, en: {} },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_2: {} }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_2: { action: "", text: "" } }
+    },
+
+    { it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } } },
+    { it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }, en: {} },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_2: {} }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_2: { text: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_2: { action: "" } }
+    },
+    {
+      it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
+      en: { cta_2: { action: "", text: "" } }
+    }
+  ].forEach(invalidMessageCTA => {
+    it(`should return undefined if input does not have the CTA (${JSON.stringify(
+      invalidMessageCTA
+    )})`, () => {
+      const messageCTA = invalidMessageCTA as MessageCTA;
+      const ctas = ctaFromMessageCTA(messageCTA);
+      expect(ctas).toBeUndefined();
+    });
+  });
+  it("should return CTAS if input is correct", () => {
+    const messageCTA: MessageCTA = {
+      it: {
+        cta_1: {
+          text: "The text",
+          action: "ioit://messages"
+        }
+      }
+    };
+    const ctas = ctaFromMessageCTA(messageCTA);
+    expect(ctas).toEqual({
+      cta_1: {
+        text: "The text",
+        action: "ioit://messages"
+      }
+    });
+  });
+});
 
 // getServiceCTA
 // should return undefined if input is undefined
