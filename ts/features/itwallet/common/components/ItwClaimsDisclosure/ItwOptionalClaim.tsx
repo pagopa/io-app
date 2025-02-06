@@ -6,8 +6,7 @@ import {
   BodySmall,
   IOSelectionListItemStyles,
   IOStyles,
-  useListItemAnimation,
-  CheckboxLabel
+  useListItemAnimation
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
 import { ClaimDisplayFormat } from "../../utils/itwClaimsUtils";
