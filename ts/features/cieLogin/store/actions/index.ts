@@ -7,10 +7,6 @@ export const cieLoginDisableUat = createStandardAction(
   "CIE_LOGIN_DISABLE_UAT"
 )();
 
-export const cieIDFeatureSetEnabled = createStandardAction(
-  "PREFERENCES_CIE_ID_FEATURE_SET_ENABLED"
-)<{ isCieIDFeatureEnabled: boolean }>();
-
 export const cieIDDisableTourGuide = createStandardAction(
   "CIE_ID_DISABLE_TOUR_GUIDE"
 )();
@@ -21,6 +17,5 @@ export const cieIDSetSelectedSecurityLevel = createStandardAction(
 export type CieLoginConfigActions =
   | ActionType<typeof cieLoginDisableUat>
   | ActionType<typeof cieLoginEnableUat>
-  | ActionType<typeof cieIDFeatureSetEnabled>
   | ActionType<typeof cieIDDisableTourGuide>
   | ActionType<typeof cieIDSetSelectedSecurityLevel>;
