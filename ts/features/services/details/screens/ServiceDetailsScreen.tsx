@@ -1,4 +1,8 @@
-import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOVisualCostants,
+  VSpacer,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -280,20 +284,18 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
           <CardWithMarkdownContent content={service_metadata.description} />
         </View>
       )}
-
-      <ServiceDetailsTosAndPrivacy serviceId={service_id} />
-
       <VSpacer size={40} />
-      <ServiceDetailsPreferences
-        serviceId={service_id}
-        availableChannels={available_notification_channels}
-      />
-
-      <VSpacer size={40} />
-      <ServiceDetailsMetadata
-        organizationFiscalCode={organization_fiscal_code}
-        serviceId={service_id}
-      />
+      <VStack space={40}>
+        <ServiceDetailsTosAndPrivacy serviceId={service_id} />
+        <ServiceDetailsPreferences
+          serviceId={service_id}
+          availableChannels={available_notification_channels}
+        />
+        <ServiceDetailsMetadata
+          organizationFiscalCode={organization_fiscal_code}
+          serviceId={service_id}
+        />
+      </VStack>
     </ServiceDetailsScreenComponent>
   );
 };

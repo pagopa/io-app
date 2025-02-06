@@ -161,6 +161,22 @@ export const trackInstitutionDetailsError = (
     buildEventProperties("KO", undefined, { organization_fiscal_code, reason })
   );
 
+export const trackServicesPreferences = () =>
+  void mixpanelTrack(
+    "SERVICES_PREFERENCES",
+    buildEventProperties("UX", "action")
+  );
+
+export const trackServicesPreferencesSelected = (
+  landing_page: "preferences_services" | "profile_main"
+) =>
+  void mixpanelTrack(
+    "SERVICES_PREFERENCES_SELECTED",
+    buildEventProperties("UX", "action", {
+      landing_page
+    })
+  );
+
 export const trackSearchPage = () =>
   void mixpanelTrack(
     "SERVICES_SEARCH_PAGE",
