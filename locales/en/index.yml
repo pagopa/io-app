@@ -499,7 +499,7 @@ profile:
       action: Go to "Your data" section
       close: Close the banner and do not show it again
     appearanceBanner:
-      title: Want to change the typeface used for content in the app?
+      title: Do you want to change the typeface used in the app?
       action: Edit typeface style
   data:
     title: Your data
