@@ -13,6 +13,7 @@ export const settingsBannerToShowSelector = (state: GlobalState) => {
 
   const isApperanceSettingsBannerEnabled =
     showAppearanceSettingsBannerSelector(state);
+
   return isApperanceSettingsBannerEnabled
     ? "APPEARANCE_SETTINGS_BANNER"
     : undefined;
