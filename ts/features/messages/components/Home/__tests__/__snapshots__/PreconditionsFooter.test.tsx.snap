@@ -435,14 +435,13 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     "height": 48,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
                                   {
                                     "paddingHorizontal": 16,
                                   },
-                                  {
-                                    "backgroundColor": "#0B3EE3",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -1411,14 +1410,13 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     "height": 48,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
                                   {
                                     "paddingHorizontal": 16,
                                   },
-                                  {
-                                    "backgroundColor": "#0B3EE3",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,

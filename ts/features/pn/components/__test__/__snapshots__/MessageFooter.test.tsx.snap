@@ -1100,14 +1100,13 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                   "height": 48,
                                 },
                                 {
+                                  "backgroundColor": "#0B3EE3",
                                   "overflow": "hidden",
                                 },
                                 {
                                   "paddingHorizontal": 16,
                                 },
-                                {
-                                  "backgroundColor": "#0B3EE3",
-                                },
+                                {},
                                 false,
                                 {
                                   "backgroundColor": undefined,
@@ -1582,13 +1581,13 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                   "height": 48,
                                 },
                                 {
+                                  "backgroundColor": "#BBC2D6",
                                   "overflow": "hidden",
                                 },
                                 {
                                   "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#D2D6E3",
                                   "opacity": 0.5,
                                 },
                                 false,

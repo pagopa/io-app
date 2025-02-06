@@ -829,14 +829,13 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     "height": 48,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
                                   {
                                     "paddingHorizontal": 16,
                                   },
-                                  {
-                                    "backgroundColor": "#0B3EE3",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -1468,14 +1467,13 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                     "height": 48,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
                                   {
                                     "paddingHorizontal": 16,
                                   },
-                                  {
-                                    "backgroundColor": "#0B3EE3",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -2420,14 +2418,13 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     "height": 48,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
                                   {
                                     "paddingHorizontal": 16,
                                   },
-                                  {
-                                    "backgroundColor": "#0B3EE3",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,

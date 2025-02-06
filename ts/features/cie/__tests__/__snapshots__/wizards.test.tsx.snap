@@ -409,14 +409,13 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                 "height": 48,
               },
               {
+                "backgroundColor": "#0B3EE3",
                 "overflow": "hidden",
               },
               {
                 "paddingHorizontal": 16,
               },
-              {
-                "backgroundColor": "#0B3EE3",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,
@@ -1351,14 +1350,13 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 "height": 48,
               },
               {
+                "backgroundColor": "#0B3EE3",
                 "overflow": "hidden",
               },
               {
                 "paddingHorizontal": 16,
               },
-              {
-                "backgroundColor": "#0B3EE3",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,
@@ -2399,14 +2397,13 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 "height": 48,
               },
               {
+                "backgroundColor": "#0B3EE3",
                 "overflow": "hidden",
               },
               {
                 "paddingHorizontal": 16,
               },
-              {
-                "backgroundColor": "#0B3EE3",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,
@@ -2745,14 +2742,13 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 "height": 48,
               },
               {
+                "backgroundColor": "#0B3EE3",
                 "overflow": "hidden",
               },
               {
                 "paddingHorizontal": 16,
               },
-              {
-                "backgroundColor": "#0B3EE3",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,

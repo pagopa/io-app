@@ -998,14 +998,13 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     "height": 48,
                                   },
                                   {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
                                   {
                                     "paddingHorizontal": 16,
                                   },
-                                  {
-                                    "backgroundColor": "#0B3EE3",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,

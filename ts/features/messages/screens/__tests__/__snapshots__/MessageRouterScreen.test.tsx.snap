@@ -2204,12 +2204,11 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,

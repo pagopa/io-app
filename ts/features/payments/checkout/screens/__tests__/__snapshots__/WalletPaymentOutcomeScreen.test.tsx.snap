@@ -495,12 +495,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -2426,12 +2425,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -4338,12 +4336,11 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -6235,12 +6232,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -8146,12 +8142,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -10013,12 +10008,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -11972,12 +11966,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -13989,12 +13982,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -15836,12 +15828,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -17767,12 +17758,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -19678,12 +19668,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -21609,12 +21598,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -23476,12 +23464,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -25527,12 +25514,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -27458,12 +27444,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -29397,12 +29382,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -31308,12 +31292,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -33177,12 +33160,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -35208,12 +35190,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -37125,12 +37106,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -39310,12 +39290,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -41180,12 +41159,11 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -43231,12 +43209,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -45248,12 +45225,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -47187,12 +47163,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -49098,12 +49073,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -51029,12 +51003,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,

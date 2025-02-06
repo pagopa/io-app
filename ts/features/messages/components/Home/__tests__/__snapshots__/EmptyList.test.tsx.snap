@@ -1187,12 +1187,11 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -6850,12 +6849,11 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                           "height": 48,
                                         },
                                         {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "backgroundColor": "#0B3EE3",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
