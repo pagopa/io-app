@@ -498,6 +498,9 @@ profile:
       title: Vuoi visualizzare il tuo Codice Fiscale?
       action: Vai alla sezione “I tuoi dati”
       close: Chiudi il banner e non mostrarlo più
+    appearanceBanner:
+      title: Vuoi modificare il carattere usato per i testi in app?
+      action: Modifica stile carattere
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO

@@ -26,7 +26,7 @@ export const ProfileMainScreenTopBanner = () => {
     dispatch(setShowAppearanceSettingsBanner(false));
   }, [dispatch]);
 
-  const navigateToProfile = useCallback(
+  const navigateToAppearance = useCallback(
     () =>
       navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
         screen: ROUTES.PROFILE_PREFERENCES_APPEARANCE
@@ -64,12 +64,12 @@ export const ProfileMainScreenTopBanner = () => {
         <ContentWrapper>
           <VSpacer size={16} />
           <Banner
-            title={I18n.t("profile.main.banner.title")}
-            action={I18n.t("profile.main.banner.action")}
-            pictogramName={"settings"}
+            title={I18n.t("profile.main.appearanceBanner.title")}
+            action={I18n.t("profile.main.appearanceBanner.action")}
+            pictogramName={"help"}
             color={"neutral"}
             size={"big"}
-            onPress={navigateToProfile}
+            onPress={navigateToAppearance}
             onClose={handleCloseBanner}
             labelClose={I18n.t("profile.main.banner.close")}
             testID={"fiscal-code-banner"}
