@@ -19,6 +19,7 @@ export type ZendeskAssistanceType = Partial<{
   card: boolean;
   fci: boolean;
   itWallet: boolean;
+  idPay: boolean;
 }>;
 
 export type ZendeskStartPayload = {

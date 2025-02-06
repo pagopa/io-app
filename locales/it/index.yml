@@ -3802,6 +3802,7 @@ idpay:
       buttons:
         privacy: Preferenze & Privacy
         unsubscribe: Rimuovi {{initiativeName}}
+        requestHelp: Chiedi aiuto
     operationDetails:
       discount:
         labels:
