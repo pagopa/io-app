@@ -1,9 +1,14 @@
-import { HeaderActionProps, IOColors } from "@pagopa/io-app-design-system";
+import {
+  HeaderActionProps,
+  IOColors,
+  useIOThemeContext
+} from "@pagopa/io-app-design-system";
 import { ReactNode } from "react";
 import { Dimensions, StatusBar } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
+import { isAndroid } from "../../utils/platform";
 import { IOScrollView, IOScrollViewActions } from "../ui/IOScrollView";
 import { BonusCard } from "./BonusCard";
 
@@ -41,12 +46,24 @@ const BonusCardScreenComponent = ({
   const screenHeight = Dimensions.get("window").height;
   const shouldHideLogo = screenHeight < MIN_HEIGHT_TO_SHOW_FULL_RENDER;
 
+  const { themeType } = useIOThemeContext();
+
+  const isDark = themeType === "dark";
+  // We need to check if the card is a CGN type to set the background color
+  const isCGNType = !cardProps.isLoading && cardProps.cardBackground;
+  // Custom background color for CGN based on the platform
+  const cgnBackgroundColor = isAndroid ? IOColors.white : IOColors["grey-50"];
+  // If the card is not a CGN type, we set the default header background color as card color
+  const backgroundColor = isCGNType
+    ? cgnBackgroundColor
+    : IOColors["blueIO-50"];
+
   useHeaderSecondLevel({
     title: title || "",
     transparent: true,
     supportRequest: true,
     variant: "neutral",
-    backgroundColor: IOColors["grey-50"],
+    backgroundColor,
     faqCategories,
     contextualHelpMarkdown,
     contextualHelp,
@@ -57,7 +74,9 @@ const BonusCardScreenComponent = ({
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar
+        barStyle={isAndroid && isDark ? "light-content" : "dark-content"}
+      />
       <IOScrollView
         animatedRef={animatedScrollViewRef}
         actions={actions}
