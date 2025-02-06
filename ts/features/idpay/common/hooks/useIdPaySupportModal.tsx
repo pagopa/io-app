@@ -40,10 +40,8 @@ const useIdPaySupportModal = (): PaymentFailureSupportModal => {
   };
 
   const startIdPaySupport = (startingRoute?: string) => {
-    switch (choosenTool) {
-      case ToolEnum.zendesk:
-        zendeskAssistanceLogAndStart(startingRoute);
-        break;
+    if (choosenTool === ToolEnum.zendesk) {
+      zendeskAssistanceLogAndStart(startingRoute);
     }
   };
 
