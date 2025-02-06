@@ -20,9 +20,11 @@ import { useIOSelector } from "../../../../store/hooks";
 import { useTimelineDetailsBottomSheet } from "../../timeline/components/TimelineDetailsBottomSheet";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
+  idpayInitiativeDetailsSelector,
   idpayOperationListSelector,
   idpayPaginatedTimelineSelector
 } from "../store";
+import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import { TimelineOperationListItem } from "./TimelineOperationListItem";
 
 type Props = {
@@ -38,6 +40,8 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
   const paginatedTimelinePot = useIOSelector(idpayPaginatedTimelineSelector);
   const timeline = useIOSelector(idpayOperationListSelector);
   const isLoading = pot.isLoading(paginatedTimelinePot);
+  const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
+  const initiative = pot.toUndefined(initiativeDataPot);
 
   const navigateToOperationsList = () => {
     navigation.push(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
@@ -63,6 +67,10 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
           <Fragment key={operation.operationId}>
             <TimelineOperationListItem
               operation={operation}
+              pressable={
+                initiative?.initiativeRewardType !==
+                InitiativeRewardTypeEnum.EXPENSE
+              }
               onPress={() => detailsBottomSheet.present(operation)}
             />
             {index < size - 1 ? <Divider /> : undefined}

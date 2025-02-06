@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.82.0-rc.6](https://github.com/pagopa/io-app/compare/2.82.0-rc.5...2.82.0-rc.6) (2025-02-05)
+
+
+### Features
+
+* **IDPay:** [[IOBP-1131](https://pagopa.atlassian.net/browse/IOBP-1131)] Text input onboarding field ([#6676](https://github.com/pagopa/io-app/issues/6676)) ([f118b92](https://github.com/pagopa/io-app/commit/f118b92649b8aa5fe6fb2e04d592315078e4a34d))
+* **IDPay:** [[IOBP-1139](https://pagopa.atlassian.net/browse/IOBP-1139)] Add new IDPay initiative reward type `EXPENSE` ([#6621](https://github.com/pagopa/io-app/issues/6621)) ([a7d95e6](https://github.com/pagopa/io-app/commit/a7d95e64aa656da89d688050d36b472b3080a82e))
+
+
+### Bug Fixes
+
+* [[IOCOM-2088](https://pagopa.atlassian.net/browse/IOCOM-2088)] Handling of <br /> tags on IOMarkdown ([#6679](https://github.com/pagopa/io-app/issues/6679)) ([5e79c2c](https://github.com/pagopa/io-app/commit/5e79c2c5c2f3a806807dc3f3f290948c5d2a4790))
+
+
+### Chores
+
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] remove main/profile deep link route ([#6683](https://github.com/pagopa/io-app/issues/6683)) ([e50f5c9](https://github.com/pagopa/io-app/commit/e50f5c902a98e10dac9336a192bc51f759d0fe3c))
+
+## [2.82.0-rc.5](https://github.com/pagopa/io-app/compare/2.82.0-rc.4...2.82.0-rc.5) (2025-02-04)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1946](https://pagopa.atlassian.net/browse/SIW-1946)] Add hold to copy for credentials text claims ([#6609](https://github.com/pagopa/io-app/issues/6609)) ([e8c6bba](https://github.com/pagopa/io-app/commit/e8c6bba3a3cae4b4a39226aed604558500049d4a))
+
+
+### Chores
+
+* [[IOBP-1171](https://pagopa.atlassian.net/browse/IOBP-1171),[IOBP-1172](https://pagopa.atlassian.net/browse/IOBP-1172),[IOBP-1173](https://pagopa.atlassian.net/browse/IOBP-1173)] Update payment outcome localizations ([#6681](https://github.com/pagopa/io-app/issues/6681)) ([09d4346](https://github.com/pagopa/io-app/commit/09d43469e362898e68a5cfc05668476e3ece1032))
+* [[IOBP-1174](https://pagopa.atlassian.net/browse/IOBP-1174)] Align bottom sheet text with design requirements ([#6682](https://github.com/pagopa/io-app/issues/6682)) ([24cbec0](https://github.com/pagopa/io-app/commit/24cbec0e72fe8a02eba778866087cbb386107623))
+* [[IOPLT-949](https://pagopa.atlassian.net/browse/IOPLT-949)] Filters HttpClientErrors events from Sentry ([#6685](https://github.com/pagopa/io-app/issues/6685)) ([435848a](https://github.com/pagopa/io-app/commit/435848afdb6f9bb8149d9fbbfc12c57fad926da4))
+
 ## [2.82.0-rc.4](https://github.com/pagopa/io-app/compare/2.82.0-rc.3...2.82.0-rc.4) (2025-02-03)
 
 

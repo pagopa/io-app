@@ -196,7 +196,10 @@ export const ServicesHomeScreen = () => {
     () => ({
       icon: "coggle",
       accessibilityLabel: I18n.t("global.buttons.settings"),
-      onPress: present
+      onPress: () => {
+        analytics.trackServicesPreferences();
+        present();
+      }
     }),
     [present]
   );

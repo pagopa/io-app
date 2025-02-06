@@ -5,16 +5,15 @@ import {
   IOColors,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
-import { memo } from "react";
 import Color from "color";
+import { memo } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import I18n from "../../../../i18n";
-
-export type TagColorScheme = "default" | "faded" | "greyscale";
+import I18n from "../../../../../i18n";
+import { CardColorScheme } from "./types";
 
 type DigitalVersionBadgeProps = {
   credentialType: string;
-  colorScheme: TagColorScheme;
+  colorScheme: CardColorScheme;
 };
 
 type CredentialTypesProps = {
@@ -24,7 +23,7 @@ type CredentialTypesProps = {
 
 const getColorPropsByScheme = (
   credentialType: string,
-  colorScheme: TagColorScheme
+  colorScheme: CardColorScheme
 ) => {
   const mapCredentialTypes: Record<string, CredentialTypesProps> = {
     MDL: {
@@ -57,7 +56,7 @@ const getColorPropsByScheme = (
   return baseColorProps;
 };
 
-const ItwDigitalVersionBadge = ({
+const DigitalVersionBadge = ({
   credentialType,
   colorScheme = "default"
 }: DigitalVersionBadgeProps) => {
@@ -129,6 +128,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwDigitalVersionBadge = memo(ItwDigitalVersionBadge);
+const MemoizedDigitalVersionBadge = memo(DigitalVersionBadge);
 
-export { MemoizedItwDigitalVersionBadge as ItwDigitalVersionBadge };
+export { MemoizedDigitalVersionBadge as DigitalVersionBadge };

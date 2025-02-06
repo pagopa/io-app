@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react-native";
-import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
+import { ItwCredentialStatus } from "../../../utils/itwTypesUtils";
 import { ItwCredentialCard } from "../ItwCredentialCard";
 
 describe("ItwCredentialCard", () => {
