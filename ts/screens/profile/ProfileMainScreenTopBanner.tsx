@@ -5,8 +5,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useCallback, useEffect } from "react";
-import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
-import { profileBannerToShowSelector } from "../../features/profileSettings/store/selectors";
+import { setShowAppearanceSettingsBanner } from "../../features/appearanceSettings/store/actions";
+import { settingsBannerToShowSelector } from "../../features/appearanceSettings/store/selectors";
 import {
   trackPushNotificationsBannerTap,
   trackPushNotificationsBannerVisualized
@@ -18,18 +18,18 @@ import ROUTES from "../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 
 export const ProfileMainScreenTopBanner = () => {
-  const bannerToShow = useIOSelector(profileBannerToShowSelector);
+  const bannerToShow = useIOSelector(settingsBannerToShowSelector);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
   const handleCloseBanner = useCallback(() => {
-    dispatch(setShowProfileBanner(false));
+    dispatch(setShowAppearanceSettingsBanner(false));
   }, [dispatch]);
 
   const navigateToProfile = useCallback(
     () =>
       navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.PROFILE_DATA
+        screen: ROUTES.PROFILE_PREFERENCES_APPEARANCE
       }),
     [navigation]
   );
@@ -59,14 +59,14 @@ export const ProfileMainScreenTopBanner = () => {
           />
         </ContentWrapper>
       );
-    case "PROFILE_BANNER":
+    case "APPEARANCE_SETTINGS_BANNER":
       return (
         <ContentWrapper>
           <VSpacer size={16} />
           <Banner
             title={I18n.t("profile.main.banner.title")}
             action={I18n.t("profile.main.banner.action")}
-            pictogramName={"help"}
+            pictogramName={"settings"}
             color={"neutral"}
             size={"big"}
             onPress={navigateToProfile}

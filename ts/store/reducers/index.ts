@@ -72,6 +72,7 @@ import remoteConfigReducer from "./backendStatus/remoteConfig";
 import statusMessagesReducer from "./backendStatus/statusMessages";
 import sectionStatusReducer from "./backendStatus/sectionStatus";
 import { backendInfoReducer } from "./backendStatus/backendInfo";
+import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -256,6 +257,12 @@ export function createRootReducer(
                   state.features.profileSettings
                     .hasUserAcknowledgedSettingsBanner,
                 _persist: state.features.profileSettings._persist
+              },
+              appearanceSettings: {
+                ...appearanceSettingsReducerInitialState,
+                showAppearanceBanner:
+                  state.features.appearanceSettings.showAppearanceBanner,
+                _persist: state.features.appearanceSettings._persist
               },
               /**
                * IT Wallet state persists across sessions and is explicitly reset on session changes
