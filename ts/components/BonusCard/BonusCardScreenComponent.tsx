@@ -1,6 +1,6 @@
-import { HeaderActionProps } from "@pagopa/io-app-design-system";
+import { HeaderActionProps, IOColors } from "@pagopa/io-app-design-system";
 import { ReactNode } from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, StatusBar } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
@@ -45,6 +45,8 @@ const BonusCardScreenComponent = ({
     title: title || "",
     transparent: true,
     supportRequest: true,
+    variant: "neutral",
+    backgroundColor: IOColors["grey-50"],
     faqCategories,
     contextualHelpMarkdown,
     contextualHelp,
@@ -54,14 +56,17 @@ const BonusCardScreenComponent = ({
   });
 
   return (
-    <IOScrollView
-      animatedRef={animatedScrollViewRef}
-      actions={actions}
-      includeContentMargins={false}
-    >
-      <BonusCard hideLogo={shouldHideLogo} {...cardProps} />
-      {children}
-    </IOScrollView>
+    <>
+      <StatusBar barStyle="dark-content" />
+      <IOScrollView
+        animatedRef={animatedScrollViewRef}
+        actions={actions}
+        includeContentMargins={false}
+      >
+        <BonusCard hideLogo={shouldHideLogo} {...cardProps} />
+        {children}
+      </IOScrollView>
+    </>
   );
 };
 

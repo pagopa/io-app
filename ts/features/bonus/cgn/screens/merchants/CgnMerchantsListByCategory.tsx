@@ -12,7 +12,7 @@ import * as O from "fp-ts/lib/Option";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, RefreshControl, StatusBar, View } from "react-native";
-import Animated, { AnimatedRef, useAnimatedRef } from "react-native-reanimated";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
@@ -126,8 +126,7 @@ const CgnMerchantsListByCategory = () => {
       )
     ),
     enableDiscreteTransition: true,
-    animatedRef:
-      animatedFlatListRef as unknown as AnimatedRef<Animated.ScrollView>,
+    animatedRef: animatedFlatListRef,
     backgroundColor: categorySpecs?.colors,
     variant: categorySpecs?.headerVariant,
     supportRequest: true,

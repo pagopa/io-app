@@ -196,6 +196,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
       }
       cardFooter={
         <H4
+          color="black"
           style={{
             textAlign: "center",
             marginHorizontal: 16,
