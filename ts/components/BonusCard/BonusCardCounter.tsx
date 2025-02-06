@@ -49,7 +49,11 @@ const BonusCardCounter = (props: BonusCardCounter) => {
       style={[styles.container, { alignItems: "stretch" }]}
       testID="BonusCardCounterTestID"
     >
-      <LabelMini weight="Regular" style={{ textAlign: "center" }}>
+      <LabelMini
+        weight="Regular"
+        style={{ textAlign: "center" }}
+        color="blueItalia-850"
+      >
         {props.label}
       </LabelMini>
       <VSpacer size={4} />

@@ -485,9 +485,6 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
-    cieID:
-      cieIdTest:
-        title: CieID
     designSystemEnvironment: Experimental Design System
     newScanSection: New 'Scan' feature
     sessionRefresh: Activate Session Refresh
@@ -657,7 +654,7 @@ authentication:
     nospid-nocie: Don't have SPID or CIE? Find out more
     card0-title: Welcome to IO!
     card0-content: Swipe left to see what you can do in the app
-    card0-content-accessibility:  Select the previous item to open a chat with the IO team if something is not working as it should.
+    card0-content-accessibility: Select the previous item to open a chat with the IO team if something is not working as it should.
     card1-title: Keep your personal documents safe
     card1-content: With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips
     card2-title: Receive communications, also with legal value
@@ -885,6 +882,13 @@ authentication:
     recoverDescription: If you're missing your password, you can recover it by tapping on the following button.
     dualRecoverDescription: If you're missing your credentials, you can recover them by tapping on the following buttons.
     recoverPassword: Recover the password
+    poste_id:
+      bottom_sheet:
+        title: Log in without a password!
+        description: "If you have the Poste ID app, follow these steps:"
+        feature_1: Tap on **‘Accedi più rapidamente** in the grey band in the middle of the screen
+        feature_2: Enter your PosteID code or use biometric
+        feature_3: When you see **Autorizzazione concessa** appear, go back to IO and press **Acconsento**
   idp_login_success:
     contentTitle: Hi, {{name}}!
   errors:
@@ -1602,8 +1606,8 @@ wallet:
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
     amountInfo:
-      title: Do you see a different amount?
-      message: pagoPA updates the amount in real time, so that you can pay without additional charges or interest. This may happen, for instance, when the institution applies notification fees (if it has sent you a notification with legal value) or if you are late with your payment.
+      title: Is the amount different from the one on the pagoPA notice?
+      message: "If the amount changes, it means that the Payee has automatically updated it. In this way, you can be sure that you are always paying the amount that is due. If it is higher, you may have to pay interest, penalties or notification costs.\n\nPlease contact the Payee for further details, as pagoPA does not know the reasons for the update."
       cta: Ok, va bene
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
@@ -1913,7 +1917,7 @@ wallet:
         title: "L’Ente Creditore sta avendo problemi nella risposta"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       PAYMENT_ONGOING:
-        title: "C’è già un pagamento in corso, riprova più tardi"
+        title: "C’è già un’operazione in corso, riprova più tardi"
         subtitle: "Se il problema persiste, puoi aprire una segnalazione."
       PAYMENT_EXPIRED:
         title: "L’avviso è scaduto e non è più possibile pagarlo"
@@ -1927,10 +1931,10 @@ wallet:
         title: "Non riusciamo a verificare lo stato di questo avviso"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       GENERIC_ERROR:
-        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        title: "Stiamo riscontrando alcuni problemi sui sistemi di pagamento"
         subtitle: "Riprova più tardi."
       PAYMENT_SLOWDOWN_ERROR:
-        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        title: "Stiamo riscontrando alcuni problemi sui sistemi di pagamento"
         subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
@@ -2909,7 +2913,7 @@ bonus:
           one: 1 second
           other: "{{seconds}} seconds"
   cdc:
-   serviceEntryPoint:
+    serviceEntryPoint:
       notAvailable: "The service is not available at this time. Try later."
 features:
   messages:
@@ -3311,7 +3315,7 @@ features:
           content: Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!
           action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
-      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
+      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n\n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
       tos: Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyAndTosUrl}}).
       upcomingWalletBanner:
         title: "Novità in arrivo: i tuoi Documenti su IO"
@@ -3520,7 +3524,7 @@ features:
         openPdf: Show document
         shareButton: Save or share
         fiscalCode: Your Fiscal Code
-      eid: 
+      eid:
         verificationExpired:
           title: Verifica la tua identità
           contentStart: "È un passaggio di sicurezza necessario per continuare ad usare "
@@ -3704,6 +3708,7 @@ idpay:
     details:
       initiativeCard:
         availableAmount: Disponibile
+        refundRequestedAmount: Rimborso richiesto
         validUntil: Fino al {{expiryDate}}
         expiresOn: Scade il {{expiryDate}}
         toRefund: Da rimborsare
@@ -3762,6 +3767,7 @@ idpay:
               UNSUBSCRIBED: "Recesso dall’iniziativa"
     discountDetails:
       authorizeButton: Autorizza un pagamento
+      addExpenseButton: Aggiungi spesa
       bottomSheetOptions:
         scanQr: Inquadra un codice QR
         generateBarcode: Crea un codice sconto
