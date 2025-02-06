@@ -25,12 +25,12 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import {
   ItwOptionalClaimsList,
   ItwRequiredClaimsList,
-  ConsentClaim
-} from "../../../common/components/ItwConsentClaims";
+  DisclosureClaim
+} from "../../../common/components/ItwClaimsDisclosure";
 
 const RP_MOCK_NAME = "Comune di Milano";
 
-const mockedRequiredClaims: Array<ConsentClaim> = [
+const mockedRequiredClaims: Array<DisclosureClaim> = [
   {
     claim: { id: "fiscal_code", label: "Codice fiscale", value: "QWERTYUIOP" },
     source: "IPZS"
@@ -45,7 +45,7 @@ const mockedRequiredClaims: Array<ConsentClaim> = [
   }
 ];
 
-const mockedOptionalClaims: Array<ConsentClaim> = [
+const mockedOptionalClaims: Array<DisclosureClaim> = [
   {
     claim: { id: "birthdate", label: "Data di nascita", value: "01/01/1970" },
     source: "IPZS"

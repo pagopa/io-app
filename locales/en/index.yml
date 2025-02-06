@@ -3536,6 +3536,7 @@ features:
         subtitle: Saranno mostrati a **{{relyingParty}}** per accedere ai servizi richiesti.
         requiredClaims: Dati necessari
         optionalClaims: Dati facoltativi
+        claimUnavailable: Non disponibile
         optionalClaimsAlert: I dati facoltativi ti offrono servizi più completi.
         disclaimer:
           - I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.

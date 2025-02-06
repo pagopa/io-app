@@ -50,7 +50,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
-import { ItwRequiredClaimsList } from "../../common/components/ItwConsentClaims";
+import { ItwRequiredClaimsList } from "../../common/components/ItwClaimsDisclosure";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
