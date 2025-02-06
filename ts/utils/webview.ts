@@ -12,6 +12,10 @@ export const ON_SCROLL_END_LISTENER = `window.onscroll=function(){
     }
 };`;
 
+export const GET_CONTENT_HEIGHT_SCRIPT = `
+    window.ReactNativeWebView.postMessage(Math.max(document.documentElement.clientHeight, document.documentElement.scrollHeight, document.body.clientHeight, document.body.scrollHeight));
+  `;
+
 const endTrue = "true;";
 // ensure the injected JS into the webview contains the right closure. If not it will be added.
 export const closeInjectedScript = (injection: string) => {

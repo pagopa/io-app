@@ -899,6 +899,13 @@ authentication:
     dualRecoverDescription: Se hai dimenticato le tue credenziali, ti consigliamo di procedere cliccando sui bottoni qui di seguito.
     recoverUsername: Recupera il nome utente
     recoverPassword: Recupera la password
+    poste_id:
+      bottom_sheet:
+        title: Accedi senza password!
+        description: "Se hai l’app Poste ID, segui questi passaggi:"
+        feature_1: Tocca su **"Accedi più rapidamente"** nella fascia grigia al centro della schermata
+        feature_2: Inserisci il codice PosteID o usa il biometrico
+        feature_3: Quando vedrai apparire **Autorizzazione concessa**, torna su IO e premi **Acconsento**
   idp_login_success:
     contentTitle: Ciao {{name}}!
   errors:
@@ -3325,7 +3332,7 @@ features:
           content: Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!
           action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
-      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
+      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n\n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
       tos: Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyAndTosUrl}}).
       upcomingWalletBanner:
         title: "Novità in arrivo: i tuoi Documenti su IO"
@@ -3534,7 +3541,7 @@ features:
         openPdf: "Mostra documento"
         shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
-      eid: 
+      eid:
         verificationExpired:
           title: Verifica la tua identità
           contentStart: "È un passaggio di sicurezza necessario per continuare ad usare "
