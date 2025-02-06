@@ -1,0 +1,4 @@
+export const ITW_REMOTE_ROUTES = {
+  MAIN: "ITW_REMOTE_MAIN" as const,
+  CLAIMS_DISCLOSURE: "ITW_REMOTE_CLAIMS_DISCLOSURE" as const
+};

@@ -54,6 +54,8 @@ import { ServicesParamsList } from "../../features/services/common/navigation/pa
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
+import { ItwRemoteParamsList } from "../../features/itwallet/presentation/remote/navigation/ItwRemoteParamsList.ts";
+import { ITW_REMOTE_ROUTES } from "../../features/itwallet/presentation/remote/navigation/routes.ts";
 import ROUTES from "../routes";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
@@ -106,6 +108,7 @@ export type AppParamsList = {
   [PaymentsReceiptRoutes.PAYMENT_RECEIPT_NAVIGATOR]: NavigatorScreenParams<PaymentsReceiptParamsList>;
 
   [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;
+  [ITW_REMOTE_ROUTES.MAIN]: NavigatorScreenParams<ItwRemoteParamsList>;
 };
 
 /**
