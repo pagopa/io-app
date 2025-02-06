@@ -24,13 +24,13 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 
-export type ItwEidClaimsSelectionScreenNavigationParams = {
+export type ItwRemoteClaimsDisclosureScreenNavigationParams = {
   itwRemoteRequestPayload: ItwRemoteRequestPayload;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
   ItwRemoteParamsList,
-  "ITW_REMOTE_EID_CLAIMS_SELECTION"
+  "ITW_REMOTE_CLAIMS_DISCLOSURE"
 >;
 
 const QRCodeValidationScreen = () => (
@@ -47,7 +47,7 @@ const QRCodeValidationScreen = () => (
   </LoadingScreenContent>
 );
 
-const ItwEidClaimsSelectionScreen = (params: ScreenProps) => {
+const ItwRemoteClaimsDisclosureScreen = (params: ScreenProps) => {
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
@@ -125,4 +125,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { ItwEidClaimsSelectionScreen };
+export { ItwRemoteClaimsDisclosureScreen };

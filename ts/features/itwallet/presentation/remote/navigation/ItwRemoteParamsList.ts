@@ -1,6 +1,6 @@
-import { ItwEidClaimsSelectionScreenNavigationParams } from "../screens/ItwEidClaimsSelectionScreen.tsx";
+import { ItwRemoteClaimsDisclosureScreenNavigationParams } from "../screens/ItwRemoteClaimsDisclosureScreen.tsx";
 import { ITW_REMOTE_ROUTES } from "./routes.ts";
 
 export type ItwRemoteParamsList = {
-  [ITW_REMOTE_ROUTES.EID_CLAIMS_SELECTION]: ItwEidClaimsSelectionScreenNavigationParams;
+  [ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE]: ItwRemoteClaimsDisclosureScreenNavigationParams;
 };

@@ -158,7 +158,7 @@ const BarcodeScanScreen = () => {
         break;
       case "ITW_REMOTE":
         navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
-          screen: ITW_REMOTE_ROUTES.EID_CLAIMS_SELECTION,
+          screen: ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE,
           params: {
             itwRemoteRequestPayload: barcode.itwRemoteRequestPayload
           }
