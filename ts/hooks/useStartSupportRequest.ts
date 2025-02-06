@@ -46,7 +46,8 @@ export const useStartSupportRequest = ({
               payment: false,
               card: false,
               fci: false,
-              itWallet: false
+              itWallet: false,
+              idPay: false
             }
           })
         );

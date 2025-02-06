@@ -1,4 +1,18 @@
-// This file is a placeholder for future implementation
-export type Context = object;
+import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
+import { RemoteFailure } from "./failure.ts";
 
-export const InitialContext: Context = {};
+export type Context = {
+  /**
+   * The remote request payload for the remote presentation
+   */
+  payload: ItwRemoteRequestPayload | undefined;
+  /**
+   * The failure of the remote presentation machine
+   */
+  failure?: RemoteFailure;
+};
+
+export const InitialContext: Context = {
+  payload: undefined,
+  failure: undefined
+};
