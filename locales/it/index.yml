@@ -3533,6 +3533,10 @@ features:
         title: Non siamo riusciti a caricare {{credentialName}}
         content: Chiudi e riapri l'app per riprovare.
         primaryAction: Ho capito
+      remote:
+        loadingScreen:
+          title: Stiamo facendo alcune verifiche di sicurezza...
+          subtitle: Attendi qualche secondo
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale
@@ -3798,6 +3802,7 @@ idpay:
       buttons:
         privacy: Preferenze & Privacy
         unsubscribe: Rimuovi {{initiativeName}}
+        requestHelp: Chiedi aiuto
     operationDetails:
       discount:
         labels:

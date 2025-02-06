@@ -1,4 +1,5 @@
-import { render, within } from "@testing-library/react-native";
+import { within } from "@testing-library/react-native";
+import configureMockStore from "redux-mock-store";
 import {
   InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum
@@ -10,6 +11,11 @@ import {
 } from "../BeneficiaryDetailsContent";
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../../definitions/idpay/OnboardingStatusDTO";
 import { RewardValueTypeEnum } from "../../../../../../definitions/idpay/RewardValueDTO";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { IDPayDetailsRoutes } from "../../navigation";
 
 setLocale("it");
 
@@ -49,7 +55,7 @@ const T_REWARD_VALUE_ABSOLUTE_STRING = "30,00 €";
 
 describe("Test BeneficiaryDetailsContent component", () => {
   it("should correctly render all the info ", () => {
-    const component = renderComponent(InitiativeRewardTypeEnum.REFUND);
+    const { component } = renderComponent(InitiativeRewardTypeEnum.REFUND);
 
     const statusRow = within(component.getByTestId("statusTestID"));
     expect(
@@ -147,7 +153,7 @@ describe("Test BeneficiaryDetailsContent component", () => {
   });
 
   it("should correctly render absolute reward type data", () => {
-    const component = renderComponent(
+    const { component } = renderComponent(
       InitiativeRewardTypeEnum.REFUND,
       RewardValueTypeEnum.ABSOLUTE
     );
@@ -165,12 +171,12 @@ describe("Test BeneficiaryDetailsContent component", () => {
     ).toBeTruthy();
   });
   it("should correctly render type dependant entries in case of a discount initiative", () => {
-    const component = renderComponent(InitiativeRewardTypeEnum.DISCOUNT);
+    const { component } = renderComponent(InitiativeRewardTypeEnum.DISCOUNT);
     expect(component.queryByTestId("accruedTestID")).toBeTruthy();
     expect(component.queryByTestId("refundedTestID")).toBeFalsy();
   });
   it("should correctly render type dependant entries in case of a refund initiative", () => {
-    const component = renderComponent(InitiativeRewardTypeEnum.REFUND);
+    const { component } = renderComponent(InitiativeRewardTypeEnum.REFUND);
     expect(component.queryByTestId("accruedTestID")).toBeTruthy();
     expect(component.queryByTestId("refundedTestID")).toBeTruthy();
   });
@@ -208,5 +214,19 @@ const renderComponent = (
     }
   };
 
-  return render(<BeneficiaryDetailsContent {...props} />);
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const mockStore = configureMockStore<GlobalState>();
+  const store: ReturnType<typeof mockStore> = mockStore({
+    ...globalState
+  });
+
+  return {
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
+      () => <BeneficiaryDetailsContent {...props} />,
+      IDPayDetailsRoutes.IDPAY_DETAILS_MAIN,
+      {},
+      store
+    ),
+    store
+  };
 };
