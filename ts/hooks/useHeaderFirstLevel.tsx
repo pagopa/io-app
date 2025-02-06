@@ -1,6 +1,8 @@
-import { HeaderActionProps } from "@pagopa/io-app-design-system";
-import { useLayoutEffect } from "react";
-import HeaderFirstLevel from "../components/ui/HeaderFirstLevel";
+import {
+  HeaderActionProps,
+  HeaderFirstLevel
+} from "@pagopa/io-app-design-system";
+import { useLayoutEffect, useMemo } from "react";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../navigation/params/MainTabParamsList";
 import { useHeaderFirstLevelActionPropHelp } from "./useHeaderFirstLevelActionPropHelp";
@@ -18,9 +20,9 @@ has a default behaviour but can be overridden
 (as in `ServicesHomeScreen') */
 type HeaderFirstLevelHookProps = Omit<
   HeaderFirstLevel,
-  "firstAction" | "secondAction" | "ignoreSafeAreaMargin"
+  "ignoreSafeAreaMargin" | "actions"
 > & {
-  secondAction?: HeaderActionProps;
+  actions?: Array<HeaderActionProps>;
 };
 
 /**
@@ -36,19 +38,27 @@ export const useHeaderFirstLevel = ({
   const actionSettings = useHeaderFirstLevelActionPropSettings();
   const alertProps = useStatusAlertProps(currentRoute);
 
+  const actions = useMemo(
+    (): HeaderFirstLevel["actions"] | [] =>
+      headerProps.actions
+        ? [
+            headerProps.actions?.[0],
+            headerProps.actions?.[1] ?? actionSettings,
+            headerProps.actions?.[2] ?? actionHelp
+          ]
+        : [],
+    [headerProps.actions, actionSettings, actionHelp]
+  );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <HeaderFirstLevel
-          /* Settings action may be overwritten
-          (like in `ServicesHomeScreen`), so we
-          put it before the spreading props. */
-          secondAction={actionSettings}
           {...headerProps}
-          firstAction={actionHelp}
+          actions={actions}
           ignoreSafeAreaMargin={!!alertProps}
         />
       )
     });
-  }, [navigation, headerProps, actionHelp, actionSettings, alertProps]);
+  }, [navigation, headerProps, alertProps, actions]);
 };

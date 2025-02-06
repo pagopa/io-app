@@ -90,8 +90,7 @@ export const MessagesHomeScreen = () => {
     currentRoute: MESSAGES_ROUTES.MESSAGES_HOME,
     headerProps: {
       title: I18n.t("messages.contentTitle"),
-      secondAction: settingsActionInMessageSection,
-      thirdAction: searchMessageAction
+      actions: [searchMessageAction, settingsActionInMessageSection]
     }
   });
 

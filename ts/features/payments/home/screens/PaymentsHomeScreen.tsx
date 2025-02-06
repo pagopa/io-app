@@ -76,7 +76,8 @@ const PaymentsHomeScreen = () => {
     currentRoute: ROUTES.PAYMENTS_HOME,
     headerProps: {
       title: I18n.t("features.payments.title"),
-      animatedRef: scrollViewContentRef
+      animatedRef: scrollViewContentRef,
+      actions: []
     }
   });
 
