@@ -54,6 +54,7 @@ import {
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import NavigationService from "../../../../navigation/NavigationService";
 import { FIMS_ROUTES } from "../../../fims/common/navigation";
+import { removeFIMSPrefixFromUrl } from "../../../../components/ui/Markdown/handlers/link";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -95,7 +96,7 @@ const IdPayInitiativeDetailsScreen = () => {
       screen: FIMS_ROUTES.CONSENTS,
       params: {
         ctaText: I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
-        ctaUrl: addExpenseFimsUrl
+        ctaUrl: removeFIMSPrefixFromUrl(addExpenseFimsUrl)
       }
     });
   };
