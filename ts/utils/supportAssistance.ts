@@ -116,6 +116,7 @@ export const zendeskCurrentAppVersionId = "4414316660369";
 export const zendeskVersionsHistoryId = "4419641151505";
 export const zendeskFciId = "14874226407825";
 export const zendeskItWalletFailureCode = "31775197295633";
+export const zendeskIdPayCategoryId = "8086481365265";
 
 export const defaultZendeskPaymentCategory: ZendeskCategory = {
   value: "io_pagamenti_pagopa",
@@ -151,8 +152,8 @@ export const zendeskItWalletCategory: ZendeskCategory = {
   }
 };
 
-export const defaultIdPayCategory: ZendeskCategory = {
-  value: "io_pagamenti_pagopa",
+export const defaultIdPayExpenseCategory: ZendeskCategory = {
+  value: "idpay_guidonia",
   description: {
     "it-IT": "Pagamento pagoPA",
     "en-EN": "pagoPA payment",

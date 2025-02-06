@@ -4,9 +4,9 @@ import { assistanceToolConfigSelector } from "../../../../store/reducers/backend
 import {
   addTicketCustomField,
   assistanceToolRemoteConfig,
-  defaultIdPayCategory,
+  defaultIdPayExpenseCategory,
   resetCustomFields,
-  zendeskCategoryId
+  zendeskIdPayCategoryId
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -26,7 +26,10 @@ const useIdPaySupportModal = (): PaymentFailureSupportModal => {
   const zendeskAssistanceLogAndStart = (startingRoute?: string) => {
     resetCustomFields();
     // attach the main zendesk category to the ticket
-    addTicketCustomField(zendeskCategoryId, defaultIdPayCategory.value);
+    addTicketCustomField(
+      zendeskIdPayCategoryId,
+      defaultIdPayExpenseCategory.value
+    );
 
     dispatch(
       zendeskSupportStart({
@@ -36,7 +39,7 @@ const useIdPaySupportModal = (): PaymentFailureSupportModal => {
         }
       })
     );
-    dispatch(zendeskSelectedCategory(defaultIdPayCategory));
+    dispatch(zendeskSelectedCategory(defaultIdPayExpenseCategory));
   };
 
   const startIdPaySupport = (startingRoute?: string) => {
