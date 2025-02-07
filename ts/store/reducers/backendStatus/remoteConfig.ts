@@ -422,22 +422,14 @@ export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
       )
   );
 
-export const appFeedbackEnabledSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): boolean =>
-    pipe(
+export const appFeedbackEnabledSelector = (state: GlobalState) =>
+  pipe(state, remoteConfigSelector, remoteConfig =>
+    isPropertyWithMinAppVersionEnabled({
       remoteConfig,
-      O.map(config =>
-        isVersionSupported(
-          Platform.OS === "ios"
-            ? config.app_feedback?.min_app_version.ios
-            : config.app_feedback?.min_app_version.android,
-          getAppVersion()
-        )
-      ),
-      O.getOrElse(() => false)
-    )
-);
+      mainLocalFlag: true,
+      configPropertyName: "app_feedback"
+    })
+  );
 
 /**
  * The 'disabledForMessagesAndServices' on the 'ioMarkdown' is used to
