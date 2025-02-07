@@ -281,7 +281,7 @@ export const isIdPayEnabledSelector = createSelector(
   remoteConfigSelector,
   isIdPayTestEnabledSelector,
   (remoteConfig, isIdPayTestEnabled): boolean =>
-    isIdPayTestEnabled &&
+    isIdPayTestEnabled ||
     pipe(
       remoteConfig,
       O.map(config =>
