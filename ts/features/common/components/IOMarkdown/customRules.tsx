@@ -1,5 +1,9 @@
 import { Fragment } from "react";
-import { TxtHeaderNode, TxtLinkNode } from "@textlint/ast-node-types";
+import {
+  TxtHeaderNode,
+  TxtHtmlNode,
+  TxtLinkNode
+} from "@textlint/ast-node-types";
 import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
 import { isIoInternalLink } from "../../../../components/ui/Markdown/handlers/link";
 import { handleInternalLink } from "../../../../utils/internalLink";
@@ -73,5 +77,11 @@ export const generateMessagesAndServicesRules = (
         {link.children.map(render)}
       </Body>
     );
-  }
+  },
+  Html: (_html: TxtHtmlNode) => undefined
 });
+
+export const generatePreconditionsRules =
+  (): Partial<IOMarkdownRenderRules> => ({
+    Html: (_html: TxtHtmlNode) => undefined
+  });

@@ -8,6 +8,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
@@ -19,10 +20,10 @@ import {
   trackItWalletIntroScreen,
   trackOpenItwTos
 } from "../../analytics";
-import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig";
 import { selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -64,17 +65,14 @@ const ItwDiscoveryInfoScreen = () => {
       <ContentWrapper>
         <H1>{I18n.t("features.itWallet.discovery.title")}</H1>
         <VSpacer size={24} />
-        <ItwMarkdown>
-          {I18n.t("features.itWallet.discovery.content")}
-        </ItwMarkdown>
-        <ItwMarkdown
-          styles={{ body: { fontSize: 14 } }}
-          onLinkOpen={trackOpenItwTos}
-        >
-          {I18n.t("features.itWallet.discovery.tos", {
+        <IOMarkdown content={I18n.t("features.itWallet.discovery.content")} />
+        <VSpacer size={24} />
+        <IOMarkdown
+          content={I18n.t("features.itWallet.discovery.tos", {
             privacyAndTosUrl
           })}
-        </ItwMarkdown>
+          rules={generateLinkRuleWithCallback(trackOpenItwTos)}
+        />
       </ContentWrapper>
       <FooterActions
         fixed={false}
