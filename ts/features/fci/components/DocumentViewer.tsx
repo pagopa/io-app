@@ -1,4 +1,5 @@
 import {
+  ButtonOutline,
   ButtonSolidProps,
   FooterActions,
   FooterActionsInline,
@@ -57,7 +58,7 @@ const renderFooter = (url: string, filePath: string) => {
     accessibilityLabel: I18n.t("global.buttons.share")
   };
 
-  const saveButtonProps: ButtonSolidProps = {
+  const saveButtonProps: ButtonOutline = {
     onPress: () => {
       ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
         {
