@@ -48,7 +48,7 @@ const migrations: MigrationManifest = {
 
     return {
       ...prevState,
-      showAppearanceBanner: true // TODO: Review this migration
+      showAppearanceBanner: true
     };
   }
 };
