@@ -1,6 +1,12 @@
-// This file is a placeholder for future implementation
-export type PlaceHolder = {
-  type: "PLACEHOLDER";
+import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
+
+export type Start = {
+  type: "start";
+  payload: ItwRemoteRequestPayload;
 };
 
-export type RemoteEvents = PlaceHolder;
+export type Back = {
+  type: "back";
+};
+
+export type RemoteEvents = Start | Back;
