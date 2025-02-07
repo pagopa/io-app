@@ -40,7 +40,6 @@ import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/detail
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
-import { ItwPresentationTrustRelyingParty } from "../presentation/remote/screens/ItwPresentationTrustRelyingParty";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -212,10 +211,6 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
         component={ItwPresentationCredentialFiscalCodeModal}
-      />
-      <Stack.Screen
-        name={ITW_ROUTES.PRESENTATION.VERIFIABLE_PRESENTATION_TRUST_RP}
-        component={ItwPresentationTrustRelyingParty}
       />
       {/* PLAYGROUNDS */}
       <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />
