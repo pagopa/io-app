@@ -403,6 +403,13 @@ const PlaygroundsSection = () => {
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS
         })
+    },
+    {
+      value: "App Feedback",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.APP_FEEDBACK_PLAYGROUND
+        })
     }
   ];
 

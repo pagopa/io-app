@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   appFeedbackEnabledSelector,
@@ -12,7 +13,6 @@ import {
   appReviewPositiveFeedback,
   TopicKeys
 } from "../store/actions";
-import { openWebUrl } from "../../../utils/url";
 
 export const useAppReviewRequest = (topic: TopicKeys = "general") => {
   const dispatch = useIODispatch();
@@ -35,8 +35,8 @@ export const useAppReviewRequest = (topic: TopicKeys = "general") => {
             style: "cancel",
             onPress: () => {
               if (surveyUrl) {
-                openWebUrl(surveyUrl);
                 dispatch(appReviewNegativeFeedback(topic));
+                void openAuthenticationSession(surveyUrl, "");
               }
             }
           },
@@ -44,8 +44,8 @@ export const useAppReviewRequest = (topic: TopicKeys = "general") => {
             text: I18n.t("appFeedback.alert.continue"),
             style: "default",
             onPress: () => {
-              dispatch(appReviewPositiveFeedback());
               requestAppReview();
+              dispatch(appReviewPositiveFeedback());
             }
           }
         ]

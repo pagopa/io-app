@@ -5,6 +5,7 @@ import { Action } from "../../../../store/actions/types";
 import {
   appReviewNegativeFeedback,
   appReviewPositiveFeedback,
+  clearFeedbackDatas,
   TopicKeys
 } from "../actions";
 
@@ -25,6 +26,11 @@ const appFeedbackReducer = (
   action: Action
 ): AppFeedbackState => {
   switch (action.type) {
+    case getType(clearFeedbackDatas):
+      return {
+        ...state,
+        ...appFeedbackInitialState
+      };
     case getType(appReviewPositiveFeedback):
       return {
         ...state,

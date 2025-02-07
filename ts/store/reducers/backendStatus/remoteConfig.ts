@@ -413,7 +413,11 @@ export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
       pipe(
         feedbackConfig,
         O.fromNullable,
-        O.map(config => config.feedback_uri[topic]),
+        O.map(config =>
+          config.feedback_uri[topic]
+            ? config.feedback_uri[topic]
+            : config.feedback_uri.general
+        ),
         O.toUndefined
       )
   );
