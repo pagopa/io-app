@@ -94,8 +94,6 @@ const customVariables = {
   headerBodyFontSize: 14,
   headerBodyFontWeight: "600" as FontWeight,
 
-  androidStatusBarColor: IOColors.white,
-
   // Text
   textColor: IOColors["grey-700"],
   textMessageDetailLinkColor: "#0073E6",
