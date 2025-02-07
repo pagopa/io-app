@@ -431,15 +431,14 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -1404,15 +1403,14 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,

@@ -9,6 +9,8 @@ import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
   [ITW_ROUTES.ONBOARDING]: undefined;
+  // OFFLINE WALLET
+  [ITW_ROUTES.OFFLINE.WALLET]: undefined;
   // DISCOVERY
   [ITW_ROUTES.DISCOVERY.INFO]: undefined;
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
