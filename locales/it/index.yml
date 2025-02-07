@@ -3546,6 +3546,10 @@ features:
           - I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
           - I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento.
         tos: "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}})."
+      remote:
+        loadingScreen:
+          title: Stiamo facendo alcune verifiche di sicurezza...
+          subtitle: Attendi qualche secondo
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale
@@ -3811,6 +3815,7 @@ idpay:
       buttons:
         privacy: Preferenze & Privacy
         unsubscribe: Rimuovi {{initiativeName}}
+        requestHelp: Chiedi aiuto
     operationDetails:
       discount:
         labels:
