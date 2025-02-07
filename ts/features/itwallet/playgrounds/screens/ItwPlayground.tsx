@@ -13,8 +13,6 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
 
 /**
  * ITW Playground screen
@@ -23,7 +21,6 @@ import { ITW_ROUTES } from "../../navigation/routes";
 const ItwPlayground = () => {
   const credentialMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
-  const navigation = useIONavigation();
 
   useFocusEffect(
     useCallback(() => {
@@ -74,17 +71,6 @@ const ItwPlayground = () => {
           onPress={handleStartCredentialIssuance(
             CredentialType.EUROPEAN_DISABILITY_CARD
           )}
-        />
-        <ListItemHeader label="Verifiable presentation" />
-        <ListItemNav
-          value="Consent screen"
-          accessibilityLabel="Consent screen"
-          description="Consent screen with required and optional claims for verifiable presentations"
-          onPress={() =>
-            navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.PRESENTATION.VERIFIABLE_PRESENTATION_TRUST_RP
-            })
-          }
         />
         <VSpacer size={16} />
         <ItwLifecycleSection />
