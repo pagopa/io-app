@@ -1,7 +1,7 @@
-import { addMonths, isPast } from "date-fns";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 import { TopicKeys } from "../actions";
+import { checkFourMonthPeriod } from "../../utils/date";
 
 export const appFeedbackSelector = (state: GlobalState) =>
   state.features.appFeedback;
@@ -13,15 +13,6 @@ export const appReviewNegativeFeedbackLogSelector =
   (topic: TopicKeys) => (state: GlobalState) =>
     state.features.appFeedback.negativeFeedbackDate[topic];
 
-const checkSixMonthPeriod = (date?: string) => {
-  if (!date) {
-    return true;
-  }
-  const logDate = new Date(date);
-  const expirationDate = addMonths(logDate, 6);
-  return isNaN(logDate.getTime()) && isPast(expirationDate);
-};
-
 export const canAskFeedbackSelector = (topic: TopicKeys = "general") =>
   createSelector(
     [
@@ -29,6 +20,6 @@ export const canAskFeedbackSelector = (topic: TopicKeys = "general") =>
       appReviewNegativeFeedbackLogSelector(topic)
     ],
     (positiveFeedbackDate, negativeFeedbackDate) =>
-      checkSixMonthPeriod(positiveFeedbackDate) &&
-      checkSixMonthPeriod(negativeFeedbackDate)
+      checkFourMonthPeriod(positiveFeedbackDate) &&
+      checkFourMonthPeriod(negativeFeedbackDate)
   );
