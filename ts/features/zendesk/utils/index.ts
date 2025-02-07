@@ -15,7 +15,9 @@ export const handleContactSupport = (
   zendeskRemoteConfig: ZendeskConfig
 ) => {
   const canSkipCategoryChoice: boolean =
-    !isReady(zendeskRemoteConfig) || !!assistanceType.payment;
+    !isReady(zendeskRemoteConfig) ||
+    !!assistanceType.payment ||
+    !!assistanceType.idPay;
 
   if (isPanicModeActive(zendeskRemoteConfig)) {
     // Go to panic mode screen

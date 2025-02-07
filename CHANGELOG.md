@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.82.0-rc.7](https://github.com/pagopa/io-app/compare/2.82.0-rc.6...2.82.0-rc.7) (2025-02-06)
+
+
+### Features
+
+* **IDPay:** [[IOBP-1137](https://pagopa.atlassian.net/browse/IOBP-1137)] Add expense cta with FIMS implementation ([#6691](https://github.com/pagopa/io-app/issues/6691)) ([9692c48](https://github.com/pagopa/io-app/commit/9692c48a83b2ea1350097821c440e63fab2c146c))
+* **IDPay:** [[IOBP-1147](https://pagopa.atlassian.net/browse/IOBP-1147)] Add request help from IDPay beneficiary details screen ([#6622](https://github.com/pagopa/io-app/issues/6622)) ([cd5d68a](https://github.com/pagopa/io-app/commit/cd5d68a4376f7038c396a9cee2718f33896a48b0))
+* **IT Wallet:** [[SIW-1960](https://pagopa.atlassian.net/browse/SIW-1960)] Scan QR code for remote presentation ([#6670](https://github.com/pagopa/io-app/issues/6670)) ([7763bd1](https://github.com/pagopa/io-app/commit/7763bd1bf72ef5af712267c3a73b144d433d27f9))
+* [[IOPAE-1324](https://pagopa.atlassian.net/browse/IOPAE-1324)] Add analytics tracking for service settings and selected actions ([#6661](https://github.com/pagopa/io-app/issues/6661)) ([143f209](https://github.com/pagopa/io-app/commit/143f209e96e10466a230d04c59f8f2504db68281))
+
+
+### Chores
+
+* [[IOBP-1180](https://pagopa.atlassian.net/browse/IOBP-1180)] Add priority to remote feature flag for the IDPay feature ([#6693](https://github.com/pagopa/io-app/issues/6693)) ([506efe0](https://github.com/pagopa/io-app/commit/506efe0262a90cc58119b5700a6d451c8f588588))
+* [[IOPAE-1773](https://pagopa.atlassian.net/browse/IOPAE-1773)] Truncate long national institution names ([#6662](https://github.com/pagopa/io-app/issues/6662)) ([1951fe0](https://github.com/pagopa/io-app/commit/1951fe03ec6c0240cce5017a48ad5870757a9e1d))
+* **IT Wallet:** [[SIW-2001](https://pagopa.atlassian.net/browse/SIW-2001)] Track unknown credential status error ([#6686](https://github.com/pagopa/io-app/issues/6686)) ([196e77c](https://github.com/pagopa/io-app/commit/196e77cb87adc60dca1bb533c3cc458a3d8d765e))
+
+## [2.82.0-rc.6](https://github.com/pagopa/io-app/compare/2.82.0-rc.5...2.82.0-rc.6) (2025-02-05)
+
+
+### Features
+
+* **IDPay:** [[IOBP-1131](https://pagopa.atlassian.net/browse/IOBP-1131)] Text input onboarding field ([#6676](https://github.com/pagopa/io-app/issues/6676)) ([f118b92](https://github.com/pagopa/io-app/commit/f118b92649b8aa5fe6fb2e04d592315078e4a34d))
+* **IDPay:** [[IOBP-1139](https://pagopa.atlassian.net/browse/IOBP-1139)] Add new IDPay initiative reward type `EXPENSE` ([#6621](https://github.com/pagopa/io-app/issues/6621)) ([a7d95e6](https://github.com/pagopa/io-app/commit/a7d95e64aa656da89d688050d36b472b3080a82e))
+
+
+### Bug Fixes
+
+* [[IOCOM-2088](https://pagopa.atlassian.net/browse/IOCOM-2088)] Handling of <br /> tags on IOMarkdown ([#6679](https://github.com/pagopa/io-app/issues/6679)) ([5e79c2c](https://github.com/pagopa/io-app/commit/5e79c2c5c2f3a806807dc3f3f290948c5d2a4790))
+
+
+### Chores
+
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] remove main/profile deep link route ([#6683](https://github.com/pagopa/io-app/issues/6683)) ([e50f5c9](https://github.com/pagopa/io-app/commit/e50f5c902a98e10dac9336a192bc51f759d0fe3c))
+
 ## [2.82.0-rc.5](https://github.com/pagopa/io-app/compare/2.82.0-rc.4...2.82.0-rc.5) (2025-02-04)
 
 
