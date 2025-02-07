@@ -4,7 +4,9 @@ import {
 } from "@react-navigation/stack";
 import { Platform } from "react-native";
 import { isGestureEnabled } from "../../../utils/navigation";
+import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
+import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import { ItwActivateNfcScreen } from "../identification/screens/cie/ItwActivateNfcScreen";
 import { ItwCieCardReaderScreen } from "../identification/screens/cie/ItwCieCardReaderScreen";
 import { ItwCieExpiredOrInvalidScreen } from "../identification/screens/cie/ItwCieExpiredOrInvalidScreen";
@@ -12,8 +14,11 @@ import { ItwCiePinScreen } from "../identification/screens/cie/ItwCiePinScreen";
 import { ItwCieUnexpectedErrorScreen } from "../identification/screens/cie/ItwCieUnexpectedErrorScreen";
 import { ItwCieWrongCardScreen } from "../identification/screens/cie/ItwCieWrongCardScreen";
 import { ItwCieWrongCiePinScreen } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
+import ItwCieIdLoginScreen from "../identification/screens/cieId/ItwCieIdLoginScreen";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/screens/ItwIdentificationIdpSelectionScreen";
 import { ItwIdentificationModeSelectionScreen } from "../identification/screens/ItwIdentificationModeSelectionScreen";
+import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
+import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
@@ -32,14 +37,10 @@ import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModal } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
-import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
-import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
-import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
-import ItwCieIdLoginScreen from "../identification/screens/cieId/ItwCieIdLoginScreen";
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/details/screens/ItwPresentationCredentialFiscalCodeModal";
-import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
-import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
+import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
+import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -75,6 +76,13 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.ONBOARDING}
         component={WalletCardOnboardingScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.OFFLINE.WALLET}
+        component={ItwOfflineWalletScreen}
+        options={{
+          gestureEnabled: isGestureEnabled
+        }}
       />
       {/* DISCOVERY */}
       <Stack.Screen
