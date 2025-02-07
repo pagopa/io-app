@@ -5,6 +5,7 @@ import {
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import {
@@ -31,7 +32,7 @@ export const ItwLifecycleSection = () => {
   };
 
   return (
-    <>
+    <View>
       <ListItemHeader label="Wallet Instance Lifecycle" />
       <ListItemInfo label="Current status" value={getLifecycleStateLabel()} />
       <VSpacer size={8} />
@@ -40,6 +41,6 @@ export const ItwLifecycleSection = () => {
         label="Reset Wallet Instance"
         onPress={resetWalletInstance}
       />
-    </>
+    </View>
   );
 };
