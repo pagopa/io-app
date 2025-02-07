@@ -75,7 +75,7 @@ const ErrorComponent = (props: Props) => {
     }
   };
 
-  const retryButtonProps = {
+  const retryButtonProps: ButtonOutline = {
     testID: "FciRetryButtonTestID",
     onPress: props.onPress,
     fullWidth: true,
@@ -83,7 +83,7 @@ const ErrorComponent = (props: Props) => {
     accessibilityLabel: I18n.t("features.fci.errors.buttons.retry")
   };
 
-  const closeButtonProps = {
+  const closeButtonProps: ButtonOutline = {
     testID: "FciCloseButtonTestID",
     onPress: props.onPress,
     fullWidth: true,
@@ -91,7 +91,7 @@ const ErrorComponent = (props: Props) => {
     accessibilityLabel: I18n.t("features.fci.errors.buttons.close")
   };
 
-  const assistanceButtonProps = {
+  const assistanceButtonProps: ButtonOutline = {
     testID: "FciAssistanceButtonTestID",
     fullWidth: true,
     onPress: handleAskAssistance,
