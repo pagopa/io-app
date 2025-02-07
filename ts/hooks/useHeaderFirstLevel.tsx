@@ -22,7 +22,7 @@ type HeaderFirstLevelHookProps = Omit<
   HeaderFirstLevel,
   "ignoreSafeAreaMargin" | "actions"
 > & {
-  actions?: Array<HeaderActionProps>;
+  actions?: HeaderFirstLevel["actions"];
 };
 
 /**
@@ -33,32 +33,45 @@ export const useHeaderFirstLevel = ({
   headerProps
 }: useHeaderFirstLevelProps) => {
   const navigation = useIONavigation();
+  const { actions: incomingActions, ...rest } = headerProps;
 
   const actionHelp = useHeaderFirstLevelActionPropHelp(currentRoute);
   const actionSettings = useHeaderFirstLevelActionPropSettings();
   const alertProps = useStatusAlertProps(currentRoute);
 
-  const actions = useMemo(
-    (): HeaderFirstLevel["actions"] | [] =>
-      headerProps.actions
-        ? [
-            headerProps.actions?.[0],
-            headerProps.actions?.[1] ?? actionSettings,
-            headerProps.actions?.[2] ?? actionHelp
-          ]
-        : [],
-    [headerProps.actions, actionSettings, actionHelp]
-  );
+  /*
+    If we don't pass any actions, we render the fallback actions.
+    If we explicitly pass an empty array, we don't render any actions.
+    */
+  const actions: HeaderFirstLevel["actions"] = useMemo(() => {
+    const fallbackActions = [actionSettings, actionHelp];
+
+    if (incomingActions === undefined) {
+      return fallbackActions as [HeaderActionProps, HeaderActionProps];
+    }
+
+    return incomingActions.length > 0
+      ? ([
+          incomingActions?.[0],
+          incomingActions?.[1] ?? actionSettings,
+          incomingActions?.[2] ?? actionHelp
+        ].filter(action => action !== undefined) as [
+          HeaderActionProps,
+          HeaderActionProps,
+          HeaderActionProps
+        ])
+      : [];
+  }, [actionSettings, actionHelp, incomingActions]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <HeaderFirstLevel
-          {...headerProps}
+          {...rest}
           actions={actions}
           ignoreSafeAreaMargin={!!alertProps}
         />
       )
     });
-  }, [navigation, headerProps, alertProps, actions]);
+  }, [navigation, alertProps, rest, actions]);
 };
