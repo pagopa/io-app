@@ -202,6 +202,24 @@ some noise`;
     const cleaned = cleanMarkdownFromCTAs(CTA_2 as MessageBodyMarkdown);
     expect(cleaned).toEqual(messageBody);
   });
+
+  it("should return empty string for empty string input", () => {
+    const input = "";
+    const markdown = cleanMarkdownFromCTAs(input);
+    expect(markdown).toBe("");
+  });
+  it("should return the markdown for a proper formatted message (with front matter and body)", () => {
+    const input =
+      "---\nit:\n cta_1:\n  text: Il testo\n  action: ioit://messages\nen:\n cta_1:\n  text: The text\n  action: ioit//messages\n---\nThis is the message body";
+    const markdown = cleanMarkdownFromCTAs(input);
+    expect(markdown).toBe("This is the message body");
+  });
+  it("should return input string for invalid front matter", () => {
+    const input =
+      "---\nit:\n cta_1:\n  text: Il testo  action: ioit://messages\nen:\n cta_1:\n  text: The text\n  action: ioit//messages\n---\nThis is the message body";
+    const markdown = cleanMarkdownFromCTAs(input);
+    expect(markdown).toBe(input);
+  });
 });
 
 const ioHandledLinks = [
@@ -1663,5 +1681,126 @@ describe("getServiceCTA", () => {
         text: "CTA's text"
       }
     });
+  });
+});
+
+describe("safeContainsFronMatter", () => {
+  it("should return false for empty string", () => {
+    const input = "";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(false);
+  });
+  it("should return false for non front matter string", () => {
+    const input = "it:\n cta_1:\n  text: The text";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(false);
+  });
+  it("should return false for non opening front matter", () => {
+    const input = "it:\n cta_1:\n  text: The text\n---";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(false);
+  });
+  it("should return false for non closing front matter", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(false);
+  });
+  it("should return false for opening front matter without newline", () => {
+    const input = "---it:\n cta_1:\n  text: The text\n---";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(false);
+  });
+  it("should return false for closing front matter without newline", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text---";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(false);
+  });
+  it("should return false for proper front matter that has extra characters (on the same line) after closing", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text\n---Something else";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(false);
+  });
+  it("should return false for proper front matter that has extra space before opening", () => {
+    const input = " ---\nit:\n cta_1:\n  text: The text\n---";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(false);
+  });
+  it("should return false for proper front matter that has extra space before closing", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text\n ---";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(false);
+  });
+  it("should return false for a front matter that has wrong opening", () => {
+    const input = "...\nit:\n cta_1:\n  text: The text\n---";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(false);
+  });
+  it("should return true for proper front matter", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text\n---";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(true);
+  });
+  it("should return true for proper front matter with invalid yaml", () => {
+    const input = "---\nit: cta_1: text: The text\n---";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(true);
+  });
+});
+
+describe("safeExtractBodyAfterFrontMatter", () => {
+  it("should return input string for non opening front matter", () => {
+    const input = "it:\n cta_1:\n  text: The text\n---\nThis is the body";
+    const body = testable!.safeExtractBodyAfterFrontMatter(input);
+    expect(body).toBe(input);
+  });
+  it("should return input string for non closing front matter", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text\nThis is the body";
+    const body = testable!.safeExtractBodyAfterFrontMatter(input);
+    expect(body).toBe(input);
+  });
+  it("should return input string for opening front matter without newline", () => {
+    const input = "---it:\n cta_1:\n  text: The text\n---\nThis is the body";
+    const body = testable!.safeExtractBodyAfterFrontMatter(input);
+    expect(body).toBe(input);
+  });
+  it("should return input string for closing front matter without newline", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text---\nThis is the body";
+    const body = testable!.safeExtractBodyAfterFrontMatter(input);
+    expect(body).toBe(input);
+  });
+  it("should return input string for proper front matter that has extra characters (on the same line) after closing", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text\n---This is the body";
+    const body = testable!.safeExtractBodyAfterFrontMatter(input);
+    expect(body).toBe(input);
+  });
+  it("should return input string for proper front matter that has extra space before opening", () => {
+    const input = " ---\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
+    const body = testable!.safeExtractBodyAfterFrontMatter(input);
+    expect(body).toBe(input);
+  });
+  it("should return input string for proper front matter that has extra space before closing", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text\n ---\nThis is the body";
+    const body = testable!.safeExtractBodyAfterFrontMatter(input);
+    expect(body).toBe(input);
+  });
+  it("should return input string for a front matter that has wrong opening", () => {
+    const input = "...\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
+    const body = testable!.safeExtractBodyAfterFrontMatter(input);
+    expect(body).toBe(input);
+  });
+  it("should extract body for valid front matter", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
+    const body = testable!.safeExtractBodyAfterFrontMatter(input);
+    expect(body).toBe("This is the body");
+  });
+  it("should extract body for a string with no front matter", () => {
+    const input = "This is the body";
+    const body = testable!.safeExtractBodyAfterFrontMatter(input);
+    expect(body).toBe("This is the body");
+  });
+  it("should extract empty body from an empty string", () => {
+    const input = "";
+    const body = testable!.safeExtractBodyAfterFrontMatter(input);
+    expect(body).toBe("");
   });
 });

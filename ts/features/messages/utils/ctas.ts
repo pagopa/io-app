@@ -121,11 +121,11 @@ export const getServiceCTA = (
 export const cleanMarkdownFromCTAs = (
   markdown: MessageBodyMarkdown | string
 ): string => {
-  const isValidMarkdown = safeFMTest(markdown);
+  const isValidMarkdown = safeContainsFronMatter(markdown);
   if (!isValidMarkdown) {
     return markdown; // TODO
   }
-  return safeFMBody(markdown);
+  return safeExtractBodyAfterFrontMatter(markdown);
 };
 
 const getCTAIfValid = (
@@ -158,7 +158,7 @@ export const unsafeMessageCTAFromInput = (
   if (input == null) {
     return undefined;
   }
-  const isValidFrontMatter = safeFMTest(input);
+  const isValidFrontMatter = safeContainsFronMatter(input);
   if (!isValidFrontMatter) {
     return undefined;
   }
@@ -234,7 +234,7 @@ const isCtaActionValid = (
   return E.isRight(maybeCustomHandledAction);
 };
 
-const safeFMTest = (input: string): boolean => {
+const safeContainsFronMatter = (input: string): boolean => {
   try {
     return FM.test(input);
   } catch {
@@ -242,7 +242,7 @@ const safeFMTest = (input: string): boolean => {
   }
 };
 
-const safeFMBody = (input: string): string => {
+const safeExtractBodyAfterFrontMatter = (input: string): string => {
   try {
     const frontMatter = FM(input);
     return frontMatter.body;
@@ -258,7 +258,7 @@ export const testable = isTestEnv
       hasMetadataTokenName,
       internalRoutePredicates,
       isCtaActionValid,
-      safeFMTest,
-      safeFMBody
+      safeContainsFronMatter,
+      safeExtractBodyAfterFrontMatter
     }
   : undefined;
