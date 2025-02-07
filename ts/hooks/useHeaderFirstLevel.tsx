@@ -1,7 +1,4 @@
-import {
-  HeaderActionProps,
-  HeaderFirstLevel
-} from "@pagopa/io-app-design-system";
+import { HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import { useLayoutEffect, useMemo } from "react";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../navigation/params/MainTabParamsList";
@@ -39,28 +36,32 @@ export const useHeaderFirstLevel = ({
   const actionSettings = useHeaderFirstLevelActionPropSettings();
   const alertProps = useStatusAlertProps(currentRoute);
 
-  /*
-    If we don't pass any actions, we render the fallback actions.
-    If we explicitly pass an empty array, we don't render any actions.
-    */
   const actions: HeaderFirstLevel["actions"] = useMemo(() => {
-    const fallbackActions = [actionSettings, actionHelp];
+    const fallbackActions: HeaderFirstLevel["actions"] = [
+      actionSettings,
+      actionHelp
+    ];
 
+    /* Undefined means we render fallback actions */
     if (incomingActions === undefined) {
-      return fallbackActions as [HeaderActionProps, HeaderActionProps];
+      return fallbackActions;
     }
 
-    return incomingActions.length > 0
-      ? ([
-          incomingActions?.[0],
-          incomingActions?.[1] ?? actionSettings,
-          incomingActions?.[2] ?? actionHelp
-        ].filter(action => action !== undefined) as [
-          HeaderActionProps,
-          HeaderActionProps,
-          HeaderActionProps
-        ])
-      : [];
+    /* Empty array means we don't render any actions */
+    if (incomingActions.length === 0) {
+      return [];
+    }
+
+    /* Filter undefined elements */
+    const filteredActions = incomingActions.filter(
+      action => action !== undefined
+    );
+
+    return [
+      filteredActions?.[0],
+      filteredActions?.[1] ?? actionSettings,
+      filteredActions?.[2] ?? actionHelp
+    ];
   }, [actionSettings, actionHelp, incomingActions]);
 
   useLayoutEffect(() => {
