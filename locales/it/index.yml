@@ -2339,6 +2339,7 @@ services:
       email: "Invia un'email"
       pec: "Invia una PEC"
       fiscalCode: "Codice fiscale ente"
+      fiscalCodeAccessibilityHint: "Copia negli appunti"
       address: "Indirizzo"
       serviceId: "ID servizio"
     tosAndPrivacy:

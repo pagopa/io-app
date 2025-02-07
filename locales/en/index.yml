@@ -2339,6 +2339,7 @@ services:
       email: "Send email"
       pec: "Send PEC"
       fiscalCode: "Institution's fiscal code"
+      fiscalCodeAccessibilityHint: "Copy to clipboard"
       address: "Address"
       serviceId: "Service ID"
     tosAndPrivacy:
