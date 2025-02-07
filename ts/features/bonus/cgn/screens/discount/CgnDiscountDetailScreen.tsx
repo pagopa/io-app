@@ -191,17 +191,6 @@ const CgnDiscountDetailScreen = () => {
     }
   };
 
-  useHeaderSecondLevel({
-    title: discountDetails?.name || "",
-    scrollValues: {
-      contentOffsetY: translationY,
-      triggerOffset: titleHeight
-    },
-    transparent: true,
-    canGoBack: true,
-    supportRequest: true
-  });
-
   useEffect(() => {
     dispatch(resetMerchantDiscountCode());
     dispatch(resetOtpState());
@@ -252,6 +241,18 @@ const CgnDiscountDetailScreen = () => {
   const discountColor = discountDetails?.isNew
     ? styles.backgroundNewItem
     : styles.backgroundDefault;
+
+  useHeaderSecondLevel({
+    title: discountDetails?.name || "",
+    scrollValues: {
+      contentOffsetY: translationY,
+      triggerOffset: titleHeight
+    },
+    backgroundColor: discountColor.backgroundColor,
+    variant: "neutral",
+    canGoBack: true,
+    supportRequest: true
+  });
 
   if (discountDetails && merchantDetails) {
     return (

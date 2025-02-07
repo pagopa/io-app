@@ -1,5 +1,9 @@
 /* eslint-disable functional/immutable-data */
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  useIOTheme,
+  useIOThemeContext
+} from "@pagopa/io-app-design-system";
 import {
   LinkingOptions,
   NavigationContainer,
@@ -90,6 +94,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
 
   // Dark/Light Mode
   const { themeType } = useIOThemeContext();
+  const theme = useIOTheme();
 
   const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
@@ -166,12 +171,9 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
       }}
     >
       <StatusBar
-        backgroundColor={
-          themeType === "dark"
-            ? IONavigationDarkTheme.colors?.background
-            : IONavigationLightTheme.colors.background
-        }
+        backgroundColor={IOColors[theme["appBackground-primary"]]}
         barStyle={themeType === "dark" ? "light-content" : "dark-content"}
+        animated
       />
       {props.children}
     </NavigationContainer>

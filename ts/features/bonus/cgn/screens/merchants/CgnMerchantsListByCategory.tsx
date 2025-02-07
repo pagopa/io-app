@@ -219,6 +219,7 @@ const CgnMerchantsListByCategory = () => {
   return (
     <>
       <StatusBar
+        animated
         backgroundColor={categorySpecs?.colors}
         barStyle={categorySpecs?.statusBarStyle}
       />
