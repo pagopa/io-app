@@ -72,7 +72,7 @@ export const ProfileMainScreenTopBanner = () => {
             onPress={navigateToAppearance}
             onClose={handleCloseBanner}
             labelClose={I18n.t("profile.main.banner.close")}
-            testID={"fiscal-code-banner"}
+            testID={"appearance-settings-banner"}
           />
         </ContentWrapper>
       );

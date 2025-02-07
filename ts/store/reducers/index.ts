@@ -34,6 +34,7 @@ import { trialSystemActivationStatusReducer } from "../../features/trialSystem/s
 import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
 import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
+import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -72,7 +73,6 @@ import remoteConfigReducer from "./backendStatus/remoteConfig";
 import statusMessagesReducer from "./backendStatus/statusMessages";
 import sectionStatusReducer from "./backendStatus/sectionStatus";
 import { backendInfoReducer } from "./backendStatus/backendInfo";
-import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -251,8 +251,6 @@ export function createRootReducer(
               },
               profileSettings: {
                 ...profileSettingsReducerInitialState,
-                showProfileBanner:
-                  state.features.profileSettings.showProfileBanner,
                 hasUserAcknowledgedSettingsBanner:
                   state.features.profileSettings
                     .hasUserAcknowledgedSettingsBanner,
