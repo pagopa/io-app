@@ -54,7 +54,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 39;
+const CURRENT_REDUX_STORE_VERSION = 40;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -464,6 +464,17 @@ const migrations: MigrationManifest = {
       persistedPreferences: {
         ...typedState.persistedPreferences,
         isIOMarkdownEnabledOnMessagesAndServices: false
+      }
+    };
+  },
+  // Add 'isItwOfflineAccessEnabled' to 'persistedPreferences'
+  "40": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...typedState.persistedPreferences,
+        isItwOfflineAccessEnabled: false
       }
     };
   }

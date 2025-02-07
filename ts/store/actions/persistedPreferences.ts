@@ -53,6 +53,10 @@ export const setIOMarkdownEnabledOnMessagesAndServices = createStandardAction(
   "PREFERENCES_IO_MARKDOWN_ON_MESSAGES_AND_SERVICES_SET"
 )<{ enabledOnMessagesAndServices: boolean }>();
 
+export const setItwOfflineAccessEnabled = createStandardAction(
+  "PREFERENCES_ITW_OFFLINE_ACCESS_ENABLED_SET"
+)<boolean>();
+
 export type PersistedPreferencesActions = ActionType<
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
@@ -66,4 +70,5 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesIdPayTestSetEnabled
   | typeof preferencesDesignSystemSetEnabled
   | typeof setIOMarkdownEnabledOnMessagesAndServices
+  | typeof setItwOfflineAccessEnabled
 >;
