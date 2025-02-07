@@ -20,7 +20,7 @@ export const appearanceSettingsReducerInitialState = {
   showAppearanceBanner: true
 };
 
-const profileSettingsReducer = (
+const appearanceSettingsReducer = (
   state: AppearanceSettingsState = appearanceSettingsReducerInitialState,
   action: Action
 ): AppearanceSettingsState => {
@@ -63,5 +63,5 @@ const persistConfig: PersistConfig = {
 
 export const appearanceSettingsReducerPersistor = persistReducer(
   persistConfig,
-  profileSettingsReducer
+  appearanceSettingsReducer
 );
