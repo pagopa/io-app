@@ -25,7 +25,7 @@ export const itwRemoteMachine = setup({
       on: {
         start: {
           actions: assign(({ event }) => ({
-            remoteRequestPayload: event.remoteRequestPayload
+            payload: event.payload
           })),
           target: "RemoteRequestValidation"
         }

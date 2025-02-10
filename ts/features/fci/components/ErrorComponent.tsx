@@ -3,7 +3,6 @@ import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import {
   ButtonOutline,
   ButtonSolid,
-  ButtonSolidProps,
   IOPictograms,
   IOSpacingScale,
   IOStyles,
@@ -76,7 +75,7 @@ const ErrorComponent = (props: Props) => {
     }
   };
 
-  const retryButtonProps: ButtonSolidProps = {
+  const retryButtonProps: ButtonOutline = {
     testID: "FciRetryButtonTestID",
     onPress: props.onPress,
     fullWidth: true,
@@ -84,7 +83,7 @@ const ErrorComponent = (props: Props) => {
     accessibilityLabel: I18n.t("features.fci.errors.buttons.retry")
   };
 
-  const closeButtonProps: ButtonSolidProps = {
+  const closeButtonProps: ButtonOutline = {
     testID: "FciCloseButtonTestID",
     onPress: props.onPress,
     fullWidth: true,
@@ -92,7 +91,7 @@ const ErrorComponent = (props: Props) => {
     accessibilityLabel: I18n.t("features.fci.errors.buttons.close")
   };
 
-  const assistanceButtonProps: ButtonSolidProps = {
+  const assistanceButtonProps: ButtonOutline = {
     testID: "FciAssistanceButtonTestID",
     fullWidth: true,
     onPress: handleAskAssistance,

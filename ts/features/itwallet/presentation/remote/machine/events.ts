@@ -2,7 +2,7 @@ import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
 
 export type Start = {
   type: "start";
-  remoteRequestPayload: ItwRemoteRequestPayload;
+  payload: ItwRemoteRequestPayload;
 };
 
 export type Back = {

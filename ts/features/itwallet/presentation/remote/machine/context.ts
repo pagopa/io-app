@@ -5,7 +5,7 @@ export type Context = {
   /**
    * The remote request payload for the remote presentation
    */
-  remoteRequestPayload: ItwRemoteRequestPayload | undefined;
+  payload: ItwRemoteRequestPayload | undefined;
   /**
    * The failure of the remote presentation machine
    */
@@ -13,6 +13,6 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
-  remoteRequestPayload: undefined,
+  payload: undefined,
   failure: undefined
 };

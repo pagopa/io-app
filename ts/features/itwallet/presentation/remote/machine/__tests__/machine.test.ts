@@ -29,7 +29,7 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      remoteRequestPayload: {
+      payload: {
         clientId: T_CLIENT_ID,
         requestUri: T_REQUEST_URI,
         state: T_STATE
@@ -37,7 +37,7 @@ describe("itwRemoteMachine", () => {
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("RemoteRequestValidation");
-    expect(actor.getSnapshot().context.remoteRequestPayload).toStrictEqual({
+    expect(actor.getSnapshot().context.payload).toStrictEqual({
       clientId: T_CLIENT_ID,
       requestUri: T_REQUEST_URI,
       state: T_STATE

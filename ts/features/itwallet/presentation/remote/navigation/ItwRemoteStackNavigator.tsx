@@ -4,7 +4,8 @@ import {
   ItwRemoteMachineContext,
   ItwRemoteMachineProvider
 } from "../machine/provider.tsx";
-import { ItwEidClaimsSelectionScreen } from "../screens/ItwEidClaimsSelectionScreen.tsx";
+
+import { ItwRemoteClaimsDisclosureScreen } from "../screens/ItwRemoteClaimsDisclosureScreen.tsx";
 import { ITW_REMOTE_ROUTES } from "./routes.ts";
 import { ItwRemoteParamsList } from "./ItwRemoteParamsList.ts";
 
@@ -23,7 +24,7 @@ const InnerNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={ITW_REMOTE_ROUTES.EID_CLAIMS_SELECTION}
+      initialRouteName={ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE}
       screenOptions={{ gestureEnabled: isGestureEnabled }}
       screenListeners={{
         beforeRemove: () => {
@@ -32,8 +33,8 @@ const InnerNavigator = () => {
       }}
     >
       <Stack.Screen
-        name={ITW_REMOTE_ROUTES.EID_CLAIMS_SELECTION}
-        component={ItwEidClaimsSelectionScreen}
+        name={ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE}
+        component={ItwRemoteClaimsDisclosureScreen}
         options={hiddenHeader}
       />
     </Stack.Navigator>
