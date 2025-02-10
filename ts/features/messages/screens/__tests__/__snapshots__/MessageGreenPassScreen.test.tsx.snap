@@ -588,15 +588,14 @@ exports[`MessageGreenPassScreen Should match snapshost 1`] = `
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,

@@ -1183,15 +1183,14 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -6845,15 +6844,14 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
