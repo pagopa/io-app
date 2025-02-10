@@ -220,10 +220,10 @@ tablet:
   message: The IO interface is optimized for smartphones, but all the functions compatible with your device are still available.
 appFeedback:
   alert:
-    title: "Ti piace “App IO”?"
-    description: "Dicci cosa ne pensi"
-    continue: "Sì"
-    discard: "No"
+    title: "Ti piace “IO”??"
+    description: "Utilizziamo la tua risposta per migliorare i nostri servizi"
+    continue: "Sì, mi piace"
+    discard: "Non mi piace"
 rooted:
   title: Looks like the security of your device has been compromised!
   body: If you press 'Continue', you agree to continue browsing at your own risk, otherwise close the app.
