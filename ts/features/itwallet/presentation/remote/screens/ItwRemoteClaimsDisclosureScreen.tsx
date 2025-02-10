@@ -9,7 +9,6 @@ import {
   H2,
   IOStyles,
   ListItemHeader,
-  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import { View, StyleSheet } from "react-native";
@@ -175,20 +174,21 @@ const ContentView = () => {
           <ItwDataExchangeIcons
             requesterLogoUri={require("../../../../../../img/features/itWallet/issuer/IPZS.png")} // TODO: get the Relying Party logo
           />
-          <H2>
-            {I18n.t("features.itWallet.presentation.selectiveDisclosure.title")}
-          </H2>
-        </VStack>
-        <VSpacer size={16} />
-        <IOMarkdown
-          content={I18n.t(
-            "features.itWallet.presentation.selectiveDisclosure.subtitle",
-            { relyingParty: RP_MOCK_NAME }
-          )}
-        />
-        <VSpacer size={24} />
 
-        <VStack space={24}>
+          <VStack space={8}>
+            <H2>
+              {I18n.t(
+                "features.itWallet.presentation.selectiveDisclosure.title"
+              )}
+            </H2>
+            <IOMarkdown
+              content={I18n.t(
+                "features.itWallet.presentation.selectiveDisclosure.subtitle",
+                { relyingParty: RP_MOCK_NAME }
+              )}
+            />
+          </VStack>
+
           <View>
             <ListItemHeader
               label={I18n.t(
@@ -204,24 +204,29 @@ const ContentView = () => {
 
           {renderOptionalClaims()}
 
-          <FeatureInfo
-            iconName="fornitori"
-            body={I18n.t(
-              "features.itWallet.presentation.selectiveDisclosure.disclaimer.0"
-            )}
-          />
-          <FeatureInfo
-            iconName="trashcan"
-            body={I18n.t(
-              "features.itWallet.presentation.selectiveDisclosure.disclaimer.1"
-            )}
-          />
-          <IOMarkdown
-            content={I18n.t(
-              "features.itWallet.presentation.selectiveDisclosure.tos",
-              { privacyUrl: RP_MOCK_PRIVACY_URL }
-            )}
-          />
+          <Animated.View
+            style={styles.animatedContainer}
+            layout={LinearTransition.duration(200)}
+          >
+            <FeatureInfo
+              iconName="fornitori"
+              body={I18n.t(
+                "features.itWallet.presentation.selectiveDisclosure.disclaimer.0"
+              )}
+            />
+            <FeatureInfo
+              iconName="trashcan"
+              body={I18n.t(
+                "features.itWallet.presentation.selectiveDisclosure.disclaimer.1"
+              )}
+            />
+            <IOMarkdown
+              content={I18n.t(
+                "features.itWallet.presentation.selectiveDisclosure.tos",
+                { privacyUrl: RP_MOCK_PRIVACY_URL }
+              )}
+            />
+          </Animated.View>
         </VStack>
       </ContentWrapper>
       <FooterActions
@@ -247,6 +252,9 @@ const ItwMemoizedRequiredClaimsList = memo(ItwRequiredClaimsList);
 const styles = StyleSheet.create({
   claimsSelection: {
     marginLeft: "auto"
+  },
+  animatedContainer: {
+    gap: 24
   }
 });
 
