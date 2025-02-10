@@ -9,6 +9,8 @@ import {
   TopicKeys
 } from "../actions";
 
+// String formats for the dates represents the log to be persisted to check the last feedback request time
+// both fields are updated directly from reducer on action dispatch and not from the action payload.
 export type AppFeedbackState = {
   positiveFeedbackDate: string;
   negativeFeedbackDate:
