@@ -1,14 +1,21 @@
+import { useIsFocused } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
 import { AppState, Linking } from "react-native";
 import { Camera, CameraPermissionStatus } from "react-native-vision-camera";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { isAndroid } from "../../../utils/platform";
 
 /**
  * Hook to handle camera permission status with platform specific behavior
  */
 export const useCameraPermissionStatus = () => {
+  const navigation = useIONavigation();
   const [cameraPermissionStatus, setCameraPermissionStatus] =
     useState<CameraPermissionStatus>();
+
+  const isFocused = useIsFocused();
+  const [isNavigationTransitionEnded, setIsNavigationTransitionEnded] =
+    useState(false);
 
   /**
    * Opens the system prompt to ask camera permission
@@ -35,12 +42,13 @@ export const useCameraPermissionStatus = () => {
   useEffect(() => {
     const permission = Camera.getCameraPermissionStatus();
     if (isAndroid && permission === "denied") {
-      // Waits 500ms to ensure navigation is completed
-      setTimeout(requestCameraPermission, 500);
+      if (isFocused && isNavigationTransitionEnded) {
+        void requestCameraPermission();
+      }
     } else {
       setCameraPermissionStatus(permission);
     }
-  }, [requestCameraPermission]);
+  }, [requestCameraPermission, isFocused, isNavigationTransitionEnded]);
 
   /**
    * Setup listener for app state changes to detect if camera permissions were granted
@@ -59,6 +67,18 @@ export const useCameraPermissionStatus = () => {
     }
     return () => null;
   }, [cameraPermissionStatus]);
+
+  /**
+   * Listener for navigation transition end to detect if the user has navigated
+   * to the barcode screen and we can request the camera permission.
+   */
+  useEffect(
+    () =>
+      navigation.addListener("transitionEnd", () => {
+        setIsNavigationTransitionEnded(true);
+      }),
+    [navigation]
+  );
 
   return {
     cameraPermissionStatus,
