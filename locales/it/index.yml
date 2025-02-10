@@ -220,8 +220,8 @@ tablet:
   message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
 appFeedback:
   alert:
-    title: "Ti piace “IO”??"
-    description: "Utilizziamo la tua risposta per migliorare i nostri servizi"
+    title: "Ti piace l'app IO?"
+    description: "Useremo la tua risposta per migliorare"
     continue: "Sì, mi piace"
     discard: "Non mi piace"
 rooted:
