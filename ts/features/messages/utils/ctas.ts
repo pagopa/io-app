@@ -28,6 +28,7 @@ import {
 } from "../../../utils/internalLink";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { FIMS_ROUTES } from "../../fims/common/navigation";
+import { isTestEnv } from "../../../utils/environment";
 
 export type CTAActionType =
   | "io_handled_link"
@@ -91,33 +92,6 @@ export const getRemoteLocale = (): Extract<Locales, MessageCTALocales> =>
     E.getOrElseW(() => localeFallback.locale)
   );
 
-const extractCTAs = (
-  text: string,
-  serviceMetadata?: ServiceMetadata,
-  serviceId?: ServiceId
-): O.Option<CTAS> =>
-  pipe(
-    text,
-    FM.test,
-    O.fromPredicate(identity),
-    O.chain(() =>
-      pipe(
-        E.tryCatch(() => FM<MessageCTA>(text).attributes, E.toError),
-        E.mapLeft(() => trackMessageCTAFrontMatterDecodingError(serviceId)),
-        O.fromEither
-      )
-    ),
-    O.chain(attributes =>
-      pipe(
-        attributes[getRemoteLocale()],
-        CTAS.decode,
-        O.fromEither,
-        // check if the decoded actions are valid
-        O.filter(ctas => hasCtaValidActions(ctas, serviceMetadata))
-      )
-    )
-  );
-
 /**
  * Extract the CTAs if they are nested inside the message markdown content.
  * The returned CTAs are already localized.
@@ -129,7 +103,7 @@ export const getMessageCTA = (
   markdown: MessageBodyMarkdown | string,
   serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
-): O.Option<CTAS> => extractCTAs(markdown, serviceMetadata, serviceId);
+): CTAS | undefined => getCTAIfValid(markdown, serviceMetadata, serviceId);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
@@ -138,12 +112,94 @@ export const getMessageCTA = (
  */
 export const getServiceCTA = (
   serviceMetadata?: ServiceMetadata
-): O.Option<CTAS> =>
+): CTAS | undefined => getCTAIfValid(serviceMetadata?.cta, serviceMetadata);
+
+/**
+ * remove the cta front-matter if it is nested inside the markdown
+ * @param markdown
+ */
+export const cleanMarkdownFromCTAs = (
+  markdown: MessageBodyMarkdown | string
+): string =>
   pipe(
-    serviceMetadata?.cta,
-    O.fromNullable,
-    O.chain(cta => extractCTAs(cta, serviceMetadata))
+    markdown,
+    FM.test,
+    O.fromPredicate(identity),
+    O.map(() => FM(markdown).body),
+    O.getOrElse(() => markdown as string)
   );
+
+const getCTAIfValid = (
+  text: string | undefined,
+  serviceMetadata?: ServiceMetadata,
+  serviceId?: ServiceId
+): CTAS | undefined => {
+  const unsafeMessageCTA = unsafeMessageCTAFromInput(text);
+  if (unsafeMessageCTA == null) {
+    trackMessageCTAFrontMatterDecodingError(serviceId);
+    return undefined;
+  }
+
+  const safeCTAS = ctaFromMessageCTA(unsafeMessageCTA);
+  if (safeCTAS == null) {
+    trackMessageCTAFrontMatterDecodingError(serviceId);
+    return undefined;
+  }
+
+  if (hasCtaValidActions(safeCTAS, serviceMetadata)) {
+    return safeCTAS;
+  }
+
+  return undefined;
+};
+
+export const unsafeMessageCTAFromInput = (
+  input: string | undefined
+): MessageCTA | undefined => {
+  if (input == null) {
+    return undefined;
+  }
+  const isValidFrontMatter = FM.test(input);
+  if (!isValidFrontMatter) {
+    return undefined;
+  }
+  try {
+    const frontMatter = FM<MessageCTA>(input);
+    return frontMatter.attributes;
+  } catch {
+    return undefined;
+  }
+};
+
+export const ctaFromMessageCTA = (
+  messageCTA: MessageCTA | undefined
+): CTAS | undefined => {
+  if (messageCTA == null) {
+    return undefined;
+  }
+  const unsafeCTAs = messageCTA[getRemoteLocale()];
+  const decodedCTAS = CTAS.decode(unsafeCTAs);
+  if (E.isRight(decodedCTAS)) {
+    return decodedCTAS.right;
+  }
+  return undefined;
+};
+
+/**
+ * return true if at least one of the CTAs is valid
+ * @param ctas
+ * @param serviceMetadata
+ */
+const hasCtaValidActions = (
+  ctas: CTAS,
+  serviceMetadata?: ServiceMetadata
+): boolean => {
+  const isCTA1Valid = isCtaActionValid(ctas.cta_1, serviceMetadata);
+  if (isCTA1Valid) {
+    return true;
+  }
+  return ctas.cta_2 != null && isCtaActionValid(ctas.cta_2, serviceMetadata);
+};
 
 /**
  * return a boolean indicating if the cta action is valid or not
@@ -179,34 +235,12 @@ const isCtaActionValid = (
   return E.isRight(maybeCustomHandledAction);
 };
 
-/**
- * return true if at least one of the CTAs is valid
- * @param ctas
- * @param serviceMetadata
- */
-const hasCtaValidActions = (
-  ctas: CTAS,
-  serviceMetadata?: ServiceMetadata
-): boolean => {
-  const isCTA1Valid = isCtaActionValid(ctas.cta_1, serviceMetadata);
-  if (ctas.cta_2 === undefined) {
-    return isCTA1Valid;
-  }
-  const isCTA2Valid = isCtaActionValid(ctas.cta_2, serviceMetadata);
-  return isCTA1Valid || isCTA2Valid;
-};
-
-/**
- * remove the cta front-matter if it is nested inside the markdown
- * @param markdown
- */
-export const cleanMarkdownFromCTAs = (
-  markdown: MessageBodyMarkdown | string
-): string =>
-  pipe(
-    markdown,
-    FM.test,
-    O.fromPredicate(identity),
-    O.map(() => FM(markdown).body),
-    O.getOrElse(() => markdown as string)
-  );
+export const testable = isTestEnv
+  ? {
+      getCTAIfValid,
+      hasCtaValidActions,
+      hasMetadataTokenName,
+      internalRoutePredicates,
+      isCtaActionValid
+    }
+  : undefined;
