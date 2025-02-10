@@ -22,5 +22,5 @@ export const buildItwRemoteRequestDeepLink = (barcode: ItwRemoteBarcode) =>
     payload => JSON.stringify(payload),
     encodeURIComponent,
     encodedPayload =>
-      `${barcode.baseAuthUrl}/eid-claims-selection?itwRemoteRequestPayload=${encodedPayload}`
+      `${barcode.baseAuthUrl}/claims-disclosure?itwRemoteRequestPayload=${encodedPayload}`
   );
