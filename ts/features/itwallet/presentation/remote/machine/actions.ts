@@ -6,9 +6,9 @@ import { ITW_ROUTES } from "../../../navigation/routes.ts";
 export const createRemoteActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>
 ) => ({
-  navigateToItwWalletInactiveScreen: () => {
+  navigateToFailureScreen: () => {
     navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
-      screen: ITW_REMOTE_ROUTES.WALLET_INACTIVE
+      screen: ITW_REMOTE_ROUTES.FAILURE
     });
   },
 

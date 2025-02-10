@@ -9,23 +9,23 @@ const T_STATE = "state";
 type MachineSnapshot = StateFrom<ItwRemoteMachine>;
 
 describe("itwRemoteMachine", () => {
-  const navigateToItwWalletInactiveScreen = jest.fn();
   const navigateToTosScreen = jest.fn();
   const navigateToWallet = jest.fn();
+  const navigateToFailureScreen = jest.fn();
   const closeIssuance = jest.fn();
 
-  const isItwWalletInactive = jest.fn();
+  const isWalletActive = jest.fn();
 
   const mockedMachine = itwRemoteMachine.provide({
     actions: {
-      navigateToItwWalletInactiveScreen,
       navigateToTosScreen,
       navigateToWallet,
+      navigateToFailureScreen,
       closeIssuance
     },
     actors: {},
     guards: {
-      isItwWalletInactive
+      isWalletActive
     }
   });
 
@@ -41,7 +41,7 @@ describe("itwRemoteMachine", () => {
   });
 
   it("should transition from Idle to WalletInactive when wallet is inactive", () => {
-    isItwWalletInactive.mockReturnValue(true);
+    isWalletActive.mockReturnValue(false);
 
     const actor = createActor(mockedMachine);
     actor.start();
@@ -55,8 +55,8 @@ describe("itwRemoteMachine", () => {
       }
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("WalletInactive");
-    expect(navigateToItwWalletInactiveScreen).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
   });
 
   it("Should navigate to wallet when user not accept to active ITWallet", async () => {
@@ -64,7 +64,7 @@ describe("itwRemoteMachine", () => {
       createActor(itwRemoteMachine).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: "WalletInactive",
+      value: "Failure",
       context: {
         payload: {
           clientId: T_CLIENT_ID,
@@ -88,7 +88,7 @@ describe("itwRemoteMachine", () => {
       createActor(itwRemoteMachine).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: "WalletInactive",
+      value: "Failure",
       context: {
         payload: {
           clientId: T_CLIENT_ID,
@@ -111,7 +111,7 @@ describe("itwRemoteMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    isItwWalletInactive.mockReturnValue(false);
+    isWalletActive.mockReturnValue(true);
 
     actor.send({
       type: "start",

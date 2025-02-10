@@ -1,7 +1,7 @@
-import { assign, setup } from "xstate";
+import { assign, not, setup } from "xstate";
 import { ItwTags } from "../../../machine/tags";
 import { InitialContext, Context } from "./context";
-import { mapEventToFailure } from "./failure";
+import { mapEventToFailure, RemoteFailureType } from "./failure";
 import { RemoteEvents } from "./events";
 
 const notImplemented = () => {
@@ -15,14 +15,14 @@ export const itwRemoteMachine = setup({
   },
   actions: {
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    navigateToItwWalletInactiveScreen: notImplemented,
+    navigateToFailureScreen: notImplemented,
     navigateToTosScreen: notImplemented,
     navigateToWallet: notImplemented,
     closeIssuance: notImplemented
   },
   actors: {},
   guards: {
-    isItwWalletInactive: notImplemented
+    isWalletActive: notImplemented
   }
 }).createMachine({
   id: "itwRemoteMachine",
@@ -46,25 +46,19 @@ export const itwRemoteMachine = setup({
       tags: [ItwTags.Loading],
       always: [
         {
-          guard: "isItwWalletInactive",
-          target: "WalletInactive"
+          guard: not("isWalletActive"),
+          actions: assign({
+            failure: {
+              type: RemoteFailureType.WALLET_INACTIVE,
+              reason: "IT Wallet is inactive"
+            }
+          }),
+          target: "Failure"
         },
         {
           target: "PayloadValidated"
         }
       ]
-    },
-    WalletInactive: {
-      entry: "navigateToItwWalletInactiveScreen",
-      description: "The wallet is inactive, showing the inactive screen",
-      on: {
-        "accept-tos": {
-          actions: "navigateToTosScreen"
-        },
-        "go-to-wallet": {
-          actions: "navigateToWallet"
-        }
-      }
     },
     PayloadValidated: {
       description: "The remote request payload has been validated",
@@ -75,7 +69,19 @@ export const itwRemoteMachine = setup({
       }
     },
     Failure: {
-      description: "This state is reached when an error occurs"
+      entry: "navigateToFailureScreen",
+      description: "This state is reached when an error occurs",
+      on: {
+        "accept-tos": {
+          actions: "navigateToTosScreen"
+        },
+        "go-to-wallet": {
+          actions: "navigateToWallet"
+        },
+        close: {
+          actions: "closeIssuance"
+        }
+      }
     }
   }
 });

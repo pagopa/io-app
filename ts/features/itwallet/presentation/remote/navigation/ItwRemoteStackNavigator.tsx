@@ -5,7 +5,7 @@ import {
   ItwRemoteMachineProvider
 } from "../machine/provider.tsx";
 import { ItwRemoteClaimsDisclosureScreen } from "../screens/ItwRemoteClaimsDisclosureScreen.tsx";
-import { ItwRemoteWalletInactiveScreen } from "../screens/ItwRemoteWalletInactiveScreen.tsx";
+import { ItwRemoteFailureScreen } from "../screens/ItwRemoteFailureScreen.tsx";
 import { ITW_REMOTE_ROUTES } from "./routes.ts";
 import { ItwRemoteParamsList } from "./ItwRemoteParamsList.ts";
 
@@ -38,8 +38,8 @@ const InnerNavigator = () => {
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_REMOTE_ROUTES.WALLET_INACTIVE}
-        component={ItwRemoteWalletInactiveScreen}
+        name={ITW_REMOTE_ROUTES.FAILURE}
+        component={ItwRemoteFailureScreen}
         options={hiddenHeader}
       />
     </Stack.Navigator>

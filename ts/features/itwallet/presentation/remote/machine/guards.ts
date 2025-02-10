@@ -5,7 +5,7 @@ import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors"
 export const createRemoteGuardsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => ({
-  isItwWalletInactive: () =>
-    !itwLifecycleIsValidSelector(store.getState()) &&
+  isWalletActive: () =>
+    itwLifecycleIsValidSelector(store.getState()) &&
     isItwEnabledSelector(store.getState())
 });
