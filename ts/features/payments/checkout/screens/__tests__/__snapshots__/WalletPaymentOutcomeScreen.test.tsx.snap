@@ -491,15 +491,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -2421,15 +2420,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -4332,15 +4330,14 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -6228,15 +6225,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -8138,15 +8134,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -10004,15 +9999,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -11962,15 +11956,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -13978,15 +13971,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -15824,15 +15816,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -17754,15 +17745,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -19664,15 +19654,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -21594,15 +21583,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -23460,15 +23448,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -25510,15 +25497,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -27440,15 +27426,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -29378,15 +29363,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -31288,15 +31272,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -33156,15 +33139,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -35186,15 +35168,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -37102,15 +37083,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -39286,15 +39266,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -41155,15 +41134,14 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -43205,15 +43183,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -45221,15 +45198,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -47159,15 +47135,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -49069,15 +49044,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -50999,15 +50973,14 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
