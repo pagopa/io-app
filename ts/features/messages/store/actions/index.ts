@@ -40,6 +40,7 @@ export type SuccessGetMessageDataActionType = {
   containsAttachments: boolean;
   containsPayment?: boolean;
   firstTimeOpening: boolean;
+  hasFIMSCTA: boolean;
   hasRemoteContent: boolean;
   isLegacyGreenPass?: boolean;
   isPNMessage: boolean;
