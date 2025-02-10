@@ -125,7 +125,6 @@ describe("WalletPaymentFailureDetail", () => {
     "PAYMENT_DATA_ERROR",
     "DOMAIN_UNKNOWN",
     "PAYMENT_ONGOING",
-    "PAYMENT_CANCELED",
     "PAYMENT_VERIFY_GENERIC_ERROR",
     "GENERIC_ERROR"
   ] as ReadonlyArray<WalletPaymentFailure["faultCodeCategory"]>)(
@@ -135,6 +134,15 @@ describe("WalletPaymentFailureDetail", () => {
       expect(getByTestId("wallet-payment-failure-support-button")).toBeTruthy();
     }
   );
+
+  it("renders the contact support button when faultCodeCategory is PAYMENT_CANCELED ", () => {
+    const { getByTestId } = renderComponent(
+      "PAYMENT_CANCELED" as WalletPaymentFailure["faultCodeCategory"]
+    );
+    expect(
+      getByTestId("wallet-payment-failure-discover-more-button")
+    ).toBeTruthy();
+  });
 
   it("calls navigation.pop on press close button when present", () => {
     const { getByTestId } = renderComponent(
