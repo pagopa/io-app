@@ -1,7 +1,7 @@
 import { StateFrom } from "xstate";
+import * as O from "fp-ts/Option";
 import { ItwTags } from "../../../machine/tags.ts";
 import { ItwRemoteMachine } from "./machine.ts";
-import * as O from "fp-ts/Option";
 
 type MachineSnapshot = StateFrom<ItwRemoteMachine>;
 
