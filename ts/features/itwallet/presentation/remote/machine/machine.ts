@@ -61,7 +61,8 @@ export const itwRemoteMachine = setup({
       ]
     },
     ClaimsDisclosure: {
-      description: "Display the list of claims to disclose for the verifiable presentation",
+      description:
+        "Display the list of claims to disclose for the verifiable presentation",
       on: {
         close: {
           actions: "closeIssuance"
