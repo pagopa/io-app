@@ -31,7 +31,7 @@ import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { maybeNotNullyString } from "../../../../utils/strings";
-import { getRemoteLocale } from "../../../messages/utils/messages";
+import { getRemoteLocale } from "../../../messages/utils/ctas";
 import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
