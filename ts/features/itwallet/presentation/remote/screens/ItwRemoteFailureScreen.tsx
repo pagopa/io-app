@@ -61,7 +61,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 "features.itWallet.presentation.remote.walletInactiveScreen.continue"
               ),
-              onPress: () => machineRef.send({ type: "go-to-wallet-activation" })
+              onPress: () =>
+                machineRef.send({ type: "go-to-wallet-activation" })
             },
             secondaryAction: {
               label: I18n.t(
