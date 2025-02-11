@@ -33,7 +33,17 @@ export const itwRemoteMachine = setup({
     },
     RemoteRequestValidation: {
       description: "Validating the remote request payload before proceeding",
-      tags: [ItwTags.Loading]
+      tags: [ItwTags.Loading],
+      // WARNING: for mocking purposes only
+      after: {
+        1000: {
+          target: "ClaimsDisclosure"
+        }
+      }
+    },
+    ClaimsDisclosure: {
+      description:
+        "Display the list of claims to disclose for the verifiable presentation"
     },
     Failure: {
       description: "This state is reached when an error occurs"
