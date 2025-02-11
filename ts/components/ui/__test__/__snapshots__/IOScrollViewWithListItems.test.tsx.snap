@@ -825,15 +825,14 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -1461,15 +1460,14 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -2410,15 +2408,14 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,

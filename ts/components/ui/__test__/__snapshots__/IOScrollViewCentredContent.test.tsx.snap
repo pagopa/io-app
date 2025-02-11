@@ -854,15 +854,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -1784,15 +1783,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -2943,15 +2941,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -3881,15 +3878,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -4700,15 +4696,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -5748,15 +5743,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -6774,15 +6768,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -7681,15 +7674,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -8817,15 +8809,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -9732,15 +9723,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -10528,15 +10518,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -11553,15 +11542,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,

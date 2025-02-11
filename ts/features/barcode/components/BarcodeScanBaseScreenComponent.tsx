@@ -1,6 +1,7 @@
 import {
   IOColors,
   IconButton,
+  LoadingSpinner,
   TabItem,
   TabNavigation
 } from "@pagopa/io-app-design-system";
@@ -57,6 +58,7 @@ import {
   trackBarcodeScanTorch,
   trackZendeskSupport
 } from "../analytics";
+import { useCameraPermissionStatus } from "../hooks/useCameraPermissionStatus";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
 import {
   IOBarcode,
@@ -209,21 +211,20 @@ const BarcodeScanBaseScreenComponent = ({
   };
 
   const {
-    cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
-    openCameraSettings,
-    hasTorch,
-    isTorchOn,
-    toggleTorch
-  } = useIOBarcodeCameraScanner({
-    onBarcodeSuccess,
-    onBarcodeError,
-    barcodeFormats,
-    barcodeTypes,
-    isDisabled: isAppInBackground || !isFocused || isDisabled,
-    isLoading
-  });
+    openCameraSettings
+  } = useCameraPermissionStatus();
+
+  const { cameraComponent, hasTorch, isTorchOn, toggleTorch } =
+    useIOBarcodeCameraScanner({
+      onBarcodeSuccess,
+      onBarcodeError,
+      barcodeFormats,
+      barcodeTypes,
+      isDisabled: isAppInBackground || !isFocused || isDisabled,
+      isLoading
+    });
 
   const customGoBack = (
     <IconButton
@@ -233,11 +234,6 @@ const BarcodeScanBaseScreenComponent = ({
       color="contrast"
     />
   );
-
-  const openAppSetting = useCallback(async () => {
-    // Open the custom settings if the app has one
-    await openCameraSettings();
-  }, [openCameraSettings]);
 
   const cameraView = useMemo(() => {
     if (cameraPermissionStatus === "granted") {
@@ -266,26 +262,30 @@ const BarcodeScanBaseScreenComponent = ({
       );
     }
 
-    trackBarcodeCameraAuthorizationDenied();
+    if (cameraPermissionStatus === "denied") {
+      trackBarcodeCameraAuthorizationDenied();
 
-    return (
-      <CameraPermissionView
-        pictogram="cameraDenied"
-        title={I18n.t("barcodeScan.permissions.denied.title")}
-        body={I18n.t("barcodeScan.permissions.denied.label")}
-        action={{
-          label: I18n.t("barcodeScan.permissions.denied.action"),
-          accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
-          onPress: async () => {
-            trackBarcodeCameraAuthorizedFromSettings();
-            await openAppSetting();
-          }
-        }}
-      />
-    );
+      return (
+        <CameraPermissionView
+          pictogram="cameraDenied"
+          title={I18n.t("barcodeScan.permissions.denied.title")}
+          body={I18n.t("barcodeScan.permissions.denied.label")}
+          action={{
+            label: I18n.t("barcodeScan.permissions.denied.action"),
+            accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
+            onPress: () => {
+              trackBarcodeCameraAuthorizedFromSettings();
+              openCameraSettings();
+            }
+          }}
+        />
+      );
+    }
+
+    return <LoadingSpinner size={76} color="white" />;
   }, [
     cameraPermissionStatus,
-    openAppSetting,
+    openCameraSettings,
     cameraComponent,
     requestCameraPermission
   ]);
