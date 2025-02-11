@@ -9,7 +9,7 @@ export const createRemoteGuardsImplementation = (
     itwLifecycleIsValidSelector(store.getState()) &&
     isItwEnabledSelector(store.getState()),
 
-  areRequiredCredentialsAvailable: () => {
+  areRequiredCredentialsAvailable: () =>
     // TODO: implementation depends on the remote presentation request
-  }
+    true
 });
