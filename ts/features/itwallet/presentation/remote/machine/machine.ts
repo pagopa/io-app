@@ -16,7 +16,7 @@ export const itwRemoteMachine = setup({
   actions: {
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     navigateToFailureScreen: notImplemented,
-    navigateToTosScreen: notImplemented,
+    navigateToDiscoveryScreen: notImplemented,
     navigateToWallet: notImplemented,
     closeIssuance: notImplemented
   },
@@ -72,8 +72,8 @@ export const itwRemoteMachine = setup({
       entry: "navigateToFailureScreen",
       description: "This state is reached when an error occurs",
       on: {
-        "accept-tos": {
-          actions: "navigateToTosScreen"
+        "go-to-wallet-activation": {
+          actions: "navigateToDiscoveryScreen"
         },
         "go-to-wallet": {
           actions: "navigateToWallet"

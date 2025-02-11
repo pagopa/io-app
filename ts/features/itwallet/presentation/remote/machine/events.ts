@@ -9,8 +9,8 @@ export type Start = {
   payload: ItwRemoteRequestPayload;
 };
 
-export type AcceptTos = {
-  type: "accept-tos";
+export type GoToWalletActivation = {
+  type: "go-to-wallet-activation";
 };
 
 export type GoToWallet = {
@@ -28,7 +28,7 @@ export type Close = {
 export type RemoteEvents =
   | Reset
   | Start
-  | AcceptTos
+  | GoToWalletActivation
   | GoToWallet
   | Back
   | Close;

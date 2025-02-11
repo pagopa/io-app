@@ -12,7 +12,7 @@ export const createRemoteActionsImplementation = (
     });
   },
 
-  navigateToTosScreen: () => {
+  navigateToDiscoveryScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO
     });
