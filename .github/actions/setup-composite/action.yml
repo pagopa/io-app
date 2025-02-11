@@ -11,7 +11,7 @@ runs:
       with:
         node-version-file: ".node-version"
     - id: yarn-cache
-      uses: actions/cache@b7a00a3203cfa62623760990f5171f9b4a2ab1a7 # v4.0.0
+      uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.0.0
       with:
         path: |
           **/node_modules
