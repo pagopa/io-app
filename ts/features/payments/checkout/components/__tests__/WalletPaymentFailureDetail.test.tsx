@@ -12,12 +12,15 @@ import { PaymentsCheckoutRoutes } from "../../navigation/routes";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import { openWebUrl } from "../../../../../utils/url";
 
 jest.mock("../../hooks/usePaymentFailureSupportModal", () => ({
   usePaymentFailureSupportModal: jest.fn()
 }));
 
 jest.mock("../../analytics");
+
+jest.mock("../../../../../utils/url");
 
 const mockNavigation = {
   pop: jest.fn(),
@@ -125,7 +128,6 @@ describe("WalletPaymentFailureDetail", () => {
     "PAYMENT_DATA_ERROR",
     "DOMAIN_UNKNOWN",
     "PAYMENT_ONGOING",
-    "PAYMENT_CANCELED",
     "PAYMENT_VERIFY_GENERIC_ERROR",
     "GENERIC_ERROR"
   ] as ReadonlyArray<WalletPaymentFailure["faultCodeCategory"]>)(
@@ -135,6 +137,18 @@ describe("WalletPaymentFailureDetail", () => {
       expect(getByTestId("wallet-payment-failure-support-button")).toBeTruthy();
     }
   );
+
+  it("renders the contact support button when faultCodeCategory is PAYMENT_CANCELED", () => {
+    const { getByTestId } = renderComponent(
+      "PAYMENT_CANCELED" as WalletPaymentFailure["faultCodeCategory"]
+    );
+    expect(
+      getByTestId("wallet-payment-failure-discover-more-button")
+    ).toBeTruthy();
+
+    fireEvent.press(getByTestId("wallet-payment-failure-discover-more-button"));
+    expect(openWebUrl).toHaveBeenCalled();
+  });
 
   it("calls navigation.pop on press close button when present", () => {
     const { getByTestId } = renderComponent(
