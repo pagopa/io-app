@@ -6,7 +6,7 @@ import { BonusAvailable } from "../../../../../definitions/content/BonusAvailabl
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
-import { getRemoteLocale } from "../../../messages/utils/messages";
+import { getRemoteLocale } from "../../../messages/utils/ctas";
 
 export type AvailableBonusItemState = "incoming" | "active" | "completed";
 
