@@ -19,6 +19,7 @@ import {
 import * as ANALYTICS from "../../analytics";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
+import FM from "front-matter";
 
 const messageBody = `### this is a message
 
@@ -1734,6 +1735,15 @@ describe("safeContainsFronMatter", () => {
     const input = "...\nit:\n cta_1:\n  text: The text\n---";
     const containsFrontMatter = testable!.safeContainsFronMatter(input);
     expect(containsFrontMatter).toBe(false);
+  });
+  it("should return false if the library throws an exception", () => {
+    jest.spyOn(FM, "test").mockImplementation(_input => {
+      throw Error("An error");
+    });
+    const input = "---\nit:\n cta_1:\n  text: The text\n---";
+    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    expect(containsFrontMatter).toBe(false);
+    jest.restoreAllMocks();
   });
   it("should return true for proper front matter", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---";
