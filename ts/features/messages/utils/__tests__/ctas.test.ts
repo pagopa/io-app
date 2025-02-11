@@ -1,4 +1,5 @@
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import FM from "front-matter";
 import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
@@ -19,7 +20,6 @@ import {
 import * as ANALYTICS from "../../analytics";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
-import FM from "front-matter";
 
 const messageBody = `### this is a message
 
