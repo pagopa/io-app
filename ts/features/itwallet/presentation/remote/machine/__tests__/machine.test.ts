@@ -9,7 +9,7 @@ const T_STATE = "state";
 type MachineSnapshot = StateFrom<ItwRemoteMachine>;
 
 describe("itwRemoteMachine", () => {
-  const navigateToTosScreen = jest.fn();
+  const navigateToDiscoveryScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const closeIssuance = jest.fn();
@@ -18,7 +18,7 @@ describe("itwRemoteMachine", () => {
 
   const mockedMachine = itwRemoteMachine.provide({
     actions: {
-      navigateToTosScreen,
+      navigateToDiscoveryScreen,
       navigateToWallet,
       navigateToFailureScreen,
       closeIssuance
@@ -103,8 +103,8 @@ describe("itwRemoteMachine", () => {
     });
     actor.start();
 
-    actor.send({ type: "accept-tos" });
-    expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+    actor.send({ type: "go-to-wallet-activation" });
+    expect(navigateToDiscoveryScreen).toHaveBeenCalledTimes(1);
   });
 
   it("should transition from Idle to PayloadValidated when ITWallet is active", () => {
