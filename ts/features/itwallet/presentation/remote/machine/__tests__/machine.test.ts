@@ -107,7 +107,7 @@ describe("itwRemoteMachine", () => {
     expect(navigateToDiscoveryScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("should transition from Idle to PayloadValidated when ITWallet is active", () => {
+  it("should transition from Idle to ClaimsDisclosure when ITWallet is active", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -122,6 +122,6 @@ describe("itwRemoteMachine", () => {
       }
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("PayloadValidated");
+    expect(actor.getSnapshot().value).toStrictEqual("ClaimsDisclosure");
   });
 });
