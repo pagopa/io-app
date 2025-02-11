@@ -22,7 +22,8 @@ export const itwRemoteMachine = setup({
   },
   actors: {},
   guards: {
-    isWalletActive: notImplemented
+    isWalletActive: notImplemented,
+    areRequiredCredentialsAvailable: notImplemented
   }
 }).createMachine({
   id: "itwRemoteMachine",

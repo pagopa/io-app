@@ -12,6 +12,9 @@ import { RemoteFailure, RemoteFailureType } from "../machine/failure.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import I18n from "../../../../../i18n.ts";
+import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
 export const ItwRemoteFailureScreen = () => {
   const failureOption =
@@ -30,6 +33,7 @@ type ContentViewProps = { failure: RemoteFailure };
 
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwRemoteMachineContext.useActorRef();
+  const navigation = useIONavigation();
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
@@ -59,17 +63,45 @@ const ContentView = ({ failure }: ContentViewProps) => {
             pictogram: "itWallet",
             action: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.walletInactiveScreen.continue"
+                "features.itWallet.presentation.remote.walletInactiveScreen.primaryAction"
               ),
               onPress: () => machineRef.send({ type: "accept-tos" })
             },
             secondaryAction: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.walletInactiveScreen.close"
+                "features.itWallet.presentation.remote.walletInactiveScreen.secondaryAction"
               ),
               onPress: () => machineRef.send({ type: "go-to-wallet" })
             }
           };
+        case RemoteFailureType.MISSING_CREDENTIALS: {
+          const [missingCredential] = failure.reason.missingCredentials; // Only consider one credential for now
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.missingCredentialsScreen.title",
+              { credentialName: getCredentialNameFromType(missingCredential) }
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.missingCredentialsScreen.subtitle"
+            ),
+            pictogram: "emptyWallet",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.missingCredentialsScreen.primaryAction"
+              ),
+              onPress: () =>
+                navigation.navigate(ITW_ROUTES.MAIN, {
+                  screen: ITW_ROUTES.ONBOARDING
+                })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.missingCredentialsScreen.secondaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "go-to-wallet" })
+            }
+          };
+        }
       }
     };
 

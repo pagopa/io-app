@@ -7,5 +7,9 @@ export const createRemoteGuardsImplementation = (
 ) => ({
   isWalletActive: () =>
     itwLifecycleIsValidSelector(store.getState()) &&
-    isItwEnabledSelector(store.getState())
+    isItwEnabledSelector(store.getState()),
+
+  areRequiredCredentialsAvailable: () => {
+    // TODO: implementation depends on the remote presentation request
+  }
 });
