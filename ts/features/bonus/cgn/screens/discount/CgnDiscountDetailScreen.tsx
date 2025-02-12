@@ -257,7 +257,6 @@ const CgnDiscountDetailScreen = () => {
     return (
       <>
         <Animated.ScrollView
-          accessible
           style={{ flexGrow: 1 }}
           onScroll={scrollHandler}
           scrollEventThrottle={8}
