@@ -62,6 +62,9 @@ describe("ItwRemoteRequestValidationScreen", () => {
     const logic = itwRemoteMachine.provide({
       guards: {
         isWalletActive: jest.fn().mockReturnValue(true)
+      },
+      actions: {
+        navigateToClaimsDisclosureScreen: jest.fn()
       }
     });
 
