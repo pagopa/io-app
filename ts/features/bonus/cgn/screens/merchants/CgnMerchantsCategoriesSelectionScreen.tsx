@@ -16,6 +16,7 @@ import I18n from "../../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import CGN_ROUTES from "../../navigation/routes";
+import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CgnMerchantsListScreen from "./CgnMerchantsListScreen";
 import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
 
@@ -88,6 +89,7 @@ const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
 };
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
+  useDisableRootNavigatorGesture();
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
