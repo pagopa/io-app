@@ -33,6 +33,7 @@ const ItwRemoteRequestValidationScreen = (params: ScreenProps) => {
     return (
       <OperationResultScreenContent
         title={"Failure"}
+        testID={"failure"}
         action={{
           label: "Chiudi",
           onPress: () => navigation.goBack()
@@ -58,6 +59,7 @@ const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
 
   return (
     <LoadingScreenContent
+      testID={"loader"}
       contentTitle={I18n.t(
         "features.itWallet.presentation.remote.loadingScreen.title"
       )}
