@@ -1,4 +1,6 @@
 import { createActorContext } from "@xstate/react";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { useIOStore } from "../../../../../store/hooks.ts";
 import { itwRemoteMachine } from "./machine.ts";
 import { createRemoteActorsImplementation } from "./actors.ts";
 import { createRemoteActionsImplementation } from "./actions.ts";
@@ -11,9 +13,12 @@ type Props = {
 export const ItwRemoteMachineContext = createActorContext(itwRemoteMachine);
 
 export const ItwRemoteMachineProvider = (props: Props) => {
+  const navigation = useIONavigation();
+  const store = useIOStore();
+
   const remoteMachine = itwRemoteMachine.provide({
-    guards: createRemoteGuardsImplementation(),
-    actions: createRemoteActionsImplementation(),
+    guards: createRemoteGuardsImplementation(store),
+    actions: createRemoteActionsImplementation(navigation),
     actors: createRemoteActorsImplementation()
   });
 

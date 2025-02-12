@@ -97,6 +97,12 @@ type CredentialUnexpectedFailure = {
   type: string;
 };
 
+type CredentialStatusAttestationFailure = {
+  credential: MixPanelCredential;
+  credential_status: string;
+  reason?: unknown;
+};
+
 type ItwIdMethod = IdentificationContext["mode"];
 
 // PROPERTIES TYPES
@@ -669,12 +675,18 @@ export const trackItwStatusWalletAttestationFailure = () => {
   );
 };
 
-export const trackItwStatusCredentialAttestationFailure = (
-  credential: MixPanelCredential
-) => {
+export const trackItwStatusCredentialAttestationFailure = ({
+  credential,
+  credential_status,
+  reason
+}: CredentialStatusAttestationFailure) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_STATUS_CREDENTIAL_ATTESTATION_FAILURE,
-    buildEventProperties("KO", "error", { credential })
+    buildEventProperties("KO", "error", {
+      credential,
+      credential_status,
+      reason
+    })
   );
 };
 

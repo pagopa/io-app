@@ -86,6 +86,7 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
   "isFingerprintEnabled": undefined,
   "isIOMarkdownEnabledOnMessagesAndServices": false,
   "isIdPayTestEnabled": false,
+  "isItwOfflineAccessEnabled": false,
   "isMixpanelEnabled": null,
   "isPagoPATestEnabled": false,
   "isPnTestEnabled": false,

@@ -61,6 +61,8 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
+import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
+import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -337,6 +339,11 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.MAIN}
         component={ItwStackNavigator}
+        options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+      />
+      <Stack.Screen
+        name={ITW_REMOTE_ROUTES.MAIN}
+        component={ItwRemoteStackNavigator}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
     </Stack.Navigator>

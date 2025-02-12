@@ -26,6 +26,9 @@ import { ServicePublic } from "../../../../../definitions/backend/ServicePublic"
 import { trackMessageDataLoadFailure } from "../../analytics";
 import { MessageGetStatusFailurePhaseType } from "../../store/reducers/messageGetStatus";
 
+const fimsCTAFrontMatter =
+  '---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "iosso://https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "iosso://https://relyingParty.url"\n---';
+
 describe("getPaginatedMessage", () => {
   it("when no paginated message is in store, it should dispatch a loadMessageById.request and retrieve its result from the store if it succeeds", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
@@ -399,6 +402,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: true,
       containsPayment: undefined,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: true,
       isLegacyGreenPass: false,
       isPNMessage: true,
@@ -447,6 +451,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: true,
       containsPayment: false,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: true,
       isLegacyGreenPass: false,
       isPNMessage: false,
@@ -493,6 +498,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: false,
       containsPayment: false,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: true,
       isLegacyGreenPass: false,
       isPNMessage: false,
@@ -536,6 +542,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: false,
       containsPayment: false,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: false,
       isLegacyGreenPass: false,
       isPNMessage: false,
@@ -579,6 +586,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: false,
       containsPayment: true,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: false,
       isLegacyGreenPass: false,
       isPNMessage: false,
@@ -625,6 +633,7 @@ describe("dispatchSuccessAction", () => {
       containsAttachments: false,
       containsPayment: false,
       firstTimeOpening: !isRead,
+      hasFIMSCTA: false,
       hasRemoteContent: false,
       isLegacyGreenPass: !!authCode,
       isPNMessage: false,
@@ -643,6 +652,104 @@ describe("dispatchSuccessAction", () => {
       .next()
       .select(isPnEnabledSelector)
       .next(false)
+      .put(getMessageDataAction.success(expectedOutput))
+      .next()
+      .isDone();
+  });
+  it("should properly report a standard message with the FIMS CTA", () => {
+    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceName = "serName";
+    const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
+    const isRead = true;
+    const paginatedMessage = {
+      id: messageId,
+      serviceId,
+      organizationName,
+      organizationFiscalCode,
+      serviceName,
+      isRead,
+      category: { tag: "GENERIC" }
+    } as UIMessage;
+    const messageDetails = {
+      markdown: fimsCTAFrontMatter
+    } as UIMessageDetails;
+    const expectedOutput = {
+      containsAttachments: false,
+      containsPayment: false,
+      firstTimeOpening: !isRead,
+      hasFIMSCTA: true,
+      hasRemoteContent: false,
+      isLegacyGreenPass: false,
+      isPNMessage: false,
+      messageId,
+      organizationName,
+      organizationFiscalCode,
+      serviceId,
+      serviceName
+    };
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      undefined
+    )
+      .next()
+      .select(isPnEnabledSelector)
+      .next(false)
+      .put(getMessageDataAction.success(expectedOutput))
+      .next()
+      .isDone();
+  });
+  it("should properly report a Third Party message with FIMS CTA", () => {
+    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceName = "serName";
+    const organizationName = "orgName";
+    const organizationFiscalCode = "orgFisCod";
+    const isRead = true;
+    const paginatedMessage = {
+      id: messageId,
+      serviceId,
+      organizationName,
+      organizationFiscalCode,
+      serviceName,
+      isRead,
+      category: { tag: "GENERIC" }
+    } as UIMessage;
+    const messageDetails = {} as UIMessageDetails;
+    const thirdPartyMessage = {
+      third_party_message: {
+        details: {
+          markdown: fimsCTAFrontMatter,
+          subject: "The subject"
+        }
+      } as ThirdPartyMessage
+    } as ThirdPartyMessageWithContent;
+    const expectedOutput = {
+      containsAttachments: false,
+      containsPayment: false,
+      firstTimeOpening: !isRead,
+      hasFIMSCTA: true,
+      hasRemoteContent: true,
+      isLegacyGreenPass: false,
+      isPNMessage: false,
+      messageId,
+      organizationName,
+      organizationFiscalCode,
+      serviceId,
+      serviceName
+    };
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      thirdPartyMessage
+    )
+      .next()
+      .select(isPnEnabledSelector)
+      .next(true)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
       .isDone();
@@ -1074,4 +1181,126 @@ describe("commonFailureHandling", () => {
       })
     )
   );
+});
+
+describe("computeHasFIMSCTA", () => {
+  const fimsCTA2FrontMatter = `---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "https://relyingParty.url"\n cta_2:\n  text: "Visualizza i requisiti"\n  action: "iosso://https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "https://relyingParty.url"\n cta_2:\n  text: "View requirements"\n  action: "iosso://https://relyingParty.url"\n---`;
+  const unrelatedCTAFrontMatter =
+    '---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "https://relyingParty.url"\n cta_1:\n  text: "Visualizza i requisiti"\n  action: "https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "https://relyingParty.url"\n cta_1:\n  text: "View requirements"\n  action: "https://relyingParty.url"\n---';
+  it("should return true for a standard message with FIMS cta (cta1)", () => {
+    const messageDetails = {
+      markdown: `${fimsCTAFrontMatter}\nThis is the message body`
+    } as UIMessageDetails;
+
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(messageDetails, undefined);
+
+    expect(hasFIMSCTA).toBe(true);
+  });
+  it("should return true for a standard message with FIMS cta (cta2)", () => {
+    const messageDetails = {
+      markdown: `${fimsCTA2FrontMatter}\nThis is the message body`
+    } as UIMessageDetails;
+
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(messageDetails, undefined);
+
+    expect(hasFIMSCTA).toBe(true);
+  });
+  it("should return false for a standard message with no cta", () => {
+    const messageDetails = {
+      markdown: `This is the message body`
+    } as UIMessageDetails;
+
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(messageDetails, undefined);
+
+    expect(hasFIMSCTA).toBe(false);
+  });
+  it("should return false for a standard message with CTAs unrelated to FIMS", () => {
+    const messageDetails = {
+      markdown: `${unrelatedCTAFrontMatter}\nThis is the message body`
+    } as UIMessageDetails;
+
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(messageDetails, undefined);
+
+    expect(hasFIMSCTA).toBe(false);
+  });
+  it("should return true for a remote message with FIMS cta (cta1)", () => {
+    const messageDetails = {
+      markdown: `This is the message body`
+    } as UIMessageDetails;
+    const remoteMessage = {
+      third_party_message: {
+        details: {
+          subject: "The subject",
+          markdown: `${fimsCTAFrontMatter}\nThis is the message body`
+        }
+      } as ThirdPartyMessage
+    } as ThirdPartyMessageWithContent;
+
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(
+      messageDetails,
+      remoteMessage
+    );
+
+    expect(hasFIMSCTA).toBe(true);
+  });
+  it("should return true for a remote message with FIMS cta (cta2)", () => {
+    const messageDetails = {
+      markdown: `This is the message body`
+    } as UIMessageDetails;
+    const remoteMessage = {
+      third_party_message: {
+        details: {
+          subject: "The subject",
+          markdown: `${fimsCTA2FrontMatter}\nThis is the message body`
+        }
+      } as ThirdPartyMessage
+    } as ThirdPartyMessageWithContent;
+
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(
+      messageDetails,
+      remoteMessage
+    );
+
+    expect(hasFIMSCTA).toBe(true);
+  });
+  it("should return false for a remote message with no cta", () => {
+    const messageDetails = {
+      markdown: `This is the message body`
+    } as UIMessageDetails;
+    const remoteMessage = {
+      third_party_message: {
+        details: {
+          subject: "The subject",
+          markdown: `This is the message body`
+        }
+      } as ThirdPartyMessage
+    } as ThirdPartyMessageWithContent;
+
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(
+      messageDetails,
+      remoteMessage
+    );
+
+    expect(hasFIMSCTA).toBe(false);
+  });
+  it("should return false for a remote message with CTAs unrelated to FIMS", () => {
+    const messageDetails = {
+      markdown: `This is the message body`
+    } as UIMessageDetails;
+    const remoteMessage = {
+      third_party_message: {
+        details: {
+          subject: "The subject",
+          markdown: `${unrelatedCTAFrontMatter}\nThis is the message body`
+        }
+      } as ThirdPartyMessage
+    } as ThirdPartyMessageWithContent;
+
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(
+      messageDetails,
+      remoteMessage
+    );
+
+    expect(hasFIMSCTA).toBe(false);
+  });
 });
