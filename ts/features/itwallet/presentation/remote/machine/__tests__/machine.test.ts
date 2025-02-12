@@ -12,6 +12,7 @@ describe("itwRemoteMachine", () => {
   const navigateToDiscoveryScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const navigateToFailureScreen = jest.fn();
+  const navigateToClaimsDisclosureScreen = jest.fn();
   const closeIssuance = jest.fn();
 
   const isWalletActive = jest.fn();
@@ -21,6 +22,7 @@ describe("itwRemoteMachine", () => {
       navigateToDiscoveryScreen,
       navigateToWallet,
       navigateToFailureScreen,
+      navigateToClaimsDisclosureScreen,
       closeIssuance
     },
     actors: {},
@@ -122,6 +124,7 @@ describe("itwRemoteMachine", () => {
       }
     });
 
+    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().value).toStrictEqual("ClaimsDisclosure");
   });
 });
