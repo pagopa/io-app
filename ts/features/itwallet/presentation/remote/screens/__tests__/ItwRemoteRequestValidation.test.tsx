@@ -1,15 +1,15 @@
 import { createStore } from "redux";
-import {ITW_REMOTE_ROUTES} from "../../navigation/routes.ts";
-import {renderScreenWithNavigationStoreContext} from "../../../../../../utils/testWrapper.tsx";
-import {GlobalState} from "../../../../../../store/reducers/types.ts";
-import {ItwRemoteRequestValidationScreen} from "../ItwRemoteRequestValidationScreen.tsx";
-import {appReducer} from "../../../../../../store/reducers";
-import {applicationChangeState} from "../../../../../../store/actions/application.ts";
-import {ItwRemoteRequestPayload} from "../../Utils/itwRemoteTypeUtils.ts";
-import {ItwRemoteMachineContext } from "../../machine/provider.tsx";
-import {IOStackNavigationProp} from "../../../../../../navigation/params/AppParamsList.ts";
-import {ItwRemoteParamsList} from "../../navigation/ItwRemoteParamsList.ts";
-import {itwRemoteMachine} from "../../machine/machine.ts";
+import { ITW_REMOTE_ROUTES } from "../../navigation/routes.ts";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
+import { GlobalState } from "../../../../../../store/reducers/types.ts";
+import { ItwRemoteRequestValidationScreen } from "../ItwRemoteRequestValidationScreen.tsx";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application.ts";
+import { ItwRemoteRequestPayload } from "../../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
+import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList.ts";
+import { ItwRemoteParamsList } from "../../navigation/ItwRemoteParamsList.ts";
+import { itwRemoteMachine } from "../../machine/machine.ts";
 
 describe("ItwRemoteRequestValidationScreen", () => {
   it("it should render the screen correctly", () => {
@@ -24,7 +24,7 @@ describe("ItwRemoteRequestValidationScreen", () => {
       state: "hyqizm592"
     };
 
-    const {getByTestId} = renderComponent(validPayload);
+    const { getByTestId } = renderComponent(validPayload);
 
     expect(getByTestId("loader")).toBeTruthy();
   });
@@ -35,11 +35,10 @@ describe("ItwRemoteRequestValidationScreen", () => {
       request_uri: "https://example.com/callback"
     };
 
-    const {getByTestId} = renderComponent(partialPayload);
+    const { getByTestId } = renderComponent(partialPayload);
 
     expect(getByTestId("failure")).toBeTruthy();
   });
-
 
   const renderComponent = (payload: Partial<ItwRemoteRequestPayload> = {}) => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
