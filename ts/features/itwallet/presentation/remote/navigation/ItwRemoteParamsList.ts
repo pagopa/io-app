@@ -1,6 +1,7 @@
-import { ItwRemoteClaimsDisclosureScreenNavigationParams } from "../screens/ItwRemoteClaimsDisclosureScreen.tsx";
+import { ItwRemoteRequestValidationScreenNavigationParams } from "../screens/ItwRemoteRequestValidationScreen.tsx";
 import { ITW_REMOTE_ROUTES } from "./routes.ts";
 
 export type ItwRemoteParamsList = {
-  [ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE]: ItwRemoteClaimsDisclosureScreenNavigationParams;
+  [ITW_REMOTE_ROUTES.REQUEST_VALIDATION]: ItwRemoteRequestValidationScreenNavigationParams;
+  [ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE]: undefined;
 };

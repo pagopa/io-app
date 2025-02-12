@@ -35,8 +35,8 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
     [ITW_REMOTE_ROUTES.MAIN]: {
       path: "itw/auth",
       screens: {
-        [ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE]: {
-          path: "claims-disclosure"
+        [ITW_REMOTE_ROUTES.REQUEST_VALIDATION]: {
+          path: ""
         }
       }
     }

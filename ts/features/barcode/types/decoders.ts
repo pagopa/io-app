@@ -9,11 +9,8 @@ import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { sequenceS } from "fp-ts/lib/Apply";
-import { decodePosteDataMatrix } from "../../../utils/payment";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/Utils/itwRemoteTypeUtils.ts";
-import { getUrlParam } from "../../itwallet/presentation/remote/Utils/itwRemoteUrlUtils.ts";
+import { decodePosteDataMatrix } from "../../../utils/payment";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -54,8 +51,7 @@ export type DecodedIOBarcode =
     }
   | {
       type: "ITW_REMOTE";
-      baseAuthUrl: string;
-      itwRemoteRequestPayload: ItwRemoteRequestPayload;
+      authUrl: string;
     };
 
 // Barcode decoder function which is used to determine the type and content of a barcode
@@ -117,29 +113,11 @@ const decodeFciBarcode: IOBarcodeDecoderFn = (data: string) =>
 
 const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
   pipe(
-    O.fromNullable(
-      data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)
-    ),
-    O.chain(([url]) =>
-      sequenceS(O.Monad)({
-        clientId: getUrlParam(url, "client_id"),
-        requestUri: getUrlParam(url, "request_uri"),
-        state: getUrlParam(url, "state"),
-        requestUriMethod: pipe(
-          getUrlParam(url, "request_uri_method"),
-          O.alt(() => O.some("GET"))
-        )
-      })
-    ),
-    O.map(({ clientId, requestUri, state, requestUriMethod }) => ({
+    data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/),
+    O.fromNullable,
+    O.map(([url]) => ({
       type: "ITW_REMOTE",
-      baseAuthUrl: data.split("?")[0],
-      itwRemoteRequestPayload: {
-        clientId,
-        requestUri,
-        state,
-        requestUriMethod
-      }
+      authUrl: url
     }))
   );
 

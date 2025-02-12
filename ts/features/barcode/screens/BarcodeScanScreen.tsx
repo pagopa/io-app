@@ -45,7 +45,6 @@ import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
-import { buildItwRemoteRequestDeepLink } from "../../itwallet/presentation/remote/Utils/itwRemoteUrlUtils.ts";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -157,7 +156,7 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "ITW_REMOTE":
-        openDeepLink(buildItwRemoteRequestDeepLink(barcode));
+        openDeepLink(barcode.authUrl);
         break;
     }
   };

@@ -1,77 +1,23 @@
 import {
   Avatar,
-  Body,
   ContentWrapper,
   FeatureInfo,
   ForceScrollDownView,
   HSpacer,
   Icon,
-  IOStyles,
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { View, StyleSheet } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
+import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
-import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
-import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
-import { selectIsLoading } from "../machine/selectors.ts";
-import { ItwRemoteMachineContext } from "../machine/provider.tsx";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 
-export type ItwRemoteClaimsDisclosureScreenNavigationParams = {
-  itwRemoteRequestPayload: ItwRemoteRequestPayload;
-};
-
-type ScreenProps = IOStackNavigationRouteProps<
-  ItwRemoteParamsList,
-  "ITW_REMOTE_CLAIMS_DISCLOSURE"
->;
-
-const QRCodeValidationScreen = () => (
-  <LoadingScreenContent
-    contentTitle={I18n.t(
-      "features.itWallet.presentation.remote.loadingScreen.title"
-    )}
-  >
-    <View style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}>
-      <Body>
-        {I18n.t("features.itWallet.presentation.remote.loadingScreen.subtitle")}
-      </Body>
-    </View>
-  </LoadingScreenContent>
-);
-
-const ItwRemoteClaimsDisclosureScreen = (params: ScreenProps) => {
+const ItwRemoteClaimsDisclosureScreen = () => {
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
-
-  const machineRef = ItwRemoteMachineContext.useActorRef();
-
-  const isMachineLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
-
-  const itwRemoteRequestPayload = params.route.params.itwRemoteRequestPayload;
-
-  useFocusEffect(
-    useCallback(() => {
-      if (itwRemoteRequestPayload) {
-        machineRef.send({
-          type: "start",
-          payload: itwRemoteRequestPayload
-        });
-      }
-    }, [itwRemoteRequestPayload, machineRef])
-  );
-
-  if (isMachineLoading) {
-    return <QRCodeValidationScreen />;
-  }
 
   return (
     <ForceScrollDownView>
