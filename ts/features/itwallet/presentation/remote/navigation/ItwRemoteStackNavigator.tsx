@@ -7,8 +7,9 @@ import {
 
 import { ItwRemoteClaimsDisclosureScreen } from "../screens/ItwRemoteClaimsDisclosureScreen.tsx";
 import { ItwRemoteRequestValidationScreen } from "../screens/ItwRemoteRequestValidationScreen.tsx";
-import { ItwRemoteParamsList } from "./ItwRemoteParamsList.ts";
+import { ItwRemoteFailureScreen } from "../screens/ItwRemoteFailureScreen.tsx";
 import { ITW_REMOTE_ROUTES } from "./routes.ts";
+import { ItwRemoteParamsList } from "./ItwRemoteParamsList.ts";
 
 const Stack = createStackNavigator<ItwRemoteParamsList>();
 
@@ -41,6 +42,11 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE}
         component={ItwRemoteClaimsDisclosureScreen}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_REMOTE_ROUTES.FAILURE}
+        component={ItwRemoteFailureScreen}
         options={hiddenHeader}
       />
     </Stack.Navigator>

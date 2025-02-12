@@ -1,7 +1,5 @@
 import * as t from "io-ts";
-import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import { pipe } from "fp-ts/lib/function";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
@@ -57,7 +55,8 @@ export const trackOpenMessage = (
   containsPayment: boolean | undefined,
   hasRemoteContent: boolean,
   containsAttachments: boolean,
-  fromPushNotification: boolean
+  fromPushNotification: boolean,
+  hasFIMSCTA: boolean
 ) => {
   const eventName = "OPEN_MESSAGE";
   const props = buildEventProperties("UX", "screen_view", {
@@ -65,15 +64,13 @@ export const trackOpenMessage = (
     service_name: serviceName,
     organization_name: organizationName,
     organization_fiscal_code: organizationFiscalCode,
-    contains_payment: pipe(
-      containsPayment,
-      O.fromNullable,
-      O.fold(() => "unknown" as const, booleanToYesNo)
-    ),
+    contains_payment:
+      containsPayment != null ? booleanToYesNo(containsPayment) : "unknown",
     remote_content: booleanToYesNo(hasRemoteContent),
     contains_attachment: booleanToYesNo(containsAttachments),
     first_time_opening: booleanToYesNo(firstTimeOpening),
-    fromPushNotification: booleanToYesNo(fromPushNotification)
+    fromPushNotification: booleanToYesNo(fromPushNotification),
+    has_fims_callback: booleanToYesNo(hasFIMSCTA)
   });
   void mixpanelTrack(eventName, props);
 };

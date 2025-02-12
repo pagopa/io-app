@@ -196,6 +196,8 @@ global:
     details: "Details"
     choose: "Scegli"
     copy: Copy
+    selectAll: Seleziona tutto
+    deselectAll: Deseleziona tutto
   navigator:
     messages: Messages
     wallet: Wallet
@@ -1923,6 +1925,7 @@ wallet:
       PAYMENT_CANCELED:
         title: "L’Ente Creditore ha revocato questo avviso"
         subtitle: "Contatta l’Ente per maggiori informazioni."
+        action: "Scopri di più"
       PAYMENT_DUPLICATED:
         title: "Questo avviso è stato già pagato!"
       PAYMENT_VERIFY_GENERIC_ERROR:
@@ -3533,10 +3536,26 @@ features:
         title: Non siamo riusciti a caricare {{credentialName}}
         content: Chiudi e riapri l'app per riprovare.
         primaryAction: Ho capito
+      selectiveDisclosure:
+        title: Dati richiesti
+        subtitle: Saranno mostrati a **{{relyingParty}}** per accedere ai servizi richiesti.
+        requiredClaims: Dati necessari
+        optionalClaims: Dati facoltativi
+        claimUnavailable: Non disponibile
+        optionalClaimsAlert: I dati facoltativi ti offrono servizi più completi.
+        disclaimer:
+          - I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
+          - I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento.
+        tos: "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}})."
       remote:
         loadingScreen:
           title: Stiamo facendo alcune verifiche di sicurezza...
           subtitle: Attendi qualche secondo
+        walletInactiveScreen:
+          title: Attiva Documenti su IO per continuare
+          subtitle: Per accedere con IT Wallet ai servizi online è necessario prima attivare la funzionalità Documenti su IO.
+          continue: Inizia
+          close: Non ora
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale
