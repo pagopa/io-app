@@ -72,27 +72,6 @@ describe("itwRequestedCredentialsSelector", () => {
   });
 });
 
-describe("itwRequestedCredentialsSelector", () => {
-  it("should return the list of requested credentials in the past 24 hours", () => {
-    MockDate.set("2023-11-15T20:43:21.361Z");
-
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-
-    expect(
-      itwRequestedCredentialsSelector(
-        _.set(globalState, "features.itWallet.preferences", {
-          requestedCredentials: {
-            MDL: "2023-11-14T20:43:21.362Z",
-            EuropeanDisabilityCard: "2023-11-14T20:43:21.360Z",
-            EuropeanHealthInsuranceCard: "2023-11-14T20:43:21.361Z"
-          }
-        })
-      )
-    ).toEqual(["MDL"]);
-    MockDate.reset();
-  });
-});
-
 describe("itwAuthLevelSelector", () => {
   it("should return the auth level used when issuing the eid", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));

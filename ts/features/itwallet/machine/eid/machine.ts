@@ -474,8 +474,8 @@ export const itwEidIssuanceMachine = setup({
                       "#itwEidIssuanceMachine.UserIdentification.CiePin.RequestingNfcActivation",
                     actions: assign(({ event }) => ({
                       identification: {
-                        mode: "ciePin",
                         level: "L3",
+                        mode: "ciePin",
                         pin: event.pin
                       }
                     }))
