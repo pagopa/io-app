@@ -60,6 +60,9 @@ import {
   spidLoginReducer,
   SpidLoginState
 } from "../../../spidLogin/store/reducers";
+import connectivityStateReducer, {
+  ConnectivityState
+} from "../../../connectivity/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -85,6 +88,7 @@ export type FeaturesState = {
   mixpanel: MixpanelState;
   ingress: IngressScreenState;
   landingBanners: LandingScreenBannerState;
+  connectivityStatus: ConnectivityState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -110,7 +114,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   profileSettings: profileSettingsReducerPersistor,
   mixpanel: mixpanelReducer,
   ingress: ingressScreenReducer,
-  landingBanners: landingScreenBannersReducer
+  landingBanners: landingScreenBannersReducer,
+  connectivityStatus: connectivityStateReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;
