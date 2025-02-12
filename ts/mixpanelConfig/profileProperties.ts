@@ -131,7 +131,6 @@ const tosVersionHandler = (state: GlobalState): number | string => {
 
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
   const authLevel = itwAuthLevelSelector(state);
-  console.log(authLevel);
   return authLevel ? authLevel : "not_active";
 };
 

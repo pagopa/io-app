@@ -210,6 +210,7 @@ export const createEidIssuanceActionsImplementation = (
 
   resetWalletInstance: () => {
     store.dispatch(itwLifecycleWalletReset());
+    store.dispatch(itwSetAuthLevel(undefined));
     toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
   },
 
