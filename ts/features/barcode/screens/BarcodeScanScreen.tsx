@@ -46,11 +46,12 @@ import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
 import { ITW_REMOTE_ROUTES } from "../../itwallet/presentation/remote/navigation/routes.ts";
+import { isIdPayLocallyEnabledSelector } from "../../../store/reducers/persistedPreferences.ts";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
-  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
