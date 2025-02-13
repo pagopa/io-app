@@ -18,7 +18,6 @@ import ROUTES from "../../navigation/routes";
 import { identificationRequest } from "../../store/actions/identification";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { isIdPayEnabledSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import {
   isFingerprintEnabledSelector,
   isIdPayLocallyEnabledSelector
