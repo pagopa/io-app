@@ -4222,6 +4222,7 @@ transaction:
       iuv: IUV
       subject: Oggetto del pagamento
       noticeCode: Codice avviso/IUV
+      noticeCodeAccessible: Codice avviso/Identificativo Univoco Versamento
       taxCode: Codice Fiscale Ente
 FIMS:
   updateApp:
