@@ -19,6 +19,7 @@ import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
+import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
 export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
@@ -77,6 +78,7 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
     itwCredentialByTypeSelector(credentialType)
   );
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isWalletEnabled = useIOSelector(isItwEnabledSelector);
 
   const isCredentialValid = pipe(
     credentialOption,
@@ -114,7 +116,8 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
           onPress: () =>
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO
-            })
+            }),
+          disabled: !isWalletEnabled
         }}
         secondaryAction={{
           label: I18n.t(`${ns}.secondaryAction`),
@@ -137,7 +140,8 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
               params: { credentialType }
-            })
+            }),
+          disabled: !isWalletEnabled
         }}
         secondaryAction={{
           label: I18n.t("global.buttons.close"),

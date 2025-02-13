@@ -31,11 +31,11 @@ type OperationResultScreenContentProps = WithTestID<{
   subtitleProps?: Pick<BodyProps, "textBreakStrategy" | "lineBreakStrategyIOS">;
   action?: Pick<
     ButtonSolidProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
+    "label" | "accessibilityLabel" | "onPress" | "testID" | "disabled"
   >;
   secondaryAction?: Pick<
     ButtonLinkProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
+    "label" | "accessibilityLabel" | "onPress" | "testID" | "disabled"
   >;
   isHeaderVisible?: boolean;
 }>;
