@@ -19,7 +19,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { ComponentProps, FunctionComponent, ReactElement } from "react";
-import { LocalIdpsFallback } from "../utils/idps";
+import { SpidIdp } from "../../definitions/content/SpidIdp";
 
 type OwnProps = {
   contentContainerStyle?: StyleProp<ViewStyle>;
@@ -27,9 +27,9 @@ type OwnProps = {
   headerComponentStyle?: StyleProp<ViewStyle>;
   headerComponent?: ComponentProps<typeof FlatList>["ListHeaderComponent"];
   // Array of Identity Provider to show in the grid.
-  idps: ReadonlyArray<LocalIdpsFallback>;
+  idps: ReadonlyArray<SpidIdp>;
   // A callback function called when an Identity Provider is selected
-  onIdpSelected: (_: LocalIdpsFallback) => void;
+  onIdpSelected: (_: SpidIdp) => void;
   testID?: string;
 };
 
@@ -43,14 +43,14 @@ const styles = StyleSheet.create({
   }
 });
 
-const keyExtractor = (idp: LocalIdpsFallback): string => idp.id;
+const keyExtractor = (idp: SpidIdp): string => idp.id;
 
 const renderItem =
   (props: Props) =>
-  (info: ListRenderItemInfo<LocalIdpsFallback>): ReactElement => {
+  (info: ListRenderItemInfo<SpidIdp>): ReactElement => {
     const { onIdpSelected } = props;
     const { item } = info;
-    const { id, name, logo, localLogo } = item;
+    const { id, name, logo } = item;
 
     const onPress = () => onIdpSelected(item);
 
@@ -58,8 +58,9 @@ const renderItem =
       <ModuleIDP
         key={id}
         name={name}
-        logo={{ uri: logo }}
-        localLogo={localLogo as ImageSourcePropType}
+        logo={{
+          light: logo as ImageSourcePropType
+        }}
         onPress={onPress}
         testID={`idp-${item.id}-button`}
       />
