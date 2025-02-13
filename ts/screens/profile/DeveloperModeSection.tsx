@@ -43,7 +43,7 @@ import {
 } from "../../store/reducers/authentication";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
-  isIdPayTestEnabledSelector,
+  isIdPayLocallyEnabledSelector,
   isIOMarkdownEnabledLocallySelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -350,7 +350,7 @@ const DesignSystemSection = () => {
 
 const PlaygroundsSection = () => {
   const navigation = useIONavigation();
-  const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
+  const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
@@ -461,7 +461,7 @@ const DeveloperTestEnvironmentSection = ({
   const dispatch = useIODispatch();
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
-  const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
+  const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
