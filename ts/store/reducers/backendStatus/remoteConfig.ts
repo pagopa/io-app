@@ -19,7 +19,7 @@ import { getAppVersion, isVersionSupported } from "../../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../../actions/backendStatus";
 import { Action } from "../../actions/types";
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
-import { isIdPayTestEnabledSelector } from "../persistedPreferences";
+import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
@@ -279,7 +279,7 @@ export const isFciEnabledSelector = createSelector(
 
 export const isIdPayEnabledSelector = createSelector(
   remoteConfigSelector,
-  isIdPayTestEnabledSelector,
+  isIdPayLocallyEnabledSelector,
   (remoteConfig, isIdPayTestEnabled): boolean =>
     isIdPayTestEnabled ||
     pipe(
