@@ -27,5 +27,3 @@ export type IOBarcode = {
 } & DecodedIOBarcode;
 
 export type PagoPaBarcode = IOBarcode & { type: "PAGOPA" };
-
-export type ItwRemoteBarcode = IOBarcode & { type: "ITW_REMOTE" };
