@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.83.0-rc.1](https://github.com/pagopa/io-app/compare/2.83.0-rc.0...2.83.0-rc.1) (2025-02-12)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1962](https://pagopa.atlassian.net/browse/SIW-1962)] Remote presentation handle wallet instance presence ([#6694](https://github.com/pagopa/io-app/issues/6694)) ([20d6906](https://github.com/pagopa/io-app/commit/20d6906331909b8ee703d0cc0d9193d92db97d2d))
+
+## [2.83.0-rc.0](https://github.com/pagopa/io-app/compare/2.82.0-rc.7...2.83.0-rc.0) (2025-02-11)
+
+
+### Features
+
+* [[IOCOM-2006](https://pagopa.atlassian.net/browse/IOCOM-2006)] Add property has_fims_callback to OPEN_MESSAGE event ([#6690](https://github.com/pagopa/io-app/issues/6690)) ([851fb1a](https://github.com/pagopa/io-app/commit/851fb1af394c11eb2198776d9a557c28d6a7e997))
+* **IT Wallet:** [[SIW-2007](https://pagopa.atlassian.net/browse/SIW-2007)] Add local FF for offline wallet access ([#6678](https://github.com/pagopa/io-app/issues/6678)) ([556d98c](https://github.com/pagopa/io-app/commit/556d98c41f54567d1060a4a39e95cf5046622839))
+* **IT Wallet:** [[SIW-2009](https://pagopa.atlassian.net/browse/SIW-2009)] Add offline wallet section screen ([#6684](https://github.com/pagopa/io-app/issues/6684)) ([0684a82](https://github.com/pagopa/io-app/commit/0684a8276af2edec2502750d09bac356d971cf52))
+
+
+### Bug Fixes
+
+* **Cross:** [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] Check for more than one message in linter workflows ([#6701](https://github.com/pagopa/io-app/issues/6701)) ([a84de44](https://github.com/pagopa/io-app/commit/a84de445e0405101dd2e88a7fe7d7dcedff2e5c6)), closes [/#diff-de57f78a94808c565c7223c76a3f918609a1e89cc3284597286690c944e9e2cbR50-R56](https://github.com/pagopa///issues/diff-de57f78a94808c565c7223c76a3f918609a1e89cc3284597286690c944e9e2cbR50-R56) [/#diff-36369bf33364c44d17cf895448fcaf596aed0e847b72d72cd44e9afb93118076R38-R44](https://github.com/pagopa///issues/diff-36369bf33364c44d17cf895448fcaf596aed0e847b72d72cd44e9afb93118076R38-R44)
+* [[IOAPPX-479](https://pagopa.atlassian.net/browse/IOAPPX-479)] Fix camera permission request on Android devices ([#6687](https://github.com/pagopa/io-app/issues/6687)) ([5465458](https://github.com/pagopa/io-app/commit/5465458abffaac469919a6fc22626854c7b685a4))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1966](https://pagopa.atlassian.net/browse/SIW-1966)] Selective disclosure screen for remote presentation ([#6696](https://github.com/pagopa/io-app/issues/6696)) ([eb50485](https://github.com/pagopa/io-app/commit/eb50485093f50851c58bf6d83c7bcb456a6ea5f5))
+
 ## [2.82.0-rc.7](https://github.com/pagopa/io-app/compare/2.82.0-rc.6...2.82.0-rc.7) (2025-02-06)
 
 
