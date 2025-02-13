@@ -1,8 +1,12 @@
-import { assign, setup } from "xstate";
+import { assign, not, setup } from "xstate";
 import { ItwTags } from "../../../machine/tags";
 import { InitialContext, Context } from "./context";
-import { mapEventToFailure } from "./failure";
+import { mapEventToFailure, RemoteFailureType } from "./failure";
 import { RemoteEvents } from "./events";
+
+const notImplemented = () => {
+  throw new Error("Not implemented");
+};
 
 export const itwRemoteMachine = setup({
   types: {
@@ -10,10 +14,16 @@ export const itwRemoteMachine = setup({
     events: {} as RemoteEvents
   },
   actions: {
-    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) }))
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    navigateToFailureScreen: notImplemented,
+    navigateToDiscoveryScreen: notImplemented,
+    navigateToWallet: notImplemented,
+    closeIssuance: notImplemented
   },
   actors: {},
-  guards: {}
+  guards: {
+    isWalletActive: notImplemented
+  }
 }).createMachine({
   id: "itwRemoteMachine",
   context: { ...InitialContext },
@@ -27,26 +37,52 @@ export const itwRemoteMachine = setup({
           actions: assign(({ event }) => ({
             payload: event.payload
           })),
-          target: "RemoteRequestValidation"
+          target: "PayloadValidation"
         }
       }
     },
-    RemoteRequestValidation: {
+    PayloadValidation: {
       description: "Validating the remote request payload before proceeding",
       tags: [ItwTags.Loading],
-      // WARNING: for mocking purposes only
-      after: {
-        1000: {
+      always: [
+        {
+          guard: not("isWalletActive"),
+          actions: assign({
+            failure: {
+              type: RemoteFailureType.WALLET_INACTIVE,
+              reason: "IT Wallet is inactive"
+            }
+          }),
+          target: "Failure"
+        },
+        {
           target: "ClaimsDisclosure"
         }
-      }
+      ]
     },
     ClaimsDisclosure: {
       description:
-        "Display the list of claims to disclose for the verifiable presentation"
+        "Display the list of claims to disclose for the verifiable presentation",
+      on: {
+        close: {
+          actions: "closeIssuance"
+        }
+      }
     },
     Failure: {
-      description: "This state is reached when an error occurs"
+      entry: "navigateToFailureScreen",
+      description: "This state is reached when an error occurs",
+      on: {
+        "go-to-wallet-activation": {
+          actions: "navigateToDiscoveryScreen"
+        },
+        "go-to-wallet": {
+          actions: "navigateToWallet"
+        },
+        close: {
+          actions: "closeIssuance"
+        }
+      }
     }
   }
 });
