@@ -102,47 +102,41 @@ describe("fimsHistoryNonEmptyContent", () => {
           expect(fetchMore).toHaveBeenCalledTimes(1);
         });
 
-        if (shouldShowLoadingListFooter) {
-          it(`should render list footer in case of ${testString} `, () => {
-            const component = renderComponent(
-              {
-                accesses: hasAccesses ? mockAccesses : mockEmptyAccesses,
-                fetchMore
-              },
-              store
-            );
-
+        it(`should ${
+          shouldShowLoadingListFooter ? "" : "not"
+        } render list loading footer in case of ${testString} `, () => {
+          const component = renderComponent(
+            {
+              accesses: hasAccesses ? mockAccesses : mockEmptyAccesses,
+              fetchMore
+            },
+            store
+          );
+          if (shouldShowLoadingListFooter) {
             expect(component.queryByTestId("testing-footer")).toBeTruthy();
-          });
-        } else {
-          it(`should not render list footer in case of ${testString} `, () => {
-            const component = renderComponent(
-              {
-                accesses: hasAccesses ? mockAccesses : mockEmptyAccesses,
-                fetchMore
-              },
-              store
-            );
-
+          } else {
             expect(component.queryByTestId("testing-footer")).toBeNull();
-          });
-        }
+          }
+        });
+        it(`should
+            ${shouldRenderPageFooter ? "" : "not"}
+            render export footer in case of ${testString} `, () => {
+          const component = renderComponent(
+            {
+              accesses: hasAccesses ? mockAccesses : mockEmptyAccesses,
+              fetchMore
+            },
+            store
+          );
+          if (shouldRenderPageFooter) {
+            expect(component.queryByTestId("export-footer")).toBeTruthy();
+          } else {
+            expect(component.queryByTestId("export-footer")).toBeNull();
+          }
+        });
 
         if (shouldRenderPageFooter) {
-          it(`should render export footer in case of ${testString} `, () => {
-            const component = renderComponent(
-              {
-                accesses: hasAccesses ? mockAccesses : mockEmptyAccesses,
-                fetchMore
-              },
-              store
-            );
-
-            expect(component.queryByTestId("export-footer")).toBeTruthy();
-          });
-
           const isPageFooterLoading = historyExporting;
-
           it(`should ${
             isPageFooterLoading ? "not" : ""
           } dispatch the onPress if the user taps the primary action in case of ${testString}`, () => {
@@ -167,18 +161,6 @@ describe("fimsHistoryNonEmptyContent", () => {
             expect(mockFetchMore).toHaveBeenCalledTimes(
               isPageFooterLoading ? 0 : 1
             );
-          });
-        } else {
-          it(`should not render export footer in case of ${testString} `, () => {
-            const component = renderComponent(
-              {
-                accesses: hasAccesses ? mockAccesses : mockEmptyAccesses,
-                fetchMore
-              },
-              store
-            );
-
-            expect(component.queryByTestId("export-footer")).toBeNull();
           });
         }
       }
