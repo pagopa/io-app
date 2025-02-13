@@ -1,7 +1,8 @@
 import { RemoteEvents } from "./events.ts";
 
 export enum RemoteFailureType {
-  UNEXPECTED = "UNEXPECTED"
+  UNEXPECTED = "UNEXPECTED",
+  WALLET_INACTIVE = "WALLET_INACTIVE"
 }
 
 export type RemoteFailure = {
