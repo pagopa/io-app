@@ -29,12 +29,13 @@ const ItwRemoteRequestValidationScreen = (params: ScreenProps) => {
   const payload = params.route.params;
 
   if (!ItwRemoteRequestPayload.is(payload)) {
-    // TODO: handle invalid payload failure [1961]
+    // TODO: handle invalid payload failure for deep link [1961]
     return (
       <OperationResultScreenContent
         title={"Contenuto non valido"}
         subtitle={"Il contenuto della richiesta non è valido"}
         testID={"failure"}
+        pictogram={"umbrellaNew"}
         action={{
           label: "Ho capito",
           onPress: () => navigation.goBack()
@@ -43,7 +44,13 @@ const ItwRemoteRequestValidationScreen = (params: ScreenProps) => {
     );
   }
 
-  return <ContentView payload={payload} />;
+  // Add default value for request_uri_method if not present
+  const updatedPayload = {
+    ...payload,
+    request_uri_method: payload.request_uri_method ?? "GET"
+  };
+
+  return <ContentView payload={updatedPayload} />;
 };
 
 const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {

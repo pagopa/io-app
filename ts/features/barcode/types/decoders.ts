@@ -11,6 +11,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { decodePosteDataMatrix } from "../../../utils/payment";
+import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/Utils/itwRemoteTypeUtils.ts";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -113,12 +114,23 @@ const decodeFciBarcode: IOBarcodeDecoderFn = (data: string) =>
 
 const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
   pipe(
-    data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/),
-    O.fromNullable,
-    O.map(([url]) => ({
-      type: "ITW_REMOTE",
-      authUrl: url
-    }))
+    O.fromNullable(
+      data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)
+    ),
+    O.map(match => new URLSearchParams(match[1])),
+    O.chain(params =>
+      pipe(
+        ItwRemoteRequestPayload.decode({
+          client_id: params.get("client_id"),
+          request_uri: params.get("request_uri"),
+          state: params.get("state")
+        }),
+        E.fold(
+          () => O.none,
+          () => O.some({ type: "ITW_REMOTE", authUrl: data })
+        )
+      )
+    )
   );
 
 // Each type comes with its own decoded function which is used to identify the barcode content

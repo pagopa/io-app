@@ -22,7 +22,7 @@ describe("ItwRemoteRequestValidationScreen", () => {
       client_id: "abc123xy",
       request_uri: "https://example.com/callback",
       state: "hyqizm592"
-    };
+    } as ItwRemoteRequestPayload;
 
     const { getByTestId } = renderComponent(validPayload);
 
@@ -33,7 +33,19 @@ describe("ItwRemoteRequestValidationScreen", () => {
     const partialPayload = {
       client_id: "abc123xy",
       request_uri: "https://example.com/callback"
-    };
+    } as ItwRemoteRequestPayload;
+
+    const { getByTestId } = renderComponent(partialPayload);
+
+    expect(getByTestId("failure")).toBeTruthy();
+  });
+
+  it("should render failure screen if required fields are empty", () => {
+    const partialPayload = {
+      client_id: "",
+      request_uri: "https://example.com/callback",
+      state: "hyqizm592"
+    } as ItwRemoteRequestPayload;
 
     const { getByTestId } = renderComponent(partialPayload);
 
