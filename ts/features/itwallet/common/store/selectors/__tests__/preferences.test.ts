@@ -9,6 +9,7 @@ import {
   itwIsFeedbackBannerHiddenSelector,
   itwRequestedCredentialsSelector
 } from "../preferences";
+import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 
 describe("itwIsFeedbackBannerHiddenSelector", () => {
   it.each([
@@ -73,16 +74,46 @@ describe("itwRequestedCredentialsSelector", () => {
 });
 
 describe("itwAuthLevelSelector", () => {
-  it("should return the auth level used when issuing the eid", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-
-    expect(
-      itwAuthLevelSelector(
-        _.set(globalState, "features.itWallet.preferences", {
-          authLevel: "L2"
-        })
-      )
-    ).toEqual("L2");
+  afterEach(() => {
+    // Always reset the date after each test to avoid side effects
     MockDate.reset();
+  });
+
+  it("returns the auth level when it is set", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const updatedState = {
+      ...state,
+      features: {
+        ...state.features,
+        itWallet: {
+          ...state.features?.itWallet,
+          preferences: {
+            ...state.features?.itWallet?.preferences,
+            authLevel: "L2" as ItwAuthLevel
+          }
+        }
+      }
+    };
+
+    expect(itwAuthLevelSelector(updatedState)).toEqual("L2");
+  });
+
+  it("returns undefined when the auth level is not set", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const updatedState = {
+      ...state,
+      features: {
+        ...state.features,
+        itWallet: {
+          ...state.features?.itWallet,
+          preferences: {
+            ...state.features?.itWallet?.preferences,
+            authLevel: undefined
+          }
+        }
+      }
+    };
+
+    expect(itwAuthLevelSelector(updatedState)).toBeUndefined();
   });
 });
