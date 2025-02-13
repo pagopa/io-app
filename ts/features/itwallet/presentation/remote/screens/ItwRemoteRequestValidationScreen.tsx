@@ -29,13 +29,14 @@ const ItwRemoteRequestValidationScreen = (params: ScreenProps) => {
   const payload = params.route.params;
 
   if (!ItwRemoteRequestPayload.is(payload)) {
-    // TODO: handle invalid payload failure
+    // TODO: handle invalid payload failure [1961]
     return (
       <OperationResultScreenContent
-        title={"Failure"}
+        title={"Contenuto non valido"}
+        subtitle={"Il contenuto della richiesta non è valido"}
         testID={"failure"}
         action={{
-          label: "Chiudi",
+          label: "Ho capito",
           onPress: () => navigation.goBack()
         }}
       />

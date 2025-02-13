@@ -37,12 +37,13 @@ export const itwRemoteMachine = setup({
           actions: assign(({ event }) => ({
             payload: event.payload
           })),
-          target: "PayloadValidation"
+          target: "PreliminaryChecks"
         }
       }
     },
-    PayloadValidation: {
-      description: "Validating the remote request payload before proceeding",
+    PreliminaryChecks: {
+      description:
+        "Perform preliminary checks on the wallet and necessary conditions before proceeding",
       always: [
         {
           guard: not("isWalletActive"),
