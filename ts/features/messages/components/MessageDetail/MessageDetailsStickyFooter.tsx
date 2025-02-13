@@ -18,7 +18,7 @@ import {
   paymentsButtonStateSelector
 } from "../../store/reducers/payments";
 import { trackPNOptInMessageAccepted } from "../../../pn/analytics";
-import { CTAActionType, handleCtaAction } from "../../utils/messages";
+import { CTAActionType, handleCtaAction } from "../../utils/ctas";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { MessageDetailsPaymentButton } from "./MessageDetailsPaymentButton";

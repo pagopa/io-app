@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.83.0-rc.1](https://github.com/pagopa/io-app/compare/2.83.0-rc.0...2.83.0-rc.1) (2025-02-12)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1962](https://pagopa.atlassian.net/browse/SIW-1962)] Remote presentation handle wallet instance presence ([#6694](https://github.com/pagopa/io-app/issues/6694)) ([20d6906](https://github.com/pagopa/io-app/commit/20d6906331909b8ee703d0cc0d9193d92db97d2d))
+
+## [2.83.0-rc.0](https://github.com/pagopa/io-app/compare/2.82.0-rc.7...2.83.0-rc.0) (2025-02-11)
+
+
+### Features
+
+* [[IOCOM-2006](https://pagopa.atlassian.net/browse/IOCOM-2006)] Add property has_fims_callback to OPEN_MESSAGE event ([#6690](https://github.com/pagopa/io-app/issues/6690)) ([851fb1a](https://github.com/pagopa/io-app/commit/851fb1af394c11eb2198776d9a557c28d6a7e997))
+* **IT Wallet:** [[SIW-2007](https://pagopa.atlassian.net/browse/SIW-2007)] Add local FF for offline wallet access ([#6678](https://github.com/pagopa/io-app/issues/6678)) ([556d98c](https://github.com/pagopa/io-app/commit/556d98c41f54567d1060a4a39e95cf5046622839))
+* **IT Wallet:** [[SIW-2009](https://pagopa.atlassian.net/browse/SIW-2009)] Add offline wallet section screen ([#6684](https://github.com/pagopa/io-app/issues/6684)) ([0684a82](https://github.com/pagopa/io-app/commit/0684a8276af2edec2502750d09bac356d971cf52))
+
+
+### Bug Fixes
+
+* **Cross:** [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] Check for more than one message in linter workflows ([#6701](https://github.com/pagopa/io-app/issues/6701)) ([a84de44](https://github.com/pagopa/io-app/commit/a84de445e0405101dd2e88a7fe7d7dcedff2e5c6)), closes [/#diff-de57f78a94808c565c7223c76a3f918609a1e89cc3284597286690c944e9e2cbR50-R56](https://github.com/pagopa///issues/diff-de57f78a94808c565c7223c76a3f918609a1e89cc3284597286690c944e9e2cbR50-R56) [/#diff-36369bf33364c44d17cf895448fcaf596aed0e847b72d72cd44e9afb93118076R38-R44](https://github.com/pagopa///issues/diff-36369bf33364c44d17cf895448fcaf596aed0e847b72d72cd44e9afb93118076R38-R44)
+* [[IOAPPX-479](https://pagopa.atlassian.net/browse/IOAPPX-479)] Fix camera permission request on Android devices ([#6687](https://github.com/pagopa/io-app/issues/6687)) ([5465458](https://github.com/pagopa/io-app/commit/5465458abffaac469919a6fc22626854c7b685a4))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1966](https://pagopa.atlassian.net/browse/SIW-1966)] Selective disclosure screen for remote presentation ([#6696](https://github.com/pagopa/io-app/issues/6696)) ([eb50485](https://github.com/pagopa/io-app/commit/eb50485093f50851c58bf6d83c7bcb456a6ea5f5))
+
+## [2.82.0-rc.7](https://github.com/pagopa/io-app/compare/2.82.0-rc.6...2.82.0-rc.7) (2025-02-06)
+
+
+### Features
+
+* **IDPay:** [[IOBP-1137](https://pagopa.atlassian.net/browse/IOBP-1137)] Add expense cta with FIMS implementation ([#6691](https://github.com/pagopa/io-app/issues/6691)) ([9692c48](https://github.com/pagopa/io-app/commit/9692c48a83b2ea1350097821c440e63fab2c146c))
+* **IDPay:** [[IOBP-1147](https://pagopa.atlassian.net/browse/IOBP-1147)] Add request help from IDPay beneficiary details screen ([#6622](https://github.com/pagopa/io-app/issues/6622)) ([cd5d68a](https://github.com/pagopa/io-app/commit/cd5d68a4376f7038c396a9cee2718f33896a48b0))
+* **IT Wallet:** [[SIW-1960](https://pagopa.atlassian.net/browse/SIW-1960)] Scan QR code for remote presentation ([#6670](https://github.com/pagopa/io-app/issues/6670)) ([7763bd1](https://github.com/pagopa/io-app/commit/7763bd1bf72ef5af712267c3a73b144d433d27f9))
+* [[IOPAE-1324](https://pagopa.atlassian.net/browse/IOPAE-1324)] Add analytics tracking for service settings and selected actions ([#6661](https://github.com/pagopa/io-app/issues/6661)) ([143f209](https://github.com/pagopa/io-app/commit/143f209e96e10466a230d04c59f8f2504db68281))
+
+
+### Chores
+
+* [[IOBP-1180](https://pagopa.atlassian.net/browse/IOBP-1180)] Add priority to remote feature flag for the IDPay feature ([#6693](https://github.com/pagopa/io-app/issues/6693)) ([506efe0](https://github.com/pagopa/io-app/commit/506efe0262a90cc58119b5700a6d451c8f588588))
+* [[IOPAE-1773](https://pagopa.atlassian.net/browse/IOPAE-1773)] Truncate long national institution names ([#6662](https://github.com/pagopa/io-app/issues/6662)) ([1951fe0](https://github.com/pagopa/io-app/commit/1951fe03ec6c0240cce5017a48ad5870757a9e1d))
+* **IT Wallet:** [[SIW-2001](https://pagopa.atlassian.net/browse/SIW-2001)] Track unknown credential status error ([#6686](https://github.com/pagopa/io-app/issues/6686)) ([196e77c](https://github.com/pagopa/io-app/commit/196e77cb87adc60dca1bb533c3cc458a3d8d765e))
+
 ## [2.82.0-rc.6](https://github.com/pagopa/io-app/compare/2.82.0-rc.5...2.82.0-rc.6) (2025-02-05)
 
 

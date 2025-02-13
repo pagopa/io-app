@@ -57,12 +57,13 @@ export const itwRemoteMachine = setup({
           target: "Failure"
         },
         {
-          target: "PayloadValidated"
+          target: "ClaimsDisclosure"
         }
       ]
     },
-    PayloadValidated: {
-      description: "The remote request payload has been validated",
+    ClaimsDisclosure: {
+      description:
+        "Display the list of claims to disclose for the verifiable presentation",
       on: {
         close: {
           actions: "closeIssuance"
