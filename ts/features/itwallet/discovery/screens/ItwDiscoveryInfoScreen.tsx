@@ -20,10 +20,7 @@ import {
   trackItWalletIntroScreen,
   trackOpenItwTos
 } from "../../analytics";
-import {
-  isItwEnabledSelector,
-  itwIsActivationDisabledSelector
-} from "../../common/store/selectors/remoteConfig";
+import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig";
 import { selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
@@ -42,7 +39,6 @@ const ItwDiscoveryInfoScreen = () => {
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const tosConfig = useIOSelector(tosConfigSelector);
   const privacyAndTosUrl = tosConfig.tos_url;
-  const isWalletEnabled = useIOSelector(isItwEnabledSelector);
 
   const handleContinuePress = () => {
     trackItWalletActivationStart();
@@ -84,7 +80,7 @@ const ItwDiscoveryInfoScreen = () => {
           type: "SingleButton",
           primary: {
             loading: isLoading,
-            disabled: itwActivationDisabled || !isWalletEnabled,
+            disabled: itwActivationDisabled,
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
             onPress: handleContinuePress
