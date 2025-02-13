@@ -3554,8 +3554,13 @@ features:
         walletInactiveScreen:
           title: Attiva Documenti su IO per continuare
           subtitle: Per accedere con IT Wallet ai servizi online è necessario prima attivare la funzionalità Documenti su IO.
-          continue: Inizia
-          close: Non ora
+          primaryAction: Inizia
+          secondaryAction: Non ora
+        missingCredentialsScreen:
+          title: Mancano i dati contenuti in {{credentialName}}
+          subtitle: Aggiungi il documento al Portafoglio prima di continuare e poi riprova.
+          primaryAction: Aggiungi documento al Portafoglio
+          secondaryAction: Annulla
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale
@@ -4216,7 +4221,8 @@ transaction:
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
-      noticeCode: Codice avviso
+      noticeCode: Codice avviso/IUV
+      noticeCodeAccessible: Codice avviso/Identificativo Univoco Versamento
       taxCode: Codice Fiscale Ente
 FIMS:
   updateApp:

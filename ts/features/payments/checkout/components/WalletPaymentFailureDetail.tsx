@@ -110,6 +110,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     accessibilityLabel: I18n.t(
       "wallet.payment.failure.PAYMENT_CANCELED.action"
     ),
+    icon: "categLearning",
     onPress: handleDiscoverMore
   };
 

@@ -17,10 +17,7 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import {
-  barcodesScannerConfigSelector,
-  isIdPayEnabledSelector
-} from "../../../store/reducers/backendStatus/remoteConfig";
+import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
@@ -46,11 +43,12 @@ import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
 import { ITW_REMOTE_ROUTES } from "../../itwallet/presentation/remote/navigation/routes.ts";
+import { isIdPayLocallyEnabledSelector } from "../../../store/reducers/persistedPreferences.ts";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
-  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
