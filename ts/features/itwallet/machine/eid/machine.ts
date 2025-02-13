@@ -301,8 +301,7 @@ export const itwEidIssuanceMachine = setup({
                 actions: assign(() => ({
                   identification: {
                     mode: "cieId",
-                    level: "L2",
-                    abortController: new AbortController()
+                    level: "L2"
                   }
                 })),
                 target: "CieID"
