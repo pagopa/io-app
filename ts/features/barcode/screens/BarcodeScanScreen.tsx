@@ -17,10 +17,7 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import {
-  barcodesScannerConfigSelector,
-  isIdPayEnabledSelector
-} from "../../../store/reducers/backendStatus/remoteConfig";
+import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
