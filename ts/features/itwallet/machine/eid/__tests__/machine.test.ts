@@ -47,7 +47,6 @@ describe("itwEidIssuanceMachine", () => {
   const setWalletInstanceToOperational = jest.fn();
   const setWalletInstanceToValid = jest.fn();
   const handleSessionExpired = jest.fn();
-  const abortIdentification = jest.fn();
   const onInit = jest.fn();
 
   const createWalletInstance = jest.fn();
@@ -91,7 +90,6 @@ describe("itwEidIssuanceMachine", () => {
       setWalletInstanceToOperational,
       setWalletInstanceToValid,
       handleSessionExpired,
-      abortIdentification,
       resetWalletInstance,
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
@@ -349,8 +347,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "cieId",
-        level: "L2",
-        abortController: new AbortController()
+        level: "L2"
       }
     });
     expect(navigateToCieIdLoginScreen).toHaveBeenCalledTimes(1);

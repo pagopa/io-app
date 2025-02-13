@@ -202,12 +202,6 @@ export const createEidIssuanceActionsImplementation = (
   handleSessionExpired: () =>
     store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
 
-  abortIdentification: ({
-    context
-  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    context.identification?.abortController?.abort();
-  },
-
   resetWalletInstance: () => {
     store.dispatch(itwLifecycleWalletReset());
     store.dispatch(itwSetAuthLevel(undefined));
