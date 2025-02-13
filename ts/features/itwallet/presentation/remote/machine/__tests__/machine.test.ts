@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { StateFrom, createActor } from "xstate";
 import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
+import { ItwRemoteRequestPayload } from "../../Utils/itwRemoteTypeUtils.ts";
 
 const T_CLIENT_ID = "clientId";
 const T_REQUEST_URI = "https://example.com";
@@ -54,7 +55,7 @@ describe("itwRemoteMachine", () => {
         client_id: T_CLIENT_ID,
         request_uri: T_REQUEST_URI,
         state: T_STATE
-      }
+      } as ItwRemoteRequestPayload
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
@@ -72,7 +73,7 @@ describe("itwRemoteMachine", () => {
           client_id: T_CLIENT_ID,
           request_uri: T_REQUEST_URI,
           state: T_STATE
-        }
+        } as ItwRemoteRequestPayload
       }
     } as MachineSnapshot);
 
@@ -96,7 +97,7 @@ describe("itwRemoteMachine", () => {
           client_id: T_CLIENT_ID,
           request_uri: T_REQUEST_URI,
           state: T_STATE
-        }
+        } as ItwRemoteRequestPayload
       }
     } as MachineSnapshot);
 
@@ -121,7 +122,7 @@ describe("itwRemoteMachine", () => {
         client_id: T_CLIENT_ID,
         request_uri: T_REQUEST_URI,
         state: T_STATE
-      }
+      } as ItwRemoteRequestPayload
     });
 
     expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
