@@ -21,8 +21,9 @@ export const itwSetReviewPending = createStandardAction(
   "ITW_SET_REVIEW_PENDING"
 )<boolean>();
 
-export const itwSetAuthLevel =
-  createStandardAction("ITW_SET_AUTH_LEVEL")<ItwAuthLevel>();
+export const itwSetAuthLevel = createStandardAction("ITW_SET_AUTH_LEVEL")<
+  ItwAuthLevel | undefined
+>();
 
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
