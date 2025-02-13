@@ -2444,8 +2444,36 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         accessibilityElementsHidden={true}
                                         accessibilityLabel="We give you a hand"
                                         accessibilityRole="button"
+                                        accessibilityState={
+                                          {
+                                            "busy": undefined,
+                                            "checked": undefined,
+                                            "disabled": undefined,
+                                            "expanded": undefined,
+                                            "selected": undefined,
+                                          }
+                                        }
+                                        accessibilityValue={
+                                          {
+                                            "max": undefined,
+                                            "min": undefined,
+                                            "now": undefined,
+                                            "text": undefined,
+                                          }
+                                        }
                                         accessible={true}
+                                        collapsable={false}
+                                        focusable={true}
                                         importantForAccessibility="no-hide-descendants"
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onResponderGrant={[Function]}
+                                        onResponderMove={[Function]}
+                                        onResponderRelease={[Function]}
+                                        onResponderTerminate={[Function]}
+                                        onResponderTerminationRequest={[Function]}
+                                        onStartShouldSetResponder={[Function]}
                                         pointerEvents="none"
                                       >
                                         <View
@@ -5328,8 +5356,36 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         accessibilityElementsHidden={true}
                                         accessibilityLabel="We give you a hand"
                                         accessibilityRole="button"
+                                        accessibilityState={
+                                          {
+                                            "busy": undefined,
+                                            "checked": undefined,
+                                            "disabled": undefined,
+                                            "expanded": undefined,
+                                            "selected": undefined,
+                                          }
+                                        }
+                                        accessibilityValue={
+                                          {
+                                            "max": undefined,
+                                            "min": undefined,
+                                            "now": undefined,
+                                            "text": undefined,
+                                          }
+                                        }
                                         accessible={true}
+                                        collapsable={false}
+                                        focusable={true}
                                         importantForAccessibility="no-hide-descendants"
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onResponderGrant={[Function]}
+                                        onResponderMove={[Function]}
+                                        onResponderRelease={[Function]}
+                                        onResponderTerminate={[Function]}
+                                        onResponderTerminationRequest={[Function]}
+                                        onStartShouldSetResponder={[Function]}
                                         pointerEvents="none"
                                       >
                                         <View
