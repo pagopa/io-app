@@ -1,25 +1,24 @@
-import { useCallback, useState } from "react";
-import * as t from "io-ts";
+import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useFocusEffect } from "@react-navigation/native";
-import I18n from "../../../../i18n";
+import * as t from "io-ts";
+import { useCallback, useState } from "react";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../../i18n";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
-import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
 export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
@@ -78,7 +77,6 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
     itwCredentialByTypeSelector(credentialType)
   );
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isWalletEnabled = useIOSelector(isItwEnabledSelector);
 
   const isCredentialValid = pipe(
     credentialOption,
@@ -116,8 +114,7 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
           onPress: () =>
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO
-            }),
-          disabled: !isWalletEnabled
+            })
         }}
         secondaryAction={{
           label: I18n.t(`${ns}.secondaryAction`),
@@ -140,8 +137,7 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
               params: { credentialType }
-            }),
-          disabled: !isWalletEnabled
+            })
         }}
         secondaryAction={{
           label: I18n.t("global.buttons.close"),

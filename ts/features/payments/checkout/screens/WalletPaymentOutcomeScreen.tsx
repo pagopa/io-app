@@ -163,21 +163,19 @@ const WalletPaymentOutcomeScreen = () => {
     testID: "wallet-payment-outcome-success-button"
   };
 
-  const closeFailureAction: OperationResultScreenContentProps["secondaryAction"] =
-    {
-      label: I18n.t("global.buttons.close"),
-      accessibilityLabel: I18n.t("global.buttons.close"),
-      onPress: handleClose
-    };
+  const closeFailureAction: OperationResultScreenContentProps["action"] = {
+    label: I18n.t("global.buttons.close"),
+    accessibilityLabel: I18n.t("global.buttons.close"),
+    onPress: handleClose
+  };
 
-  const contactSupportAction: OperationResultScreenContentProps["secondaryAction"] =
-    {
-      label: I18n.t("wallet.payment.support.button"),
-      accessibilityLabel: I18n.t("wallet.payment.support.button"),
-      onPress: handleContactSupport
-    };
+  const contactSupportAction: OperationResultScreenContentProps["action"] = {
+    label: I18n.t("wallet.payment.support.button"),
+    accessibilityLabel: I18n.t("wallet.payment.support.button"),
+    onPress: handleContactSupport
+  };
 
-  const onboardPaymentMethodCloseAction: OperationResultScreenContentProps["secondaryAction"] =
+  const onboardPaymentMethodCloseAction: OperationResultScreenContentProps["action"] =
     {
       label: I18n.t(
         "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
