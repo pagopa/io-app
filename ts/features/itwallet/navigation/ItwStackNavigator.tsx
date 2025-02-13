@@ -3,7 +3,7 @@ import {
   TransitionPresets
 } from "@react-navigation/stack";
 import { Platform } from "react-native";
-import { ComponentType, useLayoutEffect } from "react";
+import { ComponentType } from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
