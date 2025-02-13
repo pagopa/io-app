@@ -205,8 +205,8 @@ export const isMixpanelEnabled = (state: GlobalState): boolean | null =>
 export const isPnTestEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isPnTestEnabled;
 
-export const isIdPayTestEnabledSelector = (state: GlobalState) =>
-  !!state.persistedPreferences?.isIdPayTestEnabled;
+export const isIdPayLocallyEnabledSelector = (state: GlobalState) =>
+  state.persistedPreferences?.isIdPayTestEnabled;
 
 // 'isDesignSystemEnabled' has been introduced without a migration
 // (PR https://github.com/pagopa/io-app/pull/4427) so there are cases
