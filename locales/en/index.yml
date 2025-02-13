@@ -4221,7 +4221,7 @@ transaction:
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
-      noticeCode: Codice avviso
+      noticeCode: Codice avviso/IUV
       taxCode: Codice Fiscale Ente
 FIMS:
   updateApp:

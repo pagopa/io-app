@@ -3207,7 +3207,7 @@ transaction:
       debtor: "Schuldner"
       iuv: "IUV"
       subject: "Zahlungsgrund"
-      noticeCode: "Kodex der Zahlungsmitteilung"
+      noticeCode: "Kodex der Zahlungsmitteilung/IUV"
       taxCode: "Steuernummer Körperschaft"
 FIMS:
   updateApp:
