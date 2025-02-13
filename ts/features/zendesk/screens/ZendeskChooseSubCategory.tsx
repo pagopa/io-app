@@ -1,7 +1,11 @@
 import {
+  Banner,
+  ContentWrapper,
   Divider,
   IOVisualCostants,
-  ListItemNav
+  ListItemNav,
+  useIOToast,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
@@ -21,6 +25,7 @@ import {
   zendeskSupportFailure
 } from "../store/actions";
 import { zendeskSelectedCategorySelector } from "../store/reducers";
+import { openWebUrl } from "../../../utils/url";
 
 export type ZendeskChooseSubCategoryNavigationParams = {
   assistanceType: ZendeskAssistanceType;
@@ -31,11 +36,20 @@ type Props = IOStackNavigationRouteProps<
   "ZENDESK_CHOOSE_SUB_CATEGORY"
 >;
 
+function getOrFallback<
+  O extends object,
+  K1 extends keyof O,
+  K2 extends keyof O
+>(obj: O, key: K1, fallback: K2) {
+  return obj[key] ?? obj[fallback];
+}
+
 /**
  * this screen shows the sub-categories for which the user can ask support with the assistance
  * see {@link ZendeskChooseCategory} to check the previous category screen
  */
 const ZendeskChooseSubCategory = (props: Props) => {
+  const { error } = useIOToast();
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useIODispatch();
   const { assistanceType } = props.route.params;
@@ -61,6 +75,8 @@ const ZendeskChooseSubCategory = (props: Props) => {
     selectedCategory.zendeskSubCategories?.subCategories ?? [];
   const subCategoriesId: string =
     selectedCategory.zendeskSubCategories?.id ?? "";
+  const bannerEducational =
+    selectedCategory.zendeskSubCategories?.bannerEducational;
 
   const locale = getFullLocale();
 
@@ -90,6 +106,30 @@ const ZendeskChooseSubCategory = (props: Props) => {
       ignoreSafeAreaMargin={true}
       testID={"ZendeskChooseCategory"}
     >
+      {bannerEducational && (
+        <ContentWrapper>
+          <Banner
+            pictogramName="charity"
+            size="big"
+            color="neutral"
+            title={getOrFallback(bannerEducational.title, locale, "it-IT")}
+            content={getOrFallback(bannerEducational.content, locale, "it-IT")}
+            action={getOrFallback(
+              bannerEducational.action.label,
+              locale,
+              "it-IT"
+            )}
+            onPress={() => {
+              const href = bannerEducational.action.href;
+
+              openWebUrl(getOrFallback(href, locale, "it-IT"), () => {
+                error(I18n.t("global.jserror.title"));
+              });
+            }}
+          />
+          <VSpacer size={8} />
+        </ContentWrapper>
+      )}
       <FlatList
         scrollEnabled={false}
         contentContainerStyle={{
@@ -98,7 +138,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
         data={subCategories}
         keyExtractor={c => c.value}
         renderItem={renderItem}
-        ItemSeparatorComponent={() => <Divider />}
+        ItemSeparatorComponent={Divider}
       />
     </IOScrollViewWithLargeHeader>
   );
