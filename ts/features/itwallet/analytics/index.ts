@@ -777,28 +777,25 @@ export const trackBackToWallet = ({ exit_page, credential }: BackToWallet) => {
 
 // #region TECH
 
-export const trackItwRequest = (ITW_ID_method?: ItwIdMethod) => {
-  if (ITW_ID_method) {
+export const trackItwRequest = (method?: ItwIdMethod) => {
+  if (method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST,
-      buildEventProperties("TECH", undefined, { ITW_ID_method })
+      buildEventProperties("TECH", undefined, { ITW_ID_method: method })
     );
   }
 };
 
-export const trackItwRequestSuccess = ({
-  ITW_ID_method,
-  ITW_ID_status
-}: {
-  ITW_ID_method: ItwIdMethod;
-  ITW_ID_status: ItwStatus;
-}) => {
-  if (ITW_ID_method) {
+export const trackItwRequestSuccess = (
+  method?: ItwIdMethod,
+  status?: ItwStatus
+) => {
+  if (method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST_SUCCESS,
       buildEventProperties("TECH", undefined, {
-        ITW_ID_method,
-        ITW_ID_V2: ITW_ID_status
+        ITW_ID_method: method,
+        ITW_ID_V2: status
       })
     );
   }

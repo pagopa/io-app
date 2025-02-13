@@ -84,10 +84,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
     useCallback(() => {
       trackCredentialPreview(mixPanelCredential);
       if (identification) {
-        trackItwRequestSuccess({
-          ITW_ID_method: identification?.mode,
-          ITW_ID_status: identification?.level
-        });
+        trackItwRequestSuccess(identification?.mode, identification?.level);
       }
     }, [identification, mixPanelCredential])
   );

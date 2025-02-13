@@ -24,7 +24,6 @@ import lifecycleReducer, {
 import wiaReducer, {
   ItwWalletInstanceState
 } from "../../../walletInstance/store/reducers";
-import { StoredCredential } from "../../utils/itwTypesUtils.ts";
 import preferencesReducer, { ItwPreferencesState } from "./preferences";
 
 export type ItWalletState = {
@@ -58,11 +57,17 @@ const migrations: MigrationManifest = {
 
   // Added authLevel to preferences store and set it to "L2" if eid is present
   "2": (state: PersistedState): PersistedState => {
-    const eid: O.Option<StoredCredential> = _.get(state, "credentials.eid");
+    const { credentials, preferences } = state as PersistedItWalletState;
 
     // If eid is a Some(value), set authLevel to "L2"
-    if (eid && O.isSome(eid)) {
-      return _.set(state, "preferences.authLevel", "L2");
+    if (O.isSome(credentials.eid)) {
+      return {
+        ...state,
+        preferences: {
+          ...preferences,
+          authLevel: "L2"
+        }
+      } as PersistedItWalletState;
     }
 
     return state;
