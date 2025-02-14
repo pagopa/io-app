@@ -23,6 +23,7 @@ describe("itwRemoteMachine", () => {
       navigateToDiscoveryScreen,
       navigateToWallet,
       navigateToFailureScreen,
+      navigateToIdentificationModeScreen,
       closeIssuance
     },
     actors: {},
