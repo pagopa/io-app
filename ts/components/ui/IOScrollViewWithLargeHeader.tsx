@@ -45,6 +45,9 @@ type Props = WithTestID<
     headerActionsProp?: HeaderActionsProps;
     canGoback?: boolean;
     excludeEndContentMargin?: boolean;
+    ignoreAccessibilityCheck?: ComponentProps<
+      typeof HeaderSecondLevel
+    >["ignoreAccessibilityCheck"];
   } & SupportRequestParams
 >;
 
@@ -69,7 +72,8 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       includeContentMargins = false,
       headerActionsProp = {},
       excludeEndContentMargin,
-      testID
+      testID,
+      ignoreAccessibilityCheck = false
     },
     ref
   ) => {
@@ -93,6 +97,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
 
     const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
       ignoreSafeAreaMargin,
+      ignoreAccessibilityCheck,
       ...useHeaderProps(
         canGoback
           ? {
