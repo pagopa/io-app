@@ -84,7 +84,7 @@ const ReceiptCartItemDetailsScreen = () => {
               }
               label={I18n.t("transaction.details.operation.noticeCode")}
               accessibilityLabel={I18n.t(
-                "transaction.details.operation.noticeCode"
+                "transaction.details.operation.noticeCodeAccessible"
               )}
               value={cartItem.refNumberValue}
             />

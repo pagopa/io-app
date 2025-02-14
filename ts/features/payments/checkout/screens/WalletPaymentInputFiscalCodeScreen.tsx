@@ -97,7 +97,9 @@ const WalletPaymentInputFiscalCodeScreen = () => {
           label: I18n.t("wallet.payment.manual.fiscalCode.title")
         }}
         description={I18n.t("wallet.payment.manual.fiscalCode.subtitle")}
+        ignoreAccessibilityCheck
         canGoback
+        headerActionsProp={{ showHelp: true }}
         contextualHelp={emptyContextualHelp}
         actions={
           Platform.OS === "android"
