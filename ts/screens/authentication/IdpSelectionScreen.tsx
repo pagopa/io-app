@@ -28,7 +28,6 @@ import { AuthenticationParamsList } from "../../navigation/params/Authentication
 import { IdpData } from "../../../definitions/content/IdpData";
 import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import IdpsGrid from "../../components/IdpsGrid";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
@@ -77,9 +76,6 @@ const IdpSelectionScreen = (): ReactElement => {
   const idps = useIOSelector(idpsRemoteValueSelector);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const nativeLoginFeature = useIOSelector(nativeLoginSelector);
-  const isFastLoginFeatureFlagEnabled = useIOSelector(
-    isFastLoginEnabledSelector
-  );
   const isNativeLoginFeatureFlagEnabled = useIOSelector(
     isNativeLoginEnabledSelector
   );
@@ -184,11 +180,7 @@ const IdpSelectionScreen = (): ReactElement => {
             viewRef={viewRef}
             color="neutral"
             size="small"
-            content={
-              isFastLoginFeatureFlagEnabled
-                ? I18n.t("login.expiration_info_FL")
-                : I18n.t("login.expiration_info")
-            }
+            content={I18n.t("authentication.idp_selection.bannerDefaultInfo")}
             pictogramName="passcode"
           />
         </Pressable>

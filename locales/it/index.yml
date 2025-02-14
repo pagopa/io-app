@@ -872,6 +872,7 @@ authentication:
     contentTitle: Scegli il tuo Identity Provider
     contextualHelpTitle: Chi è il tuo Identity Provider
     contextualHelpContent: !include authentication/authentication_idp_selection.md
+    bannerDefaultInfo: Dopo l’autenticazione con il tuo Identity Provider, torna su IO!
   idp_login:
     headerTitle: Accedi
     contextualHelpTitle: Qual è la tua password
