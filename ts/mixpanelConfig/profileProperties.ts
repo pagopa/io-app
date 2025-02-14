@@ -131,7 +131,7 @@ const tosVersionHandler = (state: GlobalState): number | string => {
 
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
   const authLevel = itwAuthLevelSelector(state);
-  return authLevel ? authLevel : "not_active";
+  return authLevel ?? "not_active";
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
