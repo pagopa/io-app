@@ -441,7 +441,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       false,
                                       {
                                         "backgroundColor": undefined,
-                                        "borderColor": "#BBC2D6",
+                                        "borderColor": undefined,
                                       },
                                       false,
                                       false,
@@ -524,7 +524,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                   </RNSVGSvgView>
                                   <Text
                                     allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
                                     maxFontSizeMultiplier={1.5}
                                     style={
                                       [
@@ -535,7 +534,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 21,
+                                          "lineHeight": undefined,
                                         },
                                       ]
                                     }
@@ -686,7 +685,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                   </RNSVGSvgView>
                                   <Text
                                     allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
                                     maxFontSizeMultiplier={1.5}
                                     style={
                                       [
@@ -697,7 +695,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 21,
+                                          "lineHeight": undefined,
                                         },
                                       ]
                                     }
@@ -1260,7 +1258,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                   </RNSVGSvgView>
                                   <Text
                                     allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
                                     maxFontSizeMultiplier={1.5}
                                     style={
                                       [
@@ -1271,7 +1268,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 21,
+                                          "lineHeight": undefined,
                                         },
                                       ]
                                     }
@@ -1352,7 +1349,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       false,
                                       {
                                         "backgroundColor": undefined,
-                                        "borderColor": "#BBC2D6",
+                                        "borderColor": undefined,
                                       },
                                       false,
                                       false,
@@ -1422,7 +1419,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                   </RNSVGSvgView>
                                   <Text
                                     allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
                                     maxFontSizeMultiplier={1.5}
                                     style={
                                       [
@@ -1433,7 +1429,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 21,
+                                          "lineHeight": undefined,
                                         },
                                       ]
                                     }
