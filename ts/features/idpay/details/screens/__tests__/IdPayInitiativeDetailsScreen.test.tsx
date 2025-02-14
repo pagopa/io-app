@@ -129,7 +129,7 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
     );
     expect(component).toBeTruthy();
     expect(component).not.toBeNull();
-    expect(component.getByTestId("missing-configuration-alert")).toBeNull();
+    expect(component.queryByTestId("missing-configuration-alert")).toBeNull();
   });
 
   it("should render the banner missing configuration Alert for REFUND initiatives with status not undefined", () => {
