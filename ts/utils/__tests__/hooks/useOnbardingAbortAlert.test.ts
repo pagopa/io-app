@@ -8,11 +8,11 @@ import { abortOnboarding } from "../../../store/actions/onboarding";
 import * as dispatch from "../../../store/hooks";
 
 describe("useOnboardingAbortAlert", () => {
-  beforeAll(() => {
+  beforeEach(() => {
     jest.spyOn(Alert, "alert");
   });
 
-  afterAll(() => {
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
@@ -36,17 +36,30 @@ describe("useOnboardingAbortAlert", () => {
     expect(buttons[1].text).toBe("Exit");
     expect(buttons[1].style).toBe("default");
   });
-});
 
-it("should dispatch abortOnboarding action when exit button is pressed", () => {
-  const dispatchMock = jest.fn();
-  jest.spyOn(dispatch, "useIODispatch").mockReturnValue(dispatchMock);
+  it("should dispatch abortOnboarding action when exit button is pressed", () => {
+    const dispatchMock = jest.fn();
+    jest.spyOn(dispatch, "useIODispatch").mockReturnValue(dispatchMock);
 
-  renderHook();
+    renderHook();
 
-  const buttons = (Alert.alert as jest.Mock).mock.calls[0][2];
-  buttons[1].onPress();
-  expect(dispatchMock).toHaveBeenCalledWith(abortOnboarding());
+    const buttons = (Alert.alert as jest.Mock).mock.calls[0][2];
+    buttons[1].onPress();
+    expect(dispatchMock).toHaveBeenCalledWith(abortOnboarding());
+  });
+
+  it("should call the provided callback instead of dispatching abortOnboarding action when exit button is pressed", () => {
+    const dispatchMock = jest.fn();
+    jest.spyOn(dispatch, "useIODispatch").mockReturnValue(dispatchMock);
+    const mockCallback = jest.fn();
+
+    renderHook(mockCallback);
+
+    const buttons = (Alert.alert as jest.Mock).mock.calls[0][2];
+    buttons[1].onPress();
+    expect(dispatchMock).not.toHaveBeenCalledWith(abortOnboarding());
+    expect(mockCallback).toHaveBeenCalled();
+  });
 });
 
 const renderHook = (callback?: () => void) => {
