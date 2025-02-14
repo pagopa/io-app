@@ -103,6 +103,29 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
+        case RemoteFailureType.EID_EXPIRED: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.eidExpiredScreen.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.eidExpiredScreen.subtitle"
+            ),
+            pictogram: "identityRefresh",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.eidExpiredScreen.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "go-to-identification-mode" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.eidExpiredScreen.secondaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "go-to-wallet" })
+            }
+          };
+        }
       }
     };
 

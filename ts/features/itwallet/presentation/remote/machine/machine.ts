@@ -18,12 +18,14 @@ export const itwRemoteMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToDiscoveryScreen: notImplemented,
     navigateToWallet: notImplemented,
+    navigateToIdentificationModeScreen: notImplemented,
     closeIssuance: notImplemented
   },
   actors: {},
   guards: {
     isWalletActive: notImplemented,
-    areRequiredCredentialsAvailable: notImplemented
+    areRequiredCredentialsAvailable: notImplemented,
+    isEidExpired: notImplemented
   }
 }).createMachine({
   id: "itwRemoteMachine",
@@ -57,6 +59,16 @@ export const itwRemoteMachine = setup({
           target: "Failure"
         },
         {
+          guard: "isEidExpired",
+          actions: assign({
+            failure: {
+              type: RemoteFailureType.EID_EXPIRED,
+              reason: "EID is expired"
+            }
+          }),
+          target: "Failure"
+        },
+        {
           target: "ClaimsDisclosure"
         }
       ]
@@ -79,6 +91,9 @@ export const itwRemoteMachine = setup({
         },
         "go-to-wallet": {
           actions: "navigateToWallet"
+        },
+        "go-to-identification-mode": {
+          actions: "navigateToIdentificationModeScreen"
         },
         close: {
           actions: "closeIssuance"

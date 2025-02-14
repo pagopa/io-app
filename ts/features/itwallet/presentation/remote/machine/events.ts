@@ -17,6 +17,10 @@ export type GoToWallet = {
   type: "go-to-wallet";
 };
 
+export type GoToIdentificationMode = {
+  type: "go-to-identification-mode";
+};
+
 export type Back = {
   type: "back";
 };
@@ -30,5 +34,6 @@ export type RemoteEvents =
   | Start
   | GoToWalletActivation
   | GoToWallet
+  | GoToIdentificationMode
   | Back
   | Close;

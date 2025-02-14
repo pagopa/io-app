@@ -32,6 +32,15 @@ export const createRemoteActionsImplementation = (
     });
   },
 
+  navigateToIdentificationModeScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+      params: {
+        eidReissuing: true
+      }
+    });
+  },
+
   closeIssuance: () => {
     navigation.popToTop();
   }

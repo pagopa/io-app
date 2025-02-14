@@ -12,9 +12,11 @@ describe("itwRemoteMachine", () => {
   const navigateToDiscoveryScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const navigateToFailureScreen = jest.fn();
+  const navigateToIdentificationModeScreen = jest.fn();
   const closeIssuance = jest.fn();
 
   const isWalletActive = jest.fn();
+  const isEidExpired = jest.fn();
 
   const mockedMachine = itwRemoteMachine.provide({
     actions: {
@@ -25,7 +27,8 @@ describe("itwRemoteMachine", () => {
     },
     actors: {},
     guards: {
-      isWalletActive
+      isWalletActive,
+      isEidExpired
     }
   });
 
@@ -107,11 +110,56 @@ describe("itwRemoteMachine", () => {
     expect(navigateToDiscoveryScreen).toHaveBeenCalledTimes(1);
   });
 
+  it("Should navigate to Identification mode when user start the reissuing flow", async () => {
+    const initialSnapshot: MachineSnapshot =
+      createActor(itwRemoteMachine).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: "Failure",
+      context: {
+        payload: {
+          clientId: T_CLIENT_ID,
+          requestUri: T_REQUEST_URI,
+          state: T_STATE
+        }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+
+    actor.send({ type: "go-to-identification-mode" });
+    expect(navigateToIdentificationModeScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("should transition from Idle to Failure when EID is expired", () => {
+    isWalletActive.mockReturnValue(true);
+    isEidExpired.mockReturnValue(true);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: {
+        clientId: T_CLIENT_ID,
+        requestUri: T_REQUEST_URI,
+        state: T_STATE
+      }
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
+  });
+
   it("should transition from Idle to ClaimsDisclosure when ITWallet is active", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
     isWalletActive.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
 
     actor.send({
       type: "start",
