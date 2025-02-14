@@ -118,6 +118,32 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
       )
     ).toBeTruthy();
   });
+
+  it("should not render the banner missing configuration Alert for REFUND initiatives that have status not undefined", () => {
+    const { component } = renderComponent(
+      pot.some({
+        ...mockedInitiative,
+        initiativeRewardType: InitiativeRewardTypeEnum.EXPENSE,
+        status: StatusEnum.NOT_REFUNDABLE_ONLY_IBAN
+      })
+    );
+    expect(component).toBeTruthy();
+    expect(component).not.toBeNull();
+    expect(component.getByTestId("missing-configuration-alert")).toBeNull();
+  });
+
+  it("should render the banner missing configuration Alert for REFUND initiatives with status not undefined", () => {
+    const { component } = renderComponent(
+      pot.some({
+        ...mockedInitiative,
+        initiativeRewardType: InitiativeRewardTypeEnum.REFUND,
+        status: StatusEnum.NOT_REFUNDABLE_ONLY_IBAN
+      })
+    );
+    expect(component).toBeTruthy();
+    expect(component).not.toBeNull();
+    expect(component.getByTestId("missing-configuration-alert")).toBeTruthy();
+  });
 });
 
 const renderComponent = (
