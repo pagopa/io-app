@@ -18,8 +18,10 @@ import ROUTES from "../../navigation/routes";
 import { identificationRequest } from "../../store/actions/identification";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { isIdPayEnabledSelector } from "../../store/reducers/backendStatus/remoteConfig";
-import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
+import {
+  isFingerprintEnabledSelector,
+  isIdPayLocallyEnabledSelector
+} from "../../store/reducers/persistedPreferences";
 import { getFlowType } from "../../utils/analytics";
 import {
   biometricAuthenticationRequest,
@@ -51,7 +53,7 @@ const SecurityScreen = (): ReactElement => {
   const dispatch = useIODispatch();
   const isFingerprintEnabled = useIOSelector(isFingerprintEnabledSelector);
   const isIdPayCodeOnboarded = useIOSelector(isIdPayCodeOnboardedSelector);
-  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
   const isFimsHistoryEnabled = useIOSelector(fimsIsHistoryEnabledSelector);
   const navigation = useIONavigation();
   const [isBiometricDataAvailable, setIsBiometricDataAvailable] =
