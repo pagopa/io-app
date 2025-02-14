@@ -49,10 +49,10 @@ it("should dispatch abortOnboarding action when exit button is pressed", () => {
   expect(dispatchMock).toHaveBeenCalledWith(abortOnboarding());
 });
 
-const renderHook = () => {
+const renderHook = (callback?: () => void) => {
   const Component = () => {
     const { showAlert } = useOnboardingAbortAlert();
-    showAlert();
+    showAlert(callback);
     return null;
   };
   const globalState = appReducer(undefined, applicationChangeState("active"));
