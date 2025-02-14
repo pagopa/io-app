@@ -116,7 +116,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 "features.itWallet.presentation.remote.eidExpiredScreen.primaryAction"
               ),
-              onPress: () => machineRef.send({ type: "go-to-identification-mode" })
+              onPress: () =>
+                machineRef.send({ type: "go-to-identification-mode" })
             },
             secondaryAction: {
               label: I18n.t(
