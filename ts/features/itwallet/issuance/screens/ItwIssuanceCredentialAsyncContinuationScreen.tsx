@@ -1,24 +1,24 @@
-import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useState } from "react";
+import * as t from "io-ts";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as t from "io-ts";
-import { useCallback, useState } from "react";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
-import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
 export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
