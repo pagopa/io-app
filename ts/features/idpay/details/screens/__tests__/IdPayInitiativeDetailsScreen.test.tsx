@@ -119,7 +119,7 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
     ).toBeTruthy();
   });
 
-  it("should not render the banner missing configuration Alert for REFUND initiatives that have status not undefined", () => {
+  it("should not render the banner missing configuration Alert for EXPENSE initiatives that have status not undefined", () => {
     const { component } = renderComponent(
       pot.some({
         ...mockedInitiative,
