@@ -69,6 +69,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
   return (
     <>
       <IOScrollViewWithLargeHeader
+        ignoreAccessibilityCheck
         title={{
           label: I18n.t("wallet.payment.manual.noticeNumber.title")
         }}
