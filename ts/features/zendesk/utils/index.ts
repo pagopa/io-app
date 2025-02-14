@@ -72,7 +72,9 @@ export const formatRequestedTokenString = (
       "walletToken",
       "bpdToken",
       "fimsToken",
-      "lollipopAssertionRef"
+      "lollipopAssertionRef",
+      // TODO: Evaluate whether it makes sense to keep this value among the default tokens or not.
+      "expirationDate"
     ];
     tokensArray = defaultTokens;
   }
