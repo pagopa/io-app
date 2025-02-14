@@ -19,7 +19,7 @@ export const itwRemoteMachine = setup({
     navigateToDiscoveryScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
-    closeIssuance: notImplemented
+    close: notImplemented
   },
   actors: {},
   guards: {
@@ -78,7 +78,7 @@ export const itwRemoteMachine = setup({
         "Display the list of claims to disclose for the verifiable presentation",
       on: {
         close: {
-          actions: "closeIssuance"
+          actions: "close"
         }
       }
     },
@@ -96,7 +96,7 @@ export const itwRemoteMachine = setup({
           actions: "navigateToIdentificationModeScreen"
         },
         close: {
-          actions: "closeIssuance"
+          actions: "close"
         }
       }
     }

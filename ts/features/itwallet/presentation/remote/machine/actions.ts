@@ -41,7 +41,7 @@ export const createRemoteActionsImplementation = (
     });
   },
 
-  closeIssuance: () => {
+  close: () => {
     navigation.popToTop();
   }
 });
