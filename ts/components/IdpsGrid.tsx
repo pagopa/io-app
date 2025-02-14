@@ -5,7 +5,6 @@
 
 import {
   FlatList,
-  ImageSourcePropType,
   ListRenderItemInfo,
   StyleProp,
   StyleSheet,
@@ -59,7 +58,7 @@ const renderItem =
         key={id}
         name={name}
         logo={{
-          light: logo as ImageSourcePropType
+          light: { uri: logo }
         }}
         onPress={onPress}
         testID={`idp-${item.id}-button`}
