@@ -52,7 +52,7 @@ export type DecodedIOBarcode =
     }
   | {
       type: "ITW_REMOTE";
-      authUrl: string;
+      itwRemoteRequestPayload: ItwRemoteRequestPayload;
     };
 
 // Barcode decoder function which is used to determine the type and content of a barcode
@@ -118,19 +118,18 @@ const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
       data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)
     ),
     O.map(match => new URLSearchParams(match[1])),
-    O.chain(params =>
-      pipe(
-        ItwRemoteRequestPayload.decode({
-          client_id: params.get("client_id"),
-          request_uri: params.get("request_uri"),
-          state: params.get("state")
-        }),
-        E.fold(
-          () => O.none,
-          () => O.some({ type: "ITW_REMOTE", authUrl: data })
-        )
-      )
-    )
+    O.chainEitherK(params =>
+      ItwRemoteRequestPayload.decode({
+        client_id: params.get("client_id"),
+        request_uri: params.get("request_uri"),
+        state: params.get("state"),
+        request_uri_method: params.get("request_uri_method") ?? "GET"
+      })
+    ),
+    O.map(itwRemoteRequestPayload => ({
+      type: "ITW_REMOTE",
+      itwRemoteRequestPayload
+    }))
   );
 
 // Each type comes with its own decoded function which is used to identify the barcode content

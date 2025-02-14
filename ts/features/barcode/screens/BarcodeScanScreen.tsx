@@ -43,6 +43,7 @@ import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
 import { isIdPayLocallyEnabledSelector } from "../../../store/reducers/persistedPreferences.ts";
+import { ITW_REMOTE_ROUTES } from "../../itwallet/presentation/remote/navigation/routes.ts";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -154,7 +155,10 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "ITW_REMOTE":
-        openDeepLink(barcode.authUrl);
+        navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
+          screen: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
+          params: barcode.itwRemoteRequestPayload
+        });
         break;
     }
   };
