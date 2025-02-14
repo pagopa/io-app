@@ -218,6 +218,9 @@ export function trackHelpCenterCtaTapped(
   hc_landing_url?: string,
   hc_source?: string
 ) {
+  // TODO: ✋🛑 - wait for the hc_source values to be defined
+  // https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33561#1130270800
+  // Remove before merging
   void mixpanelTrack(
     "HC_CTA_TAPPED",
     buildEventProperties("UX", "action", { hc_id, hc_landing_url, hc_source })
