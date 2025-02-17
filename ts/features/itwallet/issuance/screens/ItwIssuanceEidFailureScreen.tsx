@@ -18,7 +18,7 @@ import {
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import { ZendeskSubcategoryValue, useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
 import { KoState, trackWalletCreationFailed } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
@@ -68,7 +68,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
   });
   const supportModal = useItwFailureSupportModal({
     failure,
-    supportChatEnabled: zendeskAssistanceErrors.includes(failure.type)
+    supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
+    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI
   });
 
   const closeIssuance = (errorConfig: KoState) => {

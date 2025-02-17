@@ -3561,6 +3561,11 @@ features:
           subtitle: Aggiungi il documento al Portafoglio prima di continuare e poi riprova.
           primaryAction: Aggiungi documento al Portafoglio
           secondaryAction: Annulla
+        deepLinkValidationErrorScreen:
+          title: Si è verificato un errore
+          subtitle: "Il link sembra non funzionare correttamente, riprova.\nSe il problema persiste, contatta l'assistenza."
+          primaryAction: Mostra dettagli
+          secondaryAction: Chiudi
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale

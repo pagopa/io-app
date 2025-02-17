@@ -3,16 +3,13 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import I18n from "../../../../../i18n.ts";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../../navigation/params/AppParamsList.ts";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
+import { ItwRemoteDeepLinkFailureScreen } from "./ItwRemoteDeepLinkFailureScreen.tsx";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload>;
@@ -23,25 +20,12 @@ type ScreenProps = IOStackNavigationRouteProps<
 >;
 
 const ItwRemoteRequestValidationScreen = (params: ScreenProps) => {
-  const navigation = useIONavigation();
   useItwDisableGestureNavigation();
 
   const payload = params.route.params;
 
   if (!ItwRemoteRequestPayload.is(payload)) {
-    // TODO: handle invalid payload failure for deep link [1961]
-    return (
-      <OperationResultScreenContent
-        title={"Contenuto non valido"}
-        subtitle={"Il contenuto della richiesta non è valido"}
-        testID={"failure"}
-        pictogram={"umbrellaNew"}
-        action={{
-          label: "Ho capito",
-          onPress: () => navigation.goBack()
-        }}
-      />
-    );
+    return <ItwRemoteDeepLinkFailureScreen payload={payload} />;
   }
 
   // Add default value for request_uri_method if not present

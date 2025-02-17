@@ -35,6 +35,7 @@ import {
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { IssuanceFailure } from "../../machine/eid/failure";
 import { CredentialIssuanceFailure } from "../../machine/credential/failure";
+import {ItwFailure} from "../utils/ItwFailureUtils.ts";
 
 const { isWalletProviderResponseError, isIssuerResponseError } = Errors;
 
@@ -45,10 +46,15 @@ type SupportContactMethods = Partial<{
   website: string;
 }>;
 
+export enum ZendeskSubcategoryValue {
+  IT_WALLET_PRESENTAZIONE_REMOTA = "it_wallet_presentazione_remota",
+  IT_WALLET_AGGIUNTA_DOCUMENTI = "it_wallet_aggiunta_documenti"
+}
+
 // The subcategory is fixed for now. In the future it can be made dynamic depending on the error type.
 const ZENDESK_SUBCATEGORY = {
   id: "29326690756369",
-  value: "it_wallet_aggiunta_documenti"
+  value: ZendeskSubcategoryValue
 };
 
 const contactMethodsByCredentialType: Record<
@@ -85,9 +91,10 @@ const extractErrorCode = (failure: Props["failure"]) => {
 const isDefined = <T,>(x: T | undefined | null | ""): x is T => Boolean(x);
 
 type Props = {
-  failure: IssuanceFailure | CredentialIssuanceFailure;
+  failure: IssuanceFailure | CredentialIssuanceFailure | ItwFailure;
   credentialType?: string;
   supportChatEnabled: boolean;
+  zendeskSubcategory: ZendeskSubcategoryValue;
 };
 
 /**
@@ -96,7 +103,8 @@ type Props = {
 export const useItwFailureSupportModal = ({
   failure,
   credentialType,
-  supportChatEnabled
+  supportChatEnabled,
+  zendeskSubcategory
 }: Props) => {
   const dispatch = useIODispatch();
 
@@ -109,7 +117,7 @@ export const useItwFailureSupportModal = ({
     resetLog();
 
     addTicketCustomField(zendeskCategoryId, zendeskItWalletCategory.value);
-    addTicketCustomField(ZENDESK_SUBCATEGORY.id, ZENDESK_SUBCATEGORY.value);
+    addTicketCustomField(ZENDESK_SUBCATEGORY.id, zendeskSubcategory);
     addTicketCustomField(zendeskItWalletFailureCode, code);
     appendLog(JSON.stringify(failure));
 
