@@ -9,7 +9,7 @@ import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
   ItwFailure,
   ItwFailureType
-} from "../../../common/utils/ItwFailureUtils.ts";
+} from "../../../common/utils/ItwFailureTypes.ts";
 
 type Props = {
   payload: Partial<ItwRemoteRequestPayload>;
