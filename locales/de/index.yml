@@ -1839,6 +1839,7 @@ wallet:
       PAYMENT_CANCELED:
         title: "Die ausstellende Körperschaft hat diese Zahlungsmitteilung zurückgezogen"
         subtitle: "Wende dich für weitere Informationen an die Körperschaft."
+        action: "Scopri di più"
       PAYMENT_DUPLICATED:
         title: "Diese Zahlungsmitteilung wurde bereits bezahlt!"
       PAYMENT_VERIFY_GENERIC_ERROR:
@@ -3206,7 +3207,8 @@ transaction:
       debtor: "Schuldner"
       iuv: "IUV"
       subject: "Zahlungsgrund"
-      noticeCode: "Kodex der Zahlungsmitteilung"
+      noticeCode: "Kodex der Zahlungsmitteilung/IUV"
+      noticeCodeAccessible: Codice avviso/Identificativo Univoco Versamento
       taxCode: "Steuernummer Körperschaft"
 FIMS:
   updateApp:
