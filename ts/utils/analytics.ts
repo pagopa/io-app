@@ -211,16 +211,13 @@ function toUrlWithoutQueryParams(url: string) {
  *
  * @param hc_id - The contextual ID of the CTA (ex: SESSION_EXPIRED)
  * @param hc_landing_url - The URL where we navigate the user
- * @param hc_source - The route name where the CTA is
+ * @param hc_source - The route name where the CTA is (ex: AUTHENTICATION_LANDING)
  */
 export function trackHelpCenterCtaTapped(
   hc_id?: string,
   hc_landing_url?: string,
   hc_source?: string
 ) {
-  // TODO: ✋🛑 - wait for the hc_source values to be defined
-  // https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33561#1130270800
-  // Remove before merging
   void mixpanelTrack(
     "HC_CTA_TAPPED",
     buildEventProperties("UX", "action", { hc_id, hc_landing_url, hc_source })
