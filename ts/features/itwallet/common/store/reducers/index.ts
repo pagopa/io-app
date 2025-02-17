@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import _ from "lodash";
 import { combineReducers } from "redux";
@@ -43,15 +44,34 @@ const itwReducer = combineReducers({
   preferences: preferencesReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 1;
+const CURRENT_REDUX_ITW_STORE_VERSION = 2;
 
 const migrations: MigrationManifest = {
   // Added preferences store
   "0": (state: PersistedState): PersistedState =>
     _.set(state, "preferences", {}),
+
   // Added requestedCredentials to preferences store
   "1": (state: PersistedState): PersistedState =>
-    _.set(state, "preferences.requestedCredentials", {})
+    _.set(state, "preferences.requestedCredentials", {}),
+
+  // Added authLevel to preferences store and set it to "L2" if eid is present
+  "2": (state: PersistedState): PersistedState => {
+    const { credentials, preferences } = state as PersistedItWalletState;
+
+    // If eid is a Some(value), set authLevel to "L2"
+    if (O.isSome(credentials.eid)) {
+      return {
+        ...state,
+        preferences: {
+          ...preferences,
+          authLevel: "L2"
+        }
+      } as PersistedItWalletState;
+    }
+
+    return state;
+  }
 };
 
 const itwPersistConfig: PersistConfig = {
