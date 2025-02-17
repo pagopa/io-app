@@ -166,8 +166,7 @@ export const ServiceDetailsScreenComponent = ({
       contentOffsetY: scrollTranslationY
     },
     supportRequest: true,
-    title,
-    variant: "neutral"
+    title
   });
 
   const footerGradientOpacityTransition = useAnimatedStyle(() => ({
