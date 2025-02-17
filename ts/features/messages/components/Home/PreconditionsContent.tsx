@@ -24,6 +24,7 @@ import {
 import { trackDisclaimerLoadError } from "../../analytics";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../common/store/reducers";
+import { generatePreconditionsRules } from "../../../common/components/IOMarkdown/customRules";
 import { PreconditionsFeedback } from "./PreconditionsFeedback";
 
 export const PreconditionsContent = () => {
@@ -68,12 +69,15 @@ const PreconditionsContentMarkdown = () => {
     },
     [dispatch, store]
   );
-
   if (!markdown) {
     return null;
   }
   return useIOMarkdown ? (
-    <IOMarkdown content={markdown} onError={onErrorCallback} />
+    <IOMarkdown
+      content={markdown}
+      onError={onErrorCallback}
+      rules={generatePreconditionsRules()}
+    />
   ) : (
     <MessageMarkdown
       loadingLines={7}

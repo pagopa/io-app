@@ -5,7 +5,6 @@ import { appReducer } from "../../../store/reducers";
 import { LandingScreen } from "../LandingScreen";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import ROUTES from "../../../navigation/routes";
-import * as cieSelectors from "../../../features/cieLogin/store/selectors";
 
 const mockNavigateToCiePinInsertion = jest.fn();
 const mockNavigateToIdpSelection = jest.fn();
@@ -30,12 +29,6 @@ jest.mock("../../../hooks/useNavigateToLoginMethod", () => ({
     navigateToCieIdLoginScreen: mockNavigateToCieIdLoginScreen,
     isCieSupported: true
   })
-}));
-
-jest.mock("../../../features/cieLogin/store/selectors", () => ({
-  ...jest.requireActual("../../../features/cieLogin/store/selectors"),
-  __esModule: true,
-  isCieIDFFEnabledSelector: jest.fn()
 }));
 
 jest.mock("@gorhom/bottom-sheet", () =>
@@ -63,29 +56,7 @@ const toMatchSnapshot = () => {
   expect(component).toMatchSnapshot();
 };
 
-describe("LandingScreen with both local and remote CieID FF disabled", () => {
-  afterEach(jest.clearAllMocks);
-
-  it("Should be defined", toBeDefined);
-  it("Should match the snapshot", toMatchSnapshot);
-  it("Should navigate to login with cie + pin", () => {
-    const { getByTestId } = renderComponent();
-
-    const loginWithCie = getByTestId("landing-button-login-cie");
-    fireEvent.press(loginWithCie);
-
-    expect(mockNavigateToCiePinInsertion).toHaveBeenCalled();
-    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-  });
-  it("Should navigate to idp selection screen", navigateToIdpSelection);
-});
-
-describe("LandingScreen with CieID FF enabled", () => {
-  beforeAll(() =>
-    jest
-      .spyOn(cieSelectors, "isCieIDFFEnabledSelector")
-      .mockImplementation(() => true)
-  );
+describe(LandingScreen, () => {
   afterEach(jest.clearAllMocks);
 
   it("Should be defined", toBeDefined);

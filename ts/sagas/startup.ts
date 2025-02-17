@@ -86,11 +86,11 @@ import {
   sessionTokenSelector
 } from "../store/reducers/authentication";
 import {
+  isIdPayEnabledSelector,
   isPnEnabledSelector,
   remoteConfigSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { IdentificationResult } from "../store/reducers/identification";
-import { isIdPayTestEnabledSelector } from "../store/reducers/persistedPreferences";
 import {
   isProfileFirstOnBoarding,
   profileSelector
@@ -566,10 +566,11 @@ export function* initializeApplicationSaga(
     yield* fork(watchPnSaga, sessionToken);
   }
 
-  const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =
-    yield* select(isIdPayTestEnabledSelector);
+  const idPayEnabled: ReturnType<typeof isIdPayEnabledSelector> = yield* select(
+    isIdPayEnabledSelector
+  );
 
-  if (idPayTestEnabled) {
+  if (idPayEnabled) {
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, bpdToken);
   }

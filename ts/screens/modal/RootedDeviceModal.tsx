@@ -1,11 +1,11 @@
 import {
   BodySmall,
   ButtonLink,
-  ButtonSolid,
   ContentWrapper,
   H3,
   Pictogram,
-  VSpacer
+  VSpacer,
+  ButtonSolid
 } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
 import { Platform, StyleSheet, View } from "react-native";

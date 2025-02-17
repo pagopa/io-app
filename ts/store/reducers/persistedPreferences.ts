@@ -20,7 +20,8 @@ import {
   preferencesPnTestEnvironmentSetEnabled,
   preferencesIdPayTestSetEnabled,
   preferencesDesignSystemSetEnabled,
-  setIOMarkdownEnabledOnMessagesAndServices
+  setIOMarkdownEnabledOnMessagesAndServices,
+  setItwOfflineAccessEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -46,6 +47,7 @@ export type PersistedPreferencesState = Readonly<{
   // be sure to handle such case when reading and using this value
   isDesignSystemEnabled: boolean;
   isIOMarkdownEnabledOnMessagesAndServices: boolean;
+  isItwOfflineAccessEnabled: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -60,7 +62,8 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
   isDesignSystemEnabled: false,
-  isIOMarkdownEnabledOnMessagesAndServices: false
+  isIOMarkdownEnabledOnMessagesAndServices: false,
+  isItwOfflineAccessEnabled: false
 };
 
 export default function preferencesReducer(
@@ -164,6 +167,13 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(setItwOfflineAccessEnabled, action)) {
+    return {
+      ...state,
+      isItwOfflineAccessEnabled: action.payload
+    };
+  }
+
   return state;
 }
 
@@ -195,8 +205,8 @@ export const isMixpanelEnabled = (state: GlobalState): boolean | null =>
 export const isPnTestEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isPnTestEnabled;
 
-export const isIdPayTestEnabledSelector = (state: GlobalState) =>
-  !!state.persistedPreferences?.isIdPayTestEnabled;
+export const isIdPayLocallyEnabledSelector = (state: GlobalState) =>
+  state.persistedPreferences?.isIdPayTestEnabled;
 
 // 'isDesignSystemEnabled' has been introduced without a migration
 // (PR https://github.com/pagopa/io-app/pull/4427) so there are cases
@@ -210,6 +220,9 @@ export const isIOMarkdownEnabledLocallySelector = (
   state: GlobalState
 ): boolean =>
   state.persistedPreferences.isIOMarkdownEnabledOnMessagesAndServices;
+
+export const isItwOfflineAccessEnabledSelector = (state: GlobalState) =>
+  state.persistedPreferences.isItwOfflineAccessEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

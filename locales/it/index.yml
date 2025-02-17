@@ -196,6 +196,8 @@ global:
     details: "Dettagli"
     choose: "Scegli"
     copy: Copia
+    selectAll: Seleziona tutto
+    deselectAll: Deseleziona tutto
   navigator:
     messages: Messaggi
     wallet: Portafoglio
@@ -483,9 +485,6 @@ profile:
     idpay:
       idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
-    cieID:
-      cieIdTest:
-        title: CieID
     trial:
       titleSection: Partecipa alla sperimentazione
     experimentalEnvironment: Interfaccia sperimentale
@@ -902,6 +901,13 @@ authentication:
     dualRecoverDescription: Se hai dimenticato le tue credenziali, ti consigliamo di procedere cliccando sui bottoni qui di seguito.
     recoverUsername: Recupera il nome utente
     recoverPassword: Recupera la password
+    poste_id:
+      bottom_sheet:
+        title: Accedi senza password!
+        description: "Se hai l’app Poste ID, segui questi passaggi:"
+        feature_1: Tocca su **"Accedi più rapidamente"** nella fascia grigia al centro della schermata
+        feature_2: Inserisci il codice PosteID o usa il biometrico
+        feature_3: Quando vedrai apparire **Autorizzazione concessa**, torna su IO e premi **Acconsento**
   idp_login_success:
     contentTitle: Ciao {{name}}!
   errors:
@@ -1623,8 +1629,8 @@ wallet:
     fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
     amountInfo:
-      title: Vedi un importo diverso?
-      message: pagoPA aggiorna l'importo in tempo reale, per permetterti di pagare evitando more o interessi aggiuntivi. Può succedere, per esempio, quando l'ente applica dei costi di notifica (se ti ha inviato una comunicazione a valore legale) o se sei in ritardo con il pagamento.
+      title: L’importo è diverso da quello riportato sull’avviso pagoPA?
+      message: "Quando l'importo cambia, significa che l'ente creditore l'ha aggiornato automaticamente. In questo modo, hai sempre la certezza di pagare l’importo dovuto. Se è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nPer ulteriori dettagli contatta l'ente creditore, poiché pagoPA non conosce i motivi dell'aggiornamento."
       cta: Ok, va bene
     contextualHelpTitle: Riepilogo della transazione
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
@@ -1930,7 +1936,7 @@ wallet:
         title: "L’Ente Creditore sta avendo problemi nella risposta"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       PAYMENT_ONGOING:
-        title: "C’è già un pagamento in corso, riprova più tardi"
+        title: "C’è già un’operazione in corso, riprova più tardi"
         subtitle: "Se il problema persiste, puoi aprire una segnalazione."
       PAYMENT_EXPIRED:
         title: "L’avviso è scaduto e non è più possibile pagarlo"
@@ -1938,16 +1944,17 @@ wallet:
       PAYMENT_CANCELED:
         title: "L’Ente Creditore ha revocato questo avviso"
         subtitle: "Contatta l’Ente per maggiori informazioni."
+        action: "Scopri di più"
       PAYMENT_DUPLICATED:
         title: "Questo avviso è stato già pagato!"
       PAYMENT_VERIFY_GENERIC_ERROR:
         title: "Non riusciamo a verificare lo stato di questo avviso"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       GENERIC_ERROR:
-        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        title: "Stiamo riscontrando alcuni problemi sui sistemi di pagamento"
         subtitle: "Riprova più tardi."
       PAYMENT_SLOWDOWN_ERROR:
-        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        title: "Stiamo riscontrando alcuni problemi sui sistemi di pagamento"
         subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
@@ -3328,7 +3335,7 @@ features:
           content: Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!
           action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
-      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
+      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n\n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
       tos: Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyAndTosUrl}}).
       upcomingWalletBanner:
         title: "Novità in arrivo: i tuoi Documenti su IO"
@@ -3537,7 +3544,7 @@ features:
         openPdf: "Mostra documento"
         shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
-      eid: 
+      eid:
         verificationExpired:
           title: Verifica la tua identità
           contentStart: "È un passaggio di sicurezza necessario per continuare ad usare "
@@ -3548,6 +3555,31 @@ features:
         title: Non siamo riusciti a caricare {{credentialName}}
         content: Chiudi e riapri l'app per riprovare.
         primaryAction: Ho capito
+      selectiveDisclosure:
+        title: Dati richiesti
+        subtitle: Saranno mostrati a **{{relyingParty}}** per accedere ai servizi richiesti.
+        requiredClaims: Dati necessari
+        optionalClaims: Dati facoltativi
+        claimUnavailable: Non disponibile
+        optionalClaimsAlert: I dati facoltativi ti offrono servizi più completi.
+        disclaimer:
+          - I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
+          - I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento.
+        tos: "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}})."
+      remote:
+        loadingScreen:
+          title: Stiamo facendo alcune verifiche di sicurezza...
+          subtitle: Attendi qualche secondo
+        walletInactiveScreen:
+          title: Attiva Documenti su IO per continuare
+          subtitle: Per accedere con IT Wallet ai servizi online è necessario prima attivare la funzionalità Documenti su IO.
+          primaryAction: Inizia
+          secondaryAction: Non ora
+        missingCredentialsScreen:
+          title: Mancano i dati contenuti in {{credentialName}}
+          subtitle: Aggiungi il documento al Portafoglio prima di continuare e poi riprova.
+          primaryAction: Aggiungi documento al Portafoglio
+          secondaryAction: Annulla
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale
@@ -3710,6 +3742,7 @@ idpay:
     details:
       initiativeCard:
         availableAmount: Disponibile
+        refundRequestedAmount: Rimborso richiesto
         validUntil: Fino al {{expiryDate}}
         expiresOn: Scade il {{expiryDate}}
         toRefund: Da rimborsare
@@ -3771,6 +3804,7 @@ idpay:
         scanQr: Inquadra un codice QR
         generateBarcode: Crea un codice sconto
       authorizeButton: Autorizza un pagamento
+      addExpenseButton: Aggiungi spesa
       IDPayCode:
         banner:
           title: Paga con la tua carta d’identità elettronica
@@ -3811,6 +3845,7 @@ idpay:
       buttons:
         privacy: Preferenze & Privacy
         unsubscribe: Rimuovi {{initiativeName}}
+        requestHelp: Chiedi aiuto
     operationDetails:
       discount:
         labels:
@@ -4205,7 +4240,8 @@ transaction:
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
-      noticeCode: Codice avviso
+      noticeCode: Codice avviso/IUV
+      noticeCodeAccessible: Codice avviso/Identificativo Univoco Versamento
       taxCode: Codice Fiscale Ente
 FIMS:
   updateApp:

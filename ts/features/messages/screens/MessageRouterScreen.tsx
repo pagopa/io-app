@@ -88,7 +88,8 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
         data.containsPayment,
         data.hasRemoteContent,
         data.containsAttachments,
-        fromPushNotification
+        fromPushNotification,
+        data.hasFIMSCTA
       );
 
       if (data.isLegacyGreenPass) {

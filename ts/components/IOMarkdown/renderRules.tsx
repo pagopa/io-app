@@ -41,7 +41,11 @@ import I18n from "../../i18n";
 import { openWebUrl } from "../../utils/url";
 import { isAndroid } from "../../utils/platform";
 import { IOMarkdownRenderRules, Renderer } from "./types";
-import { extractAllLinksFromRootNode, LinkData } from "./markdownRenderer";
+import {
+  extractAllLinksFromRootNode,
+  isParagraphNodeInHierarchy,
+  LinkData
+} from "./markdownRenderer";
 
 const BULLET_ITEM_FULL = "\u2022";
 const BULLET_ITEM_EMPTY = "\u25E6";
@@ -440,7 +444,14 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     const [, value] = val;
 
     if (value === "br") {
-      return <Fragment key={getTxtNodeKey(html)}>{"\n"}</Fragment>;
+      const hasAParentParagraphNode = isParagraphNodeInHierarchy(html.parent);
+      return hasAParentParagraphNode ? (
+        <Fragment key={getTxtNodeKey(html)}>{"\n"}</Fragment>
+      ) : (
+        <Body key={getTxtNodeKey(html)}>
+          <Fragment>{"\n"}</Fragment>
+        </Body>
+      );
     }
 
     return null;

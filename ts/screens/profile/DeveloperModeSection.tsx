@@ -43,7 +43,7 @@ import {
 } from "../../store/reducers/authentication";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
-  isIdPayTestEnabledSelector,
+  isIdPayLocallyEnabledSelector,
   isIOMarkdownEnabledLocallySelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -53,8 +53,6 @@ import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { isCieIDLocalFeatureEnabledSelector } from "../../features/cieLogin/store/selectors";
-import { cieIDFeatureSetEnabled } from "../../features/cieLogin/store/actions";
 import { requestAppReview } from "../../utils/storeReview";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
@@ -351,7 +349,7 @@ const DesignSystemSection = () => {
 
 const PlaygroundsSection = () => {
   const navigation = useIONavigation();
-  const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
+  const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
@@ -455,10 +453,7 @@ const DeveloperTestEnvironmentSection = ({
   const dispatch = useIODispatch();
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
-  const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isCieIDFeatureEnabled = useIOSelector(
-    isCieIDLocalFeatureEnabledSelector
-  );
+  const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -505,9 +500,6 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
     handleShowModal();
   };
-  const onCieIDFeatureToggle = (enabled: boolean) => {
-    dispatch(cieIDFeatureSetEnabled({ isCieIDFeatureEnabled: enabled }));
-  };
 
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
@@ -526,11 +518,6 @@ const DeveloperTestEnvironmentSection = ({
       description: I18n.t("profile.main.idpay.idpayTestAlert"),
       value: isIdPayTestEnabled,
       onSwitchValueChange: onIdPayTestToggle
-    },
-    {
-      label: I18n.t("profile.main.cieID.cieIdTest.title"),
-      value: isCieIDFeatureEnabled,
-      onSwitchValueChange: onCieIDFeatureToggle
     }
   ];
 
