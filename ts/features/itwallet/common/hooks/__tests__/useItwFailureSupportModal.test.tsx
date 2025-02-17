@@ -1,7 +1,7 @@
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { render } from "@testing-library/react-native";
-import { useItwFailureSupportModal } from "../useItwFailureSupportModal";
+import {useItwFailureSupportModal, ZendeskSubcategoryValue} from "../useItwFailureSupportModal";
 import {
   IssuanceFailure,
   IssuanceFailureType
@@ -13,6 +13,7 @@ import {
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
+import {ItwFailure} from "../../utils/ItwFailureTypes.ts";
 
 jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
   // Mock the bottom sheet to immediately render the component
@@ -25,6 +26,7 @@ describe("useItwFailureSupportModal", () => {
   it("renders support chat when it is enabled", () => {
     const { queryByTestId } = renderHook({
       supportChatEnabled: true,
+      zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
       failure: {
         type: IssuanceFailureType.WALLET_PROVIDER_GENERIC,
         reason: {}
@@ -41,6 +43,7 @@ describe("useItwFailureSupportModal", () => {
     const { queryByTestId } = renderHook({
       supportChatEnabled: false,
       credentialType: "MDL",
+      zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
       failure: {
         type: CredentialIssuanceFailureType.ISSUER_GENERIC,
         reason: {}
@@ -57,6 +60,7 @@ describe("useItwFailureSupportModal", () => {
     const { queryByTestId } = renderHook({
       supportChatEnabled: false,
       credentialType: "EuropeanHealthInsuranceCard",
+      zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
       failure: {
         type: CredentialIssuanceFailureType.ISSUER_GENERIC,
         reason: {}
@@ -73,6 +77,7 @@ describe("useItwFailureSupportModal", () => {
     const { queryByTestId } = renderHook({
       supportChatEnabled: false,
       credentialType: "EuropeanDisabilityCard",
+      zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
       failure: {
         type: CredentialIssuanceFailureType.ISSUER_GENERIC,
         reason: {}
@@ -87,9 +92,10 @@ describe("useItwFailureSupportModal", () => {
 });
 
 type Params = {
-  failure: IssuanceFailure | CredentialIssuanceFailure;
+  failure: IssuanceFailure | CredentialIssuanceFailure | ItwFailure;
   credentialType?: string;
   supportChatEnabled: boolean;
+  zendeskSubcategory: ZendeskSubcategoryValue;
 };
 
 const renderHook = (params: Params) => {
