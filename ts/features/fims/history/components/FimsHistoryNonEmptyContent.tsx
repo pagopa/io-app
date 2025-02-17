@@ -1,29 +1,28 @@
-import { Divider, IOStyles } from "@pagopa/io-app-design-system";
+import { Divider, FooterActions, IOStyles } from "@pagopa/io-app-design-system";
 import { FlashList } from "@shopify/flash-list";
 import { AccessHistoryPage } from "../../../../../definitions/fims_history/AccessHistoryPage";
-import * as RemoteValue from "../../../../common/model/RemoteValue";
-import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useFooterActionsMeasurements } from "../../../../hooks/useFooterActionsMeasurements";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { LoadingFimsHistoryItemsFooter } from "../components/FimsHistoryLoaders";
 import { useFimsHistoryExport } from "../hooks/useFimsHistoryResultToasts";
 import {
-  fimsHistoryExportStateSelector,
+  isFimsHistoryExportingSelector,
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
 import { FimsHistoryHeaderComponent } from "./FimsHistoryHeaderComponent";
 import { FimsHistoryListItemPicker } from "./FimsHistoryListItemPicker";
+import { LoadingFimsHistoryItemsFooter } from "./FimsHistoryLoaders";
+
+export type FimsHistoryNonEmptyContentProps = {
+  accesses?: AccessHistoryPage;
+  fetchMore: () => void;
+};
 
 export const FimsHistoryNonEmptyContent = ({
   accesses,
   fetchMore
-}: {
-  accesses?: AccessHistoryPage;
-  fetchMore: () => void;
-}) => {
-  const historyExportState = useIOSelector(fimsHistoryExportStateSelector);
-  const isHistoryExporting = RemoteValue.isLoading(historyExportState);
+}: FimsHistoryNonEmptyContentProps) => {
+  const isHistoryExporting = useIOSelector(isFimsHistoryExportingSelector);
   const isHistoryLoading = useIOSelector(isFimsHistoryLoadingSelector);
 
   const { handleExportOnPress } = useFimsHistoryExport();
@@ -60,12 +59,14 @@ export const FimsHistoryNonEmptyContent = ({
       {!shouldHideFooter && (
         <FooterActions
           onMeasure={handleFooterActionsMeasurements}
+          testID="export-footer"
           actions={{
             type: "SingleButton",
             primary: {
               loading: isHistoryExporting,
               label: I18n.t("FIMS.history.exportData.CTA"),
-              onPress: handleExportOnPress
+              onPress: handleExportOnPress,
+              testID: "export-button"
             }
           }}
         />

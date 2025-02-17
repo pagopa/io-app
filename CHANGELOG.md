@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.83.0-rc.3](https://github.com/pagopa/io-app/compare/2.83.0-rc.2...2.83.0-rc.3) (2025-02-14)
+
+
+### Bug Fixes
+
+* [[IOBP-1156](https://pagopa.atlassian.net/browse/IOBP-1156)] `a11y` InputForm error message ([#6703](https://github.com/pagopa/io-app/issues/6703)) ([a5d2865](https://github.com/pagopa/io-app/commit/a5d286575ab37ed6359acab09def60403612766e))
+* [[PE-959](https://pagopa.atlassian.net/browse/PE-959),[PE-960](https://pagopa.atlassian.net/browse/PE-960),[PE-961](https://pagopa.atlassian.net/browse/PE-961),[PE-962](https://pagopa.atlassian.net/browse/PE-962)] Remove transparent header in `CGN` ([#6709](https://github.com/pagopa/io-app/issues/6709)) ([84a1f99](https://github.com/pagopa/io-app/commit/84a1f995cb9df4435a217890b2715ae576054d6c))
+
+
+### Chores
+
+* **IDPay:** [[IOBP-1205](https://pagopa.atlassian.net/browse/IOBP-1205)] Removed the missing configuration alert for `EXPENSE` initiatives ([#6719](https://github.com/pagopa/io-app/issues/6719)) ([6099525](https://github.com/pagopa/io-app/commit/60995255f1e0cb7ecfba92bc4f5795356c8254be))
+
+## [2.83.0-rc.2](https://github.com/pagopa/io-app/compare/2.83.0-rc.1...2.83.0-rc.2) (2025-02-13)
+
+
+### Bug Fixes
+
+* **IDPay:** [[IOBP-1203](https://pagopa.atlassian.net/browse/IOBP-1203)] Show some IDPay features not needed under local feature flag ([#6712](https://github.com/pagopa/io-app/issues/6712)) ([487d9b9](https://github.com/pagopa/io-app/commit/487d9b92c240b25203a80486aeffbfa0bf060106))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1964](https://pagopa.atlassian.net/browse/SIW-1964)] Add failure screen for missing credentials in presentation ([#6702](https://github.com/pagopa/io-app/issues/6702)) ([c89685c](https://github.com/pagopa/io-app/commit/c89685c1c4f5564491b97d998de4106f0f9359b2))
+
+## [2.83.0-rc.1](https://github.com/pagopa/io-app/compare/2.83.0-rc.0...2.83.0-rc.1) (2025-02-12)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1962](https://pagopa.atlassian.net/browse/SIW-1962)] Remote presentation handle wallet instance presence ([#6694](https://github.com/pagopa/io-app/issues/6694)) ([20d6906](https://github.com/pagopa/io-app/commit/20d6906331909b8ee703d0cc0d9193d92db97d2d))
+
 ## [2.83.0-rc.0](https://github.com/pagopa/io-app/compare/2.82.0-rc.7...2.83.0-rc.0) (2025-02-11)
 
 
