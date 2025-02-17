@@ -247,7 +247,6 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -266,7 +265,6 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -518,15 +516,14 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,

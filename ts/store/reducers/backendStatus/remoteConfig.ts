@@ -19,7 +19,7 @@ import { getAppVersion, isVersionSupported } from "../../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../../actions/backendStatus";
 import { Action } from "../../actions/types";
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
-import { isIdPayTestEnabledSelector } from "../persistedPreferences";
+import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
@@ -279,9 +279,9 @@ export const isFciEnabledSelector = createSelector(
 
 export const isIdPayEnabledSelector = createSelector(
   remoteConfigSelector,
-  isIdPayTestEnabledSelector,
+  isIdPayLocallyEnabledSelector,
   (remoteConfig, isIdPayTestEnabled): boolean =>
-    isIdPayTestEnabled &&
+    isIdPayTestEnabled ||
     pipe(
       remoteConfig,
       O.map(config =>
@@ -392,4 +392,22 @@ export const landingScreenBannerOrderSelector = (state: GlobalState) =>
     O.chainNullableK(config => config.landing_banners),
     O.chainNullableK(banners => banners.priority_order),
     O.getOrElse(() => emptyArray)
+  );
+
+/**
+ * The 'disabledForMessagesAndServices' on the 'ioMarkdown' is used to
+ * remotely disable the IO Markdown feature for messages and services,
+ * bypassing the local feature flag (in the relative selector).
+ * @param state The global redux state
+ * @returns true if IOMarkdown has to be disabled for messages and services
+ */
+export const isIOMarkdownDisabledForMessagesAndServices = (
+  state: GlobalState
+): boolean =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.chainNullableK(config => config.ioMarkdown),
+    O.chainNullableK(ioMarkdown => ioMarkdown.disabledForMessagesAndServices),
+    O.getOrElse(() => false)
   );

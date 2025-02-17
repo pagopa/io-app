@@ -1,8 +1,8 @@
 import {
   Badge,
   Divider,
-  H6,
   H4,
+  H6,
   Icon,
   ListItemAction,
   ListItemHeader,
@@ -650,7 +650,7 @@ const renderListItemTransaction = () => (
         transaction={{
           badge: getBadgePropsByTransactionStatus("refunded")
         }}
-        paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
+        paymentLogoIcon={<Icon name="refund" />}
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
@@ -687,7 +687,7 @@ const renderListItemTransaction = () => (
           amount: "",
           amountAccessibilityLabel: ""
         }}
-        paymentLogoIcon={<Icon name="notice" color="red" />}
+        paymentLogoIcon={<Icon name="notice" color="error-500" />}
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>

@@ -412,8 +412,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                             }
                           />
                           <View
-                            accessibilityLabel="List Header"
-                            accessible={true}
                             style={
                               {
                                 "marginHorizontal": -24,
@@ -423,7 +421,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                             }
                           >
                             <View
-                              importantForAccessibility="no-hide-descendants"
                               style={
                                 {
                                   "alignItems": "center",
@@ -440,9 +437,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                 }
                               >
                                 <View
-                                  accessibilityElementsHidden={false}
+                                  accessibilityLabel="List Header"
+                                  accessibilityRole="header"
                                   accessible={true}
-                                  importantForAccessibility="yes"
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -828,15 +825,14 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -1464,15 +1460,14 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,
@@ -2000,8 +1995,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                             }
                           />
                           <View
-                            accessibilityLabel="List Header"
-                            accessible={true}
                             style={
                               {
                                 "marginHorizontal": -24,
@@ -2011,7 +2004,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                             }
                           >
                             <View
-                              importantForAccessibility="no-hide-descendants"
                               style={
                                 {
                                   "alignItems": "center",
@@ -2028,9 +2020,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                 }
                               >
                                 <View
-                                  accessibilityElementsHidden={false}
+                                  accessibilityLabel="List Header"
+                                  accessibilityRole="header"
                                   accessible={true}
-                                  importantForAccessibility="yes"
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -2416,15 +2408,14 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,

@@ -1,6 +1,7 @@
 import { GlobalState } from "../../../../store/reducers/types";
 import { type CredentialIssuanceFailure } from "../../machine/credential/failure";
 import { type IssuanceFailure } from "../../machine/eid/failure";
+import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
 
 interface PollForStoreValueOptions<T> {
   getState: () => GlobalState;
@@ -54,7 +55,7 @@ export const pollForStoreValue = <T>({
  * Serialize failure reasons that are instances of {@link Error}, to be safely stored and displayed.
  */
 export const serializeFailureReason = (
-  failure: IssuanceFailure | CredentialIssuanceFailure
+  failure: IssuanceFailure | CredentialIssuanceFailure | RemoteFailure
 ) => ({
   ...failure,
   reason:

@@ -2,6 +2,7 @@ import {
   Body,
   BodySmall,
   Divider,
+  ListItemAction,
   ListItemHeader,
   ListItemInfo,
   ListItemTransaction,
@@ -35,6 +36,8 @@ import { format } from "../../../../utils/dates";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
 import { IdPayUnsubscriptionRoutes } from "../../unsubscription/navigation/routes";
+import { useIdPaySupportModal } from "../../common/hooks/useIdPaySupportModal";
+import { IDPayDetailsRoutes } from "../navigation";
 import {
   InitiativeRulesInfoBox,
   InitiativeRulesInfoBoxSkeleton
@@ -63,6 +66,7 @@ const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
 const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const { startIdPaySupport } = useIdPaySupportModal();
   const { initiativeDetails, beneficiaryDetails, onboardingStatus, isLoading } =
     props;
 
@@ -200,6 +204,10 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       )
     );
 
+  const handleRequestHelpPress = () => {
+    startIdPaySupport(IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY);
+  };
+
   const handleUnsubscribePress = () => {
     pipe(
       sequenceS(O.Monad)({
@@ -281,36 +289,74 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       </>
     ));
 
+  const renderBeneficiaryDetailsContent = () => {
+    switch (initiativeType) {
+      case InitiativeRewardTypeEnum.DISCOUNT:
+      case InitiativeRewardTypeEnum.REFUND:
+        return (
+          <>
+            <ListItemHeader
+              label={I18n.t("idpay.initiative.beneficiaryDetails.summary")}
+            />
+            {renderTableRow(summaryData)}
+            <VSpacer size={8} />
+            <BodySmall weight="Regular">{lastUpdateString}</BodySmall>
+            <VSpacer size={8} />
+            <ListItemHeader
+              label={I18n.t(
+                "idpay.initiative.beneficiaryDetails.spendingRules"
+              )}
+            />
+            {renderTableRow(spendingRulesData)}
+            <ListItemHeader
+              label={I18n.t(
+                "idpay.initiative.beneficiaryDetails.enrollmentDetails"
+              )}
+            />
+            {renderTableRow(enrollmentData)}
+            <VSpacer size={16} />
+            <Body weight="Semibold" asLink onPress={handlePrivacyLinkPress}>
+              {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
+            </Body>
+            <VSpacer size={16} />
+            <Body weight="Semibold" asLink onPress={handleUnsubscribePress}>
+              {I18n.t(
+                "idpay.initiative.beneficiaryDetails.buttons.unsubscribe",
+                {
+                  initiativeName
+                }
+              )}
+            </Body>
+          </>
+        );
+      default:
+        return (
+          <>
+            <VSpacer size={32} />
+            <ListItemAction
+              label={I18n.t(
+                "idpay.initiative.beneficiaryDetails.buttons.privacy"
+              )}
+              onPress={handlePrivacyLinkPress}
+              variant="primary"
+            />
+            <Divider />
+            <ListItemAction
+              label={I18n.t(
+                "idpay.initiative.beneficiaryDetails.buttons.requestHelp"
+              )}
+              onPress={handleRequestHelpPress}
+              variant="danger"
+            />
+          </>
+        );
+    }
+  };
+
   return (
     <>
       {ruleInfoBox}
-      <ListItemHeader
-        label={I18n.t("idpay.initiative.beneficiaryDetails.summary")}
-      />
-      {renderTableRow(summaryData)}
-      <VSpacer size={8} />
-      <BodySmall weight="Regular" color="bluegrey">
-        {lastUpdateString}
-      </BodySmall>
-      <VSpacer size={8} />
-      <ListItemHeader
-        label={I18n.t("idpay.initiative.beneficiaryDetails.spendingRules")}
-      />
-      {renderTableRow(spendingRulesData)}
-      <ListItemHeader
-        label={I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDetails")}
-      />
-      {renderTableRow(enrollmentData)}
-      <VSpacer size={16} />
-      <Body weight="Semibold" asLink onPress={handlePrivacyLinkPress}>
-        {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
-      </Body>
-      <VSpacer size={16} />
-      <Body weight="Semibold" asLink onPress={handleUnsubscribePress}>
-        {I18n.t("idpay.initiative.beneficiaryDetails.buttons.unsubscribe", {
-          initiativeName
-        })}
-      </Body>
+      {renderBeneficiaryDetailsContent()}
       <VSpacer size={48} />
     </>
   );

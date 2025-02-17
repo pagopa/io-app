@@ -55,7 +55,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
           align="xMidYMid"
           bbHeight={120}
           bbWidth={120}
-          color="#00C5CA"
           focusable={false}
           height={120}
           meetOrSlice={0}
@@ -74,7 +73,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
               },
             ]
           }
-          tintColor="#00C5CA"
           vbHeight={240}
           vbWidth={240}
           width={120}
@@ -301,15 +299,14 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "textAlignVertical": "center",
                   },
                   {
+                    "backgroundColor": "#0073E6",
                     "overflow": "hidden",
                   },
                   false,
                   {
                     "height": 40,
                   },
-                  {
-                    "backgroundColor": "#0073E6",
-                  },
+                  {},
                   false,
                   {
                     "backgroundColor": undefined,
@@ -545,7 +542,6 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
           align="xMidYMid"
           bbHeight={120}
           bbWidth={120}
-          color="#00C5CA"
           focusable={false}
           height={120}
           meetOrSlice={0}
@@ -564,7 +560,6 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
               },
             ]
           }
-          tintColor="#00C5CA"
           vbHeight={240}
           vbWidth={240}
           width={120}
@@ -793,15 +788,14 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "textAlignVertical": "center",
                   },
                   {
+                    "backgroundColor": "#0073E6",
                     "overflow": "hidden",
                   },
                   false,
                   {
                     "height": 40,
                   },
-                  {
-                    "backgroundColor": "#0073E6",
-                  },
+                  {},
                   false,
                   {
                     "backgroundColor": undefined,

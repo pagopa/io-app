@@ -1529,8 +1529,8 @@ wallet:
     fee: "Transaktionsgebühr"
     idTransaction: "Identifikationscode der Transaktion"
     amountInfo:
-      title: "Siehst du einen anderen Betrag?"
-      message: "pagoPA aktualisiert den Betrag automatisch, um sicherzustellen, dass du genau den Betrag bezahlst, den du schuldest und somit weitere Strafen oder Zinsen vermeidest"
+      title: "Ist der Betrag anders als auf der pagoPA-Benachrichtigung?"
+      message: "Wenn sich der Betrag ändert, bedeutet das, dass die Gläubigerinstitution ihn automatisch aktualisiert hat. So kannst du sicher sein, immer den fälligen Betrag zu bezahlen. Falls er höher ist, könnten Zinsen, Strafen oder Benachrichtigungskosten anfallen.\n\nFür weitere Details wende dich bitte an die Gläubigerinstitution, da pagoPA die Gründe für die Aktualisierung nicht kennt."
       cta: "OK, habe verstanden"
     contextualHelpTitle: "Zusammenfassung der Transaktion"
     errorDetails:
@@ -1839,6 +1839,7 @@ wallet:
       PAYMENT_CANCELED:
         title: "Die ausstellende Körperschaft hat diese Zahlungsmitteilung zurückgezogen"
         subtitle: "Wende dich für weitere Informationen an die Körperschaft."
+        action: "Scopri di più"
       PAYMENT_DUPLICATED:
         title: "Diese Zahlungsmitteilung wurde bereits bezahlt!"
       PAYMENT_VERIFY_GENERIC_ERROR:
@@ -3206,7 +3207,8 @@ transaction:
       debtor: "Schuldner"
       iuv: "IUV"
       subject: "Zahlungsgrund"
-      noticeCode: "Kodex der Zahlungsmitteilung"
+      noticeCode: "Kodex der Zahlungsmitteilung/IUV"
+      noticeCodeAccessible: Codice avviso/Identificativo Univoco Versamento
       taxCode: "Steuernummer Körperschaft"
 FIMS:
   updateApp:

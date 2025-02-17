@@ -4,11 +4,13 @@ import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Dispatch } from "redux";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { PaymentData, UIMessage } from "../types";
+import { PaymentData, UIMessage, UIMessageDetails } from "../types";
 import { NetworkError, getNetworkError } from "../../../utils/errors";
 import { addUserSelectedPaymentRptId } from "../store/actions";
 import { Action } from "../../../store/actions/types";
 import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
+import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 
 export const gapBetweenItemsInAGrid = 8;
 
@@ -84,3 +86,25 @@ export const duplicateSetAndToggle = <A>(inputSet: Set<A>, id: A) =>
     : duplicateSetAndAdd(inputSet, id);
 
 export const emptyMessageArray: ReadonlyArray<UIMessage> = [];
+
+export const extractContentFromMessageSources = <T>(
+  extractionFunction: (input: RemoteContentDetails | UIMessageDetails) => T,
+  messageDetails: UIMessageDetails | undefined,
+  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
+): T | undefined => {
+  const thirdPartyMessageDetails =
+    thirdPartyMessage?.third_party_message.details;
+  if (thirdPartyMessageDetails != null) {
+    const decodedThirdPartyMessageDetails = RemoteContentDetails.decode(
+      thirdPartyMessageDetails
+    );
+    if (E.isRight(decodedThirdPartyMessageDetails)) {
+      return extractionFunction(decodedThirdPartyMessageDetails.right);
+    }
+  }
+
+  if (messageDetails != null) {
+    return extractionFunction(messageDetails);
+  }
+  return undefined;
+};

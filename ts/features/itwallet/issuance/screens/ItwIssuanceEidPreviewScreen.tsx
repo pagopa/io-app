@@ -1,4 +1,5 @@
 import {
+  FooterActions,
   ForceScrollDownView,
   H2,
   HeaderSecondLevel,
@@ -10,10 +11,9 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useLayoutEffect, useMemo } from "react";
+import { useCallback, useLayoutEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -80,10 +80,14 @@ const ContentView = ({ eid }: ContentViewProps) => {
     [eid.credentialType]
   );
 
-  useFocusEffect(() => {
-    trackCredentialPreview(mixPanelCredential);
-    trackItwRequestSuccess(identification?.mode);
-  });
+  useFocusEffect(
+    useCallback(() => {
+      trackCredentialPreview(mixPanelCredential);
+      if (identification) {
+        trackItwRequestSuccess(identification?.mode, identification?.level);
+      }
+    }, [identification, mixPanelCredential])
+  );
 
   useDebugInfo({
     parsedCredential: eid.parsedCredential
@@ -93,10 +97,6 @@ const ContentView = ({ eid }: ContentViewProps) => {
     machineRef.send({ type: "close" });
     trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
   });
-
-  const handleStoreEidSuccess = () => {
-    machineRef.send({ type: "add-to-wallet" });
-  };
 
   const handleSaveToWallet = () => {
     trackSaveCredentialToWallet(eid.credentialType);
@@ -110,7 +110,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
           onCancel: () => undefined
         },
         {
-          onSuccess: handleStoreEidSuccess
+          onSuccess: () => machineRef.send({ type: "add-to-wallet" })
         }
       )
     );

@@ -405,15 +405,14 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                 "textAlignVertical": "center",
               },
               {
+                "backgroundColor": "#0073E6",
                 "overflow": "hidden",
               },
               false,
               {
                 "height": 40,
               },
-              {
-                "backgroundColor": "#0073E6",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,
@@ -1344,15 +1343,14 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 "textAlignVertical": "center",
               },
               {
+                "backgroundColor": "#0073E6",
                 "overflow": "hidden",
               },
               false,
               {
                 "height": 40,
               },
-              {
-                "backgroundColor": "#0073E6",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,
@@ -2389,15 +2387,14 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 "textAlignVertical": "center",
               },
               {
+                "backgroundColor": "#0073E6",
                 "overflow": "hidden",
               },
               false,
               {
                 "height": 40,
               },
-              {
-                "backgroundColor": "#0073E6",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,
@@ -2732,15 +2729,14 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 "textAlignVertical": "center",
               },
               {
+                "backgroundColor": "#0073E6",
                 "overflow": "hidden",
               },
               false,
               {
                 "height": 40,
               },
-              {
-                "backgroundColor": "#0073E6",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,

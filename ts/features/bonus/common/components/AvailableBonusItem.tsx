@@ -6,7 +6,7 @@ import { BonusAvailable } from "../../../../../definitions/content/BonusAvailabl
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
-import { getRemoteLocale } from "../../../messages/utils/messages";
+import { getRemoteLocale } from "../../../messages/utils/ctas";
 
 export type AvailableBonusItemState = "incoming" | "active" | "completed";
 
@@ -79,7 +79,7 @@ export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {
     >
       <View style={styles.columnLeft}>
         <View style={[IOStyles.row, IOStyles.alignCenter, disabledStyle]}>
-          <H6 color="bluegreyDark">{bonusTypeLocalizedContent.name}</H6>
+          <H6 color="grey-850">{bonusTypeLocalizedContent.name}</H6>
           <HSpacer size={8} />
           {renderBadge(state)}
         </View>

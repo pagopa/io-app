@@ -377,7 +377,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                               align="xMidYMid"
                               bbHeight={180}
                               bbWidth={180}
-                              color="#00C5CA"
                               focusable={false}
                               height={180}
                               meetOrSlice={0}
@@ -396,7 +395,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -802,15 +800,14 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     "textAlignVertical": "center",
                                   },
                                   {
+                                    "backgroundColor": "#0073E6",
                                     "overflow": "hidden",
                                   },
                                   false,
                                   {
                                     "height": 40,
                                   },
-                                  {
-                                    "backgroundColor": "#0073E6",
-                                  },
+                                  {},
                                   false,
                                   {
                                     "backgroundColor": undefined,

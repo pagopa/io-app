@@ -20,7 +20,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   primaryBlockLegacy: {
-    backgroundColor: IOColors.blue,
+    backgroundColor: IOColors["blue-500"],
     padding: 16,
     borderRadius: 8
   },
@@ -371,73 +371,6 @@ const renderButtonOutline = (isExperimental: boolean) => (
         />
       </VStack>
     </DSComponentViewerBox>
-
-    {!isExperimental && (
-      <>
-        <DSComponentViewerBox name="ButtonOutline · Danger variant">
-          <VStack space={buttonBlockInnerSpacing}>
-            <ButtonOutline
-              color="danger"
-              label={"Danger button"}
-              onPress={onButtonPress}
-              accessibilityLabel="Tap to trigger test alert"
-            />
-
-            <ButtonOutline
-              color="danger"
-              label={"Danger button"}
-              icon="trashcan"
-              accessibilityLabel="Tap to trigger test alert"
-              onPress={onButtonPress}
-            />
-
-            <ButtonOutline
-              color="danger"
-              label={"Danger button"}
-              icon="trashcan"
-              iconPosition="end"
-              accessibilityLabel="Tap to trigger test alert"
-              onPress={onButtonPress}
-            />
-          </VStack>
-        </DSComponentViewerBox>
-        <DSComponentViewerBox name="ButtonOutline · Danger, full width">
-          <ButtonOutline
-            fullWidth
-            color="danger"
-            accessibilityLabel="Tap to trigger test alert"
-            label={"Danger button (full width)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
-          />
-        </DSComponentViewerBox>
-
-        <DSComponentViewerBox name="ButtonOutline · Danger, disabled">
-          <VStack space={buttonBlockInnerSpacing}>
-            <ButtonOutline
-              color="danger"
-              disabled
-              accessibilityLabel="Tap to trigger test alert"
-              label={"Danger button (disabled)"}
-              onPress={() => {
-                alert("Action triggered");
-              }}
-            />
-            <ButtonOutline
-              color="danger"
-              disabled
-              fullWidth
-              accessibilityLabel="Tap to trigger test alert"
-              label={"Danger Button (full width, disabled)"}
-              onPress={() => {
-                alert("Action triggered");
-              }}
-            />
-          </VStack>
-        </DSComponentViewerBox>
-      </>
-    )}
 
     <View
       style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}

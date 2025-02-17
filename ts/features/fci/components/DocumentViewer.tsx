@@ -1,4 +1,5 @@
 import {
+  ButtonOutline,
   ButtonSolidProps,
   FooterActions,
   FooterActionsInline,
@@ -27,7 +28,7 @@ import LoadingComponent from "./LoadingComponent";
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors.bluegrey
+    backgroundColor: IOColors["grey-700"]
   }
 });
 
@@ -57,7 +58,7 @@ const renderFooter = (url: string, filePath: string) => {
     accessibilityLabel: I18n.t("global.buttons.share")
   };
 
-  const saveButtonProps: ButtonSolidProps = {
+  const saveButtonProps: ButtonOutline = {
     onPress: () => {
       ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
         {
