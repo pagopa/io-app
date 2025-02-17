@@ -272,10 +272,6 @@ export const LandingScreen = () => {
 
     const { name: routeName } = useRoute();
 
-    const sessionExpiredCardContent = I18n.t(
-      "authentication.landing.session_expired.body"
-    );
-
     const carouselCards: ReadonlyArray<
       ComponentProps<typeof LandingCardComponent>
     > = useMemo(
@@ -341,7 +337,7 @@ export const LandingScreen = () => {
             ref={accessibilityFirstFocuseViewRef}
             pictogramName={"identityCheck"}
             title={I18n.t("authentication.landing.session_expired.title")}
-            content={sessionExpiredCardContent}
+            content={I18n.t("authentication.landing.session_expired.body")}
             buttonLink={{
               label: I18n.t(
                 "authentication.landing.session_expired.linkButtonLabel"
@@ -354,7 +350,7 @@ export const LandingScreen = () => {
                   helpCenterHowToDoWhenSessionIsExpiredUrl,
                   routeName
                 );
-                openWebUrl("", () => {
+                openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
                   error(I18n.t("global.jserror.title"));
                 });
               }
