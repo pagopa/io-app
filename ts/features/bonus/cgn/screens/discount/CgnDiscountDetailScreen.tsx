@@ -191,13 +191,17 @@ const CgnDiscountDetailScreen = () => {
     }
   };
 
+  const { backgroundColor } = discountDetails?.isNew
+    ? styles.backgroundNewItem
+    : styles.backgroundDefault;
+
   useHeaderSecondLevel({
     title: discountDetails?.name || "",
     scrollValues: {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
     },
-    transparent: true,
+    backgroundColor,
     canGoBack: true,
     supportRequest: true
   });
@@ -249,10 +253,6 @@ const CgnDiscountDetailScreen = () => {
     );
   };
 
-  const discountColor = discountDetails?.isNew
-    ? styles.backgroundNewItem
-    : styles.backgroundDefault;
-
   if (discountDetails && merchantDetails) {
     return (
       <>
@@ -272,7 +272,7 @@ const CgnDiscountDetailScreen = () => {
               style={{
                 position: "absolute",
                 height: 1000,
-                backgroundColor: discountColor.backgroundColor,
+                backgroundColor,
                 top: -1000,
                 right: 0,
                 left: 0
