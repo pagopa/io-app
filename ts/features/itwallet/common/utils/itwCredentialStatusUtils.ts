@@ -25,7 +25,7 @@ export const getCredentialStatus = (
   credential: StoredCredential,
   options: GetCredentialStatusOptions = {}
 ): ItwCredentialStatus => {
-  const { expiringDays = 14 } = options;
+  const { expiringDays = 30 } = options;
   const {
     jwt,
     parsedCredential,
