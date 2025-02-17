@@ -71,6 +71,7 @@ const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
             tabOptions[route.name as keyof CgnMerchantsHomeTabParamsList].title;
           return (
             <TabItem
+              testID={`cgn-merchants-tab-${route.name}`}
               icon={
                 tabOptions[route.name as keyof CgnMerchantsHomeTabParamsList]
                   .icon
@@ -95,6 +96,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     supportRequest: true,
     secondAction: {
       icon: "search",
+      testID: "search-button",
       onPress() {
         navigate(CGN_ROUTES.DETAILS.MAIN, {
           screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
