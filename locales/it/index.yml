@@ -2206,6 +2206,7 @@ messageDetails:
     actions:
       call: Fai una chiamata
       email: Scrivi un'email
+  markdownLinkUnsupported: "Questo link non è supportato"
 messagePDFPreview:
   title: "Anteprima PDF"
   singleBtn: "Salva o condividi"
@@ -4221,7 +4222,8 @@ transaction:
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
-      noticeCode: Codice avviso
+      noticeCode: Codice avviso/IUV
+      noticeCodeAccessible: Codice avviso/Identificativo Univoco Versamento
       taxCode: Codice Fiscale Ente
 FIMS:
   updateApp:

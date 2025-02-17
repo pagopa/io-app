@@ -13,7 +13,6 @@ import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, RefreshControl, StatusBar, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import {
@@ -52,7 +51,6 @@ const CgnMerchantsListByCategory = () => {
 
   const animatedFlatListRef = useAnimatedRef<Animated.FlatList<any>>();
 
-  const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const route =
     useRoute<
@@ -170,7 +168,6 @@ const CgnMerchantsListByCategory = () => {
           style={[
             IOStyles.horizontalContentPadding,
             {
-              paddingTop: insets.top,
               backgroundColor: categorySpecs.colors,
               paddingBottom: 24
             }
