@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { assertEvent, assign, fromPromise, not, setup, and } from "xstate";
-import { assert } from "../../../../utils/assert";
+import { and, assertEvent, assign, fromPromise, not, setup } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
+import { assert } from "../../../../utils/assert.ts";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
@@ -50,10 +50,10 @@ export const itwEidIssuanceMachine = setup({
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
     handleSessionExpired: notImplemented,
-    abortIdentification: notImplemented,
     resetWalletInstance: notImplemented,
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
+    storeAuthLevel: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     onInit: notImplemented,
     /**
@@ -301,7 +301,7 @@ export const itwEidIssuanceMachine = setup({
                 actions: assign(() => ({
                   identification: {
                     mode: "cieId",
-                    abortController: new AbortController()
+                    level: "L2"
                   }
                 })),
                 target: "CieID"
@@ -352,7 +352,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: "completeUserIdentification"
+                  actions: ["completeUserIdentification", "storeAuthLevel"]
                 },
                 error: {
                   actions: "setFailure",
@@ -386,7 +386,11 @@ export const itwEidIssuanceMachine = setup({
                 "select-spid-idp": {
                   target: "StartingSpidAuthFlow",
                   actions: assign(({ event }) => ({
-                    identification: { mode: "spid", idpId: event.idp.id }
+                    identification: {
+                      mode: "spid",
+                      level: "L2",
+                      idpId: event.idp.id
+                    }
                   }))
                 },
                 back: {
@@ -425,7 +429,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: "completeUserIdentification"
+                  actions: ["completeUserIdentification", "storeAuthLevel"]
                 },
                 back: {
                   target: "IdpSelection"
@@ -456,14 +460,22 @@ export const itwEidIssuanceMachine = setup({
                     guard: "isNFCEnabled",
                     target: "StartingCieAuthFlow",
                     actions: assign(({ event }) => ({
-                      identification: { mode: "ciePin", pin: event.pin }
+                      identification: {
+                        mode: "ciePin",
+                        level: "L3",
+                        pin: event.pin
+                      }
                     }))
                   },
                   {
                     target:
                       "#itwEidIssuanceMachine.UserIdentification.CiePin.RequestingNfcActivation",
                     actions: assign(({ event }) => ({
-                      identification: { mode: "ciePin", pin: event.pin }
+                      identification: {
+                        level: "L3",
+                        mode: "ciePin",
+                        pin: event.pin
+                      }
                     }))
                   }
                 ],
@@ -522,7 +534,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: "completeUserIdentification"
+                  actions: ["completeUserIdentification", "storeAuthLevel"]
                 },
                 close: {
                   target: "#itwEidIssuanceMachine.UserIdentification"

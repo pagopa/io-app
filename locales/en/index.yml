@@ -2206,6 +2206,7 @@ messageDetails:
     actions:
       call: Call
       email: Send email
+  markdownLinkUnsupported: "This link is not supported"
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"

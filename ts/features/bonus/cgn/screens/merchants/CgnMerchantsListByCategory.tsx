@@ -152,7 +152,7 @@ const CgnMerchantsListByCategory = () => {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
     },
-    transparent: true,
+    backgroundColor: categorySpecs?.colors,
     supportRequest: true,
     secondAction: {
       icon: "search",
@@ -195,14 +195,12 @@ const CgnMerchantsListByCategory = () => {
           style={[
             IOStyles.horizontalContentPadding,
             {
-              paddingTop: insets.top,
               backgroundColor: categorySpecs.colors,
               paddingBottom: 24
             }
           ]}
         >
-          <VSpacer size={48} />
-          <VSpacer size={32} />
+          <VSpacer size={24} />
           <View style={[IOStyles.row, { alignItems: "center" }]}>
             <View
               style={{
