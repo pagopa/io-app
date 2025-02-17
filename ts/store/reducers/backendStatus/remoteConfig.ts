@@ -1,4 +1,5 @@
 import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
@@ -21,6 +22,7 @@ import { Action } from "../../actions/types";
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
+import { FimsServiceConfiguration_config } from "../../../../definitions/content/FimsServiceConfiguration";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -120,6 +122,26 @@ export const fimsRequiresAppUpdateSelector = (state: GlobalState) =>
         configPropertyName: "fims"
       })
   );
+
+export const fimsServiceConfiguration = createSelector(
+  [
+    remoteConfigSelector,
+    (_state: GlobalState, configurationId: string) => configurationId
+  ],
+  (
+    remoteConfig,
+    configurationId: string
+  ): FimsServiceConfiguration_config | undefined =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.fims.services),
+      O.map(
+        RA.findFirst(service => service.configuration_id === configurationId)
+      ),
+      O.flatten,
+      O.toUndefined
+    )
+);
 
 export const oidcProviderDomainSelector = (state: GlobalState) =>
   pipe(

@@ -12,11 +12,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { logosForService } from "../../common/utils";
 import { CTA, CTAS } from "../../../messages/types/MessageCTA";
-import {
-  CTAActionType,
-  getServiceCTA,
-  handleCtaAction
-} from "../../../messages/utils/ctas";
+import { getServiceCTA, handleCtaAction } from "../../../messages/utils/ctas";
 import * as analytics from "../../common/analytics";
 import { CtaCategoryType } from "../../common/analytics";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
@@ -44,7 +40,7 @@ import {
   serviceMetadataInfoSelector
 } from "../store/reducers";
 import { ServiceMetadataInfo } from "../types/ServiceMetadataInfo";
-import { trackAuthenticationStart } from "../../../fims/common/analytics";
+import { useFIMSFromServiceId } from "../../../fims/common/hooks";
 
 export type ServiceDetailsScreenRouteParams = {
   serviceId: ServiceId;
@@ -99,6 +95,8 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     [serviceMetadata]
   );
 
+  const { startFIMSAuthenticationFlow } = useFIMSFromServiceId(serviceId);
+
   useOnFirstRender(
     () => {
       analytics.trackServiceDetails({
@@ -152,18 +150,9 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
       cta_category: ctaType,
       service_id: serviceId
     });
-    handleCtaAction(cta, linkTo, (type: CTAActionType) => {
-      if (type === "fims") {
-        trackAuthenticationStart(
-          service.service_id,
-          service.service_name,
-          service.organization_name,
-          service.organization_fiscal_code,
-          cta.text,
-          "service_detail"
-        );
-      }
-    });
+    handleCtaAction(cta, linkTo, (label, url) =>
+      startFIMSAuthenticationFlow(label, url)
+    );
   };
 
   const getActionsProps = (

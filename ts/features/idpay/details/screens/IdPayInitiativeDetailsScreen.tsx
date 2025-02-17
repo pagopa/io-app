@@ -52,9 +52,7 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import NavigationService from "../../../../navigation/NavigationService";
-import { FIMS_ROUTES } from "../../../fims/common/navigation";
-import { removeFIMSPrefixFromUrl } from "../../../../components/ui/Markdown/handlers/link";
+import { useFIMSRemoteServiceConfiguration } from "../../../fims/common/hooks";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -87,18 +85,18 @@ const IdPayInitiativeDetailsScreen = () => {
     });
   };
 
+  const { startFIMSAuthenticationFlow } = useFIMSRemoteServiceConfiguration(
+    "idPayGuidoniaSummerCamp"
+  );
   const onAddExpense = () => {
     const addExpenseFimsUrl = pot.toUndefined(initiativeDataPot)?.webViewUrl;
     if (!addExpenseFimsUrl) {
       return;
     }
-    NavigationService.navigate(FIMS_ROUTES.MAIN, {
-      screen: FIMS_ROUTES.CONSENTS,
-      params: {
-        ctaText: I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
-        ctaUrl: removeFIMSPrefixFromUrl(addExpenseFimsUrl)
-      }
-    });
+    startFIMSAuthenticationFlow(
+      I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
+      addExpenseFimsUrl
+    );
   };
 
   const navigateToConfiguration = () => {
