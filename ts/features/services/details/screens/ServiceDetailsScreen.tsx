@@ -4,8 +4,6 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -18,7 +16,7 @@ import {
   CTAActionType,
   getServiceCTA,
   handleCtaAction
-} from "../../../messages/utils/messages";
+} from "../../../messages/utils/ctas";
 import * as analytics from "../../common/analytics";
 import { CtaCategoryType } from "../../common/analytics";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
@@ -97,7 +95,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   );
 
   const serviceCtas = useMemo(
-    () => pipe(serviceMetadata, getServiceCTA, O.toUndefined),
+    () => getServiceCTA(serviceMetadata),
     [serviceMetadata]
   );
 

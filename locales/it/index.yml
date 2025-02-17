@@ -196,6 +196,8 @@ global:
     details: "Dettagli"
     choose: "Scegli"
     copy: Copia
+    selectAll: Seleziona tutto
+    deselectAll: Deseleziona tutto
   navigator:
     messages: Messaggi
     wallet: Portafoglio
@@ -1923,6 +1925,7 @@ wallet:
       PAYMENT_CANCELED:
         title: "L’Ente Creditore ha revocato questo avviso"
         subtitle: "Contatta l’Ente per maggiori informazioni."
+        action: "Scopri di più"
       PAYMENT_DUPLICATED:
         title: "Questo avviso è stato già pagato!"
       PAYMENT_VERIFY_GENERIC_ERROR:
@@ -2203,6 +2206,7 @@ messageDetails:
     actions:
       call: Fai una chiamata
       email: Scrivi un'email
+  markdownLinkUnsupported: "Questo link non è supportato"
 messagePDFPreview:
   title: "Anteprima PDF"
   singleBtn: "Salva o condividi"
@@ -3534,10 +3538,31 @@ features:
         title: Non siamo riusciti a caricare {{credentialName}}
         content: Chiudi e riapri l'app per riprovare.
         primaryAction: Ho capito
+      selectiveDisclosure:
+        title: Dati richiesti
+        subtitle: Saranno mostrati a **{{relyingParty}}** per accedere ai servizi richiesti.
+        requiredClaims: Dati necessari
+        optionalClaims: Dati facoltativi
+        claimUnavailable: Non disponibile
+        optionalClaimsAlert: I dati facoltativi ti offrono servizi più completi.
+        disclaimer:
+          - I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
+          - I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento.
+        tos: "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}})."
       remote:
         loadingScreen:
           title: Stiamo facendo alcune verifiche di sicurezza...
           subtitle: Attendi qualche secondo
+        walletInactiveScreen:
+          title: Attiva Documenti su IO per continuare
+          subtitle: Per accedere con IT Wallet ai servizi online è necessario prima attivare la funzionalità Documenti su IO.
+          primaryAction: Inizia
+          secondaryAction: Non ora
+        missingCredentialsScreen:
+          title: Mancano i dati contenuti in {{credentialName}}
+          subtitle: Aggiungi il documento al Portafoglio prima di continuare e poi riprova.
+          primaryAction: Aggiungi documento al Portafoglio
+          secondaryAction: Annulla
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale
@@ -4198,7 +4223,8 @@ transaction:
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
-      noticeCode: Codice avviso
+      noticeCode: Codice avviso/IUV
+      noticeCodeAccessible: Codice avviso/Identificativo Univoco Versamento
       taxCode: Codice Fiscale Ente
 FIMS:
   updateApp:

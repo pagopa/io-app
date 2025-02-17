@@ -109,8 +109,7 @@ export const InstitutionServicesScreen = ({
       contentOffsetY: scrollTranslationY
     },
     supportRequest: true,
-    title: institutionName,
-    variant: "neutral"
+    title: institutionName
   });
 
   const scrollHandler = useAnimatedScrollHandler(event => {

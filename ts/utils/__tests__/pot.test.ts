@@ -6,7 +6,8 @@ import {
   isSomeOrSomeError,
   isStrictNone,
   isStrictSome,
-  isStrictSomeError
+  isStrictSomeError,
+  toUndefinedOptional
 } from "../pot";
 
 const potInstances = [
@@ -259,3 +260,21 @@ const verifyZeroCallMock = (
     expect(value).not.toHaveBeenCalled();
   }
 };
+
+describe("toUndefinedOptional", () => {
+  [undefined, ...potInstances].forEach(aPot => {
+    const expectedOutput =
+      aPot?.kind === "PotSome" ||
+      aPot?.kind === "PotSomeError" ||
+      aPot?.kind === "PotSomeLoading" ||
+      aPot?.kind === "PotSomeUpdating"
+        ? aPot!.value
+        : undefined;
+    it(`should output (${
+      expectedOutput != null ? "data" : "undefined"
+    }) for a pot of type ${aPot?.kind}`, () => {
+      const output = toUndefinedOptional(aPot);
+      expect(output).toBe(expectedOutput);
+    });
+  });
+});
