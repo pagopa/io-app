@@ -5,12 +5,10 @@ import {
 import { type StoredCredential } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
 
-type WithAbortController<T> = T & { abortController?: AbortController };
-
 export type IdentificationContext =
-  | WithAbortController<{ mode: "cieId" }>
-  | WithAbortController<{ mode: "ciePin"; pin: string }>
-  | WithAbortController<{ mode: "spid"; idpId: string }>;
+  | { mode: "cieId"; level: "L2" }
+  | { mode: "ciePin"; level: "L3"; pin: string }
+  | { mode: "spid"; level: "L2"; idpId: string };
 
 /**
  * When authenticating with CIE + PIN the flow is interrupted

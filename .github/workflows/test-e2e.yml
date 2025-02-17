@@ -30,7 +30,7 @@ jobs:
           yarn run postinstall
         shell: bash
       - id: cache-cocoapods
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: ios/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
@@ -42,7 +42,7 @@ jobs:
       - id: detox-rebuild-framework-cache
         run: yarn detox rebuild-framework-cache
       - id: cache-detox-build
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: ios/build
           key: ${{ runner.os }}-detox-build

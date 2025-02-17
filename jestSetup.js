@@ -12,6 +12,7 @@ import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 
 import "react-native-get-random-values";
+require("@shopify/flash-list/jestSetup");
 
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
