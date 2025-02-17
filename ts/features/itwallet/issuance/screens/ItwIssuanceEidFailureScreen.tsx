@@ -18,7 +18,10 @@ import {
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { ZendeskSubcategoryValue, useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import {
+  ZendeskSubcategoryValue,
+  useItwFailureSupportModal
+} from "../../common/hooks/useItwFailureSupportModal";
 import { KoState, trackWalletCreationFailed } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";

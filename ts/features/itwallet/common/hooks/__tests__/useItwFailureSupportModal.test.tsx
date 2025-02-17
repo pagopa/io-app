@@ -1,7 +1,10 @@
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { render } from "@testing-library/react-native";
-import {useItwFailureSupportModal, ZendeskSubcategoryValue} from "../useItwFailureSupportModal";
+import {
+  useItwFailureSupportModal,
+  ZendeskSubcategoryValue
+} from "../useItwFailureSupportModal";
 import {
   IssuanceFailure,
   IssuanceFailureType
@@ -13,7 +16,7 @@ import {
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {ItwFailure} from "../../utils/ItwFailureTypes.ts";
+import { ItwFailure } from "../../utils/ItwFailureTypes.ts";
 
 jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
   // Mock the bottom sheet to immediately render the component

@@ -16,7 +16,10 @@ import {
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackWalletCreationFailed } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { ZendeskSubcategoryValue, useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import {
+  ZendeskSubcategoryValue,
+  useItwFailureSupportModal
+} from "../../common/hooks/useItwFailureSupportModal";
 import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/selectors/remoteConfig";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";

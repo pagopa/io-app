@@ -4,7 +4,10 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList.
 import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes.ts";
 import ROUTES from "../../../../../navigation/routes.ts";
-import { ZendeskSubcategoryValue, useItwFailureSupportModal } from "../../../common/hooks/useItwFailureSupportModal.tsx";
+import {
+  ZendeskSubcategoryValue,
+  useItwFailureSupportModal
+} from "../../../common/hooks/useItwFailureSupportModal.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
   ItwFailure,

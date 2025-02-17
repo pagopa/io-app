@@ -35,7 +35,7 @@ import {
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { IssuanceFailure } from "../../machine/eid/failure";
 import { CredentialIssuanceFailure } from "../../machine/credential/failure";
-import {ItwFailure} from "../utils/ItwFailureTypes.ts";
+import { ItwFailure } from "../utils/ItwFailureTypes.ts";
 
 const { isWalletProviderResponseError, isIssuerResponseError } = Errors;
 
