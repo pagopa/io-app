@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.83.0-rc.3](https://github.com/pagopa/io-app/compare/2.83.0-rc.2...2.83.0-rc.3) (2025-02-14)
+
+
+### Bug Fixes
+
+* [[IOBP-1156](https://pagopa.atlassian.net/browse/IOBP-1156)] `a11y` InputForm error message ([#6703](https://github.com/pagopa/io-app/issues/6703)) ([a5d2865](https://github.com/pagopa/io-app/commit/a5d286575ab37ed6359acab09def60403612766e))
+* [[PE-959](https://pagopa.atlassian.net/browse/PE-959),[PE-960](https://pagopa.atlassian.net/browse/PE-960),[PE-961](https://pagopa.atlassian.net/browse/PE-961),[PE-962](https://pagopa.atlassian.net/browse/PE-962)] Remove transparent header in `CGN` ([#6709](https://github.com/pagopa/io-app/issues/6709)) ([84a1f99](https://github.com/pagopa/io-app/commit/84a1f995cb9df4435a217890b2715ae576054d6c))
+
+
+### Chores
+
+* **IDPay:** [[IOBP-1205](https://pagopa.atlassian.net/browse/IOBP-1205)] Removed the missing configuration alert for `EXPENSE` initiatives ([#6719](https://github.com/pagopa/io-app/issues/6719)) ([6099525](https://github.com/pagopa/io-app/commit/60995255f1e0cb7ecfba92bc4f5795356c8254be))
+
 ## [2.83.0-rc.2](https://github.com/pagopa/io-app/compare/2.83.0-rc.1...2.83.0-rc.2) (2025-02-13)
 
 
