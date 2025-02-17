@@ -4,11 +4,12 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { ReactNode } from "react";
-import { Dimensions, StatusBar } from "react-native";
+import { Dimensions } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import { isAndroid } from "../../utils/platform";
+import FocusAwareStatusBar from "../ui/FocusAwareStatusBar";
 import { IOScrollView, IOScrollViewActions } from "../ui/IOScrollView";
 import { BonusCard } from "./BonusCard";
 
@@ -74,7 +75,7 @@ const BonusCardScreenComponent = ({
 
   return (
     <>
-      <StatusBar
+      <FocusAwareStatusBar
         barStyle={isAndroid && isDark ? "light-content" : "dark-content"}
       />
       <IOScrollView

@@ -11,14 +11,18 @@ import {
 } from "@react-navigation/native";
 import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
 
-import { StatusBar, View } from "react-native";
+import { View } from "react-native";
+import { ReactNavigationInstrumentation } from "../App";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
+import FocusAwareStatusBar from "../components/ui/FocusAwareStatusBar";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { IngressScreen } from "../features/ingress/screens/IngressScreen";
+import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
@@ -34,10 +38,8 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
-import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
-import { ReactNavigationInstrumentation } from "../App";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
+import { linkingSubscription } from "./linkingSubscription";
 import NavigationService, {
   navigationRef,
   setMainNavigatorReady
@@ -45,7 +47,6 @@ import NavigationService, {
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
-import { linkingSubscription } from "./linkingSubscription";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
@@ -170,7 +171,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         routeNameRef.current = currentRouteName;
       }}
     >
-      <StatusBar
+      <FocusAwareStatusBar
         backgroundColor={IOColors[theme["appBackground-primary"]]}
         barStyle={themeType === "dark" ? "light-content" : "dark-content"}
         animated

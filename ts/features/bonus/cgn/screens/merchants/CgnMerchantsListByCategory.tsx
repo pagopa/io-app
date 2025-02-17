@@ -11,7 +11,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Platform, RefreshControl, StatusBar, View } from "react-native";
+import { Platform, RefreshControl, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
@@ -22,6 +22,7 @@ import {
 } from "../../../../../common/model/RemoteValue";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
@@ -215,7 +216,7 @@ const CgnMerchantsListByCategory = () => {
 
   return (
     <>
-      <StatusBar
+      <FocusAwareStatusBar
         animated
         backgroundColor={categorySpecs?.colors}
         barStyle={categorySpecs?.statusBarStyle}
