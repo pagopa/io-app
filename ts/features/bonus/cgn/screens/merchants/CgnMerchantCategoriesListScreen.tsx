@@ -6,7 +6,8 @@ import {
   IOStyles,
   IOToast,
   ListItemAction,
-  ListItemNav
+  ListItemNav,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
@@ -29,6 +30,7 @@ import { getCategorySpecs } from "../../utils/filters";
 import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 
 export const CgnMerchantCategoriesListScreen = () => {
+  const theme = useIOTheme();
   const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const [isPullRefresh, setIsPullRefresh] = useState(false);
@@ -115,7 +117,7 @@ export const CgnMerchantCategoriesListScreen = () => {
                 }
               );
             }}
-            iconColor="grey-300"
+            iconColor={theme["icon-decorative"]}
             icon={s.icon}
           />
         )
