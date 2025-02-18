@@ -3184,6 +3184,8 @@ features:
         failure: FALLITA
         success: ""
       receipt:
+        a11y:
+          preview: Anteprima ricevuta in formato PDF
         loading: Stiamo nascondendo la ricevuta...
         title: Ricevuta pagoPA
         shareButton: Salva o condividi
