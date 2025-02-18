@@ -55,7 +55,7 @@ export async function readLocaleDoc(
 
   return {
     locale,
-    doc: content
+    doc: content.default
   };
 }
 
