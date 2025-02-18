@@ -581,8 +581,6 @@ The entire app is built using custom components included in the external [`io-ap
 
 This library was introduced in Q1 2023. Previously, the application was built using the legacy `2.x` version of the rather famous `native-base` library.
 
-If you want to improve the `io-app-design-system` library, feel free to contribute by opening an issue with your suggestions or by directly opening a PR. Criticism is welcome and appreciated.
-
 ### Frequently Asked Questions
 
 #### Why is the app not optimized for high refresh rate devices (90-120 Hz and above)?
@@ -599,6 +597,9 @@ We're actively working on a dark mode version of the app. This color mode will b
 
 You can follow the related activities by [filtering the PRs with the `Dark Mode` label](https://github.com/pagopa/io-app/pulls?q=is%3Apr+label%3A%22Dark+mode+%F0%9F%8C%9D%22)
 
+---
+
+If you want to improve the `io-app-design-system` library, feel free to contribute by opening an issue with your suggestions or by directly opening a PR. Criticism is welcome and appreciated.
 
 
 
