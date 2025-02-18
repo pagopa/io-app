@@ -18,8 +18,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
-import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
+import {
+  getHeaderPropsByCredentialType,
+  getStatusBarPropsByCredentialType
+} from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
 
 export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
 
@@ -65,6 +69,9 @@ const ItwPresentationDetailsScreenBase = ({
   );
 
   const headerProps = getHeaderPropsByCredentialType(credential.credentialType);
+  const statusBarProps = getStatusBarPropsByCredentialType(
+    credential.credentialType
+  );
 
   useHeaderSecondLevel({
     scrollValues: {
@@ -114,6 +121,7 @@ const ItwPresentationDetailsScreenBase = ({
 
   return (
     <Fragment>
+      <FocusAwareStatusBar {...statusBarProps} />
       <Animated.ScrollView
         ref={animatedScrollViewRef}
         contentContainerStyle={{

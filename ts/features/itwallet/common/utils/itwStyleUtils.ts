@@ -1,4 +1,4 @@
-import { StatusBarStyle } from "react-native";
+import { StatusBarProps, StatusBarStyle } from "react-native";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
@@ -60,6 +60,25 @@ export const getHeaderPropsByCredentialType = (
         supportRequest: true,
         variant: "contrast",
         backgroundColor
+      };
+  }
+};
+
+export const getStatusBarPropsByCredentialType = (
+  credentialType: string
+): StatusBarProps => {
+  const { backgroundColor } = getThemeColorByCredentialType(credentialType);
+
+  switch (credentialType) {
+    case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
+      return {
+        backgroundColor,
+        barStyle: "dark-content"
+      };
+    default:
+      return {
+        backgroundColor,
+        barStyle: "light-content"
       };
   }
 };
