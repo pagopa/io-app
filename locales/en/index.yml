@@ -613,9 +613,9 @@ authentication:
         label: IO presentation
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     session_expired:
-      title: Accedi di nuovo
-      body: Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità
-      linkButtonLabel: Non ricordi come fare?
+      title: Log in again
+      body: We need to check your identity from time to time for security reasons
+      linkButtonLabel: Read more
     cie_unsupported:
       title: You cannot use CIE
       body: The device you are using does not support access with Electronic ID Card (CIE).
