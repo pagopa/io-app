@@ -46,7 +46,7 @@ export const isSessionExpirationBannerRenderableSelector = createSelector(
       ),
       O.map(
         ({ expirationDate, threshold }) =>
-          threshold < 0 &&
+          threshold >= 0 &&
           showSessionExpirationBanner &&
           differenceInDays(expirationDate, new Date()) < threshold
       ),
