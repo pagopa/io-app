@@ -1,15 +1,16 @@
 import {
   Divider,
+  IOColors,
   IOStyles,
   IOToast,
   IOVisualCostants,
   ListItemNav,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect } from "react";
-import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
+import { ListRenderItemInfo, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
@@ -47,9 +48,6 @@ const scrollTriggerOffsetValue: number = 88;
 const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1
-  },
-  refreshControlContainer: {
-    zIndex: 1
   }
 });
 
@@ -59,10 +57,10 @@ export const InstitutionServicesScreen = ({
 }: InstitutionServicesScreen) => {
   const { institutionId, institutionName } = route.params;
 
+  const theme = useIOTheme();
   const dispatch = useIODispatch();
   const isFirstRender = useFirstRender();
 
-  const headerHeight = useHeaderHeight();
   const scrollTranslationY = useSharedValue(0);
 
   const {
@@ -103,15 +101,15 @@ export const InstitutionServicesScreen = ({
   }, [dispatch, navigation]);
 
   useHeaderSecondLevel({
+    backgroundColor: IOColors[theme["appBackground-secondary"]],
     goBack,
-    title: institutionName,
-    supportRequest: true,
-    transparent: true,
+    headerShown: !!data || !isError,
     scrollValues: {
       triggerOffset: scrollTriggerOffsetValue,
       contentOffsetY: scrollTranslationY
     },
-    headerShown: !!data || !isError
+    supportRequest: true,
+    title: institutionName
   });
 
   const scrollHandler = useAnimatedScrollHandler(event => {
@@ -218,18 +216,8 @@ export const InstitutionServicesScreen = ({
     return <InstitutionServicesFailure onRetry={() => fetchPage(0)} />;
   }
 
-  const refreshControl = (
-    <RefreshControl
-      onRefresh={refresh}
-      progressViewOffset={headerHeight}
-      refreshing={isRefreshing}
-      style={styles.refreshControlContainer}
-    />
-  );
-
   return (
     <Animated.FlatList
-      onScroll={scrollHandler}
       ItemSeparatorComponent={() => <Divider />}
       ListEmptyComponent={renderListEmptyComponent}
       ListHeaderComponent={renderListHeaderComponent}
@@ -245,8 +233,10 @@ export const InstitutionServicesScreen = ({
       keyExtractor={(item, index) => `service-${item.id}-${index}`}
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.1}
+      onScroll={scrollHandler}
+      onRefresh={refresh}
+      refreshing={isRefreshing}
       renderItem={renderItem}
-      refreshControl={refreshControl}
       testID="intitution-services-list"
     />
   );

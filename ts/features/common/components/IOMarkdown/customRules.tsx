@@ -5,7 +5,10 @@ import {
   TxtLinkNode
 } from "@textlint/ast-node-types";
 import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
-import { isIoInternalLink } from "../../../../components/ui/Markdown/handlers/link";
+import {
+  isHttpsLink,
+  isIoInternalLink
+} from "../../../../components/ui/Markdown/handlers/link";
 import { handleInternalLink } from "../../../../utils/internalLink";
 import { openWebUrl } from "../../../../utils/url";
 import I18n from "../../../../i18n";
@@ -18,6 +21,7 @@ import {
   Renderer
 } from "../../../../components/IOMarkdown/types";
 import { extractAllLinksFromRootNode } from "../../../../components/IOMarkdown/markdownRenderer";
+import { isTestEnv } from "../../../../utils/environment";
 
 const HEADINGS_MAP = {
   1: MdH1,
@@ -31,10 +35,12 @@ const HEADINGS_MAP = {
 const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
   if (isIoInternalLink(url)) {
     handleInternalLink(linkTo, url);
-  } else {
+  } else if (isHttpsLink(url)) {
     openWebUrl(url, () => {
       IOToast.error(I18n.t("global.jserror.title"));
     });
+  } else {
+    IOToast.warning(I18n.t("messageDetails.markdownLinkUnsupported"));
   }
 };
 
@@ -85,3 +91,5 @@ export const generatePreconditionsRules =
   (): Partial<IOMarkdownRenderRules> => ({
     Html: (_html: TxtHtmlNode) => undefined
   });
+
+export const testable = isTestEnv ? { handleOpenLink } : undefined;
