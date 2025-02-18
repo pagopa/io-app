@@ -41,12 +41,23 @@ export const ServicesHeader = ({
   const theme = useIOTheme();
 
   return (
-    <View style={styles.container} testID="services-header">
-      <View style={styles.itemAvatar}>
+    <View
+      importantForAccessibility="no"
+      style={styles.container}
+      testID="services-header"
+    >
+      <View
+        accessible={false}
+        accessibilityElementsHidden={true}
+        importantForAccessibility="no-hide-descendants"
+        style={styles.itemAvatar}
+      >
         <Avatar logoUri={logoUri} size="medium" />
       </View>
       <View style={IOStyles.flex}>
-        <H3 color={theme["textHeading-secondary"]}>{title}</H3>
+        <H3 accessibilityRole="header" color={theme["textHeading-secondary"]}>
+          {title}
+        </H3>
         <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
           {subTitle}
         </BodySmall>
