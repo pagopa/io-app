@@ -2,7 +2,6 @@ import { ComponentProps, useCallback, useEffect } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import {
   Divider,
-  IOStyles,
   IOToast,
   ListItemHeader,
   ListItemSwitch
@@ -175,7 +174,6 @@ export const ServiceDetailsPreferences = ({
         <ListItemHeader label={I18n.t("services.details.preferences.title")} />
       }
       ItemSeparatorComponent={() => <Divider />}
-      contentContainerStyle={IOStyles.horizontalContentPadding}
       data={filteredPreferenceListItems}
       keyExtractor={item => item.label}
       renderItem={renderItem}

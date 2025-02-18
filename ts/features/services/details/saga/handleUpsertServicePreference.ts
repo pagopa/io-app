@@ -77,8 +77,8 @@ export function* trackPNPushNotificationSettings(
   pipe(
     serviceMetadataInfo,
     O.fromNullable,
-    O.chainNullableK(metadata => metadata.customSpecialFlow),
-    O.filter(customSpecialFlow => customSpecialFlow === "pn"),
+    O.chainNullableK(metadata => metadata.serviceKind),
+    O.filter(serviceKind => serviceKind === "pn"),
     O.fold(
       () => undefined,
       _ => trackPNPushSettings(action.payload.push)
