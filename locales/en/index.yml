@@ -3562,8 +3562,8 @@ features:
           primaryAction: Aggiungi documento al Portafoglio
           secondaryAction: Annulla
         deepLinkValidationErrorScreen:
-          title: Si è verificato un errore
-          subtitle: "Il link sembra non funzionare correttamente, riprova.\nSe il problema persiste, contatta l'assistenza."
+          title: Il link sembra non funzionare
+          subtitle: "Ti suggeriamo di riprovare.\n\nSe il problema persiste, contatta l'assistenza."
           primaryAction: Mostra dettagli
           secondaryAction: Chiudi
     trustmark:
