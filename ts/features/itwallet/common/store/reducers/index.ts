@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import _ from "lodash";
 import { combineReducers } from "redux";
@@ -44,7 +43,7 @@ const itwReducer = combineReducers({
   preferences: preferencesReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 2;
+const CURRENT_REDUX_ITW_STORE_VERSION = 5;
 
 const migrations: MigrationManifest = {
   // Added preferences store
@@ -57,10 +56,9 @@ const migrations: MigrationManifest = {
 
   // Added authLevel to preferences store and set it to "L2" if eid is present
   "2": (state: PersistedState): PersistedState => {
-    const { credentials, preferences } = state as PersistedItWalletState;
-
-    // If eid is a Some(value), set authLevel to "L2"
-    if (credentials && O.isSome(credentials.eid)) {
+    const { lifecycle, preferences } = state as PersistedItWalletState;
+    // If the lifecycle is valid that means we have an eid, set the authLevel to "L2"
+    if (lifecycle === ItwLifecycleState.ITW_LIFECYCLE_VALID) {
       return {
         ...state,
         preferences: {
