@@ -126,12 +126,7 @@ export const itwCredentialsEidStatusSelector = createSelector(
     pipe(
       eidOption,
       // eID does not have status attestation nor expiry date, so it safe to assume its status is based on the JWT only
-      O.map(
-        eid =>
-          getCredentialStatus(eid, {
-            expiringDays: 14
-          }) as ItwJwtCredentialStatus
-      ),
+      O.map(eid => getCredentialStatus(eid) as ItwJwtCredentialStatus),
       O.toUndefined
     )
 );
