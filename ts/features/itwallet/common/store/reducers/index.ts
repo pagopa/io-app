@@ -43,7 +43,7 @@ const itwReducer = combineReducers({
   preferences: preferencesReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 5;
+const CURRENT_REDUX_ITW_STORE_VERSION = 2;
 
 const migrations: MigrationManifest = {
   // Added preferences store
