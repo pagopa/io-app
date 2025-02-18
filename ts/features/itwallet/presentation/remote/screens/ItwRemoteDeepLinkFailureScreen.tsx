@@ -2,8 +2,6 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import I18n from "../../../../../i18n.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes.ts";
-import ROUTES from "../../../../../navigation/routes.ts";
 import {
   ZendeskSubcategoryValue,
   useItwFailureSupportModal
@@ -58,17 +56,7 @@ export const ItwRemoteDeepLinkFailureScreen = ({ payload }: Props) => {
             "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.secondaryAction"
           ),
           onPress: () => {
-            navigation.reset({
-              index: 1,
-              routes: [
-                {
-                  name: ROUTES.MAIN,
-                  params: {
-                    screen: MESSAGES_ROUTES.MESSAGES_HOME
-                  }
-                }
-              ]
-            });
+            navigation.popToTop();
           }
         }}
       />
