@@ -5,11 +5,12 @@ import {
   itwCloseDiscoveryBanner,
   itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
+  itwSetAuthLevel,
   itwUnflagCredentialAsRequested
 } from "../../actions/preferences";
 import reducer, {
-  ItwPreferencesState,
-  itwPreferencesInitialState
+  itwPreferencesInitialState,
+  ItwPreferencesState
 } from "../preferences";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 
@@ -97,5 +98,15 @@ describe("IT Wallet preferences reducer", () => {
     const newState = reducer(INITIAL_STATE, action);
 
     expect(newState).toEqual(itwPreferencesInitialState);
+  });
+
+  it("should handle itwSetAuthLevel action", () => {
+    const action = itwSetAuthLevel("L2");
+    const newState = reducer(INITIAL_STATE, action);
+
+    expect(newState).toEqual({
+      ...newState,
+      authLevel: "L2"
+    });
   });
 });
