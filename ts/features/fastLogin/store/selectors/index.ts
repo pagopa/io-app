@@ -118,14 +118,32 @@ const showSessionExpirationBannerSelector = (state: GlobalState) =>
  */
 export const isSessionExpirationBannerRenderableSelector = createSelector(
   sessionInfoSelector,
+  remoteConfigSelector,
   showSessionExpirationBannerSelector,
-  (sessionInfo, showSessionExpirationBanner) =>
+  isFastLoginEnabledSelector,
+  (sessionInfo, config, showSessionExpirationBanner, isFastLogin) =>
     pipe(
-      sessionInfo,
-      O.chainNullableK(({ expirationDate }) => expirationDate),
+      O.Do,
+      O.bind("expirationDate", () =>
+        pipe(
+          sessionInfo,
+          O.chainNullableK(({ expirationDate }) => expirationDate)
+        )
+      ),
+      O.bind("threshold", () =>
+        pipe(
+          config,
+          O.chainNullableK(({ loginConfig }) =>
+            isFastLogin
+              ? loginConfig?.notifyExpirationThreshold?.fastLogin
+              : loginConfig?.notifyExpirationThreshold?.standardLogin
+          )
+        )
+      ),
       O.map(
-        expirationDate =>
-          differenceInDays(expirationDate, new Date()) < 30 &&
+        ({ expirationDate, threshold }) =>
+          threshold !== 0 &&
+          differenceInDays(expirationDate, new Date()) < threshold &&
           showSessionExpirationBanner
       ),
       O.getOrElse(() => false)
