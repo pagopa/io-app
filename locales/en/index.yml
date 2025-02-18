@@ -4185,7 +4185,7 @@ fastLogin:
     title: Logging into IO just got easier!
     subtitle: From now on, to log into the app you'll have to use your SPID or CIE only once a year. After that you can just use your unlock code, fingerprint or face.
   expirationBanner:
-    content: A breve dovrai accedere di nuovo in app con SPID o CIE
+    content: Il {{date}} dovrai accedere di nuovo con SPID o CIE
     action: 
       label: Leggi come fare
 whatsNew:
