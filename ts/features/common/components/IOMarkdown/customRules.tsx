@@ -4,7 +4,16 @@ import {
   TxtHtmlNode,
   TxtLinkNode
 } from "@textlint/ast-node-types";
-import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  IOSpacer,
+  IOToast,
+  MdH1,
+  MdH2,
+  MdH3,
+  useIOTheme,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import {
   isHttpsLink,
   isIoInternalLink
@@ -52,7 +61,23 @@ export const generateMessagesAndServicesRules = (
     render: Renderer,
     screenReaderEnabled: boolean
   ) {
+    const theme = useIOTheme();
     const Heading = HEADINGS_MAP[header.depth];
+
+    const spacerValues: {
+      [key: number]: { before: IOSpacer; after: IOSpacer };
+    } = {
+      1: { before: 16, after: 4 },
+      2: { before: 16, after: 8 },
+      3: { before: 8, after: 4 }
+    };
+
+    const { before: marginStart, after: marginEnd } = spacerValues[
+      header.depth
+    ] || {
+      before: 0,
+      after: 0
+    };
 
     const allLinkData = extractAllLinksFromRootNode(
       header,
@@ -62,7 +87,11 @@ export const generateMessagesAndServicesRules = (
 
     return (
       <Fragment key={nodeKey}>
-        <Heading>{header.children.map(render)}</Heading>
+        <VSpacer size={marginStart} />
+        <Heading color={theme["textHeading-default"]}>
+          {header.children.map(render)}
+        </Heading>
+        <VSpacer size={marginEnd} />
         {generateAccesibilityLinkViewsIfNeeded(
           allLinkData,
           nodeKey,
