@@ -3184,6 +3184,8 @@ features:
         failure: FALLITA
         success: ""
       receipt:
+        a11y:
+          preview: Receipt preview in PDF format
         loading: "We are hiding your receipt..."
         title: pagoPA Receipt
         shareButton: Save or share
