@@ -6,8 +6,8 @@ import { isItwPersistedDiscoveryBannerRenderableSelector } from "../../itwallet/
 import { hasUserAcknowledgedSettingsBannerSelector } from "../../profileSettings/store/selectors";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
-import { FastLoginExpirationBanner } from "../../fastLogin/components/FastLoginExpirationBanner";
-import { isSessionExpirationBannerRenderableSelector } from "../../fastLogin/store/selectors";
+import { LoginExpirationBanner } from "../../login/preferences/components/LoginExpirationBanner";
+import { isSessionExpirationBannerRenderableSelector } from "../../login/preferences/store/selectors";
 
 type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
 type ComponentAndLogic = {
@@ -50,7 +50,7 @@ export const landingScreenBannerMap: BannerMapById = {
   },
   LV_EXPIRATION_REMINDER: {
     component: closeHandler => (
-      <FastLoginExpirationBanner handleOnClose={closeHandler} />
+      <LoginExpirationBanner handleOnClose={closeHandler} />
     ),
     isRenderableSelector: isSessionExpirationBannerRenderableSelector
   }

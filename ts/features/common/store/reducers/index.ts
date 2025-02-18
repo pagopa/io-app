@@ -63,6 +63,10 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { isIOMarkdownDisabledForMessagesAndServices } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isIOMarkdownEnabledLocallySelector } from "../../../../store/reducers/persistedPreferences";
+import {
+  loginPreferencesReducer,
+  LoginPreferencesState
+} from "../../../login/preferences/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -71,6 +75,7 @@ type LoginFeaturesState = {
   cieLogin: CieLoginState & PersistPartial;
   loginInfo: LoginInfoState;
   spidLogin: SpidLoginState;
+  loginPreferences: LoginPreferencesState;
 };
 
 export type FeaturesState = {
@@ -105,7 +110,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     fastLogin: fastLoginReducer,
     cieLogin: cieLoginPersistor,
     loginInfo: loginInfoReducer,
-    spidLogin: spidLoginReducer
+    spidLogin: spidLoginReducer,
+    loginPreferences: loginPreferencesReducer
   }),
   wallet: walletReducer,
   fims: fimsReducer,

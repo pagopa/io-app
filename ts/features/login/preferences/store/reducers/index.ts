@@ -1,20 +1,20 @@
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../store/actions/types";
-import { closeSessionExpirationBanner } from "../actions/sessionExpirationActions";
+import { Action } from "../../../../../store/actions/types";
+import { closeSessionExpirationBanner } from "../actions";
 
-export type SessionExpirationState = {
+export type LoginPreferencesState = {
   showSessionExpirationBanner: boolean;
 };
 
-const SESSION_EXPIRATION_INITIAL_STATE: SessionExpirationState = {
+const LOGIN_PREFERENCES_INITIAL_STATE: LoginPreferencesState = {
   showSessionExpirationBanner: true
 };
 
 // TODO: Probably this value should be persisted
-export const sessionExpirationReducer = (
-  state: SessionExpirationState = SESSION_EXPIRATION_INITIAL_STATE,
+export const loginPreferencesReducer = (
+  state: LoginPreferencesState = LOGIN_PREFERENCES_INITIAL_STATE,
   action: Action
-): SessionExpirationState => {
+): LoginPreferencesState => {
   switch (action.type) {
     case getType(closeSessionExpirationBanner):
       return {
