@@ -14,7 +14,6 @@ import {
 } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
-  ItwCredentialStatus,
   ItwJwtCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils";
