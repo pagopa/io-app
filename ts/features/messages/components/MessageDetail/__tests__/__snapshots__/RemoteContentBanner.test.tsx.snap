@@ -443,8 +443,36 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               accessibilityElementsHidden={true}
                               accessibilityLabel="Learn more"
                               accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": undefined,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
                               accessible={true}
+                              collapsable={false}
+                              focusable={true}
                               importantForAccessibility="no-hide-descendants"
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
                               pointerEvents="none"
                             >
                               <View

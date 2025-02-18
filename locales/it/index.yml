@@ -3185,6 +3185,8 @@ features:
         failure: FALLITA
         success: ""
       receipt:
+        a11y:
+          preview: Anteprima ricevuta in formato PDF
         loading: Stiamo nascondendo la ricevuta...
         title: Ricevuta pagoPA
         shareButton: Salva o condividi
@@ -4138,8 +4140,8 @@ barcodeScan:
     input: Digita
     a11y:
       scan: Inquadra, 1 di 3
-      upload: Carica, 2 di 3
-      input: Digita, 3 di 3
+      upload: Carica un'immagine o un documento, 2 di 3
+      input: Digita i dati di un avviso, 3 di 3
   upload:
     image: Carica un'immagine
     file: Carica un file
