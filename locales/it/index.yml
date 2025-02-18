@@ -615,7 +615,7 @@ authentication:
     session_expired:
       title: Accedi di nuovo
       body: Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità
-      linkButtonLabel: Non ricordi come fare?
+      linkButtonLabel: Leggi come fare
     cie_unsupported:
       title: Non puoi entrare con CIE
       body: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE).
