@@ -17,7 +17,6 @@ export const itwRemoteMachine = setup({
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     navigateToFailureScreen: notImplemented,
     navigateToDiscoveryScreen: notImplemented,
-    navigateToWallet: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     close: notImplemented
   },
@@ -88,9 +87,6 @@ export const itwRemoteMachine = setup({
       on: {
         "go-to-wallet-activation": {
           actions: "navigateToDiscoveryScreen"
-        },
-        "go-to-wallet": {
-          actions: "navigateToWallet"
         },
         "go-to-identification-mode": {
           actions: "navigateToIdentificationModeScreen"

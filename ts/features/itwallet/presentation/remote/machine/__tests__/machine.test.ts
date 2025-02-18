@@ -10,7 +10,6 @@ type MachineSnapshot = StateFrom<ItwRemoteMachine>;
 
 describe("itwRemoteMachine", () => {
   const navigateToDiscoveryScreen = jest.fn();
-  const navigateToWallet = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToIdentificationModeScreen = jest.fn();
   const close = jest.fn();
@@ -21,7 +20,6 @@ describe("itwRemoteMachine", () => {
   const mockedMachine = itwRemoteMachine.provide({
     actions: {
       navigateToDiscoveryScreen,
-      navigateToWallet,
       navigateToFailureScreen,
       navigateToIdentificationModeScreen,
       close
@@ -83,8 +81,8 @@ describe("itwRemoteMachine", () => {
     });
     actor.start();
 
-    actor.send({ type: "go-to-wallet" });
-    expect(navigateToWallet).toHaveBeenCalledTimes(1);
+    actor.send({ type: "close" });
+    expect(close).toHaveBeenCalledTimes(1);
   });
 
   it("Should navigate to TOS when user accept to active ITWallet", async () => {

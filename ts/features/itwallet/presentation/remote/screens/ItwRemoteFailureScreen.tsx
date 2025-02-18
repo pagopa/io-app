@@ -72,7 +72,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 "features.itWallet.presentation.remote.walletInactiveScreen.secondaryAction"
               ),
-              onPress: () => machineRef.send({ type: "go-to-wallet" })
+              onPress: () => machineRef.send({ type: "close" })
             }
           };
         case RemoteFailureType.MISSING_CREDENTIALS: {
@@ -99,7 +99,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 "features.itWallet.presentation.remote.missingCredentialsScreen.secondaryAction"
               ),
-              onPress: () => machineRef.send({ type: "go-to-wallet" })
+              onPress: () => machineRef.send({ type: "close" })
             }
           };
         }
@@ -123,7 +123,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 "features.itWallet.presentation.remote.eidExpiredScreen.secondaryAction"
               ),
-              onPress: () => machineRef.send({ type: "go-to-wallet" })
+              onPress: () => machineRef.send({ type: "close" })
             }
           };
         }
