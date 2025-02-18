@@ -4136,9 +4136,9 @@ barcodeScan:
     upload: Carica
     input: Digita
     a11y:
-      scan: Inquadra, 1 di 3
-      upload: Carica, 2 di 3
-      input: Digita, 3 di 3
+      scan: Scan, 1 of 3
+      upload: Upload an image or a document, 2 of 3
+      input: Type in the notice code data, 3 of 3
   upload:
     image: Carica un'immagine
     file: Carica un file
