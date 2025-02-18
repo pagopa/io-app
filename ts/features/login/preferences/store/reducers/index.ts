@@ -1,21 +1,25 @@
 import { getType } from "typesafe-actions";
+import { PersistConfig, persistReducer } from "redux-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action } from "../../../../../store/actions/types";
 import { closeSessionExpirationBanner } from "../actions";
+import { loginSuccess } from "../../../../../store/actions/authentication";
 
 export type LoginPreferencesState = {
   showSessionExpirationBanner: boolean;
 };
 
-const LOGIN_PREFERENCES_INITIAL_STATE: LoginPreferencesState = {
+const loginPreferencesInitialState: LoginPreferencesState = {
   showSessionExpirationBanner: true
 };
 
-// TODO: Probably this value should be persisted
-export const loginPreferencesReducer = (
-  state: LoginPreferencesState = LOGIN_PREFERENCES_INITIAL_STATE,
+const loginPreferencesReducer = (
+  state: LoginPreferencesState = loginPreferencesInitialState,
   action: Action
 ): LoginPreferencesState => {
   switch (action.type) {
+    case getType(loginSuccess):
+      return loginPreferencesInitialState;
     case getType(closeSessionExpirationBanner):
       return {
         ...state,
@@ -25,3 +29,17 @@ export const loginPreferencesReducer = (
       return state;
   }
 };
+
+const CURRENT_REDUX_OPT_IN_STORE_VERSION = -1;
+
+const persistConfig: PersistConfig = {
+  key: "loginPreferences",
+  storage: AsyncStorage,
+  version: CURRENT_REDUX_OPT_IN_STORE_VERSION,
+  whitelist: ["showSessionExpirationBanner"]
+};
+
+export const loginPreferencesPersistor = persistReducer<
+  LoginPreferencesState,
+  Action
+>(persistConfig, loginPreferencesReducer);
