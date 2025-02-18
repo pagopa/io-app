@@ -60,7 +60,7 @@ const migrations: MigrationManifest = {
     const { credentials, preferences } = state as PersistedItWalletState;
 
     // If eid is a Some(value), set authLevel to "L2"
-    if (O.isSome(credentials.eid)) {
+    if (credentials && O.isSome(credentials.eid)) {
       return {
         ...state,
         preferences: {
