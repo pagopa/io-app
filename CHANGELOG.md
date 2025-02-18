@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.83.0-rc.4](https://github.com/pagopa/io-app/compare/2.83.0-rc.3...2.83.0-rc.4) (2025-02-17)
+
+
+### Bug Fixes
+
+* [[IOBP-1179](https://pagopa.atlassian.net/browse/IOBP-1179)] `a11y` banner focus order ([#6725](https://github.com/pagopa/io-app/issues/6725)) ([29718a3](https://github.com/pagopa/io-app/commit/29718a3bbae3a13d1609d663fe942f64aa2c78af))
+* [[IOCOM-2097](https://pagopa.atlassian.net/browse/IOCOM-2097)] Special link support removed from IOMarkdown on messages and services ([#6722](https://github.com/pagopa/io-app/issues/6722)) ([b1cc73f](https://github.com/pagopa/io-app/commit/b1cc73f1fd0c8cef5f87fa713d8a6ad75916b9a0))
+* [[PE-937](https://pagopa.atlassian.net/browse/PE-937)] a11y on `CgnCard` expiry date ([#6726](https://github.com/pagopa/io-app/issues/6726)) ([1de394f](https://github.com/pagopa/io-app/commit/1de394f830ceea87854d1ae41df6a9bde3e794a1))
+* [[PE-965](https://pagopa.atlassian.net/browse/PE-965)] CGN Swipe back gesture to root stack navigator ([#6708](https://github.com/pagopa/io-app/issues/6708)) ([f969b17](https://github.com/pagopa/io-app/commit/f969b1754c3964eb4fa84b5009ac91cf7ea1e5db))
+* **IT Wallet:** [[SIW-2003](https://pagopa.atlassian.net/browse/SIW-2003)] ITW auth level tracking  ([#6710](https://github.com/pagopa/io-app/issues/6710)) ([ca154f3](https://github.com/pagopa/io-app/commit/ca154f395048cdf757e4d0981c9b491a21ad988a))
+
+
+### Chores
+
+* [[IOPAE-1744](https://pagopa.atlassian.net/browse/IOPAE-1744),[IOPAE-1749](https://pagopa.atlassian.net/browse/IOPAE-1749)] Remove transparent header to solve accessibility problems ([#6692](https://github.com/pagopa/io-app/issues/6692)) ([4359b93](https://github.com/pagopa/io-app/commit/4359b93d338bf663ae25a3bd9274b2e14c32e223))
+
 ## [2.83.0-rc.3](https://github.com/pagopa/io-app/compare/2.83.0-rc.2...2.83.0-rc.3) (2025-02-14)
 
 
