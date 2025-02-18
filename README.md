@@ -46,7 +46,7 @@
   - [Main technologies used](#main-technologies-used)
   - [SPID Authentication](#spid-authentication)
   - [Deep linking](#deep-linking)
-  - [Design System](#design-system) 🚧
+  - [Design System](#design-system)
 - Appendix
   - [Internationalization](locales/README.md)
   - [End to end test](e2e/README.md)
@@ -577,6 +577,29 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
 </details>
 
 ## Design System
-We have been gradually rolling out a new library of custom components since Q1 2023. This library uses the latest React Native APIs and replaces the legacy `native-base` library, which was stuck at `v2.x`.
+The entire app is built using custom components included in the external [`io-app-design-system`](https://github.com/pagopa/io-app-design-system/) library. This library uses the latest React Native APIs and is tailored to our specific needs.
 
-You can access the new library through the external [`io-app-design-system`](https://github.com/pagopa/io-app-design-system/) package.
+This library was introduced in Q1 2023. Previously, the application was built using the legacy `2.x` version of the rather famous `native-base` library.
+
+If you want to improve the `io-app-design-system` library, feel free to contribute by opening an issue with your suggestions or by directly opening a PR. Criticism is welcome and appreciated.
+
+### Frequently Asked Questions
+
+#### Why is the app not optimized for high refresh rate devices (90-120 Hz and above)?
+
+We're committed to providing a faster and more satisfying experience for our citizens, but because we didn't build the app using fully native APIs, this goal is not easy to achieve. Technically, we have already enabled the full range of refresh rates by setting `CADisableMinimumFrameDurationOnPhone` to `true`, as recommended by Apple [in their documentation](https://developer.apple.com/documentation/quartzcore/optimizing-promotion-refresh-rates-for-iphone-13-pro-and-ipad-pro).
+
+Our internal testing has shown that there's a pretty obvious difference between the classic navigation `Stack` and the `NativeStack`, which uses native APIs underneath. This NativeStack is only enabled in the **Design System** section, which isn't accessible to everyone because it's only visible when developer mode is enabled.
+
+Replacing all navigation stacks with `NativeStack` requires a fairly significant effort. Currently, this activity is not in our roadmap.
+
+#### Why is there no dark mode?
+
+We're actively working on a dark mode version of the app. This color mode will be available in the coming months and will be released as a beta first.
+
+You can follow the related activities by [filtering the PRs with the `Dark Mode` label](https://github.com/pagopa/io-app/pulls?q=is%3Apr+label%3A%22Dark+mode+%F0%9F%8C%9D%22)
+
+
+
+
+
