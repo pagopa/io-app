@@ -1,2 +1,0 @@
-**You can proceed with the payment of a notice by entering the data found in the notice**: the Notice Code and the tax code of the creditor.
-Make sure that the notice supports payment through pagoPA, the payment platform for the Public Administration.
