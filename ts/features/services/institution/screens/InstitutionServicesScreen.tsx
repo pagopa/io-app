@@ -139,17 +139,9 @@ export const InstitutionServicesScreen = ({
     [institutionName, navigation]
   );
 
-  const handleEndReached = useCallback(
-    ({ distanceFromEnd }: { distanceFromEnd: number }) => {
-      // guard needed to avoid endless loop
-      if (distanceFromEnd === 0) {
-        return;
-      }
-
-      fetchNextPage(currentPage + 1);
-    },
-    [currentPage, fetchNextPage]
-  );
+  const handleEndReached = useCallback(() => {
+    fetchNextPage(currentPage + 1);
+  }, [currentPage, fetchNextPage]);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<ServiceMinified>) => (
