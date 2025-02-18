@@ -59,7 +59,7 @@ export const CgnDiscountHeader = ({
             <VSpacer size={12} />
           </>
         )}
-        <H3>{name}</H3>
+        <H3 color="grey-850">{name}</H3>
         <VSpacer size={12} />
         <HStack space={4} style={{ flexWrap: "wrap" }}>
           {productCategories.map(categoryKey => (

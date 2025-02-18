@@ -109,7 +109,7 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
               </HStack>
             )}
 
-            <H6>{discount.name}</H6>
+            <H6 color={"grey-850"}>{discount.name}</H6>
             <HStack space={4} style={{ flexWrap: "wrap" }}>
               {discount.productCategories.map(categoryKey => (
                 <CategoryTag key={categoryKey} category={categoryKey} />
