@@ -35,6 +35,7 @@ import { IngressScreenActions } from "../../features/ingress/store/actions";
 import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
 import { LandingScreenBannerActions } from "../../features/landingScreenMultiBanner/store/actions";
 import { SpidConfigActions } from "../../features/spidLogin/store/actions";
+import { UtmLinkActions } from "../../features/utmLink/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -57,7 +58,6 @@ import { ProfileEmailValidationAction } from "./profileEmailValidationChange";
 import { SearchActions } from "./search";
 import { StartupActions } from "./startup";
 import { UserDataProcessingActions } from "./userDataProcessing";
-import { UtmLinkActions } from "../../features/utmLink/store/actions";
 
 export type Action =
   | AnalyticsActions
