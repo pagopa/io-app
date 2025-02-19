@@ -3,6 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import I18n from "../../../../../i18n.ts";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
@@ -22,19 +23,17 @@ type ScreenProps = IOStackNavigationRouteProps<
 const ItwRemoteRequestValidationScreen = (params: ScreenProps) => {
   useItwDisableGestureNavigation();
 
-  const payload = params.route.params;
+  // Add default value for request_uri_method if not present
+  const payload = {
+    ...params.route.params,
+    request_uri_method: params.route.params.request_uri_method ?? "GET"
+  };
 
   if (!ItwRemoteRequestPayload.is(payload)) {
     return <ItwRemoteDeepLinkFailure payload={payload} />;
   }
 
-  // Add default value for request_uri_method if not present
-  const updatedPayload = {
-    ...payload,
-    request_uri_method: payload.request_uri_method ?? "GET"
-  };
-
-  return <ContentView payload={updatedPayload} />;
+  return <ContentView payload={payload} />;
 };
 
 const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
