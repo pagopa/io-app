@@ -22,7 +22,7 @@ export const linkingSubscription =
       // If we have a deep link with a utm_campaign parameter, we want to track it
       // We don't enter this point if the app is opened from scratch with a deep link,
       // but we track it in the `useOnFirstRender` hook on the AppStackNavigator
-      trackUtmCampaign(url);
+      trackUtmCampaign(url, dispatch);
       listener(url);
     });
     return () => {

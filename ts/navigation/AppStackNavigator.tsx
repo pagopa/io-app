@@ -147,7 +147,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   useOnFirstRender(() => {
     void Linking.getInitialURL().then(initialUrl => {
       if (initialUrl) {
-        trackUtmCampaign(initialUrl);
+        trackUtmCampaign(initialUrl, dispatch);
       }
     });
   });

@@ -63,6 +63,7 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { isIOMarkdownDisabledForMessagesAndServices } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isIOMarkdownEnabledLocallySelector } from "../../../../store/reducers/persistedPreferences";
+import { utmLinkReducer, UtmLinkState } from "../../../utmLink/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -88,6 +89,7 @@ export type FeaturesState = {
   mixpanel: MixpanelState;
   ingress: IngressScreenState;
   landingBanners: LandingScreenBannerState;
+  utmLink: UtmLinkState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -113,7 +115,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   profileSettings: profileSettingsReducerPersistor,
   mixpanel: mixpanelReducer,
   ingress: ingressScreenReducer,
-  landingBanners: landingScreenBannersReducer
+  landingBanners: landingScreenBannersReducer,
+  utmLink: utmLinkReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

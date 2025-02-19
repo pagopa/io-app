@@ -57,6 +57,7 @@ import { ProfileEmailValidationAction } from "./profileEmailValidationChange";
 import { SearchActions } from "./search";
 import { StartupActions } from "./startup";
 import { UserDataProcessingActions } from "./userDataProcessing";
+import { UtmLinkActions } from "../../features/utmLink/store/actions";
 
 export type Action =
   | AnalyticsActions
@@ -107,7 +108,8 @@ export type Action =
   | IngressScreenActions
   | MixpanelFeatureActions
   | LandingScreenBannerActions
-  | SpidConfigActions;
+  | SpidConfigActions
+  | UtmLinkActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
