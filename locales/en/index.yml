@@ -2206,6 +2206,7 @@ messageDetails:
     actions:
       call: Call
       email: Send email
+  markdownLinkUnsupported: "This link is not supported"
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"
@@ -2342,6 +2343,7 @@ services:
       email: "Send email"
       pec: "Send PEC"
       fiscalCode: "Institution's fiscal code"
+      fiscalCodeAccessibilityHint: "Copy to clipboard"
       address: "Address"
       serviceId: "Service ID"
     tosAndPrivacy:
@@ -3183,6 +3185,8 @@ features:
         failure: FALLITA
         success: ""
       receipt:
+        a11y:
+          preview: Receipt preview in PDF format
         loading: "We are hiding your receipt..."
         title: pagoPA Receipt
         shareButton: Save or share
@@ -4135,9 +4139,9 @@ barcodeScan:
     upload: Carica
     input: Digita
     a11y:
-      scan: Inquadra, 1 di 3
-      upload: Carica, 2 di 3
-      input: Digita, 3 di 3
+      scan: Scan, 1 of 3
+      upload: Upload an image or a document, 2 of 3
+      input: Type in the notice code data, 3 of 3
   upload:
     image: Carica un'immagine
     file: Carica un file
