@@ -7,7 +7,7 @@ import {
 } from "@react-navigation/native";
 import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
 
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
@@ -33,6 +33,8 @@ import {
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { ReactNavigationInstrumentation } from "../App";
+import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
+import { trackUtmCampaign } from "../features/utmLink";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -134,6 +136,21 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
     },
     subscribe: linkingSubscription(dispatch, store)
   };
+
+  /**
+   * If the app is swiped closed and it's opened with a deep link,
+   * the linking event in the NavigationContainer is not triggered.
+   * `Linking` has the option to get the initial URL when the app is opened.
+   * We can use this to check if the app was opened with a deep link and
+   * check if it has a `utm_campaign` parameter
+   */
+  useOnFirstRender(() => {
+    void Linking.getInitialURL().then(initialUrl => {
+      if (initialUrl) {
+        trackUtmCampaign(initialUrl);
+      }
+    });
+  });
 
   return (
     <NavigationContainer
