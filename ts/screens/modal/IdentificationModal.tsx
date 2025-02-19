@@ -296,7 +296,11 @@ const IdentificationModal = () => {
     />
   ));
 
-  const { top: topInset } = useSafeAreaInsets();
+  const { top: safeAreaTop } = useSafeAreaInsets();
+  const topInset =
+    Platform.OS === "android"
+      ? safeAreaTop || StatusBar.currentHeight || 0
+      : safeAreaTop;
 
   const pictogramKey: IOPictograms = isValidatingTask ? "passcode" : "key";
 
@@ -449,18 +453,10 @@ const IdentificationModal = () => {
                 />
               </View>
             </View>
-            {isDeviceScreenSmall ? (
-              <VSpacer size={16} />
-            ) : (
-              <VSpacer size={32} />
-            )}
+            <VSpacer size={isDeviceScreenSmall ? 16 : 32} />
             <NumberPad />
             <View>
-              {isDeviceScreenSmall ? (
-                <VSpacer size={16} />
-              ) : (
-                <VSpacer size={32} />
-              )}
+              <VSpacer size={isDeviceScreenSmall ? 16 : 32} />
               <View style={IOStyles.selfCenter}>
                 <ButtonLink
                   textAlign="center"

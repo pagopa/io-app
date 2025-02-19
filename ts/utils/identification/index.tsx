@@ -4,7 +4,11 @@ import {
   IOStyles
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
+import { TxtParagraphNode } from "@textlint/ast-node-types";
 import I18n from "../../i18n";
+import IOMarkdown from "../../components/IOMarkdown";
+import { Renderer } from "../../components/IOMarkdown/types";
+import { getTxtNodeKey } from "../../components/IOMarkdown/renderRules";
 
 export const FAIL_ATTEMPTS_TO_SHOW_ALERT = 4;
 
@@ -14,62 +18,30 @@ export const getBiometryIconName = (
   switch (biometryPrintableSimpleType) {
     case "BIOMETRICS":
     case "TOUCH_ID":
-      return I18n.t("identification.unlockCode.accessibility.fingerprint");
+      return I18n.t("identification.unlockCode.accessibility.fingerprint"); // Autenticati con l'impronta digitale
     case "FACE_ID":
-      return I18n.t("identification.unlockCode.accessibility.faceId");
+      return I18n.t("identification.unlockCode.accessibility.faceId"); // Autenticati con il riconoscimento facciale
   }
-};
-
-const getTranlations = () => {
-  // We need a function to handle the translations when the language changes,
-  // or is differnt between the device and the app
-  const unlockCode = I18n.t("identification.instructions.unlockCode");
-  const unlockCodePrefix = I18n.t(
-    "identification.instructions.unlockCodepPrefix"
-  );
-  const fingerprint = I18n.t("identification.instructions.fingerprint");
-  const fingerprintPrefix = I18n.t(
-    "identification.instructions.fingerprintPrefix"
-  );
-  const faceId = I18n.t("identification.instructions.faceId");
-  const faceIdPrefix = I18n.t("identification.instructions.faceIdPrefix");
-  return {
-    unlockCode,
-    unlockCodePrefix,
-    fingerprint,
-    fingerprintPrefix,
-    faceId,
-    faceIdPrefix,
-    congiunction: I18n.t("identification.instructions.congiunction"),
-    unlockCodeInstruction: `${unlockCodePrefix} ${unlockCode}`,
-    fingerprintInstruction: `${fingerprintPrefix} ${fingerprint}`,
-    faceIdInstruction: `${faceIdPrefix} ${faceId}`
-  };
 };
 
 export const getAccessibiliyIdentificationInstructions = (
   biometricType: BiometricsValidType | undefined,
   isBimoetricIdentificatoinFailed: boolean = false
 ) => {
-  const {
-    unlockCodeInstruction,
-    fingerprintInstruction,
-    faceIdInstruction,
-    congiunction
-  } = getTranlations();
-
   if (isBimoetricIdentificatoinFailed) {
-    return unlockCodeInstruction;
+    return I18n.t("identification.instructions.useUnlockCodeA11y");
   }
 
   switch (biometricType) {
     case "BIOMETRICS":
     case "TOUCH_ID":
-      return `${fingerprintInstruction} ${congiunction} ${unlockCodeInstruction}`;
+      return I18n.t(
+        "identification.instructions.useFingerPrintOrUnlockCodeA11y"
+      );
     case "FACE_ID":
-      return `${faceIdInstruction} ${congiunction} ${unlockCodeInstruction}`;
+      return I18n.t("identification.instructions.useFaceIdOrUnlockCodeA11y");
     default:
-      return unlockCodeInstruction;
+      return I18n.t("identification.instructions.useUnlockCodeA11y");
   }
 };
 
@@ -82,39 +54,33 @@ export const IdentificationInstructionsComponent = (props: {
     biometricType,
     isBimoetricIdentificatoinFailed
   );
-  const {
-    unlockCode,
-    unlockCodePrefix,
-    fingerprint,
-    fingerprintPrefix,
-    faceId,
-    faceIdPrefix,
-    congiunction
-  } = getTranlations();
-  const instructionComponent = (
-    <View style={IOStyles.row}>
-      <Body color="white" weight="Regular">
-        {unlockCodePrefix}
-        <Body color="white" weight="Semibold">
-          {` ${unlockCode}`}
+
+  const generatePragraphRule = () => ({
+    Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
+      return (
+        <Body
+          key={getTxtNodeKey(paragraph)}
+          color="white"
+          textStyle={{ textAlign: "center" }}
+        >
+          {paragraph.children.map(render)}
         </Body>
-      </Body>
-    </View>
-  );
-  const instructionComponentWithFingerprint = (
-    <View style={IOStyles.row}>
-      <Body color="white" weight="Regular">
-        {fingerprintPrefix}
-        <Body color="white" weight="Semibold">{` ${fingerprint}`}</Body>
-      </Body>
-    </View>
-  );
-  const instructionComponentWithFaceId = (
-    <View style={IOStyles.row}>
-      <Body color="white" weight="Regular">
-        {faceIdPrefix}
-        <Body color="white" weight="Semibold">{` ${faceId}`}</Body>
-      </Body>
+      );
+    }
+  });
+
+  const instructionComponent = (
+    <View
+      accessible
+      accessibilityLabel={I18n.t(
+        "identification.instructions.useUnlockCodeA11y"
+      )}
+      style={IOStyles.row}
+    >
+      <IOMarkdown
+        content={I18n.t("identification.instructions.useUnlockCode")}
+        rules={generatePragraphRule()}
+      />
     </View>
   );
 
@@ -131,12 +97,12 @@ export const IdentificationInstructionsComponent = (props: {
           accessibilityLabel={a11yInstruction}
           style={IOStyles.row}
         >
-          {instructionComponentWithFingerprint}
-          <Body color="white" weight="Regular">
-            {" "}
-            {congiunction}{" "}
-          </Body>
-          {instructionComponent}
+          <IOMarkdown
+            content={I18n.t(
+              "identification.instructions.useFingerPrintOrUnlockCode"
+            )}
+            rules={generatePragraphRule()}
+          />
         </View>
       );
     case "FACE_ID":
@@ -146,12 +112,12 @@ export const IdentificationInstructionsComponent = (props: {
           accessibilityLabel={a11yInstruction}
           style={IOStyles.row}
         >
-          {instructionComponentWithFaceId}
-          <Body color="white" weight="Regular">
-            {" "}
-            {congiunction}{" "}
-          </Body>
-          {instructionComponent}
+          <IOMarkdown
+            content={I18n.t(
+              "identification.instructions.useFaceIdOrUnlockCode"
+            )}
+            rules={generatePragraphRule()}
+          />
         </View>
       );
     default:
