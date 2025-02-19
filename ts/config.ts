@@ -105,6 +105,17 @@ export const cieLoginFlowWithDevServerEnabled =
 // Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
+// #region Help Center URLs
+
+/**
+ * Help Center URL for the "What to do when the session is expired" article
+ * hard-coded for now [by design]( https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33508#1129981819)
+ */
+export const helpCenterHowToDoWhenSessionIsExpiredUrl =
+  "https://assistenza.ioapp.it/hc/it/articles/32616176301713" as NonEmptyString;
+
+// #endregion
+
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
   t.Integer.decode,
