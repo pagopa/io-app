@@ -10,10 +10,13 @@ import {
 import { openWebUrl } from "../../../../utils/url";
 
 export const isIoInternalLink = (href: string): boolean =>
-  href.startsWith(IO_INTERNAL_LINK_PREFIX);
+  href.toLowerCase().startsWith(IO_INTERNAL_LINK_PREFIX);
 
 export const isIoFIMSLink = (href: string): boolean =>
-  href.startsWith(IO_FIMS_LINK_PREFIX);
+  href.toLowerCase().startsWith(IO_FIMS_LINK_PREFIX);
+
+export const isHttpsLink = (href: string): boolean =>
+  href.toLowerCase().startsWith("https://");
 
 export const removeFIMSPrefixFromUrl = (fimsUrlWithProtocol: string) => {
   // eslint-disable-next-line no-useless-escape

@@ -130,6 +130,7 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.CIE_CONSENT_DATA_USAGE}
       component={CieConsentDataUsageScreen}
+      options={{ headerShown: true }}
     />
 
     <Stack.Group
