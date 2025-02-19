@@ -9,7 +9,7 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
-import { ItwRemoteDeepLinkFailureScreen } from "./ItwRemoteDeepLinkFailureScreen.tsx";
+import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload>;
@@ -25,7 +25,7 @@ const ItwRemoteRequestValidationScreen = (params: ScreenProps) => {
   const payload = params.route.params;
 
   if (!ItwRemoteRequestPayload.is(payload)) {
-    return <ItwRemoteDeepLinkFailureScreen payload={payload} />;
+    return <ItwRemoteDeepLinkFailure payload={payload} />;
   }
 
   // Add default value for request_uri_method if not present

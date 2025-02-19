@@ -15,8 +15,11 @@ import {
 type Props = {
   payload: Partial<ItwRemoteRequestPayload>;
 };
-
-export const ItwRemoteDeepLinkFailureScreen = ({ payload }: Props) => {
+/**
+ * Component that renders an error message for an invalid deep link payload
+ * and provides access to the support bottom sheet.
+ */
+export const ItwRemoteDeepLinkFailure = ({ payload }: Props) => {
   const navigation = useIONavigation();
 
   useDebugInfo({
