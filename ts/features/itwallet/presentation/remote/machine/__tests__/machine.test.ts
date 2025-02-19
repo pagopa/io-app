@@ -120,10 +120,10 @@ describe("itwRemoteMachine", () => {
       value: "Failure",
       context: {
         payload: {
-          clientId: T_CLIENT_ID,
-          requestUri: T_REQUEST_URI,
+          client_id: T_CLIENT_ID,
+          request_uri: T_REQUEST_URI,
           state: T_STATE
-        }
+        } as ItwRemoteRequestPayload
       }
     } as MachineSnapshot);
 
@@ -146,10 +146,10 @@ describe("itwRemoteMachine", () => {
     actor.send({
       type: "start",
       payload: {
-        clientId: T_CLIENT_ID,
-        requestUri: T_REQUEST_URI,
+        client_id: T_CLIENT_ID,
+        request_uri: T_REQUEST_URI,
         state: T_STATE
-      }
+      } as ItwRemoteRequestPayload
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");

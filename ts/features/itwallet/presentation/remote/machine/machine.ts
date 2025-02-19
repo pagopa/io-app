@@ -16,7 +16,6 @@ export const itwRemoteMachine = setup({
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     navigateToFailureScreen: notImplemented,
     navigateToDiscoveryScreen: notImplemented,
-    navigateToWallet: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     close: notImplemented
