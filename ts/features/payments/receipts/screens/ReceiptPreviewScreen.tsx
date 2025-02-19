@@ -82,18 +82,25 @@ const ReceiptPreviewScreen = () => {
           paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
         }}
       >
-        <Pdf
-          enablePaging
-          fitPolicy={0}
-          style={{
-            flexGrow: 1,
-            backgroundColor: IOColors["grey-100"]
-          }}
-          source={{
-            uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value.base64File}`,
-            cache: true
-          }}
-        />
+        <View
+          style={{ ...IOStyles.flex }}
+          accessibilityLabel={I18n.t(
+            "features.payments.transactions.receipt.a11y.preview"
+          )}
+        >
+          <Pdf
+            enablePaging
+            fitPolicy={0}
+            style={{
+              flexGrow: 1,
+              backgroundColor: IOColors["grey-100"]
+            }}
+            source={{
+              uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value.base64File}`,
+              cache: true
+            }}
+          />
+        </View>
         <FooterActions
           onMeasure={handleFooterActionsMeasurements}
           actions={{
