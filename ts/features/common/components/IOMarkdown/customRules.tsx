@@ -5,7 +5,6 @@ import {
   MdH1,
   MdH2,
   MdH3,
-  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
@@ -66,7 +65,6 @@ export const generateMessagesAndServicesRules = (
     render: Renderer,
     screenReaderEnabled: boolean
   ) {
-    const theme = useIOTheme();
     const Heading = HEADINGS_MAP[header.depth];
 
     const spacerValues: {
@@ -93,9 +91,7 @@ export const generateMessagesAndServicesRules = (
     return (
       <Fragment key={nodeKey}>
         <VSpacer size={marginStart} />
-        <Heading color={theme["textHeading-default"]}>
-          {header.children.map(render)}
-        </Heading>
+        <Heading>{header.children.map(render)}</Heading>
         <VSpacer size={marginEnd} />
         {generateAccesibilityLinkViewsIfNeeded(
           allLinkData,
