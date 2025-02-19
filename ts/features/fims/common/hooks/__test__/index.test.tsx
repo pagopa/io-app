@@ -1,10 +1,12 @@
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ComponentType } from "react";
 import { createStore } from "redux";
 import {
   useAutoFetchingServiceByIdPot,
   useFIMSAuthenticationFlow,
-  useFIMSFromServiceId
+  useFIMSFromServiceId,
+  useFIMSRemoteServiceConfiguration
 } from "..";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -15,6 +17,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
 import { loadServiceDetail } from "../../../../services/details/store/actions/details";
 import { FIMS_ROUTES } from "../../navigation";
+import { FimsServiceConfiguration_config } from "../../../../../../definitions/content/FimsServiceConfiguration";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -46,18 +49,20 @@ let serviceDataPot: pot.Pot<ServicePublic, Error> | undefined;
 // eslint-disable-next-line functional/no-let
 let serviceData: unknown;
 // eslint-disable-next-line functional/no-let
-let authenticationCallback: (label: string, url: string) => void | undefined;
+let authenticationCallback: ((label: string, url: string) => void) | undefined;
 // eslint-disable-next-line functional/no-let
-let authenticationCallbackWithServiceId: (
-  label: string,
-  serviceId: ServiceId,
-  url: string
-) => void | undefined;
+let authenticationCallbackWithServiceId:
+  | ((label: string, serviceId: ServiceId, url: string) => void)
+  | undefined;
 
 describe("index", () => {
   afterEach(() => {
     jest.restoreAllMocks();
     jest.resetAllMocks();
+    serviceDataPot = undefined;
+    serviceData = undefined;
+    authenticationCallback = undefined;
+    authenticationCallbackWithServiceId = undefined;
   });
   describe("useAutoFetchingServiceByIdPot", () => {
     const service = {} as ServicePublic;
@@ -130,7 +135,7 @@ describe("index", () => {
       pot.someUpdating(service, service),
       pot.someError(service, Error(""))
     ].forEach(servicePot => {
-      it(`should call 'navigation.navigate' with proper paramters for '${servicePot.kind}' service and return proper service data for analytics`, () => {
+      it(`should call 'navigation.navigate' with proper parameters for '${servicePot.kind}' service and return proper service data for analytics`, () => {
         const expectedServiceData = pot.isSome(servicePot)
           ? {
               serviceId,
@@ -149,7 +154,7 @@ describe("index", () => {
 
         const label = "A label";
         const url = "iosso://https://relyingParty.url/login";
-        authenticationCallback(label, url);
+        authenticationCallback!(label, url);
 
         expect(mockNavigation.mock.calls.length).toBe(1);
         expect(mockNavigation.mock.calls[0].length).toBe(2);
@@ -174,7 +179,7 @@ describe("index", () => {
         });
       });
     });
-    it(`should call 'navigation.navigate' with proper paramters for unmatching service id and return proper service data for analytics`, () => {
+    it(`should call 'navigation.navigate' with proper parameters for unmatching service id and return proper service data for analytics`, () => {
       const hookServiceId = "01JMEZB6QNR7KKDEFRR6WZEH6F" as ServiceId;
       const expectedServiceData = {
         serviceId: hookServiceId
@@ -187,7 +192,7 @@ describe("index", () => {
 
       const label = "A label";
       const url = "iosso://https://relyingParty.url/login";
-      authenticationCallback(label, url);
+      authenticationCallback!(label, url);
 
       expect(mockNavigation.mock.calls.length).toBe(1);
       expect(mockNavigation.mock.calls[0].length).toBe(2);
@@ -224,14 +229,14 @@ describe("index", () => {
       pot.someUpdating(service, service),
       pot.someError(service, Error(""))
     ].forEach(servicePot => {
-      it(`should call 'navigation.navigate' with proper paramters for '${servicePot.kind}' service and return proper service data for analytics`, () => {
+      it(`should call 'navigation.navigate' with proper parameters for '${servicePot.kind}' service and return proper service data for analytics`, () => {
         renderFromAuthenticationFlowHook(servicePot, serviceId);
 
         expect(authenticationCallbackWithServiceId).toBeDefined();
 
         const label = "A label";
         const url = "iosso://https://relyingParty.url/login";
-        authenticationCallbackWithServiceId(label, serviceId, url);
+        authenticationCallbackWithServiceId!(label, serviceId, url);
 
         expect(mockNavigation.mock.calls.length).toBe(1);
         expect(mockNavigation.mock.calls[0].length).toBe(2);
@@ -256,7 +261,7 @@ describe("index", () => {
         });
       });
     });
-    it(`should call 'navigation.navigate' with proper paramters for unmatching service id and return proper service data for analytics`, () => {
+    it(`should call 'navigation.navigate' with proper parameters for unmatching service id and return proper service data for analytics`, () => {
       renderFromAuthenticationFlowHook(pot.some(service), serviceId);
 
       expect(authenticationCallbackWithServiceId).toBeDefined();
@@ -264,7 +269,7 @@ describe("index", () => {
       const label = "A label";
       const callbackServiceId = "01JMEZB6QNR7KKDEFRR6WZEH6F" as ServiceId;
       const url = "iosso://https://relyingParty.url/login";
-      authenticationCallbackWithServiceId(label, callbackServiceId, url);
+      authenticationCallbackWithServiceId!(label, callbackServiceId, url);
 
       expect(mockNavigation.mock.calls.length).toBe(1);
       expect(mockNavigation.mock.calls[0].length).toBe(2);
@@ -281,6 +286,71 @@ describe("index", () => {
           source: MESSAGES_ROUTES.MESSAGE_DETAIL
         }
       });
+    });
+  });
+  describe("renderFromRemoteConfigurationHook", () => {
+    it(`should call 'navigation.navigate' with proper parameters and return proper service data for analytics`, () => {
+      const configurationId = "configId";
+      const configuration: FimsServiceConfiguration_config = {
+        configuration_id: configurationId,
+        organization_fiscal_code: "01234567890",
+        organization_name: "Organization name",
+        service_id: "01JMF90E33B89232YER1WRYQ26" as ServiceId,
+        service_name: "Service name"
+      };
+
+      renderFromRemoteConfigurationHook(configuration, configurationId);
+
+      expect(serviceData).toEqual({
+        serviceId: configuration.service_id,
+        organizationFiscalCode: configuration.organization_fiscal_code,
+        organizationName: configuration.organization_name,
+        serviceName: configuration.service_name
+      });
+      expect(authenticationCallback).toBeDefined();
+
+      const label = "FIMS label";
+      const url = "iosso://https://relyingParty.url/login";
+      authenticationCallback!(label, url);
+
+      expect(mockNavigation.mock.calls.length).toBe(1);
+      expect(mockNavigation.mock.calls[0].length).toBe(2);
+      expect(mockNavigation.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
+      expect(mockNavigation.mock.calls[0][1]).toEqual({
+        screen: FIMS_ROUTES.CONSENTS,
+        params: {
+          ctaUrl: "https://relyingParty.url/login",
+          ctaText: label,
+          organizationFiscalCode: configuration.organization_fiscal_code,
+          organizationName: configuration.organization_name,
+          serviceId: configuration.service_id,
+          serviceName: configuration.service_name,
+          source: MESSAGES_ROUTES.MESSAGE_DETAIL
+        }
+      });
+    });
+    it(`should not call 'navigation.navigate' and return undefined serviceData when configuration id does not match`, () => {
+      const configuration: FimsServiceConfiguration_config = {
+        configuration_id: "configId",
+        organization_fiscal_code: "01234567890",
+        organization_name: "Organization name",
+        service_id: "01JMF90E33B89232YER1WRYQ26" as ServiceId,
+        service_name: "Service name"
+      };
+
+      renderFromRemoteConfigurationHook(
+        configuration,
+        "unmatchingConfiguration"
+      );
+
+      expect(serviceData).toBeUndefined();
+      expect(authenticationCallback).toBeDefined();
+
+      const label = "FIMS label";
+      const url = "iosso://https://relyingParty.url/login";
+      authenticationCallback!(label, url);
+
+      expect(mockNavigation.mock.calls.length).toBe(0);
     });
   });
 });
@@ -341,6 +411,32 @@ const renderFromAuthenticationFlowHook = (
   return genericRender(() => AuthenticationFlowHookWrapper(), appState);
 };
 
+const renderFromRemoteConfigurationHook = (
+  configuration: FimsServiceConfiguration_config,
+  hookConfigurationId: string
+) => {
+  const appState = {
+    remoteConfig: O.some({
+      cgn: {
+        enabled: false
+      },
+      fims: {
+        services: [configuration]
+      },
+      itw: {
+        min_app_version: {
+          android: "0.0.0.0",
+          ios: "0.0.0.0"
+        }
+      }
+    })
+  } as GlobalState;
+  return genericRender(
+    () => FromRemoteConfigurationHookWrapper(hookConfigurationId),
+    appState
+  );
+};
+
 const AutoFetchHookWrapper = (serviceId: ServiceId) => {
   serviceDataPot = useAutoFetchingServiceByIdPot(serviceId);
   return undefined;
@@ -353,6 +449,12 @@ const FromServiceIdHookWrapper = (serviceId: ServiceId) => {
 };
 const AuthenticationFlowHookWrapper = () => {
   authenticationCallbackWithServiceId = useFIMSAuthenticationFlow();
+  return undefined;
+};
+const FromRemoteConfigurationHookWrapper = (configurationId: string) => {
+  const hookData = useFIMSRemoteServiceConfiguration(configurationId);
+  serviceData = hookData.serviceData;
+  authenticationCallback = hookData.startFIMSAuthenticationFlow;
   return undefined;
 };
 
