@@ -585,7 +585,7 @@ This library was introduced in Q1 2023. Previously, the application was built us
 
 #### Why is the app not optimized for high refresh rate devices (90-120 Hz and above)?
 
-We're committed to providing a faster and more satisfying experience for our citizens, but because we didn't build the app using fully native APIs, this goal is not easy to achieve. Technically, we have already enabled the full range of refresh rates by setting `CADisableMinimumFrameDurationOnPhone` to `true`, as recommended by Apple [in their documentation](https://developer.apple.com/documentation/quartzcore/optimizing-promotion-refresh-rates-for-iphone-13-pro-and-ipad-pro).
+We're committed to providing a faster and more satisfying experience for our citizens, but because we didn't build the app using fully native APIs, this goal is not easy to achieve. For iOS, we have already enabled the full range of refresh rates by setting `CADisableMinimumFrameDurationOnPhone` to `true`, as recommended by Apple [in their documentation](https://developer.apple.com/documentation/quartzcore/optimizing-promotion-refresh-rates-for-iphone-13-pro-and-ipad-pro).
 
 Our internal testing has shown that there's a pretty obvious difference between the classic navigation `Stack` and the `NativeStack`, which uses native APIs underneath. This NativeStack is only enabled in the **Design System** section, which isn't accessible to everyone because it's only visible when developer mode is enabled.
 
