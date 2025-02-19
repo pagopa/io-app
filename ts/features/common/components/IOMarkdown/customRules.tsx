@@ -1,9 +1,3 @@
-import { Fragment } from "react";
-import {
-  TxtHeaderNode,
-  TxtHtmlNode,
-  TxtLinkNode
-} from "@textlint/ast-node-types";
 import {
   Body,
   IOSpacer,
@@ -15,12 +9,12 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
-  isHttpsLink,
-  isIoInternalLink
-} from "../../../../components/ui/Markdown/handlers/link";
-import { handleInternalLink } from "../../../../utils/internalLink";
-import { openWebUrl } from "../../../../utils/url";
-import I18n from "../../../../i18n";
+  TxtHeaderNode,
+  TxtHtmlNode,
+  TxtLinkNode
+} from "@textlint/ast-node-types";
+import { Fragment } from "react";
+import { extractAllLinksFromRootNode } from "../../../../components/IOMarkdown/markdownRenderer";
 import {
   generateAccesibilityLinkViewsIfNeeded,
   getTxtNodeKey
@@ -29,8 +23,19 @@ import {
   IOMarkdownRenderRules,
   Renderer
 } from "../../../../components/IOMarkdown/types";
-import { extractAllLinksFromRootNode } from "../../../../components/IOMarkdown/markdownRenderer";
+import {
+  isHttpsLink,
+  isIoInternalLink
+} from "../../../../components/ui/Markdown/handlers/link";
+import I18n from "../../../../i18n";
 import { isTestEnv } from "../../../../utils/environment";
+import { handleInternalLink } from "../../../../utils/internalLink";
+import { openWebUrl } from "../../../../utils/url";
+
+type HeadingMargins = {
+  marginStart: IOSpacer;
+  marginEnd: IOSpacer;
+};
 
 const HEADINGS_MAP = {
   1: MdH1,
@@ -65,19 +70,19 @@ export const generateMessagesAndServicesRules = (
     const Heading = HEADINGS_MAP[header.depth];
 
     const spacerValues: {
-      [key: number]: { before: IOSpacer; after: IOSpacer };
+      [key: number]: HeadingMargins;
     } = {
-      1: { before: 16, after: 4 },
-      2: { before: 16, after: 8 },
-      3: { before: 8, after: 4 }
+      1: { marginStart: 16, marginEnd: 4 },
+      2: { marginStart: 16, marginEnd: 8 }
     };
 
-    const { before: marginStart, after: marginEnd } = spacerValues[
-      header.depth
-    ] || {
-      before: 0,
-      after: 0
+    const defaultHeadingMargins: HeadingMargins = {
+      marginStart: 8,
+      marginEnd: 4
     };
+
+    const { marginStart, marginEnd } =
+      spacerValues[header.depth] || defaultHeadingMargins;
 
     const allLinkData = extractAllLinksFromRootNode(
       header,
