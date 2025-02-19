@@ -8,11 +8,9 @@ import { utmLinkSetCampaign } from "./store/actions";
  * ex: https://continua.io.pagopa.it?utm_campaign=re-engagement
  */
 export const trackUtmCampaign = (url: string, dispatch: AppDispatch) => {
-  console.log("🔥 Initial URL", url);
   const urlParams = new URL(url).searchParams;
   const utmCampaign = urlParams.get("utm_campaign");
   if (utmCampaign) {
     dispatch(utmLinkSetCampaign(utmCampaign));
-    console.log("utm_campaign", utmCampaign);
   }
 };
