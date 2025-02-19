@@ -2,6 +2,7 @@ import { configure, fetch } from "@react-native-community/netinfo";
 import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 
+// TODO replace with the actual reachability URL
 const IO_REACHABIITY_URL = "https://www.google.com";
 
 export const configureNetInfo = () =>
