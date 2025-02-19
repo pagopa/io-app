@@ -589,7 +589,7 @@ The perception of slowness is mainly due to the navigation architecture, which i
 
 #### Why is there no dark mode?
 
-We're actively working on a dark mode version of the app. This color mode will be available in the coming months and will be released as a beta first.
+We're actively developing a dark mode for the app that will be available in the coming months. The initial release will be a beta version to allow users to explore and provide feedback.
 
 You can follow the related activities by [filtering the PRs with the `Dark Mode` label](https://github.com/pagopa/io-app/pulls?q=is%3Apr+label%3A%22Dark+mode+%F0%9F%8C%9D%22)
 
