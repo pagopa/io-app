@@ -74,6 +74,7 @@ export const formatRequestedTokenString = (
       "fimsToken",
       "lollipopAssertionRef",
       // TODO: Evaluate whether it makes sense to keep this value among the default tokens or not.
+      // Depends on https://pagopa.atlassian.net/browse/IOPID-2750
       "expirationDate"
     ];
     tokensArray = defaultTokens;
