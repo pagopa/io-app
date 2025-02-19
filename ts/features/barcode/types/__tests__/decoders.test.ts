@@ -98,10 +98,10 @@ describe("test decodeIOBarcode function", () => {
         O.some({
           type: "ITW_REMOTE",
           itwRemoteRequestPayload: {
-            clientId: "abc123xy",
-            requestUri: "https://example.com/callback",
+            client_id: "abc123xy",
+            request_uri: "https://example.com/callback",
             state: "hyqizm592",
-            requestUriMethod: "GET"
+            request_uri_method: "GET"
           }
         })
       );
@@ -117,10 +117,10 @@ describe("test decodeIOBarcode function", () => {
         O.some({
           type: "ITW_REMOTE",
           itwRemoteRequestPayload: {
-            clientId: "abc123xy",
-            requestUri: "https://example.com/callback",
+            client_id: "abc123xy",
+            request_uri: "https://example.com/callback",
             state: "hyqizm592",
-            requestUriMethod: "POST"
+            request_uri_method: "POST"
           }
         })
       );
