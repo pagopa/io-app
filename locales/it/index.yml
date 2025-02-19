@@ -615,8 +615,9 @@ authentication:
         label: Presentazione di IO
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     session_expired:
-      title: La tua sessione è scaduta
-      body: Per ragioni di sicurezza, ti chiediamo di entrare con SPID o CIE ogni {{days}} giorni o se esci dall’app.
+      title: Accedi di nuovo
+      body: Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità
+      linkButtonLabel: Leggi come fare
     cie_unsupported:
       title: Non puoi entrare con CIE
       body: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE).
