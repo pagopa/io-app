@@ -3,6 +3,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ComponentType } from "react";
 import { createStore } from "redux";
 import {
+  FIMSServiceData,
+  testable,
   useAutoFetchingServiceByIdPot,
   useFIMSAuthenticationFlow,
   useFIMSFromServiceId,
@@ -18,6 +20,10 @@ import { ServicePublic } from "../../../../../../definitions/backend/ServicePubl
 import { loadServiceDetail } from "../../../../services/details/store/actions/details";
 import { FIMS_ROUTES } from "../../navigation";
 import { FimsServiceConfiguration_config } from "../../../../../../definitions/content/FimsServiceConfiguration";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../../navigation/params/AppParamsList";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -25,29 +31,30 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
-const mockNavigation = jest.fn();
+const mockNavigate = jest.fn();
+const mockNavigation = {
+  getState: () => ({
+    index: 0,
+    routes: [
+      {
+        name: "MESSAGE_DETAIL"
+      }
+    ]
+  }),
+  navigate: mockNavigate
+} as unknown as IOStackNavigationProp<AppParamsList, keyof AppParamsList>;
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
-    useNavigation: () => ({
-      getState: () => ({
-        index: 0,
-        routes: [
-          {
-            name: "MESSAGE_DETAIL"
-          }
-        ]
-      }),
-      navigate: mockNavigation
-    })
+    useNavigation: () => mockNavigation
   };
 });
 
 // eslint-disable-next-line functional/no-let
 let serviceDataPot: pot.Pot<ServicePublic, Error> | undefined;
 // eslint-disable-next-line functional/no-let
-let serviceData: unknown;
+let serviceData: FIMSServiceData | undefined;
 // eslint-disable-next-line functional/no-let
 let authenticationCallback: ((label: string, url: string) => void) | undefined;
 // eslint-disable-next-line functional/no-let
@@ -156,10 +163,10 @@ describe("index", () => {
         const url = "iosso://https://relyingParty.url/login";
         authenticationCallback!(label, url);
 
-        expect(mockNavigation.mock.calls.length).toBe(1);
-        expect(mockNavigation.mock.calls[0].length).toBe(2);
-        expect(mockNavigation.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
-        expect(mockNavigation.mock.calls[0][1]).toEqual({
+        expect(mockNavigate.mock.calls.length).toBe(1);
+        expect(mockNavigate.mock.calls[0].length).toBe(2);
+        expect(mockNavigate.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
+        expect(mockNavigate.mock.calls[0][1]).toEqual({
           screen: FIMS_ROUTES.CONSENTS,
           params: {
             ctaUrl: "https://relyingParty.url/login",
@@ -194,10 +201,10 @@ describe("index", () => {
       const url = "iosso://https://relyingParty.url/login";
       authenticationCallback!(label, url);
 
-      expect(mockNavigation.mock.calls.length).toBe(1);
-      expect(mockNavigation.mock.calls[0].length).toBe(2);
-      expect(mockNavigation.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
-      expect(mockNavigation.mock.calls[0][1]).toEqual({
+      expect(mockNavigate.mock.calls.length).toBe(1);
+      expect(mockNavigate.mock.calls[0].length).toBe(2);
+      expect(mockNavigate.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
+      expect(mockNavigate.mock.calls[0][1]).toEqual({
         screen: FIMS_ROUTES.CONSENTS,
         params: {
           ctaUrl: "https://relyingParty.url/login",
@@ -238,10 +245,10 @@ describe("index", () => {
         const url = "iosso://https://relyingParty.url/login";
         authenticationCallbackWithServiceId!(label, serviceId, url);
 
-        expect(mockNavigation.mock.calls.length).toBe(1);
-        expect(mockNavigation.mock.calls[0].length).toBe(2);
-        expect(mockNavigation.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
-        expect(mockNavigation.mock.calls[0][1]).toEqual({
+        expect(mockNavigate.mock.calls.length).toBe(1);
+        expect(mockNavigate.mock.calls[0].length).toBe(2);
+        expect(mockNavigate.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
+        expect(mockNavigate.mock.calls[0][1]).toEqual({
           screen: FIMS_ROUTES.CONSENTS,
           params: {
             ctaUrl: "https://relyingParty.url/login",
@@ -271,10 +278,10 @@ describe("index", () => {
       const url = "iosso://https://relyingParty.url/login";
       authenticationCallbackWithServiceId!(label, callbackServiceId, url);
 
-      expect(mockNavigation.mock.calls.length).toBe(1);
-      expect(mockNavigation.mock.calls[0].length).toBe(2);
-      expect(mockNavigation.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
-      expect(mockNavigation.mock.calls[0][1]).toEqual({
+      expect(mockNavigate.mock.calls.length).toBe(1);
+      expect(mockNavigate.mock.calls[0].length).toBe(2);
+      expect(mockNavigate.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
+      expect(mockNavigate.mock.calls[0][1]).toEqual({
         screen: FIMS_ROUTES.CONSENTS,
         params: {
           ctaUrl: "https://relyingParty.url/login",
@@ -288,7 +295,7 @@ describe("index", () => {
       });
     });
   });
-  describe("renderFromRemoteConfigurationHook", () => {
+  describe("useFIMSRemoteServiceConfiguration", () => {
     it(`should call 'navigation.navigate' with proper parameters and return proper service data for analytics`, () => {
       const configurationId = "configId";
       const configuration: FimsServiceConfiguration_config = {
@@ -313,10 +320,10 @@ describe("index", () => {
       const url = "iosso://https://relyingParty.url/login";
       authenticationCallback!(label, url);
 
-      expect(mockNavigation.mock.calls.length).toBe(1);
-      expect(mockNavigation.mock.calls[0].length).toBe(2);
-      expect(mockNavigation.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
-      expect(mockNavigation.mock.calls[0][1]).toEqual({
+      expect(mockNavigate.mock.calls.length).toBe(1);
+      expect(mockNavigate.mock.calls[0].length).toBe(2);
+      expect(mockNavigate.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
+      expect(mockNavigate.mock.calls[0][1]).toEqual({
         screen: FIMS_ROUTES.CONSENTS,
         params: {
           ctaUrl: "https://relyingParty.url/login",
@@ -350,7 +357,209 @@ describe("index", () => {
       const url = "iosso://https://relyingParty.url/login";
       authenticationCallback!(label, url);
 
-      expect(mockNavigation.mock.calls.length).toBe(0);
+      expect(mockNavigate.mock.calls.length).toBe(0);
+    });
+  });
+  describe("navigateToFIMSAuthorizationFlow", () => {
+    it("should call 'navigation.navigate' with proper parameters", () => {
+      const label = "A label";
+      const innerServiceData = {
+        organizationFiscalCode: "01234567891",
+        organizationName: "Organization name",
+        serviceId: "01JMFDP73MT43B4507XXQB0105" as ServiceId,
+        serviceName: "Service name"
+      };
+      const url = "iosso://https://relyingParty.url/login";
+
+      testable!.navigateToFIMSAuthorizationFlow(
+        label,
+        mockNavigation,
+        innerServiceData,
+        url
+      );
+
+      expect(mockNavigate.mock.calls.length).toBe(1);
+      expect(mockNavigate.mock.calls[0].length).toBe(2);
+      expect(mockNavigate.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
+      expect(mockNavigate.mock.calls[0][1]).toEqual({
+        screen: FIMS_ROUTES.CONSENTS,
+        params: {
+          ctaUrl: "https://relyingParty.url/login",
+          ctaText: label,
+          organizationFiscalCode: innerServiceData.organizationFiscalCode,
+          organizationName: innerServiceData.organizationName,
+          serviceId: innerServiceData.serviceId,
+          serviceName: innerServiceData.serviceName,
+          source: MESSAGES_ROUTES.MESSAGE_DETAIL
+        }
+      });
+    });
+  });
+  describe("serviceDataFromConfigurationId", () => {
+    it(`should return service data when the configuration id matches`, () => {
+      const configuration: FimsServiceConfiguration_config = {
+        configuration_id: "configId",
+        organization_fiscal_code: "01234567890",
+        organization_name: "Organization name",
+        service_id: "01JMF90E33B89232YER1WRYQ26" as ServiceId,
+        service_name: "Service name"
+      };
+      const appState = {
+        remoteConfig: O.some({
+          fims: {
+            services: [configuration]
+          }
+        })
+      } as GlobalState;
+
+      const serviceConfiguration = testable!.serviceDataFromConfigurationId(
+        configuration.configuration_id,
+        appState
+      );
+      expect(serviceConfiguration).toEqual({
+        organizationFiscalCode: configuration.organization_fiscal_code,
+        organizationName: configuration.organization_name,
+        serviceId: configuration.service_id,
+        serviceName: configuration.service_name
+      });
+    });
+    it(`should return 'undefined' when the configuration id does not match`, () => {
+      const configuration: FimsServiceConfiguration_config = {
+        configuration_id: "configId",
+        organization_fiscal_code: "01234567890",
+        organization_name: "Organization name",
+        service_id: "01JMF90E33B89232YER1WRYQ26" as ServiceId,
+        service_name: "Service name"
+      };
+      const appState = {
+        remoteConfig: O.some({
+          fims: {
+            services: [configuration]
+          }
+        })
+      } as GlobalState;
+
+      const serviceConfiguration = testable!.serviceDataFromConfigurationId(
+        "unmatchingConfigurationId",
+        appState
+      );
+      expect(serviceConfiguration).toBeUndefined();
+    });
+  });
+  describe("serviceDataFromServiceId", () => {
+    const serviceId = "01JMFEZR305XG9VSAB9RYX6X6B" as ServiceId;
+    const service = {
+      service_id: serviceId,
+      organization_fiscal_code: "01234567890",
+      organization_name: "Organization name",
+      service_name: "Service name"
+    } as ServicePublic;
+    [
+      pot.none,
+      pot.noneLoading,
+      pot.noneUpdating(service),
+      pot.noneError(Error("")),
+      pot.some(service),
+      pot.someLoading(service),
+      pot.someUpdating(service, service),
+      pot.someError(service, Error(""))
+    ].forEach(servicePot => {
+      it(`should return proper service data for matching service id and service data of type ${servicePot.kind}`, () => {
+        const state = {
+          features: {
+            services: {
+              details: {
+                byId: {
+                  [serviceId]: servicePot
+                }
+              }
+            }
+          }
+        } as GlobalState;
+
+        const internalServiceData = testable!.serviceDataFromServiceId(
+          serviceId,
+          state
+        );
+
+        expect(internalServiceData).toEqual({
+          organizationFiscalCode: pot.isSome(servicePot)
+            ? service.organization_fiscal_code
+            : undefined,
+          organizationName: pot.isSome(servicePot)
+            ? service.organization_name
+            : undefined,
+          serviceId: service.service_id,
+          serviceName: pot.isSome(servicePot) ? service.service_name : undefined
+        });
+      });
+    });
+    it(`should return proper service data for unmatching service id`, () => {
+      const callbackServiceId = "01JMFFSRBHTN09A6CFM0MTXFP6" as ServiceId;
+      const state = {
+        features: {
+          services: {
+            details: {
+              byId: {
+                [serviceId]: pot.some(service)
+              }
+            }
+          }
+        }
+      } as GlobalState;
+
+      const internalServiceData = testable!.serviceDataFromServiceId(
+        callbackServiceId,
+        state
+      );
+
+      expect(internalServiceData).toEqual({
+        serviceId: callbackServiceId
+      });
+    });
+  });
+  describe("useFIMSFromServiceData", () => {
+    it(`should return authentication callback that calls navigation.navigate with proper parameters when input data is defined`, () => {
+      const internalServiceData = {
+        organizationFiscalCode: "01234567891",
+        organizationName: "Organization name",
+        serviceId: "01JMFG3E20JFQH6HAQD9BDRB19" as ServiceId,
+        serviceName: "Service name"
+      };
+
+      renderFromServiceDataHook(internalServiceData);
+
+      expect(authenticationCallback).toBeDefined();
+
+      const label = "A label";
+      const url = "iosso://https://relyingParty.url/login";
+      authenticationCallback!(label, url);
+      expect(mockNavigate.mock.calls.length).toBe(1);
+      expect(mockNavigate.mock.calls[0].length).toBe(2);
+      expect(mockNavigate.mock.calls[0][0]).toBe(FIMS_ROUTES.MAIN);
+      expect(mockNavigate.mock.calls[0][1]).toEqual({
+        screen: FIMS_ROUTES.CONSENTS,
+        params: {
+          ctaUrl: "https://relyingParty.url/login",
+          ctaText: label,
+          organizationFiscalCode: internalServiceData.organizationFiscalCode,
+          organizationName: internalServiceData.organizationName,
+          serviceId: internalServiceData.serviceId,
+          serviceName: internalServiceData.serviceName,
+          source: MESSAGES_ROUTES.MESSAGE_DETAIL
+        }
+      });
+    });
+    it(`should return authentication callback that does nothing when input data is undefined`, () => {
+      renderFromServiceDataHook(undefined);
+
+      expect(authenticationCallback).toBeDefined();
+
+      authenticationCallback!(
+        "a label",
+        "iosso://https://relyingParty.url/login"
+      );
+      expect(mockNavigate.mock.calls.length).toBe(0);
     });
   });
 });
@@ -437,6 +646,16 @@ const renderFromRemoteConfigurationHook = (
   );
 };
 
+const renderFromServiceDataHook = (
+  internalServiceData: FIMSServiceData | undefined
+) => {
+  const appState = {} as GlobalState;
+  return genericRender(
+    () => FromServiceDataHookWrapper(internalServiceData),
+    appState
+  );
+};
+
 const AutoFetchHookWrapper = (serviceId: ServiceId) => {
   serviceDataPot = useAutoFetchingServiceByIdPot(serviceId);
   return undefined;
@@ -455,6 +674,13 @@ const FromRemoteConfigurationHookWrapper = (configurationId: string) => {
   const hookData = useFIMSRemoteServiceConfiguration(configurationId);
   serviceData = hookData.serviceData;
   authenticationCallback = hookData.startFIMSAuthenticationFlow;
+  return undefined;
+};
+const FromServiceDataHookWrapper = (
+  internalServiceData: FIMSServiceData | undefined
+) => {
+  authenticationCallback =
+    testable!.useFIMSFromServiceData(internalServiceData);
   return undefined;
 };
 

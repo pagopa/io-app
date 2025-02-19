@@ -22,7 +22,7 @@ import { isTestEnv } from "../../../../utils/environment";
 import { fimsServiceConfiguration } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 
-type FIMSServiceData = {
+export type FIMSServiceData = {
   organizationFiscalCode?: string;
   organizationName?: string;
   serviceId: ServiceId;
