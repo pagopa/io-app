@@ -5,10 +5,12 @@ import {
   itwCloseDiscoveryBanner,
   itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
-  itwUnflagCredentialAsRequested,
-  itwSetReviewPending
+  itwSetAuthLevel,
+  itwSetReviewPending,
+  itwUnflagCredentialAsRequested
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
+import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export type ItwPreferencesState = {
   // Date until which the feedback banner should be hidden
@@ -21,6 +23,8 @@ export type ItwPreferencesState = {
   requestedCredentials: { [credentialType: string]: string };
   // Indicates whether the user should see the modal to review the app.
   isPendingReview?: boolean;
+  // Indicates the SPID/CIE authentication level used to obtain the eid
+  authLevel?: ItwAuthLevel;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -73,6 +77,13 @@ const reducer = (
       return {
         ...state,
         isPendingReview: action.payload
+      };
+    }
+
+    case getType(itwSetAuthLevel): {
+      return {
+        ...state,
+        authLevel: action.payload
       };
     }
 
