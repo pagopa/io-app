@@ -579,8 +579,6 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
 ## Design System
 The entire app is built using custom components included in the external [`io-app-design-system`](https://github.com/pagopa/io-app-design-system/) library. This library uses the latest React Native APIs and is tailored to our specific needs.
 
-This library was introduced in Q1 2023. Previously, the application was built using the legacy `2.x` version of the rather famous `native-base` library.
-
 ### Frequently Asked Questions
 
 #### Why is the app not optimized for high refresh rate devices (90-120 Hz and above)?
