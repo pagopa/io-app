@@ -1,12 +1,16 @@
 import { merge, set } from "lodash";
 import * as O from "fp-ts/lib/Option";
 import { addDays } from "date-fns";
+import MockDate from "mockdate";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { isSessionExpirationBannerRenderableSelector } from "../selectors";
 import { isFastLoginEnabledSelector } from "../../../../fastLogin/store/selectors";
 import { AuthenticationState } from "../../../../../store/reducers/authentication";
 import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
+
+// If you want to know when this selector was implemented, you can refer to the mocked date below!
+MockDate.set(new Date(2025, 1, 19));
 
 const getFutureDate = (days: number): Date => addDays(new Date(), days);
 
