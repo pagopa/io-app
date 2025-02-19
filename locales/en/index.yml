@@ -4192,10 +4192,10 @@ fastLogin:
 loginFeatures:
   loginPreferences:
     expirationBanner:
-      title: Accesso rapido in scadenza
-      content: Il {{date}} dovrai accedere di nuovo con SPID o CIE
+      title: Quick access is about to expire.
+      content: On {{date}} you will need to log in again with SPID or CIE
       action: 
-        label: Leggi come fare
+        label: Read more
 whatsNew:
   title: What's changed?
 bonusCard:
