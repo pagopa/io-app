@@ -39,6 +39,7 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   return (
     <View style={styles.margins}>
       <Banner
+        title={I18n.t("loginFeatures.loginPreferences.expirationBanner.title")}
         content={I18n.t(
           "loginFeatures.loginPreferences.expirationBanner.content",
           {

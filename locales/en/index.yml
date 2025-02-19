@@ -4187,6 +4187,7 @@ fastLogin:
 loginFeatures:
   loginPreferences:
     expirationBanner:
+      title: Accesso rapido in scadenza
       content: Il {{date}} dovrai accedere di nuovo con SPID o CIE
       action: 
         label: Leggi come fare
