@@ -26,7 +26,11 @@ const ItwRemoteRequestValidationScreen = (params: ScreenProps) => {
   const navigation = useIONavigation();
   useItwDisableGestureNavigation();
 
-  const payload = params.route.params;
+  // Add default value for request_uri_method if not present
+  const payload = {
+    ...params.route.params,
+    request_uri_method: params.route.params.request_uri_method ?? "GET"
+  };
 
   if (!ItwRemoteRequestPayload.is(payload)) {
     // TODO: handle invalid payload failure for deep link [1961]
@@ -44,13 +48,7 @@ const ItwRemoteRequestValidationScreen = (params: ScreenProps) => {
     );
   }
 
-  // Add default value for request_uri_method if not present
-  const updatedPayload = {
-    ...payload,
-    request_uri_method: payload.request_uri_method ?? "GET"
-  };
-
-  return <ContentView payload={updatedPayload} />;
+  return <ContentView payload={payload} />;
 };
 
 const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
