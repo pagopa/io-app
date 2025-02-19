@@ -26,6 +26,8 @@ import {
 } from "../store/actions";
 import { zendeskSelectedCategorySelector } from "../store/reducers";
 import { openWebUrl } from "../../../utils/url";
+import { trackHelpCenterCtaTapped } from "../../../utils/analytics";
+import { getOrFallback } from "../../../utils/object";
 
 export type ZendeskChooseSubCategoryNavigationParams = {
   assistanceType: ZendeskAssistanceType;
@@ -36,14 +38,6 @@ type Props = IOStackNavigationRouteProps<
   "ZENDESK_CHOOSE_SUB_CATEGORY"
 >;
 
-function getOrFallback<
-  O extends object,
-  K1 extends keyof O,
-  K2 extends keyof O
->(obj: O, key: K1, fallback: K2) {
-  return obj[key] ?? obj[fallback];
-}
-
 /**
  * this screen shows the sub-categories for which the user can ask support with the assistance
  * see {@link ZendeskChooseCategory} to check the previous category screen
@@ -52,7 +46,10 @@ const ZendeskChooseSubCategory = (props: Props) => {
   const { error } = useIOToast();
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useIODispatch();
-  const { assistanceType } = props.route.params;
+  const {
+    params: { assistanceType },
+    name: routeName
+  } = props.route;
   const selectedSubcategory = (subcategory: ZendeskSubCategory) =>
     dispatch(zendeskSelectedSubcategory(subcategory));
   const zendeskWorkUnitFailure = (reason: string) =>
@@ -109,7 +106,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
       {bannerEducational && (
         <ContentWrapper>
           <Banner
-            pictogramName="charity"
+            pictogramName="help"
             size="big"
             color="neutral"
             title={getOrFallback(bannerEducational.title, locale, "it-IT")}
@@ -120,9 +117,14 @@ const ZendeskChooseSubCategory = (props: Props) => {
               "it-IT"
             )}
             onPress={() => {
-              const href = bannerEducational.action.href;
+              const url = getOrFallback(
+                bannerEducational.action.href,
+                locale,
+                "it-IT"
+              );
 
-              openWebUrl(getOrFallback(href, locale, "it-IT"), () => {
+              trackHelpCenterCtaTapped(selectedCategory.value, url, routeName);
+              openWebUrl(url, () => {
                 error(I18n.t("global.jserror.title"));
               });
             }}
