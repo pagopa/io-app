@@ -587,8 +587,6 @@ We're committed to providing a faster and more satisfying experience for our cit
 
 Our internal testing has shown that there's a pretty obvious difference between the classic navigation `Stack` and the `NativeStack`, which uses native APIs underneath. It's currently only enabled in the **Design System** section, which isn't accessible to everyone because it's only visible when developer mode is enabled.
 
-Replacing all navigation stacks with `NativeStack` requires a fairly significant effort. Currently, this activity is not in our roadmap.
-
 #### Why is there no dark mode?
 
 We're actively working on a dark mode version of the app. This color mode will be available in the coming months and will be released as a beta first.
