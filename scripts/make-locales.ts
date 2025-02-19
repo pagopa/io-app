@@ -50,12 +50,12 @@ export async function readLocaleDoc(
   locale: string
 ): Promise<LocaleDoc> {
   const localePath = path.join(rootPath, locale);
-  const filename = path.join(localePath, "index.ts");
+  const filename = path.join(localePath, "index.json");
   const content = await require(filename);
 
   return {
     locale,
-    doc: content.default
+    doc: content
   };
 }
 
@@ -136,7 +136,9 @@ async function emitTsDefinitions(
     )
     .join("\n");
   const imports = locales
-    .map(l => `import ${l.locale.toUpperCase()} from "./${l.locale}";`)
+    .map(
+      l => `import ${l.locale.toUpperCase()} from "./${l.locale}/index.json";`
+    )
     .join("\n");
 
   const content = `
