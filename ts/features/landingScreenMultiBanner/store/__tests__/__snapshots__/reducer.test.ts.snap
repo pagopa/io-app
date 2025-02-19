@@ -3,6 +3,7 @@
 exports[`landingScreenBannersReducer should match snapshot: undefined_no_action 1`] = `
 {
   "ITW_DISCOVERY": true,
+  "LV_EXPIRATION_REMINDER": true,
   "PUSH_NOTIFICATIONS_REMINDER": true,
   "SETTINGS_DISCOVERY": true,
 }
