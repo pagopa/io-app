@@ -1,5 +1,4 @@
 import { assign, not, setup } from "xstate";
-import { ItwTags } from "../../../machine/tags";
 import { InitialContext, Context } from "./context";
 import { mapEventToFailure, RemoteFailureType } from "./failure";
 import { RemoteEvents } from "./events";
@@ -18,6 +17,7 @@ export const itwRemoteMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToDiscoveryScreen: notImplemented,
     navigateToWallet: notImplemented,
+    navigateToClaimsDisclosureScreen: notImplemented,
     closeIssuance: notImplemented
   },
   actors: {},
@@ -38,13 +38,13 @@ export const itwRemoteMachine = setup({
           actions: assign(({ event }) => ({
             payload: event.payload
           })),
-          target: "PayloadValidation"
+          target: "PreliminaryChecks"
         }
       }
     },
-    PayloadValidation: {
-      description: "Validating the remote request payload before proceeding",
-      tags: [ItwTags.Loading],
+    PreliminaryChecks: {
+      description:
+        "Perform preliminary checks on the wallet and necessary conditions before proceeding",
       always: [
         {
           guard: not("isWalletActive"),
@@ -62,6 +62,7 @@ export const itwRemoteMachine = setup({
       ]
     },
     ClaimsDisclosure: {
+      entry: "navigateToClaimsDisclosureScreen",
       description:
         "Display the list of claims to disclose for the verifiable presentation",
       on: {

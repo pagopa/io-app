@@ -1,19 +1,16 @@
 import {
   Alert,
-  Body,
   ButtonLink,
   ContentWrapper,
   FeatureInfo,
   FooterActions,
   ForceScrollDownView,
   H2,
-  IOStyles,
   ListItemHeader,
   VStack
 } from "@pagopa/io-app-design-system";
 import { View, StyleSheet } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import { memo, useCallback, useState } from "react";
+import { memo, useState } from "react";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   FadeIn,
@@ -21,16 +18,9 @@ import Animated, {
   LinearTransition
 } from "react-native-reanimated";
 import I18n from "../../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
-import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
-import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
-import { selectIsLoading } from "../machine/selectors.ts";
-import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
-import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { ItwRemotePresentationClaimsMock } from "../../../common/utils/itwMocksUtils.ts";
 import {
@@ -43,60 +33,10 @@ import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
 const RP_MOCK_NAME = "Comune di Milano";
 const RP_MOCK_PRIVACY_URL = "https://rp.privacy.url";
 
-export type ItwRemoteClaimsDisclosureScreenNavigationParams = {
-  itwRemoteRequestPayload: ItwRemoteRequestPayload;
-};
-
-type ScreenProps = IOStackNavigationRouteProps<
-  ItwRemoteParamsList,
-  "ITW_REMOTE_CLAIMS_DISCLOSURE"
->;
-
-const QRCodeValidationScreen = () => (
-  <LoadingScreenContent
-    contentTitle={I18n.t(
-      "features.itWallet.presentation.remote.loadingScreen.title"
-    )}
-  >
-    <View style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}>
-      <Body>
-        {I18n.t("features.itWallet.presentation.remote.loadingScreen.subtitle")}
-      </Body>
-    </View>
-  </LoadingScreenContent>
-);
-
-const ItwRemoteClaimsDisclosureScreen = (params: ScreenProps) => {
+const ItwRemoteClaimsDisclosureScreen = () => {
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
-
-  const machineRef = ItwRemoteMachineContext.useActorRef();
-
-  const isMachineLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
-
-  const itwRemoteRequestPayload = params.route.params.itwRemoteRequestPayload;
-
-  useFocusEffect(
-    useCallback(() => {
-      if (itwRemoteRequestPayload) {
-        machineRef.send({
-          type: "start",
-          payload: itwRemoteRequestPayload
-        });
-      }
-    }, [itwRemoteRequestPayload, machineRef])
-  );
-
-  const dismissDialog = useItwDismissalDialog(() => {
-    machineRef.send({ type: "close" });
-  });
-
-  useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
-
-  if (isMachineLoading) {
-    return <QRCodeValidationScreen />;
-  }
 
   return <ContentView />;
 };
