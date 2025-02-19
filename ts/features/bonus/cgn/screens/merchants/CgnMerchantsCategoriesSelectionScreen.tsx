@@ -16,6 +16,7 @@ import I18n from "../../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import CGN_ROUTES from "../../navigation/routes";
+import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CgnMerchantsListScreen from "./CgnMerchantsListScreen";
 import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
 
@@ -70,6 +71,7 @@ const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
             tabOptions[route.name as keyof CgnMerchantsHomeTabParamsList].title;
           return (
             <TabItem
+              testID={`cgn-merchants-tab-${route.name}`}
               icon={
                 tabOptions[route.name as keyof CgnMerchantsHomeTabParamsList]
                   .icon
@@ -88,11 +90,13 @@ const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
 };
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
+  useDisableRootNavigatorGesture();
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
     secondAction: {
       icon: "search",
+      testID: "search-button",
       onPress() {
         navigate(CGN_ROUTES.DETAILS.MAIN, {
           screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH

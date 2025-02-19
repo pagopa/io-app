@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.83.0-rc.5](https://github.com/pagopa/io-app/compare/2.83.0-rc.4...2.83.0-rc.5) (2025-02-18)
+
+
+### Bug Fixes
+
+* [[IOPAE-1758](https://pagopa.atlassian.net/browse/IOPAE-1758),[IOPAE-1759](https://pagopa.atlassian.net/browse/IOPAE-1759),[IOPAE-1761](https://pagopa.atlassian.net/browse/IOPAE-1761),[IOPAE-1762](https://pagopa.atlassian.net/browse/IOPAE-1762)] Accessibility improvements ([#6698](https://github.com/pagopa/io-app/issues/6698)) ([90cfeb1](https://github.com/pagopa/io-app/commit/90cfeb11cf9eeb8c57f0afb8d46d7dbd506447f3))
+* **IT Wallet:** [[SIW-2003](https://pagopa.atlassian.net/browse/SIW-2003)] Fix redux migration logic ([#6728](https://github.com/pagopa/io-app/issues/6728)) ([f2db628](https://github.com/pagopa/io-app/commit/f2db6281eeb01244dec66b30fead5f67dbeae614))
+
+
+### Chores
+
+* [[IOBP-1164](https://pagopa.atlassian.net/browse/IOBP-1164)] Add a11y description to the receipt PDF preview page ([#6730](https://github.com/pagopa/io-app/issues/6730)) ([3151da2](https://github.com/pagopa/io-app/commit/3151da23d79ec913180b74ec3446a47f8e73378d))
+* [[IOBP-1191](https://pagopa.atlassian.net/browse/IOBP-1191)] Add a11y description to button inside the barcode scan screen ([#6729](https://github.com/pagopa/io-app/issues/6729)) ([5f92407](https://github.com/pagopa/io-app/commit/5f9240778dde1e8a708627bf96d9086cb0ae63ac))
+* [[IOPID-2690](https://pagopa.atlassian.net/browse/IOPID-2690)] Support back navigation from `CieIdLoginScreen` and `CieConsentDataUsageScreen` ([#6721](https://github.com/pagopa/io-app/issues/6721)) ([a676e00](https://github.com/pagopa/io-app/commit/a676e0053aabd051b53c8a991bc6a597791d90dd)), closes [/#diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R40](https://github.com/pagopa///issues/diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R40) [/#diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R40](https://github.com/pagopa///issues/diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R40) [/#diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R274-R284](https://github.com/pagopa///issues/diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R274-R284) [/#diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L27-R27](https://github.com/pagopa///issues/diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L27-R27) [/#diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L27-R27](https://github.com/pagopa///issues/diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L27-R27) [/#diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L79-R83](https://github.com/pagopa///issues/diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L79-R83) [/#diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL8-R8](https://github.com/pagopa///issues/diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL8-R8) [/#diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL8-R8](https://github.com/pagopa///issues/diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL8-R8) [/#diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL18-R19](https://github.com/pagopa///issues/diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL18-R19) [/#diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daR32-R45](https://github.com/pagopa///issues/diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daR32-R45) [/#diff-4b4bec9087f67cc00d09dc51404a059bae24a78ad98e066916f1046a78b5b9f9R1-R78](https://github.com/pagopa///issues/diff-4b4bec9087f67cc00d09dc51404a059bae24a78ad98e066916f1046a78b5b9f9R1-R78) [/#diff-ad2b53460d1d1097a95454f9788b1a4f1a50f7d37cf641c6db1d64e05f3fac7bR133](https://github.com/pagopa///issues/diff-ad2b53460d1d1097a95454f9788b1a4f1a50f7d37cf641c6db1d64e05f3fac7bR133)
+
+## [2.83.0-rc.4](https://github.com/pagopa/io-app/compare/2.83.0-rc.3...2.83.0-rc.4) (2025-02-17)
+
+
+### Bug Fixes
+
+* [[IOBP-1179](https://pagopa.atlassian.net/browse/IOBP-1179)] `a11y` banner focus order ([#6725](https://github.com/pagopa/io-app/issues/6725)) ([29718a3](https://github.com/pagopa/io-app/commit/29718a3bbae3a13d1609d663fe942f64aa2c78af))
+* [[IOCOM-2097](https://pagopa.atlassian.net/browse/IOCOM-2097)] Special link support removed from IOMarkdown on messages and services ([#6722](https://github.com/pagopa/io-app/issues/6722)) ([b1cc73f](https://github.com/pagopa/io-app/commit/b1cc73f1fd0c8cef5f87fa713d8a6ad75916b9a0))
+* [[PE-937](https://pagopa.atlassian.net/browse/PE-937)] a11y on `CgnCard` expiry date ([#6726](https://github.com/pagopa/io-app/issues/6726)) ([1de394f](https://github.com/pagopa/io-app/commit/1de394f830ceea87854d1ae41df6a9bde3e794a1))
+* [[PE-965](https://pagopa.atlassian.net/browse/PE-965)] CGN Swipe back gesture to root stack navigator ([#6708](https://github.com/pagopa/io-app/issues/6708)) ([f969b17](https://github.com/pagopa/io-app/commit/f969b1754c3964eb4fa84b5009ac91cf7ea1e5db))
+* **IT Wallet:** [[SIW-2003](https://pagopa.atlassian.net/browse/SIW-2003)] ITW auth level tracking  ([#6710](https://github.com/pagopa/io-app/issues/6710)) ([ca154f3](https://github.com/pagopa/io-app/commit/ca154f395048cdf757e4d0981c9b491a21ad988a))
+
+
+### Chores
+
+* [[IOPAE-1744](https://pagopa.atlassian.net/browse/IOPAE-1744),[IOPAE-1749](https://pagopa.atlassian.net/browse/IOPAE-1749)] Remove transparent header to solve accessibility problems ([#6692](https://github.com/pagopa/io-app/issues/6692)) ([4359b93](https://github.com/pagopa/io-app/commit/4359b93d338bf663ae25a3bd9274b2e14c32e223))
+
 ## [2.83.0-rc.3](https://github.com/pagopa/io-app/compare/2.83.0-rc.2...2.83.0-rc.3) (2025-02-14)
 
 
