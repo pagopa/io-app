@@ -59,6 +59,7 @@ const MissingConfigurationAlert = (props: Props) => {
     <>
       <Alert
         ref={viewRef}
+        testID="missing-configuration-alert"
         content={I18n.t(
           `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
         )}

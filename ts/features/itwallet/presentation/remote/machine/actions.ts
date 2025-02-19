@@ -32,6 +32,12 @@ export const createRemoteActionsImplementation = (
     });
   },
 
+  navigateToClaimsDisclosureScreen: () => {
+    navigation.replace(ITW_REMOTE_ROUTES.MAIN, {
+      screen: ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE
+    });
+  },
+
   navigateToIdentificationModeScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,

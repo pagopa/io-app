@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { StateFrom, createActor } from "xstate";
 import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
+import { ItwRemoteRequestPayload } from "../../Utils/itwRemoteTypeUtils.ts";
 
 const T_CLIENT_ID = "clientId";
 const T_REQUEST_URI = "https://example.com";
@@ -11,6 +12,7 @@ type MachineSnapshot = StateFrom<ItwRemoteMachine>;
 describe("itwRemoteMachine", () => {
   const navigateToDiscoveryScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
+  const navigateToClaimsDisclosureScreen = jest.fn();
   const navigateToIdentificationModeScreen = jest.fn();
   const close = jest.fn();
 
@@ -21,6 +23,7 @@ describe("itwRemoteMachine", () => {
     actions: {
       navigateToDiscoveryScreen,
       navigateToFailureScreen,
+      navigateToClaimsDisclosureScreen,
       navigateToIdentificationModeScreen,
       close
     },
@@ -51,10 +54,10 @@ describe("itwRemoteMachine", () => {
     actor.send({
       type: "start",
       payload: {
-        clientId: T_CLIENT_ID,
-        requestUri: T_REQUEST_URI,
+        client_id: T_CLIENT_ID,
+        request_uri: T_REQUEST_URI,
         state: T_STATE
-      }
+      } as ItwRemoteRequestPayload
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
@@ -69,10 +72,10 @@ describe("itwRemoteMachine", () => {
       value: "Failure",
       context: {
         payload: {
-          clientId: T_CLIENT_ID,
-          requestUri: T_REQUEST_URI,
+          client_id: T_CLIENT_ID,
+          request_uri: T_REQUEST_URI,
           state: T_STATE
-        }
+        } as ItwRemoteRequestPayload
       }
     } as MachineSnapshot);
 
@@ -93,10 +96,10 @@ describe("itwRemoteMachine", () => {
       value: "Failure",
       context: {
         payload: {
-          clientId: T_CLIENT_ID,
-          requestUri: T_REQUEST_URI,
+          client_id: T_CLIENT_ID,
+          request_uri: T_REQUEST_URI,
           state: T_STATE
-        }
+        } as ItwRemoteRequestPayload
       }
     } as MachineSnapshot);
 
@@ -163,12 +166,13 @@ describe("itwRemoteMachine", () => {
     actor.send({
       type: "start",
       payload: {
-        clientId: T_CLIENT_ID,
-        requestUri: T_REQUEST_URI,
+        client_id: T_CLIENT_ID,
+        request_uri: T_REQUEST_URI,
         state: T_STATE
-      }
+      } as ItwRemoteRequestPayload
     });
 
+    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().value).toStrictEqual("ClaimsDisclosure");
   });
 });
