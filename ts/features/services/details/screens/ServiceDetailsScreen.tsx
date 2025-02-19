@@ -1,4 +1,4 @@
-import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -128,13 +128,11 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
           extraBottomPadding={headerPaddingBottom}
           isLoading={true}
         />
-        <ContentWrapper>
-          <VStack space={40}>
-            <View style={styles.cardContainer}>
-              <CardWithMarkdownContentSkeleton />
-            </View>
-          </VStack>
-        </ContentWrapper>
+        <VStack space={40}>
+          <View style={styles.cardContainer}>
+            <CardWithMarkdownContentSkeleton />
+          </View>
+        </VStack>
       </ServiceDetailsScreenComponent>
     );
   }
@@ -198,24 +196,22 @@ const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
         title={service_name}
         subTitle={organization_name}
       />
-      <ContentWrapper>
-        <VStack space={40}>
-          {service_metadata?.description && (
-            <View style={styles.cardContainer}>
-              <CardWithMarkdownContent content={service_metadata.description} />
-            </View>
-          )}
-          <ServiceDetailsTosAndPrivacy serviceId={service_id} />
-          <ServiceDetailsPreferences
-            serviceId={service_id}
-            availableChannels={available_notification_channels}
-          />
-          <ServiceDetailsMetadata
-            organizationFiscalCode={organization_fiscal_code}
-            serviceId={service_id}
-          />
-        </VStack>
-      </ContentWrapper>
+      <VStack space={40}>
+        {service_metadata?.description && (
+          <View style={styles.cardContainer}>
+            <CardWithMarkdownContent content={service_metadata.description} />
+          </View>
+        )}
+        <ServiceDetailsTosAndPrivacy serviceId={service_id} />
+        <ServiceDetailsPreferences
+          serviceId={service_id}
+          availableChannels={available_notification_channels}
+        />
+        <ServiceDetailsMetadata
+          organizationFiscalCode={organization_fiscal_code}
+          serviceId={service_id}
+        />
+      </VStack>
     </>
   );
 };
