@@ -5,14 +5,16 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import I18n from "../../../../i18n";
 import { closeSessionExpirationBanner } from "../store/actions";
 import { formattedExpirationDateSelector } from "../../../../store/reducers/authentication";
+import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../config";
+import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 
-const SESSION_EXPIRED_EDUCATIONAL_URL =
-  "https://assistenza.ioapp.it/hc/it/articles/32616176301713-Cosa-fare-quando-la-sessione-scade";
+const HC_ID = "SESSION_ABOUT_TO_EXPIRE";
 
 type Props = {
   handleOnClose: () => void;
@@ -22,15 +24,22 @@ type Props = {
  * (see MultiBanner feature for the landing screen)
  */
 export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
+  const { name: routeName } = useRoute();
   const expirationDate = useIOSelector(formattedExpirationDateSelector);
   const { error } = useIOToast();
   const dispatch = useIODispatch();
 
-  const handleOnPress = () => {
-    openWebUrl(SESSION_EXPIRED_EDUCATIONAL_URL, () => {
+  const handleOnPress = useCallback(() => {
+    trackHelpCenterCtaTapped(
+      HC_ID,
+      helpCenterHowToDoWhenSessionIsExpiredUrl,
+      routeName
+    );
+    openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
       error(I18n.t("global.jserror.title"));
     });
-  };
+  }, [error, routeName]);
+
   const closeHandler = useCallback(() => {
     dispatch(closeSessionExpirationBanner());
     handleOnClose();
