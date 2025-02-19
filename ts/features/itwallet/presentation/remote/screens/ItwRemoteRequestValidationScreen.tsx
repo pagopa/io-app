@@ -3,7 +3,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import I18n from "../../../../../i18n.ts";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
