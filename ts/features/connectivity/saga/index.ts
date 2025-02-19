@@ -26,7 +26,7 @@ export function* connectionStatusSaga(): Generator<
     }
     return false;
   } catch (e) {
-    // do nothing. it should be a network or decoding error
+    // do nothing. it should be a library error
     return false;
   }
 }
@@ -37,12 +37,12 @@ export function* connectionStatusSaga(): Generator<
  * the whole usage.
  */
 export function* connectionStatusWatcherLoop() {
-  // check backend status periodically
+  // check connectivity status periodically
   while (true) {
     const response: SagaCallReturnType<typeof connectionStatusSaga> =
       yield* call(connectionStatusSaga);
 
-    // if we have no information increase rate
+    // if we have no connection increase rate
     if (response === false) {
       yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
       continue;
@@ -50,7 +50,7 @@ export function* connectionStatusWatcherLoop() {
 
     const isAppConnected = yield* select(isConnectedSelector);
 
-    // if backend is off increase rate
+    // if connection is off increase rate
     if (!isAppConnected) {
       yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
     } else {
@@ -60,6 +60,7 @@ export function* connectionStatusWatcherLoop() {
 }
 
 export default function* root(): IterableIterator<ReduxSagaEffect> {
+  // configure net info library to check status and fetch a specific url
   configureNetInfo();
   yield* fork(connectionStatusWatcherLoop);
 }
