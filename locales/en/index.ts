@@ -803,8 +803,9 @@ export default {
         }
       },
       session_expired: {
-        title: "Your session is expired",
-        body: "For security reasons, we ask you to log in with SPID or CIE every {{days}} days or if you log out"
+        title: "Log in again",
+        body: "We need to check your identity from time to time for security reasons",
+        linkButtonLabel: "Read more"
       },
       cie_unsupported: {
         title: "You cannot use CIE",
@@ -3184,6 +3185,7 @@ export default {
         email: "Send email",
         pec: "Send PEC",
         fiscalCode: "Institution's fiscal code",
+        fiscalCodeAccessibilityHint: "Copy to clipboard",
         address: "Address",
         serviceId: "Service ID"
       },
@@ -4406,6 +4408,9 @@ export default {
           success: ""
         },
         receipt: {
+          a11y: {
+            preview: "Receipt preview in PDF format"
+          },
           loading: "We are hiding your receipt...",
           title: "pagoPA Receipt",
           shareButton: "Save or share",
@@ -5746,9 +5751,9 @@ export default {
       upload: "Carica",
       input: "Digita",
       a11y: {
-        scan: "Inquadra, 1 di 3",
-        upload: "Carica, 2 di 3",
-        input: "Digita, 3 di 3"
+        scan: "Scan, 1 of 3",
+        upload: "Upload an image or a document, 2 of 3",
+        input: "Type in the notice code data, 3 of 3"
       }
     },
     upload: {

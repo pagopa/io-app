@@ -755,10 +755,6 @@ export default {
           hint: "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
         }
       },
-      session_expired: {
-        title: "Deine Sitzung ist abgelaufen",
-        body: "Aus Sicherheitsgründen bitten wir dich, dich alle {{days}} Tage oder wenn du die App verlässt, mit SPID oder CIE anzumelden."
-      },
       cie_unsupported: {
         title: "Du kannst dich nicht mit CIE anmelden",
         body: "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht.",

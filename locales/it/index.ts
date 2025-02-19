@@ -813,8 +813,9 @@ export default {
         }
       },
       session_expired: {
-        title: "La tua sessione è scaduta",
-        body: "Per ragioni di sicurezza, ti chiediamo di entrare con SPID o CIE ogni {{days}} giorni o se esci dall’app."
+        title: "Accedi di nuovo",
+        body: "Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità",
+        linkButtonLabel: "Leggi come fare"
       },
       cie_unsupported: {
         title: "Non puoi entrare con CIE",
@@ -3222,6 +3223,7 @@ export default {
         email: "Invia un'email",
         pec: "Invia una PEC",
         fiscalCode: "Codice fiscale ente",
+        fiscalCodeAccessibilityHint: "Copia negli appunti",
         address: "Indirizzo",
         serviceId: "ID servizio"
       },
@@ -4453,6 +4455,9 @@ export default {
           success: ""
         },
         receipt: {
+          a11y: {
+            preview: "Anteprima ricevuta in formato PDF"
+          },
           loading: "Stiamo nascondendo la ricevuta...",
           title: "Ricevuta pagoPA",
           shareButton: "Salva o condividi",
@@ -5794,8 +5799,8 @@ export default {
       input: "Digita",
       a11y: {
         scan: "Inquadra, 1 di 3",
-        upload: "Carica, 2 di 3",
-        input: "Digita, 3 di 3"
+        upload: "Carica un'immagine o un documento, 2 di 3",
+        input: "Digita i dati di un avviso, 3 di 3"
       }
     },
     upload: {
