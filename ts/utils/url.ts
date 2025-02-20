@@ -149,7 +149,7 @@ export function extractPathFromURL(
         .join("\\.")}`
     );
 
-    const normalizedURL = url.replace(/\/+/g, "/");
+    const normalizedURL = url.replace(/\/+/g, "/").toLowerCase();
 
     if (prefixRegex.test(normalizedURL)) {
       return normalizedURL.replace(prefixRegex, "");

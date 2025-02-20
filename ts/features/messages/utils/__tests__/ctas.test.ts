@@ -1,4 +1,5 @@
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { Linking } from "react-native";
 import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
@@ -13,6 +14,7 @@ import {
   getMessageCTA,
   getRemoteLocale,
   getServiceCTA,
+  handleCtaAction,
   testable,
   unsafeMessageCTAFromInput
 } from "../ctas";
@@ -70,7 +72,10 @@ const messageWithContent = {
 
 // test "it" as default language
 beforeAll(() => setLocale("it" as Locales));
-afterEach(() => jest.restoreAllMocks());
+afterEach(() => {
+  jest.restoreAllMocks();
+  jest.clearAllMocks();
+});
 
 describe("getRemoteLocale", () => {
   it("should return it if locale is it", () => {
@@ -1661,6 +1666,88 @@ describe("getServiceCTA", () => {
       cta_1: {
         action: "ioit://messages",
         text: "CTA's text"
+      }
+    });
+  });
+});
+
+describe("handleCtaAction", () => {
+  const mockedLinkTo = jest.fn(); // (path: string) => undefined;
+  const mockedFimsCallback = jest.fn(); // (label: string, url: string) => undefined;
+  [
+    "ioit://messages",
+    "iOiT://messages",
+    "IOIT://messages",
+    "iosso://https://relyingParty.url/login",
+    "iOsSo://https://relyingParty.url/login",
+    "IOSSO://https://relyingParty.url/login",
+    "iohandledlink://mailto:johnsmith@gmail.com",
+    "iOhAnDlEdLiNk://mailto:johnsmith@gmail.com",
+    "IOHANDLEDLINK://mailto:johnsmith@gmail.com",
+    "ioit:/messages",
+    "ioit:messages",
+    "ioitmessages",
+    "iosso:/https://relyingParty.url/login",
+    "iosso:https://relyingParty.url/login",
+    "iossohttps://relyingParty.url/login",
+    "iohandledlink:/mailto:johnsmith@gmail.com",
+    "iohandledlink:mailto:johnsmith@gmail.com",
+    "iohandledlinkmailto:johnsmith@gmail.com",
+    "https://www.google.com",
+    "https://google.com",
+    "http://www.google.com",
+    "http://google.com",
+    "clipboard://prova",
+    "clipboard:prova",
+    "sms://3331234567",
+    "sms:3331234567",
+    "tel://3331234567",
+    "tel:3331234567",
+    "mailto://johnsmith@gmail.com",
+    "mailto:johnsmith@gmail.com",
+    "copy://aValue",
+    "copy:aValue"
+  ].forEach((anUri, index) => {
+    const linkToCalled = index < 3;
+    const fimsCalled = index > 2 && index < 6;
+    const openUrlCalled = index > 5 && index < 9;
+    it(`should call '${
+      linkToCalled
+        ? "linkTo"
+        : fimsCalled
+        ? "fimsCallback"
+        : openUrlCalled
+        ? "Linking.openUrl"
+        : "nothing"
+    }' when the CTA's action is ${anUri}`, () => {
+      const spiedOnMockedOpenURL = jest
+        .spyOn(Linking, "openURL")
+        .mockImplementation(
+          _anUrl => new Promise(resolve => resolve(undefined))
+        );
+      const cta: CTA = {
+        action: anUri,
+        text: "A text"
+      };
+
+      handleCtaAction(cta, mockedLinkTo, mockedFimsCallback);
+
+      if (linkToCalled) {
+        expect(mockedLinkTo).toHaveBeenCalledWith(anUri.substring(6));
+      } else {
+        expect(mockedLinkTo).not.toHaveBeenCalled();
+      }
+
+      if (fimsCalled) {
+        expect(mockedFimsCallback).toHaveBeenCalledWith(cta.text, cta.action);
+      } else {
+        expect(mockedFimsCallback).not.toHaveBeenCalled();
+      }
+
+      if (openUrlCalled) {
+        expect(spiedOnMockedOpenURL).toHaveBeenCalledWith(anUri.substring(16));
+      } else {
+        expect(spiedOnMockedOpenURL).not.toHaveBeenCalled();
       }
     });
   });
