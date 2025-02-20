@@ -105,3 +105,11 @@ export type ItwCredentialStatus =
   | ItwJwtCredentialStatus;
 
 export type ItwAuthLevel = "L2" | "L3";
+
+/**
+ * Defines the payload structure for setting claim values visibility by credential type.
+ */
+export type ItwClaimValuesHiddenByCredential = {
+  credentialType: string;
+  hidden: boolean;
+};
