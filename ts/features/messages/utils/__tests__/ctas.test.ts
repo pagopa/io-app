@@ -1707,6 +1707,7 @@ describe("handleCtaAction", () => {
     "mailto:johnsmith@gmail.com",
     "copy://aValue",
     "copy:aValue"
+    // eslint-disable-next-line sonarjs/cognitive-complexity
   ].forEach((anUri, index) => {
     const linkToCalled = index < 3;
     const fimsCalled = index > 2 && index < 6;

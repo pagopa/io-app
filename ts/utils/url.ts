@@ -146,10 +146,11 @@ export function extractPathFromURL(
       `^${escapeStringRegexp(protocol)}(/)*${host
         .split(".")
         .map(it => (it === "*" ? "[^/]+" : escapeStringRegexp(it)))
-        .join("\\.")}`
+        .join("\\.")}`,
+      "i"
     );
 
-    const normalizedURL = url.replace(/\/+/g, "/").toLowerCase();
+    const normalizedURL = url.replace(/\/+/g, "/");
 
     if (prefixRegex.test(normalizedURL)) {
       return normalizedURL.replace(prefixRegex, "");
