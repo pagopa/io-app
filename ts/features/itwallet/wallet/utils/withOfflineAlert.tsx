@@ -10,6 +10,12 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 
 const MODAL_BOTTOM_PADDING = 150;
 
+/**
+ * HOC that wraps a screen with an Alert which informs the user that the app is offline
+ * and allows them to restart the app
+ * @param Screen - The screen to wrap
+ * @returns The wrapped screen
+ */
 export const withOfflineAlert =
   (Screen: React.ComponentType<any>) => (props: any) => {
     const dispatch = useIODispatch();
