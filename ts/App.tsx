@@ -21,9 +21,9 @@ export type ReactNavigationInstrumentation = ReturnType<
   typeof Sentry.reactNavigationIntegration
 >;
 
-export const navigationIntegration = Sentry.reactNavigationIntegration({
-  enableTimeToInitialDisplay: true
-});
+// export const navigationIntegration = Sentry.reactNavigationIntegration({
+//   enableTimeToInitialDisplay: true
+// });
 
 const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
   event: T
@@ -48,11 +48,14 @@ Sentry.init({
     return removeUserFromEvent(event);
   },
   ignoreErrors: ["HTTPClientError"],
-  integrations: integrations => [...integrations, navigationIntegration],
+  integrations: integrations => [
+    ...integrations,
+    Sentry.reactNativeTracingIntegration()
+  ],
   enabled: !isDevEnv,
   // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-the-message-in-my-error-being-truncated
   maxValueLength: 3000,
-  tracesSampleRate: 0.3,
+  tracesSampleRate: 0.2,
   sampleRate: 0.3
 });
 
@@ -76,7 +79,7 @@ const App = (): JSX.Element => (
                   <LightModalProvider>
                     <StatusMessages>
                       <RootContainer
-                        routingInstumentation={navigationIntegration}
+                      // routingInstumentation={navigationIntegration}
                       />
                     </StatusMessages>
                   </LightModalProvider>

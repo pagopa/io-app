@@ -28,13 +28,13 @@ import {
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
-import { ReactNavigationInstrumentation } from "./App";
+// import { ReactNavigationInstrumentation } from "./App";
 import { setScreenReaderEnabled } from "./store/actions/preferences";
 
-type Props = ReturnType<typeof mapStateToProps> &
-  typeof mapDispatchToProps & {
-    routingInstumentation: ReactNavigationInstrumentation;
-  };
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+// & {
+//   routingInstumentation: ReactNavigationInstrumentation;
+// };
 
 /**
  * The main container of the application with:
@@ -119,7 +119,7 @@ class RootContainer extends PureComponent<Props> {
         />
 
         <IONavigationContainer
-          routingInstrumentation={this.props.routingInstumentation}
+        // routingInstrumentation={this.props.routingInstumentation}
         />
 
         {/* When debug mode is enabled, the following information
