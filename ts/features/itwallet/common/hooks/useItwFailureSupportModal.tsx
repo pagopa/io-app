@@ -52,10 +52,7 @@ export enum ZendeskSubcategoryValue {
 }
 
 // The subcategory is fixed for now. In the future it can be made dynamic depending on the error type.
-const ZENDESK_SUBCATEGORY = {
-  id: "29326690756369",
-  value: ZendeskSubcategoryValue
-};
+const ZENDESK_SUBCATEGORY_ID = "29326690756369";
 
 const contactMethodsByCredentialType: Record<
   string,
@@ -117,7 +114,7 @@ export const useItwFailureSupportModal = ({
     resetLog();
 
     addTicketCustomField(zendeskCategoryId, zendeskItWalletCategory.value);
-    addTicketCustomField(ZENDESK_SUBCATEGORY.id, zendeskSubcategory);
+    addTicketCustomField(ZENDESK_SUBCATEGORY_ID, zendeskSubcategory);
     addTicketCustomField(zendeskItWalletFailureCode, code);
     appendLog(JSON.stringify(failure));
 
