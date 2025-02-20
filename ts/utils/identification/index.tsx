@@ -18,9 +18,9 @@ export const getBiometryIconName = (
   switch (biometryPrintableSimpleType) {
     case "BIOMETRICS":
     case "TOUCH_ID":
-      return I18n.t("identification.unlockCode.accessibility.fingerprint"); // Autenticati con l'impronta digitale
+      return I18n.t("identification.unlockCode.accessibility.fingerprint");
     case "FACE_ID":
-      return I18n.t("identification.unlockCode.accessibility.faceId"); // Autenticati con il riconoscimento facciale
+      return I18n.t("identification.unlockCode.accessibility.faceId");
   }
 };
 

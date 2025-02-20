@@ -2351,13 +2351,6 @@ services:
       privacyLink: "Informativa sulla privacy"
 identification:
   instructions:
-    unlockCode: codice di sblocco
-    unlockCodepPrefix: inserisci il
-    fingerprint: impronta
-    fingerprintPrefix: usa l'
-    faceId: volto
-    faceIdPrefix: usa il
-    congiunction: o
     useFingerPrintOrUnlockCode: usa l'**impronta** o inserisci il **codice di blocco**
     useFingerPrintOrUnlockCodeA11y: usa l'impronta o inserisci il codice di sblocco
     useFaceIdOrUnlockCode: usa il **volto** o inserisci il **codice di sblocco**

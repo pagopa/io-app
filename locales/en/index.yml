@@ -2351,19 +2351,12 @@ services:
       privacyLink: "Privacy information"
 identification:
   instructions:
-    unlockCode: unlock code
-    unlockCodepPrefix: use your
-    fingerprint: fingerprint
-    fingerprintPrefix: use your
-    faceId: face
-    faceIdPrefix: use your
-    congiunction: or
-    useFingerPrintOrUnlockCode: usa l'**impronta** o inserisci il **codice di blocco**
-    useFingerPrintOrUnlockCodeA11y: usa l'impronta o inserisci il codice di sblocco
-    useFaceIdOrUnlockCode: usa il **volto** o inserisci il **codice di sblocco**
-    useFaceIdOrUnlockCodeA11y: usa il volto o inserisci il codice di sblocco
-    useUnlockCode: inserisci il **codice di blocco**
-    useUnlockCodeA11y: inserisci il codice di sblocco
+    useFingerPrintOrUnlockCode: use your **fingerprint** or use your **unlock code**
+    useFingerPrintOrUnlockCodeA11y: use your fingerprint or use your unlock code
+    useFaceIdOrUnlockCode: use your **face** or use your **unlock code**
+    useFaceIdOrUnlockCodeA11y: use your face or use your unlock code
+    useUnlockCode: use your **unlock code**
+    useUnlockCodeA11y: use your unlock code
   title: Hi {{name}}!
   titleProfileName: Hi {{profileName}}!
   titleValidation: Authorise the operation.
