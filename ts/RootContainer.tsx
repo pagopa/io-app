@@ -118,9 +118,7 @@ class RootContainer extends PureComponent<Props> {
           backgroundColor={customVariables.androidStatusBarColor}
         />
 
-        <IONavigationContainer
-        // routingInstrumentation={this.props.routingInstumentation}
-        />
+        <IONavigationContainer />
 
         {/* When debug mode is enabled, the following information
         is displayed:

@@ -21,10 +21,6 @@ export type ReactNavigationInstrumentation = ReturnType<
   typeof Sentry.reactNavigationIntegration
 >;
 
-// export const navigationIntegration = Sentry.reactNavigationIntegration({
-//   enableTimeToInitialDisplay: true
-// });
-
 const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
   event: T
 ): T => {
