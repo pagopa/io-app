@@ -17,7 +17,9 @@ import { memo, useCallback, useMemo, useRef, useState } from "react";
 import {
   Alert,
   ColorSchemeName,
+  Dimensions,
   Modal,
+  PixelRatio,
   Platform,
   StatusBar,
   StyleSheet,
@@ -37,7 +39,6 @@ import I18n from "../../i18n";
 import {
   identificationCancel,
   identificationFailure,
-  identificationForceLogout,
   identificationPinReset,
   identificationSuccess
 } from "../../store/actions/identification";
@@ -60,6 +61,7 @@ import {
   IdentificationInstructionsComponent,
   getBiometryIconName
 } from "../../utils/identification";
+import { MIN_HEIGHT_TO_SHOW_FULL_RENDER } from "../authentication/OptInScreen";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 import { IdentificationNumberPad } from "./components/IdentificationNumberPad";
 
@@ -76,8 +78,10 @@ const IdentificationModal = () => {
   const errorStatusRef = useRef<View>(null);
   const colorScheme: ColorSchemeName = "light";
   const numberPadVariant = colorScheme ? "dark" : "light";
-
   const { isDeviceScreenSmall } = useDetectSmallScreen();
+  const isSmallScreenWithLargeText =
+    Dimensions.get("screen").height < MIN_HEIGHT_TO_SHOW_FULL_RENDER &&
+    PixelRatio.getFontScale() > 1;
 
   const blueColor = useAppBackgroundAccentColorName();
 
@@ -133,9 +137,11 @@ const IdentificationModal = () => {
     },
     [dispatch]
   );
-  const onIdentificationForceLogout = useCallback(() => {
-    dispatch(identificationForceLogout());
+
+  const onPinResetHandler = useCallback(() => {
+    dispatch(identificationPinReset());
   }, [dispatch]);
+
   const onIdentificationFailure = useCallback(() => {
     dispatch(identificationFailure());
   }, [dispatch]);
@@ -158,15 +164,13 @@ const IdentificationModal = () => {
       O.getOrElse(() => false)
     );
     if (forceLogout) {
-      onIdentificationForceLogout();
+      // eslint-disable-next-line functional/immutable-data
+      showRetryText.current = false;
+      onPinResetHandler();
     } else {
       onIdentificationFailure();
     }
-  }, [
-    identificationFailState,
-    onIdentificationFailure,
-    onIdentificationForceLogout
-  ]);
+  }, [identificationFailState, onIdentificationFailure, onPinResetHandler]);
 
   const onIdentificationSuccessHandler = useCallback(
     (isBiometric: boolean) => {
@@ -236,10 +240,6 @@ const IdentificationModal = () => {
         : {},
     [biometricType, onFingerprintRequest]
   );
-
-  const onPinResetHandler = useCallback(() => {
-    dispatch(identificationPinReset());
-  }, [dispatch]);
 
   const confirmResetAlert = useCallback(
     () =>
@@ -432,7 +432,8 @@ const IdentificationModal = () => {
                     variant="warning"
                   />
                 </View>
-              ) : isDeviceScreenSmall && isValidatingTask ? null : (
+              ) : (isDeviceScreenSmall || isSmallScreenWithLargeText) &&
+                isValidatingTask ? null : (
                 <View style={IOStyles.alignCenter}>
                   <Pictogram
                     pictogramStyle="light-content"
