@@ -16,7 +16,10 @@ import {
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackWalletCreationFailed } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import {
+  ZendeskSubcategoryValue,
+  useItwFailureSupportModal
+} from "../../common/hooks/useItwFailureSupportModal";
 import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/selectors/remoteConfig";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
@@ -104,7 +107,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const supportModal = useItwFailureSupportModal({
     failure,
     credentialType: O.toUndefined(credentialType),
-    supportChatEnabled: zendeskAssistanceErrors.includes(failure.type)
+    supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
+    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI
   });
 
   const supportModalAction = {
