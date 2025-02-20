@@ -3566,6 +3566,11 @@ features:
           subtitle: Aggiungi il documento al Portafoglio prima di continuare e poi riprova.
           primaryAction: Aggiungi documento al Portafoglio
           secondaryAction: Annulla
+        deepLinkValidationErrorScreen:
+          title: Il link sembra non funzionare
+          subtitle: "Ti suggeriamo di riprovare.\nSe il problema persiste, contatta l'assistenza."
+          primaryAction: Mostra dettagli
+          secondaryAction: Chiudi
         eidExpiredScreen:
           title: Verifica la tua identità
           subtitle: È un passaggio di verifica necessario per continuare ad usare Documenti su IO per autenticarti.
