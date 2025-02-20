@@ -2,11 +2,8 @@ import {
   AlertEdgeToEdgeWrapper,
   FooterActions
 } from "@pagopa/io-app-design-system";
-import { CommonActions } from "@react-navigation/native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
-import NavigationService from "../../../../navigation/NavigationService";
-import ROUTES from "../../../../navigation/routes";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { useIODispatch } from "../../../../store/hooks";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
@@ -19,12 +16,6 @@ export const withOfflineAlert =
 
     const handleAppRestart = () => {
       dispatch(startApplicationInitialization());
-      NavigationService.getNavigator().current?.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: ROUTES.MAIN }]
-        })
-      );
     };
 
     const offlineInfoModal = useIOBottomSheetAutoresizableModal(
