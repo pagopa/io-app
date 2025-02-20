@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.83.0-rc.6](https://github.com/pagopa/io-app/compare/2.83.0-rc.5...2.83.0-rc.6) (2025-02-19)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1963](https://pagopa.atlassian.net/browse/SIW-1963)]  Handle eid expired in Remote Presentation ([#6716](https://github.com/pagopa/io-app/issues/6716)) ([3564712](https://github.com/pagopa/io-app/commit/35647125d020ae7452239727587df169213df164))
+* [[IOPID-2666](https://pagopa.atlassian.net/browse/IOPID-2666)] FastLogin expiration Banner ([#6736](https://github.com/pagopa/io-app/issues/6736)) ([0fc1157](https://github.com/pagopa/io-app/commit/0fc115798ba4243559916cb1c52b39a8a34b6e9f))
+* **IT Wallet:** [[SIW-1972](https://pagopa.atlassian.net/browse/SIW-1972)] Remote presentation same device ([#6689](https://github.com/pagopa/io-app/issues/6689)) ([436fb3f](https://github.com/pagopa/io-app/commit/436fb3fac44da694864cc420720632852aac90bc))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2039](https://pagopa.atlassian.net/browse/SIW-2039)] Refactor IT Wallet discovery screen ([#6733](https://github.com/pagopa/io-app/issues/6733)) ([11c621c](https://github.com/pagopa/io-app/commit/11c621cdf74794e6ddbb1432eb3d59cb6ada78c7))
+* [[IOPID-2664](https://pagopa.atlassian.net/browse/IOPID-2664)] Change session expired card component ([#6720](https://github.com/pagopa/io-app/issues/6720)) ([73f2d47](https://github.com/pagopa/io-app/commit/73f2d47f8d95ab0d4fab5b3ce06fbacdfd98f2c6)), closes [/#diff-0f5e4629af7b77f0b21af3a54fe1d4d21314eb44c8a54193316d9d80ba2654bfR108-R118](https://github.com/pagopa///issues/diff-0f5e4629af7b77f0b21af3a54fe1d4d21314eb44c8a54193316d9d80ba2654bfR108-R118) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L12-R13](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L12-R13) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L27-R28](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L27-R28) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L38-R46](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L38-R46) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R59-R61](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R59-R61) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R83](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R83) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L188-L189](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L188-L189) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R273-R276](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R273-R276) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L336-R361](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L336-R361) [/#diff-f963522b870f04775f600b4d3638b625908f5faeb9dfca0a87637a8c006603bbR1-R81](https://github.com/pagopa///issues/diff-f963522b870f04775f600b4d3638b625908f5faeb9dfca0a87637a8c006603bbR1-R81) [/#diff-972a2c234b6a6865885c41c7e12280bce9e61e71b5bcd78bf1efcc4e42cfe1e2R1-R63](https://github.com/pagopa///issues/diff-972a2c234b6a6865885c41c7e12280bce9e61e71b5bcd78bf1efcc4e42cfe1e2R1-R63) [/#diff-a425aab9658df7526ca2afd44dfd12ab19227f77c49e80436ef35388f2266627R206-R230](https://github.com/pagopa///issues/diff-a425aab9658df7526ca2afd44dfd12ab19227f77c49e80436ef35388f2266627R206-R230)
+
 ## [2.83.0-rc.5](https://github.com/pagopa/io-app/compare/2.83.0-rc.4...2.83.0-rc.5) (2025-02-18)
 
 

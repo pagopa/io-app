@@ -3571,6 +3571,11 @@ features:
           subtitle: "Ti suggeriamo di riprovare.\n\nSe il problema persiste, contatta l'assistenza."
           primaryAction: Mostra dettagli
           secondaryAction: Chiudi
+        eidExpiredScreen:
+          title: Verifica la tua identità
+          subtitle: È un passaggio di verifica necessario per continuare ad usare Documenti su IO per autenticarti.
+          primaryAction: Inizia
+          secondaryAction: Annulla
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale
@@ -4194,6 +4199,13 @@ fastLogin:
   whatsNew:
     title: Abbiamo migliorato l’accesso a IO!
     subtitle: Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare.
+loginFeatures:
+  loginPreferences:
+    expirationBanner:
+      title: Accesso rapido in scadenza
+      content: Il {{date}} dovrai accedere di nuovo con SPID o CIE
+      action: 
+        label: Leggi come fare
 whatsNew:
   title: Cosa cambia?
 bonusCard:
