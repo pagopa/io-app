@@ -145,11 +145,15 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
    * check if it has a `utm_campaign` parameter
    */
   useOnFirstRender(() => {
-    void Linking.getInitialURL().then(initialUrl => {
-      if (initialUrl) {
-        trackUtmCampaign(initialUrl, dispatch);
-      }
-    });
+    try {
+      void Linking.getInitialURL().then(initialUrl => {
+        if (initialUrl) {
+          trackUtmCampaign(initialUrl, dispatch);
+        }
+      });
+    } catch (e) {
+      // Mainly to manage jest tests where Linking.getInitialURL is not available or mocked
+    }
   });
 
   return (

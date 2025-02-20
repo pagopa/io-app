@@ -319,6 +319,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
   },
+  "utmLink": {
+    "utmCampaign": undefined,
+  },
   "wallet": {
     "cards": {},
     "placeholders": {
