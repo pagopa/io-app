@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { StateFrom, createActor } from "xstate";
 import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
+import { ItwRemoteRequestPayload } from "../../Utils/itwRemoteTypeUtils.ts";
 
 const T_CLIENT_ID = "clientId";
 const T_REQUEST_URI = "https://example.com";
@@ -10,22 +11,26 @@ type MachineSnapshot = StateFrom<ItwRemoteMachine>;
 
 describe("itwRemoteMachine", () => {
   const navigateToDiscoveryScreen = jest.fn();
-  const navigateToWallet = jest.fn();
   const navigateToFailureScreen = jest.fn();
-  const closeIssuance = jest.fn();
+  const navigateToClaimsDisclosureScreen = jest.fn();
+  const navigateToIdentificationModeScreen = jest.fn();
+  const close = jest.fn();
 
   const isWalletActive = jest.fn();
+  const isEidExpired = jest.fn();
 
   const mockedMachine = itwRemoteMachine.provide({
     actions: {
       navigateToDiscoveryScreen,
-      navigateToWallet,
       navigateToFailureScreen,
-      closeIssuance
+      navigateToClaimsDisclosureScreen,
+      navigateToIdentificationModeScreen,
+      close
     },
     actors: {},
     guards: {
-      isWalletActive
+      isWalletActive,
+      isEidExpired
     }
   });
 
@@ -49,10 +54,10 @@ describe("itwRemoteMachine", () => {
     actor.send({
       type: "start",
       payload: {
-        clientId: T_CLIENT_ID,
-        requestUri: T_REQUEST_URI,
+        client_id: T_CLIENT_ID,
+        request_uri: T_REQUEST_URI,
         state: T_STATE
-      }
+      } as ItwRemoteRequestPayload
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
@@ -67,10 +72,10 @@ describe("itwRemoteMachine", () => {
       value: "Failure",
       context: {
         payload: {
-          clientId: T_CLIENT_ID,
-          requestUri: T_REQUEST_URI,
+          client_id: T_CLIENT_ID,
+          request_uri: T_REQUEST_URI,
           state: T_STATE
-        }
+        } as ItwRemoteRequestPayload
       }
     } as MachineSnapshot);
 
@@ -79,8 +84,8 @@ describe("itwRemoteMachine", () => {
     });
     actor.start();
 
-    actor.send({ type: "go-to-wallet" });
-    expect(navigateToWallet).toHaveBeenCalledTimes(1);
+    actor.send({ type: "close" });
+    expect(close).toHaveBeenCalledTimes(1);
   });
 
   it("Should navigate to TOS when user accept to active ITWallet", async () => {
@@ -91,10 +96,10 @@ describe("itwRemoteMachine", () => {
       value: "Failure",
       context: {
         payload: {
-          clientId: T_CLIENT_ID,
-          requestUri: T_REQUEST_URI,
+          client_id: T_CLIENT_ID,
+          request_uri: T_REQUEST_URI,
           state: T_STATE
-        }
+        } as ItwRemoteRequestPayload
       }
     } as MachineSnapshot);
 
@@ -107,21 +112,67 @@ describe("itwRemoteMachine", () => {
     expect(navigateToDiscoveryScreen).toHaveBeenCalledTimes(1);
   });
 
+  it("Should navigate to Identification mode when user start the reissuing flow", async () => {
+    const initialSnapshot: MachineSnapshot =
+      createActor(itwRemoteMachine).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: "Failure",
+      context: {
+        payload: {
+          client_id: T_CLIENT_ID,
+          request_uri: T_REQUEST_URI,
+          state: T_STATE
+        } as ItwRemoteRequestPayload
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+
+    actor.send({ type: "go-to-identification-mode" });
+    expect(navigateToIdentificationModeScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("should transition from Idle to Failure when EID is expired", () => {
+    isWalletActive.mockReturnValue(true);
+    isEidExpired.mockReturnValue(true);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: {
+        client_id: T_CLIENT_ID,
+        request_uri: T_REQUEST_URI,
+        state: T_STATE
+      } as ItwRemoteRequestPayload
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
+  });
+
   it("should transition from Idle to ClaimsDisclosure when ITWallet is active", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
     isWalletActive.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
 
     actor.send({
       type: "start",
       payload: {
-        clientId: T_CLIENT_ID,
-        requestUri: T_REQUEST_URI,
+        client_id: T_CLIENT_ID,
+        request_uri: T_REQUEST_URI,
         state: T_STATE
-      }
+      } as ItwRemoteRequestPayload
     });
 
+    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().value).toStrictEqual("ClaimsDisclosure");
   });
 });

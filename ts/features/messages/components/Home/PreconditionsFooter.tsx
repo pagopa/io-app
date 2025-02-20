@@ -1,12 +1,12 @@
 import { useCallback } from "react";
 import { View } from "react-native";
+import { FooterActions } from "@pagopa/io-app-design-system";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import {
   preconditionsCategoryTagSelector,
   preconditionsFooterSelector,
   preconditionsMessageIdSelector
 } from "../../store/reducers/messagePrecondition";
-import { FooterActions } from "../../../../components/ui/FooterActions";
 import I18n from "../../../../i18n";
 import { openAppStoreUrl } from "../../../../utils/url";
 import { trackNotificationRejected, trackUxConversion } from "../../analytics";
@@ -15,11 +15,13 @@ import { UIMessageId } from "../../types";
 export type PreconditionsFooterProps = {
   onNavigation: (messageId: UIMessageId) => void;
   onDismiss: () => void;
+  onFooterHeightAvailable: (height: number) => void;
 };
 
 export const PreconditionsFooter = ({
   onNavigation,
-  onDismiss
+  onDismiss,
+  onFooterHeightAvailable
 }: PreconditionsFooterProps) => {
   const footerContent = useIOSelector(preconditionsFooterSelector);
   switch (footerContent) {
@@ -28,6 +30,7 @@ export const PreconditionsFooter = ({
         <PreconditionsFooterContent
           onNavigation={onNavigation}
           onDismiss={onDismiss}
+          onFooterHeightAvailable={onFooterHeightAvailable}
         />
       );
     case "update":
@@ -40,7 +43,8 @@ export const PreconditionsFooter = ({
 
 const PreconditionsFooterContent = ({
   onNavigation,
-  onDismiss
+  onDismiss,
+  onFooterHeightAvailable
 }: PreconditionsFooterProps) => {
   const store = useIOStore();
 
@@ -80,6 +84,9 @@ const PreconditionsFooterContent = ({
           testID: "message_preconditions_footer_cancel"
         }
       }}
+      onMeasure={measurements =>
+        onFooterHeightAvailable(measurements.actionBlockHeight)
+      }
     />
   );
 };

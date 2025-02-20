@@ -10,7 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect } from "react";
-import { ListRenderItemInfo, StyleSheet } from "react-native";
+import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
@@ -48,6 +48,9 @@ const scrollTriggerOffsetValue: number = 88;
 const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1
+  },
+  refreshControlContainer: {
+    zIndex: 1
   }
 });
 
@@ -136,17 +139,9 @@ export const InstitutionServicesScreen = ({
     [institutionName, navigation]
   );
 
-  const handleEndReached = useCallback(
-    ({ distanceFromEnd }: { distanceFromEnd: number }) => {
-      // guard needed to avoid endless loop
-      if (distanceFromEnd === 0) {
-        return;
-      }
-
-      fetchNextPage(currentPage + 1);
-    },
-    [currentPage, fetchNextPage]
-  );
+  const handleEndReached = useCallback(() => {
+    fetchNextPage(currentPage + 1);
+  }, [currentPage, fetchNextPage]);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<ServiceMinified>) => (
@@ -216,6 +211,14 @@ export const InstitutionServicesScreen = ({
     return <InstitutionServicesFailure onRetry={() => fetchPage(0)} />;
   }
 
+  const refreshControlComponent = (
+    <RefreshControl
+      onRefresh={refresh}
+      refreshing={isRefreshing}
+      style={styles.refreshControlContainer}
+    />
+  );
+
   return (
     <Animated.FlatList
       ItemSeparatorComponent={() => <Divider />}
@@ -234,8 +237,7 @@ export const InstitutionServicesScreen = ({
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.1}
       onScroll={scrollHandler}
-      onRefresh={refresh}
-      refreshing={isRefreshing}
+      refreshControl={refreshControlComponent}
       renderItem={renderItem}
       testID="intitution-services-list"
     />
