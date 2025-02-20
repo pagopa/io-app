@@ -3612,6 +3612,14 @@ features:
         revokedByUser:
           title: Hai disattivato Documenti su IO
           content: Se cambi idea, potrai riattivare Documenti su IO in futuro.
+    offline:
+      alert:
+        title: Nessuna connessione
+        action: Cosa posso fare?
+      modal:
+        title: Nessuna connessione
+        content: "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell’app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l’app per continuare ad usare tutti i servizi di IO."
+        action: Ricarica app IO
 support:
   ticketList:
     noTicket:
@@ -4199,7 +4207,7 @@ loginFeatures:
     expirationBanner:
       title: Quick access is about to expire.
       content: On {{date}} you will need to log in again with SPID or CIE
-      action: 
+      action:
         label: Read more
 whatsNew:
   title: What's changed?
