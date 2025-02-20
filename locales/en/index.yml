@@ -3568,7 +3568,7 @@ features:
           secondaryAction: Annulla
         deepLinkValidationErrorScreen:
           title: Il link sembra non funzionare
-          subtitle: "Ti suggeriamo di riprovare.\n\nSe il problema persiste, contatta l'assistenza."
+          subtitle: "Ti suggeriamo di riprovare.\nSe il problema persiste, contatta l'assistenza."
           primaryAction: Mostra dettagli
           secondaryAction: Chiudi
         eidExpiredScreen:
