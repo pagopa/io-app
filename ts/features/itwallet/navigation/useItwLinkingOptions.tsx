@@ -2,6 +2,7 @@ import { PathConfigMap } from "@react-navigation/native";
 import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { itwLifecycleIsValidSelector } from "../lifecycle/store/selectors";
+import { ITW_REMOTE_ROUTES } from "../presentation/remote/navigation/routes.ts";
 import { ITW_ROUTES } from "./routes";
 
 /**
@@ -24,6 +25,14 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
           ? ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL
           : ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]: {
           path: "presentation/credential-detail/:credentialType"
+        }
+      }
+    },
+    [ITW_REMOTE_ROUTES.MAIN]: {
+      path: "itw/auth",
+      screens: {
+        [ITW_REMOTE_ROUTES.REQUEST_VALIDATION]: {
+          path: ""
         }
       }
     }

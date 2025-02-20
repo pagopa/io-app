@@ -615,8 +615,9 @@ authentication:
         label: Presentazione di IO
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     session_expired:
-      title: La tua sessione è scaduta
-      body: Per ragioni di sicurezza, ti chiediamo di entrare con SPID o CIE ogni {{days}} giorni o se esci dall’app.
+      title: Accedi di nuovo
+      body: Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità
+      linkButtonLabel: Leggi come fare
     cie_unsupported:
       title: Non puoi entrare con CIE
       body: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE).
@@ -2206,6 +2207,7 @@ messageDetails:
     actions:
       call: Fai una chiamata
       email: Scrivi un'email
+  markdownLinkUnsupported: "Questo link non è supportato"
 messagePDFPreview:
   title: "Anteprima PDF"
   singleBtn: "Salva o condividi"
@@ -2342,6 +2344,7 @@ services:
       email: "Invia un'email"
       pec: "Invia una PEC"
       fiscalCode: "Codice fiscale ente"
+      fiscalCodeAccessibilityHint: "Copia negli appunti"
       address: "Indirizzo"
       serviceId: "ID servizio"
     tosAndPrivacy:
@@ -3183,6 +3186,8 @@ features:
         failure: FALLITA
         success: ""
       receipt:
+        a11y:
+          preview: Anteprima ricevuta in formato PDF
         loading: Stiamo nascondendo la ricevuta...
         title: Ricevuta pagoPA
         shareButton: Salva o condividi
@@ -3316,7 +3321,7 @@ features:
           content: Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!
           action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
-      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n\n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
+      content: "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **4 Milioni** di persone stanno già usando i **Documenti su IO**!"
       tos: Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyAndTosUrl}}).
       upcomingWalletBanner:
         title: "Novità in arrivo: i tuoi Documenti su IO"
@@ -3560,6 +3565,11 @@ features:
           title: Mancano i dati contenuti in {{credentialName}}
           subtitle: Aggiungi il documento al Portafoglio prima di continuare e poi riprova.
           primaryAction: Aggiungi documento al Portafoglio
+          secondaryAction: Annulla
+        eidExpiredScreen:
+          title: Verifica la tua identità
+          subtitle: È un passaggio di verifica necessario per continuare ad usare Documenti su IO per autenticarti.
+          primaryAction: Inizia
           secondaryAction: Annulla
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
@@ -4136,8 +4146,8 @@ barcodeScan:
     input: Digita
     a11y:
       scan: Inquadra, 1 di 3
-      upload: Carica, 2 di 3
-      input: Digita, 3 di 3
+      upload: Carica un'immagine o un documento, 2 di 3
+      input: Digita i dati di un avviso, 3 di 3
   upload:
     image: Carica un'immagine
     file: Carica un file
@@ -4184,6 +4194,13 @@ fastLogin:
   whatsNew:
     title: Abbiamo migliorato l’accesso a IO!
     subtitle: Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare.
+loginFeatures:
+  loginPreferences:
+    expirationBanner:
+      title: Accesso rapido in scadenza
+      content: Il {{date}} dovrai accedere di nuovo con SPID o CIE
+      action: 
+        label: Leggi come fare
 whatsNew:
   title: Cosa cambia?
 bonusCard:
