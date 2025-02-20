@@ -16,14 +16,15 @@ export const itwRemoteMachine = setup({
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     navigateToFailureScreen: notImplemented,
     navigateToDiscoveryScreen: notImplemented,
-    navigateToWallet: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
-    closeIssuance: notImplemented
+    navigateToIdentificationModeScreen: notImplemented,
+    close: notImplemented
   },
   actors: {},
   guards: {
     isWalletActive: notImplemented,
-    areRequiredCredentialsAvailable: notImplemented
+    areRequiredCredentialsAvailable: notImplemented,
+    isEidExpired: notImplemented
   }
 }).createMachine({
   id: "itwRemoteMachine",
@@ -57,6 +58,16 @@ export const itwRemoteMachine = setup({
           target: "Failure"
         },
         {
+          guard: "isEidExpired",
+          actions: assign({
+            failure: {
+              type: RemoteFailureType.EID_EXPIRED,
+              reason: "EID is expired"
+            }
+          }),
+          target: "Failure"
+        },
+        {
           target: "ClaimsDisclosure"
         }
       ]
@@ -67,7 +78,7 @@ export const itwRemoteMachine = setup({
         "Display the list of claims to disclose for the verifiable presentation",
       on: {
         close: {
-          actions: "closeIssuance"
+          actions: "close"
         }
       }
     },
@@ -78,11 +89,11 @@ export const itwRemoteMachine = setup({
         "go-to-wallet-activation": {
           actions: "navigateToDiscoveryScreen"
         },
-        "go-to-wallet": {
-          actions: "navigateToWallet"
+        "go-to-identification-mode": {
+          actions: "navigateToIdentificationModeScreen"
         },
         close: {
-          actions: "closeIssuance"
+          actions: "close"
         }
       }
     }
