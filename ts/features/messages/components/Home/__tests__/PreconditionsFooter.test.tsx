@@ -131,7 +131,11 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext(
     () => (
-      <PreconditionsFooter onDismiss={onDismiss} onNavigation={onNavigation} />
+      <PreconditionsFooter
+        onDismiss={onDismiss}
+        onNavigation={onNavigation}
+        onFooterHeightAvailable={_height => undefined}
+      />
     ),
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},
