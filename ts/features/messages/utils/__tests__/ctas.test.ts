@@ -570,78 +570,40 @@ describe("internalRoutePredicates", () => {
 });
 
 describe("isCtaActionValid", () => {
-  it("should return true for ioit://whatever", () => {
-    const cta: CTA = {
-      action: "ioit://whatever",
-      text: "CTA text"
-    };
-
-    const isValid = testable!.isCtaActionValid(cta);
-
-    expect(isValid).toBe(true);
-  });
-  it("should return false for ioit://services/webview with undefined metadata", () => {
-    const cta: CTA = {
-      action: "ioit://services/webview",
-      text: "CTA text"
-    };
-
-    const isValid = testable!.isCtaActionValid(cta);
-
-    expect(isValid).toBe(false);
-  });
-  it("should return false for ioit://services/webview with metadata with undefined token_name", () => {
-    const cta: CTA = {
-      action: "ioit://services/webview",
-      text: "CTA text"
-    };
-    const metadata = {} as ServiceMetadata;
-
-    const isValid = testable!.isCtaActionValid(cta, metadata);
-
-    expect(isValid).toBe(false);
-  });
-  it("should return true for iosso://https://relyingParty.url", () => {
-    const cta: CTA = {
-      action: "iosso://https://relyingParty.url",
-      text: "CTA text"
-    };
-
-    const isValid = testable!.isCtaActionValid(cta);
-
-    expect(isValid).toBe(true);
-  });
-  ioHandledLinks.forEach(ioHandledLink =>
-    it(`should return true for ${ioHandledLink}`, () => {
+  const inputData: ReadonlyArray<[string, boolean]> = [
+    ["ioit://whatever", true],
+    ["iOiT://whatever", true],
+    ["IOIT://whatever", true],
+    ["ioit://services/webview", false],
+    ["iosso://https://relyingParty.url", true],
+    ["iOsSo://https://relyingParty.url", true],
+    ["IOSSO://https://relyingParty.url", true],
+    ["iohandledlink://http://whateverHere", true],
+    ["iohandledlink://https://whateverHere", true],
+    ["iOhAnDlEdLiNk://https://whateverHere", true],
+    ["IOHANDLEDLINK://https://whateverHere", true],
+    ["iohandledlink://sms://whateverHere", true],
+    ["iohandledlink://tel://whateverHere", true],
+    ["iohandledlink://mailto://whateverHere", true],
+    ["iohandledlink://copy://whateverHere", true],
+    ["iohandledlink://whatever", false],
+    ["https://www.google.com", false],
+    ["https://google.com", false],
+    ["http://www.google.com", false],
+    ["http://google.com", false],
+    ["invalid", false]
+  ];
+  inputData.forEach(tuple => {
+    const [action, validity] = tuple;
+    it(`should return '${validity}' for '${action}'`, () => {
       const cta: CTA = {
-        action: ioHandledLink,
+        action,
         text: "CTA text"
       };
-
       const isValid = testable!.isCtaActionValid(cta);
 
-      expect(isValid).toBe(true);
-    })
-  );
-  it(`should return false for iohandledlink://whatever`, () => {
-    const cta: CTA = {
-      action: "iohandledlink://whatever",
-      text: "CTA text"
-    };
-
-    const isValid = testable!.isCtaActionValid(cta);
-
-    expect(isValid).toBe(false);
-  });
-  it(`should return false for invalid action`, () => {
-    const cta: CTA = {
-      action: "invalid",
-      text: "CTA text"
-    };
-
-    const isValid = testable!.isCtaActionValid(cta);
-
-    expect(isValid).toBe(false);
+      expect(isValid).toBe(validity);
+    });
   });
 });
 
