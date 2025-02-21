@@ -52,9 +52,9 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     fiscalCode: O.none
   });
 
-  const textInputWrappperRef = useRef<View>(null);
+  const textInputWrapperRef = useRef<View>(null);
   const focusTextInput = () => {
-    setAccessibilityFocus(textInputWrappperRef);
+    setAccessibilityFocus(textInputWrapperRef);
   };
 
   const navigateToTransactionSummary = () => {
@@ -112,7 +112,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
               }
             : undefined
         }
-        ref={textInputWrappperRef}
+        ref={textInputWrapperRef}
         includeContentMargins
       >
         <TextInputValidation
@@ -122,6 +122,9 @@ const WalletPaymentInputFiscalCodeScreen = () => {
           )}
           errorMessage={I18n.t(
             "wallet.payment.manual.fiscalCode.validationError"
+          )}
+          accessibilityErrorLabel={I18n.t(
+            "wallet.payment.manual.fiscalCode.a11y"
           )}
           value={inputState.fiscalCodeText}
           icon="fiscalCodeIndividual"

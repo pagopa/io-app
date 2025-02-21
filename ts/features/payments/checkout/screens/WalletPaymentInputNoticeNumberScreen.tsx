@@ -56,7 +56,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
 
   const focusTextInput = () => {
     if (O.isNone(inputState.noticeNumber)) {
-      setAccessibilityFocus(textInputWrappperRef);
+      setAccessibilityFocus(textInputWrapperRef);
     }
   };
 
@@ -64,7 +64,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
     analytics.trackPaymentNoticeDataEntry();
   });
 
-  const textInputWrappperRef = useRef<View>(null);
+  const textInputWrapperRef = useRef<View>(null);
 
   return (
     <>
@@ -89,7 +89,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
             : undefined
         }
         includeContentMargins
-        ref={textInputWrappperRef}
+        ref={textInputWrapperRef}
       >
         <TextInputValidation
           placeholder={I18n.t("wallet.payment.manual.noticeNumber.placeholder")}
@@ -98,6 +98,9 @@ const WalletPaymentInputNoticeNumberScreen = () => {
           )}
           errorMessage={I18n.t(
             "wallet.payment.manual.noticeNumber.validationError"
+          )}
+          accessibilityErrorLabel={I18n.t(
+            "wallet.payment.manual.noticeNumber.a11y"
           )}
           value={inputState.noticeNumberText}
           icon="docPaymentCode"
