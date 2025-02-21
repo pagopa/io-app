@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { select, takeLatest } from "typed-redux-saga/macro";
+import { put, select, takeLatest } from "typed-redux-saga/macro";
 import {
   utmLinkCampaignSelector,
   utmLinkMediumSelector,
@@ -7,7 +7,7 @@ import {
 } from "../store/selectors";
 import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
 import { setIsMixpanelInitialized } from "../../mixpanel/store/actions";
-import { utmLinkSetParams } from "../store/actions";
+import { utmLinkClearParams, utmLinkSetParams } from "../store/actions";
 import { trackUtmLink } from "../analytics";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "./../../../store/reducers/persistedPreferences";
 
@@ -41,5 +41,8 @@ function* handleApplicationInitialized(
   ) {
     return;
   }
+  // Track the UTM link campaign
   trackUtmLink(utmSource, utmMedium, utmCampaign);
+  // Clear the UTM link params
+  yield* put(utmLinkClearParams());
 }
