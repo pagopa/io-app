@@ -23,25 +23,23 @@ const InitiativeRulesInfoBox = (props: Props) => {
   const { content } = props;
   const theme = useIOTheme();
 
-  const { bottomSheet, present, dismiss } = useIOBottomSheetModal(
-    {
-      component: <IOMarkdown content={content} />,
-      title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
-      footer: (
-        <FooterActions
-          actions={{
-            type: "SingleButton",
-            primary: {
-              label: I18n.t(
-                "idpay.initiative.beneficiaryDetails.infoModal.button"
-              ),
-              onPress: () => dismiss()
-            }
-          }}
-        />
-      )
-    }
-  );
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
+    component: <IOMarkdown content={content} />,
+    title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
+    footer: (
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t(
+              "idpay.initiative.beneficiaryDetails.infoModal.button"
+            ),
+            onPress: () => dismiss()
+          }
+        }}
+      />
+    )
+  });
 
   return (
     <>

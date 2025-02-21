@@ -40,36 +40,34 @@ export const PDNDPrerequisitesScreen = () => {
   const continueOnPress = () => machine.send({ type: "next" });
   const goBackOnPress = () => machine.send({ type: "back" });
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
-    {
-      title: I18n.t(
-        "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
-      ),
-      component: (
-        <IOMarkdown
-          content={I18n.t(
-            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
-            {
-              provider: authority
-            }
-          )}
-        />
-      ),
-      footer: (
-        <FooterActions
-          actions={{
-            primary: {
-              label: I18n.t(
-                "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
-              ),
-              onPress: () => dismiss()
-            },
-            type: "SingleButton"
-          }}
-        />
-      )
-    }
-  );
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
+    title: I18n.t(
+      "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
+    ),
+    component: (
+      <IOMarkdown
+        content={I18n.t(
+          "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
+          {
+            provider: authority
+          }
+        )}
+      />
+    ),
+    footer: (
+      <FooterActions
+        actions={{
+          primary: {
+            label: I18n.t(
+              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
+            ),
+            onPress: () => dismiss()
+          },
+          type: "SingleButton"
+        }}
+      />
+    )
+  });
 
   const pdndCriteria = useSelector(pdndCriteriaSelector);
 

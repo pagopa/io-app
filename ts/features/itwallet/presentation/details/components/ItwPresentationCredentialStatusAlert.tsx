@@ -87,12 +87,10 @@ const DocumentExpiringAlert = ({ credential }: Props) => {
     credential.credentialType as Exclude<CredentialType, CredentialType.PID>
   }.expiring` as const;
 
-  const bottomSheet = useIOBottomSheetModal(
-    {
-      title: I18n.t(`${bottomSheetNs}.title`),
-      component: <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
-    }
-  );
+  const bottomSheet = useIOBottomSheetModal({
+    title: I18n.t(`${bottomSheetNs}.title`),
+    component: <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
+  });
 
   return (
     <>
@@ -117,12 +115,10 @@ type IssuerDynamicErrorAlertProps = {
 
 const IssuerDynamicErrorAlert = ({ message }: IssuerDynamicErrorAlertProps) => {
   const localizedMessage = message[getClaimsFullLocale()];
-  const bottomSheet = useIOBottomSheetModal(
-    {
-      title: localizedMessage.title,
-      component: <Body>{localizedMessage.description}</Body>
-    }
-  );
+  const bottomSheet = useIOBottomSheetModal({
+    title: localizedMessage.title,
+    component: <Body>{localizedMessage.description}</Body>
+  });
 
   return (
     <>

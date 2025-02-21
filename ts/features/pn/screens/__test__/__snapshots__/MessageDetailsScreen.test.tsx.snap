@@ -1358,19 +1358,15 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               </View>
                             </View>
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -1388,14 +1384,29 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
                               >
-                                <View />
+                                <View>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 48,
+                                      }
+                                    }
+                                  />
+                                  <View
+                                    style={
+                                      {
+                                        "height": 48,
+                                      }
+                                    }
+                                  />
+                                </View>
                               </RCTScrollView>
                             </Modal>
                             <View
@@ -1563,25 +1574,16 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               </View>
                             </View>
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
-                              snapPoints={
-                                [
-                                  10,
-                                ]
-                              }
                               style={
                                 {
                                   "borderCurve": "continuous",
@@ -1593,496 +1595,506 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
                               >
                                 <View>
                                   <View
-                                    onLayout={[Function]}
+                                    style={
+                                      {
+                                        "marginHorizontal": -24,
+                                        "paddingHorizontal": 24,
+                                        "paddingVertical": 12,
+                                      }
+                                    }
                                   >
                                     <View
                                       style={
                                         {
-                                          "marginHorizontal": -24,
-                                          "paddingHorizontal": 24,
-                                          "paddingVertical": 12,
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "space-between",
                                         }
                                       }
                                     >
                                       <View
                                         style={
                                           {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                            "justifyContent": "space-between",
+                                            "flex": 1,
                                           }
                                         }
                                       >
                                         <View
-                                          style={
-                                            {
-                                              "flex": 1,
-                                            }
-                                          }
+                                          accessibilityLabel="Notifica"
+                                          accessibilityRole="header"
+                                          accessible={true}
                                         >
-                                          <View
-                                            accessibilityLabel="Notifica"
-                                            accessibilityRole="header"
-                                            accessible={true}
-                                          >
-                                            <Text
-                                              allowFontScaling={true}
-                                              dynamicTypeRamp="headline"
-                                              maxFontSizeMultiplier={1.5}
-                                              role="heading"
-                                              style={
-                                                [
-                                                  {},
-                                                  {
-                                                    "color": "#555C70",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 17,
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "600",
-                                                    "lineHeight": 24,
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              Notifica
-                                            </Text>
-                                          </View>
-                                        </View>
-                                      </View>
-                                    </View>
-                                    <View
-                                      accessibilityLabel="Codice IUN, copia"
-                                      accessibilityRole="button"
-                                      accessibilityState={
-                                        {
-                                          "busy": undefined,
-                                          "checked": undefined,
-                                          "disabled": undefined,
-                                          "expanded": undefined,
-                                          "selected": undefined,
-                                        }
-                                      }
-                                      accessibilityValue={
-                                        {
-                                          "max": undefined,
-                                          "min": undefined,
-                                          "now": undefined,
-                                          "text": undefined,
-                                        }
-                                      }
-                                      accessible={true}
-                                      collapsable={false}
-                                      focusable={true}
-                                      onBlur={[Function]}
-                                      onClick={[Function]}
-                                      onFocus={[Function]}
-                                      onResponderGrant={[Function]}
-                                      onResponderMove={[Function]}
-                                      onResponderRelease={[Function]}
-                                      onResponderTerminate={[Function]}
-                                      onResponderTerminationRequest={[Function]}
-                                      onStartShouldSetResponder={[Function]}
-                                      onTouchEnd={[Function]}
-                                    >
-                                      <View
-                                        accessibilityElementsHidden={true}
-                                        importantForAccessibility="no-hide-descendants"
-                                        style={
-                                          [
-                                            {
-                                              "marginHorizontal": -24,
-                                              "paddingHorizontal": 24,
-                                              "paddingVertical": 12,
-                                            },
-                                            {
-                                              "backgroundColor": undefined,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        <View
-                                          style={
-                                            [
-                                              {
-                                                "alignItems": "center",
-                                                "flexDirection": "row",
-                                                "justifyContent": "space-between",
-                                              },
-                                              {
-                                                "columnGap": 18,
-                                              },
-                                              {
-                                                "transform": [
-                                                  {
-                                                    "scale": undefined,
-                                                  },
-                                                ],
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          <View
-                                            style={
-                                              {
-                                                "flex": 1,
-                                              }
-                                            }
-                                          >
-                                            <Text
-                                              allowFontScaling={true}
-                                              dynamicTypeRamp="footnote"
-                                              maxFontSizeMultiplier={1.5}
-                                              style={
-                                                [
-                                                  {},
-                                                  {
-                                                    "color": "#555C70",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 14,
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "400",
-                                                    "lineHeight": 21,
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              Codice IUN
-                                            </Text>
-                                            <Text
-                                              allowFontScaling={true}
-                                              dynamicTypeRamp="headline"
-                                              maxFontSizeMultiplier={1.5}
-                                              numberOfLines={2}
-                                              style={
-                                                [
-                                                  {},
-                                                  {
-                                                    "color": "#0B3EE3",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 17,
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "600",
-                                                    "lineHeight": 24,
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              731143-7-0317-8200-0
-                                            </Text>
-                                          </View>
-                                          <RNSVGSvgView
-                                            accessibilityElementsHidden={true}
-                                            accessibilityLabel=""
-                                            accessible={false}
-                                            align="xMidYMid"
-                                            bbHeight={36}
-                                            bbWidth={36}
-                                            focusable={false}
-                                            height={36}
-                                            importantForAccessibility="no-hide-descendants"
-                                            meetOrSlice={0}
-                                            minX={0}
-                                            minY={0}
+                                          <Text
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="headline"
+                                            maxFontSizeMultiplier={1.5}
+                                            role="heading"
                                             style={
                                               [
+                                                {},
                                                 {
-                                                  "backgroundColor": "transparent",
-                                                  "borderWidth": 0,
-                                                },
-                                                {
-                                                  "color": "#0B3EE3",
-                                                },
-                                                {
-                                                  "flex": 0,
-                                                  "height": 36,
-                                                  "width": 36,
+                                                  "color": "#555C70",
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 17,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 24,
                                                 },
                                               ]
                                             }
-                                            tintColor="#0B3EE3"
-                                            vbHeight={24}
-                                            vbWidth={24}
-                                            width={36}
                                           >
-                                            <RNSVGGroup
-                                              color="#0B3EE3"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
-                                              }
-                                            >
-                                              <RNSVGPath
-                                                clipRule={0}
-                                                d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
-                                                fill={
-                                                  {
-                                                    "type": 2,
-                                                  }
-                                                }
-                                                fillRule={0}
-                                                propList={
-                                                  [
-                                                    "fill",
-                                                    "fillRule",
-                                                  ]
-                                                }
-                                              />
-                                            </RNSVGGroup>
-                                          </RNSVGSvgView>
-                                        </View>
-                                      </View>
-                                    </View>
-                                    <View
-                                      style={
-                                        {
-                                          "marginHorizontal": -24,
-                                          "paddingHorizontal": 24,
-                                          "paddingVertical": 12,
-                                        }
-                                      }
-                                    >
-                                      <View
-                                        style={
-                                          {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                            "justifyContent": "space-between",
-                                          }
-                                        }
-                                      >
-                                        <View
-                                          style={
-                                            {
-                                              "flex": 1,
-                                            }
-                                          }
-                                        >
-                                          <View
-                                            accessibilityLabel="Message"
-                                            accessibilityRole="header"
-                                            accessible={true}
-                                          >
-                                            <Text
-                                              allowFontScaling={true}
-                                              dynamicTypeRamp="headline"
-                                              maxFontSizeMultiplier={1.5}
-                                              role="heading"
-                                              style={
-                                                [
-                                                  {},
-                                                  {
-                                                    "color": "#555C70",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 17,
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "600",
-                                                    "lineHeight": 24,
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              Message
-                                            </Text>
-                                          </View>
-                                        </View>
-                                      </View>
-                                    </View>
-                                    <View
-                                      accessibilityLabel="ID messaggio, copy"
-                                      accessibilityRole="button"
-                                      accessibilityState={
-                                        {
-                                          "busy": undefined,
-                                          "checked": undefined,
-                                          "disabled": undefined,
-                                          "expanded": undefined,
-                                          "selected": undefined,
-                                        }
-                                      }
-                                      accessibilityValue={
-                                        {
-                                          "max": undefined,
-                                          "min": undefined,
-                                          "now": undefined,
-                                          "text": undefined,
-                                        }
-                                      }
-                                      accessible={true}
-                                      collapsable={false}
-                                      focusable={true}
-                                      onBlur={[Function]}
-                                      onClick={[Function]}
-                                      onFocus={[Function]}
-                                      onResponderGrant={[Function]}
-                                      onResponderMove={[Function]}
-                                      onResponderRelease={[Function]}
-                                      onResponderTerminate={[Function]}
-                                      onResponderTerminationRequest={[Function]}
-                                      onStartShouldSetResponder={[Function]}
-                                      onTouchEnd={[Function]}
-                                    >
-                                      <View
-                                        accessibilityElementsHidden={true}
-                                        importantForAccessibility="no-hide-descendants"
-                                        style={
-                                          [
-                                            {
-                                              "marginHorizontal": -24,
-                                              "paddingHorizontal": 24,
-                                              "paddingVertical": 12,
-                                            },
-                                            {
-                                              "backgroundColor": undefined,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        <View
-                                          style={
-                                            [
-                                              {
-                                                "alignItems": "center",
-                                                "flexDirection": "row",
-                                                "justifyContent": "space-between",
-                                              },
-                                              {
-                                                "columnGap": 18,
-                                              },
-                                              {
-                                                "transform": [
-                                                  {
-                                                    "scale": undefined,
-                                                  },
-                                                ],
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          <View
-                                            style={
-                                              {
-                                                "flex": 1,
-                                              }
-                                            }
-                                          >
-                                            <Text
-                                              allowFontScaling={true}
-                                              dynamicTypeRamp="footnote"
-                                              maxFontSizeMultiplier={1.5}
-                                              style={
-                                                [
-                                                  {},
-                                                  {
-                                                    "color": "#555C70",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 14,
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "400",
-                                                    "lineHeight": 21,
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              Message ID
-                                            </Text>
-                                            <Text
-                                              allowFontScaling={true}
-                                              dynamicTypeRamp="headline"
-                                              maxFontSizeMultiplier={1.5}
-                                              numberOfLines={2}
-                                              style={
-                                                [
-                                                  {},
-                                                  {
-                                                    "color": "#0B3EE3",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 17,
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "600",
-                                                    "lineHeight": 24,
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              FAT00001
-                                            </Text>
-                                          </View>
-                                          <RNSVGSvgView
-                                            accessibilityElementsHidden={true}
-                                            accessibilityLabel=""
-                                            accessible={false}
-                                            align="xMidYMid"
-                                            bbHeight={36}
-                                            bbWidth={36}
-                                            focusable={false}
-                                            height={36}
-                                            importantForAccessibility="no-hide-descendants"
-                                            meetOrSlice={0}
-                                            minX={0}
-                                            minY={0}
-                                            style={
-                                              [
-                                                {
-                                                  "backgroundColor": "transparent",
-                                                  "borderWidth": 0,
-                                                },
-                                                {
-                                                  "color": "#0B3EE3",
-                                                },
-                                                {
-                                                  "flex": 0,
-                                                  "height": 36,
-                                                  "width": 36,
-                                                },
-                                              ]
-                                            }
-                                            tintColor="#0B3EE3"
-                                            vbHeight={24}
-                                            vbWidth={24}
-                                            width={36}
-                                          >
-                                            <RNSVGGroup
-                                              color="#0B3EE3"
-                                              fill={
-                                                {
-                                                  "payload": 4278190080,
-                                                  "type": 0,
-                                                }
-                                              }
-                                            >
-                                              <RNSVGPath
-                                                clipRule={0}
-                                                d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
-                                                fill={
-                                                  {
-                                                    "type": 2,
-                                                  }
-                                                }
-                                                fillRule={0}
-                                                propList={
-                                                  [
-                                                    "fill",
-                                                    "fillRule",
-                                                  ]
-                                                }
-                                              />
-                                            </RNSVGGroup>
-                                          </RNSVGSvgView>
+                                            Notifica
+                                          </Text>
                                         </View>
                                       </View>
                                     </View>
                                   </View>
+                                  <View
+                                    accessibilityLabel="Codice IUN, copia"
+                                    accessibilityRole="button"
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
+                                    }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
+                                    onTouchEnd={[Function]}
+                                  >
+                                    <View
+                                      accessibilityElementsHidden={true}
+                                      importantForAccessibility="no-hide-descendants"
+                                      style={
+                                        [
+                                          {
+                                            "marginHorizontal": -24,
+                                            "paddingHorizontal": 24,
+                                            "paddingVertical": 12,
+                                          },
+                                          {
+                                            "backgroundColor": undefined,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                              "justifyContent": "space-between",
+                                            },
+                                            {
+                                              "columnGap": 18,
+                                            },
+                                            {
+                                              "transform": [
+                                                {
+                                                  "scale": undefined,
+                                                },
+                                              ],
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            {
+                                              "flex": 1,
+                                            }
+                                          }
+                                        >
+                                          <Text
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="footnote"
+                                            maxFontSizeMultiplier={1.5}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#555C70",
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 14,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "400",
+                                                  "lineHeight": 21,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            Codice IUN
+                                          </Text>
+                                          <Text
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="headline"
+                                            maxFontSizeMultiplier={1.5}
+                                            numberOfLines={2}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#0B3EE3",
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 17,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 24,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            731143-7-0317-8200-0
+                                          </Text>
+                                        </View>
+                                        <RNSVGSvgView
+                                          accessibilityElementsHidden={true}
+                                          accessibilityLabel=""
+                                          accessible={false}
+                                          align="xMidYMid"
+                                          bbHeight={36}
+                                          bbWidth={36}
+                                          focusable={false}
+                                          height={36}
+                                          importantForAccessibility="no-hide-descendants"
+                                          meetOrSlice={0}
+                                          minX={0}
+                                          minY={0}
+                                          style={
+                                            [
+                                              {
+                                                "backgroundColor": "transparent",
+                                                "borderWidth": 0,
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                              },
+                                              {
+                                                "flex": 0,
+                                                "height": 36,
+                                                "width": 36,
+                                              },
+                                            ]
+                                          }
+                                          tintColor="#0B3EE3"
+                                          vbHeight={24}
+                                          vbWidth={24}
+                                          width={36}
+                                        >
+                                          <RNSVGGroup
+                                            color="#0B3EE3"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
+                                              }
+                                            }
+                                          >
+                                            <RNSVGPath
+                                              clipRule={0}
+                                              d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
+                                              fill={
+                                                {
+                                                  "type": 2,
+                                                }
+                                              }
+                                              fillRule={0}
+                                              propList={
+                                                [
+                                                  "fill",
+                                                  "fillRule",
+                                                ]
+                                              }
+                                            />
+                                          </RNSVGGroup>
+                                        </RNSVGSvgView>
+                                      </View>
+                                    </View>
+                                  </View>
+                                  <View
+                                    style={
+                                      {
+                                        "marginHorizontal": -24,
+                                        "paddingHorizontal": 24,
+                                        "paddingVertical": 12,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      style={
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "space-between",
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          {
+                                            "flex": 1,
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          accessibilityLabel="Message"
+                                          accessibilityRole="header"
+                                          accessible={true}
+                                        >
+                                          <Text
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="headline"
+                                            maxFontSizeMultiplier={1.5}
+                                            role="heading"
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#555C70",
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 17,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 24,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            Message
+                                          </Text>
+                                        </View>
+                                      </View>
+                                    </View>
+                                  </View>
+                                  <View
+                                    accessibilityLabel="ID messaggio, copy"
+                                    accessibilityRole="button"
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
+                                    }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
+                                    onTouchEnd={[Function]}
+                                  >
+                                    <View
+                                      accessibilityElementsHidden={true}
+                                      importantForAccessibility="no-hide-descendants"
+                                      style={
+                                        [
+                                          {
+                                            "marginHorizontal": -24,
+                                            "paddingHorizontal": 24,
+                                            "paddingVertical": 12,
+                                          },
+                                          {
+                                            "backgroundColor": undefined,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                              "justifyContent": "space-between",
+                                            },
+                                            {
+                                              "columnGap": 18,
+                                            },
+                                            {
+                                              "transform": [
+                                                {
+                                                  "scale": undefined,
+                                                },
+                                              ],
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            {
+                                              "flex": 1,
+                                            }
+                                          }
+                                        >
+                                          <Text
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="footnote"
+                                            maxFontSizeMultiplier={1.5}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#555C70",
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 14,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "400",
+                                                  "lineHeight": 21,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            Message ID
+                                          </Text>
+                                          <Text
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="headline"
+                                            maxFontSizeMultiplier={1.5}
+                                            numberOfLines={2}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#0B3EE3",
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 17,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 24,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            FAT00001
+                                          </Text>
+                                        </View>
+                                        <RNSVGSvgView
+                                          accessibilityElementsHidden={true}
+                                          accessibilityLabel=""
+                                          accessible={false}
+                                          align="xMidYMid"
+                                          bbHeight={36}
+                                          bbWidth={36}
+                                          focusable={false}
+                                          height={36}
+                                          importantForAccessibility="no-hide-descendants"
+                                          meetOrSlice={0}
+                                          minX={0}
+                                          minY={0}
+                                          style={
+                                            [
+                                              {
+                                                "backgroundColor": "transparent",
+                                                "borderWidth": 0,
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                              },
+                                              {
+                                                "flex": 0,
+                                                "height": 36,
+                                                "width": 36,
+                                              },
+                                            ]
+                                          }
+                                          tintColor="#0B3EE3"
+                                          vbHeight={24}
+                                          vbWidth={24}
+                                          width={36}
+                                        >
+                                          <RNSVGGroup
+                                            color="#0B3EE3"
+                                            fill={
+                                              {
+                                                "payload": 4278190080,
+                                                "type": 0,
+                                              }
+                                            }
+                                          >
+                                            <RNSVGPath
+                                              clipRule={0}
+                                              d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
+                                              fill={
+                                                {
+                                                  "type": 2,
+                                                }
+                                              }
+                                              fillRule={0}
+                                              propList={
+                                                [
+                                                  "fill",
+                                                  "fillRule",
+                                                ]
+                                              }
+                                            />
+                                          </RNSVGGroup>
+                                        </RNSVGSvgView>
+                                      </View>
+                                    </View>
+                                  </View>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 48,
+                                      }
+                                    }
+                                  />
+                                  <View
+                                    style={
+                                      {
+                                        "height": 48,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>

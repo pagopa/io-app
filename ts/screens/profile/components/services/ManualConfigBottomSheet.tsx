@@ -14,31 +14,27 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     present,
     bottomSheet: manualConfigBottomSheet,
     dismiss
-  } = useIOBottomSheetModal(
-    {
-      title: I18n.t(
-        "services.optIn.preferences.manualConfig.bottomSheet.title"
-      ),
-      component: <ManualConfigConfirm />,
-      footer: (
-        <FooterActionsInline
-          startAction={{
-            color: "primary",
-            label: I18n.t("global.buttons.cancel"),
-            onPress: () => dismiss()
-          }}
-          endAction={{
-            color: "danger",
-            label: I18n.t("global.buttons.confirm"),
-            onPress: () => {
-              onConfirm();
-              dismiss();
-            }
-          }}
-        />
-      )
-    }
-  );
+  } = useIOBottomSheetModal({
+    title: I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title"),
+    component: <ManualConfigConfirm />,
+    footer: (
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.cancel"),
+          onPress: () => dismiss()
+        }}
+        endAction={{
+          color: "danger",
+          label: I18n.t("global.buttons.confirm"),
+          onPress: () => {
+            onConfirm();
+            dismiss();
+          }
+        }}
+      />
+    )
+  });
 
   return { present, manualConfigBottomSheet, dismiss };
 };
