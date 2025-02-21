@@ -114,6 +114,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         includeContentMargins
       >
         <TextInputValidation
+          testID="fiscalCodeInput"
           validationMode="onContinue"
           ref={textInputRef}
           placeholder={I18n.t("wallet.payment.manual.fiscalCode.placeholder")}
