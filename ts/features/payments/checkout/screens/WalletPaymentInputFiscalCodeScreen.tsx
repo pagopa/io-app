@@ -16,7 +16,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
@@ -53,9 +52,8 @@ const WalletPaymentInputFiscalCodeScreen = () => {
   });
 
   const textInputWrapperRef = useRef<View>(null);
-  const focusTextInput = () => {
-    setAccessibilityFocus(textInputWrapperRef);
-  };
+
+  const textInputRef = useRef<{ validateInput: () => void }>(null);
 
   const navigateToTransactionSummary = () => {
     pipe(
@@ -82,7 +80,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
       inputState.fiscalCode,
       O.fold(() => {
         Keyboard.dismiss();
-        focusTextInput();
+        textInputRef.current?.validateInput();
       }, navigateToTransactionSummary)
     );
 
@@ -116,6 +114,8 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         includeContentMargins
       >
         <TextInputValidation
+          validationMode="onContinue"
+          ref={textInputRef}
           placeholder={I18n.t("wallet.payment.manual.fiscalCode.placeholder")}
           accessibilityLabel={I18n.t(
             "wallet.payment.manual.fiscalCode.placeholder"

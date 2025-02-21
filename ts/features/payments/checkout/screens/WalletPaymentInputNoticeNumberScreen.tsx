@@ -11,7 +11,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
@@ -50,21 +49,17 @@ const WalletPaymentInputNoticeNumberScreen = () => {
       inputState.noticeNumber,
       O.fold(() => {
         Keyboard.dismiss();
-        focusTextInput();
+        textInputRef.current?.validateInput();
       }, navigateToFiscalCodeInput)
     );
-
-  const focusTextInput = () => {
-    if (O.isNone(inputState.noticeNumber)) {
-      setAccessibilityFocus(textInputWrapperRef);
-    }
-  };
 
   useOnFirstRender(() => {
     analytics.trackPaymentNoticeDataEntry();
   });
 
   const textInputWrapperRef = useRef<View>(null);
+
+  const textInputRef = useRef<{ validateInput: () => void }>(null);
 
   return (
     <>
@@ -92,6 +87,8 @@ const WalletPaymentInputNoticeNumberScreen = () => {
         ref={textInputWrapperRef}
       >
         <TextInputValidation
+          ref={textInputRef}
+          validationMode="onContinue"
           placeholder={I18n.t("wallet.payment.manual.noticeNumber.placeholder")}
           accessibilityLabel={I18n.t(
             "wallet.payment.manual.noticeNumber.placeholder"
