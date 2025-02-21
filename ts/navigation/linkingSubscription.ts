@@ -19,7 +19,7 @@ export const linkingSubscription =
         // Auto-reset does not provide feedback to the user
         dispatch(resetMessageArchivingAction(undefined));
       }
-      // If we have a deep link with utm_campaign and utm_source parameters, we want to track it
+      // If we have a deep link with utm_medium and utm_source parameters, we want to track it
       // We don't enter this point if the app is opened from scratch with a deep link,
       // but we track it in the `useOnFirstRender` hook on the AppStackNavigator
       processUtmLink(url, dispatch);
