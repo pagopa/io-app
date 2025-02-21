@@ -34,7 +34,7 @@ import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { ReactNavigationInstrumentation } from "../App";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
-import { trackUtmCampaign } from "../features/utmLink";
+import { processUtmLink } from "../features/utmLink";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -147,7 +147,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   useOnFirstRender(() => {
     void Linking.getInitialURL().then(initialUrl => {
       if (initialUrl) {
-        trackUtmCampaign(initialUrl, dispatch);
+        processUtmLink(initialUrl, dispatch);
       }
     });
   });

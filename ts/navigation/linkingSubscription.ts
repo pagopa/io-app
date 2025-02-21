@@ -3,7 +3,7 @@ import { Action, Dispatch, Store } from "redux";
 import { GlobalState } from "../store/reducers/types";
 import { isArchivingDisabledSelector } from "../features/messages/store/reducers/archiving";
 import { resetMessageArchivingAction } from "../features/messages/store/actions/archiving";
-import { trackUtmCampaign } from "../features/utmLink";
+import { processUtmLink } from "../features/utmLink";
 
 export const linkingSubscription =
   (dispatch: Dispatch<Action>, store: Store<Readonly<GlobalState>>) =>
@@ -22,7 +22,7 @@ export const linkingSubscription =
       // If we have a deep link with utm_campaign and utm_source parameters, we want to track it
       // We don't enter this point if the app is opened from scratch with a deep link,
       // but we track it in the `useOnFirstRender` hook on the AppStackNavigator
-      trackUtmCampaign(url, dispatch);
+      processUtmLink(url, dispatch);
       listener(url);
     });
     return () => {
