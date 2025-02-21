@@ -1,2 +1,0 @@
-Biometric recognition is requested by the user during login (if the session is still active), allowing you to quickly enter the IO app without having to re-enter your username, password and OTP each time, and as confirmation during the payment flow or other significant actions that have a direct impact on user security (such as account cancellation).
-Biometric recognition remains active for 30 days from the last access; on the 31st day the session expires and it will be necessary to authenticate again.

@@ -1,1 +1,0 @@
-Aggiungi un promemoria per il <b>{{date}}</b> [alle <b>{{hour}}</b>]
