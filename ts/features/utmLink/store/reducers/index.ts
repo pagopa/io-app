@@ -1,12 +1,16 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { utmLinkClearCampaign, utmLinkSetCampaign } from "../actions";
+import { utmLinkClearParams, utmLinkSetParams } from "../actions";
 
 export type UtmLinkState = {
+  utmSource: string | undefined;
+  utmMedium: string | undefined;
   utmCampaign: string | undefined;
 };
 
 const utmLinkInitialState: UtmLinkState = {
+  utmSource: undefined,
+  utmMedium: undefined,
   utmCampaign: undefined
 };
 
@@ -15,13 +19,13 @@ export const utmLinkReducer = (
   action: Action
 ): UtmLinkState => {
   switch (action.type) {
-    case getType(utmLinkClearCampaign):
+    case getType(utmLinkClearParams):
       return {
-        utmCampaign: undefined
+        ...utmLinkInitialState
       };
-    case getType(utmLinkSetCampaign):
+    case getType(utmLinkSetParams):
       return {
-        utmCampaign: action.payload
+        ...action.payload
       };
 
     default:

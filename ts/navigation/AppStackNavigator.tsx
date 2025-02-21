@@ -142,7 +142,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
    * the linking event in the NavigationContainer is not triggered.
    * `Linking` has the option to get the initial URL when the app is opened.
    * We can use this to check if the app was opened with a deep link and
-   * check if it has a `utm_campaign` parameter
+   * check if it has a `utm_campaign` and `utm_source` parameters
    */
   useOnFirstRender(() => {
     void Linking.getInitialURL().then(initialUrl => {

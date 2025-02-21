@@ -1,13 +1,19 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-export const utmLinkClearCampaign = createStandardAction(
-  "UTM_LINK_CLEAR_UTM_CAMPAIGN"
+export type UtmLinkParams = {
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string | undefined;
+};
+
+export const utmLinkClearParams = createStandardAction(
+  "UTM_LINK_CLEAR_UTM_PARAMS"
 )();
 
-export const utmLinkSetCampaign = createStandardAction(
-  "UTM_LINK_SET_UTM_CAMPAIGN"
-)<string>();
+export const utmLinkSetParams = createStandardAction(
+  "UTM_LINK_SET_UTM_PARAMS"
+)<UtmLinkParams>();
 
 export type UtmLinkActions = ActionType<
-  typeof utmLinkClearCampaign | typeof utmLinkSetCampaign
+  typeof utmLinkClearParams | typeof utmLinkSetParams
 >;

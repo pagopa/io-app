@@ -1,9 +1,13 @@
 import { SagaIterator } from "redux-saga";
 import { select, takeLatest } from "typed-redux-saga/macro";
-import { utmLinkCampaignSelector } from "../store/selectors";
+import {
+  utmLinkCampaignSelector,
+  utmLinkMediumSelector,
+  utmLinkSourceSelector
+} from "../store/selectors";
 import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
 import { setIsMixpanelInitialized } from "../../mixpanel/store/actions";
-import { utmLinkSetCampaign } from "../store/actions";
+import { utmLinkSetParams } from "../store/actions";
 import { trackUtmLink } from "../analytics";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "./../../../store/reducers/persistedPreferences";
 
@@ -14,7 +18,7 @@ import { isMixpanelEnabled as isMixpanelEnabledSelector } from "./../../../store
  */
 export function* watchUtmLinkSaga(): SagaIterator {
   yield* takeLatest(
-    [setIsMixpanelInitialized, utmLinkSetCampaign],
+    [setIsMixpanelInitialized, utmLinkSetParams],
     handleApplicationInitialized
   );
 }
@@ -22,13 +26,20 @@ export function* watchUtmLinkSaga(): SagaIterator {
 function* handleApplicationInitialized(
   _:
     | ReturnType<typeof setIsMixpanelInitialized>
-    | ReturnType<typeof utmLinkSetCampaign>
+    | ReturnType<typeof utmLinkSetParams>
 ) {
+  const utmSource = yield* select(utmLinkSourceSelector);
+  const utmMedium = yield* select(utmLinkMediumSelector);
   const utmCampaign = yield* select(utmLinkCampaignSelector);
   const isMixpanelInitialized = yield* select(isMixpanelInitializedSelector);
   const isMixpanelEnabled = yield* select(isMixpanelEnabledSelector);
-  if (!utmCampaign || !isMixpanelInitialized || isMixpanelEnabled === false) {
+  if (
+    !utmSource ||
+    !utmMedium ||
+    !isMixpanelInitialized ||
+    isMixpanelEnabled === false
+  ) {
     return;
   }
-  trackUtmLink(utmCampaign);
+  trackUtmLink(utmSource, utmMedium, utmCampaign);
 }
