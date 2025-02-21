@@ -1,4 +1,3 @@
-import React from "react";
 import { RefreshControlProps } from "react-native";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";

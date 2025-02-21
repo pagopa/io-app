@@ -1,19 +1,14 @@
 import {
   Body,
-  ContentWrapper,
   FooterActionsInline,
-  H2,
-  IconButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import React from "react";
-import { SafeAreaView, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { useEffect } from "react";
+import { View } from "react-native";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -43,6 +38,25 @@ type RouteProps = RouteProp<
 
 const checksByInitiativeType = {
   [InitiativeRewardTypeEnum.REFUND]: [
+    {
+      title: I18n.t("idpay.unsubscription.checks.1.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.2.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.2.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.3.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.4.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.4.content")
+    }
+  ],
+
+  [InitiativeRewardTypeEnum.EXPENSE]: [
     {
       title: I18n.t("idpay.unsubscription.checks.1.title"),
       subtitle: I18n.t("idpay.unsubscription.checks.1.content")
@@ -94,7 +108,7 @@ const UnsubscriptionConfirmationScreen = () => {
     dispatch(idPayUnsubscribeAction.request({ initiativeId }));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isFailure || isSuccess) {
       navigation.navigate(IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
         screen: IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_RESULT
@@ -102,93 +116,77 @@ const UnsubscriptionConfirmationScreen = () => {
     }
   }, [navigation, isFailure, isSuccess]);
 
-  const closeButton = (
-    <IconButton
-      icon="closeLarge"
-      color="neutral"
-      onPress={handleClosePress}
-      accessibilityLabel={I18n.t("global.buttons.close")}
-    />
+  const confirmModal = useIOBottomSheetModal(
+    {
+      title: I18n.t("idpay.unsubscription.modal.title", { initiativeName }),
+      component: (
+        <View>
+          <Body>{I18n.t("idpay.unsubscription.modal.content")}</Body>
+          <VSpacer size={16} />
+        </View>
+      ),
+      footer: (
+        <FooterActionsInline
+          startAction={{
+            color: "primary",
+            label: I18n.t("global.buttons.cancel"),
+            onPress: () => {
+              confirmModal.dismiss();
+            }
+          }}
+          endAction={{
+            color: "danger",
+            label: I18n.t("idpay.unsubscription.button.continue"),
+            onPress: () => {
+              confirmModal.dismiss();
+              handleConfirmPress();
+            }
+          }}
+        />
+      )
+    }
   );
 
-  const confirmModal = useIOBottomSheetModal({
-    title: I18n.t("idpay.unsubscription.modal.title", { initiativeName }),
-    component: (
-      <View>
-        <Body>{I18n.t("idpay.unsubscription.modal.content")}</Body>
-        <VSpacer size={16} />
-      </View>
-    ),
-    footer: (
-      <FooterActionsInline
-        startAction={{
-          color: "primary",
-          label: I18n.t("global.buttons.cancel"),
-          onPress: () => {
-            confirmModal.dismiss();
-          }
-        }}
-        endAction={{
-          color: "danger",
-          label: I18n.t("idpay.unsubscription.button.continue"),
-          onPress: () => {
-            confirmModal.dismiss();
-            handleConfirmPress();
-          }
-        }}
-      />
-    )
-  });
-
   const body = (
-    <SafeAreaView style={IOStyles.flex}>
-      <ScrollView>
-        <ContentWrapper>
-          <VSpacer size={16} />
-          <H2>{I18n.t("idpay.unsubscription.title", { initiativeName })}</H2>
-          <VSpacer size={16} />
-          <Body>{I18n.t("idpay.unsubscription.subtitle")}</Body>
-          <VSpacer size={16} />
-          {unsubscriptionChecks.map((item, index) => (
-            <UnsubscriptionCheckListItem
-              key={index}
-              title={item.title}
-              subtitle={item.subtitle}
-              checked={checks.values[index]}
-              onValueChange={value => checks.setValue(index, value)}
-            />
-          ))}
-          <VSpacer size={48} />
-        </ContentWrapper>
-      </ScrollView>
-      <FooterActionsInline
-        startAction={{
-          color: "primary",
-          label: I18n.t("global.buttons.cancel"),
-          onPress: handleClosePress
-        }}
-        endAction={{
-          color: checks.areFulfilled ? "danger" : "primary",
+    <IOScrollViewWithLargeHeader
+      goBack={handleClosePress}
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{
+        showHelp: true
+      }}
+      title={{
+        label: I18n.t("idpay.unsubscription.title", { initiativeName })
+      }}
+      description={I18n.t("idpay.unsubscription.subtitle")}
+      actions={{
+        type: "SingleButton",
+        primary: {
           label: I18n.t("idpay.unsubscription.button.continue"),
           onPress: confirmModal.present,
           disabled: !checks.areFulfilled
-        }}
-      />
-    </SafeAreaView>
+        }
+      }}
+      includeContentMargins
+    >
+      {unsubscriptionChecks.map((item, index) => (
+        <UnsubscriptionCheckListItem
+          key={index}
+          title={item.title}
+          subtitle={item.subtitle}
+          checked={checks.values[index]}
+          onValueChange={value => checks.setValue(index, value)}
+        />
+      ))}
+    </IOScrollViewWithLargeHeader>
   );
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("idpay.unsubscription.headerTitle")}
-      customGoBack={closeButton}
-      contextualHelp={emptyContextualHelp}
-    >
+    <>
       <LoadingSpinnerOverlay isLoading={isLoading}>
         {!isLoading && body}
       </LoadingSpinnerOverlay>
       {confirmModal.bottomSheet}
-    </BaseScreenComponent>
+    </>
   );
 };
 

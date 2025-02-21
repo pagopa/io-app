@@ -2,12 +2,9 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
-import React from "react";
 import { Platform } from "react-native";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
-import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
-import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
 import {
   CgnActivationNavigator,
   CgnDetailsNavigator,
@@ -16,6 +13,7 @@ import {
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FciStackNavigator } from "../features/fci/navigation/FciStackNavigator";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
+import { FIMS_ROUTES, FimsNavigator } from "../features/fims/common/navigation";
 import { IdPayBarcodeNavigator } from "../features/idpay/barcode/navigation/navigator";
 import { IdPayBarcodeRoutes } from "../features/idpay/barcode/navigation/routes";
 import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
@@ -33,10 +31,12 @@ import { IdPayPaymentRoutes } from "../features/idpay/payment/navigation/routes"
 import { IDPayPaymentCodeScanScreen } from "../features/idpay/payment/screens/IDPayPaymentCodeScanScreen";
 import { IdPayUnsubscriptionNavigator } from "../features/idpay/unsubscription/navigation/navigator";
 import { IdPayUnsubscriptionRoutes } from "../features/idpay/unsubscription/navigation/routes";
+import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
+import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { NOTIFICATIONS_ROUTES } from "../features/pushNotifications/navigation/routes";
+import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
@@ -45,27 +45,24 @@ import { PaymentsMethodDetailsNavigator } from "../features/payments/details/nav
 import { PaymentsMethodDetailsRoutes } from "../features/payments/details/navigation/routes";
 import { PaymentsOnboardingNavigator } from "../features/payments/onboarding/navigation/navigator";
 import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/navigation/routes";
+import { PaymentsReceiptNavigator } from "../features/payments/receipts/navigation/navigator";
+import { PaymentsReceiptRoutes } from "../features/payments/receipts/navigation/routes";
+import { NOTIFICATIONS_ROUTES } from "../features/pushNotifications/navigation/routes";
+import { SystemNotificationPermissionsScreen } from "../features/pushNotifications/screens/SystemNotificationPermissionsScreen";
 import ServicesNavigator from "../features/services/common/navigation/navigator";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { SearchScreen } from "../features/services/search/screens/SearchScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
-import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
-import { PaymentsReceiptRoutes } from "../features/payments/receipts/navigation/routes";
-import { PaymentsReceiptNavigator } from "../features/payments/receipts/navigation/navigator";
 import { useIOSelector } from "../store/hooks";
 import {
-  isCdcEnabledSelector,
   isCGNEnabledSelector,
   isFciEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
-import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
-import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import { SearchScreen } from "../features/services/search/screens/SearchScreen";
-import { FIMS_ROUTES, FimsNavigator } from "../features/fims/common/navigation";
-import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
-import { SystemNotificationPermissionsScreen } from "../features/pushNotifications/screens/SystemNotificationPermissionsScreen";
+import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
+import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -80,7 +77,6 @@ const hideHeaderOptions = {
 };
 
 const AuthenticatedStackNavigator = () => {
-  const cdcEnabled = useIOSelector(isCdcEnabledSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
@@ -188,14 +184,6 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
 
-      <Stack.Screen
-        name={ROUTES.GALLERY_PERMISSION_INSTRUCTIONS}
-        component={GalleryPermissionInstructionsScreen}
-        options={{
-          gestureEnabled: isGestureEnabled
-        }}
-      />
-
       {cgnEnabled && (
         <Stack.Screen
           name={CGN_ROUTES.ACTIVATION.MAIN}
@@ -243,15 +231,6 @@ const AuthenticatedStackNavigator = () => {
         options={hideHeaderOptions}
         component={FimsNavigator}
       />
-
-      {cdcEnabled && (
-        <Stack.Screen
-          name={CDC_ROUTES.BONUS_REQUEST_MAIN}
-          options={hideHeaderOptions}
-          component={CdcStackNavigator}
-        />
-      )}
-
       {isFciEnabled && (
         <Stack.Screen
           name={FCI_ROUTES.MAIN}
@@ -360,6 +339,11 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.MAIN}
         component={ItwStackNavigator}
+        options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+      />
+      <Stack.Screen
+        name={ITW_REMOTE_ROUTES.MAIN}
+        component={ItwRemoteStackNavigator}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
     </Stack.Navigator>

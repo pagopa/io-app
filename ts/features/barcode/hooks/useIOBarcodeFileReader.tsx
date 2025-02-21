@@ -1,28 +1,24 @@
 import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useState } from "react";
 import { Alert, Linking, View } from "react-native";
 import DocumentPicker, {
   DocumentPickerOptions,
   DocumentPickerResponse,
   types
 } from "react-native-document-picker";
-import * as ImagePicker from "react-native-image-picker";
-import { ImageLibraryOptions } from "react-native-image-picker";
-import I18n from "../../../i18n";
 import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../navigation/params/AppParamsList";
-import ROUTES from "../../../navigation/routes";
+  launchImageLibrary,
+  ImagePickerResponse,
+  ImageLibraryOptions
+} from "react-native-image-picker";
+import I18n from "../../../i18n";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { requestMediaPermission } from "../../../utils/permission";
 import {
   BarcodeAnalyticsFlow,
   trackBarcodeFileUpload,
@@ -113,9 +109,8 @@ const useIOBarcodeFileReader = ({
   barcodeTypes,
   barcodeAnalyticsFlow
 }: IOBarcodeFileReaderConfiguration): IOBarcodeFileReader => {
-  const [isFilePickerVisible, setFilePickerVisible] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const [isFilePickerVisible, setFilePickerVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
     setIsLoading(false);
@@ -130,7 +125,7 @@ const useIOBarcodeFileReader = ({
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
    */
-  const onImageSelected = async (response: ImagePicker.ImagePickerResponse) => {
+  const onImageSelected = async (response: ImagePickerResponse) => {
     if (response.didCancel) {
       setIsLoading(false);
       return;
@@ -173,15 +168,9 @@ const useIOBarcodeFileReader = ({
   };
 
   const showImagePicker = async () => {
-    const permissionGranted = await requestMediaPermission();
-    if (!permissionGranted) {
-      navigation.navigate(ROUTES.GALLERY_PERMISSION_INSTRUCTIONS);
-      return;
-    }
-
     setIsLoading(true);
 
-    void ImagePicker.launchImageLibrary(imageLibraryOptions, onImageSelected);
+    void launchImageLibrary(imageLibraryOptions, onImageSelected);
   };
 
   /**

@@ -4,10 +4,12 @@ import MockDate from "mockdate";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import {
+  itwAuthLevelSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwRequestedCredentialsSelector
 } from "../preferences";
+import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 
 describe("itwIsFeedbackBannerHiddenSelector", () => {
   it.each([
@@ -51,8 +53,8 @@ describe("itwIsDiscoveryBannerHiddenSelector", () => {
 });
 
 describe("itwRequestedCredentialsSelector", () => {
-  it("should return the list of requested credentials in the past 7 days", () => {
-    MockDate.set("2024-11-14T20:43:21.361Z");
+  it("should return the list of requested credentials in the past 24 hours", () => {
+    MockDate.set("2023-11-15T20:43:21.361Z");
 
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -62,11 +64,56 @@ describe("itwRequestedCredentialsSelector", () => {
           requestedCredentials: {
             MDL: "2023-11-14T20:43:21.362Z",
             EuropeanDisabilityCard: "2023-11-14T20:43:21.360Z",
-            EuropeanHealthInsuranceCard: "2023-11-10T20:43:21.361Z"
+            EuropeanHealthInsuranceCard: "2023-11-14T20:43:21.361Z"
           }
         })
       )
     ).toEqual(["MDL"]);
     MockDate.reset();
+  });
+});
+
+describe("itwAuthLevelSelector", () => {
+  afterEach(() => {
+    // Always reset the date after each test to avoid side effects
+    MockDate.reset();
+  });
+
+  it("returns the auth level when it is set", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const updatedState = {
+      ...state,
+      features: {
+        ...state.features,
+        itWallet: {
+          ...state.features?.itWallet,
+          preferences: {
+            ...state.features?.itWallet?.preferences,
+            authLevel: "L2" as ItwAuthLevel
+          }
+        }
+      }
+    };
+
+    expect(itwAuthLevelSelector(updatedState)).toEqual("L2");
+  });
+
+  it("returns undefined when the auth level is not set", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const updatedState = {
+      ...state,
+      features: {
+        ...state.features,
+        itWallet: {
+          ...state.features?.itWallet,
+          preferences: {
+            ...state.features?.itWallet?.preferences,
+            authLevel: undefined
+          }
+        }
+      }
+    };
+
+    expect(itwAuthLevelSelector(updatedState)).toBeUndefined();
   });
 });

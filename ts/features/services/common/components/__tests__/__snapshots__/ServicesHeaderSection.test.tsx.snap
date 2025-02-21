@@ -7,7 +7,7 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
       "backgroundColor": "#F4F5F8",
       "marginTop": -1334,
       "paddingBottom": undefined,
-      "paddingTop": 1534,
+      "paddingTop": 1334,
     }
   }
 >
@@ -171,7 +171,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
       "backgroundColor": "#F4F5F8",
       "marginTop": -1334,
       "paddingBottom": undefined,
-      "paddingTop": 1534,
+      "paddingTop": 1334,
     }
   }
 >
@@ -183,6 +183,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
     }
   >
     <View
+      importantForAccessibility="no"
       style={
         {
           "alignItems": "center",
@@ -194,6 +195,9 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
       testID="services-header"
     >
       <View
+        accessibilityElementsHidden={true}
+        accessible={false}
+        importantForAccessibility="no-hide-descendants"
         style={
           {
             "marginRight": 16,
@@ -261,9 +265,10 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
         }
       >
         <Text
-          allowFontScaling={false}
+          accessibilityRole="header"
+          allowFontScaling={true}
           dynamicTypeRamp="title2"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
@@ -281,9 +286,9 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
           #### title ####
         </Text>
         <Text
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="footnote"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},

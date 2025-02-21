@@ -413,9 +413,9 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -443,8 +443,36 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               accessibilityElementsHidden={true}
                               accessibilityLabel="Learn more"
                               accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": undefined,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
                               accessible={true}
+                              collapsable={false}
+                              focusable={true}
                               importantForAccessibility="no-hide-descendants"
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
                               pointerEvents="none"
                             >
                               <View
@@ -457,10 +485,10 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -496,7 +524,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               align="xMidYMid"
                               bbHeight={80}
                               bbWidth={80}
-                              color="#00C5CA"
                               focusable={false}
                               height={80}
                               meetOrSlice={0}
@@ -515,7 +542,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={80}
@@ -674,16 +700,25 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                         </View>
                       </View>
                       <Modal
+                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
-                        enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
+                        handleComponentAccessibility={
+                          {
+                            "accessible": false,
+                          }
+                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
-                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
+                        snapPoints={
+                          [
+                            10,
+                          ]
+                        }
                         style={
                           {
                             "borderCurve": "continuous",
@@ -695,39 +730,21 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
-                          overScrollMode="never"
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
                         >
                           <View>
-                            <Text
-                              allowFontScaling={false}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "left",
-                                  },
-                                ]
-                              }
+                            <View
+                              onLayout={[Function]}
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -739,103 +756,118 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       "fontWeight": "400",
                                       "lineHeight": 24,
                                     },
-                                  ]
-                                }
-                              >
-                                It's a message that the sender can edit 
-                              </Text>
-                              <Text
-                                allowFontScaling={false}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
-                                style={
-                                  [
-                                    {},
                                     {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
+                                      "textAlign": "left",
                                     },
                                   ]
                                 }
                               >
-                                after you've received it
-                              </Text>
-                              <Text
-                                allowFontScaling={false}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                . This way, the information it includes will always be up-to-date.
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  It's a message that the sender can edit 
+                                </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  after you've received it
+                                </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  . This way, the information it includes will always be up-to-date.
 
 The sender can edit the information in a dynamic message only 
-                              </Text>
-                              <Text
-                                allowFontScaling={false}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                specific cases
-                              </Text>
-                              <Text
-                                allowFontScaling={false}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                . For example, to change outdated information or replace an attachment that is no longer valid.
+                                </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  specific cases
+                                </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  . For example, to change outdated information or replace an attachment that is no longer valid.
 
 If the sender needs to share new information or important updates with you, you'll receive a new message.
+                                </Text>
                               </Text>
-                            </Text>
-                            <View
-                              style={
-                                {
-                                  "height": 0,
-                                }
-                              }
-                            />
+                            </View>
                           </View>
                         </RCTScrollView>
                       </Modal>

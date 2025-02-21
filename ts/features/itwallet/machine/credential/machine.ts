@@ -28,6 +28,7 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToCredentialPreviewScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
+    navigateToEidVerificationExpiredScreen: notImplemented,
     closeIssuance: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeCredential: notImplemented,
@@ -57,7 +58,10 @@ export const itwCredentialIssuanceMachine = setup({
   guards: {
     isSessionExpired: notImplemented,
     isDeferredIssuance: notImplemented,
-    hasValidWalletInstanceAttestation: notImplemented
+    hasValidWalletInstanceAttestation: notImplemented,
+    isStatusError: notImplemented,
+    isEidExpired: notImplemented,
+    isSkipNavigation: notImplemented
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -71,7 +75,12 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "select-credential": [
           {
-            guard: ({ event }) => event.skipNavigation === true,
+            guard: "isEidExpired",
+            actions: "navigateToEidVerificationExpiredScreen",
+            target: "Idle"
+          },
+          {
+            guard: "isSkipNavigation",
             target: "CheckingWalletInstanceAttestation",
             actions: [
               assign(({ event }) => ({
@@ -249,6 +258,10 @@ export const itwCredentialIssuanceMachine = setup({
         {
           guard: "isDeferredIssuance",
           actions: "flagCredentialAsRequested"
+        },
+        {
+          guard: "isStatusError",
+          actions: "unflagCredentialAsRequested"
         }
       ],
       on: {

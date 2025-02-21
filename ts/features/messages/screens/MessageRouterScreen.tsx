@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import { ReactElement, useCallback, useEffect, useRef } from "react";
+
 import { View } from "react-native";
 import { StackActions } from "@react-navigation/native";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
@@ -39,9 +40,7 @@ type NavigationProps = IOStackNavigationRouteProps<
   "MESSAGE_ROUTER"
 >;
 
-export const MessageRouterScreen = (
-  props: NavigationProps
-): React.ReactElement => {
+export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
   const messageId = props.route.params.messageId;
   const fromPushNotification = props.route.params.fromNotification;
   const dispatch = useIODispatch();
@@ -89,7 +88,8 @@ export const MessageRouterScreen = (
         data.containsPayment,
         data.hasRemoteContent,
         data.containsAttachments,
-        fromPushNotification
+        fromPushNotification,
+        data.hasFIMSCTA
       );
 
       if (data.isLegacyGreenPass) {

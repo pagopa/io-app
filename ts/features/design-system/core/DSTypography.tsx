@@ -22,7 +22,6 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { Alert, View } from "react-native";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -106,7 +105,7 @@ const H4Row = () => {
   const theme = useIOTheme();
 
   return (
-    <HStack space={16}>
+    <HStack space={16} style={{ flexWrap: "wrap" }}>
       <H4>Header H4</H4>
       <H4 color={theme["interactiveElem-default"]}>Header H4</H4>
       <View
@@ -122,7 +121,7 @@ const H5Row = () => {
   const theme = useIOTheme();
 
   return (
-    <HStack space={16}>
+    <HStack space={16} style={{ flexWrap: "wrap" }}>
       <H5>Header H5</H5>
       <H5 color={theme["textHeading-tertiary"]}>Header H5</H5>
       <H5 color={theme["interactiveElem-default"]}>Header H5</H5>
@@ -134,7 +133,7 @@ const H6Row = () => {
   const theme = useIOTheme();
 
   return (
-    <HStack space={16}>
+    <HStack space={16} style={{ flexWrap: "wrap" }}>
       <H6>Header H6</H6>
       <H6 color={theme["textHeading-tertiary"]}>Header H6</H6>
       <H6 color={theme["interactiveElem-default"]}>Header H6</H6>
@@ -146,7 +145,7 @@ const ButtonTextRow = () => {
   const theme = useIOTheme();
 
   return (
-    <HStack space={16}>
+    <HStack space={16} style={{ flexWrap: "wrap" }}>
       <ButtonText color={theme["textBody-tertiary"]}>ButtonText</ButtonText>
       <ButtonText color={theme["interactiveElem-default"]}>
         ButtonText
@@ -164,7 +163,7 @@ const CaptionRow = () => {
   const theme = useIOTheme();
 
   return (
-    <HStack space={16}>
+    <HStack space={16} style={{ flexWrap: "wrap" }}>
       <Caption>Caption</Caption>
       <Caption color={theme["textBody-tertiary"]}>Caption</Caption>
       <Caption color={theme["interactiveElem-default"]}>Caption</Caption>
@@ -196,7 +195,7 @@ export const BodySmallRow = () => {
     <>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <BodySmall>Body small</BodySmall>
-        <BodySmall color={"red"}>Body small</BodySmall>
+        <BodySmall color={theme.errorText}>Body small</BodySmall>
         <View
           style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
         >
@@ -208,7 +207,7 @@ export const BodySmallRow = () => {
       </HStack>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <BodySmall weight="Semibold">Body small SB</BodySmall>
-        <BodySmall weight="Semibold" color={"red"}>
+        <BodySmall weight="Semibold" color={theme.errorText}>
           Body small SB
         </BodySmall>
         <View
@@ -222,9 +221,9 @@ export const BodySmallRow = () => {
           Body small SB asLink
         </BodySmall>
       </HStack>
-      <HStack space={typographicStyleMargin}>
+      <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <BodySmall weight="Regular">Body small Regular</BodySmall>
-        <BodySmall weight="Regular" color={"red"}>
+        <BodySmall weight="Regular" color={theme.errorText}>
           Body small Regular
         </BodySmall>
         <View
@@ -249,7 +248,7 @@ export const LabelMiniRow = () => {
     <>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <LabelMini>Label mini</LabelMini>
-        <LabelMini color={"red"}>Label mini</LabelMini>
+        <LabelMini color={theme.errorText}>Label mini</LabelMini>
         <View
           style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
         >
@@ -258,7 +257,7 @@ export const LabelMiniRow = () => {
       </HStack>
       <HStack space={typographicStyleMargin}>
         <LabelMini weight="Semibold">Label mini SB</LabelMini>
-        <LabelMini weight="Semibold" color={"red"}>
+        <LabelMini weight="Semibold" color={theme.errorText}>
           Label mini SB
         </LabelMini>
         <View
@@ -271,7 +270,7 @@ export const LabelMiniRow = () => {
       </HStack>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <LabelMini weight="Regular">Label mini Regular</LabelMini>
-        <LabelMini weight="Regular" color={"red"}>
+        <LabelMini weight="Regular" color={theme.errorText}>
           Label mini Regular
         </LabelMini>
         <View

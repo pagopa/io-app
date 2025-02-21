@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
 import LogoutScreen from "../components/screens/LogoutScreen";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
@@ -26,7 +25,6 @@ import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import TosScreen from "../screens/profile/TosScreen";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboardingPlayground";
-import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import { isGestureEnabled } from "../utils/navigation";
 import TrialSystemPlayground from "../screens/profile/TrialSystemPlayground";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
@@ -110,10 +108,6 @@ const ProfileStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.PROFILE_DOWNLOAD_DATA}
       component={DownloadProfileDataScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.MARKDOWN_PLAYGROUND}
-      component={MarkdownPlayground}
     />
     <Stack.Screen
       name={ROUTES.IO_MARKDOWN_PLAYGROUND}

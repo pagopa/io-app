@@ -14,8 +14,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as S from "fp-ts/lib/string";
-import * as React from "react";
-import { ComponentProps } from "react";
+import { useRef, useState, useEffect, ComponentProps } from "react";
 import { StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
 import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
@@ -49,7 +48,7 @@ import {
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors.bluegrey
+    backgroundColor: IOColors["grey-700"]
   }
 });
 
@@ -58,9 +57,9 @@ export type FciDocumentsScreenNavigationParams = Readonly<{
 }>;
 
 const FciDocumentsScreen = () => {
-  const pdfRef = React.useRef<Pdf>(null);
-  const [totalPages, setTotalPages] = React.useState(0);
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const pdfRef = useRef<Pdf>(null);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
   const currentDoc = route.params.currentDoc ?? 0;
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
@@ -73,7 +72,7 @@ const FciDocumentsScreen = () => {
   const dispatch = useIODispatch();
   const isFocused = useIsFocused();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (documents.length !== 0 && isFocused) {
       dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
     }
@@ -95,7 +94,7 @@ const FciDocumentsScreen = () => {
     }
   }, [dispatch, documentSignaturesSelector, documents, currentDoc, isFocused]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // with a document opened, we can track the opening success event
     if (documents[currentDoc] && isFocused) {
       trackFciDocOpeningSuccess(

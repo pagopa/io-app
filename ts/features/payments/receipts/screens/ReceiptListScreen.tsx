@@ -5,36 +5,44 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp } from "@react-navigation/native";
-import * as React from "react";
+import { useState, useCallback, useEffect } from "react";
 import { LayoutChangeEvent, SectionList, SectionListData } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { PaymentsReceiptParamsList } from "../navigation/params";
-import { getPaymentsReceiptAction } from "../store/actions";
-import { walletReceiptListPotSelector } from "../store/selectors";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { isPaymentsTransactionsEmptySelector } from "../../home/store/selectors";
-import { ReceiptListItemTransaction } from "../components/ReceiptListItemTransaction";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { groupTransactionsByMonth } from "../utils";
-import I18n from "../../../../i18n";
-import { PaymentsReceiptRoutes } from "../navigation/routes";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import {
+  OperationResultScreenContent,
+  OperationResultScreenContentProps
+} from "../../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { isPaymentsTransactionsEmptySelector } from "../../home/store/selectors";
 import * as analytics from "../analytics";
-import { ReceiptsCategoryFilter } from "../types";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { ReceiptFadeInOutAnimationView } from "../components/ReceiptFadeInOutAnimationView";
+import { ReceiptListItemTransaction } from "../components/ReceiptListItemTransaction";
 import { ReceiptLoadingList } from "../components/ReceiptLoadingList";
 import { ReceiptSectionListHeader } from "../components/ReceiptSectionListHeader";
+import { PaymentsReceiptParamsList } from "../navigation/params";
+import { PaymentsReceiptRoutes } from "../navigation/routes";
+import { getPaymentsReceiptAction } from "../store/actions";
+import { walletReceiptListPotSelector } from "../store/selectors";
+import { ReceiptsCategoryFilter } from "../types";
+import { groupTransactionsByMonth } from "../utils";
 
 export type ReceiptListScreenProps = RouteProp<
   PaymentsReceiptParamsList,
   "PAYMENT_RECEIPT_DETAILS"
+>;
+
+type OperationResultEmptyProps = Pick<
+  OperationResultScreenContentProps,
+  "title" | "subtitle" | "pictogram"
 >;
 
 const AnimatedSectionList = Animated.createAnimatedComponent(
@@ -46,20 +54,19 @@ const ReceiptListScreen = () => {
   const navigation = useIONavigation();
 
   const scrollTranslationY = useSharedValue(0);
-  const [titleHeight, setTitleHeight] = React.useState(0);
-  const [isRefreshing, setIsRefreshing] = React.useState(false);
-  const [continuationToken, setContinuationToken] = React.useState<
+  const [titleHeight, setTitleHeight] = useState(0);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [continuationToken, setContinuationToken] = useState<
     string | undefined
   >();
   const [noticeCategory, setNoticeCategory] =
-    React.useState<ReceiptsCategoryFilter>("all");
+    useState<ReceiptsCategoryFilter>("all");
   const [groupedTransactions, setGroupedTransactions] =
-    React.useState<ReadonlyArray<SectionListData<NoticeListItem>>>();
+    useState<ReadonlyArray<SectionListData<NoticeListItem>>>();
   const insets = useSafeAreaInsets();
 
   const transactionsPot = useIOSelector(walletReceiptListPotSelector);
   const isEmpty = useIOSelector(isPaymentsTransactionsEmptySelector);
-
   const isLoading = pot.isLoading(transactionsPot);
 
   const handleNavigateToTransactionDetails = (transaction: NoticeListItem) => {
@@ -70,7 +77,8 @@ const ReceiptListScreen = () => {
       screen: PaymentsReceiptRoutes.PAYMENT_RECEIPT_DETAILS,
       params: {
         transactionId: transaction.eventId,
-        isPayer: transaction.isPayer
+        isPayer: transaction.isPayer,
+        isCart: transaction.isCart
       }
     });
   };
@@ -114,9 +122,10 @@ const ReceiptListScreen = () => {
     );
   };
 
-  const handleCategorySelected = React.useCallback(
+  const handleCategorySelected = useCallback(
     (category: ReceiptsCategoryFilter) => {
       setNoticeCategory(category);
+      analytics.trackReceiptFilterUsage(category);
       dispatch(
         getPaymentsReceiptAction.request({
           firstLoad: true,
@@ -129,7 +138,7 @@ const ReceiptListScreen = () => {
   );
 
   useOnFirstRender(
-    React.useCallback(() => {
+    useCallback(() => {
       analytics.trackPaymentsReceiptListing();
       dispatch(
         getPaymentsReceiptAction.request({
@@ -149,7 +158,7 @@ const ReceiptListScreen = () => {
     }
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (pot.isSome(transactionsPot)) {
       setGroupedTransactions(groupTransactionsByMonth(transactionsPot.value));
     }
@@ -163,14 +172,23 @@ const ReceiptListScreen = () => {
     </>
   );
 
+  const emptyProps: OperationResultEmptyProps =
+    noticeCategory === "payer"
+      ? {
+          title: I18n.t("features.payments.transactions.list.emptyPayer.title"),
+          pictogram: "empty"
+        }
+      : {
+          title: I18n.t("features.payments.transactions.list.empty.title"),
+          subtitle: I18n.t(
+            "features.payments.transactions.list.empty.subtitle"
+          ),
+          pictogram: "emptyArchive"
+        };
+
   const EmptyStateList = isEmpty ? (
     <ReceiptFadeInOutAnimationView>
-      <OperationResultScreenContent
-        isHeaderVisible
-        title={I18n.t("features.payments.transactions.list.empty.title")}
-        subtitle={I18n.t("features.payments.transactions.list.empty.subtitle")}
-        pictogram="emptyArchive"
-      />
+      <OperationResultScreenContent isHeaderVisible {...emptyProps} />
     </ReceiptFadeInOutAnimationView>
   ) : undefined;
 

@@ -1,23 +1,24 @@
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { ComponentProps, forwardRef, useCallback, useRef } from "react";
 import {
   Animated,
-  ScrollView,
-  View,
-  StyleSheet,
   GestureResponderEvent,
-  useWindowDimensions
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+  View
 } from "react-native";
-import { trackCarousel } from "../analytics/carouselAnalytics";
 import { LandingCardComponent } from "../../../components/LandingCardComponent";
 import { useInteractiveElementDefaultColorName } from "../../../utils/hooks/theme";
+import { trackCarousel } from "../analytics/carouselAnalytics";
 
 const styles = StyleSheet.create({
   normalDot: {
     height: 8,
     width: 8,
     borderRadius: 4,
-    backgroundColor: IOColors.greyLight,
+    backgroundColor: IOColors["grey-100"],
     marginHorizontal: 4
   },
   indicatorContainer: {
@@ -30,9 +31,7 @@ const styles = StyleSheet.create({
 const newDsGrey = IOColors["grey-200"];
 
 type CarouselProps = {
-  carouselCards: ReadonlyArray<
-    React.ComponentProps<typeof LandingCardComponent>
-  >;
+  carouselCards: ReadonlyArray<ComponentProps<typeof LandingCardComponent>>;
   dotEasterEggCallback?: () => void;
 };
 
@@ -40,7 +39,7 @@ type CarouselDotsProps = CarouselProps & { scrollX: Animated.Value };
 
 const CarouselDots = (props: CarouselDotsProps) => {
   const { carouselCards, dotEasterEggCallback, scrollX } = props;
-  const dotTouchCount = React.useRef(0);
+  const dotTouchCount = useRef(0);
 
   const blueColor = useInteractiveElementDefaultColorName();
 
@@ -92,13 +91,13 @@ const CarouselDots = (props: CarouselDotsProps) => {
   );
 };
 
-export const Carousel = React.forwardRef<View, CarouselProps>((props, ref) => {
+export const Carousel = forwardRef<View, CarouselProps>((props, ref) => {
   const { carouselCards, dotEasterEggCallback } = props;
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;
-  const scrollX = React.useRef(new Animated.Value(0)).current;
+  const scrollX = useRef(new Animated.Value(0)).current;
 
-  const renderCardComponents = React.useCallback(
+  const renderCardComponents = useCallback(
     () =>
       carouselCards.map(p => (
         <LandingCardComponent

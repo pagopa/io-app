@@ -14,14 +14,20 @@ import {
 import { NetworkError } from "../../../../utils/errors";
 import { FAQsCategoriesType } from "../../../../utils/faq";
 
+export type ZendeskAssistanceType = Partial<{
+  payment: boolean;
+  card: boolean;
+  fci: boolean;
+  itWallet: boolean;
+  idPay: boolean;
+}>;
+
 export type ZendeskStartPayload = {
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   startingRoute: string;
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
-  assistanceForFci: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 /**
  * The user chooses to start the workflow to open a support request

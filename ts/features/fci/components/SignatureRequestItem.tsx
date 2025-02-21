@@ -1,4 +1,3 @@
-import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import {
   Badge,
@@ -66,7 +65,7 @@ const SignatureRequestItem = (props: Props) => {
       >
         <View style={{ flexDirection: "column", flex: 1 }}>
           <H6>{item.dossier_title}</H6>
-          <BodySmall weight={"Regular"} color={"bluegrey"} numberOfLines={1}>
+          <BodySmall weight={"Regular"} numberOfLines={1}>
             {I18n.t("features.fci.requests.itemSubtitle", {
               date: item.created_at.toLocaleDateString(),
               time: item.created_at.toLocaleTimeString(),

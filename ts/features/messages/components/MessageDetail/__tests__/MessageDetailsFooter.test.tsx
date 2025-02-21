@@ -1,4 +1,5 @@
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
+
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
@@ -262,7 +263,7 @@ describe("MessageDetailsFooter component", () => {
 
 const renderComponent = (
   state: GlobalState,
-  props: React.ComponentProps<typeof MessageDetailsFooter>
+  props: ComponentProps<typeof MessageDetailsFooter>
 ) => {
   const mockStore = configureMockStore<GlobalState>();
   const store: Store<GlobalState> = mockStore(state);

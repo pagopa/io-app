@@ -31,6 +31,7 @@ import {
   itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
+import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -125,8 +126,8 @@ const forceUpdate = <T extends keyof SuperProperties>(
 };
 
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
-  const credentialsState = itwCredentialsSelector(state);
-  return O.isSome(credentialsState.eid) ? "L2" : "not_active";
+  const authLevel = itwAuthLevelSelector(state);
+  return authLevel ? authLevel : "not_active";
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {

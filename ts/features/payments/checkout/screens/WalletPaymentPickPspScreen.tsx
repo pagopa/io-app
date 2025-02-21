@@ -1,6 +1,5 @@
 import {
   Body,
-  GradientScrollView,
   H2,
   ListItemHeader,
   RadioGroup,
@@ -11,7 +10,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -35,13 +34,14 @@ import {
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
 import { FaultCodeCategoryEnum } from "../types/PspPaymentMethodNotAvailableProblemJson";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 
 const WalletPaymentPickPspScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
 
-  const [showFeaturedPsp, setShowFeaturedPsp] = React.useState(true);
+  const [showFeaturedPsp, setShowFeaturedPsp] = useState(true);
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
@@ -72,7 +72,7 @@ const WalletPaymentPickPspScreen = () => {
     O.toUndefined
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       isError &&
       (pspListPot.error as WalletPaymentFailure)?.faultCodeCategory ===
@@ -88,7 +88,7 @@ const WalletPaymentPickPspScreen = () => {
   }, [isError, navigation, pspListPot]);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (
         !pot.isSome(pspListPot) ||
         pot.isLoading(pspListPot) ||
@@ -115,7 +115,7 @@ const WalletPaymentPickPspScreen = () => {
     }, [pspListPot])
   );
 
-  const handlePspSelection = React.useCallback(
+  const handlePspSelection = useCallback(
     (bundleId: string) => {
       if (!sortedPspList) {
         return;
@@ -150,10 +150,11 @@ const WalletPaymentPickPspScreen = () => {
     );
   };
 
-  const sortButtonProps: ListItemHeader["endElement"] = React.useMemo(
+  const sortButtonProps: ListItemHeader["endElement"] = useMemo(
     () => ({
       type: "buttonLink",
       componentProps: {
+        testID: "wallet-payment-pick-psp-sort-button",
         label: I18n.t("wallet.payment.psp.pspSortButton"),
         accessibilityLabel: I18n.t("wallet.payment.psp.pspSortButton"),
         onPress: present
@@ -164,7 +165,7 @@ const WalletPaymentPickPspScreen = () => {
 
   const pspSelected = pipe(selectedPspOption, O.toUndefined);
 
-  const SelectPspHeadingContent = React.useCallback(
+  const SelectPspHeadingContent = useCallback(
     () => (
       <>
         <H2>{I18n.t("wallet.payment.psp.title")}</H2>
@@ -188,15 +189,18 @@ const WalletPaymentPickPspScreen = () => {
   );
 
   return (
-    <GradientScrollView
-      primaryActionProps={
+    <IOScrollView
+      actions={
         canContinue
           ? {
-              label: I18n.t("wallet.payment.psp.continueButton"),
-              accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
-              onPress: handleContinue,
-              disabled: isLoading,
-              loading: isLoading
+              type: "SingleButton",
+              primary: {
+                label: I18n.t("wallet.payment.psp.continueButton"),
+                accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
+                onPress: handleContinue,
+                disabled: isLoading,
+                loading: isLoading
+              }
             }
           : undefined
       }
@@ -212,7 +216,7 @@ const WalletPaymentPickPspScreen = () => {
       )}
       {isLoading && <WalletPspListSkeleton />}
       {sortPspBottomSheet}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 

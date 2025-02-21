@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   AppState,
   AppStateStatus,
@@ -17,7 +17,7 @@ import { closeInjectedScript } from "../../../utils/webview";
 import { remarkProcessor } from "../../../utils/markdown";
 import { MarkdownWebviewComponent } from "./MarkdownWebviewComponent";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
-import { LoadingSkeleton } from "./LoadingSkeleton";
+import { LoadingSkeleton } from "./../LoadingSkeleton";
 import { convertOldDemoMarkdownTag, generateHtml } from "./utils";
 
 export type MarkdownProps = {

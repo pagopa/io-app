@@ -2,7 +2,6 @@ import {
   TransitionPresets,
   createStackNavigator
 } from "@react-navigation/stack";
-import * as React from "react";
 import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import { Platform } from "react-native";
 import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
@@ -10,14 +9,12 @@ import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import { LandingScreen } from "../screens/authentication/LandingScreen";
 import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
-import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
 import { CieCardReaderScreenWrapper } from "../screens/authentication/cie/CieCardReaderScreenWrapper";
 import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
-import CieNotSupported from "../components/cie/CieNotSupported";
 import RootedDeviceModal from "../screens/modal/RootedDeviceModal";
 import { isGestureEnabled } from "../utils/navigation";
 import CieUnexpectedErrorScreen from "../screens/authentication/cie/CieUnexpectedErrorScreen";
@@ -126,11 +123,6 @@ const AuthenticationStackNavigator = () => (
     />
 
     <Stack.Screen
-      name={ROUTES.CIE_AUTHORIZE_USAGE_SCREEN}
-      component={CieAuthorizeDataUsageScreen}
-    />
-
-    <Stack.Screen
       name={ROUTES.CIE_CARD_READER_SCREEN}
       component={CieCardReaderScreenWrapper}
     />
@@ -138,6 +130,7 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.CIE_CONSENT_DATA_USAGE}
       component={CieConsentDataUsageScreen}
+      options={{ headerShown: true }}
     />
 
     <Stack.Group
@@ -208,11 +201,6 @@ const AuthenticationStackNavigator = () => (
         headerShown: true
       }}
     >
-      <Stack.Screen
-        name={ROUTES.CIE_NOT_SUPPORTED}
-        component={CieNotSupported}
-      />
-
       <Stack.Screen
         options={{ headerShown: true }}
         name={ROUTES.CIE_ACTIVATE_NFC_SCREEN}

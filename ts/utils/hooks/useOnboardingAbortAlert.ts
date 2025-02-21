@@ -5,7 +5,7 @@ import I18n from "../../i18n";
 import { useIODispatch } from "../../store/hooks";
 
 type OnboardingAbortAlertUtils = {
-  showAlert: () => void;
+  showAlert: (callback?: () => void) => void;
 };
 
 /**
@@ -15,25 +15,34 @@ type OnboardingAbortAlertUtils = {
 export const useOnboardingAbortAlert = (): OnboardingAbortAlertUtils => {
   const dispatch = useIODispatch();
 
-  const showAlert = useCallback(() => {
-    Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.exit"),
-          style: "default",
-          onPress: () => {
-            dispatch(abortOnboarding());
+  const showAlert = useCallback(
+    (callback?: () => void) => {
+      Alert.alert(
+        I18n.t("onboarding.alert.title"),
+        I18n.t("onboarding.alert.description"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.exit"),
+            style: "default",
+            onPress: () => {
+              // If a callback is provided, we want to handle the logic in the callback
+              // otherwise we want to automatically dispatch the abortOnboarding action
+              if (callback && typeof callback === "function") {
+                callback();
+              } else {
+                dispatch(abortOnboarding());
+              }
+            }
           }
-        }
-      ]
-    );
-  }, [dispatch]);
+        ]
+      );
+    },
+    [dispatch]
+  );
 
   return { showAlert };
 };

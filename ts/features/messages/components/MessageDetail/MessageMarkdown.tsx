@@ -1,5 +1,3 @@
-import { Omit } from "@pagopa/ts-commons/lib/types";
-import React from "react";
 import customVariables from "../../../../theme/variables";
 import {
   Markdown,

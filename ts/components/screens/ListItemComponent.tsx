@@ -10,7 +10,7 @@ import {
   NativeSwitch,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { Component } from "react";
 import {
   AccessibilityRole,
   AccessibilityState,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
  *
  * @deprecated It should be more appropriate to use a proper list item or just let the Flatlist handle the rendering.
  */
-export default class ListItemComponent extends React.Component<Props> {
+export default class ListItemComponent extends Component<Props> {
   public render() {
     const ICON_SIZE: IOIconSizeScale = this.props.iconSize
       ? this.props.iconSize
@@ -126,8 +126,8 @@ export default class ListItemComponent extends React.Component<Props> {
                     styles.listItemText,
                     {
                       color: this.props.isItemDisabled
-                        ? IOColors.grey
-                        : IOColors.bluegreyDark
+                        ? IOColors["grey-450"]
+                        : IOColors["grey-850"]
                     }
                   ]}
                   numberOfLines={2}
@@ -160,7 +160,7 @@ export default class ListItemComponent extends React.Component<Props> {
                   <Icon
                     name="chevronRightListItem"
                     size={ICON_SIZE}
-                    color="blue"
+                    color="blue-500"
                   />
                 ))}
             </View>
@@ -188,7 +188,7 @@ export default class ListItemComponent extends React.Component<Props> {
                   size={
                     this.props.smallIconSize ? ICON_SIZE : ICON_SIZE_DEFAULT
                   }
-                  color="blue"
+                  color="blue-500"
                 />
               </View>
             )}

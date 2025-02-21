@@ -1,18 +1,18 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { PureComponent } from "react";
 import {
+  AccessibilityInfo,
   AppState,
   AppStateStatus,
+  EmitterSubscription,
   NativeEventSubscription,
-  Platform,
   StatusBar
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
-import FlagSecureComponent from "./components/FlagSecure";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
 import { setLocale } from "./i18n";
@@ -28,12 +28,9 @@ import {
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
-import { ReactNavigationInstrumentation } from "./App";
+import { setScreenReaderEnabled } from "./store/actions/preferences";
 
-type Props = ReturnType<typeof mapStateToProps> &
-  typeof mapDispatchToProps & {
-    routingInstumentation: ReactNavigationInstrumentation;
-  };
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 /**
  * The main container of the application with:
@@ -43,8 +40,9 @@ type Props = ReturnType<typeof mapStateToProps> &
  * - the UpdateAppModal, if the backend is not compatible with the installed app version
  * - the root for displaying light modals
  */
-class RootContainer extends React.PureComponent<Props> {
+class RootContainer extends PureComponent<Props> {
   private subscription: NativeEventSubscription | undefined;
+  private accessibilitySubscription: EmitterSubscription | undefined;
   constructor(props: Props) {
     super(props);
     /* Configure the application to receive push notifications */
@@ -54,6 +52,11 @@ class RootContainer extends React.PureComponent<Props> {
   private handleApplicationActivity = (activity: AppStateStatus) =>
     this.props.applicationChangeState(activity);
 
+  private handleScreenReaderEnabled = (isScreenReaderEnabled: boolean) =>
+    this.props.setScreenReaderEnabled({
+      screenReaderEnabled: isScreenReaderEnabled
+    });
+
   public componentDidMount() {
     // boot: send the status of the application
     this.handleApplicationActivity(AppState.currentState);
@@ -62,6 +65,14 @@ class RootContainer extends React.PureComponent<Props> {
       "change",
       this.handleApplicationActivity
     );
+    // eslint-disable-next-line functional/immutable-data
+    this.accessibilitySubscription = AccessibilityInfo.addEventListener(
+      "screenReaderChanged",
+      this.handleScreenReaderEnabled
+    );
+    AccessibilityInfo.isScreenReaderEnabled()
+      .then(this.handleScreenReaderEnabled)
+      .catch(() => undefined);
 
     this.updateLocale();
     // Hide splash screen
@@ -82,6 +93,7 @@ class RootContainer extends React.PureComponent<Props> {
 
   public componentWillUnmount() {
     this.subscription?.remove();
+    this.accessibilitySubscription?.remove();
   }
 
   public componentDidUpdate() {
@@ -101,11 +113,8 @@ class RootContainer extends React.PureComponent<Props> {
           barStyle={"dark-content"}
           backgroundColor={customVariables.androidStatusBarColor}
         />
-        {Platform.OS === "android" && <FlagSecureComponent />}
 
-        <IONavigationContainer
-          routingInstrumentation={this.props.routingInstumentation}
-        />
+        <IONavigationContainer />
 
         {/* When debug mode is enabled, the following information
         is displayed:
@@ -137,7 +146,8 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = {
   applicationChangeState,
   navigateBack,
-  setDebugCurrentRouteName
+  setDebugCurrentRouteName,
+  setScreenReaderEnabled
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);

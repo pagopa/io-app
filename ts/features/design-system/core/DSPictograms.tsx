@@ -4,7 +4,6 @@ import {
   IOColors,
   IOPictograms,
   IOPictogramsBleed,
-  IOPictogramsLegacy,
   IOPictogramsObject,
   Pictogram,
   PictogramBleed,
@@ -13,7 +12,6 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import {
   DSAssetViewerBox,
@@ -69,10 +67,7 @@ const filterPictogramSet = (
   );
 
 const filteredIOPictograms = filterPictogramSet(
-  {
-    ...IOPictogramsObject,
-    ...IOPictogramsLegacy
-  },
+  IOPictogramsObject,
   IOPictograms
 );
 

@@ -2,9 +2,11 @@ import * as O from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { PublicSession } from "../../../definitions/session_manager/PublicSession";
 import { SessionToken } from "../../types/SessionToken";
 import {
+  clearCurrentSession,
   idpSelected,
   loginSuccess,
   logoutFailure,
@@ -17,6 +19,7 @@ import {
 import { Action } from "../actions/types";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
+import { format } from "../../utils/dates";
 import { logoutRequest } from "./../actions/authentication";
 import { GlobalState } from "./types";
 
@@ -165,6 +168,17 @@ export const sessionInfoSelector = createSelector(
       : O.none
 );
 
+export const formattedExpirationDateSelector = createSelector(
+  sessionInfoSelector,
+  sessionInfo =>
+    pipe(
+      sessionInfo,
+      O.chainNullableK(({ expirationDate }) => expirationDate),
+      O.map(expirationDate => format(expirationDate, "D MMMM")),
+      O.getOrElse(() => "N/A")
+    )
+);
+
 export const zendeskTokenSelector = (state: GlobalState): string | undefined =>
   isLoggedInWithSessionInfo(state.authentication)
     ? state.authentication.sessionInfo.zendeskToken
@@ -281,6 +295,10 @@ const reducer = (
         ? "SESSION_EXPIRED"
         : "NOT_LOGGED_IN"
     };
+  }
+
+  if (isActionOf(clearCurrentSession, action)) {
+    return INITIAL_STATE;
   }
 
   if (isActionOf(resetAuthenticationState, action) && isSessionExpired(state)) {

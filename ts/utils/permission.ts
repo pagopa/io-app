@@ -56,25 +56,3 @@ export const requestWriteCalendarPermission = async (
     ios: Promise.resolve(true),
     default: Promise.resolve(true)
   });
-
-/**
- * Wrapper function to request permission to read images from the gallery
- * @returns boolean that indicates wether the user has granted the permission or not
- */
-export const requestMediaPermission = async () => {
-  switch (Platform.OS) {
-    case "android":
-      return requestIOPermission(
-        Platform.Version >= 33
-          ? RNPermissions.PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
-          : RNPermissions.PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
-      );
-    case "ios":
-      // On iOS, photo selection from the gallery is implicitly handled by the image picker.
-      // The picker itself prompts the user for permission to access photos, allowing them to
-      // select a photo that is then seamlessly passed back to the app.
-      return true;
-    default:
-      return false;
-  }
-};

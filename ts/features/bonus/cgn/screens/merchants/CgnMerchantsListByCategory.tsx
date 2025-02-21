@@ -11,8 +11,8 @@ import {
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { useMemo } from "react";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Dimensions,
   LayoutChangeEvent,
@@ -60,7 +60,7 @@ export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
 
 const CgnMerchantsListByCategory = () => {
   const screenHeight = Dimensions.get("window").height;
-  const [titleHeight, setTitleHeight] = React.useState(0);
+  const [titleHeight, setTitleHeight] = useState(0);
   const translationY = useSharedValue(0);
 
   const getTitleHeight = (event: LayoutChangeEvent) => {
@@ -107,7 +107,7 @@ const CgnMerchantsListByCategory = () => {
     [route]
   );
 
-  const [isPullRefresh, setIsPullRefresh] = React.useState(false);
+  const [isPullRefresh, setIsPullRefresh] = useState(false);
 
   const initLoadingLists = () => {
     dispatch(cgnOfflineMerchants.request(categoryFilter));
@@ -115,7 +115,7 @@ const CgnMerchantsListByCategory = () => {
     setIsPullRefresh(false);
   };
 
-  React.useEffect(initLoadingLists, [route, categoryFilter, dispatch]);
+  useEffect(initLoadingLists, [route, categoryFilter, dispatch]);
 
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
@@ -128,7 +128,7 @@ const CgnMerchantsListByCategory = () => {
     [onlineMerchants, offlineMerchants]
   );
 
-  const onItemPress = React.useCallback(
+  const onItemPress = useCallback(
     (id: Merchant["id"]) => {
       navigate(CGN_ROUTES.DETAILS.MERCHANTS.DETAIL, {
         merchantID: id
@@ -152,12 +152,12 @@ const CgnMerchantsListByCategory = () => {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
     },
-    transparent: true,
+    backgroundColor: categorySpecs?.colors,
     supportRequest: true,
     secondAction: {
       icon: "search",
       onPress() {
-        navigate("CGN_MERCHANTS_SEARCH");
+        navigate(CGN_ROUTES.DETAILS.MERCHANTS.SEARCH);
       },
       accessibilityLabel: I18n.t(
         "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
@@ -165,7 +165,7 @@ const CgnMerchantsListByCategory = () => {
     }
   });
 
-  const renderItem = React.useMemo(
+  const renderItem = useMemo(
     () => CgnMerchantListViewRenderItem({ onItemPress }),
     [onItemPress]
   );
@@ -195,14 +195,12 @@ const CgnMerchantsListByCategory = () => {
           style={[
             IOStyles.horizontalContentPadding,
             {
-              paddingTop: insets.top,
               backgroundColor: categorySpecs.colors,
               paddingBottom: 24
             }
           ]}
         >
-          <VSpacer size={48} />
-          <VSpacer size={32} />
+          <VSpacer size={24} />
           <View style={[IOStyles.row, { alignItems: "center" }]}>
             <View
               style={{
@@ -272,15 +270,14 @@ const CgnMerchantsListByCategory = () => {
         />
       ) : (
         <Animated.FlatList
-          style={{ flexGrow: 1, backgroundColor: IOColors.white }}
+          style={{ flexGrow: 1 }}
           onScroll={scrollHandler}
           scrollEventThrottle={8}
           snapToOffsets={[0, titleHeight]}
           snapToEnd={false}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: getPaddingBottom(),
-            backgroundColor: IOColors.white
+            paddingBottom: getPaddingBottom()
           }}
           refreshControl={refreshControl}
           data={merchantsAll}

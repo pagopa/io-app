@@ -9,7 +9,7 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import React, { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -19,7 +19,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
-import LegacyMarkdown from "../../../../../components/ui/Markdown/LegacyMarkdown";
+import IOMarkdown from "../../../../../components/IOMarkdown";
 import { pinPukHelpUrl } from "../../../../../config";
 import { isCieLoginUatEnabledSelector } from "../../../../../features/cieLogin/store/selectors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -27,6 +27,7 @@ import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
 import {
@@ -49,9 +50,7 @@ const onOpenForgotPinPage = () => {
 
 const ForgottenPin = () => (
   <View>
-    <LegacyMarkdown avoidTextSelection>
-      {I18n.t("bottomSheets.ciePin.content")}
-    </LegacyMarkdown>
+    <IOMarkdown content={I18n.t("bottomSheets.ciePin.content")} />
     <VSpacer size={24} />
     <Body weight="Semibold" asLink onPress={onOpenForgotPinPage}>
       {I18n.t("authentication.cie.pin.bottomSheetCTA")}
@@ -61,6 +60,8 @@ const ForgottenPin = () => (
 );
 
 export const ItwCiePinScreen = () => {
+  usePreventScreenCapture();
+
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
@@ -83,7 +84,7 @@ export const ItwCiePinScreen = () => {
   }, [isFocused]);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       trackItWalletCiePinEnter();
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
     }, [])

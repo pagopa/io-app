@@ -3,6 +3,10 @@ import { getCredentialStatus } from "../itwCredentialStatusUtils";
 import { ItwStoredCredentialsMocks } from "../itwMocksUtils";
 import { StoredCredential } from "../itwTypesUtils";
 
+const options: Parameters<typeof getCredentialStatus>[1] = {
+  expiringDays: 14
+};
+
 describe("getCredentialStatus", () => {
   afterEach(() => {
     MockDate.reset();
@@ -26,7 +30,7 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "invalid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("expired");
+      expect(getCredentialStatus(mockCredential, options)).toEqual("expired");
     });
 
     it("should return the digital document expired status", () => {
@@ -47,7 +51,9 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "valid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpired");
+      expect(getCredentialStatus(mockCredential, options)).toEqual(
+        "jwtExpired"
+      );
     });
 
     // Physical document wins
@@ -68,7 +74,7 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "invalid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("expired");
+      expect(getCredentialStatus(mockCredential, options)).toEqual("expired");
     });
 
     it("should return jwtExpired when only JWT data are available", () => {
@@ -81,7 +87,9 @@ describe("getCredentialStatus", () => {
         }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpired");
+      expect(getCredentialStatus(mockCredential, options)).toEqual(
+        "jwtExpired"
+      );
     });
   });
 
@@ -104,7 +112,7 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "valid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("expiring");
+      expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
     });
 
     it("should return the digital document expiring status", () => {
@@ -125,7 +133,9 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "valid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpiring");
+      expect(getCredentialStatus(mockCredential, options)).toEqual(
+        "jwtExpiring"
+      );
     });
 
     // Digital document wins
@@ -147,7 +157,9 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "valid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpiring");
+      expect(getCredentialStatus(mockCredential, options)).toEqual(
+        "jwtExpiring"
+      );
     });
 
     // Physical document wins
@@ -169,7 +181,7 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "valid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("expiring");
+      expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
     });
 
     it("should return jwtExpiring when only JWT data are available", () => {
@@ -182,7 +194,9 @@ describe("getCredentialStatus", () => {
         }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpiring");
+      expect(getCredentialStatus(mockCredential, options)).toEqual(
+        "jwtExpiring"
+      );
     });
   });
 
@@ -204,7 +218,7 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "invalid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("invalid");
+      expect(getCredentialStatus(mockCredential, options)).toEqual("invalid");
     });
 
     it("should return the physical document invalid status over any digital document status", () => {
@@ -224,7 +238,7 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "invalid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("invalid");
+      expect(getCredentialStatus(mockCredential, options)).toEqual("invalid");
     });
   });
 
@@ -247,7 +261,7 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "valid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("valid");
+      expect(getCredentialStatus(mockCredential, options)).toEqual("valid");
     });
 
     it("should return valid when the credential does not have an expiration date and it is not invalid for other reasons", () => {
@@ -268,7 +282,7 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "valid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("valid");
+      expect(getCredentialStatus(mockCredential, options)).toEqual("valid");
     });
 
     it("should return valid when only JWT data are available", () => {
@@ -281,7 +295,19 @@ describe("getCredentialStatus", () => {
         }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual("valid");
+      expect(getCredentialStatus(mockCredential, options)).toEqual("valid");
+    });
+  });
+
+  describe("unknown", () => {
+    it("should return unknown when the status attestation could not be fetched", () => {
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.eid,
+        storedStatusAttestation: {
+          credentialStatus: "unknown"
+        }
+      };
+      expect(getCredentialStatus(mockCredential, options)).toEqual("unknown");
     });
   });
 });

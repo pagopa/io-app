@@ -4,7 +4,6 @@ import {
   IOVisualCostants,
   hexToRgba
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import themeVariables from "../../theme/variables";
@@ -42,7 +41,7 @@ export const AlertModal = ({ message }: AlertModalProps) => {
       backgroundColor={opaqueBgColor}
       foreground={
         <View style={styles.container}>
-          <Body color="bluegreyDark">{message}</Body>
+          <Body color="grey-850">{message}</Body>
         </View>
       }
     />

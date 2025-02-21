@@ -11,7 +11,8 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React, { ComponentProps, forwardRef, useState } from "react";
+import { ComponentProps, forwardRef, ReactNode, useState } from "react";
+
 import { LayoutChangeEvent, View } from "react-native";
 import {
   BackProps,
@@ -32,7 +33,7 @@ export type LargeHeaderTitleProps = {
 
 type Props = WithTestID<
   {
-    children?: React.ReactNode;
+    children?: ReactNode;
     actions?: ComponentProps<typeof IOScrollView>["actions"];
     title: LargeHeaderTitleProps;
     description?: string | Array<BodyProps>;
@@ -44,6 +45,9 @@ type Props = WithTestID<
     headerActionsProp?: HeaderActionsProps;
     canGoback?: boolean;
     excludeEndContentMargin?: boolean;
+    ignoreAccessibilityCheck?: ComponentProps<
+      typeof HeaderSecondLevel
+    >["ignoreAccessibilityCheck"];
   } & SupportRequestParams
 >;
 
@@ -68,7 +72,8 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       includeContentMargins = false,
       headerActionsProp = {},
       excludeEndContentMargin,
-      testID
+      testID,
+      ignoreAccessibilityCheck = false
     },
     ref
   ) => {
@@ -92,6 +97,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
 
     const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
       ignoreSafeAreaMargin,
+      ignoreAccessibilityCheck,
       ...useHeaderProps(
         canGoback
           ? {

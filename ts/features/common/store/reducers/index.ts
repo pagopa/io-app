@@ -56,6 +56,17 @@ import {
   landingScreenBannersReducer,
   LandingScreenBannerState
 } from "../../../landingScreenMultiBanner/store/reducer";
+import {
+  spidLoginReducer,
+  SpidLoginState
+} from "../../../spidLogin/store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { isIOMarkdownDisabledForMessagesAndServices } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isIOMarkdownEnabledLocallySelector } from "../../../../store/reducers/persistedPreferences";
+import {
+  loginPreferencesPersistor,
+  LoginPreferencesState
+} from "../../../login/preferences/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -63,6 +74,8 @@ type LoginFeaturesState = {
   fastLogin: FastLoginState;
   cieLogin: CieLoginState & PersistPartial;
   loginInfo: LoginInfoState;
+  spidLogin: SpidLoginState;
+  loginPreferences: LoginPreferencesState & PersistPartial;
 };
 
 export type FeaturesState = {
@@ -96,7 +109,9 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     nativeLogin: nativeLoginReducer,
     fastLogin: fastLoginReducer,
     cieLogin: cieLoginPersistor,
-    loginInfo: loginInfoReducer
+    loginInfo: loginInfoReducer,
+    spidLogin: spidLoginReducer,
+    loginPreferences: loginPreferencesPersistor
   }),
   wallet: walletReducer,
   fims: fimsReducer,
@@ -121,3 +136,17 @@ export const featuresPersistor = persistReducer<FeaturesState, Action>(
   persistConfig,
   rootReducer
 );
+
+/**
+ * This selector checks if IO Markdown has been disabled remotely
+ * and if it has been enabled locally.
+ * The remote flag is a way to disable IOMarkdown without relying
+ * on a new app release.
+ * @param state Redux global state
+ * @returns true if IOMarkdown is enabled, false otherwise
+ */
+export const isIOMarkdownEnabledOnMessagesAndServicesSelector = (
+  state: GlobalState
+) =>
+  !isIOMarkdownDisabledForMessagesAndServices(state) &&
+  isIOMarkdownEnabledLocallySelector(state);

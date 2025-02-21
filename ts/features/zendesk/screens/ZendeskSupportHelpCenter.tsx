@@ -2,7 +2,9 @@ import {
   AccordionItem,
   Body,
   ButtonLink,
+  ContentWrapper,
   FeatureInfo,
+  FooterActions,
   H4,
   H6,
   HeaderSecondLevel,
@@ -14,13 +16,14 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, {
+import {
   useCallback,
   useEffect,
   useLayoutEffect,
   useMemo,
   useState
 } from "react";
+
 import { FlatList, ListRenderItemInfo } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import _ from "lodash";
@@ -224,9 +227,7 @@ const ZendeskSupportHelpCenter = () => {
     contextualHelp,
     contextualHelpMarkdown,
     startingRoute,
-    assistanceForPayment,
-    assistanceForCard,
-    assistanceForFci
+    assistanceType
   } = route.params || {};
   //   !contextualHelpMarkdown
   // );
@@ -245,49 +246,22 @@ const ZendeskSupportHelpCenter = () => {
     if (O.isNone(maybeProfile)) {
       navigation.navigate(ZENDESK_ROUTES.MAIN, {
         screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
-        params: {
-          assistanceForPayment,
-          assistanceForCard,
-          assistanceForFci
-        }
+        params: { assistanceType }
       });
     } else {
       navigation.navigate(ZENDESK_ROUTES.MAIN, {
         screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
-        params: {
-          assistanceForPayment,
-          assistanceForCard,
-          assistanceForFci
-        }
+        params: { assistanceType }
       });
     }
-  }, [
-    assistanceForCard,
-    assistanceForFci,
-    assistanceForPayment,
-    maybeProfile,
-    navigation
-  ]);
+  }, [assistanceType, maybeProfile, navigation]);
 
   const handleContactSupportPress = useCallback(
-    () =>
-      handleContactSupport(
-        navigation,
-        assistanceForPayment,
-        assistanceForCard,
-        assistanceForFci,
-        zendeskRemoteConfig
-      ),
-    [
-      navigation,
-      assistanceForPayment,
-      assistanceForCard,
-      assistanceForFci,
-      zendeskRemoteConfig
-    ]
+    () => handleContactSupport(navigation, assistanceType, zendeskRemoteConfig),
+    [navigation, assistanceType, zendeskRemoteConfig]
   );
 
-  const handleButtonPress = React.useCallback(
+  const handleButtonPress = useCallback(
     (value: ButtonPressedEnum) => {
       setPressedButton(value);
       if (isUserLoggedIn) {
@@ -395,36 +369,45 @@ const ZendeskSupportHelpCenter = () => {
     <IOScrollView
       animatedRef={animatedScrollViewRef}
       testID={"ZendeskSupportHelpCenterScreen"}
-      actions={showRequestSupportContacts ? footerActions : undefined}
+      includeContentMargins={false}
+      excludeEndContentMargin={showRequestSupportContacts}
     >
-      <FaqManager
-        contextualHelpConfig={contextualHelpConfig}
-        faqCategories={faqCategories}
-        startingRoute={startingRoute}
-      />
+      <ContentWrapper>
+        <FaqManager
+          contextualHelpConfig={contextualHelpConfig}
+          faqCategories={faqCategories}
+          startingRoute={startingRoute}
+        />
 
-      {showRequestSupportContacts && (
-        <>
-          <VSpacer size={24} />
-          <H6>{I18n.t("support.helpCenter.supportComponent.title")}</H6>
-          <VSpacer size={8} />
-          <Body>{I18n.t("support.helpCenter.supportComponent.subtitle")}</Body>
-          <VSpacer size={16} />
-          <ButtonLink
-            label={I18n.t("support.askPermissions.privacyLink")}
-            onPress={() => {
-              openWebUrl(zendeskPrivacyUrl, () =>
-                IOToast.error(I18n.t("global.jserror.title"))
-              );
-            }}
-          />
-          <VSpacer size={24} />
-          <FeatureInfo
-            iconName="notice"
-            body={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
-          />
-        </>
-      )}
+        {showRequestSupportContacts && (
+          <>
+            <VSpacer size={24} />
+            <H6>{I18n.t("support.helpCenter.supportComponent.title")}</H6>
+            <VSpacer size={8} />
+            <Body>
+              {I18n.t("support.helpCenter.supportComponent.subtitle")}
+            </Body>
+            <VSpacer size={16} />
+            <ButtonLink
+              label={I18n.t("support.askPermissions.privacyLink")}
+              onPress={() => {
+                openWebUrl(zendeskPrivacyUrl, () =>
+                  IOToast.error(I18n.t("global.jserror.title"))
+                );
+              }}
+            />
+            <VSpacer size={24} />
+            <FeatureInfo
+              iconName="notice"
+              body={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
+            />
+          </>
+        )}
+      </ContentWrapper>
+      <FooterActions
+        fixed={false}
+        actions={showRequestSupportContacts ? footerActions : undefined}
+      />
     </IOScrollView>
   );
 };

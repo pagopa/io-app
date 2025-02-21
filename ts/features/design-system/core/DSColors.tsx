@@ -1,7 +1,7 @@
 import {
+  BodySmall,
   H3,
   H6,
-  IOColorGradients,
   IOColors,
   IOColorsExtra,
   IOColorsLegacy,
@@ -10,22 +10,18 @@ import {
   IOColorsTints,
   IOThemeDark,
   IOThemeLight,
-  BodySmall,
   VStack,
   hexToRgba,
   themeStatusColorsDarkMode,
   themeStatusColorsLightMode,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { ColorValue, Dimensions, StyleSheet, Text, View } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import themeVariables from "../../../theme/variables";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const macroSectionMargin = 48;
-const gradientItemGutter = 16;
 const sectionTitleMargin = 16;
 const colorItemGutter = 32;
 const colorItemPadding = 8;
@@ -36,13 +32,6 @@ const colorItemBorderDarkMode = hexToRgba(IOColors.white, 0.25);
 const colorPillBg = hexToRgba(IOColors.black, 0.2);
 
 const styles = StyleSheet.create({
-  gradientItemsWrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
-    marginLeft: (gradientItemGutter / 2) * -1,
-    marginRight: (gradientItemGutter / 2) * -1
-  },
   colorItemsWrapper: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -66,7 +55,7 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   smallCapsLightMode: {
-    color: IOColors.bluegrey
+    color: IOColors["grey-700"]
   },
   smallCapsDarkMode: {
     color: IOColors["grey-450"]
@@ -93,12 +82,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     borderBottomRightRadius: 24
   },
-  gradientWrapper: {
-    width: "50%",
-    justifyContent: "flex-start",
-    paddingHorizontal: gradientItemGutter / 2,
-    marginBottom: 16
-  },
   colorItem: {
     width: "100%",
     padding: colorItemPadding,
@@ -111,15 +94,6 @@ const styles = StyleSheet.create({
   },
   colorItemDarkMode: {
     borderColor: colorItemBorderDarkMode
-  },
-  gradientItem: {
-    aspectRatio: 2 / 1,
-    borderRadius: 8,
-    padding: 12,
-    alignItems: "flex-end",
-    justifyContent: "space-between",
-    borderColor: colorItemBorderLightMode,
-    borderWidth: 1
   },
   colorPill: {
     overflow: "hidden",
@@ -285,17 +259,6 @@ export const DSColors = () => {
           </VStack>
         </VStack>
 
-        {/* GRADIENTS */}
-        <VStack space={sectionTitleMargin}>
-          <H3 color={theme["textHeading-default"]}>Gradients</H3>
-
-          <View style={styles.gradientItemsWrapper}>
-            {Object.entries(IOColorGradients).map(([name, colorValues]) => (
-              <GradientBox key={name} name={name} colors={colorValues} />
-            ))}
-          </View>
-        </VStack>
-
         {/* LEGACY */}
         <VStack space={sectionTitleMargin}>
           <View>
@@ -364,41 +327,6 @@ const ColorBox = ({
               : IOColors[theme["textBody-tertiary"]]
           }}
           numberOfLines={1}
-        >
-          {name}
-        </Text>
-      )}
-    </View>
-  );
-};
-
-type GradientBoxProps = {
-  name: string;
-  colors: Array<string>;
-};
-
-const GradientBox = ({ name, colors }: GradientBoxProps) => {
-  const theme = useIOTheme();
-  const [first, last] = colors;
-
-  return (
-    <View style={styles.gradientWrapper}>
-      <LinearGradient
-        colors={colors}
-        useAngle={true}
-        angle={180}
-        style={styles.gradientItem}
-      >
-        {first && <Text style={styles.colorPill}>{first}</Text>}
-        {last && <Text style={styles.colorPill}>{last}</Text>}
-      </LinearGradient>
-      {name && (
-        <Text
-          style={{
-            marginTop: 4,
-            fontSize: 10,
-            color: IOColors[theme["textBody-tertiary"]]
-          }}
         >
           {name}
         </Text>

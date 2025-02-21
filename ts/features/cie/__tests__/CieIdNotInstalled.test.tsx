@@ -1,15 +1,17 @@
-import { Linking, Platform } from "react-native";
+import { Platform } from "react-native";
 import { fireEvent, render } from "@testing-library/react-native";
-import React from "react";
 import CieIdNotInstalled, {
   CIE_ID_ANDROID_COLL_LINK,
   CIE_ID_ANDROID_LINK,
   CIE_ID_IOS_LINK
 } from "../components/CieIdNotInstalled";
+import * as urlUtils from "../../../utils/url";
 
 const UAT_ENV_ENABLE_STATES = [true, false];
 
 const mockPopToTop = jest.fn();
+const mockOpenUrl = jest.spyOn(urlUtils, "openWebUrl");
+const anyFunction = expect.any(Function);
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
@@ -28,15 +30,13 @@ describe(CieIdNotInstalled, () => {
 
   describe("Behavior on iOS", () => {
     UAT_ENV_ENABLE_STATES.forEach(uatState => {
-      it("Should open CIE_ID_IOS_LINK", () => {
+      it("Should open CIE_ID_IOS_LINK", async () => {
         const { getByTestId } = render(<CieIdNotInstalled isUat={uatState} />);
 
         const openStore = getByTestId("cie-id-not-installed-open-store");
         fireEvent.press(openStore);
 
-        expect(jest.spyOn(Linking, "openURL")).toHaveBeenCalledWith(
-          CIE_ID_IOS_LINK
-        );
+        expect(mockOpenUrl).toHaveBeenCalledWith(CIE_ID_IOS_LINK, anyFunction);
         expect(mockPopToTop).not.toHaveBeenCalled();
       });
     });
@@ -50,8 +50,9 @@ describe(CieIdNotInstalled, () => {
       const openStore = getByTestId("cie-id-not-installed-open-store");
       fireEvent.press(openStore);
 
-      expect(jest.spyOn(Linking, "openURL")).toHaveBeenCalledWith(
-        CIE_ID_ANDROID_LINK
+      expect(mockOpenUrl).toHaveBeenCalledWith(
+        CIE_ID_ANDROID_LINK,
+        anyFunction
       );
       expect(mockPopToTop).not.toHaveBeenCalled();
     });
@@ -63,8 +64,9 @@ describe(CieIdNotInstalled, () => {
       const openStore = getByTestId("cie-id-not-installed-open-store");
       fireEvent.press(openStore);
 
-      expect(jest.spyOn(Linking, "openURL")).toHaveBeenCalledWith(
-        CIE_ID_ANDROID_COLL_LINK
+      expect(mockOpenUrl).toHaveBeenCalledWith(
+        CIE_ID_ANDROID_COLL_LINK,
+        anyFunction
       );
       expect(mockPopToTop).not.toHaveBeenCalled();
     });
@@ -76,7 +78,7 @@ describe(CieIdNotInstalled, () => {
       const popToTop = getByTestId("cie-id-not-installed-pop-to-top");
       fireEvent.press(popToTop);
 
-      expect(jest.spyOn(Linking, "openURL")).not.toHaveBeenCalled();
+      expect(mockOpenUrl).not.toHaveBeenCalled();
       expect(mockPopToTop).toHaveBeenCalledTimes(1);
     });
   });

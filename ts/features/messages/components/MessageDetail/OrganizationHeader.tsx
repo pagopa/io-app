@@ -6,7 +6,7 @@ import {
   BodySmall,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -14,7 +14,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
 import { UIMessageId } from "../../types";
-import { DoubleAvatar } from "../Home/DS/DoubleAvatar";
+import { AvatarDouble } from "../Home/DS/AvatarDouble";
 
 export type OrganizationHeaderProps = {
   messageId: UIMessageId;
@@ -77,7 +77,7 @@ export const OrganizationHeader = ({
       </View>
       <View style={styles.itemAvatar}>
         {paymentData ? (
-          <DoubleAvatar backgroundLogoUri={logoUri} />
+          <AvatarDouble backgroundLogoUri={logoUri} />
         ) : (
           <Avatar logoUri={logoUri} size="small" />
         )}

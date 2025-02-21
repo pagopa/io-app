@@ -14,9 +14,9 @@ import { RouteProp, useFocusEffect } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import Animated, { Layout } from "react-native-reanimated";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
@@ -52,6 +52,9 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
+import NavigationService from "../../../../navigation/NavigationService";
+import { FIMS_ROUTES } from "../../../fims/common/navigation";
+import { removeFIMSPrefixFromUrl } from "../../../../components/ui/Markdown/handlers/link";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -84,6 +87,20 @@ const IdPayInitiativeDetailsScreen = () => {
     });
   };
 
+  const onAddExpense = () => {
+    const addExpenseFimsUrl = pot.toUndefined(initiativeDataPot)?.webViewUrl;
+    if (!addExpenseFimsUrl) {
+      return;
+    }
+    NavigationService.navigate(FIMS_ROUTES.MAIN, {
+      screen: FIMS_ROUTES.CONSENTS,
+      params: {
+        ctaText: I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
+        ctaUrl: removeFIMSPrefixFromUrl(addExpenseFimsUrl)
+      }
+    });
+  };
+
   const navigateToConfiguration = () => {
     navigation.push(IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR, {
       screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
@@ -93,7 +110,7 @@ const IdPayInitiativeDetailsScreen = () => {
   const discountBottomSheet = useIdPayDiscountDetailsBottomSheet(initiativeId);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       dispatch(idpayInitiativeGet.request({ initiativeId }));
       dispatch(
         idpayTimelinePageGet.request({ initiativeId, page: 0, pageSize: 5 })
@@ -163,6 +180,16 @@ const IdPayInitiativeDetailsScreen = () => {
                   progress: amountProgress
                 }
               ];
+            case InitiativeRewardTypeEnum.EXPENSE:
+              return [
+                {
+                  type: "Value",
+                  label: I18n.t(
+                    "idpay.initiative.details.initiativeCard.refundRequestedAmount"
+                  ),
+                  value: formatNumberCentsToAmount(accruedAmount, true, "right")
+                }
+              ];
             case InitiativeRewardTypeEnum.REFUND:
               return [
                 {
@@ -185,6 +212,8 @@ const IdPayInitiativeDetailsScreen = () => {
                   value: formatNumberCentsToAmount(accruedAmount, true, "right")
                 }
               ];
+            default:
+              return [];
           }
         }
       )
@@ -203,22 +232,29 @@ const IdPayInitiativeDetailsScreen = () => {
             case InitiativeRewardTypeEnum.DISCOUNT:
               return (
                 <ContentWrapper>
-                  <VSpacer size={8} />
                   <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
-                  <Animated.View layout={Layout.duration(200)}>
+                  <Animated.View layout={LinearTransition.duration(200)}>
                     <InitiativeTimelineComponent
                       initiativeId={initiative.initiativeId}
                       size={5}
                     />
-                    <VSpacer size={32} />
                     <InitiativeDiscountSettingsComponent
                       initiative={initiative}
                     />
-                    <VSpacer size={16} />
                   </Animated.View>
                 </ContentWrapper>
               );
-
+            case InitiativeRewardTypeEnum.EXPENSE:
+              return (
+                <ContentWrapper>
+                  <VSpacer size={8} />
+                  <InitiativeTimelineComponent
+                    initiativeId={initiativeId}
+                    size={3}
+                  />
+                  <VSpacer size={24} />
+                </ContentWrapper>
+              );
             case InitiativeRewardTypeEnum.REFUND:
               if (initiativeNeedsConfiguration) {
                 return (
@@ -269,6 +305,8 @@ const IdPayInitiativeDetailsScreen = () => {
                   <VSpacer size={32} />
                 </ContentWrapper>
               );
+            default:
+              return undefined;
           }
         }
       )
@@ -284,6 +322,14 @@ const IdPayInitiativeDetailsScreen = () => {
           primary: {
             label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
             onPress: discountBottomSheet.present
+          }
+        };
+      case InitiativeRewardTypeEnum.EXPENSE:
+        return {
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
+            onPress: onAddExpense
           }
         };
       default:
@@ -303,6 +349,7 @@ const IdPayInitiativeDetailsScreen = () => {
 
   return (
     <BonusCardScreenComponent
+      title={initiativeName ?? ""}
       headerAction={{
         icon: "info",
         onPress: navigateToBeneficiaryDetails,

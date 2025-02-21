@@ -1,5 +1,5 @@
 import { H3, IOColors, LabelMini, VSpacer } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -49,7 +49,11 @@ const BonusCardCounter = (props: BonusCardCounter) => {
       style={[styles.container, { alignItems: "stretch" }]}
       testID="BonusCardCounterTestID"
     >
-      <LabelMini weight="Regular" style={{ textAlign: "center" }}>
+      <LabelMini
+        weight="Regular"
+        style={{ textAlign: "center" }}
+        color="blueItalia-850"
+      >
         {props.label}
       </LabelMini>
       <VSpacer size={4} />
@@ -75,10 +79,10 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
 
   const progressBarColor = isDesignSystemEnabled
     ? IOColors["blueItalia-500"]
-    : IOColors.blue;
+    : IOColors["blue-500"];
 
   const width = useSharedValue(100);
-  React.useEffect(() => {
+  useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
     width.value = progress * 100;
   });

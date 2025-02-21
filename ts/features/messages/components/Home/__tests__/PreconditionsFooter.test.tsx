@@ -1,4 +1,3 @@
-import React from "react";
 import { constUndefined } from "fp-ts/lib/function";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
@@ -132,7 +131,11 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext(
     () => (
-      <PreconditionsFooter onDismiss={onDismiss} onNavigation={onNavigation} />
+      <PreconditionsFooter
+        onDismiss={onDismiss}
+        onNavigation={onNavigation}
+        onFooterHeightAvailable={_height => undefined}
+      />
     ),
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},

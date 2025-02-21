@@ -1,4 +1,5 @@
 import {
+  FooterActions,
   ForceScrollDownView,
   H2,
   IOVisualCostants,
@@ -8,10 +9,9 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -33,6 +33,7 @@ import {
   selectCredentialOption,
   selectCredentialTypeOption
 } from "../../machine/credential/selectors";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -45,6 +46,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
     selectCredentialOption
   );
 
+  usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
@@ -79,7 +81,9 @@ type ContentViewProps = {
  */
 const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const dispatch = useIODispatch();
   const route = useRoute();
+
   const mixPanelCredential = useMemo(
     () => CREDENTIALS_MAP[credentialType],
     [credentialType]
@@ -89,7 +93,6 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
     trackCredentialPreview(mixPanelCredential);
   });
 
-  const dispatch = useIODispatch();
   const dismissDialog = useItwDismissalDialog(() => {
     machineRef.send({ type: "close" });
     trackItwExit({ exit_page: route.name, credential: mixPanelCredential });

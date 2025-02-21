@@ -13,7 +13,6 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
-import * as React from "react";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import {
   Alert,
@@ -25,8 +24,15 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
+import { areTwoMinElapsedFromLastActivity } from "../../features/fastLogin/store/actions/sessionRefreshActions";
+import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
+import {
+  hasTwoMinutesElapsedSinceLastActivitySelector,
+  isFastLoginEnabledSelector
+} from "../../features/fastLogin/store/selectors";
+import { useDetectSmallScreen } from "../../hooks/useDetectSmallScreen";
 import I18n from "../../i18n";
 import {
   identificationCancel,
@@ -54,12 +60,6 @@ import {
   IdentificationInstructionsComponent,
   getBiometryIconName
 } from "../../utils/identification";
-import {
-  hasTwoMinutesElapsedSinceLastActivitySelector,
-  isFastLoginEnabledSelector
-} from "../../features/fastLogin/store/selectors";
-import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
-import { areTwoMinElapsedFromLastActivity } from "../../features/fastLogin/store/actions/sessionRefreshActions";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 import { IdentificationNumberPad } from "./components/IdentificationNumberPad";
 
@@ -76,6 +76,8 @@ const IdentificationModal = () => {
   const errorStatusRef = useRef<View>(null);
   const colorScheme: ColorSchemeName = "light";
   const numberPadVariant = colorScheme ? "dark" : "light";
+
+  const { isDeviceScreenSmall } = useDetectSmallScreen();
 
   const blueColor = useAppBackgroundAccentColorName();
 
@@ -426,7 +428,7 @@ const IdentificationModal = () => {
                     variant="warning"
                   />
                 </View>
-              ) : (
+              ) : isDeviceScreenSmall && isValidatingTask ? null : (
                 <View style={IOStyles.alignCenter}>
                   <Pictogram
                     pictogramStyle="light-content"
@@ -447,12 +449,24 @@ const IdentificationModal = () => {
                 />
               </View>
             </View>
-            <VSpacer size={32} />
+            {isDeviceScreenSmall ? (
+              <VSpacer size={16} />
+            ) : (
+              <VSpacer size={32} />
+            )}
             <NumberPad />
             <View>
-              <VSpacer size={32} />
+              {isDeviceScreenSmall ? (
+                <VSpacer size={16} />
+              ) : (
+                <VSpacer size={32} />
+              )}
               <View style={IOStyles.selfCenter}>
                 <ButtonLink
+                  textAlign="center"
+                  /* Don't limit number of lines
+                    when larger text is enabled */
+                  numberOfLines={0}
                   accessibilityLabel={forgotCodeLabel}
                   color="contrast"
                   label={forgotCodeLabel}

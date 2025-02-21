@@ -5,7 +5,7 @@ import {
   ListItemTransaction
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
+import { useEffect, useCallback, Fragment } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
@@ -55,7 +55,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     }
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       pot.isSome(latestTransactionsPot) &&
       !pot.isLoading(latestTransactionsPot)
@@ -66,8 +66,8 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     }
   }, [dispatch, latestTransactionsPot]);
 
-  const handleNavigateToTransactionDetails = React.useCallback(
-    ({ eventId, isPayer }: NoticeListItem) => {
+  const handleNavigateToTransactionDetails = useCallback(
+    ({ eventId, isPayer, isCart }: NoticeListItem) => {
       if (eventId === undefined) {
         return;
       }
@@ -75,7 +75,8 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
         screen: PaymentsReceiptRoutes.PAYMENT_RECEIPT_DETAILS,
         params: {
           transactionId: eventId,
-          isPayer
+          isPayer,
+          isCart
         }
       });
     },
@@ -100,7 +101,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       return (
         <View testID="PaymentsHomeTransactionsListTestID">
           {latestTransactionsPot.value.map((latestTransaction, index) => (
-            <React.Fragment key={`transaction_${latestTransaction.eventId}`}>
+            <Fragment key={`transaction_${latestTransaction.eventId}`}>
               <ReceiptListItemTransaction
                 key={`transaction_${latestTransaction.eventId}`}
                 onPress={() =>
@@ -109,7 +110,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
                 transaction={latestTransaction}
               />
               {index < latestTransactionsPot.value.length - 1 && <Divider />}
-            </React.Fragment>
+            </Fragment>
           ))}
         </View>
       );
@@ -165,7 +166,10 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
                 type: "buttonLink",
                 componentProps: {
                   label: I18n.t("features.payments.transactions.button"),
-                  onPress: handleNavigateToTransactionList
+                  onPress: handleNavigateToTransactionList,
+                  accessibilityLabel: I18n.t(
+                    "features.payments.transactions.button"
+                  )
                 }
               }
             : undefined

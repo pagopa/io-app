@@ -35,11 +35,17 @@ import {
   TxtStrNode,
   TxtStrongNode
 } from "@textlint/ast-node-types";
-import React, { Fragment, useLayoutEffect, useState } from "react";
-import { Dimensions, Image, Text, View } from "react-native";
+import { Fragment, useLayoutEffect, useState } from "react";
+import { Dimensions, Image, Pressable, Text, View } from "react-native";
 import I18n from "../../i18n";
 import { openWebUrl } from "../../utils/url";
+import { isAndroid } from "../../utils/platform";
 import { IOMarkdownRenderRules, Renderer } from "./types";
+import {
+  extractAllLinksFromRootNode,
+  isParagraphNodeInHierarchy,
+  LinkData
+} from "./markdownRenderer";
 
 const BULLET_ITEM_FULL = "\u2022";
 const BULLET_ITEM_EMPTY = "\u25E6";
@@ -109,6 +115,35 @@ export function getTxtNodeKey(txtNode: AnyTxtNode): string {
   return `${txtNode.type}_${encoded}`;
 }
 
+export const generateAccesibilityLinkViewsIfNeeded = (
+  allLinkData: ReadonlyArray<LinkData>,
+  nodeKey: string,
+  onPress: (url: string) => void,
+  screenReaderEnabled: boolean
+) => {
+  if (allLinkData.length === 0 || isAndroid || !screenReaderEnabled) {
+    return undefined;
+  }
+  return allLinkData.map((link, index) => (
+    <Pressable
+      accessible={true}
+      accessibilityLabel={link.text}
+      accessibilityRole="link"
+      collapsable={false}
+      collapsableChildren={false}
+      style={{ height: 1 }}
+      key={`${nodeKey}_${index}`}
+      onPress={() => onPress(link.url)}
+    />
+  ));
+};
+
+export const handleOpenLink = (url: string) => {
+  openWebUrl(url, () => {
+    IOToast.error(I18n.t("global.jserror.title"));
+  });
+};
+
 /**
  * This object has as key a`TxtNodeType` and as value a render function related to the `TxtNode` element to display.
  */
@@ -119,13 +154,29 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @param render The renderer function.
    * @returns A component ranging from `H1` to `H6`, inclusive, depending on the `header.depth` value..
    */
-  Header(header: TxtHeaderNode, render: Renderer) {
+  Header(
+    header: TxtHeaderNode,
+    render: Renderer,
+    screenReaderEnabled: boolean
+  ) {
     const Heading = HEADINGS_MAP[header.depth];
 
+    const allLinkData = extractAllLinksFromRootNode(
+      header,
+      screenReaderEnabled
+    );
+    const nodeKey = getTxtNodeKey(header);
+
     return (
-      <Heading key={getTxtNodeKey(header)}>
-        {header.children.map(render)}
-      </Heading>
+      <Fragment key={nodeKey}>
+        <Heading>{header.children.map(render)}</Heading>
+        {generateAccesibilityLinkViewsIfNeeded(
+          allLinkData,
+          nodeKey,
+          handleOpenLink,
+          screenReaderEnabled
+        )}
+      </Fragment>
     );
   },
   /**
@@ -133,11 +184,38 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @param render The renderer function.
    * @returns The rendered component.
    */
-  Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
+  Paragraph(
+    paragraph: TxtParagraphNode,
+    render: Renderer,
+    screenReaderEnabled: boolean
+  ) {
+    if (
+      paragraph.children.length > 0 &&
+      paragraph.children[0].type === "Image"
+    ) {
+      return (
+        <View key={getTxtNodeKey(paragraph)} style={{ marginVertical: 16 }}>
+          {paragraph.children.map(render)}
+        </View>
+      );
+    }
+
+    const allLinkData = extractAllLinksFromRootNode(
+      paragraph,
+      screenReaderEnabled
+    );
+    const nodeKey = getTxtNodeKey(paragraph);
+
     return (
-      <Body key={getTxtNodeKey(paragraph)}>
-        {paragraph.children.map(render)}
-      </Body>
+      <Fragment key={nodeKey}>
+        <Body>{paragraph.children.map(render)}</Body>
+        {generateAccesibilityLinkViewsIfNeeded(
+          allLinkData,
+          nodeKey,
+          handleOpenLink,
+          screenReaderEnabled
+        )}
+      </Fragment>
     );
   },
   /**
@@ -178,18 +256,12 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Link(link: TxtLinkNode, render: Renderer) {
-    const handleOpenLink = () => {
-      openWebUrl(link.url, () => {
-        IOToast.error(I18n.t("global.jserror.title"));
-      });
-    };
-
     return (
       <Body
         weight="Semibold"
         asLink
         key={getTxtNodeKey(link)}
-        onPress={handleOpenLink}
+        onPress={() => handleOpenLink(link.url)}
       >
         {link.children.map(render)}
       </Body>
@@ -217,6 +289,10 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
       });
     }, [screenWidth, image.url]);
 
+    if (image.parent?.type !== "Paragraph") {
+      return null;
+    }
+
     return (
       <Image
         key={getTxtNodeKey(image)}
@@ -235,7 +311,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @param render The renderer function.
    * @returns The rendered component.
    */
-  List(list: TxtListNode, render: Renderer) {
+  List(list: TxtListNode, render: Renderer, screenReaderEnabled: boolean) {
     const isOrdered = list.ordered;
     const nestingLevel = getNodeNestingLevel(list, "List");
     const bulletItem =
@@ -250,27 +326,42 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
       return <Body>{bulletItem}</Body>;
     }
 
+    const allLinkData = extractAllLinksFromRootNode(list, screenReaderEnabled);
+    const nodeKey = getTxtNodeKey(list);
+
     return (
-      <View key={getTxtNodeKey(list)}>
-        {isFirstList && <VSpacer size={8} />}
-        <View style={IOStyles.row}>
-          {isFirstList && <HSpacer size={12} />}
-          <View
-            style={[IOStyles.flex, { flexGrow: 1 }]}
-            accessible={true}
-            accessibilityRole="list"
-          >
-            {list.children.map((child, i) => (
-              <View accessible key={`${child.type}_${i}`} style={IOStyles.row}>
-                {getLeftAdornment(i)}
-                <HSpacer size={8} />
-                {render(child)}
-              </View>
-            ))}
+      <Fragment key={nodeKey}>
+        <View>
+          {isFirstList && <VSpacer size={8} />}
+          <View style={IOStyles.row}>
+            {isFirstList && <HSpacer size={12} />}
+            <View
+              style={[IOStyles.flex, { flexGrow: 1 }]}
+              accessible={true}
+              accessibilityRole="list"
+            >
+              {list.children.map((child, i) => (
+                <View
+                  accessible
+                  key={`${child.type}_${i}`}
+                  style={IOStyles.row}
+                >
+                  {getLeftAdornment(i)}
+                  <HSpacer size={8} />
+                  {render(child)}
+                </View>
+              ))}
+            </View>
           </View>
+          {isFirstList && <VSpacer size={8} />}
         </View>
-        {isFirstList && <VSpacer size={8} />}
-      </View>
+        {generateAccesibilityLinkViewsIfNeeded(
+          allLinkData,
+          nodeKey,
+          handleOpenLink,
+          screenReaderEnabled
+        )}
+      </Fragment>
     );
   },
   /**
@@ -354,7 +445,14 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     const [, value] = val;
 
     if (value === "br") {
-      return <Fragment key={getTxtNodeKey(html)}>{"\n"}</Fragment>;
+      const hasAParentParagraphNode = isParagraphNodeInHierarchy(html.parent);
+      return hasAParentParagraphNode ? (
+        <Fragment key={getTxtNodeKey(html)}>{"\n"}</Fragment>
+      ) : (
+        <Body key={getTxtNodeKey(html)}>
+          <Fragment>{"\n"}</Fragment>
+        </Body>
+      );
     }
 
     return null;

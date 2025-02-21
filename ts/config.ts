@@ -105,6 +105,17 @@ export const cieLoginFlowWithDevServerEnabled =
 // Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
+// #region Help Center URLs
+
+/**
+ * Help Center URL for the "What to do when the session is expired" article
+ * hard-coded for now [by design]( https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33508#1129981819)
+ */
+export const helpCenterHowToDoWhenSessionIsExpiredUrl =
+  "https://assistenza.ioapp.it/hc/it/articles/32616176301713" as NonEmptyString;
+
+// #endregion
+
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
   t.Integer.decode,
@@ -150,28 +161,10 @@ export const totMessageFetchWorkers = pipe(
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";
 
-export const privacyUrl: string = pipe(
-  Config.PRIVACY_URL,
-  t.string.decode,
-  E.getOrElse(() => "https://io.italia.it/app-content/tos_privacy.html")
-);
-
 export const zendeskPrivacyUrl: string = pipe(
   Config.ZENDESK_PRIVACY_URL,
   t.string.decode,
   E.getOrElse(() => "https://www.pagopa.it/it/privacy-policy-assistenza/")
-);
-
-export const unsupportedDeviceMoreInfoUrl: string = pipe(
-  Config.UNSUPPORTED_DEVICE_MORE_INFO_URL,
-  NonEmptyString.decode,
-  E.getOrElse(() => "https://io.italia.it/app-content/unsupported_device.html")
-);
-
-export const unsupportedDeviceLearnMoreUrl: string = pipe(
-  Config.UNSUPPORTED_DEVICE_LEARN_MORE_URL,
-  NonEmptyString.decode,
-  E.getOrElse(() => "https://io.italia.it/faq/#n1_15")
 );
 
 export const cieSpidMoreInfoUrl: string = pipe(
@@ -247,13 +240,3 @@ export const itwEaaVerifierBaseUrl = Config.ITW_EAA_VERIFIER_BASE_URL;
 export const itwBypassIdentityMatch =
   Config.ITW_BYPASS_IDENTITY_MATCH === "YES";
 export const itwIdpHintTest = Config.ITW_IDP_HINT_TEST === "YES";
-export const itwIpzsPrivacyUrl: string = pipe(
-  Config.ITW_IPZS_PRIVACY_URL,
-  t.string.decode,
-  E.getOrElse(() => "https://io.italia.it/informativa-ipzs")
-);
-export const itwDocumentsOnIOUrl: string = pipe(
-  Config.ITW_DOCUMENTS_ON_IO_URL,
-  t.string.decode,
-  E.getOrElse(() => "https://io.italia.it/documenti-su-io")
-);

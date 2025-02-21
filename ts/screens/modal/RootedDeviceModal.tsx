@@ -1,19 +1,19 @@
 import {
   ButtonLink,
-  ButtonOutline,
   ContentWrapper,
   H3,
   BodySmall,
   Pictogram,
-  VSpacer
+  VSpacer,
+  ButtonSolid
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useCallback } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
+import IOMarkdown from "../../components/IOMarkdown";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
@@ -26,7 +26,7 @@ const RootedDeviceModal = () => {
   const dispatch = useDispatch();
   const navigation = useIONavigation();
 
-  const handleContinueWithRootOrJailbreak = React.useCallback(() => {
+  const handleContinueWithRootOrJailbreak = useCallback(() => {
     dispatch(continueWithRootOrJailbreak(true));
     navigation.goBack();
   }, [dispatch, navigation]);
@@ -41,7 +41,7 @@ const RootedDeviceModal = () => {
     bottomSheet: learnMoreBottomSheet
   } = useIOBottomSheetModal({
     title: I18n.t("rooted.learnMoreBottomsheet.title"),
-    component: <LegacyMarkdown>{body}</LegacyMarkdown>
+    component: <IOMarkdown content={body} />
   });
 
   return (
@@ -75,7 +75,7 @@ const RootedDeviceModal = () => {
           </View>
           <VSpacer size={24} />
           <View style={IOStyles.selfCenter}>
-            <ButtonOutline
+            <ButtonSolid
               color="danger"
               label={I18n.t("global.buttons.continue")}
               accessibilityLabel={I18n.t("global.buttons.continue")}

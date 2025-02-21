@@ -6,22 +6,23 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { PropsWithChildren, useState } from "react";
+import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import {
   PaymentCard,
   PaymentCardComponentProps
 } from "../../common/components/PaymentCard";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 type Props = {
   card: PaymentCardComponentProps;
@@ -35,15 +36,17 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   card,
   headerTitle = "",
   children
-}: React.PropsWithChildren<Props>) => {
+}: PropsWithChildren<Props>) => {
   const isDSenabled = useIOSelector(isDesignSystemEnabledSelector);
   const insets = useSafeAreaInsets();
   const translationY = useSharedValue(0);
-  const [titleHeight, setTitleHeight] = React.useState(0);
+  const [titleHeight, setTitleHeight] = useState(0);
 
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];
-  const blueHeaderColor = isDSenabled ? IOColors["blueIO-600"] : IOColors.blue;
+  const blueHeaderColor = isDSenabled
+    ? IOColors["blueIO-600"]
+    : IOColors["blue-500"];
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({
@@ -52,7 +55,6 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
     variant: "contrast",
     faqCategories: ["wallet_methods"],
     supportRequest: true,
-    transparent: true,
     scrollValues: {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
@@ -113,8 +115,8 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   blueHeader: {
-    paddingTop: "105%",
-    marginTop: "-75%",
+    marginTop: -300,
+    paddingTop: 300,
     marginBottom: "15%"
   }
 });

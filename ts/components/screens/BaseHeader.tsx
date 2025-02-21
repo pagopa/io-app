@@ -1,27 +1,36 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { FC, Ref } from "react";
+
 import {
-  View,
+  Body,
+  HSpacer,
+  Icon,
+  IconButton,
+  IOColors,
+  IOIcons,
+  IOSpacer,
+  IOStyles
+} from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
+import {
+  ComponentProps,
+  createRef,
+  FC,
+  PureComponent,
+  ReactNode,
+  Ref,
+  RefObject,
+  useCallback
+} from "react";
+import {
   AccessibilityInfo,
   ColorValue,
   StyleSheet,
-  Text
+  Text,
+  View
 } from "react-native";
 import { connect } from "react-redux";
-import {
-  IOColors,
-  IOIcons,
-  Icon,
-  IconButton,
-  HSpacer,
-  IOSpacer,
-  IOStyles,
-  Body
-} from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -80,13 +89,13 @@ interface OwnProps {
   dark?: boolean; // Used only for Icons color TODO Think to use titleColor as unique prop for icons color too
   headerTitle?: string;
   backgroundColor?: ColorValue;
-  goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
+  goBack?: ComponentProps<typeof GoBackButton>["goBack"];
   primary?: boolean; // Used only for Icons color TODO Think to use titleColor as unique prop for icons color too
   hideSafeArea?: boolean;
   appLogo?: boolean;
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
-  body?: React.ReactNode;
+  body?: ReactNode;
   isSearchAvailable?: {
     enabled: true;
     searchType?: SearchType;
@@ -98,7 +107,7 @@ interface OwnProps {
     onPress: () => void;
     accessibilityLabel: string;
   };
-  customGoBack?: React.ReactNode;
+  customGoBack?: ReactNode;
   titleColor?: IOColors;
   backButtonTestID?: string;
 }
@@ -119,8 +128,8 @@ const noReferenceTimeout = 150 as Millisecond;
  * library, please use `useHeaderSecondLevel` and configure the navigator with `headerShown`
  * set to `true`. If in doubt, please ask for help or read the available documentation.
  */
-class BaseHeaderComponent extends React.PureComponent<Props, State> {
-  private firstElementRef = React.createRef<View>();
+class BaseHeaderComponent extends PureComponent<Props, State> {
+  private firstElementRef = createRef<View>();
 
   public constructor(props: Props) {
     super(props);
@@ -182,7 +191,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         return;
       }
       setAccessibilityFocus(
-        this.firstElementRef as React.RefObject<View>,
+        this.firstElementRef as RefObject<View>,
         setAccessibilityTimeout,
         this.props.onAccessibilityNavigationHeaderFocus
       );
@@ -204,10 +213,10 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
               numberOfLines={1}
               accessible={true}
               accessibilityRole={"header"}
-              color={titleColor === "white" ? "white" : "bluegrey"}
+              color={titleColor === "white" ? "white" : "grey-700"}
             >
               {/* TODO: titleColor prop is pretty useless because
-              we have two colors: dark (bluegrey) and light (white).
+              we have two colors: dark (grey-700) and light (white).
               We don't have any color values other than these two. */}
               {l}
             </Body>
@@ -240,9 +249,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           backgroundColor
             ? backgroundColor
             : dark
-            ? IOColors.bluegrey
+            ? IOColors["grey-700"]
             : primary
-            ? IOColors.blue
+            ? IOColors["blue-500"]
             : IOColors.white
         }
       >
@@ -351,7 +360,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   private renderAppLogo = () => {
     const { primary, dark } = this.props;
 
-    const iconColor: IOColors = primary || dark ? "white" : "blue";
+    const iconColor: IOColors = primary || dark ? "white" : "blue-500";
     return (
       <View
         accessible={true}
@@ -381,7 +390,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
 const NavigationEventHandler = ({ onFocus }: { onFocus: () => void }) => {
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       onFocus();
     }, [onFocus])
   );

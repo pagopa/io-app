@@ -1,5 +1,4 @@
 import { Body, IOToast, BodySmall } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
 
@@ -19,7 +18,7 @@ const OnboardingPrivacyAdvice = (props: OnboardingPrivacyAdviceProps) => {
 
   return (
     <Body accessibilityRole="link" testID="IDPayOnboardingBeforeContinue">
-      <BodySmall weight="Regular" color={"bluegrey"}>
+      <BodySmall weight="Regular">
         {I18n.t("idpay.onboarding.beforeContinue.text1")}
       </BodySmall>
       <BodySmall
@@ -30,7 +29,7 @@ const OnboardingPrivacyAdvice = (props: OnboardingPrivacyAdviceProps) => {
       >
         {I18n.t("idpay.onboarding.beforeContinue.tosLink")}
       </BodySmall>
-      <BodySmall weight={"Regular"} color={"bluegrey"}>
+      <BodySmall weight={"Regular"}>
         {I18n.t("idpay.onboarding.beforeContinue.text2")}
       </BodySmall>
       <BodySmall

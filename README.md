@@ -46,7 +46,7 @@
   - [Main technologies used](#main-technologies-used)
   - [SPID Authentication](#spid-authentication)
   - [Deep linking](#deep-linking)
-  - [Design System](#design-system) 🚧
+  - [Design System](#design-system)
 - Appendix
   - [Internationalization](locales/README.md)
   - [End to end test](e2e/README.md)
@@ -378,7 +378,7 @@ $ bundle install
 
 # Install dependencies 
 # Run this only during the first setup and when JS dependencies change
-$ yarn install
+$ yarn && yarn setup
 
 # Install podfiles when targeting iOS (ignore this step for Android)
 # Run this only during the first setup and when Pods dependencies change
@@ -514,6 +514,9 @@ The authentication flow is as follows:
 
 ## Deep linking
 
+> [!note]
+> For an improved user experience, we recommend using the App/Universal Link `https://continua.io.pagopa.it` instead of the custom scheme `ioit://`.
+
 The application is able to manage _deep links_. [Deep linking](https://reactnavigation.org/docs/5.x/deep-linking) allows opening the app or a specific screen once a user clicks on specific URL. The URL scheme for io-app is: `ioit://`.
 <details>
     <summary>Supported URLs</summary>
@@ -524,9 +527,6 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
         </tr>
         <tr>
             <td>ioit://main/services</td>
-        </tr>
-        <tr>
-            <td>ioit://main/profile</td>
         </tr>
     </table>
     <h3>wallet</h3>
@@ -577,6 +577,26 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
 </details>
 
 ## Design System
-We have been gradually rolling out a new library of custom components since Q1 2023. This library uses the latest React Native APIs and replaces the legacy `native-base` library, which was stuck at `v2.x`.
+The entire app is built using custom components included in the external [`io-app-design-system`](https://github.com/pagopa/io-app-design-system/) library. This library uses the latest React Native APIs and is tailored to our specific needs.
 
-You can access the new library through the external [`io-app-design-system`](https://github.com/pagopa/io-app-design-system/) package.
+### Frequently Asked Questions
+
+#### Why is the app not optimized for high refresh rate devices (90-120 Hz and above)?
+
+We're committed to providing a faster and more satisfying experience for our citizens, but because we didn't build the app using fully native APIs, this goal is not easy to achieve. For iOS, we have already enabled the full range of refresh rates by setting `CADisableMinimumFrameDurationOnPhone` to `true`, as recommended by Apple [in their documentation](https://developer.apple.com/documentation/quartzcore/optimizing-promotion-refresh-rates-for-iphone-13-pro-and-ipad-pro).
+
+The perception of slowness is mainly due to the navigation architecture, which is actually handled by the `react-navigation` library. Our internal testing has shown that there's a pretty obvious difference between the default `Stack` navigation and the `NativeStack`, which uses native APIs underneath. The latter is currently only enabled in the **Design System** section, which isn't accessible to everyone because it's only visible when developer mode is enabled.
+
+#### Why is there no dark mode?
+
+We're actively developing a dark mode for the app that will be available in the coming months. The initial release will be a beta version to allow users to explore and provide feedback.
+
+You can follow the related activities by [filtering the PRs with the `Dark Mode` label](https://github.com/pagopa/io-app/pulls?q=is%3Apr+label%3A%22Dark+mode+%F0%9F%8C%9D%22)
+
+---
+
+If you want to improve the `io-app-design-system` library, feel free to contribute by opening an issue with your suggestions or by directly opening a PR. Criticism is welcome and appreciated.
+
+
+
+

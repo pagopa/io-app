@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import {
   IdPayOnboardingMachineContext,
@@ -8,6 +7,7 @@ import {
 import BoolValuePrerequisitesScreen from "../screens/BoolValuePrerequisitesScreen";
 import CompletionScreen from "../screens/CompletionScreen";
 import FailureScreen from "../screens/FailureScreen";
+import InputFormVerificationScreen from "../screens/InputFormVerificationScreen";
 import { InitiativeDetailsScreen } from "../screens/InitiativeDetailsScreen";
 import MultiValuePrerequisitesScreen from "../screens/MultiValuePrerequisitesScreen";
 import PDNDPrerequisitesScreen from "../screens/PDNDPrerequisitesScreen";
@@ -30,7 +30,7 @@ export const InnerNavigator = () => {
       initialRouteName={
         IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS
       }
-      screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
       screenListeners={{
         beforeRemove: () => {
           // Read more on https://reactnavigation.org/docs/preventing-going-back/
@@ -49,6 +49,10 @@ export const InnerNavigator = () => {
         component={BoolValuePrerequisitesScreen}
       />
       <Stack.Screen
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM}
+        component={InputFormVerificationScreen}
+      />
+      <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}
         component={MultiValuePrerequisitesScreen}
       />
@@ -64,7 +68,7 @@ export const InnerNavigator = () => {
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE}
         component={FailureScreen}
-        options={{ gestureEnabled: false }}
+        options={{ gestureEnabled: false, headerShown: false }}
       />
     </Stack.Navigator>
   );

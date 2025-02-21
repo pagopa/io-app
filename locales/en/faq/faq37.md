@@ -1,1 +1,0 @@
-You can currently add credit, debit and prepaid cards issued by American Express, Mastercard and Visa. You can also add PagoBANCOMAT cards. Additional payment methods will be supported in the coming months. Please check the detailed list of supported methods visiting the [Payment Methods](https://io.italia.it/metodi-pagamento) page on IO website.

@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
 import { IDPayDetailsRoutes } from "../../navigation";
@@ -56,7 +55,7 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
     expect(
       component.queryByTestId("IDPayDetailsLastUpdatedTestID")
     ).not.toBeNull();
-    expect(component.queryByText("Fake initiative")).not.toBeNull();
+    expect(component.getAllByText("Fake initiative")).not.toBeNull();
     expect(component.queryByText("Fake organization")).not.toBeNull();
 
     expect(
@@ -95,7 +94,7 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
       component.queryByTestId("IDPayDetailsLastUpdatedTestID")
     ).not.toBeNull();
 
-    expect(component.queryByText("Fake initiative")).not.toBeNull();
+    expect(component.getAllByText("Fake initiative")).not.toBeNull();
     expect(component.queryByText("Fake organization")).not.toBeNull();
 
     expect(
@@ -118,6 +117,32 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
         I18n.t("idpay.initiative.discountDetails.authorizeButton")
       )
     ).toBeTruthy();
+  });
+
+  it("should not render the banner missing configuration Alert for EXPENSE initiatives that have status not undefined", () => {
+    const { component } = renderComponent(
+      pot.some({
+        ...mockedInitiative,
+        initiativeRewardType: InitiativeRewardTypeEnum.EXPENSE,
+        status: StatusEnum.NOT_REFUNDABLE_ONLY_IBAN
+      })
+    );
+    expect(component).toBeTruthy();
+    expect(component).not.toBeNull();
+    expect(component.queryByTestId("missing-configuration-alert")).toBeNull();
+  });
+
+  it("should render the banner missing configuration Alert for REFUND initiatives with status not undefined", () => {
+    const { component } = renderComponent(
+      pot.some({
+        ...mockedInitiative,
+        initiativeRewardType: InitiativeRewardTypeEnum.REFUND,
+        status: StatusEnum.NOT_REFUNDABLE_ONLY_IBAN
+      })
+    );
+    expect(component).toBeTruthy();
+    expect(component).not.toBeNull();
+    expect(component.getByTestId("missing-configuration-alert")).toBeTruthy();
   });
 });
 

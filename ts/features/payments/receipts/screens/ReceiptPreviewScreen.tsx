@@ -1,9 +1,13 @@
-import * as React from "react";
+import { useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Platform, View } from "react-native";
 import Share from "react-native-share";
-
-import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
+import {
+  FooterActions,
+  FooterActionsMeasurements,
+  IOColors,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import Pdf from "react-native-pdf";
 import { RouteProp } from "@react-navigation/native";
 import { PaymentsReceiptParamsList } from "../navigation/params";
@@ -13,11 +17,8 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import I18n from "../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { RECEIPT_DOCUMENT_TYPE_PREFIX } from "../utils";
-import {
-  FooterActions,
-  FooterActionsMeasurements
-} from "../../../../components/ui/FooterActions";
 import * as analytics from "../analytics";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 export type ReceiptPreviewScreenProps = RouteProp<
   PaymentsReceiptParamsList,
@@ -26,12 +27,13 @@ export type ReceiptPreviewScreenProps = RouteProp<
 
 const ReceiptPreviewScreen = () => {
   const [footerActionsMeasurements, setfooterActionsMeasurements] =
-    React.useState<FooterActionsMeasurements>({
+    useState<FooterActionsMeasurements>({
       actionBlockHeight: 0,
       safeBottomAreaHeight: 0
     });
 
   const transactionReceiptPot = useIOSelector(walletReceiptPotSelector);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   useHeaderSecondLevel({
     title: "",
@@ -43,7 +45,12 @@ const ReceiptPreviewScreen = () => {
     if (!transactionReceiptFileInfo) {
       return;
     }
-    analytics.trackPaymentsSaveAndShareReceipt();
+    analytics.trackPaymentsSaveAndShareReceipt({
+      payment_status: "paid",
+      organization_name: paymentAnalyticsData?.receiptOrganizationName,
+      first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
+      user: paymentAnalyticsData?.receiptUser
+    });
     // The file name is normalized to remove the .pdf extension on Android devices since it's added by default to the Share module
     const normalizedFilename =
       Platform.OS === "ios"
@@ -75,18 +82,25 @@ const ReceiptPreviewScreen = () => {
           paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
         }}
       >
-        <Pdf
-          enablePaging
-          fitPolicy={0}
-          style={{
-            flexGrow: 1,
-            backgroundColor: IOColors["grey-100"]
-          }}
-          source={{
-            uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value.base64File}`,
-            cache: true
-          }}
-        />
+        <View
+          style={{ ...IOStyles.flex }}
+          accessibilityLabel={I18n.t(
+            "features.payments.transactions.receipt.a11y.preview"
+          )}
+        >
+          <Pdf
+            enablePaging
+            fitPolicy={0}
+            style={{
+              flexGrow: 1,
+              backgroundColor: IOColors["grey-100"]
+            }}
+            source={{
+              uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value.base64File}`,
+              cache: true
+            }}
+          />
+        </View>
         <FooterActions
           onMeasure={handleFooterActionsMeasurements}
           actions={{

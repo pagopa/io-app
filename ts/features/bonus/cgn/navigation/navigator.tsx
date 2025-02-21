@@ -1,6 +1,5 @@
 import { PathConfigMap } from "@react-navigation/core";
 import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
 import { AppParamsList } from "../../../../navigation/params/AppParamsList";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import CgnDetailScreen from "../screens/CgnDetailScreen";
@@ -21,7 +20,6 @@ import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWe
 import { CgnMerchantSearchScreen } from "../screens/merchants/CgnMerchantSearchScreen";
 import CgnMerchantsCategoriesSelectionScreen from "../screens/merchants/CgnMerchantsCategoriesSelectionScreen";
 import CgnMerchantsListByCategory from "../screens/merchants/CgnMerchantsListByCategory";
-import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
 import {
   CgnActivationParamsList,
   CgnDetailsParamsList,
@@ -119,10 +117,6 @@ export const CgnDetailsNavigator = () => (
       name={CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY}
       options={{ headerShown: true }}
       component={CgnMerchantsListByCategory}
-    />
-    <DetailStack.Screen
-      name={CGN_ROUTES.DETAILS.MERCHANTS.TABS}
-      component={CgnMerchantsTabsScreen}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.DETAIL}

@@ -1,11 +1,12 @@
 import { Badge, Body, H6, HSpacer } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { FunctionComponent } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
-import { getRemoteLocale } from "../../../messages/utils/messages";
+import { getRemoteLocale } from "../../../messages/utils/ctas";
 
 export type AvailableBonusItemState = "incoming" | "active" | "completed";
 
@@ -63,9 +64,7 @@ const renderBadge = (state: AvailableBonusItemState) => {
  * clicking the item user navigates to the request of the related bonus
  * @param props
  */
-export const AvailableBonusItem: React.FunctionComponent<Props> = (
-  props: Props
-) => {
+export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {
   const { bonusItem, state } = props;
   const disabledStyle = state !== "active" ? styles.disabled : {};
   const bonusTypeLocalizedContent: BonusAvailableContent =
@@ -80,7 +79,7 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
     >
       <View style={styles.columnLeft}>
         <View style={[IOStyles.row, IOStyles.alignCenter, disabledStyle]}>
-          <H6 color="bluegreyDark">{bonusTypeLocalizedContent.name}</H6>
+          <H6 color="grey-850">{bonusTypeLocalizedContent.name}</H6>
           <HSpacer size={8} />
           {renderBadge(state)}
         </View>

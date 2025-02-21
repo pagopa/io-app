@@ -8,6 +8,11 @@ import { Action } from "../../actions/types";
 import { paymentCompletedSuccess } from "../../../features/payments/checkout/store/actions/orchestration";
 import { GlobalState } from "../types";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
+import {
+  updatePaymentForMessage,
+  UpdatePaymentForMessageFailure
+} from "../../../features/messages/store/actions";
+import { isPaidPaymentFromDetailV2Enum } from "../../../utils/payment";
 
 export type PaidReason = Readonly<
   | {
@@ -44,6 +49,14 @@ export const paymentByRptIdReducer = (
           transactionId: undefined
         }
       };
+    // This action is dispatched by the payment status update saga that is triggered upon
+    // entering message details. Be aware that the status of a paid payment can never change,
+    // so there is no need to handle the removal of a no-more-paid payment from the state
+    case getType(updatePaymentForMessage.failure):
+      return paymentByRptIdStateFromUpdatePaymentForMessageFailure(
+        action.payload,
+        state
+      );
     // clear state if the current profile is different from the previous one
     case getType(differentProfileLoggedIn):
       return INITIAL_STATE;
@@ -51,6 +64,31 @@ export const paymentByRptIdReducer = (
     default:
       return state;
   }
+};
+
+const paymentByRptIdStateFromUpdatePaymentForMessageFailure = (
+  payload: UpdatePaymentForMessageFailure,
+  state: PaymentByRptIdState
+): PaymentByRptIdState => {
+  // Only paid payments are tracked from the reducer, ignore the others
+  const isPaidPayment = isPaidPaymentFromDetailV2Enum(payload.details);
+  if (!isPaidPayment) {
+    return state;
+  }
+  const rptId = payload.paymentId;
+  // Make sure not to overwrite any existing data (since it may
+  // have come from a payment flow, where data are more detailed)
+  const inMemoryPaymentData = state[rptId];
+  if (inMemoryPaymentData != null) {
+    return state;
+  }
+  // Paid payment was not tracked, add it to the reducer's state
+  return {
+    ...state,
+    [rptId]: {
+      kind: "DUPLICATED"
+    }
+  };
 };
 
 // Selectors

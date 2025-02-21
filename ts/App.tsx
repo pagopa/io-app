@@ -4,7 +4,6 @@ import {
   IOThemeContextProvider,
   ToastProvider
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
@@ -21,10 +20,6 @@ import { StatusMessages } from "./components/StatusMessages";
 export type ReactNavigationInstrumentation = ReturnType<
   typeof Sentry.reactNavigationIntegration
 >;
-
-export const navigationIntegration = Sentry.reactNavigationIntegration({
-  enableTimeToInitialDisplay: true
-});
 
 const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
   event: T
@@ -48,11 +43,15 @@ Sentry.init({
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
   },
-  integrations: integrations => [...integrations, navigationIntegration],
+  ignoreErrors: ["HTTPClientError"],
+  integrations: integrations => [
+    ...integrations,
+    Sentry.reactNativeTracingIntegration()
+  ],
   enabled: !isDevEnv,
-  // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-the-message-in-my-error-being-truncated
+  // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-message-in-my-error-being-truncated
   maxValueLength: 3000,
-  tracesSampleRate: 0.3,
+  tracesSampleRate: 0.2,
   sampleRate: 0.3
 });
 
@@ -75,9 +74,7 @@ const App = (): JSX.Element => (
                 <BottomSheetModalProvider>
                   <LightModalProvider>
                     <StatusMessages>
-                      <RootContainer
-                        routingInstumentation={navigationIntegration}
-                      />
+                      <RootContainer />
                     </StatusMessages>
                   </LightModalProvider>
                 </BottomSheetModalProvider>

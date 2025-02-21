@@ -1,1 +1,0 @@
-The password is the alphanumeric code you set when creating your SPID Digital Identity. If you don't remember it, you can select password recovery and start the related recovery procedure, managed directly by the Identity Provider.

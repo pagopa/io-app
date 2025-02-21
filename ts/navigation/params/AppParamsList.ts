@@ -1,3 +1,4 @@
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import {
   NavigatorScreenParams,
   ParamListBase,
@@ -5,9 +6,6 @@ import {
   useNavigation
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
-import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
-import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
 import {
   CgnActivationParamsList,
   CgnDetailsParamsList,
@@ -25,14 +23,14 @@ import { IdPayBarcodeRoutes } from "../../features/idpay/barcode/navigation/rout
 import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
 
+import { IdPayConfigurationParamsList } from "../../features/idpay/configuration/navigation/params";
+import { IdPayConfigurationRoutes } from "../../features/idpay/configuration/navigation/routes";
 import {
   IDPayDetailsParamsList,
   IDPayDetailsRoutes
 } from "../../features/idpay/details/navigation";
 import { IdPayOnboardingParamsList } from "../../features/idpay/onboarding/navigation/params";
 import { IdPayOnboardingRoutes } from "../../features/idpay/onboarding/navigation/routes";
-import { IdPayConfigurationParamsList } from "../../features/idpay/configuration/navigation/params";
-import { IdPayConfigurationRoutes } from "../../features/idpay/configuration/navigation/routes";
 import { IdPayPaymentParamsList } from "../../features/idpay/payment/navigation/params";
 import { IdPayPaymentRoutes } from "../../features/idpay/payment/navigation/routes";
 import { IdPayUnsubscriptionParamsList } from "../../features/idpay/unsubscription/navigation/params";
@@ -41,21 +39,23 @@ import { ItwParamsList } from "../../features/itwallet/navigation/ItwParamsList"
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
-import { NOTIFICATIONS_ROUTES } from "../../features/pushNotifications/navigation/routes";
 import { PaymentsBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
 import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
-import { PaymentsReceiptParamsList } from "../../features/payments/receipts/navigation/params";
-import { PaymentsReceiptRoutes } from "../../features/payments/receipts/navigation/routes";
 import { PaymentsCheckoutParamsList } from "../../features/payments/checkout/navigation/params";
 import { PaymentsCheckoutRoutes } from "../../features/payments/checkout/navigation/routes";
 import { PaymentsMethodDetailsParamsList } from "../../features/payments/details/navigation/params";
 import { PaymentsMethodDetailsRoutes } from "../../features/payments/details/navigation/routes";
 import { PaymentsOnboardingParamsList } from "../../features/payments/onboarding/navigation/params";
 import { PaymentsOnboardingRoutes } from "../../features/payments/onboarding/navigation/routes";
+import { PaymentsReceiptParamsList } from "../../features/payments/receipts/navigation/params";
+import { PaymentsReceiptRoutes } from "../../features/payments/receipts/navigation/routes";
+import { NOTIFICATIONS_ROUTES } from "../../features/pushNotifications/navigation/routes";
 import { ServicesParamsList } from "../../features/services/common/navigation/params";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
+import { ItwRemoteParamsList } from "../../features/itwallet/presentation/remote/navigation/ItwRemoteParamsList.ts";
+import { ITW_REMOTE_ROUTES } from "../../features/itwallet/presentation/remote/navigation/routes.ts";
 import ROUTES from "../routes";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
@@ -81,8 +81,6 @@ export type AppParamsList = {
 
   [ROUTES.BARCODE_SCAN]: undefined;
 
-  [ROUTES.GALLERY_PERMISSION_INSTRUCTIONS]: undefined;
-
   [CGN_ROUTES.ACTIVATION.MAIN]: NavigatorScreenParams<CgnActivationParamsList>;
   [CGN_ROUTES.DETAILS.MAIN]: NavigatorScreenParams<CgnDetailsParamsList>;
   [CGN_ROUTES.EYCA.ACTIVATION
@@ -90,7 +88,6 @@ export type AppParamsList = {
 
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: undefined;
   [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>;
-  [CDC_ROUTES.BONUS_REQUEST_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
   [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
 
@@ -111,6 +108,7 @@ export type AppParamsList = {
   [PaymentsReceiptRoutes.PAYMENT_RECEIPT_NAVIGATOR]: NavigatorScreenParams<PaymentsReceiptParamsList>;
 
   [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;
+  [ITW_REMOTE_ROUTES.MAIN]: NavigatorScreenParams<ItwRemoteParamsList>;
 };
 
 /**

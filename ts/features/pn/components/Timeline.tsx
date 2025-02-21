@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
 import { Caption, H6, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   rectangle: {
     flexGrow: 1,
     width: 2,
-    backgroundColor: IOColors.bluegreyLight
+    backgroundColor: IOColors["grey-200"]
   },
   dot: {
     marginVertical: 4,

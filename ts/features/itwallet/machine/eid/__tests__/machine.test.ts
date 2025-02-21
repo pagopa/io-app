@@ -40,13 +40,13 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToNfcInstructionsScreen = jest.fn();
   const navigateToCieIdLoginScreen = jest.fn();
   const storeIntegrityKeyTag = jest.fn();
+  const cleanupIntegrityKeyTag = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeEidCredential = jest.fn();
   const closeIssuance = jest.fn();
   const setWalletInstanceToOperational = jest.fn();
   const setWalletInstanceToValid = jest.fn();
   const handleSessionExpired = jest.fn();
-  const abortIdentification = jest.fn();
   const onInit = jest.fn();
 
   const createWalletInstance = jest.fn();
@@ -63,6 +63,7 @@ describe("itwEidIssuanceMachine", () => {
   const trackWalletInstanceCreation = jest.fn();
   const trackWalletInstanceRevocation = jest.fn();
   const revokeWalletInstance = jest.fn();
+  const storeAuthLevel = jest.fn();
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
@@ -82,17 +83,21 @@ describe("itwEidIssuanceMachine", () => {
       navigateToNfcInstructionsScreen,
       navigateToCieIdLoginScreen,
       storeIntegrityKeyTag,
+      cleanupIntegrityKeyTag,
       storeWalletInstanceAttestation,
       storeEidCredential,
       closeIssuance,
       setWalletInstanceToOperational,
       setWalletInstanceToValid,
       handleSessionExpired,
-      abortIdentification,
       resetWalletInstance,
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
-      onInit: assign(onInit)
+      storeAuthLevel,
+      onInit: assign(onInit),
+      setIsReissuing: assign({
+        isReissuing: true
+      })
     },
     actors: {
       createWalletInstance: fromPromise<string>(createWalletInstance),
@@ -231,6 +236,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "spid",
+        level: "L2",
         idpId: idps[0].id
       }
     });
@@ -282,6 +288,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "spid",
+        level: "L2",
         idpId: idps[0].id
       },
       authenticationContext: expect.objectContaining({
@@ -340,7 +347,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "cieId",
-        abortController: new AbortController()
+        level: "L2"
       }
     });
     expect(navigateToCieIdLoginScreen).toHaveBeenCalledTimes(1);
@@ -441,6 +448,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "ciePin",
+        level: "L3",
         pin: "12345678"
       },
       cieContext: {
@@ -532,6 +540,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "ciePin",
+        level: "L3",
         pin: "12345678"
       },
       cieContext: {
@@ -560,6 +569,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "ciePin",
+        level: "L3",
         pin: "12345678"
       },
       cieContext: {
@@ -981,5 +991,231 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(handleSessionExpired).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
+  });
+
+  it("Should obtain an eID (SPID), reissuing mode", async () => {
+    // The wallet instance and attestation already exist
+    const initialContext = {
+      ...InitialContext,
+      integrityKeyTag: T_INTEGRITY_KEY,
+      walletInstanceAttestation: T_WIA
+    };
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    // eslint-disable-next-line functional/immutable-data
+    actor.getSnapshot().context = initialContext;
+
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    actor.send({ type: "start-reissuing" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: "ModeSelection"
+    });
+
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      ...initialContext,
+      isReissuing: true
+    });
+
+    /**
+     * Choose SPID as identification mode
+     */
+
+    actor.send({ type: "select-identification-mode", mode: "spid" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        Spid: "IdpSelection"
+      }
+    });
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(navigateToIdpSelectionScreen).toHaveBeenCalledTimes(1);
+
+    /**
+     * Choose first IDP in list for SPID identification
+     */
+
+    startAuthFlow.mockImplementation(() => Promise.resolve({}));
+
+    requestEid.mockImplementation(() =>
+      Promise.resolve(ItwStoredCredentialsMocks.eid)
+    );
+
+    issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
+
+    actor.send({ type: "select-spid-idp", idp: idps[0] });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        Spid: "StartingSpidAuthFlow"
+      }
+    });
+
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      ...initialContext,
+      integrityKeyTag: T_INTEGRITY_KEY,
+      walletInstanceAttestation: T_WIA,
+      isReissuing: true,
+      identification: {
+        mode: "spid",
+        level: "L2",
+        idpId: idps[0].id
+      }
+    });
+
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+
+    await waitFor(() => expect(startAuthFlow).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        Spid: "CompletingSpidAuthFlow"
+      }
+    });
+
+    actor.send({
+      type: "user-identification-completed",
+      authRedirectUrl: "http://test.it"
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Issuance: "RequestingEid"
+    });
+
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(actor.getSnapshot().context).toMatchObject({
+      authenticationContext: {
+        callbackUrl: "http://test.it"
+      }
+    });
+    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
+
+    // EID obtained
+
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Issuance: "DisplayingPreview"
+      })
+    );
+
+    actor.send({ type: "add-to-wallet" });
+
+    expect(storeEidCredential).toHaveBeenCalledTimes(1);
+    expect(setWalletInstanceToValid).toHaveBeenCalledTimes(1);
+    expect(navigateToWallet).toHaveBeenCalledTimes(1);
+
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      ...initialContext,
+      integrityKeyTag: T_INTEGRITY_KEY,
+      walletInstanceAttestation: T_WIA,
+      isReissuing: true,
+      identification: {
+        mode: "spid",
+        level: "L2",
+        idpId: idps[0].id
+      },
+      authenticationContext: expect.objectContaining({
+        callbackUrl: "http://test.it"
+      }),
+      eid: ItwStoredCredentialsMocks.eid
+    });
+  });
+
+  it("Should go back to Idle state if isReissuing is true", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        isReissuing: true
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+
+    actor.send({ type: "back" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+  });
+
+  it("Should go back to IpzsPrivacyAcceptance state if isReissuing is false", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        isReissuing: false
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+
+    actor.send({ type: "back" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
+  });
+
+  it("should cleanup integrity key tag and fail when obtaining Wallet Instance Attestation fails", async () => {
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    /**
+     * Start eID issuance
+     */
+    actor.send({ type: "start" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+
+    /**
+     * Accept TOS and request WIA
+     */
+
+    createWalletInstance.mockImplementation(() =>
+      Promise.resolve(T_INTEGRITY_KEY)
+    );
+    getWalletAttestation.mockImplementation(() => Promise.reject({})); // Simulate failure
+    isSessionExpired.mockImplementation(() => false); // Session not expired
+
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+
+    await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
+
+    // Wallet Instance Attestation failure triggers cleanupIntegrityKeyTag
+    expect(cleanupIntegrityKeyTag).toHaveBeenCalledTimes(1);
+
+    // Check that the machine transitions to Failure state
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
   });
 });

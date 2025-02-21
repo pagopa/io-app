@@ -8,7 +8,6 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { View } from "react-native";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -81,7 +80,7 @@ const renderBadge = () => (
     <DSComponentViewerBox name={"Badge · Contrast variant"}>
       <View
         style={{
-          backgroundColor: IOColors.bluegrey,
+          backgroundColor: IOColors["grey-700"],
           padding: 16,
           borderRadius: 24,
           borderCurve: "continuous"
@@ -121,7 +120,7 @@ const renderTag = () => (
         variant="custom"
         icon={{
           name: "categTravel",
-          color: "grey"
+          color: "grey-450"
         }}
       />
     </DSComponentViewerBox>

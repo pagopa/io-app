@@ -1,21 +1,22 @@
 import {
   Avatar,
+  BodySmall,
   H2,
   HSpacer,
   IOColors,
-  BodySmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
+
+import { Fragment, ReactNode, useMemo } from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Placeholder from "rn-placeholder";
 import {
   heightPercentageToDP,
   widthPercentageToDP
 } from "react-native-responsive-screen";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Placeholder from "rn-placeholder";
 import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { BonusCardCounter } from "./BonusCardCounter";
 import { BonusCardShape } from "./BonusCardShape";
 import { BonusCardStatus } from "./BonusCardStatus";
@@ -29,10 +30,10 @@ type ContentProps = {
   logoUris?: Array<ImageURISource | number>;
   name: string;
   organizationName: string;
-  status: React.ReactNode;
+  status: ReactNode;
   counters?: ReadonlyArray<BonusCardCounter>;
-  cardFooter?: React.ReactNode;
-  cardBackground?: React.ReactNode;
+  cardFooter?: ReactNode;
+  cardBackground?: ReactNode;
 };
 
 type LoadingStateProps =
@@ -74,6 +75,7 @@ const BonusCardContent = (props: BonusCard) => {
       <VSpacer size={4} />
       <BodySmall
         weight="Regular"
+        color="blueItalia-850"
         style={{ textAlign: "center", marginHorizontal: 16 }}
       >
         {organizationName}
@@ -86,10 +88,10 @@ const BonusCardContent = (props: BonusCard) => {
           {counters.map((counter, index) => {
             const isLast = index === counters.length - 1;
             return (
-              <React.Fragment key={`${counter.label}_${index}`}>
+              <Fragment key={`${counter.label}_${index}`}>
                 <BonusCardCounter {...counter} />
                 {!isLast && <HSpacer size={16} />}
-              </React.Fragment>
+              </Fragment>
             );
           })}
         </View>
@@ -110,7 +112,7 @@ export const BonusCard = (props: BonusCard) => {
   // This will generate a new key based on isLoading state.
   // A new key will force BonusCardShape to rerender, remeasuring the layout and adapting to new
   // container size.
-  const shapeKey = React.useMemo(
+  const shapeKey = useMemo(
     () => props.isLoading && Math.random().toString(36).slice(2),
     [props.isLoading]
   );

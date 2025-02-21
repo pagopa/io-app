@@ -372,6 +372,7 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
+                          testID="settingsDiscoveryBannerCTA"
                         >
                           <View
                             style={
@@ -414,9 +415,9 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -444,8 +445,36 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Go to Settings"
                                 accessibilityRole="button"
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
                                 accessible={true}
+                                collapsable={false}
+                                focusable={true}
                                 importantForAccessibility="no-hide-descendants"
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                                 pointerEvents="none"
                               >
                                 <View
@@ -458,10 +487,10 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -497,7 +526,6 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                                 align="xMidYMid"
                                 bbHeight={80}
                                 bbWidth={80}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={80}
                                 meetOrSlice={0}
@@ -516,7 +544,6 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={80}
@@ -645,10 +672,10 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -664,15 +691,15 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"

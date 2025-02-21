@@ -2,7 +2,7 @@
  * A screen to display, by a webview, the consent to send user sensitive data
  * to backend and proceed with the onboarding process
  */
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   WebViewHttpErrorEvent,
   WebViewNavigation
@@ -24,7 +24,7 @@ import { originSchemasWhiteList } from "../originSchemasWhiteList";
 import ROUTES from "../../../navigation/routes";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -76,14 +76,11 @@ const CieConsentDataUsageScreen = () => {
       navigateToLandingScreen();
       return true;
     }
-    showAlert();
+    showAlert(navigateToLandingScreen);
     return true;
   }, [hasError, navigateToLandingScreen, showAlert]);
 
-  useHardwareBackButton(() => {
-    showAbortAlert();
-    return true;
-  });
+  useHeaderSecondLevel({ title: "", goBack: showAbortAlert });
 
   const handleWebViewError = useCallback(() => setHasError(true), []);
 

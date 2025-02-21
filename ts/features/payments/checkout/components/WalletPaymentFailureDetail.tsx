@@ -1,5 +1,5 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -11,6 +11,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { openWebUrl } from "../../../../utils/url";
 import {
   paymentAnalyticsDataSelector,
   selectOngoingPaymentHistory
@@ -29,6 +30,8 @@ type Props = {
 };
 
 const WalletPaymentFailureDetail = ({ failure }: Props) => {
+  const CHECKOUT_ASSISTANCE_ARTICLE =
+    "https://assistenza.ioapp.it/hc/it/articles/31007989155985-L-avviso-pagoPA-%C3%A8-revocato";
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const supportModal = usePaymentFailureSupportModal({ failure });
   const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
@@ -73,6 +76,12 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     });
   };
 
+  const handleDiscoverMore = () => {
+    openWebUrl(CHECKOUT_ASSISTANCE_ARTICLE, () =>
+      IOToast.error(I18n.t("genericError"))
+    );
+  };
+
   const closeAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("global.buttons.close"),
     testID: "wallet-payment-failure-close-button",
@@ -93,6 +102,16 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     subtitle: I18n.t("wallet.payment.failure.GENERIC_ERROR.subtitle"),
     action: closeAction,
     secondaryAction: contactSupportAction
+  };
+
+  const discoverMoreAction: OperationResultScreenContentProps["action"] = {
+    label: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.action"),
+    testID: "wallet-payment-failure-discover-more-button",
+    accessibilityLabel: I18n.t(
+      "wallet.payment.failure.PAYMENT_CANCELED.action"
+    ),
+    icon: "categLearning",
+    onPress: handleDiscoverMore
   };
 
   const selectOtherPaymentMethodAction: OperationResultScreenContentProps["action"] =
@@ -154,7 +173,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           title: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.title"),
           subtitle: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.subtitle"),
           action: closeAction,
-          secondaryAction: contactSupportAction
+          secondaryAction: discoverMoreAction
         };
       case "PAYMENT_DUPLICATED":
         return {

@@ -1,5 +1,5 @@
 import { constUndefined } from "fp-ts/lib/function";
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 import { createStore } from "redux";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";

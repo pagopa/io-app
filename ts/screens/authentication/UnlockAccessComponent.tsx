@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Body,
   FeatureInfo,
@@ -13,6 +12,8 @@ import { openWebUrl } from "../../utils/url";
 import ROUTES from "../../navigation/routes";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { CustomWizardScreen } from "../../components/screens/CustomWizardScreen";
+import { useIOSelector } from "../../store/hooks";
+import { absolutePortalLinksSelector } from "../../store/reducers/backendStatus/remoteConfig";
 
 // A future development will allow different actions to
 // be performed if the authentication level is L3.
@@ -24,6 +25,8 @@ export type UnlockAccessProps = {
 const UnlockAccessComponent = (props: UnlockAccessProps) => {
   const { authLevel } = props;
   const navigation = useIONavigation();
+  const absolutePortalLinks = useIOSelector(absolutePortalLinksSelector);
+
   const ModalContent = () => (
     <View testID="modal-view-test">
       <Body weight="Regular" color="grey-700">
@@ -48,7 +51,7 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
         body={I18n.t("authentication.unlockmodal.listitem2_1")}
         action={{
           label: I18n.t("authentication.unlockmodal.listitem2_2"),
-          onPress: () => openWebUrl("https://ioapp.it/")
+          onPress: () => openWebUrl(absolutePortalLinks.io_web)
         }}
       />
       <VSpacer size={16} />
@@ -109,7 +112,7 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
         primaryButton={{
           testID: "button-solid-test",
           label: I18n.t("authentication.unlock.title"),
-          onPress: () => openWebUrl("https://ioapp.it/")
+          onPress: () => openWebUrl(absolutePortalLinks.io_web)
         }}
         actionButton={{
           testID: "button-link-test",

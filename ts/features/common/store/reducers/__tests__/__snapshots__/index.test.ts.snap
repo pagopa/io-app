@@ -132,16 +132,19 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "walletInstance": {
       "attestation": undefined,
+      "status": {
+        "kind": "PotNone",
+      },
     },
   },
   "landingBanners": {
     "ITW_DISCOVERY": true,
+    "LV_EXPIRATION_REMINDER": true,
     "PUSH_NOTIFICATIONS_REMINDER": true,
     "SETTINGS_DISCOVERY": true,
   },
   "loginFeatures": {
     "cieLogin": {
-      "isCieIDFeatureEnabled": false,
       "isCieIDTourGuideEnabled": true,
       "useUat": false,
     },
@@ -167,8 +170,26 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "loginInfo": {
       "userFromSuccessLogin": false,
     },
+    "loginPreferences": {
+      "showSessionExpirationBanner": true,
+    },
     "nativeLogin": {
       "enabled": true,
+    },
+    "spidLogin": {
+      "nativeLogin": {
+        "requestInfo": {
+          "nativeAttempts": 0,
+          "requestState": "LOADING",
+        },
+      },
+      "standardLogin": {
+        "requestInfo": {
+          "requestState": {
+            "kind": "PotNoneLoading",
+          },
+        },
+      },
     },
     "testLogin": {
       "kind": "idle",

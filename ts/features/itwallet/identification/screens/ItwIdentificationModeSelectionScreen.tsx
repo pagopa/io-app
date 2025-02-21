@@ -4,7 +4,7 @@ import {
   ModuleNavigation,
   VStack
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
@@ -14,11 +14,22 @@ import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
-import { itwDisabledIdentificationMethodsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { isCIEAuthenticationSupportedSelector } from "../../machine/eid/selectors";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig";
 
-export const ItwIdentificationModeSelectionScreen = () => {
+export type ItwIdentificationModeSelectionScreenNavigationParams = {
+  eidReissuing?: boolean;
+};
+
+type ScreenProps = IOStackNavigationRouteProps<
+  ItwParamsList,
+  "ITW_IDENTIFICATION_MODE_SELECTION"
+>;
+
+export const ItwIdentificationModeSelectionScreen = (params: ScreenProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isCieAuthenticationSupported = ItwEidIssuanceMachineContext.useSelector(
     isCIEAuthenticationSupportedSelector
@@ -43,6 +54,16 @@ export const ItwIdentificationModeSelectionScreen = () => {
   const isCieSupported = useMemo(
     () => cieFlowForDevServerEnabled || isCieAuthenticationSupported,
     [isCieAuthenticationSupported]
+  );
+
+  const { eidReissuing } = params.route.params;
+
+  useFocusEffect(
+    useCallback(() => {
+      if (eidReissuing) {
+        machineRef.send({ type: "start-reissuing" });
+      }
+    }, [eidReissuing, machineRef])
   );
 
   useFocusEffect(trackItWalletIDMethod);

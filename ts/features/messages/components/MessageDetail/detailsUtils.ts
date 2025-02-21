@@ -4,7 +4,7 @@ import { trackAuthenticationStart } from "../../../fims/common/analytics";
 import { serviceByIdSelector } from "../../../services/details/store/reducers";
 import { trackCTAPressed, trackPaymentStart } from "../../analytics";
 import { CTA } from "../../types/MessageCTA";
-import { CTAActionType } from "../../utils/messages";
+import { CTAActionType } from "../../utils/ctas";
 
 export const computeAndTrackCTAPressAnalytics = (
   isFirstCTA: boolean,

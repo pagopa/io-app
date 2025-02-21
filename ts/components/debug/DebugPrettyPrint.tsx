@@ -10,7 +10,7 @@ import {
   IconButton,
   useIOToast
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { useState, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import RNFS from "react-native-fs";
 import Share from "react-native-share";
@@ -44,9 +44,9 @@ type Props = Prettify<
 export const DebugPrettyPrint = withDebugEnabled(
   ({ title, data, expandable = true, isExpanded = false }: Props) => {
     const toast = useIOToast();
-    const [expanded, setExpanded] = React.useState(isExpanded);
+    const [expanded, setExpanded] = useState(isExpanded);
 
-    const content = React.useMemo(() => {
+    const content = useMemo(() => {
       if ((expandable && !expanded) || !expandable) {
         return null;
       }
@@ -57,7 +57,7 @@ export const DebugPrettyPrint = withDebugEnabled(
             font="DMMono"
             size={12}
             lineHeight={18}
-            color="bluegrey"
+            color={"grey-700"}
             weight="Medium"
           >
             {JSON.stringify(truncateObjectStrings(data), null, 2)}

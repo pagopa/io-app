@@ -1,11 +1,10 @@
 import { H6, IOColors, BodySmall, Tag } from "@pagopa/io-app-design-system";
-import { format } from "date-fns";
-import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import CgnCardShape from "../../../../../img/features/cgn/cgn_card.svg";
 import I18n from "../../../../i18n";
+import { format } from "../../../../utils/dates";
 
 export type CgnCardProps = {
   expireDate?: Date;
@@ -52,6 +51,12 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
     </View>
   );
 
+  const accessibleExpireDate = expireDate
+    ? I18n.t("bonusCard.validUntil", {
+        endDate: format(expireDate, "MMMM, YYYY")
+      })
+    : "";
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -75,7 +80,11 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
         >
           {I18n.t("bonus.cgn.departmentName")}
         </BodySmall>
-        <BodySmall weight="Semibold" color="blueItalia-850">
+        <BodySmall
+          weight="Semibold"
+          color="blueItalia-850"
+          accessibilityLabel={accessibleExpireDate}
+        >
           {expireDate &&
             I18n.t("bonusCard.validUntil", {
               endDate: format(expireDate, "MM/YY")

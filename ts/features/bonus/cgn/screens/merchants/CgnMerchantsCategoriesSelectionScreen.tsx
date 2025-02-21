@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useCallback } from "react";
 import { View } from "react-native";
 import {
   H2,
@@ -16,6 +16,7 @@ import I18n from "../../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import CGN_ROUTES from "../../navigation/routes";
+import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CgnMerchantsListScreen from "./CgnMerchantsListScreen";
 import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
 
@@ -48,10 +49,7 @@ const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
 };
 
 const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
-  const isFocused = React.useCallback(
-    (i: number) => state.index === i,
-    [state]
-  );
+  const isFocused = useCallback((i: number) => state.index === i, [state]);
 
   return (
     <View>
@@ -73,6 +71,7 @@ const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
             tabOptions[route.name as keyof CgnMerchantsHomeTabParamsList].title;
           return (
             <TabItem
+              testID={`cgn-merchants-tab-${route.name}`}
               icon={
                 tabOptions[route.name as keyof CgnMerchantsHomeTabParamsList]
                   .icon
@@ -91,11 +90,13 @@ const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
 };
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
+  useDisableRootNavigatorGesture();
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
     secondAction: {
       icon: "search",
+      testID: "search-button",
       onPress() {
         navigate(CGN_ROUTES.DETAILS.MAIN, {
           screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH

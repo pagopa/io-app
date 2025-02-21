@@ -21,7 +21,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../common/model/RemoteValue";
-import { getRemoteLocale } from "../../features/messages/utils/messages";
+import { getRemoteLocale } from "../../features/messages/utils/ctas";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
 import { getCurrentLocale } from "../../utils/locale";

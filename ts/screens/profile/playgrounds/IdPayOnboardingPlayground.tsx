@@ -1,19 +1,19 @@
 import {
   Body,
   BodyMonospace,
+  BodySmall,
   H4,
   IOColors,
-  BodySmall,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { useState } from "react";
 import { Button, ScrollView, View } from "react-native";
 import { LabelledItem } from "../../../components/LabelledItem";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IdPayOnboardingRoutes } from "../../../features/idpay/onboarding/navigation/routes";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -22,7 +22,7 @@ import { isDevEnv } from "../../../utils/environment";
 
 const IdPayOnboardingPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const [serviceId, setServiceId] = React.useState<string | undefined>();
+  const [serviceId, setServiceId] = useState<string | undefined>();
 
   const navigateToIDPayOnboarding = (serviceId: string) => {
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
@@ -39,38 +39,41 @@ const IdPayOnboardingPlayground = () => {
     }
   };
 
+  useHeaderSecondLevel({
+    title: "Playground",
+    canGoBack: true
+  });
+
   return (
-    <BaseScreenComponent goBack={true} headerTitle={"Playground"}>
-      <ScrollView style={IOStyles.horizontalContentPadding}>
-        <LabelledItem
-          label={"Service ID"}
-          inputProps={{
-            keyboardType: "default",
-            returnKeyType: "done",
-            autoFocus: true,
-            onChangeText: text => setServiceId(text),
-            value: serviceId
-          }}
-        />
-        <VSpacer size={16} />
-        <Button onPress={handleServiceSubmit} title="Start onboarding" />
-        {isDevEnv && (
-          <>
-            <VSpacer size={24} />
-            <H4>Iniziative di test</H4>
-            <Body>Iniziative disponibili tramite io-dev-server</Body>
-            {testServices.map(srv => (
-              <TestServiceItem
-                key={srv.serviceId}
-                service={srv}
-                onPress={() => navigateToIDPayOnboarding(srv.serviceId)}
-              />
-            ))}
-          </>
-        )}
-        <VSpacer size={32} />
-      </ScrollView>
-    </BaseScreenComponent>
+    <ScrollView style={IOStyles.horizontalContentPadding}>
+      <LabelledItem
+        label={"Service ID"}
+        inputProps={{
+          keyboardType: "default",
+          returnKeyType: "done",
+          autoFocus: true,
+          onChangeText: text => setServiceId(text),
+          value: serviceId
+        }}
+      />
+      <VSpacer size={16} />
+      <Button onPress={handleServiceSubmit} title="Start onboarding" />
+      {isDevEnv && (
+        <>
+          <VSpacer size={24} />
+          <H4>Iniziative di test</H4>
+          <Body>Iniziative disponibili tramite io-dev-server</Body>
+          {testServices.map(srv => (
+            <TestServiceItem
+              key={srv.serviceId}
+              service={srv}
+              onPress={() => navigateToIDPayOnboarding(srv.serviceId)}
+            />
+          ))}
+        </>
+      )}
+      <VSpacer size={32} />
+    </ScrollView>
   );
 };
 
@@ -103,51 +106,55 @@ const testServices: ReadonlyArray<TestService> = [
   },
   {
     serviceId: "TESTSRV06",
+    label: "Iniziativa GUIDONIA"
+  },
+  {
+    serviceId: "TESTSRV07",
     label: "KO - Generico",
     willFail: true
   },
   {
-    serviceId: "TESTSRV07",
+    serviceId: "TESTSRV08",
     label: "KO - Iniziativa non iniziata",
     willFail: true
   },
   {
-    serviceId: "TESTSRV08",
+    serviceId: "TESTSRV09",
     label: "KO - Iniziativa conclusa",
     willFail: true
   },
   {
-    serviceId: "TESTSRV09",
+    serviceId: "TESTSRV10",
     label: "KO - Budget terminato",
     willFail: true
   },
   {
-    serviceId: "TESTSRV10",
+    serviceId: "TESTSRV11",
     label: "KO - Requisiti non soddisfatti",
     willFail: true
   },
   {
-    serviceId: "TESTSRV11",
+    serviceId: "TESTSRV12",
     label: "KO - Non in whitelist",
     willFail: true
   },
   {
-    serviceId: "TESTSRV12",
+    serviceId: "TESTSRV13",
     label: "KO - In valutazione",
     willFail: true
   },
   {
-    serviceId: "TESTSRV13",
+    serviceId: "TESTSRV14",
     label: "KO - Non ammissibile",
     willFail: true
   },
   {
-    serviceId: "TESTSRV14",
+    serviceId: "TESTSRV15",
     label: "KO - Utente già ammesso",
     willFail: true
   },
   {
-    serviceId: "TESTSRV15",
+    serviceId: "TESTSRV16",
     label: "KO - Recesso",
     willFail: true
   }

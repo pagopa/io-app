@@ -4,6 +4,7 @@ import {
   IOColors,
   TextInputPassword,
   TextInputValidation,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
@@ -13,7 +14,7 @@ import * as T from "fp-ts/lib/Task";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { PasswordLogin } from "../../../definitions/session_manager/PasswordLogin";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -48,24 +49,30 @@ const VersionView = () => (
   </View>
 );
 
-const LoadingView = () => (
-  <View style={IOStyles.flex}>
-    <VSpacer size={40} />
-    <ActivityIndicator
-      animating={true}
-      size={"large"}
-      color={IOColors.blue}
-      accessible={true}
-      accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
-      accessibilityLabel={I18n.t(
-        "global.accessibility.activityIndicator.label"
-      )}
-      importantForAccessibility={"no-hide-descendants"}
-      testID={"activityIndicator"}
-    />
-    <VSpacer size={40} />
-  </View>
-);
+const LoadingView = () => {
+  const theme = useIOTheme();
+
+  return (
+    <View style={IOStyles.flex}>
+      <VSpacer size={40} />
+      <ActivityIndicator
+        animating={true}
+        size={"large"}
+        color={IOColors[theme["interactiveElem-default"]]}
+        accessible={true}
+        accessibilityHint={I18n.t(
+          "global.accessibility.activityIndicator.hint"
+        )}
+        accessibilityLabel={I18n.t(
+          "global.accessibility.activityIndicator.label"
+        )}
+        importantForAccessibility={"no-hide-descendants"}
+        testID={"activityIndicator"}
+      />
+      <VSpacer size={40} />
+    </View>
+  );
+};
 
 const ErrorView = (title: string, content: string) => (
   <View style={IOStyles.flex} testID="errorView">

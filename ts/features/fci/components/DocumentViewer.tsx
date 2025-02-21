@@ -1,4 +1,5 @@
 import {
+  ButtonOutline,
   ButtonSolidProps,
   FooterActions,
   FooterActionsInline,
@@ -7,7 +8,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as S from "fp-ts/lib/string";
-import React, { useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
+
 import { StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
@@ -26,7 +28,7 @@ import LoadingComponent from "./LoadingComponent";
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors.bluegrey
+    backgroundColor: IOColors["grey-700"]
   }
 });
 
@@ -56,7 +58,7 @@ const renderFooter = (url: string, filePath: string) => {
     accessibilityLabel: I18n.t("global.buttons.share")
   };
 
-  const saveButtonProps: ButtonSolidProps = {
+  const saveButtonProps: ButtonOutline = {
     onPress: () => {
       ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
         {
@@ -104,14 +106,14 @@ type Props = {
   onError: () => void;
 };
 
-export const DocumentViewer = (props: Props): React.ReactElement => {
+export const DocumentViewer = (props: Props): ReactElement => {
   const [isError, setIsError] = useState(false);
   const documentUrl = props.documentUrl;
   const dispatch = useIODispatch();
   const fciDownloadSelector = useIOSelector(fciDownloadPreviewSelector);
   const fciDownloadPath = useIOSelector(fciDownloadPathSelector);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(fciDownloadPreview.request({ url: documentUrl }));
   }, [documentUrl, dispatch]);
 

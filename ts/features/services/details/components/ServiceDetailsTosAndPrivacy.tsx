@@ -1,11 +1,10 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import {
   Divider,
   IOStyles,
   ListItemAction,
-  ListItemHeader,
-  VSpacer
+  ListItemHeader
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
@@ -15,7 +14,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 type TosAndPrivacyListItem = {
   condition?: boolean;
-} & Omit<ListItemAction, "variant" | "accessibilityLabel">;
+} & Omit<ListItemAction, "variant">;
 
 export type ServiceDetailsTosAndPrivacyProps = {
   serviceId: ServiceId;
@@ -53,11 +52,7 @@ export const ServiceDetailsTosAndPrivacy = ({
     ({
       item: { condition, ...rest }
     }: ListRenderItemInfo<TosAndPrivacyListItem>) => (
-      <ListItemAction
-        {...rest}
-        accessibilityLabel={rest.label}
-        variant="primary"
-      />
+      <ListItemAction {...rest} variant="primary" />
     ),
     []
   );
@@ -67,21 +62,18 @@ export const ServiceDetailsTosAndPrivacy = ({
   }
 
   return (
-    <>
-      <VSpacer size={40} />
-      <FlatList
-        ListHeaderComponent={
-          <ListItemHeader
-            label={I18n.t("services.details.tosAndPrivacy.title")}
-          />
-        }
-        ItemSeparatorComponent={() => <Divider />}
-        contentContainerStyle={IOStyles.horizontalContentPadding}
-        data={filteredTosAndPrivacyListItems}
-        keyExtractor={item => item.label}
-        renderItem={renderItem}
-        scrollEnabled={false}
-      />
-    </>
+    <FlatList
+      ListHeaderComponent={
+        <ListItemHeader
+          label={I18n.t("services.details.tosAndPrivacy.title")}
+        />
+      }
+      ItemSeparatorComponent={() => <Divider />}
+      contentContainerStyle={IOStyles.horizontalContentPadding}
+      data={filteredTosAndPrivacyListItems}
+      keyExtractor={item => item.label}
+      renderItem={renderItem}
+      scrollEnabled={false}
+    />
   );
 };

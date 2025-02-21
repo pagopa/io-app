@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
+import { createRef, useMemo, useEffect, useCallback } from "react";
 import { View } from "react-native";
 import * as analytics from "../analytics";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
@@ -37,7 +37,7 @@ type Props = {
 const PAYMENTS_HOME_USER_METHODS_BACKOFF = "PAYMENTS_HOME_USER_METHODS_BACKOFF";
 
 const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
-  const bannerRef = React.createRef<View>();
+  const bannerRef = createRef<View>();
 
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
@@ -51,7 +51,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   const { canRetryRequest } = usePaymentsBackoffRetry(
     PAYMENTS_HOME_USER_METHODS_BACKOFF
   );
-  const isError = React.useMemo(
+  const isError = useMemo(
     () => pot.isError(paymentMethodsPot) && !pot.isSome(paymentMethodsPot),
     [paymentMethodsPot]
   );
@@ -67,13 +67,18 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     }
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (pot.isSome(paymentMethodsPot) && !pot.isLoading(paymentMethodsPot)) {
       dispatch(clearPaymentsBackoffRetry(PAYMENTS_HOME_USER_METHODS_BACKOFF));
     }
   }, [dispatch, paymentMethodsPot]);
 
-  const handleOnMethodPress = (walletId: string) => () => {
+  const handleOnMethodPress = (walletId: string, isExpired: boolean) => () => {
+    analytics.trackPaymentWalletMethodDetail({
+      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      payment_method_status: isExpired ? "invalid" : "valid"
+    });
+
     navigation.navigate(
       PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
       {
@@ -98,7 +103,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     });
   };
 
-  const handleOnRetry = React.useCallback(() => {
+  const handleOnRetry = useCallback(() => {
     if (canRetryRequest()) {
       dispatch(getPaymentsWalletUserMethods.request());
     }
@@ -107,11 +112,14 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   const userMethods = paymentMethods.map(
     (method: WalletInfo): PaymentCardSmallProps => ({
       ...getPaymentCardPropsFromWalletInfo(method),
-      onPress: handleOnMethodPress(method.walletId)
+      onPress: handleOnMethodPress(
+        method.walletId,
+        getPaymentCardPropsFromWalletInfo(method)?.isExpired ?? false
+      )
     })
   );
 
-  const PaymentCardsCarouselContent = React.useMemo(
+  const PaymentCardsCarouselContent = useMemo(
     () =>
       isError ? (
         <BannerErrorState
@@ -167,7 +175,8 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
                 type: "buttonLink",
                 componentProps: {
                   label: I18n.t("features.payments.methods.button"),
-                  onPress: handleOnAddMethodPress
+                  onPress: handleOnAddMethodPress,
+                  accessibilityLabel: I18n.t("features.payments.methods.button")
                 }
               }
             : undefined

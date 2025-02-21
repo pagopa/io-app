@@ -1,6 +1,5 @@
 import Clipboard from "@react-native-clipboard/clipboard";
 import { fireEvent, render } from "@testing-library/react-native";
-import React from "react";
 import {
   OriginEnum,
   PaymentMethodEnum
@@ -40,7 +39,11 @@ describe("ReceiptInfoSection", () => {
 
   it("renders transaction information correctly when transaction data is provided", () => {
     const { getByText } = render(
-      <ReceiptInfoSection transaction={mockTransaction} loading={false} />
+      <ReceiptInfoSection
+        transaction={mockTransaction}
+        loading={false}
+        showUnavailableReceiptBanner
+      />
     );
 
     // Payer Info

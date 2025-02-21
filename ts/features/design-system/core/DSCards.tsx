@@ -7,7 +7,7 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useState } from "react";
 import { Alert, Pressable, ScrollView } from "react-native";
 import { CgnCard } from "../../bonus/cgn/components/CgnCard";
 import { IdPayCard } from "../../idpay/wallet/components/IdPayCard";
@@ -378,6 +378,12 @@ const ItwCards = () => (
             status="jwtExpiring"
           />
         </DSComponentViewerBox>
+        <DSComponentViewerBox name="Unknown Status">
+          <ItwCredentialCard
+            credentialType={CredentialType.DRIVING_LICENSE}
+            status="unknown"
+          />
+        </DSComponentViewerBox>
       </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="Skeumorphic Driving License">
@@ -407,6 +413,12 @@ const ItwCards = () => (
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
             status="expiring"
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Unknown Status">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
+            status="unknown"
           />
         </DSComponentViewerBox>
       </VStack>
@@ -440,13 +452,19 @@ const ItwCards = () => (
             status="expiring"
           />
         </DSComponentViewerBox>
+        <DSComponentViewerBox name="Unknown Status">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+            status="unknown"
+          />
+        </DSComponentViewerBox>
       </VStack>
     </DesignSystemSection>
   </VStack>
 );
 
 const ItwSkeumorphicCardPreview = (props: ItwSkeumorphicCardProps) => {
-  const [isFlipped, setIsFlipped] = React.useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
   return (
     <Pressable
       onPress={() => setIsFlipped(!isFlipped)}
@@ -461,7 +479,7 @@ const ItwSkeumorphicCardPreview = (props: ItwSkeumorphicCardProps) => {
 // for testing reasons, abi codes can be found here:
 // https://www.comuniecitta.it/elenco-banche-per-codice-abi
 export const DSCards = () => {
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = useState(0);
 
   return (
     <DesignSystemScreen title={"Cards"} noMargin={true}>

@@ -1,29 +1,24 @@
-import {
-  ContentWrapper,
-  FooterActions,
-  ForceScrollDownView,
-  H1,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import * as React from "react";
-import { StyleSheet } from "react-native";
+import { ContentWrapper, H1, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import { StyleSheet } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import ItwMarkdown from "../../common/components/ItwMarkdown";
-import { selectIsLoading } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { tosConfigSelector } from "../../../tos/store/selectors";
 import {
   trackItWalletActivationStart,
   trackItWalletIntroScreen,
   trackOpenItwTos
 } from "../../analytics";
-import { useIOSelector } from "../../../../store/hooks";
-import { isItwActivationDisabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { tosConfigSelector } from "../../../tos/store/selectors";
+import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig";
+import { selectIsLoading } from "../../machine/eid/selectors";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
+import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
+import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -36,7 +31,7 @@ const ItwDiscoveryInfoScreen = () => {
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const itwActivationDisabled = useIOSelector(isItwActivationDisabledSelector);
+  const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const tosConfig = useIOSelector(tosConfigSelector);
   const privacyAndTosUrl = tosConfig.tos_url;
 
@@ -56,7 +51,19 @@ const ItwDiscoveryInfoScreen = () => {
   });
 
   return (
-    <ForceScrollDownView threshold={50}>
+    <IOScrollView
+      includeContentMargins={false}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          loading: isLoading,
+          disabled: itwActivationDisabled,
+          label: I18n.t("global.buttons.continue"),
+          accessibilityLabel: I18n.t("global.buttons.continue"),
+          onPress: handleContinuePress
+        }
+      }}
+    >
       <AnimatedImage
         source={require("../../../../../img/features/itWallet/discovery/itw_hero.png")}
         style={styles.hero}
@@ -65,32 +72,16 @@ const ItwDiscoveryInfoScreen = () => {
       <ContentWrapper>
         <H1>{I18n.t("features.itWallet.discovery.title")}</H1>
         <VSpacer size={24} />
-        <ItwMarkdown>
-          {I18n.t("features.itWallet.discovery.content")}
-        </ItwMarkdown>
-        <ItwMarkdown
-          styles={{ body: { fontSize: 14 } }}
-          onLinkOpen={trackOpenItwTos}
-        >
-          {I18n.t("features.itWallet.discovery.tos", {
+        <IOMarkdown content={I18n.t("features.itWallet.discovery.content")} />
+        <VSpacer size={24} />
+        <IOMarkdown
+          content={I18n.t("features.itWallet.discovery.tos", {
             privacyAndTosUrl
           })}
-        </ItwMarkdown>
+          rules={generateLinkRuleWithCallback(trackOpenItwTos)}
+        />
       </ContentWrapper>
-      <FooterActions
-        fixed={false}
-        actions={{
-          type: "SingleButton",
-          primary: {
-            loading: isLoading,
-            disabled: itwActivationDisabled,
-            label: I18n.t("global.buttons.continue"),
-            accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: handleContinuePress
-          }
-        }}
-      />
-    </ForceScrollDownView>
+    </IOScrollView>
   );
 };
 

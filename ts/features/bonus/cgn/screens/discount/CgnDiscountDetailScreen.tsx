@@ -8,7 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { LayoutChangeEvent, Platform, StyleSheet, View } from "react-native";
 import Animated, {
   Easing,
@@ -64,7 +64,7 @@ const CgnDiscountDetailScreen = () => {
     ? merchantDetailsRemoteValue.value
     : undefined;
 
-  const [titleHeight, setTitleHeight] = React.useState(0);
+  const [titleHeight, setTitleHeight] = useState(0);
   const translationY = useSharedValue(0);
   const gradientOpacity = useSharedValue(1);
   const insets = useSafeAreaInsets();
@@ -74,14 +74,14 @@ const CgnDiscountDetailScreen = () => {
   const discountOtp = useIOSelector(cgnOtpDataSelector);
   const discountCode = useIOSelector(cgnSelectedDiscountCodeSelector);
   const profile = pot.toUndefined(useIOSelector(profileSelector));
-  const cgnUserAgeRange = React.useMemo(
+  const cgnUserAgeRange = useMemo(
     () => getCgnUserAgeRange(profile?.date_of_birth),
     [profile]
   );
 
   const loading = isLoading(bucketResponse) || isLoading(discountOtp);
 
-  const mixpanelCgnEvent = React.useCallback(
+  const mixpanelCgnEvent = useCallback(
     (eventName: string) =>
       void mixpanelTrack(eventName, {
         userAge: cgnUserAgeRange,
@@ -110,7 +110,7 @@ const CgnDiscountDetailScreen = () => {
     })
   }));
 
-  const gradientAreaHeight: number = React.useMemo(
+  const gradientAreaHeight: number = useMemo(
     () =>
       endMargins.screenEndSafeArea + buttonSolidHeight + gradientSafeAreaHeight,
     [endMargins]
@@ -191,18 +191,22 @@ const CgnDiscountDetailScreen = () => {
     }
   };
 
+  const { backgroundColor } = discountDetails?.isNew
+    ? styles.backgroundNewItem
+    : styles.backgroundDefault;
+
   useHeaderSecondLevel({
     title: discountDetails?.name || "",
     scrollValues: {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
     },
-    transparent: true,
+    backgroundColor,
     canGoBack: true,
     supportRequest: true
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(resetMerchantDiscountCode());
     dispatch(resetOtpState());
   }, [dispatch]);
@@ -249,23 +253,18 @@ const CgnDiscountDetailScreen = () => {
     );
   };
 
-  const discountColor = discountDetails?.isNew
-    ? styles.backgroundNewItem
-    : styles.backgroundDefault;
-
   if (discountDetails && merchantDetails) {
     return (
       <>
         <Animated.ScrollView
-          style={{ flexGrow: 1, backgroundColor: IOColors.white }}
+          style={{ flexGrow: 1 }}
           onScroll={scrollHandler}
           scrollEventThrottle={8}
           snapToOffsets={[0, titleHeight]}
           snapToEnd={false}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: gradientAreaHeight,
-            backgroundColor: IOColors.white
+            paddingBottom: gradientAreaHeight
           }}
         >
           {Platform.OS === "ios" && (
@@ -273,7 +272,7 @@ const CgnDiscountDetailScreen = () => {
               style={{
                 position: "absolute",
                 height: 1000,
-                backgroundColor: discountColor.backgroundColor,
+                backgroundColor,
                 top: -1000,
                 right: 0,
                 left: 0

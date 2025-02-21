@@ -1,5 +1,5 @@
 import { Divider, IOColors } from "@pagopa/io-app-design-system";
-import React, { useCallback, useMemo } from "react";
+import { forwardRef, useCallback, useMemo } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
 import {
   useSafeAreaFrame,
@@ -20,9 +20,9 @@ import {
 import { UIMessage } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
 import {
-  MessageListItemSkeleton,
+  ListItemMessageSkeleton,
   SkeletonHeight
-} from "./DS/MessageListItemSkeleton";
+} from "./DS/ListItemMessageSkeleton";
 import { EmptyList } from "./EmptyList";
 import { Footer } from "./Footer";
 import {
@@ -32,7 +32,7 @@ import {
   LayoutInfo,
   trackMessageListEndReachedIfAllowed
 } from "./homeUtils";
-import { WrappedMessageListItem } from "./WrappedMessageListItem";
+import { WrappedListItemMessage } from "./WrappedListItemMessage";
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -47,7 +47,7 @@ type MessageListProps = {
 const topBarHeight = 108;
 const bottomTabHeight = 54;
 
-export const MessageList = React.forwardRef<FlatList, MessageListProps>(
+export const MessageList = forwardRef<FlatList, MessageListProps>(
   ({ category }: MessageListProps, ref) => {
     const store = useIOStore();
     const dispatch = useIODispatch();
@@ -127,13 +127,13 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         renderItem={({ index, item }) => {
           if (typeof item === "number") {
             return (
-              <MessageListItemSkeleton
+              <ListItemMessageSkeleton
                 accessibilityLabel={I18n.t("messages.loading")}
               />
             );
           } else {
             return (
-              <WrappedMessageListItem
+              <WrappedListItemMessage
                 index={index}
                 message={item}
                 source={category}

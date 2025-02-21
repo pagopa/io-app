@@ -1,6 +1,7 @@
 import {
   IOColors,
   IconButton,
+  LoadingSpinner,
   TabItem,
   TabNavigation
 } from "@pagopa/io-app-design-system";
@@ -10,7 +11,14 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import React from "react";
+
+import {
+  ComponentProps,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
 import { AppState, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
@@ -50,6 +58,7 @@ import {
   trackBarcodeScanTorch,
   trackZendeskSupport
 } from "../analytics";
+import { useCameraPermissionStatus } from "../hooks/useCameraPermissionStatus";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
 import {
   IOBarcode,
@@ -134,7 +143,7 @@ const BarcodeScanBaseScreenComponent = ({
 
   const currentScreenName = useIOSelector(currentRouteSelector);
 
-  const [isAppInBackground, setIsAppInBackground] = React.useState(
+  const [isAppInBackground, setIsAppInBackground] = useState(
     AppState.currentState !== "active"
   );
 
@@ -150,7 +159,7 @@ const BarcodeScanBaseScreenComponent = ({
    *
    * @returns {void}
    */
-  React.useEffect(() => {
+  useEffect(() => {
     const subscription = AppState.addEventListener("change", nextAppState => {
       setIsAppInBackground(nextAppState !== "active");
     });
@@ -161,7 +170,7 @@ const BarcodeScanBaseScreenComponent = ({
   }, []);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       trackBarcodeScanScreenView(barcodeAnalyticsFlow);
     }, [barcodeAnalyticsFlow])
   );
@@ -179,9 +188,12 @@ const BarcodeScanBaseScreenComponent = ({
               contextualHelp,
               contextualHelpMarkdown,
               startingRoute: currentScreenName,
-              assistanceForPayment: false,
-              assistanceForCard: false,
-              assistanceForFci: false
+              assistanceType: {
+                payment: false,
+                card: false,
+                fci: false,
+                itWallet: false
+              }
             })
           );
         };
@@ -199,21 +211,20 @@ const BarcodeScanBaseScreenComponent = ({
   };
 
   const {
-    cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
-    openCameraSettings,
-    hasTorch,
-    isTorchOn,
-    toggleTorch
-  } = useIOBarcodeCameraScanner({
-    onBarcodeSuccess,
-    onBarcodeError,
-    barcodeFormats,
-    barcodeTypes,
-    isDisabled: isAppInBackground || !isFocused || isDisabled,
-    isLoading
-  });
+    openCameraSettings
+  } = useCameraPermissionStatus();
+
+  const { cameraComponent, hasTorch, isTorchOn, toggleTorch } =
+    useIOBarcodeCameraScanner({
+      onBarcodeSuccess,
+      onBarcodeError,
+      barcodeFormats,
+      barcodeTypes,
+      isDisabled: isAppInBackground || !isFocused || isDisabled,
+      isLoading
+    });
 
   const customGoBack = (
     <IconButton
@@ -224,12 +235,7 @@ const BarcodeScanBaseScreenComponent = ({
     />
   );
 
-  const openAppSetting = React.useCallback(async () => {
-    // Open the custom settings if the app has one
-    await openCameraSettings();
-  }, [openCameraSettings]);
-
-  const cameraView = React.useMemo(() => {
+  const cameraView = useMemo(() => {
     if (cameraPermissionStatus === "granted") {
       return cameraComponent;
     }
@@ -256,26 +262,30 @@ const BarcodeScanBaseScreenComponent = ({
       );
     }
 
-    trackBarcodeCameraAuthorizationDenied();
+    if (cameraPermissionStatus === "denied") {
+      trackBarcodeCameraAuthorizationDenied();
 
-    return (
-      <CameraPermissionView
-        pictogram="cameraDenied"
-        title={I18n.t("barcodeScan.permissions.denied.title")}
-        body={I18n.t("barcodeScan.permissions.denied.label")}
-        action={{
-          label: I18n.t("barcodeScan.permissions.denied.action"),
-          accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
-          onPress: async () => {
-            trackBarcodeCameraAuthorizedFromSettings();
-            await openAppSetting();
-          }
-        }}
-      />
-    );
+      return (
+        <CameraPermissionView
+          pictogram="cameraDenied"
+          title={I18n.t("barcodeScan.permissions.denied.title")}
+          body={I18n.t("barcodeScan.permissions.denied.label")}
+          action={{
+            label: I18n.t("barcodeScan.permissions.denied.action"),
+            accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
+            onPress: () => {
+              trackBarcodeCameraAuthorizedFromSettings();
+              openCameraSettings();
+            }
+          }}
+        />
+      );
+    }
+
+    return <LoadingSpinner size={76} color="white" />;
   }, [
     cameraPermissionStatus,
-    openAppSetting,
+    openCameraSettings,
     cameraComponent,
     requestCameraPermission
   ]);
@@ -288,15 +298,14 @@ const BarcodeScanBaseScreenComponent = ({
   const shouldDisplayTorchButton =
     cameraPermissionStatus === "granted" && hasTorch;
 
-  const torchIconButton: React.ComponentProps<
-    typeof BaseHeader
-  >["customRightIcon"] = {
-    iconName: isTorchOn ? "lightFilled" : "light",
-    accessibilityLabel: isTorchOn
-      ? I18n.t("accessibility.buttons.torch.turnOff")
-      : I18n.t("accessibility.buttons.torch.turnOn"),
-    onPress: handleTorchToggle
-  };
+  const torchIconButton: ComponentProps<typeof BaseHeader>["customRightIcon"] =
+    {
+      iconName: isTorchOn ? "lightFilled" : "light",
+      accessibilityLabel: isTorchOn
+        ? I18n.t("accessibility.buttons.torch.turnOff")
+        : I18n.t("accessibility.buttons.torch.turnOn"),
+      onPress: handleTorchToggle
+    };
 
   return (
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>

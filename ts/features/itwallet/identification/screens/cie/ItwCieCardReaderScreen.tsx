@@ -10,7 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
-import React, { memo, useCallback, useRef, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   Platform,
@@ -50,6 +50,7 @@ import {
   trackItWalletErrorCardReading
 } from "../../../analytics";
 import * as Cie from "../../components/cie";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
@@ -173,7 +174,9 @@ export const ItwCieCardReaderScreen = () => {
   const blueColorName = useInteractiveElementDefaultColorName();
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
-  const handleCancel = () => machineRef.send({ type: "close" });
+  const dismissalDialog = useItwDismissalDialog(() =>
+    machineRef.send({ type: "close" })
+  );
 
   const handleAccessibilityAnnouncement = (
     event: Cie.CieEvent | Cie.CieError
@@ -258,7 +261,7 @@ export const ItwCieCardReaderScreen = () => {
       <View>
         <ButtonLink
           label={I18n.t("global.buttons.close")}
-          onPress={handleCancel}
+          onPress={dismissalDialog.show}
         />
       </View>
     </View>

@@ -3,17 +3,18 @@ import {
   TabItem,
   TabNavigation
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackWalletCategoryFilter } from "../../itwallet/analytics";
 import { walletSetCategoryFilter } from "../store/actions/preferences";
 import {
-  selectWalletCategories,
+  isWalletCategoryFilteringEnabledSelector,
   selectWalletCategoryFilter
 } from "../store/selectors";
 import { walletCardCategoryFilters } from "../types";
+import { useDebugInfo } from "../../../hooks/useDebugInfo";
 
 /**
  * Renders filter tabs to categorize cards on the wallet home screen.
@@ -23,18 +24,27 @@ import { walletCardCategoryFilters } from "../types";
 const WalletCategoryFilterTabs = () => {
   const dispatch = useIODispatch();
 
-  const selectedCategory = useIOSelector(selectWalletCategoryFilter);
-  const categories = useIOSelector(selectWalletCategories);
-
-  const selectedIndex = React.useMemo(
-    () =>
-      selectedCategory
-        ? walletCardCategoryFilters.indexOf(selectedCategory) + 1
-        : 0,
-    [selectedCategory]
+  const categoryFilter = useIOSelector(selectWalletCategoryFilter);
+  const isFilteringEnabled = useIOSelector(
+    isWalletCategoryFilteringEnabledSelector
   );
 
-  if (categories.size <= 1) {
+  useDebugInfo({
+    wallet: {
+      isFilteringEnabled,
+      categoryFilter
+    }
+  });
+
+  const selectedIndex = useMemo(
+    () =>
+      categoryFilter
+        ? walletCardCategoryFilters.indexOf(categoryFilter) + 1
+        : 0,
+    [categoryFilter]
+  );
+
+  if (!isFilteringEnabled) {
     return null;
   }
 

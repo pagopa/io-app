@@ -6,22 +6,33 @@ import { assert } from "../../../../utils/assert";
 import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils";
 import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
 import { itwIntegritySetServiceIsReady } from "../../issuance/store/actions";
+import { getNetworkError } from "../../../../utils/errors";
+import { trackItwStatusWalletAttestationFailure } from "../../analytics";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
 export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
   const sessionToken = yield* select(sessionTokenSelector);
   assert(sessionToken, "Missing session token");
 
-  const walletInstanceStatus = yield* call(
-    getWalletInstanceStatus,
-    integrityKeyTag,
-    sessionToken
-  );
+  try {
+    const walletInstanceStatus = yield* call(
+      getWalletInstanceStatus,
+      integrityKeyTag,
+      sessionToken
+    );
 
-  if (walletInstanceStatus.is_revoked) {
-    yield* call(handleWalletInstanceResetSaga);
+    if (walletInstanceStatus.is_revoked) {
+      yield* call(handleWalletInstanceResetSaga);
+      trackItwStatusWalletAttestationFailure();
+    }
+
+    // Update wallet instance status
+    yield* put(itwUpdateWalletInstanceStatus.success(walletInstanceStatus));
+  } catch (e) {
+    yield* put(itwUpdateWalletInstanceStatus.failure(getNetworkError(e)));
   }
 }
 

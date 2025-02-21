@@ -1,13 +1,14 @@
-import { H3, VStack } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import { useState } from "react";
+import { View } from "react-native";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
+import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ItwPresentationCredentialCardFlipButton } from "../../presentation/components/ItwPresentationCredentialCardFlipButton";
-import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
 
 const credentialsWithCard: ReadonlyArray<string> = [
   "MDL",
@@ -15,20 +16,21 @@ const credentialsWithCard: ReadonlyArray<string> = [
 ];
 
 export const ItwSkeumorphicCredentialSection = () => (
-  <VStack space={16}>
-    <H3>{"Skeumorphic credential card"}</H3>
-
-    {Object.values(ItwStoredCredentialsMocks)
-      .filter(({ credentialType }) =>
-        credentialsWithCard.includes(credentialType)
-      )
-      .map(credential => (
-        <ItwSkeumorphicCredentialItem
-          key={credential.credentialType}
-          credential={credential}
-        />
-      ))}
-  </VStack>
+  <View>
+    <ListItemHeader label="Skeumorphic credential card" />
+    <VStack space={16}>
+      {Object.values(ItwStoredCredentialsMocks)
+        .filter(({ credentialType }) =>
+          credentialsWithCard.includes(credentialType)
+        )
+        .map(credential => (
+          <ItwSkeumorphicCredentialItem
+            key={credential.credentialType}
+            credential={credential}
+          />
+        ))}
+    </VStack>
+  </View>
 );
 
 const ItwSkeumorphicCredentialItem = ({
@@ -37,7 +39,7 @@ const ItwSkeumorphicCredentialItem = ({
   credential: StoredCredential;
 }) => {
   const navigation = useIONavigation();
-  const [isFlipped, setFlipped] = React.useState(false);
+  const [isFlipped, setFlipped] = useState(false);
   const { status = "valid" } = getCredentialStatusObject(credential);
 
   const handleOnPress = () => {

@@ -1,6 +1,10 @@
-import { render } from "@testing-library/react-native";
-import React from "react";
+import { createStore } from "redux";
 import IOMarkdown from "../IOMarkdown";
+import { appReducer } from "../../store/reducers";
+import { applicationChangeState } from "../../store/actions/application";
+import { preferencesDesignSystemSetEnabled } from "../../store/actions/persistedPreferences";
+import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
+import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 
 const markdownString: string = `
 # Main Title
@@ -29,8 +33,23 @@ Here is a code block:
 
 describe("IOMarkdown", () => {
   it("Should match snapshot", () => {
-    const component = render(<IOMarkdown content={markdownString} />);
-
+    const component = renderComponent(markdownString);
     expect(component).toMatchSnapshot();
   });
 });
+
+const renderComponent = (markdown: string) => {
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  const designSystemState = appReducer(
+    initialState,
+    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
+  );
+  const store = createStore(appReducer, designSystemState as any);
+
+  return renderScreenWithNavigationStoreContext(
+    () => <IOMarkdown content={markdown} />,
+    MESSAGES_ROUTES.MESSAGE_DETAIL,
+    {},
+    store
+  );
+};

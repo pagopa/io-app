@@ -5,7 +5,6 @@ import {
   IOToast
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
@@ -18,15 +17,13 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import {
-  barcodesScannerConfigSelector,
-  isIdPayEnabledSelector
-} from "../../../store/reducers/backendStatus/remoteConfig";
+import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
 import { PaymentsCheckoutRoutes } from "../../payments/checkout/navigation/routes";
 import * as analytics from "../analytics";
+import * as paymentsAnalytics from "../../payments/home/analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import {
@@ -44,11 +41,15 @@ import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes"
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
+import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
+import { isIdPayLocallyEnabledSelector } from "../../../store/reducers/persistedPreferences.ts";
+import { ITW_REMOTE_ROUTES } from "../../itwallet/presentation/remote/navigation/routes.ts";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
-  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
@@ -153,6 +154,12 @@ const BarcodeScanScreen = () => {
           }
         });
         break;
+      case "ITW_REMOTE":
+        navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
+          screen: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
+          params: barcode.itwRemoteRequestPayload
+        });
+        break;
     }
   };
 
@@ -181,6 +188,10 @@ const BarcodeScanScreen = () => {
 
   const handlePagoPACodeInput = () => {
     manualInputModal.dismiss();
+    paymentsAnalytics.trackPaymentStartDataEntry({
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length ?? 0
+    });
     navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
       screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER
     });

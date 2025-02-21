@@ -1,4 +1,4 @@
-import * as React from "react";
+import { PureComponent } from "react";
 import { View, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class ItemSeparatorComponent extends React.PureComponent<Props> {
+export default class ItemSeparatorComponent extends PureComponent<Props> {
   public render() {
     return (
       <View

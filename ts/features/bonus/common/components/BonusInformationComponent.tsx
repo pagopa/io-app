@@ -13,8 +13,7 @@ import {
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { ComponentProps } from "react";
+import { ComponentProps, useContext, useMemo } from "react";
 import { Image } from "react-native";
 import Animated, {
   Easing,
@@ -26,14 +25,13 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
-import { Markdown } from "../../../../components/ui/Markdown/Markdown";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
 import { maybeNotNullyString } from "../../../../utils/strings";
-import { getRemoteLocale } from "../../../messages/utils/messages";
+import { getRemoteLocale } from "../../../messages/utils/ctas";
 import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
@@ -53,24 +51,6 @@ type Props = OwnProps &
     "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
 
-const CSS_STYLE = `
-body {
-  font-size: ${customVariables.fontSizeBase}px;
-  color: ${customVariables.textColorDark}
-}
-
-h4 {
-  font-size: ${customVariables.fontSize2}px;
-}
-
-img {
-  width: 100%;
-}
-`;
-
-// for long content markdown computed height should be not enough
-const extraMarkdownBodyHeight = 20;
-
 const getTosFooter = (
   maybeBonusTos: O.Option<string>,
   maybeRegulationUrl: O.Option<{ url: string; name: string }>,
@@ -89,7 +69,7 @@ const getTosFooter = (
               // if tos is defined and the regolation url is not defined
               // return the link (BONUS VACANZE)
               <>
-                <Body color="bluegreyDark">
+                <Body color="grey-850">
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </Body>
                 <Body
@@ -105,16 +85,13 @@ const getTosFooter = (
             // if tos and regulation url is defined
             // return a markdown footer including both links reference (BPD)
             rU => (
-              <Markdown
-                cssStyle={CSS_STYLE}
-                extraBodyHeight={extraMarkdownBodyHeight}
-              >
-                {I18n.t("bonus.termsAndConditionFooter", {
+              <IOMarkdown
+                content={I18n.t("bonus.termsAndConditionFooter", {
                   ctaText,
                   regulationLink: rU.url,
                   tosUrl: bT
                 })}
-              </Markdown>
+              />
             )
           )
         )
@@ -132,7 +109,7 @@ const spaceBetweenActions: IOSpacer = 24;
  * A screen to explain how the bonus activation works and how it will be assigned
  */
 const BonusInformationComponent = (props: Props) => {
-  const { showModal, hideModal } = React.useContext(LightModalContext);
+  const { showModal, hideModal } = useContext(LightModalContext);
   const bonusType = props.bonus;
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusType[getRemoteLocale()];
@@ -141,7 +118,7 @@ const BonusInformationComponent = (props: Props) => {
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
 
-  const bottomMargin: number = React.useMemo(
+  const bottomMargin: number = useMemo(
     () =>
       safeAreaInsets.bottom === 0
         ? IOVisualCostants.appMarginDefault
@@ -155,12 +132,12 @@ const BonusInformationComponent = (props: Props) => {
     ? buttonSolidHeight * 2
     : buttonSolidHeight;
 
-  const safeBottomAreaHeight: number = React.useMemo(
+  const safeBottomAreaHeight: number = useMemo(
     () => bottomMargin + buttonsSolidHeight + contentEndMargin,
     [bottomMargin, buttonsSolidHeight]
   );
 
-  const gradientAreaHeight: number = React.useMemo(
+  const gradientAreaHeight: number = useMemo(
     () => bottomMargin + buttonsSolidHeight + gradientSafeArea,
     [bottomMargin, buttonsSolidHeight]
   );
@@ -261,14 +238,13 @@ const BonusInformationComponent = (props: Props) => {
         <ContentWrapper>
           <H2 accessibilityRole="header">{bonusTypeLocalizedContent.title}</H2>
           <VSpacer size={16} />
-          <Markdown
-            cssStyle={CSS_STYLE}
-            extraBodyHeight={extraMarkdownBodyHeight}
-          >
-            {bonusTypeLocalizedContent.subtitle +
+          <IOMarkdown
+            content={
+              bonusTypeLocalizedContent.subtitle +
               "\n" +
-              bonusTypeLocalizedContent.content}
-          </Markdown>
+              bonusTypeLocalizedContent.content
+            }
+          />
           <VSpacer size={40} />
           {getTosFooter(
             maybeBonusTos,

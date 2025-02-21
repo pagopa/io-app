@@ -1,13 +1,13 @@
-import * as React from "react";
-import { View, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { FunctionComponent } from "react";
+import { StyleSheet, View } from "react-native";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import CGN_ROUTES from "../../navigation/routes";
-import { CgnDetailsParamsList } from "../../navigation/params";
 import { useIODispatch } from "../../../../../store/hooks";
+import { CgnDetailsParamsList } from "../../navigation/params";
+import CGN_ROUTES from "../../navigation/routes";
 import { selectMerchantDiscount } from "../../store/actions/merchants";
-import { CgnModuleDiscount } from "./CgnModuleDiscount";
+import { ModuleCgnDiscount } from "./ModuleCgnDiscount";
 
 type Props = {
   discount: Discount;
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
+export const CgnMerchantDiscountItem: FunctionComponent<Props> = ({
   discount
 }: Props) => {
   const navigation =
@@ -38,7 +38,7 @@ export const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
 
   return (
     <View style={styles.container}>
-      <CgnModuleDiscount onPress={onDiscountPress} discount={discount} />
+      <ModuleCgnDiscount onPress={onDiscountPress} discount={discount} />
     </View>
   );
 };

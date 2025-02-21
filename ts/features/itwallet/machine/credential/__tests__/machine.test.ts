@@ -125,6 +125,9 @@ describe("itwCredentialIssuanceMachine", () => {
   const isSessionExpired = jest.fn();
   const isDeferredIssuance = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
+  const isStatusError = jest.fn();
+  const isSkipNavigation = jest.fn();
+  const isEidExpired = jest.fn();
 
   const mockedMachine = itwCredentialIssuanceMachine.provide({
     actions: {
@@ -161,13 +164,18 @@ describe("itwCredentialIssuanceMachine", () => {
     guards: {
       isSessionExpired,
       isDeferredIssuance,
-      hasValidWalletInstanceAttestation
+      hasValidWalletInstanceAttestation,
+      isStatusError,
+      isSkipNavigation,
+      isEidExpired
     }
   });
 
   beforeEach(() => {
     onInit.mockImplementation(() => ({ walletInstanceAttestation: undefined }));
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
+    isEidExpired.mockImplementation(() => false);
+    isSkipNavigation.mockImplementation(() => true);
   });
 
   afterEach(() => {
@@ -593,6 +601,7 @@ describe("itwCredentialIssuanceMachine", () => {
     actor.start();
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+    isSkipNavigation.mockImplementation(() => false);
 
     requestCredential.mockImplementation(() =>
       Promise.resolve({

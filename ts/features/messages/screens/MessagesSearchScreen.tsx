@@ -6,13 +6,7 @@ import {
   SearchInputRef,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   FlatList,
   ListRenderItemInfo,
@@ -27,7 +21,7 @@ import { EmptyList } from "../components/Search/EmptyList";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../store/hooks";
 import { UIMessage } from "../types";
-import { WrappedMessageListItem } from "../components/Home/WrappedMessageListItem";
+import { WrappedListItemMessage } from "../components/Home/WrappedListItemMessage";
 import {
   trackMessageSearchClosing,
   trackMessageSearchPage
@@ -58,7 +52,7 @@ export const MessagesSearchScreen = () => {
 
   const renderItemCallback = useCallback(
     (itemInfo: ListRenderItemInfo<UIMessage>) => (
-      <WrappedMessageListItem
+      <WrappedListItemMessage
         index={itemInfo.index}
         message={itemInfo.item}
         source="SEARCH"

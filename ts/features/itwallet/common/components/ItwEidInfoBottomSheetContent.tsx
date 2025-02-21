@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { memo, Fragment, useEffect } from "react";
 import { View } from "react-native";
 import {
   ButtonSolid,
@@ -90,13 +90,13 @@ const ItwEidInfoBottomSheetContent = ({
         />
         <View>
           {claims.map((claim, index) => (
-            <React.Fragment key={index}>
+            <Fragment key={index}>
               {index !== 0 && <Divider />}
               <ItwCredentialClaim claim={claim} isPreview={true} />
-            </React.Fragment>
+            </Fragment>
           ))}
         </View>
-        <ItwEidLifecycleAlert />
+        <ItwEidLifecycleAlert navigation={navigation} />
         <IOMarkdown
           content={I18n.t(
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"
@@ -121,8 +121,6 @@ const ItwEidInfoBottomSheetContent = ({
   );
 };
 
-const MemoizedItwEidInfoBottomSheetContent = React.memo(
-  ItwEidInfoBottomSheetContent
-);
+const MemoizedItwEidInfoBottomSheetContent = memo(ItwEidInfoBottomSheetContent);
 
 export { MemoizedItwEidInfoBottomSheetContent as ItwEidInfoBottomSheetContent };

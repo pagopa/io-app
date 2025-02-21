@@ -335,8 +335,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                       }
                     >
                       <View
-                        accessibilityLabel="Modelli F24"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -346,7 +344,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -358,88 +355,19 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           <View
                             style={
                               {
-                                "marginRight": 8,
-                              }
-                            }
-                          >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#BBC2D6",
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                ]
-                              }
-                              tintColor="#BBC2D6"
-                              vbHeight={24}
-                              vbWidth={24}
-                              width={24}
-                            >
-                              <RNSVGGroup
-                                color="#BBC2D6"
-                                fill={
-                                  {
-                                    "payload": 4278190080,
-                                    "type": 0,
-                                  }
-                                }
-                              >
-                                <RNSVGPath
-                                  clipRule={0}
-                                  d="M22 6.96129V19.5684C22 20.9481 20.913 22 19.6535 22H4.34646C3.08696 22 2 20.9481 2 19.5684V3C2 2.44772 2.44771 2 3 2H6.33457C6.67726 2 6.99609 2.17548 7.17942 2.46501L7.92109 3.63624C8.83777 5.08388 10.4319 5.96129 12.1454 5.96129H21C21.5523 5.96129 22 6.40901 22 6.96129ZM12.1454 3.96129C11.1173 3.96129 10.1608 3.43485 9.6108 2.56626L8.86914 1.39503C8.31913 0.526447 7.36265 0 6.33457 0H3C1.34315 0 0 1.34314 0 3V19.5684C0 22.0159 1.94598 24 4.34646 24H19.6535C22.054 24 24 22.0159 24 19.5684V6.96129C24 5.30444 22.6569 3.96129 21 3.96129H12.1454ZM7 17C6.44772 17 6 17.4477 6 18C6 18.5523 6.44772 19 7 19H17C17.5523 19 18 18.5523 18 18C18 17.4477 17.5523 17 17 17H7Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  fillRule={0}
-                                  propList={
-                                    [
-                                      "fill",
-                                      "fillRule",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              {
                                 "flex": 1,
                               }
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Modelli F24"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 role="heading"
                                 style={
                                   [
@@ -462,9 +390,9 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                         </View>
                       </View>
                       <Text
-                        allowFontScaling={false}
+                        allowFontScaling={true}
                         dynamicTypeRamp="body"
-                        maxFontSizeMultiplier={1.25}
+                        maxFontSizeMultiplier={1.5}
                         style={
                           [
                             {},
@@ -558,6 +486,9 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                   "columnGap": 8,
                                 },
                                 {},
+                                {
+                                  "columnGap": 8,
+                                },
                                 false,
                               ]
                             }
@@ -565,10 +496,10 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                             <Text
                               accessibilityElementsHidden={true}
                               accessible={false}
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={1}
                               style={
                                 [
@@ -579,11 +510,16 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": undefined,
+                                    "lineHeight": 20,
                                   },
-                                  {
-                                    "color": undefined,
-                                  },
+                                  [
+                                    {
+                                      "color": undefined,
+                                    },
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                  ],
                                 ]
                               }
                             >
@@ -592,16 +528,25 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           </View>
                         </View>
                         <Modal
+                          accessibilityPositionChangeAnnouncement=""
                           accessible={false}
                           backdropComponent={[Function]}
                           enableDismissOnClose={true}
-                          enableDynamicSizing={true}
                           footerComponent={[Function]}
                           handleComponent={[Function]}
+                          handleComponentAccessibility={
+                            {
+                              "accessible": false,
+                            }
+                          }
                           hardwareAccelerated={false}
                           importantForAccessibility="yes"
-                          maxDynamicContentSize={1334}
                           onDismiss={[Function]}
+                          snapPoints={
+                            [
+                              10,
+                            ]
+                          }
                           style={
                             {
                               "borderCurve": "continuous",
@@ -613,471 +558,465 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           visible={true}
                         >
                           <RCTScrollView
-                            overScrollMode="never"
                             style={
                               {
+                                "flex": 1,
                                 "paddingHorizontal": 24,
                               }
                             }
                           >
                             <View>
                               <View
-                                accessibilityHint="pdf"
-                                accessibilityLabel="2"
-                                accessibilityRole="button"
-                                accessibilityState={
-                                  {
-                                    "busy": undefined,
-                                    "checked": undefined,
-                                    "disabled": undefined,
-                                    "expanded": undefined,
-                                    "selected": undefined,
-                                  }
-                                }
-                                accessibilityValue={
-                                  {
-                                    "max": undefined,
-                                    "min": undefined,
-                                    "now": undefined,
-                                    "text": undefined,
-                                  }
-                                }
-                                accessible={true}
-                                collapsable={false}
-                                focusable={true}
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                onResponderGrant={[Function]}
-                                onResponderMove={[Function]}
-                                onResponderRelease={[Function]}
-                                onResponderTerminate={[Function]}
-                                onResponderTerminationRequest={[Function]}
-                                onStartShouldSetResponder={[Function]}
-                                onTouchEnd={[Function]}
+                                onLayout={[Function]}
                               >
                                 <View
-                                  style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
-                                        "borderCurve": "continuous",
-                                        "borderRadius": 8,
-                                        "borderWidth": 1,
-                                        "flexDirection": "row",
-                                        "justifyContent": "space-between",
-                                        "paddingHorizontal": 16,
-                                        "paddingVertical": 16,
-                                      },
-                                      {
-                                        "borderColor": "#E8EBF1",
-                                      },
-                                      false,
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
-                                    ]
+                                  accessibilityHint="pdf"
+                                  accessibilityLabel="2"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
                                   }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
                                     style={
-                                      {
-                                        "alignItems": "center",
-                                        "display": "flex",
-                                        "flexDirection": "row",
-                                        "gap": 8,
-                                      }
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "borderWidth": 1,
+                                          "flexDirection": "row",
+                                          "justifyContent": "space-between",
+                                          "paddingHorizontal": 16,
+                                          "paddingVertical": 16,
+                                        },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
+                                        {
+                                          "transform": [
+                                            {
+                                              "scale": undefined,
+                                            },
+                                          ],
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "alignItems": "flex-start",
+                                          "alignItems": "center",
                                           "display": "flex",
-                                          "flexDirection": "column",
-                                          "flexGrow": 1,
-                                          "flexShrink": 1,
-                                          "gap": 4,
+                                          "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
-                                        numberOfLines={2}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        2
-                                      </Text>
                                       <View
-                                        accessible={true}
                                         style={
-                                          [
-                                            {
-                                              "alignItems": "center",
-                                              "borderCurve": "continuous",
-                                              "borderRadius": 24,
-                                              "flexDirection": "row",
-                                              "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
-                                            },
-                                            {
-                                              "backgroundColor": "#F4F5F8",
-                                            },
-                                          ]
+                                          {
+                                            "alignItems": "flex-start",
+                                            "display": "flex",
+                                            "flexDirection": "column",
+                                            "flexGrow": 1,
+                                            "flexShrink": 1,
+                                            "gap": 4,
+                                          }
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
-                                          ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
-                                          numberOfLines={1}
+                                          allowFontScaling={true}
+                                          dynamicTypeRamp="body"
+                                          maxFontSizeMultiplier={1.5}
+                                          numberOfLines={2}
                                           style={
                                             [
                                               {},
                                               {
-                                                "color": "#555C70",
+                                                "color": "#0B3EE3",
                                                 "fontFamily": "Titillium Sans Pro",
-                                                "fontSize": 12,
+                                                "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 16,
-                                              },
-                                              {
-                                                "alignSelf": "center",
-                                                "flexShrink": 1,
-                                                "letterSpacing": 0.5,
-                                                "textTransform": "uppercase",
+                                                "lineHeight": 24,
                                               },
                                             ]
                                           }
                                         >
-                                          PDF
+                                          2
                                         </Text>
-                                      </View>
-                                    </View>
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0B3EE3"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
-                                    >
-                                      <RNSVGGroup
-                                        color="#0B3EE3"
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
+                                        <View
+                                          accessible={true}
+                                          style={
                                             [
-                                              "fill",
-                                              "fillRule",
+                                              {
+                                                "alignItems": "center",
+                                                "borderCurve": "continuous",
+                                                "flexDirection": "row",
+                                                "justifyContent": "center",
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
+                                              },
+                                              {
+                                                "backgroundColor": "#F4F5F8",
+                                              },
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          <Text
+                                            allowFontScaling={true}
+                                            ellipsizeMode="tail"
+                                            maxFontSizeMultiplier={1.5}
+                                            numberOfLines={1}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#555C70",
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 12,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 16,
+                                                },
+                                                {
+                                                  "alignSelf": "center",
+                                                  "flexShrink": 1,
+                                                  "letterSpacing": 0.5,
+                                                  "textTransform": "uppercase",
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            PDF
+                                          </Text>
+                                        </View>
+                                      </View>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          color="#0B3EE3"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
-                              </View>
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
-                              <View
-                                accessibilityHint="pdf"
-                                accessibilityLabel="4"
-                                accessibilityRole="button"
-                                accessibilityState={
-                                  {
-                                    "busy": undefined,
-                                    "checked": undefined,
-                                    "disabled": undefined,
-                                    "expanded": undefined,
-                                    "selected": undefined,
-                                  }
-                                }
-                                accessibilityValue={
-                                  {
-                                    "max": undefined,
-                                    "min": undefined,
-                                    "now": undefined,
-                                    "text": undefined,
-                                  }
-                                }
-                                accessible={true}
-                                collapsable={false}
-                                focusable={true}
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                onResponderGrant={[Function]}
-                                onResponderMove={[Function]}
-                                onResponderRelease={[Function]}
-                                onResponderTerminate={[Function]}
-                                onResponderTerminationRequest={[Function]}
-                                onStartShouldSetResponder={[Function]}
-                                onTouchEnd={[Function]}
-                              >
                                 <View
                                   style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
-                                        "borderCurve": "continuous",
-                                        "borderRadius": 8,
-                                        "borderWidth": 1,
-                                        "flexDirection": "row",
-                                        "justifyContent": "space-between",
-                                        "paddingHorizontal": 16,
-                                        "paddingVertical": 16,
-                                      },
-                                      {
-                                        "borderColor": "#E8EBF1",
-                                      },
-                                      false,
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
-                                    ]
+                                    {
+                                      "height": 8,
+                                    }
                                   }
+                                />
+                                <View
+                                  accessibilityHint="pdf"
+                                  accessibilityLabel="4"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                  onTouchEnd={[Function]}
                                 >
                                   <View
                                     style={
-                                      {
-                                        "alignItems": "center",
-                                        "display": "flex",
-                                        "flexDirection": "row",
-                                        "gap": 8,
-                                      }
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
+                                          "borderWidth": 1,
+                                          "flexDirection": "row",
+                                          "justifyContent": "space-between",
+                                          "paddingHorizontal": 16,
+                                          "paddingVertical": 16,
+                                        },
+                                        {
+                                          "borderColor": "#E8EBF1",
+                                        },
+                                        false,
+                                        {
+                                          "transform": [
+                                            {
+                                              "scale": undefined,
+                                            },
+                                          ],
+                                        },
+                                      ]
                                     }
                                   >
                                     <View
                                       style={
                                         {
-                                          "alignItems": "flex-start",
+                                          "alignItems": "center",
                                           "display": "flex",
-                                          "flexDirection": "column",
-                                          "flexGrow": 1,
-                                          "flexShrink": 1,
-                                          "gap": 4,
+                                          "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
-                                      <Text
-                                        allowFontScaling={false}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
-                                        numberOfLines={2}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        4
-                                      </Text>
                                       <View
-                                        accessible={true}
                                         style={
-                                          [
-                                            {
-                                              "alignItems": "center",
-                                              "borderCurve": "continuous",
-                                              "borderRadius": 24,
-                                              "flexDirection": "row",
-                                              "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
-                                            },
-                                            {
-                                              "backgroundColor": "#F4F5F8",
-                                            },
-                                          ]
+                                          {
+                                            "alignItems": "flex-start",
+                                            "display": "flex",
+                                            "flexDirection": "column",
+                                            "flexGrow": 1,
+                                            "flexShrink": 1,
+                                            "gap": 4,
+                                          }
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
-                                          ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
-                                          numberOfLines={1}
+                                          allowFontScaling={true}
+                                          dynamicTypeRamp="body"
+                                          maxFontSizeMultiplier={1.5}
+                                          numberOfLines={2}
                                           style={
                                             [
                                               {},
                                               {
-                                                "color": "#555C70",
+                                                "color": "#0B3EE3",
                                                 "fontFamily": "Titillium Sans Pro",
-                                                "fontSize": 12,
+                                                "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 16,
-                                              },
-                                              {
-                                                "alignSelf": "center",
-                                                "flexShrink": 1,
-                                                "letterSpacing": 0.5,
-                                                "textTransform": "uppercase",
+                                                "lineHeight": 24,
                                               },
                                             ]
                                           }
                                         >
-                                          PDF
+                                          4
                                         </Text>
-                                      </View>
-                                    </View>
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0B3EE3"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
-                                    >
-                                      <RNSVGGroup
-                                        color="#0B3EE3"
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
+                                        <View
+                                          accessible={true}
+                                          style={
                                             [
-                                              "fill",
-                                              "fillRule",
+                                              {
+                                                "alignItems": "center",
+                                                "borderCurve": "continuous",
+                                                "flexDirection": "row",
+                                                "justifyContent": "center",
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
+                                              },
+                                              {
+                                                "backgroundColor": "#F4F5F8",
+                                              },
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          <Text
+                                            allowFontScaling={true}
+                                            ellipsizeMode="tail"
+                                            maxFontSizeMultiplier={1.5}
+                                            numberOfLines={1}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#555C70",
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 12,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 16,
+                                                },
+                                                {
+                                                  "alignSelf": "center",
+                                                  "flexShrink": 1,
+                                                  "letterSpacing": 0.5,
+                                                  "textTransform": "uppercase",
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            PDF
+                                          </Text>
+                                        </View>
+                                      </View>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          color="#0B3EE3"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "height": 48,
-                                  }
-                                }
-                              />
-                              <View
-                                style={
-                                  {
-                                    "height": 48,
-                                  }
-                                }
-                              />
                             </View>
                           </RCTScrollView>
                         </Modal>
@@ -2475,8 +2414,6 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                       }
                     >
                       <View
-                        accessibilityLabel="Modelli F24"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -2486,7 +2423,6 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -2498,88 +2434,19 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                           <View
                             style={
                               {
-                                "marginRight": 8,
-                              }
-                            }
-                          >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#BBC2D6",
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                ]
-                              }
-                              tintColor="#BBC2D6"
-                              vbHeight={24}
-                              vbWidth={24}
-                              width={24}
-                            >
-                              <RNSVGGroup
-                                color="#BBC2D6"
-                                fill={
-                                  {
-                                    "payload": 4278190080,
-                                    "type": 0,
-                                  }
-                                }
-                              >
-                                <RNSVGPath
-                                  clipRule={0}
-                                  d="M22 6.96129V19.5684C22 20.9481 20.913 22 19.6535 22H4.34646C3.08696 22 2 20.9481 2 19.5684V3C2 2.44772 2.44771 2 3 2H6.33457C6.67726 2 6.99609 2.17548 7.17942 2.46501L7.92109 3.63624C8.83777 5.08388 10.4319 5.96129 12.1454 5.96129H21C21.5523 5.96129 22 6.40901 22 6.96129ZM12.1454 3.96129C11.1173 3.96129 10.1608 3.43485 9.6108 2.56626L8.86914 1.39503C8.31913 0.526447 7.36265 0 6.33457 0H3C1.34315 0 0 1.34314 0 3V19.5684C0 22.0159 1.94598 24 4.34646 24H19.6535C22.054 24 24 22.0159 24 19.5684V6.96129C24 5.30444 22.6569 3.96129 21 3.96129H12.1454ZM7 17C6.44772 17 6 17.4477 6 18C6 18.5523 6.44772 19 7 19H17C17.5523 19 18 18.5523 18 18C18 17.4477 17.5523 17 17 17H7Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  fillRule={0}
-                                  propList={
-                                    [
-                                      "fill",
-                                      "fillRule",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              {
                                 "flex": 1,
                               }
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Modelli F24"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 role="heading"
                                 style={
                                   [
@@ -2602,9 +2469,9 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                         </View>
                       </View>
                       <Text
-                        allowFontScaling={false}
+                        allowFontScaling={true}
                         dynamicTypeRamp="body"
-                        maxFontSizeMultiplier={1.25}
+                        maxFontSizeMultiplier={1.5}
                         style={
                           [
                             {},
@@ -2714,9 +2581,9 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={2}
                                 style={
                                   [
@@ -2741,11 +2608,13 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 4,
+                                    },
+                                    {
+                                      "borderRadius": 36,
+                                      "paddingHorizontal": 12,
+                                      "paddingVertical": 6,
                                     },
                                     {
                                       "backgroundColor": "#F4F5F8",
@@ -2754,9 +2623,9 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [

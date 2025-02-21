@@ -6,6 +6,7 @@ import { buildEventProperties } from "../../../utils/analytics";
 import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
 import { ItwCredentialStatus } from "../common/utils/itwTypesUtils";
+import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -96,6 +97,12 @@ type CredentialUnexpectedFailure = {
   type: string;
 };
 
+type CredentialStatusAttestationFailure = {
+  credential: MixPanelCredential;
+  credential_status: string;
+  reason?: unknown;
+};
+
 type ItwIdMethod = IdentificationContext["mode"];
 
 // PROPERTIES TYPES
@@ -129,14 +136,15 @@ export type ItwCed = "not_available" | "valid" | "not_valid" | "expiring";
  */
 export const ID_STATUS_MAP: Record<
   ItwCredentialStatus,
-  "valid" | "not_valid" | "expiring"
+  "valid" | "not_valid" | "expiring" | "unknown"
 > = {
   valid: "valid",
   invalid: "not_valid",
   expired: "not_valid",
   expiring: "expiring",
   jwtExpired: "not_valid",
-  jwtExpiring: "expiring"
+  jwtExpiring: "expiring",
+  unknown: "unknown"
 };
 
 // #region SCREEN VIEW EVENTS
@@ -492,6 +500,16 @@ export function trackIssuanceCredentialScrollToBottom(
   );
 }
 
+export function trackCredentialCardModal(credential: MixPanelCredential) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_CARD_MODAL,
+    buildEventProperties("UX", "action", {
+      credential,
+      credential_status: "valid"
+    })
+  );
+}
+
 // #endregion ACTIONS
 
 // #region ERRORS
@@ -650,6 +668,37 @@ export const trackItwAlreadyActivated = () => {
   );
 };
 
+export const trackItwStatusWalletAttestationFailure = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_STATUS_WALLET_ATTESTATION_FAILURE,
+    buildEventProperties("KO", "error")
+  );
+};
+
+export const trackItwStatusCredentialAttestationFailure = ({
+  credential,
+  credential_status,
+  reason
+}: CredentialStatusAttestationFailure) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_STATUS_CREDENTIAL_ATTESTATION_FAILURE,
+    buildEventProperties("KO", "error", {
+      credential,
+      credential_status,
+      reason
+    })
+  );
+};
+
+export const trackItwTrustmarkRenewFailure = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_TRUSTMARK_RENEW_FAILURE,
+    buildEventProperties("KO", "error", { credential })
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
@@ -728,22 +777,25 @@ export const trackBackToWallet = ({ exit_page, credential }: BackToWallet) => {
 
 // #region TECH
 
-export const trackItwRequest = (ITW_ID_method?: ItwIdMethod) => {
-  if (ITW_ID_method) {
+export const trackItwRequest = (method?: ItwIdMethod) => {
+  if (method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST,
-      buildEventProperties("TECH", undefined, { ITW_ID_method })
+      buildEventProperties("TECH", undefined, { ITW_ID_method: method })
     );
   }
 };
 
-export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
-  if (ITW_ID_method) {
+export const trackItwRequestSuccess = (
+  method?: ItwIdMethod,
+  status?: ItwStatus
+) => {
+  if (method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST_SUCCESS,
       buildEventProperties("TECH", undefined, {
-        ITW_ID_method,
-        ITW_ID_V2: "L2"
+        ITW_ID_method: method,
+        ITW_ID_V2: status
       })
     );
   }
@@ -753,13 +805,18 @@ export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
 // #region PROFILE AND SUPER PROPERTIES UPDATE
 
 export const updateITWStatusAndIDProperties = (state: GlobalState) => {
+  const authLevel = itwAuthLevelSelector(state);
+  if (!authLevel) {
+    return;
+  }
+
   void updateMixpanelProfileProperties(state, {
     property: "ITW_STATUS_V2",
-    value: "L2"
+    value: authLevel
   });
   void updateMixpanelSuperProperties(state, {
     property: "ITW_STATUS_V2",
-    value: "L2"
+    value: authLevel
   });
   void updateMixpanelProfileProperties(state, {
     property: "ITW_ID_V2",

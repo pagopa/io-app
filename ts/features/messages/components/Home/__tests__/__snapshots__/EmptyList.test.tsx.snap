@@ -388,7 +388,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -407,7 +406,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -515,9 +513,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -545,9 +543,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -971,7 +969,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -990,7 +987,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -1098,9 +1094,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -1187,15 +1183,14 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -1204,13 +1199,15 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
                                             "alignItems": "center",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
                                           },
                                           false,
                                         ]
@@ -1219,10 +1216,10 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                       <Text
                                         accessibilityElementsHidden={true}
                                         accessible={false}
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2344,7 +2341,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -2363,7 +2359,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -2471,9 +2466,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -2501,9 +2496,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -3273,7 +3268,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -3292,7 +3286,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -3400,9 +3393,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -3430,9 +3423,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -4202,7 +4195,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -4221,7 +4213,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -4329,9 +4320,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -4359,9 +4350,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -5131,7 +5122,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -5150,7 +5140,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -5258,9 +5247,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -5288,9 +5277,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -6060,7 +6049,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -6079,7 +6067,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -6187,9 +6174,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -6217,9 +6204,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -6643,7 +6630,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -6662,7 +6648,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -6770,9 +6755,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -6859,15 +6844,14 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                           "textAlignVertical": "center",
                                         },
                                         {
+                                          "backgroundColor": "#0073E6",
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
                                           "height": 40,
                                         },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
+                                        {},
                                         false,
                                         {
                                           "backgroundColor": undefined,
@@ -6876,13 +6860,15 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
                                             "alignItems": "center",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
                                           },
                                           false,
                                         ]
@@ -6891,10 +6877,10 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                       <Text
                                         accessibilityElementsHidden={true}
                                         accessible={false}
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -8016,7 +8002,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -8035,7 +8020,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -8143,9 +8127,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -8173,9 +8157,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -8945,7 +8929,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -8964,7 +8947,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -9072,9 +9054,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -9102,9 +9084,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -9874,7 +9856,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -9893,7 +9874,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -10001,9 +9981,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -10031,9 +10011,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -10803,7 +10783,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                                 align="xMidYMid"
                                 bbHeight={120}
                                 bbWidth={120}
-                                color="#00C5CA"
                                 focusable={false}
                                 height={120}
                                 meetOrSlice={0}
@@ -10822,7 +10801,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -10930,9 +10908,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -10960,9 +10938,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},

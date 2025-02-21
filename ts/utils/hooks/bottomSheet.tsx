@@ -14,8 +14,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
-import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   Dimensions,
@@ -81,7 +80,7 @@ export const useIOBottomSheetModal = ({
 }: Omit<BottomSheetOptions, "fullScreen">): IOBottomSheetModal => {
   const insets = useSafeAreaInsets();
   const { dismissAll } = useBottomSheetModal();
-  const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const { onOpen, onClose } = useHardwareBackButtonToDismiss(dismissAll);
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
@@ -111,10 +110,10 @@ export const useIOBottomSheetModal = ({
     onClose();
   };
 
-  const present = () => {
+  const present = useCallback(() => {
     bottomSheetModalRef.current?.present();
     onOpen();
-  };
+  }, [onOpen]);
 
   // // Add opacity fade effect to backdrop
   const BackdropElement = useCallback(

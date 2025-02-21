@@ -1,5 +1,4 @@
 import { render, fireEvent } from "@testing-library/react-native";
-import React from "react";
 import { Provider } from "react-redux";
 import { PreloadedState, createStore } from "redux";
 import { Alert } from "react-native";
@@ -18,6 +17,10 @@ const ASC_NUMBERS_SEQUENCE = Array.from({ length: PIN_LENGTH_SIX }, (_, i) =>
 const DESC_NUMBER_SEQUENCE = Array.from({ length: PIN_LENGTH_SIX }, (_, i) =>
   String(i + 1)
 );
+
+jest.mock("../../../utils/hooks/usePreventScreenCapture", () => ({
+  usePreventScreenCapture: jest.fn()
+}));
 
 const invalidPinCases = [
   REPEATED_NUMBERS,

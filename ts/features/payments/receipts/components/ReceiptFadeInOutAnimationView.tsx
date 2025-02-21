@@ -1,9 +1,9 @@
-import React from "react";
 import { IOStyles } from "@pagopa/io-app-design-system";
+import { memo, ReactNode } from "react";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
-export const ReceiptFadeInOutAnimationView = React.memo(
-  ({ children }: { children: React.ReactNode }) => (
+export const ReceiptFadeInOutAnimationView = memo(
+  ({ children }: { children: ReactNode }) => (
     <Animated.View
       style={IOStyles.flex}
       exiting={FadeOut.duration(200)}

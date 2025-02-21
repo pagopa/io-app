@@ -1,11 +1,13 @@
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
-import * as React from "react";
+
+import { ComponentType } from "react";
 import configureMockStore from "redux-mock-store";
+import { Alert, Pressable } from "react-native";
+import { requestReview } from "react-native-store-review";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import * as configSelectors from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as itwSelectors from "../../../itwallet/common/store/selectors";
@@ -16,6 +18,8 @@ import {
 import { ItwJwtCredentialStatus } from "../../../itwallet/common/utils/itwTypesUtils";
 import * as itwCredentialsSelectors from "../../../itwallet/credentials/store/selectors";
 import * as itwLifecycleSelectors from "../../../itwallet/lifecycle/store/selectors";
+import * as itwWalletInstanceSelectors from "../../../itwallet/walletInstance/store/selectors";
+import * as itwPreferencesSelectors from "../../../itwallet/common/store/selectors/preferences";
 import { WalletCardsState } from "../../store/reducers/cards";
 import * as walletSelectors from "../../store/selectors";
 import { WalletCard } from "../../types";
@@ -24,13 +28,31 @@ import {
   OtherWalletCardsContainer,
   WalletCardsContainer
 } from "../WalletCardsContainer";
+import I18n from "../../../../i18n";
+import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 
+jest.spyOn(Alert, "alert");
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
   useReducedMotion: jest.fn,
   Layout: {
     duration: jest.fn()
   }
+}));
+
+jest.mock("react-native-store-review", () => ({
+  requestReview: jest.fn()
+}));
+
+const mockNavigate = jest.fn();
+
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual<typeof import("@react-navigation/native")>(
+    "@react-navigation/native"
+  ),
+  useNavigation: () => ({
+    navigate: mockNavigate
+  })
 }));
 
 jest.mock("../../../../config", () => ({
@@ -91,7 +113,7 @@ describe("WalletCardsContainer", () => {
 
   it("should render the loading screen", () => {
     jest
-      .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+      .spyOn(walletSelectors, "selectIsWalletLoading")
       .mockImplementation(() => true);
     jest
       .spyOn(walletSelectors, "selectWalletCategoryFilter")
@@ -113,7 +135,7 @@ describe("WalletCardsContainer", () => {
 
   it("should render the empty screen", () => {
     jest
-      .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+      .spyOn(walletSelectors, "selectIsWalletLoading")
       .mockImplementation(() => false);
     jest
       .spyOn(walletSelectors, "selectWalletCategoryFilter")
@@ -146,14 +168,14 @@ describe("WalletCardsContainer", () => {
         .mockImplementation(() => [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]);
 
       jest
-        .spyOn(walletSelectors, "selectWalletItwCards")
+        .spyOn(walletSelectors, "selectWalletCardsByCategory")
         .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
 
       jest
-        .spyOn(configSelectors, "isItwEnabledSelector")
+        .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
         .mockImplementation(() => true);
       jest
-        .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+        .spyOn(walletSelectors, "selectIsWalletLoading")
         .mockImplementation(() => false);
       jest
         .spyOn(walletSelectors, "selectWalletCategoryFilter")
@@ -189,7 +211,7 @@ describe("WalletCardsContainer", () => {
         .mockImplementation(() => true);
 
       jest
-        .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+        .spyOn(walletSelectors, "selectIsWalletLoading")
         .mockImplementation(() => isLoading);
       jest
         .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
@@ -210,7 +232,7 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockImplementation(() => true);
     jest
-      .spyOn(configSelectors, "isItwEnabledSelector")
+      .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
       .mockImplementation(() => false);
 
     const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
@@ -220,9 +242,6 @@ describe("ItwWalletCardsContainer", () => {
   it("should render the wallet ready banner", () => {
     jest
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
-    jest
-      .spyOn(configSelectors, "isItwEnabledSelector")
       .mockImplementation(() => true);
     jest
       .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
@@ -237,10 +256,10 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockImplementation(() => true);
     jest
-      .spyOn(configSelectors, "isItwEnabledSelector")
+      .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
       .mockImplementation(() => true);
     jest
-      .spyOn(walletSelectors, "selectWalletItwCards")
+      .spyOn(walletSelectors, "selectWalletCardsByCategory")
       .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
 
     const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
@@ -250,12 +269,6 @@ describe("ItwWalletCardsContainer", () => {
   });
 
   it("should render the feedback banner", () => {
-    jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
-    jest
-      .spyOn(configSelectors, "isItwEnabledSelector")
-      .mockImplementation(() => true);
     jest
       .spyOn(itwSelectors, "itwShouldRenderFeedbackBannerSelector")
       .mockImplementation(() => true);
@@ -357,9 +370,152 @@ describe("OtherWalletCardsContainer", () => {
     expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_placeholder_4`)).not.toBeNull();
   });
+
+  it("should not show alert if not revoked", () => {
+    jest
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .mockImplementation(() => ({
+        id: "39cc62ab-1df0-4a9d-974d-4c58173a1750",
+        is_revoked: false,
+        revocation_reason: undefined
+      }));
+
+    renderComponent(WalletCardsContainer);
+
+    expect(Alert.alert).not.toHaveBeenCalled();
+  });
+
+  it("should show alert for NEW_WALLET_INSTANCE_CREATED", () => {
+    jest
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .mockImplementation(() => ({
+        id: "39cc62ab-1df0-4a9d-974d-4c58173a1750",
+        is_revoked: true,
+        revocation_reason: "NEW_WALLET_INSTANCE_CREATED"
+      }));
+
+    renderComponent(WalletCardsContainer);
+
+    expect(Alert.alert).toHaveBeenCalledWith(
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.newWalletInstanceCreated.title"
+      ),
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.newWalletInstanceCreated.content"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.walletInstanceRevoked.alert.closeButton"
+          )
+        },
+        {
+          text: I18n.t("features.itWallet.walletInstanceRevoked.alert.cta"),
+          onPress: expect.any(Function)
+        }
+      ]
+    );
+  });
+
+  it("should show alert for CERTIFICATE_REVOKED_BY_ISSUER", () => {
+    jest
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .mockImplementation(() => ({
+        id: "39cc62ab-1df0-4a9d-974d-4c58173a1750",
+        is_revoked: true,
+        revocation_reason: "CERTIFICATE_REVOKED_BY_ISSUER"
+      }));
+
+    renderComponent(WalletCardsContainer);
+
+    expect(Alert.alert).toHaveBeenCalledWith(
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByWalletProvider.title"
+      ),
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByWalletProvider.content"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.walletInstanceRevoked.alert.closeButton"
+          )
+        },
+        {
+          text: I18n.t("features.itWallet.walletInstanceRevoked.alert.cta"),
+          onPress: expect.any(Function)
+        }
+      ]
+    );
+  });
+
+  it("should show alert for REVOKED_BY_USER", () => {
+    jest
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .mockImplementation(() => ({
+        id: "39cc62ab-1df0-4a9d-974d-4c58173a1750",
+        is_revoked: true,
+        revocation_reason: "REVOKED_BY_USER"
+      }));
+
+    renderComponent(WalletCardsContainer);
+
+    expect(Alert.alert).toHaveBeenCalledWith(
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByUser.title"
+      ),
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByUser.content"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.walletInstanceRevoked.alert.closeButtonAlt"
+          )
+        }
+      ]
+    );
+  });
+
+  it("should request app review when driving license credential is viewed", async () => {
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "selectWalletCardsByCategory")
+      .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
+
+    jest
+      .spyOn(itwPreferencesSelectors, "itwIsPendingReviewSelector")
+      .mockImplementation(() => true);
+
+    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+    expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
+
+    const mDLCredential = queryByTestId(`walletCardTestID_itw_itw_4`);
+
+    if (mDLCredential) {
+      const pressableComponent = mDLCredential.findByType(Pressable);
+      pressableComponent.props.onPress();
+    }
+
+    expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+      params: {
+        credentialType: CredentialType.DRIVING_LICENSE
+      }
+    });
+
+    expect(requestReview).toHaveBeenCalledTimes(1);
+  });
 });
 
-const renderComponent = (component: React.ComponentType<any>) => {
+const renderComponent = (component: ComponentType<any>) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();

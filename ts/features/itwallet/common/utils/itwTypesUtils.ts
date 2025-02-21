@@ -1,4 +1,8 @@
-import { Credential, Trust } from "@pagopa/io-react-native-wallet";
+import {
+  Credential,
+  Trust,
+  WalletInstance
+} from "@pagopa/io-react-native-wallet";
 
 /**
  * Alias type for the return type of the start issuance flow operation.
@@ -43,6 +47,19 @@ export type ParsedStatusAttestation = Awaited<
   ReturnType<typeof Credential.Status.verifyAndParseStatusAttestation>
 >["parsedStatusAttestation"]["payload"];
 
+/**
+ * Alias for the WalletInstanceStatus type
+ */
+export type WalletInstanceStatus = Awaited<
+  ReturnType<typeof WalletInstance.getWalletInstanceStatus>
+>;
+
+/**
+ * Alias for the WalletInstanceRevocationReason type
+ */
+export type WalletInstanceRevocationReason =
+  WalletInstanceStatus["revocation_reason"];
+
 export type StoredStatusAttestation =
   | {
       credentialStatus: "valid";
@@ -80,8 +97,11 @@ export type StoredCredential = {
 export type ItwJwtCredentialStatus = "valid" | "jwtExpired" | "jwtExpiring";
 // Combined status of a credential, that includes both the physical and the digital version
 export type ItwCredentialStatus =
+  | "unknown"
   | "valid"
   | "invalid"
   | "expiring"
   | "expired"
   | ItwJwtCredentialStatus;
+
+export type ItwAuthLevel = "L2" | "L3";

@@ -8,12 +8,19 @@ import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
-import { Linking, StyleSheet, View } from "react-native";
+
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
+import { StyleSheet, View } from "react-native";
 import Animated, { FadeIn } from "react-native-reanimated";
 import {
   Camera,
-  CameraPermissionStatus,
   Code,
   CodeType,
   useCameraDevice,
@@ -83,19 +90,7 @@ export type IOBarcodeCameraScanner = {
   /**
    * Component that renders the camera
    */
-  cameraComponent: React.ReactNode;
-  /**
-   * Camera permission status
-   */
-  cameraPermissionStatus: CameraPermissionStatus;
-  /**
-   * Opens the system prompt that let user to allow/deny camera permission
-   */
-  requestCameraPermission: () => Promise<void>;
-  /**
-   * Opens the system settings screen to let user to change camera permission
-   */
-  openCameraSettings: () => Promise<void>;
+  cameraComponent: ReactNode;
   /**
    * Returns true if the device has a torch
    */
@@ -172,7 +167,7 @@ export const useIOBarcodeCameraScanner = ({
   barcodeTypes,
   isLoading = false
 }: IOBarcodeCameraScannerConfiguration): IOBarcodeCameraScanner => {
-  const acceptedFormats = React.useMemo<Array<IOBarcodeFormat>>(
+  const acceptedFormats = useMemo<Array<IOBarcodeFormat>>(
     () => barcodeFormats || ["QR_CODE", "DATA_MATRIX"],
     [barcodeFormats]
   );
@@ -184,21 +179,18 @@ export const useIOBarcodeCameraScanner = ({
 
   // Checks that the device has a torch
   const hasTorch = !!device?.hasTorch;
-  const [isTorchOn, setTorchOn] = React.useState<boolean>(false);
+  const [isTorchOn, setTorchOn] = useState<boolean>(false);
 
   // This handles the resting state of the scanner after a scan
   // It is necessary to avoid multiple scans of the same barcode
-  const scannerReactivateTimeoutHandler = React.useRef<number>();
-  const [isResting, setIsResting] = React.useState(false);
-
-  const [cameraPermissionStatus, setCameraPermissionStatus] =
-    React.useState<CameraPermissionStatus>("not-determined");
+  const scannerReactivateTimeoutHandler = useRef<number>();
+  const [isResting, setIsResting] = useState(false);
 
   /**
    * Handles the detected {@link Code} and converts it to {@link IOBarcode}
    * Returns an Either with the {@link BarcodeFailure} or the {@link IOBarcode}
    */
-  const handleDetectedBarcode = React.useCallback(
+  const handleDetectedBarcode = useCallback(
     (detectedBarcode: Code): E.Either<BarcodeFailure, IOBarcode> =>
       pipe(
         convertToIOBarcodeFormat(detectedBarcode.type as BarcodeFormat),
@@ -225,7 +217,7 @@ export const useIOBarcodeCameraScanner = ({
   /**
    * Handles the scanned barcodes and calls the callbacks for the results
    */
-  const handleScannedBarcodes = React.useCallback(
+  const handleScannedBarcodes = useCallback(
     (codes: Array<Code>) =>
       pipe(
         retrieveNextBarcode(codes),
@@ -276,39 +268,14 @@ export const useIOBarcodeCameraScanner = ({
   });
 
   /**
-   * Hook that checks the camera permission on mount
-   */
-  React.useEffect(() => {
-    const permission = Camera.getCameraPermissionStatus();
-    setCameraPermissionStatus(permission);
-  }, []);
-
-  /**
    * Hook that clears the timeout handler on unmount
    */
-  React.useEffect(
+  useEffect(
     () => () => {
       clearTimeout(scannerReactivateTimeoutHandler.current);
     },
     [scannerReactivateTimeoutHandler]
   );
-
-  /**
-   * Opens the system prompt to ask camera permission
-   */
-  const requestCameraPermission = async () => {
-    const permissions = await Camera.requestCameraPermission();
-    setCameraPermissionStatus(permissions);
-  };
-
-  /**
-   * Opens the settings page to allow user to change the camer settings
-   */
-  const openCameraSettings = async () => {
-    await Linking.openSettings();
-    const permissions = Camera.getCameraPermissionStatus();
-    setCameraPermissionStatus(permissions);
-  };
 
   /**
    * Component that renders camera and marker
@@ -341,9 +308,6 @@ export const useIOBarcodeCameraScanner = ({
 
   return {
     cameraComponent,
-    cameraPermissionStatus,
-    requestCameraPermission,
-    openCameraSettings,
     hasTorch,
     isTorchOn,
     toggleTorch

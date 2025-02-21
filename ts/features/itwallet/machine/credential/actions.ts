@@ -19,7 +19,7 @@ import {
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
-import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -70,6 +70,12 @@ export default (
           }
         }
       ]
+    });
+  },
+
+  navigateToEidVerificationExpiredScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
     });
   },
 

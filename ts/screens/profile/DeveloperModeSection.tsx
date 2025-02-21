@@ -15,8 +15,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as Sentry from "@sentry/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as React from "react";
-import { ComponentProps } from "react";
+import { useContext, ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 import I18n from "../../i18n";
 import { AlertModal } from "../../components/ui/AlertModal";
@@ -33,7 +32,8 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled
+  preferencesPnTestEnvironmentSetEnabled,
+  setIOMarkdownEnabledOnMessagesAndServices
 } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
@@ -43,7 +43,8 @@ import {
 } from "../../store/reducers/authentication";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
-  isIdPayTestEnabledSelector,
+  isIdPayLocallyEnabledSelector,
+  isIOMarkdownEnabledLocallySelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -52,8 +53,6 @@ import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { isCieIDLocalFeatureEnabledSelector } from "../../features/cieLogin/store/selectors";
-import { cieIDFeatureSetEnabled } from "../../features/cieLogin/store/actions";
 import { requestAppReview } from "../../utils/storeReview";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
@@ -300,8 +299,13 @@ const DeveloperDataSection = () => {
 };
 
 const DesignSystemSection = () => {
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const { themeType, setTheme } = useIOThemeContext();
+
+  const ioMarkdownEnabledOnMessagesAndServices = useIOSelector(
+    isIOMarkdownEnabledLocallySelector
+  );
 
   return (
     <ContentWrapper>
@@ -326,13 +330,26 @@ const DesignSystemSection = () => {
           setTheme(themeType === "dark" ? "light" : "dark")
         }
       />
+      <Divider />
+      <ListItemSwitch
+        label="IOMarkdown (Messaggi/Servizi)"
+        value={ioMarkdownEnabledOnMessagesAndServices}
+        onSwitchValueChange={() =>
+          dispatch(
+            setIOMarkdownEnabledOnMessagesAndServices({
+              enabledOnMessagesAndServices:
+                !ioMarkdownEnabledOnMessagesAndServices
+            })
+          )
+        }
+      />
     </ContentWrapper>
   );
 };
 
 const PlaygroundsSection = () => {
   const navigation = useIONavigation();
-  const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
+  const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
@@ -340,13 +357,6 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.LOLLIPOP_PLAYGROUND
-        })
-    },
-    {
-      value: "Markdown",
-      onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.MARKDOWN_PLAYGROUND
         })
     },
     {
@@ -443,10 +453,7 @@ const DeveloperTestEnvironmentSection = ({
   const dispatch = useIODispatch();
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
-  const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isCieIDFeatureEnabled = useIOSelector(
-    isCieIDLocalFeatureEnabledSelector
-  );
+  const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -493,9 +500,6 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
     handleShowModal();
   };
-  const onCieIDFeatureToggle = (enabled: boolean) => {
-    dispatch(cieIDFeatureSetEnabled({ isCieIDFeatureEnabled: enabled }));
-  };
 
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
@@ -514,11 +518,6 @@ const DeveloperTestEnvironmentSection = ({
       description: I18n.t("profile.main.idpay.idpayTestAlert"),
       value: isIdPayTestEnabled,
       onSwitchValueChange: onIdPayTestToggle
-    },
-    {
-      label: I18n.t("profile.main.cieID.cieIdTest.title"),
-      value: isCieIDFeatureEnabled,
-      onSwitchValueChange: onCieIDFeatureToggle
     }
   ];
 
@@ -551,7 +550,7 @@ const DeveloperTestEnvironmentSection = ({
 };
 
 const DeveloperModeSection = () => {
-  const { showModal } = React.useContext(LightModalContext);
+  const { showModal } = useContext(LightModalContext);
   const dispatch = useIODispatch();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
 

@@ -1,6 +1,7 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import { createRef, Fragment, PureComponent } from "react";
 import {
   ActivityIndicator,
   AppState,
@@ -86,7 +87,7 @@ a {
 }
 
 div.custom-block.io-demo-block {
-  background-color: ${customVariables.toastColor};
+  background-color: ${IOColors["turquoise-100"]};
   border-radius: 4px;
   margin-bottom: 32px;
   padding: 4px 8px;
@@ -208,8 +209,8 @@ type State = {
 /**
  * A component to render the message markdown as HTML inside a WebView
  */
-class LegacyMarkdown extends React.PureComponent<Props, State> {
-  private webViewRef = React.createRef<WebView>();
+class LegacyMarkdown extends PureComponent<Props, State> {
+  private webViewRef = createRef<WebView>();
   private subscription: NativeEventSubscription | undefined;
 
   constructor(props: Props) {
@@ -294,7 +295,7 @@ class LegacyMarkdown extends React.PureComponent<Props, State> {
     };
 
     return (
-      <React.Fragment>
+      <Fragment>
         {this.state.isLoading && (
           <ActivityIndicator
             testID={this.props.testID}
@@ -333,7 +334,7 @@ class LegacyMarkdown extends React.PureComponent<Props, State> {
             </View>
           </ScrollView>
         )}
-      </React.Fragment>
+      </Fragment>
     );
   }
 

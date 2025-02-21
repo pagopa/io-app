@@ -6,18 +6,14 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback } from "react";
+import { useCallback, useMemo } from "react";
+import { constFalse, pipe } from "fp-ts/lib/function";
 import { StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  isItwEnabledSelector,
-  itwDisabledCredentialsSelector
-} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import {
@@ -32,6 +28,10 @@ import {
 } from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
 import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences";
+import {
+  isItwEnabledSelector,
+  itwDisabledCredentialsSelector
+} from "../../common/store/selectors/remoteConfig";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
@@ -60,7 +60,7 @@ const WalletCardOnboardingScreen = () => {
 
   useFocusEffect(trackShowCredentialsList);
 
-  const isItwSectionVisible = React.useMemo(
+  const isItwSectionVisible = useMemo(
     // IT Wallet credential catalog should be visible if
     () =>
       isItwValid && // An eID has ben obtained and wallet is valid
@@ -112,7 +112,7 @@ const ItwCredentialOnboardingSection = () => {
   );
 
   return (
-    <>
+    <View>
       <ListItemHeader
         label={I18n.t("features.wallet.onboarding.sections.itw")}
       />
@@ -134,7 +134,7 @@ const ItwCredentialOnboardingSection = () => {
           />
         ))}
       </VStack>
-    </>
+    </View>
   );
 };
 
@@ -145,7 +145,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
   const isCgnLoading = useIOSelector(isCgnDetailsLoading);
   const isCgnActive = useIOSelector(isCgnInformationAvailableSelector);
 
-  const startCgnActiviation = React.useCallback(() => {
+  const startCgnActiviation = useCallback(() => {
     trackStartAddNewCredential("CGN");
     dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
@@ -158,7 +158,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
     });
   };
 
-  const cgnModule = React.useMemo(
+  const cgnModule = useMemo(
     () =>
       isCgnLoading ? (
         <ModuleCredential testID="cgnModuleLoadingTestID" isLoading={true} />
@@ -175,7 +175,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
   );
 
   return (
-    <>
+    <View>
       {props.showTitle && (
         <ListItemHeader
           label={I18n.t("features.wallet.onboarding.sections.other")}
@@ -190,7 +190,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
           onPress={navigateToPaymentMethodOnboarding}
         />
       </VStack>
-    </>
+    </View>
   );
 };
 

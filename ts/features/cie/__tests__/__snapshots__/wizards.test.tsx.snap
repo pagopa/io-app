@@ -37,9 +37,9 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
         <Text
           accessibilityLabel="Do you have the CieID app?"
           accessibilityRole="header"
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="title1"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
@@ -72,9 +72,9 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
           }
         />
         <Text
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
@@ -178,6 +178,9 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   "columnGap": 8,
                 },
                 {},
+                {
+                  "columnGap": 8,
+                },
                 false,
               ]
             }
@@ -185,10 +188,10 @@ To enter the IO app without physically using the Electronic Identity Card, you m
             <Text
               accessibilityElementsHidden={true}
               accessible={false}
-              allowFontScaling={false}
+              allowFontScaling={true}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               numberOfLines={1}
               style={
                 [
@@ -199,11 +202,16 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": undefined,
+                    "lineHeight": 20,
                   },
-                  {
-                    "color": undefined,
-                  },
+                  [
+                    {
+                      "color": undefined,
+                    },
+                    {
+                      "textAlign": "auto",
+                    },
+                  ],
                 ]
               }
             >
@@ -397,15 +405,14 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                 "textAlignVertical": "center",
               },
               {
+                "backgroundColor": "#0073E6",
                 "overflow": "hidden",
               },
               false,
               {
                 "height": 40,
               },
-              {
-                "backgroundColor": "#0073E6",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,
@@ -414,13 +421,15 @@ To enter the IO app without physically using the Electronic Identity Card, you m
           }
         >
           <View
-            entering={[Function]}
             style={
               [
                 {
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
+                },
+                {
+                  "columnGap": 8,
                 },
                 false,
               ]
@@ -429,10 +438,10 @@ To enter the IO app without physically using the Electronic Identity Card, you m
             <Text
               accessibilityElementsHidden={true}
               accessible={false}
-              allowFontScaling={false}
+              allowFontScaling={true}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               numberOfLines={1}
               style={
                 [
@@ -534,6 +543,9 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   "columnGap": 8,
                 },
                 {},
+                {
+                  "columnGap": 8,
+                },
                 false,
               ]
             }
@@ -541,10 +553,10 @@ To enter the IO app without physically using the Electronic Identity Card, you m
             <Text
               accessibilityElementsHidden={true}
               accessible={false}
-              allowFontScaling={false}
+              allowFontScaling={true}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               numberOfLines={1}
               style={
                 [
@@ -555,11 +567,16 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": undefined,
+                    "lineHeight": 20,
                   },
-                  {
-                    "color": undefined,
-                  },
+                  [
+                    {
+                      "color": undefined,
+                    },
+                    {
+                      "textAlign": "auto",
+                    },
+                  ],
                 ]
               }
             >
@@ -610,9 +627,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         <Text
           accessibilityLabel="Do you have your Electronic Identity Card and PIN?"
           accessibilityRole="header"
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="title1"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
@@ -645,9 +662,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           }
         />
         <Text
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
@@ -749,6 +766,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "columnGap": 8,
                 },
                 {},
+                {
+                  "columnGap": 8,
+                },
                 false,
               ]
             }
@@ -756,10 +776,10 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             <Text
               accessibilityElementsHidden={true}
               accessible={false}
-              allowFontScaling={false}
+              allowFontScaling={true}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               numberOfLines={1}
               style={
                 [
@@ -770,11 +790,16 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": undefined,
+                    "lineHeight": 20,
                   },
-                  {
-                    "color": undefined,
-                  },
+                  [
+                    {
+                      "color": undefined,
+                    },
+                    {
+                      "textAlign": "auto",
+                    },
+                  ],
                 ]
               }
             >
@@ -794,9 +819,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         <View>
           <View>
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
@@ -858,9 +883,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     }
                   >
                     <Text
-                      allowFontScaling={false}
+                      allowFontScaling={true}
                       dynamicTypeRamp="body"
-                      maxFontSizeMultiplier={1.25}
+                      maxFontSizeMultiplier={1.5}
                       style={
                         [
                           {},
@@ -898,9 +923,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                       }
                     >
                       <Text
-                        allowFontScaling={false}
+                        allowFontScaling={true}
                         dynamicTypeRamp="body"
-                        maxFontSizeMultiplier={1.25}
+                        maxFontSizeMultiplier={1.5}
                         style={
                           [
                             {},
@@ -928,9 +953,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     }
                   >
                     <Text
-                      allowFontScaling={false}
+                      allowFontScaling={true}
                       dynamicTypeRamp="body"
-                      maxFontSizeMultiplier={1.25}
+                      maxFontSizeMultiplier={1.5}
                       style={
                         [
                           {},
@@ -968,9 +993,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                       }
                     >
                       <Text
-                        allowFontScaling={false}
+                        allowFontScaling={true}
                         dynamicTypeRamp="body"
-                        maxFontSizeMultiplier={1.25}
+                        maxFontSizeMultiplier={1.5}
                         style={
                           [
                             {},
@@ -1000,9 +1025,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               />
             </View>
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
@@ -1090,6 +1115,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "columnGap": 8,
                   },
                   {},
+                  {
+                    "columnGap": 8,
+                  },
                   false,
                 ]
               }
@@ -1097,10 +1125,10 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               <Text
                 accessibilityElementsHidden={true}
                 accessible={false}
-                allowFontScaling={false}
+                allowFontScaling={true}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
-                maxFontSizeMultiplier={1.25}
+                maxFontSizeMultiplier={1.5}
                 numberOfLines={1}
                 style={
                   [
@@ -1111,11 +1139,16 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                       "fontSize": 16,
                       "fontStyle": "normal",
                       "fontWeight": "600",
-                      "lineHeight": undefined,
+                      "lineHeight": 20,
                     },
-                    {
-                      "color": undefined,
-                    },
+                    [
+                      {
+                        "color": undefined,
+                      },
+                      {
+                        "textAlign": "auto",
+                      },
+                    ],
                   ]
                 }
               >
@@ -1317,15 +1350,14 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 "textAlignVertical": "center",
               },
               {
+                "backgroundColor": "#0073E6",
                 "overflow": "hidden",
               },
               false,
               {
                 "height": 40,
               },
-              {
-                "backgroundColor": "#0073E6",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,
@@ -1334,13 +1366,15 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           }
         >
           <View
-            entering={[Function]}
             style={
               [
                 {
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
+                },
+                {
+                  "columnGap": 8,
                 },
                 false,
               ]
@@ -1349,10 +1383,10 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             <Text
               accessibilityElementsHidden={true}
               accessible={false}
-              allowFontScaling={false}
+              allowFontScaling={true}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               numberOfLines={1}
               style={
                 [
@@ -1454,6 +1488,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "columnGap": 8,
                 },
                 {},
+                {
+                  "columnGap": 8,
+                },
                 false,
               ]
             }
@@ -1461,10 +1498,10 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             <Text
               accessibilityElementsHidden={true}
               accessible={false}
-              allowFontScaling={false}
+              allowFontScaling={true}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               numberOfLines={1}
               style={
                 [
@@ -1475,11 +1512,16 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": undefined,
+                    "lineHeight": 20,
                   },
-                  {
-                    "color": undefined,
-                  },
+                  [
+                    {
+                      "color": undefined,
+                    },
+                    {
+                      "textAlign": "auto",
+                    },
+                  ],
                 ]
               }
             >
@@ -1530,9 +1572,9 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         <Text
           accessibilityLabel="Activate your digital identity!"
           accessibilityRole="header"
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="title1"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
@@ -1565,9 +1607,9 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           }
         />
         <Text
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
@@ -1607,9 +1649,9 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           }
         />
         <Text
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="headline"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
@@ -1693,6 +1735,9 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                     "justifyContent": "space-between",
                   },
                   {
+                    "columnGap": 18,
+                  },
+                  {
                     "transform": [
                       {
                         "scale": undefined,
@@ -1702,75 +1747,67 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 ]
               }
             >
-              <View
+              <RNSVGSvgView
+                accessibilityElementsHidden={true}
+                accessibilityLabel=""
+                accessible={false}
+                align="xMidYMid"
+                bbHeight={36}
+                bbWidth={36}
+                focusable={false}
+                height={36}
+                importantForAccessibility="no-hide-descendants"
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
                 style={
-                  {
-                    "marginRight": 12,
-                  }
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                    {
+                      "flex": 0,
+                      "height": 36,
+                      "width": 36,
+                    },
+                  ]
                 }
+                tintColor="#0B3EE3"
+                vbHeight={24}
+                vbWidth={24}
+                width={36}
               >
-                <RNSVGSvgView
-                  accessibilityElementsHidden={true}
-                  accessibilityLabel=""
-                  accessible={false}
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  focusable={false}
-                  height={24}
-                  importantForAccessibility="no-hide-descendants"
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    [
-                      {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      {
-                        "color": "#0B3EE3",
-                      },
-                      {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
+                <RNSVGGroup
+                  color="#0B3EE3"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
                   }
-                  tintColor="#0B3EE3"
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
                 >
-                  <RNSVGGroup
-                    color="#0B3EE3"
+                  <RNSVGPath
+                    clipRule={0}
+                    d="M18.5855 18.458C17.0895 19.3667 15.3387 19.8894 13.46 19.8894C7.97044 19.8894 3.51498 15.4213 3.51498 9.94468C3.51498 4.45532 7.97044 0 13.4472 0C16.8534 0 19.8577 1.72055 21.6503 4.32706L21.9491 4.67563L17.9748 8.08194L17.7289 7.79506L17.7239 7.8C17.7047 7.77353 17.6852 7.74723 17.6655 7.72109L17.4763 7.50035L17.4846 7.49319C16.4164 6.2133 14.8146 5.4 13.0259 5.4C9.82156 5.4 7.20446 8.00426 7.20446 11.2213H6.34911C6.34911 7.54468 9.34921 4.54468 13.0259 4.54468C15.0687 4.54468 16.9055 5.47165 18.1353 6.93552L20.8254 4.62985C19.1728 2.33792 16.4768 0.842553 13.4472 0.842553C8.43003 0.842553 4.35756 4.91489 4.35756 9.93192C4.35756 14.9489 8.43003 19.0213 13.4472 19.0213C15.2037 19.0213 16.8522 18.5179 18.242 17.6506L18.6227 17.3243L21.5772 20.7718C21.5779 20.7713 21.5787 20.7707 21.5794 20.7702L22.1922 21.383C19.9708 23.0298 17.2133 24 14.2387 24C7.58745 24 2.05961 19.1362 1 12.7787H1.86811C2.91496 18.6638 8.0598 23.1447 14.2387 23.1447C16.6948 23.1447 18.9961 22.4328 20.9386 21.2037L18.5855 18.458Z"
                     fill={
                       {
-                        "payload": 4278190080,
-                        "type": 0,
+                        "type": 2,
                       }
                     }
-                  >
-                    <RNSVGPath
-                      clipRule={0}
-                      d="M18.5855 18.458C17.0895 19.3667 15.3387 19.8894 13.46 19.8894C7.97044 19.8894 3.51498 15.4213 3.51498 9.94468C3.51498 4.45532 7.97044 0 13.4472 0C16.8534 0 19.8577 1.72055 21.6503 4.32706L21.9491 4.67563L17.9748 8.08194L17.7289 7.79506L17.7239 7.8C17.7047 7.77353 17.6852 7.74723 17.6655 7.72109L17.4763 7.50035L17.4846 7.49319C16.4164 6.2133 14.8146 5.4 13.0259 5.4C9.82156 5.4 7.20446 8.00426 7.20446 11.2213H6.34911C6.34911 7.54468 9.34921 4.54468 13.0259 4.54468C15.0687 4.54468 16.9055 5.47165 18.1353 6.93552L20.8254 4.62985C19.1728 2.33792 16.4768 0.842553 13.4472 0.842553C8.43003 0.842553 4.35756 4.91489 4.35756 9.93192C4.35756 14.9489 8.43003 19.0213 13.4472 19.0213C15.2037 19.0213 16.8522 18.5179 18.242 17.6506L18.6227 17.3243L21.5772 20.7718C21.5779 20.7713 21.5787 20.7707 21.5794 20.7702L22.1922 21.383C19.9708 23.0298 17.2133 24 14.2387 24C7.58745 24 2.05961 19.1362 1 12.7787H1.86811C2.91496 18.6638 8.0598 23.1447 14.2387 23.1447C16.6948 23.1447 18.9961 22.4328 20.9386 21.2037L18.5855 18.458Z"
-                      fill={
-                        {
-                          "type": 2,
-                        }
-                      }
-                      fillRule={0}
-                      propList={
-                        [
-                          "fill",
-                          "fillRule",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+                    fillRule={0}
+                    propList={
+                      [
+                        "fill",
+                        "fillRule",
+                      ]
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
               <View
                 style={
                   {
@@ -1780,8 +1817,8 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 }
               >
                 <Text
-                  allowFontScaling={false}
-                  maxFontSizeMultiplier={1.25}
+                  allowFontScaling={true}
+                  maxFontSizeMultiplier={1.5}
                   style={
                     [
                       {},
@@ -1862,6 +1899,9 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                     "justifyContent": "space-between",
                   },
                   {
+                    "columnGap": 18,
+                  },
+                  {
                     "transform": [
                       {
                         "scale": undefined,
@@ -1871,117 +1911,109 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 ]
               }
             >
-              <View
+              <RNSVGSvgView
+                accessibilityElementsHidden={true}
+                accessibilityLabel=""
+                accessible={false}
+                align="xMidYMid"
+                bbHeight={36}
+                bbWidth={36}
+                focusable={false}
+                height={36}
+                importantForAccessibility="no-hide-descendants"
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
                 style={
-                  {
-                    "marginRight": 12,
-                  }
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                    {
+                      "flex": 0,
+                      "height": 36,
+                      "width": 36,
+                    },
+                  ]
                 }
+                tintColor="#0B3EE3"
+                vbHeight={24}
+                vbWidth={24}
+                width={36}
               >
-                <RNSVGSvgView
-                  accessibilityElementsHidden={true}
-                  accessibilityLabel=""
-                  accessible={false}
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  focusable={false}
-                  height={24}
-                  importantForAccessibility="no-hide-descendants"
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    [
-                      {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      {
-                        "color": "#0B3EE3",
-                      },
-                      {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
+                <RNSVGGroup
+                  color="#0B3EE3"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
                   }
-                  tintColor="#0B3EE3"
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
                 >
-                  <RNSVGGroup
-                    color="#0B3EE3"
+                  <RNSVGPath
+                    d="m7.172 3.422-.149.05c3.004.54 5.428 1.965 7.155 4.398 1.721 2.426 2.277 5.111 1.643 7.988-.635 2.884-2.313 5.09-4.89 6.683l.025.008c.014.005.026.01.038.012l.478.102c.353.075.705.15 1.06.221.525.106 1.05.222 1.574.337.94.208 1.88.415 2.832.564.177.027.355.058.532.088.223.039.446.077.67.11.315.046.625 0 .909-.139.613-.302.907-.806.954-1.454a3.204 3.204 0 0 0-.122-1.092 3.614 3.614 0 0 1-.128-.598c-.036-.369.095-.696.333-.983.055-.066.112-.132.169-.197.067-.077.134-.154.198-.233.136-.167.235-.349.191-.572a3.417 3.417 0 0 0-.066-.259l-.001-.003a.588.588 0 0 1 .099-.549l.08-.108c.03-.044.062-.088.096-.13.224-.282.257-.585.12-.91a14.456 14.456 0 0 0-.084-.19c-.047-.107-.094-.214-.137-.323a.738.738 0 0 1 .126-.79c.189-.228.43-.389.694-.525.333-.174.657-.36.94-.605.243-.213.466-.442.61-.731a.935.935 0 0 0 .107-.495 1.493 1.493 0 0 0-.172-.548 8.247 8.247 0 0 0-.878-1.34 502.716 502.716 0 0 0-1.904-2.433 3.126 3.126 0 0 1-.648-1.57 14.29 14.29 0 0 1-.086-.858 5.584 5.584 0 0 1-.005-.65c.008-.153.022-.305.036-.457.013-.14.026-.279.034-.418a4.754 4.754 0 0 0-.282-1.978c-.19-.501-.394-.998-.598-1.495a146.1 146.1 0 0 1-.23-.561 1.426 1.426 0 0 0-.433-.61c-.207-.163-.435-.228-.699-.14l-6.891 2.287-2.655.881-.645.215ZM.582 11.859c.388.58 1.127.87 2.215.87.668 0 1.375-.078 2.122-.231l-.032-.964c-.668.105-1.328.157-1.981.157s-1.092-.187-1.317-.56c-.225-.374-.337-1.076-.337-2.106 0-1.03.116-1.732.348-2.105.232-.374.675-.56 1.328-.56s1.306.055 1.959.167l.043-.943a9.8 9.8 0 0 0-2.133-.262c-1.081 0-1.817.281-2.21.843C.197 6.728 0 7.672 0 9c0 1.327.194 2.28.582 2.86ZM5.866 12.613h1.187V7.375H5.866v5.238ZM5.866 6.485h1.187V5.28H5.866v1.205Z"
                     fill={
                       {
-                        "payload": 4278190080,
-                        "type": 0,
+                        "type": 2,
                       }
                     }
-                  >
-                    <RNSVGPath
-                      d="m7.172 3.422-.149.05c3.004.54 5.428 1.965 7.155 4.398 1.721 2.426 2.277 5.111 1.643 7.988-.635 2.884-2.313 5.09-4.89 6.683l.025.008c.014.005.026.01.038.012l.478.102c.353.075.705.15 1.06.221.525.106 1.05.222 1.574.337.94.208 1.88.415 2.832.564.177.027.355.058.532.088.223.039.446.077.67.11.315.046.625 0 .909-.139.613-.302.907-.806.954-1.454a3.204 3.204 0 0 0-.122-1.092 3.614 3.614 0 0 1-.128-.598c-.036-.369.095-.696.333-.983.055-.066.112-.132.169-.197.067-.077.134-.154.198-.233.136-.167.235-.349.191-.572a3.417 3.417 0 0 0-.066-.259l-.001-.003a.588.588 0 0 1 .099-.549l.08-.108c.03-.044.062-.088.096-.13.224-.282.257-.585.12-.91a14.456 14.456 0 0 0-.084-.19c-.047-.107-.094-.214-.137-.323a.738.738 0 0 1 .126-.79c.189-.228.43-.389.694-.525.333-.174.657-.36.94-.605.243-.213.466-.442.61-.731a.935.935 0 0 0 .107-.495 1.493 1.493 0 0 0-.172-.548 8.247 8.247 0 0 0-.878-1.34 502.716 502.716 0 0 0-1.904-2.433 3.126 3.126 0 0 1-.648-1.57 14.29 14.29 0 0 1-.086-.858 5.584 5.584 0 0 1-.005-.65c.008-.153.022-.305.036-.457.013-.14.026-.279.034-.418a4.754 4.754 0 0 0-.282-1.978c-.19-.501-.394-.998-.598-1.495a146.1 146.1 0 0 1-.23-.561 1.426 1.426 0 0 0-.433-.61c-.207-.163-.435-.228-.699-.14l-6.891 2.287-2.655.881-.645.215ZM.582 11.859c.388.58 1.127.87 2.215.87.668 0 1.375-.078 2.122-.231l-.032-.964c-.668.105-1.328.157-1.981.157s-1.092-.187-1.317-.56c-.225-.374-.337-1.076-.337-2.106 0-1.03.116-1.732.348-2.105.232-.374.675-.56 1.328-.56s1.306.055 1.959.167l.043-.943a9.8 9.8 0 0 0-2.133-.262c-1.081 0-1.817.281-2.21.843C.197 6.728 0 7.672 0 9c0 1.327.194 2.28.582 2.86ZM5.866 12.613h1.187V7.375H5.866v5.238ZM5.866 6.485h1.187V5.28H5.866v1.205Z"
-                      fill={
-                        {
-                          "type": 2,
-                        }
+                    propList={
+                      [
+                        "fill",
+                      ]
+                    }
+                  />
+                  <RNSVGPath
+                    clipRule={0}
+                    d="m12.461 11.639-.304.031a20.61 20.61 0 0 1-1.59.063c-.515 0-.866-.101-1.055-.304-.189-.202-.287-.52-.294-.953h3.374l.076-.817c0-1.6-.761-2.4-2.285-2.4-1.575 0-2.362.93-2.362 2.787 0 .936.176 1.617.528 2.043.352.426.93.64 1.736.64.638 0 1.371-.081 2.198-.242l-.022-.848Zm-1.213-3.127c.17.206.256.567.256 1.084H9.207c.007-.496.104-.852.289-1.068.185-.217.48-.325.887-.325.406 0 .694.103.865.309Z"
+                    fill={
+                      {
+                        "type": 2,
                       }
-                      propList={
-                        [
-                          "fill",
-                        ]
+                    }
+                    fillRule={0}
+                    propList={
+                      [
+                        "fill",
+                        "fillRule",
+                      ]
+                    }
+                  />
+                  <RNSVGPath
+                    d="M4.654 21.179h1.208v-7.176H4.654v7.176Z"
+                    fill={
+                      {
+                        "type": 2,
                       }
-                    />
-                    <RNSVGPath
-                      clipRule={0}
-                      d="m12.461 11.639-.304.031a20.61 20.61 0 0 1-1.59.063c-.515 0-.866-.101-1.055-.304-.189-.202-.287-.52-.294-.953h3.374l.076-.817c0-1.6-.761-2.4-2.285-2.4-1.575 0-2.362.93-2.362 2.787 0 .936.176 1.617.528 2.043.352.426.93.64 1.736.64.638 0 1.371-.081 2.198-.242l-.022-.848Zm-1.213-3.127c.17.206.256.567.256 1.084H9.207c.007-.496.104-.852.289-1.068.185-.217.48-.325.887-.325.406 0 .694.103.865.309Z"
-                      fill={
-                        {
-                          "type": 2,
-                        }
+                    }
+                    propList={
+                      [
+                        "fill",
+                      ]
+                    }
+                  />
+                  <RNSVGPath
+                    clipRule={0}
+                    d="M7.113 21.179h2.58c1.197 0 2.002-.339 2.416-1.016.21-.343.357-.725.44-1.147.084-.423.126-.938.126-1.545 0-1.195-.21-2.071-.632-2.63-.42-.558-1.204-.838-2.35-.838h-2.58v7.176Zm3.973-5.584c.225.384.337 1.01.337 1.876 0 .433-.02.796-.06 1.089-.04.293-.118.57-.233.828-.24.51-.719.764-1.437.764H8.322V15.02h1.37c.704 0 1.169.192 1.394.576Z"
+                    fill={
+                      {
+                        "type": 2,
                       }
-                      fillRule={0}
-                      propList={
-                        [
-                          "fill",
-                          "fillRule",
-                        ]
-                      }
-                    />
-                    <RNSVGPath
-                      d="M4.654 21.179h1.208v-7.176H4.654v7.176Z"
-                      fill={
-                        {
-                          "type": 2,
-                        }
-                      }
-                      propList={
-                        [
-                          "fill",
-                        ]
-                      }
-                    />
-                    <RNSVGPath
-                      clipRule={0}
-                      d="M7.113 21.179h2.58c1.197 0 2.002-.339 2.416-1.016.21-.343.357-.725.44-1.147.084-.423.126-.938.126-1.545 0-1.195-.21-2.071-.632-2.63-.42-.558-1.204-.838-2.35-.838h-2.58v7.176Zm3.973-5.584c.225.384.337 1.01.337 1.876 0 .433-.02.796-.06 1.089-.04.293-.118.57-.233.828-.24.51-.719.764-1.437.764H8.322V15.02h1.37c.704 0 1.169.192 1.394.576Z"
-                      fill={
-                        {
-                          "type": 2,
-                        }
-                      }
-                      fillRule={0}
-                      propList={
-                        [
-                          "fill",
-                          "fillRule",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+                    }
+                    fillRule={0}
+                    propList={
+                      [
+                        "fill",
+                        "fillRule",
+                      ]
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
               <View
                 style={
                   {
@@ -1991,8 +2023,8 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 }
               >
                 <Text
-                  allowFontScaling={false}
-                  maxFontSizeMultiplier={1.25}
+                  allowFontScaling={true}
+                  maxFontSizeMultiplier={1.5}
                   style={
                     [
                       {},
@@ -2073,6 +2105,9 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                     "justifyContent": "space-between",
                   },
                   {
+                    "columnGap": 18,
+                  },
+                  {
                     "transform": [
                       {
                         "scale": undefined,
@@ -2082,75 +2117,67 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 ]
               }
             >
-              <View
+              <RNSVGSvgView
+                accessibilityElementsHidden={true}
+                accessibilityLabel=""
+                accessible={false}
+                align="xMidYMid"
+                bbHeight={36}
+                bbWidth={36}
+                focusable={false}
+                height={36}
+                importantForAccessibility="no-hide-descendants"
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
                 style={
-                  {
-                    "marginRight": 12,
-                  }
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    {
+                      "color": "#0B3EE3",
+                    },
+                    {
+                      "flex": 0,
+                      "height": 36,
+                      "width": 36,
+                    },
+                  ]
                 }
+                tintColor="#0B3EE3"
+                vbHeight={24}
+                vbWidth={24}
+                width={36}
               >
-                <RNSVGSvgView
-                  accessibilityElementsHidden={true}
-                  accessibilityLabel=""
-                  accessible={false}
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  focusable={false}
-                  height={24}
-                  importantForAccessibility="no-hide-descendants"
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    [
-                      {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      {
-                        "color": "#0B3EE3",
-                      },
-                      {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
+                <RNSVGGroup
+                  color="#0B3EE3"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
                   }
-                  tintColor="#0B3EE3"
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
                 >
-                  <RNSVGGroup
-                    color="#0B3EE3"
+                  <RNSVGPath
+                    clipRule={0}
+                    d="M12 24c6.629 0 12-5.371 12-12S18.629 0 12 0C5.375 0 0 5.371 0 12s5.375 12 12 12Zm.033-10.97c-.997 0-1.818-.336-2.463-1.014-.646-.674-.968-1.51-.968-2.507 0-1.001.322-1.83.964-2.492.64-.662 1.458-.992 2.458-.992.997 0 1.81.334 2.435 1.017.625.678.94 1.51.94 2.511 0 .993-.315 1.822-.94 2.484-.625.657-1.43.992-2.426.992Zm-3.431 4.905c0-1.001.322-1.83.96-2.492.64-.662 1.458-.992 2.467-.992.996 0 1.809.335 2.43 1.017.625.682.94 1.515.94 2.512l-6.797-.045Z"
                     fill={
                       {
-                        "payload": 4278190080,
-                        "type": 0,
+                        "type": 2,
                       }
                     }
-                  >
-                    <RNSVGPath
-                      clipRule={0}
-                      d="M12 24c6.629 0 12-5.371 12-12S18.629 0 12 0C5.375 0 0 5.371 0 12s5.375 12 12 12Zm.033-10.97c-.997 0-1.818-.336-2.463-1.014-.646-.674-.968-1.51-.968-2.507 0-1.001.322-1.83.964-2.492.64-.662 1.458-.992 2.458-.992.997 0 1.81.334 2.435 1.017.625.678.94 1.51.94 2.511 0 .993-.315 1.822-.94 2.484-.625.657-1.43.992-2.426.992Zm-3.431 4.905c0-1.001.322-1.83.96-2.492.64-.662 1.458-.992 2.467-.992.996 0 1.809.335 2.43 1.017.625.682.94 1.515.94 2.512l-6.797-.045Z"
-                      fill={
-                        {
-                          "type": 2,
-                        }
-                      }
-                      fillRule={0}
-                      propList={
-                        [
-                          "fill",
-                          "fillRule",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+                    fillRule={0}
+                    propList={
+                      [
+                        "fill",
+                        "fillRule",
+                      ]
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
               <View
                 style={
                   {
@@ -2160,8 +2187,8 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 }
               >
                 <Text
-                  allowFontScaling={false}
-                  maxFontSizeMultiplier={1.25}
+                  allowFontScaling={true}
+                  maxFontSizeMultiplier={1.5}
                   style={
                     [
                       {},
@@ -2367,15 +2394,14 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 "textAlignVertical": "center",
               },
               {
+                "backgroundColor": "#0073E6",
                 "overflow": "hidden",
               },
               false,
               {
                 "height": 40,
               },
-              {
-                "backgroundColor": "#0073E6",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,
@@ -2384,13 +2410,15 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           }
         >
           <View
-            entering={[Function]}
             style={
               [
                 {
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
+                },
+                {
+                  "columnGap": 8,
                 },
                 false,
               ]
@@ -2399,10 +2427,10 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
             <Text
               accessibilityElementsHidden={true}
               accessible={false}
-              allowFontScaling={false}
+              allowFontScaling={true}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               numberOfLines={1}
               style={
                 [
@@ -2468,9 +2496,9 @@ exports[`SpidWizard Should match the snapshot 1`] = `
         <Text
           accessibilityLabel="Do you have SPID?"
           accessibilityRole="header"
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="title1"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
@@ -2503,9 +2531,9 @@ exports[`SpidWizard Should match the snapshot 1`] = `
           }
         />
         <Text
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
@@ -2708,15 +2736,14 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 "textAlignVertical": "center",
               },
               {
+                "backgroundColor": "#0073E6",
                 "overflow": "hidden",
               },
               false,
               {
                 "height": 40,
               },
-              {
-                "backgroundColor": "#0073E6",
-              },
+              {},
               false,
               {
                 "backgroundColor": undefined,
@@ -2725,13 +2752,15 @@ exports[`SpidWizard Should match the snapshot 1`] = `
           }
         >
           <View
-            entering={[Function]}
             style={
               [
                 {
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
+                },
+                {
+                  "columnGap": 8,
                 },
                 false,
               ]
@@ -2740,10 +2769,10 @@ exports[`SpidWizard Should match the snapshot 1`] = `
             <Text
               accessibilityElementsHidden={true}
               accessible={false}
-              allowFontScaling={false}
+              allowFontScaling={true}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               numberOfLines={1}
               style={
                 [
@@ -2845,6 +2874,9 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   "columnGap": 8,
                 },
                 {},
+                {
+                  "columnGap": 8,
+                },
                 false,
               ]
             }
@@ -2852,10 +2884,10 @@ exports[`SpidWizard Should match the snapshot 1`] = `
             <Text
               accessibilityElementsHidden={true}
               accessible={false}
-              allowFontScaling={false}
+              allowFontScaling={true}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               numberOfLines={1}
               style={
                 [
@@ -2866,11 +2898,16 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": undefined,
+                    "lineHeight": 20,
                   },
-                  {
-                    "color": undefined,
-                  },
+                  [
+                    {
+                      "color": undefined,
+                    },
+                    {
+                      "textAlign": "auto",
+                    },
+                  ],
                 ]
               }
             >

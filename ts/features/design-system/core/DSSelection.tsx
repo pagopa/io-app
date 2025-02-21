@@ -12,12 +12,10 @@ import {
   NativeSwitch,
   RadioGroup,
   RadioItem,
-  SwitchLabel,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
-import { useState } from "react";
+import { ComponentProps, useState } from "react";
 import { Alert, Text, View } from "react-native";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -63,8 +61,6 @@ export const DSSelection = () => {
             <NativeSwitchShowroom />
             {/* ListItemSwitch */}
             <ListItemSwitchShowroom />
-            {/* SwitchLabel */}
-            {renderAnimatedSwitch()}
           </VStack>
         </VStack>
       </VStack>
@@ -309,29 +305,17 @@ const AnimatedMessageCheckboxShowroom = () => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <>
-      <DSComponentViewerBox name="AnimatedMessageCheckbox">
-        <View style={[IOStyles.row, IOStyles.alignCenter]}>
-          <AnimatedMessageCheckbox checked={isEnabled} />
-          <HSpacer size={24} />
-          <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
-        </View>
-      </DSComponentViewerBox>
-    </>
+    <DSComponentViewerBox name="AnimatedMessageCheckbox">
+      <View style={[IOStyles.row, IOStyles.alignCenter]}>
+        <AnimatedMessageCheckbox checked={isEnabled} />
+        <HSpacer size={24} />
+        <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
+      </View>
+    </DSComponentViewerBox>
   );
 };
 
 // SWITCH
-
-const renderAnimatedSwitch = () => (
-  <DSComponentViewerBox name="AnimatedSwitch, dismissed in favor of the native one">
-    <VStack space={componentInnerMargin}>
-      <SwitchLabel label="This is a test" />
-      <SwitchLabel label="This is a test with a very loooong looooooong loooooooong text" />
-    </VStack>
-  </DSComponentViewerBox>
-);
-
 const NativeSwitchShowroom = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -346,7 +330,7 @@ const NativeSwitchShowroom = () => {
 };
 
 type ListItemSwitchSampleProps = Pick<
-  React.ComponentProps<typeof ListItemSwitch>,
+  ComponentProps<typeof ListItemSwitch>,
   "label" | "description" | "value" | "icon" | "paymentLogo" | "action"
 >;
 

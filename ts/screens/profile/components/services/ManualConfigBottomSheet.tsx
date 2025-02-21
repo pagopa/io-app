@@ -1,16 +1,12 @@
-import { FooterActionsInline, VSpacer } from "@pagopa/io-app-design-system";
-import * as React from "react";
-import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
+import { FooterActionsInline } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 const ManualConfigConfirm = (): React.ReactElement => (
-  <>
-    <VSpacer size={16} />
-    <LegacyMarkdown>
-      {I18n.t("services.optIn.preferences.manualConfig.bottomSheet.body")}
-    </LegacyMarkdown>
-  </>
+  <IOMarkdown
+    content={I18n.t("services.optIn.preferences.manualConfig.bottomSheet.body")}
+  />
 );
 
 export const useManualConfigBottomSheet = (onConfirm: () => void) => {
@@ -18,27 +14,31 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     present,
     bottomSheet: manualConfigBottomSheet,
     dismiss
-  } = useIOBottomSheetModal({
-    title: I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title"),
-    component: <ManualConfigConfirm />,
-    footer: (
-      <FooterActionsInline
-        startAction={{
-          color: "primary",
-          label: I18n.t("global.buttons.cancel"),
-          onPress: () => dismiss()
-        }}
-        endAction={{
-          color: "danger",
-          label: I18n.t("global.buttons.confirm"),
-          onPress: () => {
-            onConfirm();
-            dismiss();
-          }
-        }}
-      />
-    )
-  });
+  } = useIOBottomSheetModal(
+    {
+      title: I18n.t(
+        "services.optIn.preferences.manualConfig.bottomSheet.title"
+      ),
+      component: <ManualConfigConfirm />,
+      footer: (
+        <FooterActionsInline
+          startAction={{
+            color: "primary",
+            label: I18n.t("global.buttons.cancel"),
+            onPress: () => dismiss()
+          }}
+          endAction={{
+            color: "danger",
+            label: I18n.t("global.buttons.confirm"),
+            onPress: () => {
+              onConfirm();
+              dismiss();
+            }
+          }}
+        />
+      )
+    }
+  );
 
   return { present, manualConfigBottomSheet, dismiss };
 };

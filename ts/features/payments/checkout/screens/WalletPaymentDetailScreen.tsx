@@ -20,7 +20,7 @@ import {
 } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { ComponentProps, useLayoutEffect } from "react";
+import { useCallback, ComponentProps, useLayoutEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
@@ -81,7 +81,7 @@ const WalletPaymentDetailScreen = () => {
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       dispatch(paymentsGetPaymentDetailsAction.request(rptId));
     }, [dispatch, rptId])
   );
@@ -322,7 +322,6 @@ const WalletPaymentDetailContent = ({
         testID="wallet-payment-detail-recipient"
         icon={"institution"}
         label={I18n.t("wallet.firstTransactionSummary.recipient")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.recipient")}
         value={payment.paName}
       />
       <Divider />
@@ -330,7 +329,6 @@ const WalletPaymentDetailContent = ({
         testID="wallet-payment-detail-object"
         icon={"notes"}
         label={I18n.t("wallet.firstTransactionSummary.object")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.object")}
         value={description}
       />
       <Divider />
@@ -338,7 +336,6 @@ const WalletPaymentDetailContent = ({
         testID="wallet-payment-detail-amount"
         icon={"psp"}
         label={I18n.t("wallet.firstTransactionSummary.amount")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.amount")}
         value={amount}
         endElement={amountEndElement}
       />
@@ -348,9 +345,6 @@ const WalletPaymentDetailContent = ({
           <ListItemInfo
             icon="calendar"
             label={I18n.t("wallet.firstTransactionSummary.dueDate")}
-            accessibilityLabel={I18n.t(
-              "wallet.firstTransactionSummary.dueDate"
-            )}
             value={dueDate}
           />
           <Divider />
@@ -360,7 +354,6 @@ const WalletPaymentDetailContent = ({
         testID="payment-notice-copy-button"
         icon="docPaymentCode"
         label={I18n.t("payment.noticeCode")}
-        accessibilityLabel={I18n.t("payment.noticeCode")}
         value={formattedPaymentNoticeNumber}
         onPress={() => handleOnCopy(formattedPaymentNoticeNumber)}
       />
@@ -368,7 +361,6 @@ const WalletPaymentDetailContent = ({
       <ListItemInfoCopy
         icon="entityCode"
         label={I18n.t("wallet.firstTransactionSummary.entityCode")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.entityCode")}
         value={orgFiscalCode}
         onPress={() => handleOnCopy(orgFiscalCode)}
       />

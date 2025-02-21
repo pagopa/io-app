@@ -5,9 +5,12 @@ import * as O from "fp-ts/lib/Option";
 import { getCredentialExpireDate } from "./itwClaimsUtils";
 import { ItwCredentialStatus, StoredCredential } from "./itwTypesUtils";
 
+const DEFAULT_EXPIRING_DAYS = 30;
+
 type GetCredentialStatusOptions = {
   /**
    * Number of days before expiration required to mark a credential as "EXPIRING".
+   * @default 30
    */
   expiringDays?: number;
 };
@@ -25,12 +28,18 @@ export const getCredentialStatus = (
   credential: StoredCredential,
   options: GetCredentialStatusOptions = {}
 ): ItwCredentialStatus => {
-  const { expiringDays = 14 } = options;
+  const { expiringDays = DEFAULT_EXPIRING_DAYS } = options;
   const {
     jwt,
     parsedCredential,
     storedStatusAttestation: statusAttestation
   } = credential;
+  // We could not determine the status of the credential.
+  // This happens when the status attestation API call fails.
+  if (statusAttestation?.credentialStatus === "unknown") {
+    return "unknown";
+  }
+
   const now = Date.now();
 
   const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);

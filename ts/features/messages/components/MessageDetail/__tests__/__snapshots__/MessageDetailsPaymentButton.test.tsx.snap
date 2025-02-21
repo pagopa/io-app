@@ -381,15 +381,14 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
                                 "textAlignVertical": "center",
                               },
                               {
+                                "backgroundColor": "#0073E6",
                                 "overflow": "hidden",
                               },
                               false,
                               {
                                 "height": 40,
                               },
-                              {
-                                "backgroundColor": "#0073E6",
-                              },
+                              {},
                               false,
                               {
                                 "backgroundColor": undefined,
@@ -398,7 +397,6 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
                           }
                         >
                           <View
-                            entering={[Function]}
                             exiting={[Function]}
                             style={
                               {
@@ -982,15 +980,14 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                                 "textAlignVertical": "center",
                               },
                               {
+                                "backgroundColor": "#0073E6",
                                 "overflow": "hidden",
                               },
                               false,
                               {
                                 "height": 40,
                               },
-                              {
-                                "backgroundColor": "#0073E6",
-                              },
+                              {},
                               false,
                               {
                                 "backgroundColor": undefined,
@@ -999,13 +996,15 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                           }
                         >
                           <View
-                            entering={[Function]}
                             style={
                               [
                                 {
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "justifyContent": "center",
+                                },
+                                {
+                                  "columnGap": 8,
                                 },
                                 false,
                               ]
@@ -1014,10 +1013,10 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                             <Text
                               accessibilityElementsHidden={true}
                               accessible={false}
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={1}
                               style={
                                 [

@@ -681,8 +681,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                       }
                     >
                       <View
-                        accessibilityLabel="Avvisi pagoPA"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -692,7 +690,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -704,98 +701,19 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                           <View
                             style={
                               {
-                                "marginRight": 8,
-                              }
-                            }
-                          >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                ]
-                              }
-                              tintColor="#0B3EE3"
-                              vbHeight={32}
-                              vbWidth={32}
-                              width={24}
-                            >
-                              <RNSVGGroup
-                                color="#0B3EE3"
-                                fill={
-                                  {
-                                    "payload": 4278190080,
-                                    "type": 0,
-                                  }
-                                }
-                              >
-                                <RNSVGPath
-                                  d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              {
                                 "flex": 1,
                               }
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Avvisi pagoPA"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 role="heading"
                                 style={
                                   [
@@ -905,9 +823,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -926,9 +844,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -963,11 +881,13 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -976,9 +896,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1157,9 +1077,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1178,9 +1098,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -1215,11 +1135,13 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -1228,9 +1150,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1409,9 +1331,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1430,9 +1352,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -1467,11 +1389,13 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -1480,9 +1404,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1661,9 +1585,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1682,9 +1606,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -1719,11 +1643,13 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -1732,9 +1658,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1913,9 +1839,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1934,9 +1860,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -1971,11 +1897,13 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -1984,9 +1912,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -2165,9 +2093,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2186,9 +2114,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -2223,11 +2151,13 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -2236,9 +2166,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -2417,9 +2347,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -2438,9 +2368,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -2475,11 +2405,13 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -2488,9 +2420,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -2929,8 +2861,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                       }
                     >
                       <View
-                        accessibilityLabel="Avvisi pagoPA"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -2940,7 +2870,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -2952,98 +2881,19 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                           <View
                             style={
                               {
-                                "marginRight": 8,
-                              }
-                            }
-                          >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                ]
-                              }
-                              tintColor="#0B3EE3"
-                              vbHeight={32}
-                              vbWidth={32}
-                              width={24}
-                            >
-                              <RNSVGGroup
-                                color="#0B3EE3"
-                                fill={
-                                  {
-                                    "payload": 4278190080,
-                                    "type": 0,
-                                  }
-                                }
-                              >
-                                <RNSVGPath
-                                  d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              {
                                 "flex": 1,
                               }
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Avvisi pagoPA"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 role="heading"
                                 style={
                                   [
@@ -3153,9 +3003,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3174,9 +3024,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -3211,11 +3061,13 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -3224,9 +3076,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -3405,9 +3257,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3426,9 +3278,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -3463,11 +3315,13 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -3476,9 +3330,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -3657,9 +3511,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3678,9 +3532,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -3715,11 +3569,13 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -3728,9 +3584,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -3909,9 +3765,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -3930,9 +3786,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -3967,11 +3823,13 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -3980,9 +3838,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -4161,9 +4019,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -4182,9 +4040,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -4219,11 +4077,13 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -4232,9 +4092,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -4413,9 +4273,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -4434,9 +4294,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -4471,11 +4331,13 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -4484,9 +4346,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -4665,9 +4527,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -4686,9 +4548,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   Codice avviso
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -4723,11 +4585,13 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -4736,9 +4600,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -5523,8 +5387,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                       }
                     >
                       <View
-                        accessibilityLabel="Avvisi pagoPA"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -5534,7 +5396,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -5546,98 +5407,19 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           <View
                             style={
                               {
-                                "marginRight": 8,
-                              }
-                            }
-                          >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                ]
-                              }
-                              tintColor="#0B3EE3"
-                              vbHeight={32}
-                              vbWidth={32}
-                              width={24}
-                            >
-                              <RNSVGGroup
-                                color="#0B3EE3"
-                                fill={
-                                  {
-                                    "payload": 4278190080,
-                                    "type": 0,
-                                  }
-                                }
-                              >
-                                <RNSVGPath
-                                  d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              {
                                 "flex": 1,
                               }
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Avvisi pagoPA"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 role="heading"
                                 style={
                                   [
@@ -5739,9 +5521,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -5760,9 +5542,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   Due date 02/05/2099
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -5792,9 +5574,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               >
                                 <Text
                                   accessibilityLabel="1.99 €"
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -5965,9 +5747,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -5986,9 +5768,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -6023,11 +5805,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#F4F5F8",
@@ -6036,9 +5820,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -6216,9 +6000,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -6237,9 +6021,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -6274,11 +6058,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#F4F5F8",
@@ -6287,9 +6073,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -6467,9 +6253,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -6488,9 +6274,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -6525,11 +6311,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F5FE",
@@ -6538,9 +6326,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -6718,9 +6506,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -6739,9 +6527,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -6776,11 +6564,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -6789,9 +6579,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -7230,8 +7020,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                       }
                     >
                       <View
-                        accessibilityLabel="Avvisi pagoPA"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -7241,7 +7029,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -7253,98 +7040,19 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           <View
                             style={
                               {
-                                "marginRight": 8,
-                              }
-                            }
-                          >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                ]
-                              }
-                              tintColor="#0B3EE3"
-                              vbHeight={32}
-                              vbWidth={32}
-                              width={24}
-                            >
-                              <RNSVGGroup
-                                color="#0B3EE3"
-                                fill={
-                                  {
-                                    "payload": 4278190080,
-                                    "type": 0,
-                                  }
-                                }
-                              >
-                                <RNSVGPath
-                                  d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              {
                                 "flex": 1,
                               }
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Avvisi pagoPA"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 role="heading"
                                 style={
                                   [
@@ -7446,9 +7154,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -7467,9 +7175,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   Due date 02/05/2099
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -7499,9 +7207,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               >
                                 <Text
                                   accessibilityLabel="1.99 €"
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -7672,9 +7380,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -7693,9 +7401,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -7730,11 +7438,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#F4F5F8",
@@ -7743,9 +7453,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -7923,9 +7633,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -7944,9 +7654,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -7981,11 +7691,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#F4F5F8",
@@ -7994,9 +7706,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -8174,9 +7886,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -8195,9 +7907,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -8232,11 +7944,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F5FE",
@@ -8245,9 +7959,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -8425,9 +8139,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -8446,9 +8160,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -8483,11 +8197,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -8496,9 +8212,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -8937,8 +8653,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                       }
                     >
                       <View
-                        accessibilityLabel="Avvisi pagoPA"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -8948,7 +8662,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -8960,98 +8673,19 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           <View
                             style={
                               {
-                                "marginRight": 8,
-                              }
-                            }
-                          >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                ]
-                              }
-                              tintColor="#0B3EE3"
-                              vbHeight={32}
-                              vbWidth={32}
-                              width={24}
-                            >
-                              <RNSVGGroup
-                                color="#0B3EE3"
-                                fill={
-                                  {
-                                    "payload": 4278190080,
-                                    "type": 0,
-                                  }
-                                }
-                              >
-                                <RNSVGPath
-                                  d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              {
                                 "flex": 1,
                               }
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Avvisi pagoPA"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 role="heading"
                                 style={
                                   [
@@ -9153,9 +8787,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -9174,9 +8808,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   Due date 02/05/2099
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -9206,9 +8840,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               >
                                 <Text
                                   accessibilityLabel="1.99 €"
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -9379,9 +9013,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -9400,9 +9034,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -9437,11 +9071,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#F4F5F8",
@@ -9450,9 +9086,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -9630,9 +9266,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -9651,9 +9287,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -9688,11 +9324,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#F4F5F8",
@@ -9701,9 +9339,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -9881,9 +9519,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -9902,9 +9540,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -9939,11 +9577,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F5FE",
@@ -9952,9 +9592,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -10132,9 +9772,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -10153,9 +9793,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -10190,11 +9830,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -10203,9 +9845,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -10372,6 +10014,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "columnGap": 8,
                                 },
                                 {},
+                                {
+                                  "columnGap": 8,
+                                },
                                 false,
                               ]
                             }
@@ -10379,10 +10024,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <Text
                               accessibilityElementsHidden={true}
                               accessible={false}
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={1}
                               style={
                                 [
@@ -10393,11 +10038,16 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": undefined,
+                                    "lineHeight": 20,
                                   },
-                                  {
-                                    "color": undefined,
-                                  },
+                                  [
+                                    {
+                                      "color": undefined,
+                                    },
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                  ],
                                 ]
                               }
                             >
@@ -10761,8 +10411,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                       }
                     >
                       <View
-                        accessibilityLabel="Avvisi pagoPA"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -10772,7 +10420,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -10784,98 +10431,19 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           <View
                             style={
                               {
-                                "marginRight": 8,
-                              }
-                            }
-                          >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                ]
-                              }
-                              tintColor="#0B3EE3"
-                              vbHeight={32}
-                              vbWidth={32}
-                              width={24}
-                            >
-                              <RNSVGGroup
-                                color="#0B3EE3"
-                                fill={
-                                  {
-                                    "payload": 4278190080,
-                                    "type": 0,
-                                  }
-                                }
-                              >
-                                <RNSVGPath
-                                  d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              {
                                 "flex": 1,
                               }
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Avvisi pagoPA"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 role="heading"
                                 style={
                                   [
@@ -10977,9 +10545,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -10998,9 +10566,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   Due date 02/05/2099
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -11030,9 +10598,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               >
                                 <Text
                                   accessibilityLabel="1.99 €"
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -11203,9 +10771,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -11224,9 +10792,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -11261,11 +10829,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#F4F5F8",
@@ -11274,9 +10844,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -11454,9 +11024,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -11475,9 +11045,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -11512,11 +11082,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#F4F5F8",
@@ -11525,9 +11097,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -11705,9 +11277,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -11726,9 +11298,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -11763,11 +11335,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F5FE",
@@ -11776,9 +11350,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -11956,9 +11530,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -11977,9 +11551,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   Notice code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -12014,11 +11588,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 24,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
                                       },
                                       {
                                         "backgroundColor": "#E1F4E1",
@@ -12027,9 +11603,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -12196,6 +11772,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "columnGap": 8,
                                 },
                                 {},
+                                {
+                                  "columnGap": 8,
+                                },
                                 false,
                               ]
                             }
@@ -12203,10 +11782,10 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <Text
                               accessibilityElementsHidden={true}
                               accessible={false}
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={1}
                               style={
                                 [
@@ -12217,11 +11796,16 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": undefined,
+                                    "lineHeight": 20,
                                   },
-                                  {
-                                    "color": undefined,
-                                  },
+                                  [
+                                    {
+                                      "color": undefined,
+                                    },
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                  ],
                                 ]
                               }
                             >
@@ -12585,8 +12169,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                       }
                     >
                       <View
-                        accessibilityLabel="Avvisi pagoPA"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -12596,7 +12178,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -12608,98 +12189,19 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                           <View
                             style={
                               {
-                                "marginRight": 8,
-                              }
-                            }
-                          >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                ]
-                              }
-                              tintColor="#0B3EE3"
-                              vbHeight={32}
-                              vbWidth={32}
-                              width={24}
-                            >
-                              <RNSVGGroup
-                                color="#0B3EE3"
-                                fill={
-                                  {
-                                    "payload": 4278190080,
-                                    "type": 0,
-                                  }
-                                }
-                              >
-                                <RNSVGPath
-                                  d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              {
                                 "flex": 1,
                               }
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Avvisi pagoPA"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 role="heading"
                                 style={
                                   [
@@ -12801,9 +12303,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -12822,9 +12324,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   Due date 02/05/2099
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -12854,9 +12356,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               >
                                 <Text
                                   accessibilityLabel="1.99 €"
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -13288,8 +12790,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                       }
                     >
                       <View
-                        accessibilityLabel="Avvisi pagoPA"
-                        accessible={true}
                         style={
                           {
                             "marginHorizontal": -24,
@@ -13299,7 +12799,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                         }
                       >
                         <View
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "alignItems": "center",
@@ -13311,98 +12810,19 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                           <View
                             style={
                               {
-                                "marginRight": 8,
-                              }
-                            }
-                          >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
-                              focusable={false}
-                              height={24}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                ]
-                              }
-                              tintColor="#0B3EE3"
-                              vbHeight={32}
-                              vbWidth={32}
-                              width={24}
-                            >
-                              <RNSVGGroup
-                                color="#0B3EE3"
-                                fill={
-                                  {
-                                    "payload": 4278190080,
-                                    "type": 0,
-                                  }
-                                }
-                              >
-                                <RNSVGPath
-                                  d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              {
                                 "flex": 1,
                               }
                             }
                           >
                             <View
-                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Avvisi pagoPA"
+                              accessibilityRole="header"
                               accessible={true}
-                              importantForAccessibility="yes"
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 role="heading"
                                 style={
                                   [
@@ -13504,9 +12924,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -13525,9 +12945,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   Due date 02/05/2099
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
@@ -13557,9 +12977,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               >
                                 <Text
                                   accessibilityLabel="1.99 €"
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [

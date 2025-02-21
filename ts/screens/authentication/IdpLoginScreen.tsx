@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
@@ -9,7 +9,6 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-
 import _isEqual from "lodash/isEqual";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
@@ -52,12 +51,11 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
+import { standardLoginRequestInfoSelector } from "../../features/spidLogin/store/selectors";
+import { setStandardLoginRequestState } from "../../features/spidLogin/store/actions";
+import { ErrorType as SpidLoginErrorType } from "../../features/spidLogin/types";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
-
-enum ErrorType {
-  "LOADING_ERROR" = "LOADING_ERROR",
-  "LOGIN_ERROR" = "LOGIN_ERROR"
-}
+import { usePosteIDApp2AppEducational } from "./hooks/usePosteIDApp2AppEducational";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -79,7 +77,9 @@ const styles = StyleSheet.create({
  */
 const IdpLoginScreen = () => {
   const dispatch = useIODispatch();
-  const { navigate } = useIONavigation();
+  // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
+  // ensuring the re-execution of the `useLollipopLoginSource` hook.
+  const { replace } = useIONavigation();
   const selectedIdp = useIOSelector(selectedIdentityProviderSelector, _isEqual);
   const selectedIdpTextData = useIOSelector(
     idpContextualHelpDataFromIdSelector(selectedIdp?.id),
@@ -95,25 +95,31 @@ const IdpLoginScreen = () => {
     _isEqual
   );
 
-  const [requestState, setRequestState] = useState<pot.Pot<true, ErrorType>>(
-    pot.noneLoading
-  );
+  const { requestState } = useIOSelector(standardLoginRequestInfoSelector);
   const [errorCodeOrMessage, setErrorCodeOrMessage] = useState<
     string | undefined
   >(undefined);
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
+  const posteIdBottomsheet = usePosteIDApp2AppEducational({
+    selectedIdp,
+    requestState
+  });
+
+  const setRequestState = useCallback(
+    (req: pot.Pot<true, SpidLoginErrorType>) => {
+      dispatch(setStandardLoginRequestState(req));
+    },
+    [dispatch]
+  );
 
   const handleOnLollipopCheckFailure = useCallback(() => {
-    setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
-  }, []);
+    setRequestState(pot.noneError(SpidLoginErrorType.LOGIN_ERROR));
+  }, [setRequestState]);
 
   const idpId = loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId, 2) : undefined;
-  const {
-    retryLollipopLogin,
-    shouldBlockUrlNavigationWhileCheckingLollipop,
-    webviewSource
-  } = useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
+  const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
+    useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(assistanceToolConfig),
@@ -132,13 +138,13 @@ const IdpLoginScreen = () => {
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
         if (url.includes(apiUrlPrefix) || statusCode !== 403) {
-          setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
+          setRequestState(pot.noneError(SpidLoginErrorType.LOADING_ERROR));
         }
       } else {
-        setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
+        setRequestState(pot.noneError(SpidLoginErrorType.LOADING_ERROR));
       }
     },
-    [loggedOutWithIdpAuth?.idp.id]
+    [loggedOutWithIdpAuth?.idp.id, setRequestState]
   );
 
   const handleLoginFailure = useCallback(
@@ -167,10 +173,10 @@ const IdpLoginScreen = () => {
       );
 
       handleSendAssistanceLog(choosenTool, logText);
-      setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
+      setRequestState(pot.noneError(SpidLoginErrorType.LOGIN_ERROR));
       setErrorCodeOrMessage(code || message);
     },
-    [dispatch, choosenTool, idp]
+    [dispatch, choosenTool, idp, setRequestState]
   );
 
   const handleLoginSuccess = useCallback(
@@ -182,11 +188,6 @@ const IdpLoginScreen = () => {
     },
     [choosenTool, dispatch, idp]
   );
-
-  const onRetryButtonPressed = useCallback((): void => {
-    setRequestState(pot.noneLoading);
-    retryLollipopLogin();
-  }, [retryLollipopLogin]);
 
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
@@ -212,7 +213,7 @@ const IdpLoginScreen = () => {
         event.loading || isAssertion ? pot.noneLoading : pot.some(true)
       );
     },
-    [dispatch, loginTrace]
+    [dispatch, loginTrace, setRequestState]
   );
 
   const handleShouldStartLoading = useCallback(
@@ -265,16 +266,17 @@ const IdpLoginScreen = () => {
   };
 
   const navigateToAuthErrorScreen = useCallback(() => {
-    navigate(ROUTES.AUTHENTICATION, {
+    // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
+    // ensuring the re-execution of the `useLollipopLoginSource` hook.
+    replace(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,
       params: {
         errorCodeOrMessage,
         authMethod: "SPID",
-        authLevel: "L2",
-        onRetry: onRetryButtonPressed
+        authLevel: "L2"
       }
     });
-  }, [errorCodeOrMessage, onRetryButtonPressed, navigate]);
+  }, [errorCodeOrMessage, replace]);
 
   useEffect(() => {
     if (pot.isError(requestState)) {
@@ -361,6 +363,7 @@ const IdpLoginScreen = () => {
     <View style={styles.webViewWrapper}>
       {!hasError && content}
       {renderMask()}
+      {posteIdBottomsheet}
     </View>
   );
 };

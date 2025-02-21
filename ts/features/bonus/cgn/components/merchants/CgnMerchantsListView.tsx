@@ -1,6 +1,5 @@
-import * as React from "react";
 import { ListRenderItem, View } from "react-native";
-import { Badge, H6, ListItemNav } from "@pagopa/io-app-design-system";
+import { Badge, H6, HSpacer, ListItemNav } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
@@ -19,11 +18,16 @@ export const CgnMerchantListViewRenderItem =
           value={
             <View style={IOStyles.rowSpaceBetween}>
               <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{item.name}</H6>
+              <HSpacer />
               {item.newDiscounts && (
                 <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
                   <Badge
                     variant="purple"
-                    text={I18n.t("bonus.cgn.merchantsList.news")}
+                    text={
+                      item.numberOfNewDiscounts
+                        ? item.numberOfNewDiscounts.toString()
+                        : I18n.t("bonus.cgn.merchantsList.news")
+                    }
                   />
                 </View>
               )}

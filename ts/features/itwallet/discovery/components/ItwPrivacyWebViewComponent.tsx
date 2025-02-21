@@ -1,49 +1,45 @@
-import React from "react";
-import { FooterActions, IOStyles } from "@pagopa/io-app-design-system";
+import { useState } from "react";
 import WebView from "react-native-webview";
-import { View } from "react-native";
-import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
-import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
-import I18n from "../../../../i18n";
+import {
+  WebViewMessageEvent,
+  WebViewSource
+} from "react-native-webview/lib/WebViewTypes";
+import {
+  AVOID_ZOOM_JS,
+  GET_CONTENT_HEIGHT_SCRIPT,
+  closeInjectedScript
+} from "../../../../utils/webview";
 
 type Props = {
   source: WebViewSource;
-  onAcceptTos: () => void;
   onLoadEnd: () => void;
   onError: () => void;
 };
 
-const ItwPrivacyWebViewComponent = ({
-  source,
-  onAcceptTos,
-  onLoadEnd,
-  onError
-}: Props) => (
-  <View style={IOStyles.flex}>
+const ItwPrivacyWebViewComponent = ({ source, onLoadEnd, onError }: Props) => {
+  const [contentHeight, setContentHeight] = useState<number>(0);
+
+  const handleWebViewMessage = (event: WebViewMessageEvent) => {
+    const height = parseInt(event.nativeEvent.data, 10);
+    setContentHeight(height * 100);
+  };
+  return (
     <WebView
+      javaScriptEnabled={true}
       androidCameraAccessDisabled={true}
       androidMicrophoneAccessDisabled={true}
       onLoadEnd={onLoadEnd}
       onError={onError}
       textZoom={100}
-      style={IOStyles.flex}
+      style={{ height: contentHeight }}
       source={source}
-      injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
+      scrollEnabled={false}
+      onMessage={handleWebViewMessage}
+      injectedJavaScript={closeInjectedScript(
+        `${AVOID_ZOOM_JS};${GET_CONTENT_HEIGHT_SCRIPT}`
+      )}
     />
-    <FooterActions
-      fixed={false}
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: I18n.t("features.itWallet.ipzsPrivacy.button.label"),
-          accessibilityLabel: I18n.t(
-            "features.itWallet.ipzsPrivacy.button.label"
-          ),
-          onPress: onAcceptTos
-        }
-      }}
-    />
-  </View>
-);
+  );
+};
 
 export default ItwPrivacyWebViewComponent;

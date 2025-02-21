@@ -1,6 +1,6 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { default as React } from "react";
+import { useRef } from "react";
 import { View } from "react-native";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIOSelector } from "../../../../store/hooks";
@@ -8,10 +8,13 @@ import {
   isPaymentsFeedbackBannerEnabledSelector,
   paymentsFeedbackBannerConfigSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { getFullLocale } from "../../../../utils/locale";
+import {
+  fallbackForLocalizedMessageKeys,
+  getFullLocale
+} from "../../../../utils/locale";
 
 const WalletPaymentFeebackBanner = () => {
-  const bannerViewRef = React.useRef<View>(null);
+  const bannerViewRef = useRef<View>(null);
   const isBannerEnabled = useIOSelector(
     isPaymentsFeedbackBannerEnabledSelector
   );
@@ -19,6 +22,7 @@ const WalletPaymentFeebackBanner = () => {
     paymentsFeedbackBannerConfigSelector
   );
   const locale = getFullLocale();
+  const localeFallback = fallbackForLocalizedMessageKeys(locale);
 
   const handleBannerPress = () => {
     if (!feedbackBannerConfig?.action) {
@@ -42,9 +46,9 @@ const WalletPaymentFeebackBanner = () => {
         pictogramName="feedback"
         size="big"
         viewRef={bannerViewRef}
-        title={feedbackBannerConfig.title?.[locale]}
-        content={feedbackBannerConfig.description[locale]}
-        action={feedbackBannerConfig.action?.label[locale]}
+        title={feedbackBannerConfig.title?.[localeFallback]}
+        content={feedbackBannerConfig.description[localeFallback]}
+        action={feedbackBannerConfig.action?.label[localeFallback]}
         onPress={handleBannerPress}
       />
     </>

@@ -12,8 +12,8 @@
 import { H6, HSpacer, IOColors, IOIcons } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import color from "color";
-import * as React from "react";
-import { useState } from "react";
+
+import { ComponentPropsWithRef, FC, useCallback, useState } from "react";
 import {
   ImageSourcePropType,
   ImageStyle,
@@ -72,7 +72,7 @@ type CommonProp = Readonly<{
   imageStyle?: ImageStyle;
   iconPosition?: "left" | "right";
   inputMaskProps?: TextInputMaskProps &
-    React.ComponentPropsWithRef<typeof TextInputMask>;
+    ComponentPropsWithRef<typeof TextInputMask>;
   inputProps?: TextInputAdditionalProps;
   isValid?: boolean;
   label?: string;
@@ -84,10 +84,10 @@ export type Props = WithTestID<CommonProp>;
 
 /* TODO: Replace this generated color variable with a value from IOCOlors
 Or Alias Token from variables.ts */
-const brandGrayDarken = color(IOColors.greyUltraLight).darken(0.2).string();
+const brandGrayDarken = color(IOColors["grey-50"]).darken(0.2).string();
 
-type DescriptionColor = "bluegreyLight" | "bluegreyDark" | "red";
-type LabelColor = Exclude<DescriptionColor, "red">;
+type DescriptionColor = "grey-200" | "grey-850" | "error-500";
+type LabelColor = Exclude<DescriptionColor, "error">;
 type ColorByProps = {
   borderColor: string | undefined;
   descriptionColor: DescriptionColor;
@@ -110,29 +110,29 @@ function getColorsByProps({
 }): ColorByProps {
   if (isDisabledTextInput) {
     return {
-      borderColor: IOColors.greyLight,
-      descriptionColor: "bluegreyLight",
-      iconColor: iconColor ?? "bluegreyLight",
-      labelColor: "bluegreyLight",
-      placeholderTextColor: IOColors.bluegreyLight
+      borderColor: IOColors["grey-100"],
+      descriptionColor: "grey-200",
+      iconColor: iconColor ?? "grey-200",
+      labelColor: "grey-200",
+      placeholderTextColor: IOColors["grey-200"]
     };
   }
   return {
-    borderColor: hasFocus && isEmpty ? IOColors.bluegrey : undefined,
-    descriptionColor: isValid === false ? "red" : "bluegreyDark",
-    iconColor: iconColor ?? "bluegrey",
+    borderColor: hasFocus && isEmpty ? IOColors["grey-700"] : undefined,
+    descriptionColor: isValid === false ? "error-500" : "grey-850",
+    iconColor: iconColor ?? "grey-700",
     placeholderTextColor: brandGrayDarken,
-    labelColor: "bluegreyDark"
+    labelColor: "grey-850"
   };
 }
 
 const NavigationEventHandler = ({ onPress }: { onPress: () => void }) => {
-  useFocusEffect(React.useCallback(() => onPress, [onPress]));
+  useFocusEffect(useCallback(() => onPress, [onPress]));
 
   return <></>;
 };
 
-export const LabelledItem: React.FC<Props> = ({
+export const LabelledItem: FC<Props> = ({
   iconPosition = "left",
   ...props
 }: Props) => {

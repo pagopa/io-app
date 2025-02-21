@@ -12,11 +12,9 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { capitalize } from "lodash";
-import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 
-import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -30,6 +28,7 @@ import { ReceiptDivider } from "./ReceiptDivider";
 type Props = {
   transaction?: NoticeDetailResponse;
   loading?: boolean;
+  showUnavailableReceiptBanner?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -47,7 +46,11 @@ const styles = StyleSheet.create({
 /**
  * Component that shows the biz-events transaction info
  */
-const ReceiptInfoSection = ({ transaction, loading }: Props) => {
+const ReceiptInfoSection = ({
+  transaction,
+  loading,
+  showUnavailableReceiptBanner
+}: Props) => {
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];
 
@@ -179,11 +182,14 @@ const ReceiptInfoSection = ({ transaction, loading }: Props) => {
             </>
           )}
         </View>
-        {transactionInfo?.origin === OriginEnum.PM && (
-          <Alert
-            variant="info"
-            content={I18n.t("transaction.details.bannerImported.content")}
-          />
+        {showUnavailableReceiptBanner && (
+          <>
+            <Alert
+              variant="info"
+              content={I18n.t("transaction.details.bannerImported.content")}
+            />
+            <VSpacer size={12} />
+          </>
         )}
       </View>
     </>

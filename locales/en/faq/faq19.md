@@ -1,1 +1,0 @@
-Biometrics-based recognition methods have proven to be more secure over time than numeric or alpha-numeric passwords, which are often vulnerable or inadvertently communicated to other people. Biometric recognition offers you the advantage of speeding up authentication, compared to entering the unlock code, and allows you to perform operations faster within the IO app.

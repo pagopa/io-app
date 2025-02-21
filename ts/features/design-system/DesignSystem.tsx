@@ -1,14 +1,13 @@
 import {
-  Divider,
-  H2,
-  IOVisualCostants,
   BodySmall,
+  Divider,
+  H3,
+  IOVisualCostants,
   ListItemNav,
   VSpacer,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { SectionList, StatusBar, useColorScheme } from "react-native";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useScreenEndMargin } from "../../hooks/useScreenEndMargin";
@@ -109,7 +108,9 @@ export const DesignSystem = () => {
     section: { title: string; description?: string };
   }) => (
     <VStack space={4}>
-      <H2 color={theme["textHeading-default"]}>{title}</H2>
+      <H3 weight="Bold" color={theme["textHeading-default"]}>
+        {title}
+      </H3>
       {description && (
         <BodySmall weight={"Regular"} color={theme["textBody-tertiary"]}>
           {description}

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import {
   Divider,
@@ -16,25 +16,26 @@ import { serviceMetadataByIdSelector } from "../store/reducers";
 import { handleItemOnPress } from "../../../../utils/url";
 import * as analytics from "../../common/analytics";
 
-type MetadataActionListItem = {
+type MetadataListItemBase = {
+  condition?: boolean;
+};
+
+type MetadataListItemAction = MetadataListItemBase & {
   kind: "ListItemAction";
-  condition?: boolean;
-} & Omit<ListItemAction, "accessibilityLabel" | "variant">;
+} & Omit<ListItemAction, "variant">;
 
-type MetadataInfoListItem = {
+type MetadataListItemInfo = MetadataListItemBase & {
   kind: "ListItemInfo";
-  condition?: boolean;
-} & Omit<ListItemInfo, "accessibilityLabel" | "paymentLogoIcon">;
+} & ListItemInfo;
 
-type MetadataInfoCopyListItem = {
+type MetadataListItemInfoCopy = MetadataListItemBase & {
   kind: "ListItemInfoCopy";
-  condition?: boolean;
-} & Omit<ListItemInfoCopy, "accessibilityLabel">;
+} & ListItemInfoCopy;
 
 type MetadataListItem =
-  | MetadataActionListItem
-  | MetadataInfoListItem
-  | MetadataInfoCopyListItem;
+  | MetadataListItemAction
+  | MetadataListItemInfo
+  | MetadataListItemInfoCopy;
 
 export type ServiceDetailsMetadataProps = {
   organizationFiscalCode: string;
@@ -164,17 +165,18 @@ export const ServiceDetailsMetadata = ({
     }: ListRenderItemInfo<MetadataListItem>) => {
       switch (rest.kind) {
         case "ListItemAction":
+          return <ListItemAction variant="primary" {...rest} />;
+        case "ListItemInfo":
+          return <ListItemInfo {...rest} />;
+        case "ListItemInfoCopy":
           return (
-            <ListItemAction
-              variant="primary"
+            <ListItemInfoCopy
               {...rest}
-              accessibilityLabel={rest.label}
+              accessibilityHint={I18n.t(
+                "services.details.metadata.fiscalCodeAccessibilityHint"
+              )}
             />
           );
-        case "ListItemInfo":
-          return <ListItemInfo {...rest} accessibilityLabel={rest.label} />;
-        case "ListItemInfoCopy":
-          return <ListItemInfoCopy {...rest} accessibilityLabel={rest.label} />;
         default:
           return null;
       }

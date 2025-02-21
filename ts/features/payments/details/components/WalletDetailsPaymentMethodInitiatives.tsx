@@ -1,6 +1,7 @@
 import { Body, H6, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import * as React from "react";
+
+import { ComponentProps, ReactElement, useCallback } from "react";
 import { View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
@@ -17,7 +18,7 @@ import { idPayEnabledInitiativesFromInstrumentSelector } from "../../../idpay/wa
 
 type Props = {
   paymentMethod: WalletInfo;
-} & Pick<React.ComponentProps<typeof View>, "style">;
+} & Pick<ComponentProps<typeof View>, "style">;
 
 /**
  * This component enlists the different initiatives active on the payment methods
@@ -26,13 +27,13 @@ type Props = {
  */
 const WalletDetailsPaymentMethodInitiatives = (
   props: Props
-): React.ReactElement | null => {
+): ReactElement | null => {
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
   const idWalletString = props.paymentMethod.walletId;
 
   const dispatch = useIODispatch();
 
-  const startInitiativeRefreshPolling = React.useCallback(() => {
+  const startInitiativeRefreshPolling = useCallback(() => {
     dispatch(
       idPayInitiativesFromInstrumentRefreshStart({
         idWallet: idWalletString
@@ -59,8 +60,8 @@ const WalletDetailsPaymentMethodInitiatives = (
       <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
         <H6 color={"grey-700"}>{I18n.t("wallet.capability.title")}</H6>
         <Body
+          asLink
           weight="Semibold"
-          color="blue"
           onPress={navigateToPairableInitiativesList}
         >
           {I18n.t("idpay.wallet.preview.showAll")}

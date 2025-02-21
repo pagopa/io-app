@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { default as React, Fragment } from "react";
+import { ElementType, Fragment, memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { QrCodeImage } from "../../../../../components/QrCodeImage";
 import {
@@ -75,7 +75,7 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
         position={{ left: `${cols[0]}%`, top: `${rows[5]}%` }}
       />
       <CardClaim
-        claim={claims["driving_privileges_details"]}
+        claim={claims["driving_privileges"]}
         position={{ left: "8%", bottom: "17.9%" }}
       />
     </View>
@@ -239,7 +239,7 @@ const DcBackData = ({ claims }: DataComponentProps) => (
 
 const dataComponentMap: Record<
   string,
-  Record<CardSide, React.ElementType<DataComponentProps>>
+  Record<CardSide, ElementType<DataComponentProps>>
 > = {
   MDL: { front: MdlFrontData, back: MdlBackData },
   EuropeanDisabilityCard: { front: DcFrontData, back: DcBackData }
@@ -271,6 +271,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizeCardData = React.memo(CardData);
+const MemoizeCardData = memo(CardData);
 
 export { MemoizeCardData as CardData };

@@ -1,42 +1,6 @@
-import * as React from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
-
-type Props = {
-  description: string;
-  onLoadEnd: () => void;
-};
-
-const OnboardingDescriptionMarkdown = (props: Props) => {
-  const { description, onLoadEnd } = props;
-
-  const [isLoaded, setLoaded] = React.useState(false);
-
-  const handleOnLoadEnd = () => {
-    // The markdown component has a different height for some istants after finishing loading
-    // Setting a timeout allows to properly display other components once the Markdown has finished
-    // loading.
-    setTimeout(() => {
-      setLoaded(true);
-      onLoadEnd();
-    }, 300);
-  };
-
-  if (description.length > 0) {
-    return (
-      <View style={{ flexGrow: 1 }}>
-        {!isLoaded && <OnboardingDescriptionMarkdownSkeleton />}
-        <LegacyMarkdown onLoadEnd={handleOnLoadEnd}>
-          {description}
-        </LegacyMarkdown>
-      </View>
-    );
-  }
-
-  return <View style={{ flexGrow: 1 }} />;
-};
 
 const OnboardingDescriptionMarkdownSkeleton = () => (
   <>
@@ -68,4 +32,4 @@ const OnboardingDescriptionMarkdownSkeleton = () => (
   </>
 );
 
-export { OnboardingDescriptionMarkdown, OnboardingDescriptionMarkdownSkeleton };
+export { OnboardingDescriptionMarkdownSkeleton };

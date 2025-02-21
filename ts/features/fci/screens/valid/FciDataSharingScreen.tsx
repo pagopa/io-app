@@ -2,7 +2,6 @@ import {
   Body,
   FooterActionsInline,
   H2,
-  H6,
   HSpacer,
   IOStyles,
   IconButton,
@@ -12,8 +11,8 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { ComponentProps } from "react";
+
+import { ComponentProps, ReactElement } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
 
 const iconSize = 24;
 
-const FciDataSharingScreen = (): React.ReactElement => {
+const FciDataSharingScreen = (): ReactElement => {
   const profile = useIOSelector(profileSelector);
   const name = useIOSelector(profileNameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
@@ -104,7 +103,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
       />
       <HSpacer size={8} />
       <View style={{ flex: 1 }}>
-        <H6 color={"bluegrey"}>
+        <Body weight="Semibold">
           {I18n.t("features.fci.shareDataScreen.alertText")}
           <HSpacer size={8} />
           <Body
@@ -123,7 +122,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
           >
             {I18n.t("features.fci.shareDataScreen.alertLink")}
           </Body>
-        </H6>
+        </Body>
       </View>
     </View>
   );
