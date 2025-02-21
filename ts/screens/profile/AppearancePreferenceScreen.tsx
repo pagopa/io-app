@@ -6,8 +6,13 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ReactElement, useState } from "react";
 import { View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
+import { mixpanelTrack } from "../../mixpanel";
+import { buildEventProperties } from "../../utils/analytics";
+import { useIOStore } from "../../store/hooks";
+import { updateMixpanelProfileProperties } from "../../mixpanelConfig/profileProperties";
 
 type TypefaceChoice = "comfortable" | "standard";
 
@@ -19,13 +24,30 @@ type ColorModeChoice = "system" | "dark" | "light";
  * @constructor
  */
 const AppearancePreferenceScreen = (): ReactElement => {
+  const store = useIOStore();
   const { newTypefaceEnabled, setNewTypefaceEnabled } = useIONewTypeface();
 
+  useFocusEffect(() => {
+    void mixpanelTrack(
+      "SETTINGS_PREFERENCES_UI",
+      buildEventProperties("UX", "screen_view")
+    );
+  });
   const selectedTypeface: TypefaceChoice = newTypefaceEnabled
     ? "comfortable"
     : "standard";
 
   const handleTypefaceChange = (choice: TypefaceChoice) => {
+    void mixpanelTrack(
+      "SETTINGS_PREFERENCES_UI_FONT_UPDATE",
+      buildEventProperties("UX", "action", {
+        current_font: choice
+      })
+    );
+    void updateMixpanelProfileProperties(store.getState(), {
+      property: "FONT_PREFERENCE",
+      value: choice
+    });
     setNewTypefaceEnabled(choice === "comfortable");
   };
 

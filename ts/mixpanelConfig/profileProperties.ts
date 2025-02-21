@@ -55,6 +55,7 @@ type ProfileProperties = {
   SAVED_PAYMENT_METHOD?: number;
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
+  FONT_PREFERENCE?: string;
 };
 
 export const updateMixpanelProfileProperties = async (
