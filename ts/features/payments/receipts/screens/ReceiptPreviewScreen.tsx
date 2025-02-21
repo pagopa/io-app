@@ -2,9 +2,9 @@ import { useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Platform, View } from "react-native";
 import Share from "react-native-share";
-
 import {
   FooterActions,
+  FooterActionsMeasurements,
   IOColors,
   IOStyles
 } from "@pagopa/io-app-design-system";
@@ -17,7 +17,6 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import I18n from "../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { RECEIPT_DOCUMENT_TYPE_PREFIX } from "../utils";
-import { FooterActionsMeasurements } from "../../../../components/ui/FooterActions";
 import * as analytics from "../analytics";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 

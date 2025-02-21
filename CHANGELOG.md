@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.83.0-rc.7](https://github.com/pagopa/io-app/compare/2.83.0-rc.6...2.83.0-rc.7) (2025-02-20)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1961](https://pagopa.atlassian.net/browse/SIW-1961)]  Handle invalid payload in deeplink for Remote presentation ([#6724](https://github.com/pagopa/io-app/issues/6724)) ([b90b49e](https://github.com/pagopa/io-app/commit/b90b49e4eaf0922c49e30d9212efc31f9e255484))
+* [[IOPID-2634](https://pagopa.atlassian.net/browse/IOPID-2634)] Implement Zendesk FAQ Banner in the `accesso_a_io` subCategories screen ([#6714](https://github.com/pagopa/io-app/issues/6714)) ([13c6767](https://github.com/pagopa/io-app/commit/13c676737b62705177795dd91c8b5fa92d0f4125))
+
+
+### Chores
+
+* [[IOAPPX-485](https://pagopa.atlassian.net/browse/IOAPPX-485)] Add some additional information to the `Design System` section of the README ([#6732](https://github.com/pagopa/io-app/issues/6732)) ([bbbbd94](https://github.com/pagopa/io-app/commit/bbbbd94371fdaaab132fa985ca149aaa424aa70d))
+* **IT Wallet:** [[SIW-2012](https://pagopa.atlassian.net/browse/SIW-2012)] Notify the user 30 days before credential expiration ([#6727](https://github.com/pagopa/io-app/issues/6727)) ([4532159](https://github.com/pagopa/io-app/commit/4532159ff97d5d9e35db0450ea3e5991e800629b))
+
 ## [2.83.0-rc.6](https://github.com/pagopa/io-app/compare/2.83.0-rc.5...2.83.0-rc.6) (2025-02-19)
 
 
