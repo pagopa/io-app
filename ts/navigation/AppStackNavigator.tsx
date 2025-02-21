@@ -188,7 +188,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
 export const IONavigationContainer = ({
   routingInstrumentation
 }: {
-  routingInstrumentation: ReactNavigationInstrumentation;
+  routingInstrumentation?: ReactNavigationInstrumentation;
 }) => (
   <InnerNavigationContainer routingInstrumentation={routingInstrumentation}>
     <AppStackNavigator />

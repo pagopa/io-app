@@ -1,1 +1,0 @@
-There is a holiday bonus available per household. The bonus can be spent by any of the family members listed on this page, not necessarily by the applicant. 

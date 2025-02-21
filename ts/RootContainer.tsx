@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
-import { ReactNavigationInstrumentation } from "./App";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
@@ -29,10 +28,7 @@ import {
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 
-type Props = ReturnType<typeof mapStateToProps> &
-  typeof mapDispatchToProps & {
-    routingInstumentation: ReactNavigationInstrumentation;
-  };
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 /**
  * The main container of the application with:
@@ -111,9 +107,7 @@ class RootContainer extends PureComponent<Props> {
 
     return (
       <>
-        <IONavigationContainer
-          routingInstrumentation={this.props.routingInstumentation}
-        />
+        <IONavigationContainer />
 
         {/* When debug mode is enabled, the following information
         is displayed:
