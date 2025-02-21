@@ -49,7 +49,7 @@ Sentry.init({
     Sentry.reactNativeTracingIntegration()
   ],
   enabled: !isDevEnv,
-  // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-the-message-in-my-error-being-truncated
+  // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-message-in-my-error-being-truncated
   maxValueLength: 3000,
   tracesSampleRate: 0.2,
   sampleRate: 0.3
@@ -74,9 +74,7 @@ const App = (): JSX.Element => (
                 <BottomSheetModalProvider>
                   <LightModalProvider>
                     <StatusMessages>
-                      <RootContainer
-                      // routingInstumentation={navigationIntegration}
-                      />
+                      <RootContainer />
                     </StatusMessages>
                   </LightModalProvider>
                 </BottomSheetModalProvider>

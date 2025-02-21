@@ -28,13 +28,9 @@ import {
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
-// import { ReactNavigationInstrumentation } from "./App";
 import { setScreenReaderEnabled } from "./store/actions/preferences";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
-// & {
-//   routingInstumentation: ReactNavigationInstrumentation;
-// };
 
 /**
  * The main container of the application with:
