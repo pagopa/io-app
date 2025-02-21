@@ -1,2 +1,0 @@
-**Se vuoi accedere più velocemente all'app senza dover ogni volta inserire il codice di sblocco, puoi farlo** abilitando il riconoscimento biometrico tramite impronta digitale direttamente dalle impostazioni del tuo sistema operativo.  
-Dalle impostazioni dell'app IO potrai in ogni momento decidere se mantenere o disabilitare il riconoscimento biometrico... provalo, e vedrai che non vorrai più farne a meno!
