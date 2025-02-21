@@ -1,1 +1,0 @@
-A facsimile does not replace the physical document in its entirety but can be used to read the data and the bar code on the document by operators who request it, for example in a pharmacy or in the post office.

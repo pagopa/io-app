@@ -1,1 +1,0 @@
-Add a reminder on <b>{{date}}</b> at <b>{{hour}}</b>

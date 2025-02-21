@@ -1,1 +1,0 @@
-No. Tourist accommodation facilities are free to join the initiative and there is no "enrolment" mechanism in any list. It is up to the structure to inform customers, through its own channels, whether or not it accepts the Holiday Bonus. Before requesting it, make sure that you can use it where you have chosen to stay for your next holiday.
