@@ -19,7 +19,6 @@ import * as path from "path";
 import chalk from "chalk";
 import * as fs from "fs-extra";
 import * as prettier from "prettier";
-import * as _ from "lodash";
 import { convertUnknownToError } from "../ts/utils/errors";
 
 interface LocaleDoc {
