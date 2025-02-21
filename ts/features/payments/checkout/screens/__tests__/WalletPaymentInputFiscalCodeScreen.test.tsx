@@ -1,5 +1,4 @@
 import { fireEvent } from "@testing-library/react-native";
-import * as O from "fp-ts/lib/Option";
 import { default as configureMockStore } from "redux-mock-store";
 import I18n from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
