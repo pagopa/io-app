@@ -77,7 +77,7 @@ const IdentificationModal = () => {
   const colorScheme: ColorSchemeName = "light";
   const numberPadVariant = colorScheme ? "dark" : "light";
   const { isDeviceScreenSmall } = useDetectSmallScreen();
-  const isLargeText = PixelRatio.getFontScale() > 1;
+  const isLargeText = PixelRatio.getFontScale() > 1.3;
 
   const blueColor = useAppBackgroundAccentColorName();
 
