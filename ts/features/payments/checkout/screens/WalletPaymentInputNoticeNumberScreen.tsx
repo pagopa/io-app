@@ -87,6 +87,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
         ref={textInputWrapperRef}
       >
         <TextInputValidation
+          testID="noticeNumberInput"
           ref={textInputRef}
           validationMode="onContinue"
           placeholder={I18n.t("wallet.payment.manual.noticeNumber.placeholder")}
