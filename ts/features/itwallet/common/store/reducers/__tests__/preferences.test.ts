@@ -6,7 +6,7 @@ import {
   itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
-  itwSetClaimValuesHiddenByCredential,
+  itwSetClaimValuesHidden,
   itwUnflagCredentialAsRequested
 } from "../../actions/preferences";
 import reducer, {
@@ -14,7 +14,6 @@ import reducer, {
   ItwPreferencesState
 } from "../preferences";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
-import { CredentialType } from "../../../utils/itwMocksUtils.ts";
 
 describe("IT Wallet preferences reducer", () => {
   const INITIAL_STATE: ItwPreferencesState = {
@@ -112,18 +111,13 @@ describe("IT Wallet preferences reducer", () => {
     });
   });
 
-  it("should handle itwSetClaimValuesHiddenByCredential action", () => {
-    const action = itwSetClaimValuesHiddenByCredential({
-      credentialType: CredentialType.DRIVING_LICENSE,
-      hidden: true
-    });
+  it("should handle itwSetClaimValuesHidden action", () => {
+    const action = itwSetClaimValuesHidden(true);
     const newState = reducer(INITIAL_STATE, action);
 
     expect(newState).toEqual({
       ...newState,
-      claimValuesHiddenByCredential: {
-        [CredentialType.DRIVING_LICENSE]: true
-      }
+      claimValuesHidden: true
     });
   });
 });

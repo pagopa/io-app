@@ -1,8 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import {
-  ItwAuthLevel,
-  ItwClaimValuesHiddenByCredential
-} from "../../utils/itwTypesUtils.ts";
+import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export const itwCloseFeedbackBanner = createStandardAction(
   "ITW_CLOSE_FEEDBACK_BANNER"
@@ -28,9 +25,9 @@ export const itwSetAuthLevel = createStandardAction("ITW_SET_AUTH_LEVEL")<
   ItwAuthLevel | undefined
 >();
 
-export const itwSetClaimValuesHiddenByCredential = createStandardAction(
-  "ITW_SET_CLAIM_VALUES_HIDDEN_BY_CREDENTIAL"
-)<ItwClaimValuesHiddenByCredential>();
+export const itwSetClaimValuesHidden = createStandardAction(
+  "ITW_SET_CLAIM_VALUES_HIDDEN"
+)<boolean>();
 
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
@@ -39,4 +36,4 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwUnflagCredentialAsRequested>
   | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetAuthLevel>
-  | ActionType<typeof itwSetClaimValuesHiddenByCredential>;
+  | ActionType<typeof itwSetClaimValuesHidden>;

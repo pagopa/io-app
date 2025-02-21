@@ -63,14 +63,7 @@ export const itwAuthLevelSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.authLevel;
 
 /**
- * Returns whether claim values are hidden for a specific credential type.
- * If the mapping object doesn't exist or the credential type is not present, it defaults to false.
+ * Returns whether claim values are hidden in credentials detail. Defaults to false.
  */
-export const itwIsClaimValueHiddenByCredentialSelector = (
-  credentialType: string
-) =>
-  createSelector(
-    [itwPreferencesSelector],
-    preferences =>
-      preferences.claimValuesHiddenByCredential?.[credentialType] ?? false
-  );
+export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.claimValuesHidden ?? false;

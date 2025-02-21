@@ -6,7 +6,7 @@ import {
   itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
-  itwSetClaimValuesHiddenByCredential,
+  itwSetClaimValuesHidden,
   itwSetReviewPending,
   itwUnflagCredentialAsRequested
 } from "../actions/preferences";
@@ -26,8 +26,8 @@ export type ItwPreferencesState = {
   isPendingReview?: boolean;
   // Indicates the SPID/CIE authentication level used to obtain the eid
   authLevel?: ItwAuthLevel;
-  // Indicates whether the claim values should be hidden for a specific credential type
-  claimValuesHiddenByCredential?: { [credentialType: string]: boolean };
+  // Indicates whether the claim values should be hidden in credential details
+  claimValuesHidden?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -90,13 +90,10 @@ const reducer = (
       };
     }
 
-    case getType(itwSetClaimValuesHiddenByCredential): {
+    case getType(itwSetClaimValuesHidden): {
       return {
         ...state,
-        claimValuesHiddenByCredential: {
-          ...state.claimValuesHiddenByCredential,
-          [action.payload.credentialType]: action.payload.hidden
-        }
+        claimValuesHidden: action.payload
       };
     }
 

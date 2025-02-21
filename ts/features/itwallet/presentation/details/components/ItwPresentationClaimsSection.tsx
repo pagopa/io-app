@@ -17,8 +17,8 @@ import {
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
-import { itwIsClaimValueHiddenByCredentialSelector } from "../../../common/store/selectors/preferences.ts";
-import { itwSetClaimValuesHiddenByCredential } from "../../../common/store/actions/preferences.ts";
+import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
+import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences.ts";
 
 type ItwPresentationClaimsSectionProps = {
   credential: StoredCredential;
@@ -38,17 +38,10 @@ export const ItwPresentationClaimsSection = ({
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
   });
 
-  const valuesHidden = useIOSelector(
-    itwIsClaimValueHiddenByCredentialSelector(credential.credentialType)
-  );
+  const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
 
-  const handleToggleClaimVisibility = (hidden: boolean) => {
-    dispatch(
-      itwSetClaimValuesHiddenByCredential({
-        credentialType: credential.credentialType,
-        hidden
-      })
-    );
+  const handleToggleClaimVisibility = () => {
+    dispatch(itwSetClaimValuesHidden(!valuesHidden));
   };
 
   const renderHideValuesToggle = () => (
@@ -63,7 +56,7 @@ export const ItwPresentationClaimsSection = ({
       <IconButton
         testID="toggle-claim-visibility"
         icon={valuesHidden ? "eyeHide" : "eyeShow"}
-        onPress={() => handleToggleClaimVisibility(!valuesHidden)}
+        onPress={handleToggleClaimVisibility}
         accessibilityLabel={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
         )}
