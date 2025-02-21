@@ -3,6 +3,7 @@ import { RemoteEvents } from "./events.ts";
 export enum RemoteFailureType {
   WALLET_INACTIVE = "WALLET_INACTIVE",
   MISSING_CREDENTIALS = "MISSING_CREDENTIALS",
+  EID_EXPIRED = "EID_EXPIRED",
   UNEXPECTED = "UNEXPECTED"
 }
 
@@ -14,6 +15,7 @@ export type ReasonTypeByFailure = {
   [RemoteFailureType.MISSING_CREDENTIALS]: {
     missingCredentials: Array<string>;
   };
+  [RemoteFailureType.EID_EXPIRED]: string;
   [RemoteFailureType.UNEXPECTED]: unknown;
 };
 

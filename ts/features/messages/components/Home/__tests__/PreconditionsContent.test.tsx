@@ -86,7 +86,7 @@ const renderComponent = () => {
   const store = createStore(appReducer, designSystemState as any);
 
   return renderScreenWithNavigationStoreContext(
-    () => <PreconditionsContent />,
+    () => <PreconditionsContent footerHeight={84} />,
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     store
