@@ -573,6 +573,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -706,6 +711,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -839,6 +849,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -972,6 +987,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -1105,6 +1125,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -1238,6 +1263,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -1371,6 +1401,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -1504,6 +1539,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -1637,6 +1677,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -1770,6 +1815,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -1903,6 +1953,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -1992,6 +2047,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             >
                               <View
                                 accessible={true}
+                                style={
+                                  {
+                                    "flexDirection": "column",
+                                  }
+                                }
                               >
                                 <Text
                                   allowFontScaling={true}
@@ -2867,6 +2927,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             >
                               <View
                                 accessible={true}
+                                style={
+                                  {
+                                    "flexDirection": "column",
+                                  }
+                                }
                               >
                                 <Text
                                   allowFontScaling={true}
@@ -2999,6 +3064,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -3088,6 +3158,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             >
                               <View
                                 accessible={true}
+                                style={
+                                  {
+                                    "flexDirection": "column",
+                                  }
+                                }
                               >
                                 <Text
                                   allowFontScaling={true}
@@ -3220,6 +3295,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -3353,6 +3433,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -3486,6 +3571,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -3575,6 +3665,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             >
                               <View
                                 accessible={true}
+                                style={
+                                  {
+                                    "flexDirection": "column",
+                                  }
+                                }
                               >
                                 <Text
                                   allowFontScaling={true}
@@ -3758,6 +3853,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -3891,6 +3991,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -3980,6 +4085,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             >
                               <View
                                 accessible={true}
+                                style={
+                                  {
+                                    "flexDirection": "column",
+                                  }
+                                }
                               >
                                 <Text
                                   allowFontScaling={true}
@@ -4112,6 +4222,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <View
                                   accessible={true}
+                                  style={
+                                    {
+                                      "flexDirection": "column",
+                                    }
+                                  }
                                 >
                                   <Text
                                     allowFontScaling={true}
@@ -4201,6 +4316,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             >
                               <View
                                 accessible={true}
+                                style={
+                                  {
+                                    "flexDirection": "column",
+                                  }
+                                }
                               >
                                 <Text
                                   allowFontScaling={true}
