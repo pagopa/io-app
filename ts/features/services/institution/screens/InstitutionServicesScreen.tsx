@@ -1,12 +1,13 @@
 import {
   Divider,
+  IOColors,
   IOStyles,
   IOToast,
   IOVisualCostants,
   ListItemNav,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect } from "react";
 import { ListRenderItemInfo, RefreshControl, StyleSheet } from "react-native";
@@ -59,10 +60,10 @@ export const InstitutionServicesScreen = ({
 }: InstitutionServicesScreen) => {
   const { institutionId, institutionName } = route.params;
 
+  const theme = useIOTheme();
   const dispatch = useIODispatch();
   const isFirstRender = useFirstRender();
 
-  const headerHeight = useHeaderHeight();
   const scrollTranslationY = useSharedValue(0);
 
   const {
@@ -103,15 +104,15 @@ export const InstitutionServicesScreen = ({
   }, [dispatch, navigation]);
 
   useHeaderSecondLevel({
+    backgroundColor: IOColors[theme["appBackground-secondary"]],
     goBack,
-    title: institutionName,
-    supportRequest: true,
-    transparent: true,
+    headerShown: !!data || !isError,
     scrollValues: {
       triggerOffset: scrollTriggerOffsetValue,
       contentOffsetY: scrollTranslationY
     },
-    headerShown: !!data || !isError
+    supportRequest: true,
+    title: institutionName
   });
 
   const scrollHandler = useAnimatedScrollHandler(event => {
@@ -138,17 +139,9 @@ export const InstitutionServicesScreen = ({
     [institutionName, navigation]
   );
 
-  const handleEndReached = useCallback(
-    ({ distanceFromEnd }: { distanceFromEnd: number }) => {
-      // guard needed to avoid endless loop
-      if (distanceFromEnd === 0) {
-        return;
-      }
-
-      fetchNextPage(currentPage + 1);
-    },
-    [currentPage, fetchNextPage]
-  );
+  const handleEndReached = useCallback(() => {
+    fetchNextPage(currentPage + 1);
+  }, [currentPage, fetchNextPage]);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<ServiceMinified>) => (
@@ -218,10 +211,9 @@ export const InstitutionServicesScreen = ({
     return <InstitutionServicesFailure onRetry={() => fetchPage(0)} />;
   }
 
-  const refreshControl = (
+  const refreshControlComponent = (
     <RefreshControl
       onRefresh={refresh}
-      progressViewOffset={headerHeight}
       refreshing={isRefreshing}
       style={styles.refreshControlContainer}
     />
@@ -229,7 +221,6 @@ export const InstitutionServicesScreen = ({
 
   return (
     <Animated.FlatList
-      onScroll={scrollHandler}
       ItemSeparatorComponent={() => <Divider />}
       ListEmptyComponent={renderListEmptyComponent}
       ListHeaderComponent={renderListHeaderComponent}
@@ -245,8 +236,9 @@ export const InstitutionServicesScreen = ({
       keyExtractor={(item, index) => `service-${item.id}-${index}`}
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.1}
+      onScroll={scrollHandler}
+      refreshControl={refreshControlComponent}
       renderItem={renderItem}
-      refreshControl={refreshControl}
       testID="intitution-services-list"
     />
   );

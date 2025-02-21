@@ -1,10 +1,4 @@
-import {
-  ContentWrapper,
-  FooterActions,
-  ForceScrollDownView,
-  H1,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ContentWrapper, H1, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
@@ -24,6 +18,7 @@ import { itwIsActivationDisabledSelector } from "../../common/store/selectors/re
 import { selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
+import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -56,7 +51,19 @@ const ItwDiscoveryInfoScreen = () => {
   });
 
   return (
-    <ForceScrollDownView threshold={50}>
+    <IOScrollView
+      includeContentMargins={false}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          loading: isLoading,
+          disabled: itwActivationDisabled,
+          label: I18n.t("global.buttons.continue"),
+          accessibilityLabel: I18n.t("global.buttons.continue"),
+          onPress: handleContinuePress
+        }
+      }}
+    >
       <AnimatedImage
         source={require("../../../../../img/features/itWallet/discovery/itw_hero.png")}
         style={styles.hero}
@@ -74,20 +81,7 @@ const ItwDiscoveryInfoScreen = () => {
           rules={generateLinkRuleWithCallback(trackOpenItwTos)}
         />
       </ContentWrapper>
-      <FooterActions
-        fixed={false}
-        actions={{
-          type: "SingleButton",
-          primary: {
-            loading: isLoading,
-            disabled: itwActivationDisabled,
-            label: I18n.t("global.buttons.continue"),
-            accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: handleContinuePress
-          }
-        }}
-      />
-    </ForceScrollDownView>
+    </IOScrollView>
   );
 };
 

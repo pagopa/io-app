@@ -1,1 +1,0 @@
-It's a three-digit code, named CVV or CVS, placed on the back of your card. On AMEX cards, the code (CID) has 4 digits and it's printed on the front.
