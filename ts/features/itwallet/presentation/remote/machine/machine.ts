@@ -1,5 +1,4 @@
 import { assign, not, setup } from "xstate";
-import { ItwTags } from "../../../machine/tags";
 import { InitialContext, Context } from "./context";
 import { mapEventToFailure, RemoteFailureType } from "./failure";
 import { RemoteEvents } from "./events";
@@ -17,13 +16,15 @@ export const itwRemoteMachine = setup({
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     navigateToFailureScreen: notImplemented,
     navigateToDiscoveryScreen: notImplemented,
-    navigateToWallet: notImplemented,
-    closeIssuance: notImplemented
+    navigateToClaimsDisclosureScreen: notImplemented,
+    navigateToIdentificationModeScreen: notImplemented,
+    close: notImplemented
   },
   actors: {},
   guards: {
     isWalletActive: notImplemented,
-    areRequiredCredentialsAvailable: notImplemented
+    areRequiredCredentialsAvailable: notImplemented,
+    isEidExpired: notImplemented
   }
 }).createMachine({
   id: "itwRemoteMachine",
@@ -38,13 +39,13 @@ export const itwRemoteMachine = setup({
           actions: assign(({ event }) => ({
             payload: event.payload
           })),
-          target: "PayloadValidation"
+          target: "PreliminaryChecks"
         }
       }
     },
-    PayloadValidation: {
-      description: "Validating the remote request payload before proceeding",
-      tags: [ItwTags.Loading],
+    PreliminaryChecks: {
+      description:
+        "Perform preliminary checks on the wallet and necessary conditions before proceeding",
       always: [
         {
           guard: not("isWalletActive"),
@@ -57,16 +58,27 @@ export const itwRemoteMachine = setup({
           target: "Failure"
         },
         {
+          guard: "isEidExpired",
+          actions: assign({
+            failure: {
+              type: RemoteFailureType.EID_EXPIRED,
+              reason: "EID is expired"
+            }
+          }),
+          target: "Failure"
+        },
+        {
           target: "ClaimsDisclosure"
         }
       ]
     },
     ClaimsDisclosure: {
+      entry: "navigateToClaimsDisclosureScreen",
       description:
         "Display the list of claims to disclose for the verifiable presentation",
       on: {
         close: {
-          actions: "closeIssuance"
+          actions: "close"
         }
       }
     },
@@ -77,11 +89,11 @@ export const itwRemoteMachine = setup({
         "go-to-wallet-activation": {
           actions: "navigateToDiscoveryScreen"
         },
-        "go-to-wallet": {
-          actions: "navigateToWallet"
+        "go-to-identification-mode": {
+          actions: "navigateToIdentificationModeScreen"
         },
         close: {
-          actions: "closeIssuance"
+          actions: "close"
         }
       }
     }

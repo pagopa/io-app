@@ -1,2 +1,0 @@
-Archived messages are moved to the 'Archived' tab of the messages section.
-This change only affects the phone you are using to perform the archiving operation: if you log in with the same credentials on another device, you will find all the messages in the 'Inbox' category. You can still remove the messages from the archive and you will automatically find them in the main 'Messages' tab.

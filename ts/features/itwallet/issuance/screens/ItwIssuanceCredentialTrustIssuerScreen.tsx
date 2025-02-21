@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   FeatureInfo,
+  FooterActions,
   ForceScrollDownView,
   H2,
   ListItemHeader,
@@ -13,7 +14,6 @@ import { pipe } from "fp-ts/lib/function";
 import { useCallback } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";

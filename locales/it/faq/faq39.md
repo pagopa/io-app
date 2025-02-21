@@ -1,1 +1,0 @@
-Il codice identificativo è un codice unico generato da pagoPA al momento della transazione con lo scopo di identificarla. Puoi usare questo codice nelle comunicazioni con pagoPA o con gli enti in caso di assistenza.
