@@ -6,6 +6,7 @@ import {
   itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
+  itwSetClaimValuesHidden,
   itwSetReviewPending,
   itwUnflagCredentialAsRequested
 } from "../actions/preferences";
@@ -25,6 +26,8 @@ export type ItwPreferencesState = {
   isPendingReview?: boolean;
   // Indicates the SPID/CIE authentication level used to obtain the eid
   authLevel?: ItwAuthLevel;
+  // Indicates whether the claim values should be hidden in credential details
+  claimValuesHidden?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -84,6 +87,13 @@ const reducer = (
       return {
         ...state,
         authLevel: action.payload
+      };
+    }
+
+    case getType(itwSetClaimValuesHidden): {
+      return {
+        ...state,
+        claimValuesHidden: action.payload
       };
     }
 

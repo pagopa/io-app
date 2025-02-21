@@ -6,6 +6,7 @@ import {
   itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
+  itwSetClaimValuesHidden,
   itwUnflagCredentialAsRequested
 } from "../../actions/preferences";
 import reducer, {
@@ -107,6 +108,16 @@ describe("IT Wallet preferences reducer", () => {
     expect(newState).toEqual({
       ...newState,
       authLevel: "L2"
+    });
+  });
+
+  it("should handle itwSetClaimValuesHidden action", () => {
+    const action = itwSetClaimValuesHidden(true);
+    const newState = reducer(INITIAL_STATE, action);
+
+    expect(newState).toEqual({
+      ...newState,
+      claimValuesHidden: true
     });
   });
 });
