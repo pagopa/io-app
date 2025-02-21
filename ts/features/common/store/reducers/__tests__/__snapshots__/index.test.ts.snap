@@ -325,6 +325,8 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "utmLink": {
     "utmCampaign": undefined,
+    "utmMedium": undefined,
+    "utmSource": undefined,
   },
   "wallet": {
     "cards": {},
