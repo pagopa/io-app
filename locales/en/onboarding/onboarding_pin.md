@@ -1,3 +1,0 @@
-**The unlock code is the security code that protects your data while using the IO app.** 
-The unlock code is defined by you at the moment of the first log in.  
-If this is the first time you enter in the application, you are free to set the numeric code you like and save it for any future log in. If you have already set the unlock code in a previous moment but can’t remember it now, please select “Forgotten unlock code" to set a new code. The unlock code is directly linked to the device on which you’ve set it: in case you change your phone, you will be asked to set it again from scratch at the first log in.
