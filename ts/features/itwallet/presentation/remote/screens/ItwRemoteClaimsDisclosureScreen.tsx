@@ -1,6 +1,7 @@
 import {
   Alert,
   ButtonLink,
+  ClaimsSelector,
   ContentWrapper,
   FeatureInfo,
   FooterActions,
@@ -10,28 +11,31 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { View, StyleSheet } from "react-native";
-import { memo, useState } from "react";
+import { ComponentProps, useState } from "react";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-import Animated, {
-  FadeIn,
-  FadeOut,
-  LinearTransition
-} from "react-native-reanimated";
 import I18n from "../../../../../i18n";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { ItwRemotePresentationClaimsMock } from "../../../common/utils/itwMocksUtils.ts";
-import {
-  ItwOptionalClaimsList,
-  ItwRequiredClaimsList
-} from "../../../common/components/ItwClaimsDisclosure/index.tsx";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
+import { RequiredClaim } from "../../../issuance/components/ItwRequestedClaimsList.tsx";
+
+type ClaimItem = ComponentProps<typeof ClaimsSelector>["items"][number];
 
 const RP_MOCK_NAME = "Comune di Milano";
 const RP_MOCK_PRIVACY_URL = "https://rp.privacy.url";
+
+const mapMockClaims = (claims: Array<RequiredClaim>, missing = false) =>
+  claims.map(
+    ({ claim }): ClaimItem => ({
+      id: claim.id,
+      title: missing ? "-" : (claim.value as string),
+      description: claim.label
+    })
+  );
 
 const ItwRemoteClaimsDisclosureScreen = () => {
   usePreventScreenCapture();
@@ -54,11 +58,11 @@ const ContentView = () => {
     selectedOptionalClaims.length ===
     ItwRemotePresentationClaimsMock.optional.length;
 
-  const toggleOptionalClaims = (claimId: string) => {
+  const toggleOptionalClaims = (claim: ClaimItem) => {
     setSelectedOptionalClaims(prevState =>
-      prevState.includes(claimId)
-        ? prevState.filter(id => id !== claimId)
-        : [...prevState, claimId]
+      prevState.includes(claim.id)
+        ? prevState.filter(id => id !== claim.id)
+        : [...prevState, claim.id]
     );
   };
 
@@ -92,25 +96,31 @@ const ContentView = () => {
           />
         </View>
       </View>
-      <ItwOptionalClaimsList
-        items={ItwRemotePresentationClaimsMock.optional}
-        selectedClaims={selectedOptionalClaims}
-        onSelectionChange={toggleOptionalClaims}
+      <ClaimsSelector
+        title="Patente di guida"
+        items={mapMockClaims(ItwRemotePresentationClaimsMock.optional)}
+        selectedItemIds={selectedOptionalClaims}
+        onItemSelected={toggleOptionalClaims}
+        defaultExpanded
       />
-      {!allOptionalClaimsSelected && (
-        <Animated.View
-          entering={FadeIn.duration(200)}
-          exiting={FadeOut.duration(200)}
-          layout={LinearTransition.duration(200)}
-        >
-          <Alert
-            variant="info"
-            content={I18n.t(
-              "features.itWallet.presentation.selectiveDisclosure.optionalClaimsAlert"
-            )}
-          />
-        </Animated.View>
-      )}
+      <ClaimsSelector
+        title="Credenziale mancante"
+        items={mapMockClaims(ItwRemotePresentationClaimsMock.optional, true)}
+        selectionEnabled={false}
+        defaultExpanded
+      />
+      <Alert
+        variant="info"
+        content={I18n.t(
+          "features.itWallet.presentation.selectiveDisclosure.optionalClaimsAlert"
+        )}
+      />
+      <Alert
+        variant="warning"
+        content={I18n.t(
+          "features.itWallet.presentation.selectiveDisclosure.missingClaimsAlert"
+        )}
+      />
     </VStack>
   );
 
@@ -144,36 +154,33 @@ const ContentView = () => {
               iconName="security"
               iconColor="grey-700"
             />
-            <ItwMemoizedRequiredClaimsList
-              items={ItwRemotePresentationClaimsMock.required}
+            <ClaimsSelector
+              title="Identità digitale"
+              selectionEnabled={false}
+              items={mapMockClaims(ItwRemotePresentationClaimsMock.required)}
             />
           </View>
 
           {renderOptionalClaims()}
 
-          <Animated.View
-            style={styles.animatedContainer}
-            layout={LinearTransition.duration(200)}
-          >
-            <FeatureInfo
-              iconName="fornitori"
-              body={I18n.t(
-                "features.itWallet.presentation.selectiveDisclosure.disclaimer.0"
-              )}
-            />
-            <FeatureInfo
-              iconName="trashcan"
-              body={I18n.t(
-                "features.itWallet.presentation.selectiveDisclosure.disclaimer.1"
-              )}
-            />
-            <IOMarkdown
-              content={I18n.t(
-                "features.itWallet.presentation.selectiveDisclosure.tos",
-                { privacyUrl: RP_MOCK_PRIVACY_URL }
-              )}
-            />
-          </Animated.View>
+          <FeatureInfo
+            iconName="fornitori"
+            body={I18n.t(
+              "features.itWallet.presentation.selectiveDisclosure.disclaimer.0"
+            )}
+          />
+          <FeatureInfo
+            iconName="trashcan"
+            body={I18n.t(
+              "features.itWallet.presentation.selectiveDisclosure.disclaimer.1"
+            )}
+          />
+          <IOMarkdown
+            content={I18n.t(
+              "features.itWallet.presentation.selectiveDisclosure.tos",
+              { privacyUrl: RP_MOCK_PRIVACY_URL }
+            )}
+          />
         </VStack>
       </ContentWrapper>
       <FooterActions
@@ -194,14 +201,9 @@ const ContentView = () => {
   );
 };
 
-const ItwMemoizedRequiredClaimsList = memo(ItwRequiredClaimsList);
-
 const styles = StyleSheet.create({
   claimsSelection: {
     marginLeft: "auto"
-  },
-  animatedContainer: {
-    gap: 24
   }
 });
 
