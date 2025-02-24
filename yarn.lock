@@ -3753,9 +3753,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:4.6.0":
-  version: 4.6.0
-  resolution: "@pagopa/io-app-design-system@npm:4.6.0"
+"@pagopa/io-app-design-system@npm:4.6.1":
+  version: 4.6.1
+  resolution: "@pagopa/io-app-design-system@npm:4.6.1"
   dependencies:
     "@testing-library/jest-native": ^5.4.2
     "@types/react-test-renderer": ^18.0.0
@@ -3779,7 +3779,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 1161c1f374267e35be7e3d569eb90d4c4a5e5fd8ce574d2333fc7747194d2e5cbb15f127f4470c006e1c8f68236ecc7f7dc1424d514233aca07c507c1a692429
+  checksum: 817424de77858b23889c7377f4a95d5401591bdc6cedf28d4832fa540d24fddc1425cbf7c82b2f5662a61eb96e3b1e3708aeeefbd7a30613e168f6327925ad29
   languageName: node
   linkType: hard
 
@@ -13657,7 +13657,7 @@ __metadata:
     "@babel/runtime": ^7.20.0
     "@gorhom/bottom-sheet": ^4.1.5
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 4.6.0
+    "@pagopa/io-app-design-system": 4.6.1
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.0.1
