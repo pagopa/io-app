@@ -4,38 +4,36 @@ import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUt
 import { itwSetIntegrityServiceStatus } from "../../issuance/store/actions";
 import { itwIntegrityServiceStatusSelector } from "../../issuance/store/selectors";
 
-export function* checkAndWaitForIntegrityServiceSaga(): Generator<
+export function* checkIntegrityServiceReadySaga(): Generator<
   ReduxSagaEffect,
   boolean
 > {
+  const integrityServiceStatus = yield* select(
+    itwIntegrityServiceStatusSelector
+  );
+
+  // If integrity service is ready means we can continue
+  if (integrityServiceStatus === "ready") {
+    return true;
+  }
+
+  // If integrity service is unavailable means the device does not support it
+  if (integrityServiceStatus === "unavailable") {
+    return false;
+  }
+
+  // If integrity service is in error state, retry warming it up
+  if (integrityServiceStatus === "error") {
+    yield* call(warmUpIntegrityServiceSaga);
+  }
+
+  // Wait for the integrity service status to be updated up to 10 seconds
   const { result } = yield* race({
-    result: call(function* () {
-      while (true) {
-        switch (yield* select(itwIntegrityServiceStatusSelector)) {
-          case "ready":
-            // If integrity service is ready means we can continue
-            return true;
-
-          case "unavailable":
-            // If integrity service is unavailable means the device does not support it
-            return false;
-
-          case "error":
-            // If integrity service is in error state, retry warming it up
-            yield* call(warmUpIntegrityServiceSaga);
-            yield* take(itwSetIntegrityServiceStatus);
-            break;
-
-          case undefined:
-            // We are still waiting for the integrity service warm up
-            yield* take(itwSetIntegrityServiceStatus);
-            break;
-        }
-      }
-    }),
-    timeout: delay(10000) // We stop checking if integrity service is not ready after 10 seconds
+    result: take(itwSetIntegrityServiceStatus),
+    timeout: delay(10000)
   });
-  return result ?? false;
+
+  return result?.payload === "ready" ?? false;
 }
 
 /**
