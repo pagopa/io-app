@@ -21,14 +21,14 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.
 import { ItwRemotePresentationClaimsMock } from "../../../common/utils/itwMocksUtils.ts";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
-import { RequiredClaim } from "../../../issuance/components/ItwRequestedClaimsList.tsx";
+import { DisclosureClaim } from "../../../issuance/components/ItwRequestedClaimsList.tsx";
 
 type ClaimItem = ComponentProps<typeof ClaimsSelector>["items"][number];
 
 const RP_MOCK_NAME = "Comune di Milano";
 const RP_MOCK_PRIVACY_URL = "https://rp.privacy.url";
 
-const mapMockClaims = (claims: Array<RequiredClaim>, missing = false) =>
+const mapMockClaims = (claims: Array<DisclosureClaim>, missing = false) =>
   claims.map(
     ({ claim }): ClaimItem => ({
       id: claim.id,
