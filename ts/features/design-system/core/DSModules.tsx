@@ -334,7 +334,8 @@ const mockIDPProviderItems = {
     id: "posteid",
     name: "Poste ID",
     logo: {
-      light: require("../../../../img/spid-idp-posteid.png")
+      light: require("../../../../img/spid-idp-posteid.png"),
+      dark: undefined
     },
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
   },
@@ -358,7 +359,8 @@ const renderModuleIDP = () => {
         <ModuleIDP
           name={posteItem.name}
           logo={{
-            light: posteItem.logo.light
+            light: posteItem.logo.light,
+            dark: posteItem.logo?.dark
           }}
           onPress={onButtonPress}
           testID={`idp-${posteItem.id}-button`}
