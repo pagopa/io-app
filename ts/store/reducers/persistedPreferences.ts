@@ -67,7 +67,7 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isDesignSystemEnabled: false,
   isIOMarkdownEnabledOnMessagesAndServices: false,
   isItwOfflineAccessEnabled: false,
-  fontPreference: "standard"
+  fontPreference: "comfortable"
 };
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -228,8 +228,8 @@ export const isIdPayLocallyEnabledSelector = (state: GlobalState) =>
 export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled ?? false;
 
-export const fontPreferenceSelector = (state: GlobalState) =>
-  state.persistedPreferences.fontPreference ?? "standard";
+export const fontPreferenceSelector = (state: GlobalState): TypefaceChoice =>
+  state.persistedPreferences.fontPreference ?? "comfortable";
 
 export const isIOMarkdownEnabledLocallySelector = (
   state: GlobalState

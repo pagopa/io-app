@@ -485,7 +485,7 @@ const migrations: MigrationManifest = {
       ...state,
       persistedPreferences: {
         ...typedState.persistedPreferences,
-        fontPreference: "standard"
+        fontPreference: "comfortable"
       }
     };
   }
