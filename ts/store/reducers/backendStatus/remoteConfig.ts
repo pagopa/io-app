@@ -99,15 +99,13 @@ export const bancomatPayConfigSelector = createSelector(
  * return the remote config about CGN enabled/disabled
  * if there is no data, false is the default value -> (CGN disabled)
  */
-export const isCGNEnabledSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): boolean =>
-    pipe(
-      remoteConfig,
-      O.map(config => config.cgn.enabled),
-      O.toUndefined
-    ) ?? false
-);
+export const isCGNEnabledSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config => config.cgn.enabled),
+    O.getOrElse(() => false)
+  );
 
 export const fimsRequiresAppUpdateSelector = (state: GlobalState) =>
   pipe(
