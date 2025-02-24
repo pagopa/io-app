@@ -4,7 +4,7 @@ import mdl from "../../__mocks__/mdl.json";
 import statusAttestation from "../../__mocks__/statusAttestation.json";
 import ts from "../../__mocks__/ts.json";
 import presentationClaims from "../../__mocks__/presentationClaims.json";
-import { type DisclosureClaim } from "../components/ItwClaimsDisclosure";
+import { RequiredClaim } from "../../issuance/components/ItwRequestedClaimsList";
 import { ParsedStatusAttestation, StoredCredential } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
@@ -31,6 +31,6 @@ export const ItwStatusAttestationMocks = {
 };
 
 export const ItwRemotePresentationClaimsMock = {
-  required: presentationClaims.requiredClaims as Array<DisclosureClaim>,
-  optional: presentationClaims.optionalClaims as Array<DisclosureClaim>
+  required: presentationClaims.requiredClaims as Array<RequiredClaim>,
+  optional: presentationClaims.optionalClaims as Array<RequiredClaim>
 };
