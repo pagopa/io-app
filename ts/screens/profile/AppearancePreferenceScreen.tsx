@@ -11,10 +11,12 @@ import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWit
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { buildEventProperties } from "../../utils/analytics";
-import { useIOStore } from "../../store/hooks";
+import { useIODispatch, useIOStore } from "../../store/hooks";
 import { updateMixpanelProfileProperties } from "../../mixpanelConfig/profileProperties";
-
-type TypefaceChoice = "comfortable" | "standard";
+import {
+  preferencesFontSet,
+  TypefaceChoice
+} from "../../store/actions/persistedPreferences";
 
 type ColorModeChoice = "system" | "dark" | "light";
 
@@ -25,6 +27,7 @@ type ColorModeChoice = "system" | "dark" | "light";
  */
 const AppearancePreferenceScreen = (): ReactElement => {
   const store = useIOStore();
+  const dispatch = useIODispatch();
   const { newTypefaceEnabled, setNewTypefaceEnabled } = useIONewTypeface();
 
   useFocusEffect(() => {
@@ -48,6 +51,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
       property: "FONT_PREFERENCE",
       value: choice
     });
+    dispatch(preferencesFontSet(choice));
     setNewTypefaceEnabled(choice === "comfortable");
   };
 

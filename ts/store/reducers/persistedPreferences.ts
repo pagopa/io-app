@@ -21,7 +21,9 @@ import {
   preferencesIdPayTestSetEnabled,
   preferencesDesignSystemSetEnabled,
   setIOMarkdownEnabledOnMessagesAndServices,
-  setItwOfflineAccessEnabled
+  setItwOfflineAccessEnabled,
+  preferencesFontSet,
+  TypefaceChoice
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -48,6 +50,7 @@ export type PersistedPreferencesState = Readonly<{
   isDesignSystemEnabled: boolean;
   isIOMarkdownEnabledOnMessagesAndServices: boolean;
   isItwOfflineAccessEnabled: boolean;
+  fontPreference: TypefaceChoice;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -63,9 +66,11 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isIdPayTestEnabled: false,
   isDesignSystemEnabled: false,
   isIOMarkdownEnabledOnMessagesAndServices: false,
-  isItwOfflineAccessEnabled: false
+  isItwOfflineAccessEnabled: false,
+  fontPreference: "standard"
 };
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
   action: Action
@@ -142,6 +147,13 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(preferencesFontSet, action)) {
+    return {
+      ...state,
+      fontPreference: action.payload
+    };
+  }
+
   // when the current user is different from the previous logged one
   // reset the mixpanel opt-in preference
   if (isActionOf(differentProfileLoggedIn, action)) {
@@ -215,6 +227,9 @@ export const isIdPayLocallyEnabledSelector = (state: GlobalState) =>
 // we must make sure that the signature's return type is respected
 export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled ?? false;
+
+export const fontPreferenceSelector = (state: GlobalState) =>
+  state.persistedPreferences.fontPreference ?? "standard";
 
 export const isIOMarkdownEnabledLocallySelector = (
   state: GlobalState
