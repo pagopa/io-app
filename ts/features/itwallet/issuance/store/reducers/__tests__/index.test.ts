@@ -60,7 +60,7 @@ describe("ITW issuance reducer", () => {
     );
     expect(
       targetSate.features.itWallet.issuance.integrityServiceStatus
-    ).toEqual("unknown");
+    ).toEqual(undefined);
   });
 
   it("should set the integrity preparation flag", () => {
