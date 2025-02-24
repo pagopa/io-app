@@ -85,7 +85,8 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.OFFLINE.WALLET}
         component={ItwOfflineWalletScreen}
         options={{
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          headerShown: false
         }}
       />
       {/* DISCOVERY */}
