@@ -19,11 +19,11 @@ import { isMixpanelEnabled as isMixpanelEnabledSelector } from "./../../../store
 export function* watchUtmLinkSaga(): SagaIterator {
   yield* takeLatest(
     [setIsMixpanelInitialized, utmLinkSetParams],
-    handleApplicationInitialized
+    handleUtmLink
   );
 }
 
-function* handleApplicationInitialized(
+function* handleUtmLink(
   _:
     | ReturnType<typeof setIsMixpanelInitialized>
     | ReturnType<typeof utmLinkSetParams>
