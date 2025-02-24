@@ -1,7 +1,11 @@
-import { Divider, FooterActions, IOStyles } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  FooterActions,
+  IOStyles,
+  useFooterActionsMeasurements
+} from "@pagopa/io-app-design-system";
 import { FlashList } from "@shopify/flash-list";
 import { AccessHistoryPage } from "../../../../../definitions/fims_history/AccessHistoryPage";
-import { useFooterActionsMeasurements } from "../../../../hooks/useFooterActionsMeasurements";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { useFimsHistoryExport } from "../hooks/useFimsHistoryResultToasts";
