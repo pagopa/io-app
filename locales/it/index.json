@@ -2912,13 +2912,12 @@
     },
     "identification": {
         "instructions": {
-            "unlockCode": "codice di sblocco",
-            "unlockCodepPrefix": "inserisci il",
-            "fingerprint": "impronta",
-            "fingerprintPrefix": "usa l'",
-            "faceId": "volto",
-            "faceIdPrefix": "usa il",
-            "congiunction": "o"
+            "useFingerPrintOrUnlockCode": "usa l'**impronta** o inserisci il **codice di blocco**",
+            "useFingerPrintOrUnlockCodeA11y": "usa l'impronta o inserisci il codice di sblocco",
+            "useFaceIdOrUnlockCode": "usa il **volto** o inserisci il **codice di sblocco**",
+            "useFaceIdOrUnlockCodeA11y": "usa il volto o inserisci il codice di sblocco",
+            "useUnlockCode": "inserisci il **codice di blocco**",
+            "useUnlockCodeA11y": "inserisci il codice di sblocco"
         },
         "title": "Ciao {{name}}!",
         "titleProfileName": "Ciao {{profileName}}!",

@@ -7,7 +7,8 @@ import {
   IconButton,
   Pictogram,
   ToastNotification,
-  VSpacer
+  VSpacer,
+  useIOFontDynamicScale
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
@@ -18,7 +19,6 @@ import {
   Alert,
   ColorSchemeName,
   Modal,
-  PixelRatio,
   Platform,
   StatusBar,
   StyleSheet,
@@ -77,7 +77,7 @@ const IdentificationModal = () => {
   const colorScheme: ColorSchemeName = "light";
   const numberPadVariant = colorScheme ? "dark" : "light";
   const { isDeviceScreenSmall } = useDetectSmallScreen();
-  const isLargeText = PixelRatio.getFontScale() > 1.3;
+  const { hugeFontEnabled } = useIOFontDynamicScale();
 
   const blueColor = useAppBackgroundAccentColorName();
 
@@ -428,7 +428,7 @@ const IdentificationModal = () => {
                     variant="warning"
                   />
                 </View>
-              ) : (isDeviceScreenSmall || isLargeText) &&
+              ) : (isDeviceScreenSmall || hugeFontEnabled) &&
                 isValidatingTask ? null : (
                 <View style={IOStyles.alignCenter}>
                   <Pictogram
