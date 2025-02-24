@@ -2912,13 +2912,12 @@
     },
     "identification": {
         "instructions": {
-            "unlockCode": "codice di sblocco",
-            "unlockCodepPrefix": "inserisci il",
-            "fingerprint": "impronta",
-            "fingerprintPrefix": "usa l'",
-            "faceId": "volto",
-            "faceIdPrefix": "usa il",
-            "congiunction": "o"
+            "useFingerPrintOrUnlockCode": "usa l'**impronta** o inserisci il **codice di sblocco**",
+            "useFingerPrintOrUnlockCodeA11y": "usa l'impronta o inserisci il codice di sblocco",
+            "useFaceIdOrUnlockCode": "usa il **volto** o inserisci il **codice di sblocco**",
+            "useFaceIdOrUnlockCodeA11y": "usa il volto o inserisci il codice di sblocco",
+            "useUnlockCode": "inserisci il **codice di sblocco**",
+            "useUnlockCodeA11y": "inserisci il codice di sblocco"
         },
         "title": "Ciao {{name}}!",
         "titleProfileName": "Ciao {{profileName}}!",
@@ -4547,6 +4546,17 @@
                         "title": "Hai disattivato Documenti su IO",
                         "content": "Se cambi idea, potrai riattivare Documenti su IO in futuro."
                     }
+                }
+            },
+            "offline": {
+                "alert": {
+                    "title": "Nessuna connessione",
+                    "action": "Cosa posso fare?"
+                },
+                "modal": {
+                    "title": "Nessuna connessione", 
+                    "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
+                    "action": "Ricarica l'app IO"
                 }
             }
         }
