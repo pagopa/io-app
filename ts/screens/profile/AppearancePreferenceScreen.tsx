@@ -7,6 +7,7 @@ import {
 import { ReactElement, useState } from "react";
 import { View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
@@ -17,6 +18,7 @@ import {
   preferencesFontSet,
   TypefaceChoice
 } from "../../store/actions/persistedPreferences";
+import { FONT_PERSISTENCE_KEY } from "../../common/context/DSTypefaceContext";
 
 type ColorModeChoice = "system" | "dark" | "light";
 
@@ -51,8 +53,10 @@ const AppearancePreferenceScreen = (): ReactElement => {
       property: "FONT_PREFERENCE",
       value: choice
     });
-    dispatch(preferencesFontSet(choice));
-    setNewTypefaceEnabled(choice === "comfortable");
+    AsyncStorage.setItem(FONT_PERSISTENCE_KEY, choice).finally(() => {
+      dispatch(preferencesFontSet(choice));
+      setNewTypefaceEnabled(choice === "comfortable");
+    });
   };
 
   const [selectedColorMode, setSelectedColorMode] =
