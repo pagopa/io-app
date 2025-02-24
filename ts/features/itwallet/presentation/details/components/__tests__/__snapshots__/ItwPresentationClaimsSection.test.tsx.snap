@@ -3636,7 +3636,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       "paddingVertical": 6,
                                     },
                                     {
-                                      "backgroundColor": "#E1F4E1",
+                                      "backgroundColor": "#FFD9D9",
                                     },
                                   ]
                                 }
@@ -3650,7 +3650,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     [
                                       {},
                                       {
-                                        "color": "#224021",
+                                        "color": "#5D1313",
                                         "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
@@ -3666,7 +3666,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     ]
                                   }
                                 >
-                                  Valid
+                                  Expired
                                 </Text>
                               </View>
                             </View>
