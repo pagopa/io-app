@@ -14,7 +14,14 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import {
   AccessibilityInfo,
   Dimensions,
@@ -58,10 +65,10 @@ export type IOBottomSheetModal = {
  * @property {onDismiss} onDismiss The possible function to be used as an effect of the dismissal of the bottom sheet
  */
 type BottomSheetOptions = {
-  component: React.ReactNode;
-  title: string | React.ReactNode;
+  component: ReactNode;
+  title: string | ReactNode;
   snapPoint?: NonEmptyArray<number | string>;
-  footer?: React.ReactElement;
+  footer?: ReactElement;
   fullScreen?: boolean;
   onDismiss?: () => void;
 };
@@ -161,7 +168,7 @@ export const useIOBottomSheetModal = ({
           </BottomSheetFooter>
         ) : null
       }
-      enableDynamicSizing={snapPoint ? false : true}
+      enableDynamicSizing={!snapPoint}
       maxDynamicContentSize={screenHeight - insets.top}
       snapPoints={snapPoint}
       ref={bottomSheetModalRef}
