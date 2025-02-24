@@ -2802,13 +2802,12 @@
     },
     "identification": {
         "instructions": {
-            "unlockCode": "Entsperrcode",
-            "unlockCodepPrefix": "Benutze deinen",
-            "fingerprint": "Fingerabdruck",
-            "fingerprintPrefix": "benutze deinen",
-            "faceId": "Gesicht",
-            "faceIdPrefix": "benutze dein",
-            "congiunction": "oder"
+            "useFingerPrintOrUnlockCode": "benutze deinen **Fingerabdruck** oder benutze deinen **Entsperrcode**",
+            "useFingerPrintOrUnlockCodeA11y": "benutze deinen Fingerabdruck oder benutze deinen Entsperrcode",
+            "useFaceIdOrUnlockCode": "benutze dein **Gesicht** oder benutze deinen **Entsperrcode**",
+            "useFaceIdOrUnlockCodeA11y": "benutze dein Gesicht oder benutze deinen Entsperrcode",
+            "useUnlockCode": "benutze deinen **Entsperrcode**",
+            "useUnlockCodeA11y": "benutze deinen Entsperrcode"
         },
         "title": "Hallo {{name}}!",
         "titleProfileName": "Hallo {{profileName}}!",

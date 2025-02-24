@@ -25,10 +25,15 @@ export const itwSetAuthLevel = createStandardAction("ITW_SET_AUTH_LEVEL")<
   ItwAuthLevel | undefined
 >();
 
+export const itwSetClaimValuesHidden = createStandardAction(
+  "ITW_SET_CLAIM_VALUES_HIDDEN"
+)<boolean>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
   | ActionType<typeof itwFlagCredentialAsRequested>
   | ActionType<typeof itwUnflagCredentialAsRequested>
   | ActionType<typeof itwSetReviewPending>
-  | ActionType<typeof itwSetAuthLevel>;
+  | ActionType<typeof itwSetAuthLevel>
+  | ActionType<typeof itwSetClaimValuesHidden>;
