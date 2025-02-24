@@ -25,6 +25,7 @@ import {
 import * as analytics from "../analytics";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
+import { TextInputValidationRefProps } from "../types";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -53,7 +54,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
 
   const textInputWrapperRef = useRef<View>(null);
 
-  const textInputRef = useRef<{ validateInput: () => void }>(null);
+  const textInputRef = useRef<TextInputValidationRefProps>(null);
 
   const navigateToTransactionSummary = () => {
     pipe(

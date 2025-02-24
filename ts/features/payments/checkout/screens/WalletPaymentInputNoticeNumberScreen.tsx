@@ -19,6 +19,7 @@ import {
 } from "../../common/utils/validation";
 import * as analytics from "../analytics";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
+import { TextInputValidationRefProps } from "../types";
 import { trimAndLimitValue } from "../utils";
 
 type InputState = {
@@ -59,7 +60,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
 
   const textInputWrapperRef = useRef<View>(null);
 
-  const textInputRef = useRef<{ validateInput: () => void }>(null);
+  const textInputRef = useRef<TextInputValidationRefProps>(null);
 
   return (
     <>
