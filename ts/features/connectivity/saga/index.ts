@@ -20,8 +20,8 @@ export function* connectionStatusSaga(): Generator<
 > {
   try {
     const response = yield* call(fetchNetInfoState());
-    if (E.isRight(response) && response.right.isConnected) {
-      yield* put(setConnectionStatus(response.right.isConnected));
+    if (E.isRight(response)) {
+      yield* put(setConnectionStatus(response.right.isConnected === true));
       return true;
     }
     return false;
