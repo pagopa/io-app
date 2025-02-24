@@ -1,1 +1,0 @@
-** Your favorite calendar is by default the one associated with your mail, ** if you registered with a Google account. You can at any time change the email associated with your calendar, in order to receive IO reminders on the calendar you use most.
