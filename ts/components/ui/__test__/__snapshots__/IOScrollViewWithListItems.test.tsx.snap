@@ -502,6 +502,11 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                 >
                                   <View
                                     accessible={true}
+                                    style={
+                                      {
+                                        "flexDirection": "column",
+                                      }
+                                    }
                                   >
                                     <Text
                                       allowFontScaling={true}
@@ -593,6 +598,11 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                 >
                                   <View
                                     accessible={true}
+                                    style={
+                                      {
+                                        "flexDirection": "column",
+                                      }
+                                    }
                                   >
                                     <Text
                                       allowFontScaling={true}
@@ -2085,6 +2095,11 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                 >
                                   <View
                                     accessible={true}
+                                    style={
+                                      {
+                                        "flexDirection": "column",
+                                      }
+                                    }
                                   >
                                     <Text
                                       allowFontScaling={true}
@@ -2176,6 +2191,11 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                 >
                                   <View
                                     accessible={true}
+                                    style={
+                                      {
+                                        "flexDirection": "column",
+                                      }
+                                    }
                                   >
                                     <Text
                                       allowFontScaling={true}
