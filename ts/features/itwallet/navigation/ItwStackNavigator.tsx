@@ -3,6 +3,7 @@ import {
   TransitionPresets
 } from "@react-navigation/stack";
 import { Platform } from "react-native";
+import { ComponentType } from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
@@ -41,6 +42,9 @@ import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/detail
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
+import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
+import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
+import { useIOSelector } from "../../../store/hooks";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -88,7 +92,8 @@ const InnerNavigator = () => {
       {/* DISCOVERY */}
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.INFO}
-        component={ItwDiscoveryInfoScreen}
+        component={withItwEnabled(ItwDiscoveryInfoScreen)}
+        options={hiddenHeader}
       />
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.IPZS_PRIVACY}
@@ -96,7 +101,7 @@ const InnerNavigator = () => {
       />
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN}
-        component={ItwAlreadyActiveScreen}
+        component={withItwEnabled(ItwAlreadyActiveScreen)}
         options={hiddenHeader}
       />
       {/* IDENTIFICATION */}
@@ -193,13 +198,14 @@ const InnerNavigator = () => {
       />
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
-        component={ItwIssuanceCredentialAsyncContinuationScreen}
+        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
         options={hiddenHeader}
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
-        component={ItwPresentationCredentialDetailScreen}
+        component={withItwEnabled(ItwPresentationCredentialDetailScreen)}
+        options={hiddenHeader}
       />
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT}
@@ -242,3 +248,22 @@ const InnerNavigator = () => {
     </Stack.Navigator>
   );
 };
+
+/**
+ * A higher-order component which renders the screen only if IT Wallet is enabled.
+ * In case IT Wallet is not enabled, it renders an error screen.
+ * @param Screen - The screen to render
+ * @returns The component or the error screen
+ */
+const withItwEnabled =
+  <P extends Record<string, unknown>>(Screen: ComponentType<P>) =>
+  (props: P) => {
+    const isItwEnabled = useIOSelector(isItwEnabledSelector);
+
+    if (!isItwEnabled) {
+      // In case the user lands in this screen and IT Wallet is not enabled,
+      // we should render an error screen.
+      return <ItwGenericErrorContent />;
+    }
+    return <Screen {...props} />;
+  };
