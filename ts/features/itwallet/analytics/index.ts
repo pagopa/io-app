@@ -272,7 +272,9 @@ export const trackItwCredentialDelete = (credential: MixPanelCredential) => {
   );
 };
 
-export const trackWalletDataShareAccepted = (properties: ItwWalletDataShare) => {
+export const trackWalletDataShareAccepted = (
+  properties: ItwWalletDataShare
+) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_DATA_SHARE_ACCEPTED,
     buildEventProperties("UX", "action", properties)

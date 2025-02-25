@@ -1,5 +1,7 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { ActionArgs, assign } from "xstate";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -22,12 +24,10 @@ import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
+import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences.ts";
+import { CredentialType } from "../../common/utils/itwMocksUtils.ts";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
-import { CredentialType } from "../../common/utils/itwMocksUtils.ts";
-import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences.ts";
-import {pipe} from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 export default (
   navigation: ReturnType<typeof useIONavigation>,
@@ -202,11 +202,22 @@ const trackDataShareEvent = (
      * request for MDL or the credential is requested from ItwCredentialOnboardingSection.
      */
     const trackingData = pipe(
-      O.fromPredicate(() => credentialType === CredentialType.DRIVING_LICENSE)(credentialType),
-      O.map(() => (isAsyncContinuation && isMdlRequested ? "async_continuation" : "initial_request")),
-      O.fold(() => ({ credential }), (phase) => ({ credential, phase }))
+      O.fromPredicate(() => credentialType === CredentialType.DRIVING_LICENSE)(
+        credentialType
+      ),
+      O.map(() =>
+        isAsyncContinuation && isMdlRequested
+          ? "async_continuation"
+          : "initial_request"
+      ),
+      O.fold(
+        () => ({ credential }),
+        phase => ({ credential, phase })
+      )
     );
 
-    (isAccepted ? trackWalletDataShareAccepted : trackWalletDataShare)(trackingData);
+    (isAccepted ? trackWalletDataShareAccepted : trackWalletDataShare)(
+      trackingData
+    );
   }
 };
