@@ -6,9 +6,7 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { useIODispatch } from "../../../../store/hooks";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-
-const MODAL_BOTTOM_PADDING = 150;
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 /**
  * HOC that wraps a screen with an Alert which informs the user that the app is offline
@@ -24,28 +22,25 @@ export const withOfflineAlert =
       dispatch(startApplicationInitialization());
     };
 
-    const offlineInfoModal = useIOBottomSheetAutoresizableModal(
-      {
-        title: I18n.t("features.itWallet.offline.modal.title"),
-        component: (
-          <IOMarkdown
-            content={I18n.t("features.itWallet.offline.modal.content")}
-          />
-        ),
-        footer: (
-          <FooterActions
-            actions={{
-              type: "SingleButton",
-              primary: {
-                label: I18n.t("features.itWallet.offline.modal.action"),
-                onPress: handleAppRestart
-              }
-            }}
-          />
-        )
-      },
-      MODAL_BOTTOM_PADDING
-    );
+    const offlineInfoModal = useIOBottomSheetModal({
+      title: I18n.t("features.itWallet.offline.modal.title"),
+      component: (
+        <IOMarkdown
+          content={I18n.t("features.itWallet.offline.modal.content")}
+        />
+      ),
+      footer: (
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
+              label: I18n.t("features.itWallet.offline.modal.action"),
+              onPress: handleAppRestart
+            }
+          }}
+        />
+      )
+    });
 
     return (
       <AlertEdgeToEdgeWrapper

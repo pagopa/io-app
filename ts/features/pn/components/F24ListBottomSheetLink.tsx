@@ -47,7 +47,6 @@ export const F24ListBottomSheetLink = ({
       </>
     ),
     title: I18n.t("features.pn.details.f24Section.bottomSheet.title"),
-    footer: <View />,
     onDismiss: () => dispatch(cancelPreviousAttachmentDownload())
   });
   return (

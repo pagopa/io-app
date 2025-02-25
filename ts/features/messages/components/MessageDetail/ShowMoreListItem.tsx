@@ -1,5 +1,4 @@
 import { Fragment } from "react";
-import { View } from "react-native";
 import {
   Divider,
   IOIcons,
@@ -61,8 +60,7 @@ export const ShowMoreListItem = ({ sections }: ShowMoreListItemProps) => {
         ))}
       </>
     ),
-    title: I18n.t("messageDetails.showMoreDataBottomSheet.title"),
-    footer: <View />
+    title: I18n.t("messageDetails.showMoreDataBottomSheet.title")
   });
 
   return (

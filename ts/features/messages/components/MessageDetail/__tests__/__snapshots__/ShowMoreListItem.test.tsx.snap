@@ -531,14 +531,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                             <View
                               style={
                                 {
-                                  "height": 48,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "height": 48,
+                                  "height": 0,
                                 }
                               }
                             />
@@ -1144,14 +1137,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                             <View
                               style={
                                 {
-                                  "height": 48,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "height": 48,
+                                  "height": 0,
                                 }
                               }
                             />
@@ -1941,14 +1927,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                             <View
                               style={
                                 {
-                                  "height": 48,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "height": 48,
+                                  "height": 0,
                                 }
                               }
                             />
@@ -2738,14 +2717,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                             <View
                               style={
                                 {
-                                  "height": 48,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "height": 48,
+                                  "height": 0,
                                 }
                               }
                             />
@@ -3727,14 +3699,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                             <View
                               style={
                                 {
-                                  "height": 48,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "height": 48,
+                                  "height": 0,
                                 }
                               }
                             />
@@ -4716,14 +4681,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                             <View
                               style={
                                 {
-                                  "height": 48,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "height": 48,
+                                  "height": 0,
                                 }
                               }
                             />
@@ -6567,14 +6525,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                             <View
                               style={
                                 {
-                                  "height": 48,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "height": 48,
+                                  "height": 0,
                                 }
                               }
                             />
@@ -7795,14 +7746,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                             <View
                               style={
                                 {
-                                  "height": 48,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "height": 48,
+                                  "height": 0,
                                 }
                               }
                             />

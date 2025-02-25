@@ -2741,14 +2741,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                               <View
                                 style={
                                   {
-                                    "height": 48,
-                                  }
-                                }
-                              />
-                              <View
-                                style={
-                                  {
-                                    "height": 48,
+                                    "height": 0,
                                   }
                                 }
                               />
@@ -3247,14 +3240,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                               <View
                                 style={
                                   {
-                                    "height": 48,
-                                  }
-                                }
-                              />
-                              <View
-                                style={
-                                  {
-                                    "height": 48,
+                                    "height": 0,
                                   }
                                 }
                               />
@@ -3973,14 +3959,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                               <View
                                 style={
                                   {
-                                    "height": 48,
-                                  }
-                                }
-                              />
-                              <View
-                                style={
-                                  {
-                                    "height": 48,
+                                    "height": 0,
                                   }
                                 }
                               />
