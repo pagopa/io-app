@@ -316,7 +316,7 @@ const ErrorComponent = (
 ) => (
   <View style={[IOStyles.flex, styles.errorContainer]}>
     <OperationResultScreenContent
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       title={I18n.t("authentication.errors.network.title")}
       action={{
         label: I18n.t("global.buttons.retry"),

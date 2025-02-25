@@ -122,7 +122,7 @@ export const MessageDetailsScreen = () => {
         O.fold(
           () => (
             <OperationResultScreenContent
-              pictogram="umbrellaNew"
+              pictogram="umbrella"
               title={I18n.t("features.pn.details.loadError.title")}
               subtitle={I18n.t("features.pn.details.loadError.body")}
             />

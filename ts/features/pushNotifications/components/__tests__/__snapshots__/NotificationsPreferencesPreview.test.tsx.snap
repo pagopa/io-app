@@ -487,8 +487,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 17,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 24,
@@ -507,7 +507,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -1021,8 +1021,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 17,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 24,
@@ -1041,7 +1041,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -1555,8 +1555,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 17,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 24,
@@ -1575,7 +1575,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -2089,8 +2089,8 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 17,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 24,
@@ -2109,7 +2109,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",

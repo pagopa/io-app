@@ -15,7 +15,6 @@ import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHo
 import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle";
 import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
-import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
@@ -28,7 +27,6 @@ export const MainTabNavigator = () => {
   const navigation = useIONavigation();
 
   const startupLoaded = useIOSelector(isStartupLoaded);
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
@@ -43,12 +41,7 @@ export const MainTabNavigator = () => {
     >
       <Tab.Navigator
         screenOptions={{
-          tabBarLabelStyle: makeFontStyleObject(
-            11,
-            isDesignSystemEnabled ? "Titillio" : "TitilliumSansPro",
-            11,
-            "Regular"
-          ),
+          tabBarLabelStyle: makeFontStyleObject(11, "Titillio", 11, "Regular"),
           tabBarHideOnKeyboard: true,
           tabBarAllowFontScaling: false,
           tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],

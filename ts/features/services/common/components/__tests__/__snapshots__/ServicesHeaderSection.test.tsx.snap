@@ -274,7 +274,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
               {},
               {
                 "color": "#2B2E38",
-                "fontFamily": "Titillium Sans Pro",
+                "fontFamily": "Titillio",
                 "fontSize": 22,
                 "fontStyle": "normal",
                 "fontWeight": "600",
@@ -294,7 +294,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
               {},
               {
                 "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
+                "fontFamily": "Titillio",
                 "fontSize": 14,
                 "fontStyle": "normal",
                 "fontWeight": "400",

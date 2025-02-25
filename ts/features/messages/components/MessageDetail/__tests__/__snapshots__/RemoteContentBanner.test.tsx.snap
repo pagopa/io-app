@@ -381,11 +381,10 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "flexDirection": "row",
+                                "padding": 16,
                               },
                               {
                                 "backgroundColor": "#F4F5F8",
-                                "paddingHorizontal": 16,
-                                "paddingVertical": 16,
                               },
                               {
                                 "transform": [
@@ -421,7 +420,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -495,7 +494,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                     {},
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -750,7 +749,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -771,7 +770,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -791,7 +790,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -811,7 +810,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -833,7 +832,7 @@ The sender can edit the information in a dynamic message only
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -853,7 +852,7 @@ The sender can edit the information in a dynamic message only
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",

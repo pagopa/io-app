@@ -377,8 +377,8 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -412,7 +412,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -621,18 +621,18 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                 style={
                                   [
                                     {
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": undefined,
+                                    },
+                                    {
                                       "flexGrow": 1,
                                       "flexShrink": 1,
                                       "height": "100%",
                                       "marginTop": 16,
                                       "paddingVertical": 0,
-                                    },
-                                    {
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": undefined,
                                     },
                                     {
                                       "color": "#0E0F13",
@@ -669,14 +669,12 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                   style={
                                     [
                                       {
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
                                         "lineHeight": undefined,
-                                      },
-                                      {
-                                        "color": "#555C70",
                                       },
                                       {
                                         "transform": [
@@ -780,7 +778,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -864,20 +862,23 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderRadius": 4,
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 8,
                                       "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "paddingHorizontal": 16,
+                                      "paddingHorizontal": 24,
                                       "textAlignVertical": "center",
                                     },
                                     {
-                                      "backgroundColor": "#0073E6",
+                                      "height": 48,
+                                    },
+                                    {
+                                      "backgroundColor": "#0B3EE3",
                                       "overflow": "hidden",
                                     },
-                                    false,
                                     {
-                                      "height": 40,
+                                      "paddingHorizontal": 16,
                                     },
                                     {},
                                     false,
@@ -915,7 +916,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                         {},
                                         {
                                           "color": "#FFFFFF",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",

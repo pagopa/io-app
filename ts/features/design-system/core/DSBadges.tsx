@@ -39,58 +39,25 @@ export const DSBadges = () => {
 
 const renderBadge = () => (
   <VStack space={componentMargin}>
-    <DSComponentViewerBox name={"Badge · Default variant"}>
-      <HStack space={componentInnerMargin}>
+    <DSComponentViewerBox name={"Badge · Default"}>
+      <HStack space={componentInnerMargin} style={{ flexWrap: "wrap" }}>
         <Badge text={"Default"} variant="default" />
-        <Badge outline text={"Default"} variant="default" />
+        <Badge text={"Warning"} variant="warning" />
+        <Badge text={"Error"} variant="error" />
+        <Badge text={"Success"} variant="success" />
+        <Badge text={"Cgn"} variant="cgn" />
+        <Badge text={"Highlight"} variant="highlight" />
       </HStack>
     </DSComponentViewerBox>
-    <DSComponentViewerBox name={"Badge · Different variants"}>
-      <VStack space={componentInnerMargin}>
-        <HStack space={componentInnerMargin}>
-          <Badge text={"Info"} variant="info" />
-          <Badge text={"Warning"} variant="warning" />
-          <Badge text={"Error"} variant="error" />
-          <Badge text={"Success"} variant="success" />
-        </HStack>
-        <HStack space={componentInnerMargin}>
-          <Badge text={"Purple"} variant="purple" />
-          <Badge text={"Light blue"} variant="lightBlue" />
-          <Badge text={"Blue"} variant="blue" />
-          <Badge text={"Turquoise"} variant="turquoise" />
-        </HStack>
-      </VStack>
-    </DSComponentViewerBox>
     <DSComponentViewerBox name={"Badge · Outline variants"}>
-      <VStack space={componentInnerMargin}>
-        <HStack space={componentInnerMargin}>
-          <Badge outline text={"Info"} variant="info" />
-          <Badge outline text={"Warning"} variant="warning" />
-          <Badge outline text={"Error"} variant="error" />
-          <Badge outline text={"Success"} variant="success" />
-        </HStack>
-        <HStack space={componentInnerMargin}>
-          <Badge outline text={"Purple"} variant="purple" />
-          <Badge outline text={"Light blue"} variant="lightBlue" />
-          <Badge outline text={"Blue"} variant="blue" />
-          <Badge outline text={"Turquoise"} variant="turquoise" />
-        </HStack>
-      </VStack>
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name={"Badge · Contrast variant"}>
-      <View
-        style={{
-          backgroundColor: IOColors["grey-700"],
-          padding: 16,
-          borderRadius: 24,
-          borderCurve: "continuous"
-        }}
-      >
-        <HStack space={componentInnerMargin}>
-          <Badge text={"Default"} variant="default" />
-          <Badge text={"Contrast"} variant="contrast" />
-        </HStack>
-      </View>
+      <HStack space={componentInnerMargin} style={{ flexWrap: "wrap" }}>
+        <Badge outline text={"Default"} variant="default" />
+        <Badge outline text={"Warning"} variant="warning" />
+        <Badge outline text={"Error"} variant="error" />
+        <Badge outline text={"Success"} variant="success" />
+        <Badge outline text={"Cgn"} variant="cgn" />
+        <Badge outline text={"Highlight"} variant="highlight" />
+      </HStack>
     </DSComponentViewerBox>
   </VStack>
 );
