@@ -68,7 +68,7 @@ export const OrganizationHeader = ({
           {organizationName}
         </Body>
         <BodySmall
-          color={theme["interactiveElem-default"]}
+          asLink={true}
           onPress={navigateToServiceDetails}
           weight="Semibold"
         >
