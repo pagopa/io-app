@@ -101,7 +101,7 @@ const TimelineRefundDetailsComponent = (props: Props) => {
             variant:
               refund.operationType === OperationTypeEnum.REJECTED_REFUND
                 ? "error"
-                : "turquoise",
+                : "highlight",
             text: I18n.t(
               `idpay.initiative.operationDetails.refund.result.${refund.operationType}`
             )

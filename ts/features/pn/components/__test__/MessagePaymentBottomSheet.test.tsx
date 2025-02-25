@@ -2,7 +2,6 @@ import { createStore } from "redux";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import PN_ROUTES from "../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MessagePaymentBottomSheet } from "../MessagePaymentBottomSheet";
@@ -15,12 +14,12 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 describe("MessagePaymentBottomSheet", () => {
   it("should match snapshot, no payments", () => {
     const messageId = "01HTHS3N21AFMBMKHGWVRAMXQ6" as UIMessageId;
-    const component = renderComponent(messageId, [], dsEnabledGlobalState());
+    const component = renderComponent(messageId, [], globalState());
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, six payments", () => {
     const messageId = "01HTHS3N21AFMBMKHGWVRAMXQ6" as UIMessageId;
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const paymentIdList = [
       "01234567890012345678912345610",
       "01234567890012345678912345620",
@@ -78,13 +77,8 @@ describe("MessagePaymentBottomSheet", () => {
   });
 });
 
-const dsEnabledGlobalState = () => {
-  const initialState = appReducer(undefined, applicationChangeState("active"));
-  return appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-};
+const globalState = () =>
+  appReducer(undefined, applicationChangeState("active"));
 
 const renderComponent = (
   messageId: UIMessageId,

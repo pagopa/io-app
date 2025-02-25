@@ -590,7 +590,7 @@
             "trial": {
                 "titleSection": "Partecipa alla sperimentazione"
             },
-            "designSystemEnvironment": "Design System sperimentale",
+            "experimentalEnvironment": "Interfaccia sperimentale",
             "newScanSection": "Nuova funzione 'Inquadra'",
             "sessionRefresh": "Attiva il refresh della sessione",
             "appVersion": "Versione",

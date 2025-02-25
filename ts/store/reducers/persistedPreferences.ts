@@ -19,7 +19,7 @@ import {
   serviceAlertDisplayedOnceSuccess,
   preferencesPnTestEnvironmentSetEnabled,
   preferencesIdPayTestSetEnabled,
-  preferencesDesignSystemSetEnabled,
+  preferencesExperimentalDesignEnabled,
   setIOMarkdownEnabledOnMessagesAndServices,
   setItwOfflineAccessEnabled
 } from "../actions/persistedPreferences";
@@ -45,7 +45,7 @@ export type PersistedPreferencesState = Readonly<{
   // where its value is `undefined` (when the user updates the app without
   // changing the variable value later). Typescript cannot detect this so
   // be sure to handle such case when reading and using this value
-  isDesignSystemEnabled: boolean;
+  isDesignSystemEnabled: boolean; // TODO: rename to isExperimentalDesignEnabled (with a migration)
   isIOMarkdownEnabledOnMessagesAndServices: boolean;
   isItwOfflineAccessEnabled: boolean;
 }>;
@@ -61,7 +61,7 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isMixpanelEnabled: null,
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
-  isDesignSystemEnabled: false,
+  isDesignSystemEnabled: false, // TODO: rename to isExperimentalDesignEnabled (with a migration)
   isIOMarkdownEnabledOnMessagesAndServices: false,
   isItwOfflineAccessEnabled: false
 };
@@ -135,10 +135,11 @@ export default function preferencesReducer(
     };
   }
 
-  if (isActionOf(preferencesDesignSystemSetEnabled, action)) {
+  if (isActionOf(preferencesExperimentalDesignEnabled, action)) {
     return {
       ...state,
-      isDesignSystemEnabled: action.payload.isDesignSystemEnabled
+      // TODO: rename to isExperimentalDesignEnabled (with a migration)
+      isDesignSystemEnabled: action.payload.isExperimentalDesignEnabled
     };
   }
 
@@ -213,7 +214,8 @@ export const isIdPayLocallyEnabledSelector = (state: GlobalState) =>
 // where its value is `undefined` (when the user updates the app without
 // changing the variable value later). Typescript cannot detect this so
 // we must make sure that the signature's return type is respected
-export const isDesignSystemEnabledSelector = (state: GlobalState) =>
+export const isExperimentalDesignEnabledSelector = (state: GlobalState) =>
+  // TODO: rename to isExperimentalDesignEnabled (with a migration)
   state.persistedPreferences.isDesignSystemEnabled ?? false;
 
 export const isIOMarkdownEnabledLocallySelector = (

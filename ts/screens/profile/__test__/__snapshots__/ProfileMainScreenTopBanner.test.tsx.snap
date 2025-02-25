@@ -56,11 +56,10 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             "borderCurve": "continuous",
             "borderRadius": 8,
             "flexDirection": "row",
+            "padding": 16,
           },
           {
             "backgroundColor": "#F4F5F8",
-            "paddingHorizontal": 16,
-            "paddingVertical": 16,
           },
           {
             "transform": [
@@ -96,8 +95,8 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               {},
               {
                 "color": "#031344",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 17,
+                "fontFamily": "Titillio",
+                "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 24,
@@ -170,7 +169,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 {},
                 {
                   "color": "#0B3EE3",
-                  "fontFamily": "Titillium Sans Pro",
+                  "fontFamily": "Titillio",
                   "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "600",
@@ -595,7 +594,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           style={
             [
               false,
-              false,
               {
                 "flex": 1,
               },
@@ -622,7 +620,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                   {},
                   {
                     "color": "#5D1313",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
@@ -643,7 +641,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                   {},
                   {
                     "color": "#5D1313",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",

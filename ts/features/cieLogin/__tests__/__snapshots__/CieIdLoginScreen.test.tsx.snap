@@ -318,7 +318,7 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
                     {},
                     {
                       "color": "#2B2E38",
-                      "fontFamily": "Titillium Sans Pro",
+                      "fontFamily": "Titillio",
                       "fontSize": 22,
                       "fontStyle": "normal",
                       "fontWeight": "600",
@@ -384,27 +384,28 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
                     [
                       {
                         "alignItems": "center",
-                        "borderRadius": 4,
+                        "borderCurve": "continuous",
+                        "borderRadius": 8,
                         "elevation": 0,
                         "flexDirection": "row",
                         "justifyContent": "center",
-                        "paddingHorizontal": 16,
+                        "paddingHorizontal": 24,
                         "textAlignVertical": "center",
                       },
+                      {
+                        "height": 48,
+                      },
+                      {
+                        "borderWidth": 2,
+                      },
                       false,
-                      {
-                        "borderWidth": 1,
-                      },
-                      {
-                        "height": 40,
-                      },
                       {
                         "columnGap": 8,
                       },
                       false,
                       {
-                        "backgroundColor": "rgba(0,115,230,0)",
-                        "borderColor": "#0073E6",
+                        "backgroundColor": "rgba(9,50,182,0)",
+                        "borderColor": "#0B3EE3",
                       },
                       false,
                       {
@@ -427,7 +428,7 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
                         {},
                         {
                           "color": "#0E0F13",
-                          "fontFamily": "Titillium Sans Pro",
+                          "fontFamily": "Titillio",
                           "fontSize": 16,
                           "fontStyle": "normal",
                           "fontWeight": "600",
