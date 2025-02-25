@@ -10,7 +10,9 @@ import {
   CREDENTIALS_MAP,
   trackAddCredentialProfileAndSuperProperties,
   trackSaveCredentialSuccess,
-  trackStartAddNewCredential
+  trackStartAddNewCredential,
+  trackWalletDataShare,
+  trackWalletDataShareAccepted
 } from "../../analytics";
 import {
   itwFlagCredentialAsRequested,
@@ -22,6 +24,10 @@ import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/ac
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
+import { CredentialType } from "../../common/utils/itwMocksUtils.ts";
+import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences.ts";
+import {pipe} from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 
 export default (
   navigation: ReturnType<typeof useIONavigation>,
@@ -160,5 +166,47 @@ export default (
   },
 
   handleSessionExpired: () =>
-    store.dispatch(checkCurrentSession.success({ isSessionValid: false }))
+    store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
+
+  trackCredentialIssuingDataShare: ({
+    context
+  }: ActionArgs<Context, CredentialIssuanceEvents, CredentialIssuanceEvents>) =>
+    trackDataShareEvent(context, store),
+
+  trackCredentialIssuingDataShareAccepted: ({
+    context
+  }: ActionArgs<Context, CredentialIssuanceEvents, CredentialIssuanceEvents>) =>
+    trackDataShareEvent(context, store, true)
 });
+
+const trackDataShareEvent = (
+  context: Context,
+  store: ReturnType<typeof useIOStore>,
+  isAccepted = false
+) => {
+  if (context.credentialType) {
+    const { credentialType, isAsyncContinuation } = context;
+    const credential = CREDENTIALS_MAP[credentialType];
+    const requestedCredentials = itwRequestedCredentialsSelector(
+      store.getState()
+    );
+    const isMdlRequested = requestedCredentials.includes(
+      CredentialType.DRIVING_LICENSE
+    );
+
+    /* Double check that we are arriving from the engagement message
+     * that leads to ItwIssuanceCredentialAsyncContinuationScreen
+     * and that there is an ongoing request for MDL.
+     * Therefore, clicking on the message/deep link will ensure that the
+     * phase is always correct, even in the case where there is an ongoing
+     * request for MDL or the credential is requested from ItwCredentialOnboardingSection.
+     */
+    const trackingData = pipe(
+      O.fromPredicate(() => credentialType === CredentialType.DRIVING_LICENSE)(credentialType),
+      O.map(() => (isAsyncContinuation && isMdlRequested ? "async_continuation" : "initial_request")),
+      O.fold(() => ({ credential }), (phase) => ({ credential, phase }))
+    );
+
+    (isAccepted ? trackWalletDataShareAccepted : trackWalletDataShare)(trackingData);
+  }
+};

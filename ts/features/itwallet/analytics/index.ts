@@ -147,11 +147,16 @@ export const ID_STATUS_MAP: Record<
   unknown: "unknown"
 };
 
+type ItwWalletDataShare = {
+  credential: MixPanelCredential;
+  phase?: "initial_request" | "async_continuation";
+};
+
 // #region SCREEN VIEW EVENTS
-export const trackWalletDataShare = (credential: MixPanelCredential) => {
+export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_DATA_SHARE,
-    buildEventProperties("UX", "screen_view", { credential })
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
@@ -267,12 +272,10 @@ export const trackItwCredentialDelete = (credential: MixPanelCredential) => {
   );
 };
 
-export const trackWalletDataShareAccepted = (
-  credential: MixPanelCredential
-) => {
+export const trackWalletDataShareAccepted = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_DATA_SHARE_ACCEPTED,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action", properties)
   );
 };
 

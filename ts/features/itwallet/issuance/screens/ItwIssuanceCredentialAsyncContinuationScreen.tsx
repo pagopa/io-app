@@ -168,7 +168,8 @@ const WrappedItwIssuanceCredentialTrustIssuerScreen = ({
     machineRef.send({
       type: "select-credential",
       credentialType,
-      skipNavigation: true
+      skipNavigation: true,
+      asyncContinuation: true
     });
     setIsMachineReady(true);
   });

@@ -7,11 +7,10 @@ import {
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -26,9 +25,7 @@ import {
   CREDENTIALS_MAP,
   trackIssuanceCredentialScrollToBottom,
   trackItwExit,
-  trackOpenItwTos,
-  trackWalletDataShare,
-  trackWalletDataShareAccepted
+  trackOpenItwTos
 } from "../../analytics";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
@@ -103,19 +100,12 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
 
-  useFocusEffect(
-    useCallback(() => {
-      trackWalletDataShare(CREDENTIALS_MAP[credentialType]);
-    }, [credentialType])
-  );
-
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
-    trackWalletDataShareAccepted(CREDENTIALS_MAP[credentialType]);
   };
 
   const dismissDialog = useItwDismissalDialog(() => {
