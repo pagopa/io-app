@@ -48,22 +48,16 @@ export const createEidIssuanceActorsImplementation = (
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");
 
-    const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
-
-    // If there is a stored key tag we assume the wallet instance was already created
-    // so we just need to prepare the integrity service and return the existing key tag.
-    if (O.isSome(storedIntegrityKeyTag)) {
-      return storedIntegrityKeyTag.value;
-    }
-
     // Reset the wallet store to prevent having dirty state before registering a new wallet instance
     store.dispatch(itwLifecycleStoresReset());
+
     // Await the integrity preparation before requesting the integrity key tag
     const integrityServiceStatus = await pollForStoreValue({
       getState: store.getState,
       selector: itwIntegrityServiceStatusSelector,
-      condition: value => value === "ready"
+      condition: value => value !== undefined
     });
+
     // If the integrity service preparation is not ready (still undefined) after 10 seconds the user will be prompted with an error,
     // he will need to retry.
     // TODO: Create a personalized error message for this case informing the user that the integrity service is not ready yet.
@@ -71,6 +65,7 @@ export const createEidIssuanceActorsImplementation = (
       integrityServiceStatus,
       "Integrity service not ready after 10 seconds"
     );
+
     // If the integrity service preparation is ready, but it is failed, the user will be prompted with an error
     // and the wallet instance creation will be aborted.
     // TODO: Create a personalized error message for this case informing the user that the integrity service is not available on his device.
@@ -78,6 +73,7 @@ export const createEidIssuanceActorsImplementation = (
       integrityServiceStatus === "ready",
       "Integrity service not available"
     );
+
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
     await registerWalletInstance(hardwareKeyTag, sessionToken);
 
