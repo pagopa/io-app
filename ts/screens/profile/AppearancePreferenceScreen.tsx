@@ -36,6 +36,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
   useFocusEffect(() => {
     trackAppearancePreferenceScreenView();
   });
+
   const selectedTypeface: TypefaceChoice = newTypefaceEnabled
     ? "comfortable"
     : "standard";

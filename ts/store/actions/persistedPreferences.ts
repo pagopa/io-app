@@ -47,9 +47,9 @@ export const preferencesIdPayTestSetEnabled = createStandardAction(
   "PREFERENCES_IDPAY_TEST_SET_ENABLED"
 )<{ isIdPayTestEnabled: boolean }>();
 
-export const preferencesDesignSystemSetEnabled = createStandardAction(
-  "PREFERENCES_DESIGN_SYSTEM_SET_ENABLED"
-)<{ isDesignSystemEnabled: boolean }>();
+export const preferencesExperimentalDesignEnabled = createStandardAction(
+  "PREFERENCES_EXPERIMENTAL_DESIGN_ENABLED"
+)<{ isExperimentalDesignEnabled: boolean }>();
 
 export const preferencesFontSet = createStandardAction(
   "PREFERENCES_DESIGN_SYSTEM_SET_ENABLED"
@@ -74,7 +74,7 @@ export type PersistedPreferencesActions = ActionType<
   | typeof continueWithRootOrJailbreak
   | typeof preferencesPnTestEnvironmentSetEnabled
   | typeof preferencesIdPayTestSetEnabled
-  | typeof preferencesDesignSystemSetEnabled
+  | typeof preferencesExperimentalDesignEnabled
   | typeof setIOMarkdownEnabledOnMessagesAndServices
   | typeof setItwOfflineAccessEnabled
   | typeof preferencesFontSet

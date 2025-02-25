@@ -7,8 +7,6 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import Placeholder from "rn-placeholder";
-import { useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 type CounterType = "Value" | "ValueWithProgress";
 
@@ -109,11 +107,7 @@ type BonusCardCounterSkeletonProps = {
 };
 
 const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-
-  const placeholderColor = isDesignSystemEnabled
-    ? IOColors["blueItalia-100"]
-    : IOColors["blueIO-100"];
+  const placeholderColor = IOColors["blueItalia-100"];
 
   return (
     <View

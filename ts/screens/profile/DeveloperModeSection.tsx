@@ -54,7 +54,7 @@ import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { requestAppReview } from "../../utils/storeReview";
-import DSEnableSwitch from "./components/DSEnableSwitch";
+import ExperimentalDesignEnableSwitch from "./components/ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
   value: string;
@@ -321,7 +321,7 @@ const DesignSystemSection = () => {
         }
       />
       <Divider />
-      <DSEnableSwitch />
+      <ExperimentalDesignEnableSwitch />
       <Divider />
       <ListItemSwitch
         label="Abilita Dark Mode"

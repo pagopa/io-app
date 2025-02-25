@@ -357,7 +357,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
-                                "height": 4,
+                                "height": 0,
                                 "position": "absolute",
                                 "shadowColor": "#0E0F13",
                                 "shadowOffset": {
@@ -1332,7 +1332,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
-                                "height": 4,
+                                "height": 0,
                                 "position": "absolute",
                                 "shadowColor": "#0E0F13",
                                 "shadowOffset": {

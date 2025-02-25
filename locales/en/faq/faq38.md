@@ -1,2 +1,0 @@
-The summary of the transaction visible within the IO app is a summary of the operation carried out, which helps you keep track of the payments made through pagoPA.
-The electronic receipt of the transaction is instead the document issued by the PSP (Payment Service Provider) which certifies the payment and which will be provided to you by the institution and / or the PSP.
