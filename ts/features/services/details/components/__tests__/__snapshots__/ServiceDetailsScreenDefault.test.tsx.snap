@@ -225,7 +225,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -430,7 +430,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -831,7 +831,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1018,20 +1018,23 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "height": 48,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {},
                                   false,
@@ -1069,7 +1072,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1280,7 +1283,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1681,7 +1684,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1868,20 +1871,23 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "height": 48,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {},
                                   false,
@@ -1919,7 +1925,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2033,7 +2039,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2249,7 +2255,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",

@@ -79,6 +79,7 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
 exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'persistedPreferences' state 1`] = `
 {
   "continueWithRootOrJailbreak": false,
+  "fontPreference": "comfortable",
   "isCustomEmailChannelEnabled": {
     "kind": "PotNone",
   },

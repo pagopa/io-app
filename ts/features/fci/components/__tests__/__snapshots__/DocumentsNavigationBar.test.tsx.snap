@@ -105,7 +105,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
               "borderWidth": 0,
             },
             {
-              "color": "#0073E6",
+              "color": "#0B3EE3",
             },
             {
               "flex": 0,
@@ -114,13 +114,13 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             },
           ]
         }
-        tintColor="#0073E6"
+        tintColor="#0B3EE3"
         vbHeight={24}
         vbWidth={24}
         width={36}
       >
         <RNSVGGroup
-          color="#0073E6"
+          color="#0B3EE3"
           fill={
             {
               "payload": 4278190080,
@@ -157,8 +157,8 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -245,7 +245,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
               "borderWidth": 0,
             },
             {
-              "color": "#0073E6",
+              "color": "#0B3EE3",
             },
             {
               "flex": 0,
@@ -254,13 +254,13 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             },
           ]
         }
-        tintColor="#0073E6"
+        tintColor="#0B3EE3"
         vbHeight={24}
         vbWidth={24}
         width={36}
       >
         <RNSVGGroup
-          color="#0073E6"
+          color="#0B3EE3"
           fill={
             {
               "payload": 4278190080,
@@ -304,8 +304,8 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,

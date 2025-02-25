@@ -2,7 +2,6 @@ import { createStore } from "redux";
 import IOMarkdown from "../IOMarkdown";
 import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 
@@ -40,11 +39,7 @@ describe("IOMarkdown", () => {
 
 const renderComponent = (markdown: string) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, designSystemState as any);
+  const store = createStore(appReducer, initialState as any);
 
   return renderScreenWithNavigationStoreContext(
     () => <IOMarkdown content={markdown} />,

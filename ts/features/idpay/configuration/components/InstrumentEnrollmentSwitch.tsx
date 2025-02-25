@@ -59,7 +59,7 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
       status =>
         ({
           text: instrumentStatusLabels[status],
-          variant: "blue"
+          variant: "default"
         } as Badge)
     )
   );

@@ -2207,13 +2207,15 @@
                     "title": "Gib den Zahlungsmitteilungskodex ein",
                     "subtitle": "Er hat 18 Ziffern und ist neben dem QR-Code zu finden.",
                     "validationError": "18 Ziffern, die mit 0, 1 oder 3 beginnen.",
-                    "placeholder": "Zahlungsmitteilungskodex"
+                    "placeholder": "Zahlungsmitteilungskodex",
+                    "a11y": "Fehler. Falscher Mitteilungscode. Es hat 18 Ziffern, Sie finden es in der Nähe des Code QR."
                 },
                 "fiscalCode": {
                     "title": "Gib die Steuernummer der Körperschaft ein",
                     "subtitle": "Sie hat 11 Ziffern und ist neben dem QR-Code zu finden.",
                     "validationError": "11 Ziffern eingeben.",
-                    "placeholder": "Steuernummer der Körperschaft"
+                    "placeholder": "Steuernummer der Körperschaft",
+                    "a11y": "Fehler. Steuergesetzbuch des falschen Gläubigers. Es hat 11 Ziffern, Sie finden es in der Nähe des QR -Code"
                 }
             },
             "abortDialog": {

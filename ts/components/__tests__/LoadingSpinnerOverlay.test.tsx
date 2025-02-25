@@ -4,7 +4,6 @@ import { Text } from "react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../store/actions/persistedPreferences";
 import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
 import LoadingSpinnerOverlay from "../LoadingSpinnerOverlay";
@@ -56,12 +55,8 @@ const renderComponent = (
   onCancel?: () => void
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const dsState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore(dsState);
+  const store: ReturnType<typeof mockStore> = mockStore(initialState);
   return render(
     <Provider store={store}>
       <LoadingSpinnerOverlay
