@@ -74,7 +74,8 @@ export const idps: ReadonlyArray<SpidIdp> = [
     id: "posteid",
     name: "Poste ID",
     logo: {
-      light: require("../../img/spid-idp-posteid.png")
+      light: require("../../img/spid-idp-posteid.png"),
+      dark: require("../../img/spid-idp-posteid-dark.png")
     },
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
   },
