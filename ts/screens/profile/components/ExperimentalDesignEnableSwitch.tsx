@@ -9,7 +9,7 @@ import { isDesignSystemEnabledSelector } from "../../../store/reducers/persisted
 import { preferencesDesignSystemSetEnabled } from "../../../store/actions/persistedPreferences";
 import { DS_PERSISTENCE_KEY } from "../../../common/context/DSExperimentalContext";
 
-const DSEnableSwitch = () => {
+const ExperimentalDesignEnableSwitch = () => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const dispatch = useIODispatch();
   const { isExperimental, setExperimental } = useIOExperimentalDesign();
@@ -32,4 +32,4 @@ const DSEnableSwitch = () => {
   );
 };
 
-export default DSEnableSwitch;
+export default ExperimentalDesignEnableSwitch;
