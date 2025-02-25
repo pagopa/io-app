@@ -23,10 +23,10 @@ import { paymentsCalculatePaymentFeesAction } from "../store/actions/networking"
 import { paymentCompletedSuccess } from "../store/actions/orchestration";
 import { selectWalletPaymentCurrentStep } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import { getPaymentPhaseFromStep } from "../utils";
+import { CHECKOUT_ASSISTANCE_ARTICLE, getPaymentPhaseFromStep } from "../utils";
 import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 
-const HC_PAYMENT_CANCELED_ERROR_ID = "PAYMENT_CANCELED_ERROR";
+export const HC_PAYMENT_CANCELED_ERROR_ID = "PAYMENT_CANCELED_ERROR";
 
 type Props = {
   failure: WalletPaymentFailure;
@@ -34,8 +34,6 @@ type Props = {
 
 const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const { name: routeName } = useRoute();
-  const CHECKOUT_ASSISTANCE_ARTICLE =
-    "https://assistenza.ioapp.it/hc/it/articles/31007989155985-L-avviso-pagoPA-%C3%A8-revocato";
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const supportModal = usePaymentFailureSupportModal({ failure });
   const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
