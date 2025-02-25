@@ -1,5 +1,5 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -24,12 +24,16 @@ import { paymentCompletedSuccess } from "../store/actions/orchestration";
 import { selectWalletPaymentCurrentStep } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { getPaymentPhaseFromStep } from "../utils";
+import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
+
+const HC_PAYMENT_CANCELED_ERROR_ID = "PAYMENT_CANCELED_ERROR";
 
 type Props = {
   failure: WalletPaymentFailure;
 };
 
 const WalletPaymentFailureDetail = ({ failure }: Props) => {
+  const { name: routeName } = useRoute();
   const CHECKOUT_ASSISTANCE_ARTICLE =
     "https://assistenza.ioapp.it/hc/it/articles/31007989155985-L-avviso-pagoPA-%C3%A8-revocato";
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -77,6 +81,11 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   };
 
   const handleDiscoverMore = () => {
+    trackHelpCenterCtaTapped(
+      HC_PAYMENT_CANCELED_ERROR_ID,
+      CHECKOUT_ASSISTANCE_ARTICLE,
+      routeName
+    );
     openWebUrl(CHECKOUT_ASSISTANCE_ARTICLE, () =>
       IOToast.error(I18n.t("genericError"))
     );
