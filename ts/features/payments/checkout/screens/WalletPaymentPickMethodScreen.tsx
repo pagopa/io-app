@@ -6,7 +6,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { AccessibilityInfo } from "react-native";
+import { AccessibilityInfo, View } from "react-native";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -52,7 +52,7 @@ import { PAYMENT_STEPS_TOTAL_PAGES } from "../utils";
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const titleRef = useRef<any>(null);
+  const titleRef = useRef<View>(null);
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
