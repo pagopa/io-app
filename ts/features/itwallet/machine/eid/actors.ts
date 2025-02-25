@@ -56,22 +56,15 @@ export const createEidIssuanceActorsImplementation = (
       getState: store.getState,
       selector: itwIntegrityServiceStatusSelector,
       condition: value => value !== undefined
+    }).catch(() => {
+      throw new Error("Integrity service status check timed out");
     });
 
-    // If the integrity service preparation is not ready (still undefined) after 10 seconds the user will be prompted with an error,
+    // If the integrity service preparation is not ready (still undefined) or in an error state after 10 seconds the user will be prompted with an error,
     // he will need to retry.
-    // TODO: Create a personalized error message for this case informing the user that the integrity service is not ready yet.
-    assert(
-      integrityServiceStatus,
-      "Integrity service not ready after 10 seconds"
-    );
-
-    // If the integrity service preparation is ready, but it is failed, the user will be prompted with an error
-    // and the wallet instance creation will be aborted.
-    // TODO: Create a personalized error message for this case informing the user that the integrity service is not available on his device.
     assert(
       integrityServiceStatus === "ready",
-      "Integrity service not available"
+      `Integrity service status is ${integrityServiceStatus}`
     );
 
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
