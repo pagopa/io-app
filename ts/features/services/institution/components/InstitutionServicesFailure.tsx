@@ -16,7 +16,7 @@ export const InstitutionServicesFailure = ({
   return (
     <OperationResultScreenContent
       testID="service-institution-failure"
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       title={I18n.t("services.institution.failure.title")}
       subtitle={I18n.t("services.institution.failure.subtitle")}
       action={{

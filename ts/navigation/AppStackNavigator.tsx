@@ -14,6 +14,7 @@ import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
 import { View } from "react-native";
 import { ReactNavigationInstrumentation } from "../App";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
+import { useStoredFontPreference } from "../common/context/DSTypefaceContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import FocusAwareStatusBar from "../components/ui/FocusAwareStatusBar";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
@@ -62,6 +63,7 @@ export const AppStackNavigator = (): ReactElement => {
   // to setup the experimental design system value from AsyncStorage
   // remove this once the experimental design system is stable
   useStoredExperimentalDesign();
+  useStoredFontPreference();
 
   const dispatch = useIODispatch();
 

@@ -8,7 +8,6 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { OnboardingNotificationsPreferencesScreen } from "../OnboardingNotificationsPreferencesScreen";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { GlobalState } from "../../../../store/reducers/types";
 
 describe("OnboardingNotificationsPreferencesScreen", () => {
@@ -92,12 +91,8 @@ const renderScreen = (
   isUpdatingProfile: boolean = false
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const dsEnabledState = appReducer(
-    globalState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const finalState = {
-    ...dsEnabledState,
+    ...globalState,
     profile: isUpdatingProfile ? pot.noneUpdating({}) : pot.some({})
   } as GlobalState;
   const store = createStore(appReducer, finalState as any);

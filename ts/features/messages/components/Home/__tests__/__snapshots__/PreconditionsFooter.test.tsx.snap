@@ -357,7 +357,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
-                                "height": 4,
+                                "height": 0,
                                 "position": "absolute",
                                 "shadowColor": "#0E0F13",
                                 "shadowOffset": {
@@ -423,20 +423,23 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "height": 48,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {},
                                   false,
@@ -474,7 +477,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -589,7 +592,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1329,7 +1332,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
-                                "height": 4,
+                                "height": 0,
                                 "position": "absolute",
                                 "shadowColor": "#0E0F13",
                                 "shadowOffset": {
@@ -1395,20 +1398,23 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "height": 48,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {},
                                   false,
@@ -1446,7 +1452,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1561,7 +1567,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",

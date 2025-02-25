@@ -236,8 +236,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -271,7 +271,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -457,8 +457,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -477,7 +477,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -558,8 +558,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -602,7 +602,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -610,14 +610,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -638,7 +638,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -669,7 +669,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -749,8 +749,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -793,7 +793,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -801,14 +801,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -829,7 +829,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -896,7 +896,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -1105,7 +1105,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1519,8 +1519,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -1554,7 +1554,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -1740,8 +1740,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -1760,7 +1760,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -1841,8 +1841,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -1885,7 +1885,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -1893,14 +1893,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -1921,7 +1921,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -1952,7 +1952,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2032,8 +2032,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -2076,7 +2076,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -2084,14 +2084,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -2112,7 +2112,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -2179,7 +2179,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -2388,7 +2388,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2802,8 +2802,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -2837,7 +2837,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -3023,8 +3023,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -3043,7 +3043,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -3124,8 +3124,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -3168,7 +3168,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -3176,14 +3176,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -3204,7 +3204,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -3235,7 +3235,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -3315,8 +3315,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -3359,7 +3359,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -3367,14 +3367,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -3395,7 +3395,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -3462,7 +3462,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -3671,7 +3671,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -4085,8 +4085,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -4120,7 +4120,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -4306,8 +4306,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -4326,7 +4326,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -4407,8 +4407,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -4451,7 +4451,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -4459,14 +4459,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -4487,7 +4487,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -4518,7 +4518,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -4598,8 +4598,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -4642,7 +4642,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -4650,14 +4650,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -4678,7 +4678,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -4745,7 +4745,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -4954,7 +4954,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -5368,8 +5368,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -5403,7 +5403,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -5589,8 +5589,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -5609,7 +5609,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -5690,8 +5690,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -5734,7 +5734,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -5742,14 +5742,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -5770,7 +5770,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -5801,7 +5801,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -5881,8 +5881,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -5925,7 +5925,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -5933,14 +5933,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -5961,7 +5961,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -6028,7 +6028,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -6237,7 +6237,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -6651,8 +6651,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -6686,7 +6686,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -6872,8 +6872,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -6892,7 +6892,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -6973,8 +6973,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -7017,7 +7017,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -7025,14 +7025,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -7053,7 +7053,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -7084,7 +7084,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -7164,8 +7164,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -7208,7 +7208,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -7216,14 +7216,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -7244,7 +7244,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -7311,7 +7311,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -7520,7 +7520,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -7934,8 +7934,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -7969,7 +7969,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -8155,8 +8155,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -8175,7 +8175,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -8256,8 +8256,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -8300,7 +8300,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -8308,14 +8308,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -8336,7 +8336,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -8367,7 +8367,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -8447,8 +8447,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -8491,7 +8491,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -8499,14 +8499,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -8527,7 +8527,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -8594,7 +8594,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -8803,7 +8803,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -9217,8 +9217,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -9252,7 +9252,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -9438,8 +9438,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -9458,7 +9458,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -9539,8 +9539,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -9583,7 +9583,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -9591,14 +9591,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -9619,7 +9619,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -9650,7 +9650,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -9730,8 +9730,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -9774,7 +9774,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -9782,14 +9782,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -9810,7 +9810,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -9877,7 +9877,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -10086,7 +10086,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -10500,8 +10500,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -10535,7 +10535,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -10721,8 +10721,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -10741,7 +10741,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -10822,8 +10822,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -10866,7 +10866,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -10874,14 +10874,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -10902,7 +10902,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -10933,7 +10933,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -11013,8 +11013,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -11057,7 +11057,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -11065,14 +11065,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -11093,7 +11093,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -11160,7 +11160,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -11369,7 +11369,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -11783,8 +11783,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -11818,7 +11818,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -12004,8 +12004,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -12024,7 +12024,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -12105,8 +12105,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -12149,7 +12149,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -12157,14 +12157,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -12185,7 +12185,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -12216,7 +12216,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -12296,8 +12296,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -12340,7 +12340,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -12348,14 +12348,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -12376,7 +12376,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -12443,7 +12443,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -12652,7 +12652,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -13066,8 +13066,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -13101,7 +13101,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -13287,8 +13287,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -13307,7 +13307,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -13388,8 +13388,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -13432,7 +13432,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -13440,14 +13440,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -13468,7 +13468,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -13499,7 +13499,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -13579,8 +13579,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -13623,7 +13623,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -13631,14 +13631,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -13659,7 +13659,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -13726,7 +13726,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -13935,7 +13935,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -14349,8 +14349,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -14384,7 +14384,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -14570,8 +14570,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -14590,7 +14590,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -14671,8 +14671,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -14715,7 +14715,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -14723,14 +14723,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -14751,7 +14751,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -14782,7 +14782,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -14862,8 +14862,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -14906,7 +14906,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -14914,14 +14914,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -14942,7 +14942,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -15009,7 +15009,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -15218,7 +15218,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -15632,8 +15632,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -15667,7 +15667,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -15853,8 +15853,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -15873,7 +15873,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -15954,8 +15954,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -15998,7 +15998,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -16006,14 +16006,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -16034,7 +16034,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -16065,7 +16065,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -16145,8 +16145,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -16189,7 +16189,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -16197,14 +16197,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -16225,7 +16225,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -16292,7 +16292,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -16501,7 +16501,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -16915,8 +16915,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -16950,7 +16950,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -17136,8 +17136,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -17156,7 +17156,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -17237,8 +17237,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -17281,7 +17281,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -17289,14 +17289,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -17317,7 +17317,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -17348,7 +17348,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -17428,8 +17428,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -17472,7 +17472,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -17480,14 +17480,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -17508,7 +17508,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -17575,7 +17575,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -17784,7 +17784,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -18198,8 +18198,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -18233,7 +18233,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -18419,8 +18419,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -18439,7 +18439,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -18520,8 +18520,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -18564,7 +18564,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -18572,14 +18572,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -18600,7 +18600,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -18631,7 +18631,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -18711,8 +18711,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -18755,7 +18755,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -18763,14 +18763,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -18791,7 +18791,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -18858,7 +18858,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -19067,7 +19067,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -19481,8 +19481,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -19516,7 +19516,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -19702,8 +19702,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -19722,7 +19722,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -19803,8 +19803,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -19847,7 +19847,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -19855,14 +19855,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -19883,7 +19883,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -19914,7 +19914,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -19994,8 +19994,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -20038,7 +20038,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -20046,14 +20046,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -20074,7 +20074,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -20141,7 +20141,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -20350,7 +20350,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -20764,8 +20764,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -20799,7 +20799,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -20985,8 +20985,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -21005,7 +21005,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -21086,8 +21086,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -21130,7 +21130,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -21138,14 +21138,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -21166,7 +21166,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -21197,7 +21197,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -21277,8 +21277,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -21321,7 +21321,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -21329,14 +21329,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -21357,7 +21357,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -21424,7 +21424,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -21633,7 +21633,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -22047,8 +22047,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -22082,7 +22082,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -22268,8 +22268,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -22288,7 +22288,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -22369,8 +22369,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -22413,7 +22413,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -22421,14 +22421,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -22449,7 +22449,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -22480,7 +22480,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -22560,8 +22560,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -22604,7 +22604,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -22612,14 +22612,14 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F4F5F8",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F4F5F8"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -22640,7 +22640,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -22707,7 +22707,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -22916,7 +22916,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",

@@ -2,6 +2,12 @@
 
 exports[`featuresPersistor should match snapshot 1`] = `
 {
+  "appearanceSettings": {
+    "showAppearanceBanner": true,
+  },
+  "connectivityStatus": {
+    "isConnected": true,
+  },
   "fci": {
     "documentPreview": {
       "kind": "PotNone",
@@ -292,7 +298,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "profileSettings": {
     "hasUserAcknowledgedSettingsBanner": false,
-    "showProfileBanner": true,
   },
   "services": {
     "details": {

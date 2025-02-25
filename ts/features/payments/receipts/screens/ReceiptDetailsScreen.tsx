@@ -135,7 +135,7 @@ const ReceiptDetailsScreen = () => {
   if (isError) {
     return (
       <OperationResultScreenContent
-        pictogram="umbrellaNew"
+        pictogram="umbrella"
         title={I18n.t("transaction.details.error.title")}
         action={{
           label: I18n.t("global.buttons.retry"),

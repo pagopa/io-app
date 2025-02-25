@@ -38,7 +38,7 @@ const FailureScreen = () => {
 
   const genericErrorProps = useMemo<OperationResultScreenContentProps>(
     () => ({
-      pictogram: "umbrellaNew",
+      pictogram: "umbrella",
       title: I18n.t("idpay.onboarding.failure.message.GENERIC.title"),
       subtitle: I18n.t("idpay.onboarding.failure.message.GENERIC.subtitle"),
       action: defaultCloseAction

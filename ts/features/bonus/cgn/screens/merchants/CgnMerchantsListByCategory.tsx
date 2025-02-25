@@ -223,7 +223,7 @@ const CgnMerchantsListByCategory = () => {
       />
       {isError(onlineMerchants) && isError(offlineMerchants) ? (
         <OperationResultScreenContent
-          pictogram="umbrellaNew"
+          pictogram="umbrella"
           title={I18n.t("wallet.errors.GENERIC_ERROR")}
           subtitle={I18n.t("wallet.errorTransaction.submitBugText")}
           action={{

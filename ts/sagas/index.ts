@@ -7,6 +7,7 @@ import { watchTokenRefreshSaga } from "../features/fastLogin/saga/tokenRefreshSa
 import { watchPendingActionsSaga } from "../features/fastLogin/saga/pendingActionsSaga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { zendeskEnabled } from "../config";
+import connectivityStatusSaga from "../features/connectivity/saga";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
@@ -22,6 +23,7 @@ export default function* root() {
     call(watchApplicationActivitySaga),
     call(startupSaga),
     call(backendStatusSaga),
+    call(connectivityStatusSaga),
     call(versionInfoSaga),
     call(loadSystemPreferencesSaga),
     call(removePersistedStatesSaga),

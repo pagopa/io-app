@@ -47,15 +47,15 @@ type PaymentsOnboardingFeedbackScreenRouteProps = RouteProp<
 export const pictogramByOutcome: Record<WalletOnboardingOutcome, IOPictograms> =
   {
     [WalletOnboardingOutcomeEnum.SUCCESS]: "success",
-    [WalletOnboardingOutcomeEnum.GENERIC_ERROR]: "umbrellaNew",
+    [WalletOnboardingOutcomeEnum.GENERIC_ERROR]: "umbrella",
     [WalletOnboardingOutcomeEnum.AUTH_ERROR]: "accessDenied",
     [WalletOnboardingOutcomeEnum.TIMEOUT]: "time",
     [WalletOnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
-    [WalletOnboardingOutcomeEnum.INVALID_SESSION]: "umbrellaNew",
+    [WalletOnboardingOutcomeEnum.INVALID_SESSION]: "umbrella",
     [WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED]: "success",
     [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention",
     [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING]: "attention",
-    [WalletOnboardingOutcomeEnum.BE_KO]: "umbrellaNew"
+    [WalletOnboardingOutcomeEnum.BE_KO]: "umbrella"
   };
 
 const PaymentsOnboardingFeedbackScreen = () => {

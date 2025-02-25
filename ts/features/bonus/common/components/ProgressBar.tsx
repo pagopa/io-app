@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
   fillBar: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: IOColors["blue-500"]
+    backgroundColor: IOColors["blueIO-500"]
   }
 });
 

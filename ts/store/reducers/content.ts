@@ -23,7 +23,7 @@ import {
 } from "../../common/model/RemoteValue";
 import { getRemoteLocale } from "../../features/messages/utils/ctas";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
+import { idps as idpsFallback } from "../../utils/idps";
 import { getCurrentLocale } from "../../utils/locale";
 import {
   contentMunicipalityLoad,
@@ -76,7 +76,7 @@ export const idpsStateSelector = createSelector(
 
 export const idpsSelector = createSelector(
   idpsStateSelector,
-  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp | LocalIdpsFallback> =>
+  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp> =>
     isReady(idps) ? idps.value.items : idpsFallback
 );
 

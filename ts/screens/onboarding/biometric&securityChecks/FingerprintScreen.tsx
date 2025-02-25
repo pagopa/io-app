@@ -114,7 +114,6 @@ const FingerprintScreen = () => {
       <Banner
         content={I18n.t("onboarding.biometric.available.settings")}
         color="neutral"
-        size="small"
         pictogramName="settings"
       />
     </IOScrollView>
