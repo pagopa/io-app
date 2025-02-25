@@ -351,8 +351,8 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                               {},
                               {
                                 "color": "#0E0F13",
-                                "fontFamily": "Titillium Sans Pro",
-                                "fontSize": 28,
+                                "fontFamily": "Titillio",
+                                "fontSize": 26,
                                 "fontStyle": "normal",
                                 "fontWeight": "600",
                                 "lineHeight": 34,
@@ -510,7 +510,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -519,13 +519,13 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={16}
                                     >
                                       <RNSVGGroup
-                                        color="#0073E6"
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -558,8 +558,8 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -720,7 +720,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -859,7 +859,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -884,7 +884,17 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                               <RCTScrollView
                                 ItemSeparatorComponent={[Function]}
                                 ListEmptyComponent={[Function]}
-                                ListFooterComponent={null}
+                                ListFooterComponent={
+                                  <React.Fragment>
+                                    <Divider />
+                                    <ListItemAction
+                                      accessibilityLabel="How are categories ordered by?"
+                                      label="How are categories ordered by?"
+                                      onPress={[Function]}
+                                      variant="primary"
+                                    />
+                                  </React.Fragment>
+                                }
                                 data={[]}
                                 getItem={[Function]}
                                 getItemCount={[Function]}
@@ -1189,6 +1199,120 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                           }
                                         }
                                       />
+                                    </View>
+                                  </View>
+                                  <View
+                                    onLayout={[Function]}
+                                  >
+                                    <View
+                                      style={
+                                        {
+                                          "backgroundColor": "#D2D6E3",
+                                          "height": 0.5,
+                                        }
+                                      }
+                                    />
+                                    <View
+                                      accessibilityLabel="How are categories ordered by?"
+                                      accessibilityRole="button"
+                                      accessibilityState={
+                                        {
+                                          "busy": undefined,
+                                          "checked": undefined,
+                                          "disabled": undefined,
+                                          "expanded": undefined,
+                                          "selected": undefined,
+                                        }
+                                      }
+                                      accessibilityValue={
+                                        {
+                                          "max": undefined,
+                                          "min": undefined,
+                                          "now": undefined,
+                                          "text": undefined,
+                                        }
+                                      }
+                                      accessible={true}
+                                      collapsable={false}
+                                      focusable={true}
+                                      onBlur={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                      onTouchEnd={[Function]}
+                                    >
+                                      <View
+                                        accessibilityElementsHidden={true}
+                                        importantForAccessibility="no-hide-descendants"
+                                        style={
+                                          [
+                                            {
+                                              "marginHorizontal": -24,
+                                              "paddingHorizontal": 24,
+                                              "paddingVertical": 12,
+                                            },
+                                            {
+                                              "backgroundColor": undefined,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            [
+                                              {
+                                                "alignItems": "center",
+                                                "flexDirection": "row",
+                                                "justifyContent": "space-between",
+                                              },
+                                              {
+                                                "columnGap": 18,
+                                              },
+                                              {
+                                                "transform": [
+                                                  {
+                                                    "scale": undefined,
+                                                  },
+                                                ],
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          <View
+                                            style={
+                                              {
+                                                "flexGrow": 1,
+                                                "flexShrink": 1,
+                                              }
+                                            }
+                                          >
+                                            <Text
+                                              allowFontScaling={true}
+                                              maxFontSizeMultiplier={1.5}
+                                              style={
+                                                [
+                                                  {},
+                                                  {
+                                                    "color": "#0B3EE3",
+                                                    "fontFamily": "Titillio",
+                                                    "fontSize": 16,
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "600",
+                                                    "lineHeight": 20,
+                                                  },
+                                                ]
+                                              }
+                                            >
+                                              How are categories ordered by?
+                                            </Text>
+                                          </View>
+                                        </View>
+                                      </View>
                                     </View>
                                   </View>
                                 </View>

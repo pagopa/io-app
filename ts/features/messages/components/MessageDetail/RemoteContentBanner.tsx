@@ -66,7 +66,6 @@ export const RemoteContentBanner = () => {
       <VSpacer size={16} />
       <Banner
         color={"neutral"}
-        size="big"
         pictogramName="message"
         content={content}
         action={`${I18n.t("messageDetails.banner.action")}`}

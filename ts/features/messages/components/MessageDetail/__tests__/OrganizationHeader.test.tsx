@@ -5,7 +5,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { appReducer } from "../../../../../store/reducers";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { UIMessageId } from "../../../types";
 
@@ -20,11 +19,7 @@ const renderComponent = () => {
   const messageId = "01J3DE93YA7QYAD9WZQZCP98M6" as UIMessageId;
   const serviceId = "01HXEPR9JD8838JZDN3YD0EF0Z" as ServiceId;
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, designSystemState as any);
+  const store = createStore(appReducer, initialState as any);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (

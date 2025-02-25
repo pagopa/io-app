@@ -515,7 +515,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                               {},
                               {
                                 "color": "#636B82",
-                                "fontFamily": "Titillium Sans Pro",
+                                "fontFamily": "Titillio",
                                 "fontSize": 16,
                                 "fontStyle": "normal",
                                 "fontWeight": "400",
@@ -575,20 +575,23 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderRadius": 4,
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 16,
+                                  "paddingHorizontal": 24,
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "backgroundColor": "#0073E6",
+                                  "height": 48,
+                                },
+                                {
+                                  "backgroundColor": "#0B3EE3",
                                   "overflow": "hidden",
                                 },
-                                false,
                                 {
-                                  "height": 40,
+                                  "paddingHorizontal": 16,
                                 },
                                 {},
                                 false,
@@ -689,7 +692,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                     {},
                                     {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",

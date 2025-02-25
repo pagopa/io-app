@@ -77,7 +77,7 @@ const IdPayBarcodeResultScreen = () => {
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: navigateToInitiativeDetails
           }}
-          pictogram="umbrellaNew"
+          pictogram="umbrella"
         />
       ),
       barcode => (

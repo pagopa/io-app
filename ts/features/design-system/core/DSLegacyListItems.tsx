@@ -62,13 +62,6 @@ export const DSLegacyListItems = () => {
           <DSComponentViewerBox name="ListItemComponent (badge)">
             <ListItemComponent
               title={"A looong looooong looooooooong looooooooooong title"}
-              hasBadge={true}
-              onPress={onListItemPress}
-            />
-          </DSComponentViewerBox>
-          <DSComponentViewerBox name="ListItemComponent (badge)">
-            <ListItemComponent
-              title={"A looong looooong looooooooong looooooooooong title"}
               titleBadge="Badge"
               onPress={onListItemPress}
             />

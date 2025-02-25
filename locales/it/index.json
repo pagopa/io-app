@@ -590,7 +590,7 @@
             "trial": {
                 "titleSection": "Partecipa alla sperimentazione"
             },
-            "designSystemEnvironment": "Design System sperimentale",
+            "experimentalEnvironment": "Interfaccia sperimentale",
             "newScanSection": "Nuova funzione 'Inquadra'",
             "sessionRefresh": "Attiva il refresh della sessione",
             "appVersion": "Versione",
@@ -604,6 +604,10 @@
                 "title": "Vuoi visualizzare il tuo Codice Fiscale?",
                 "action": "Vai alla sezione “I tuoi dati”",
                 "close": "Chiudi il banner e non mostrarlo più"
+            },
+            "appearanceBanner": {
+                "title": "Vuoi modificare il carattere usato per i testi in app?",
+                "action": "Modifica stile carattere"
             }
         },
         "data": {
@@ -4581,7 +4585,7 @@
                     "action": "Cosa posso fare?"
                 },
                 "modal": {
-                    "title": "Nessuna connessione", 
+                    "title": "Nessuna connessione",
                     "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
                     "action": "Ricarica l'app IO"
                 }

@@ -82,7 +82,7 @@ const FeaturedServiceCard = ({
     >
       <View style={styles.cardHeader}>
         <Avatar logoUri={logoForService(id, "")} size="medium" />
-        {isNew && <Badge variant="purple" text={I18n.t("services.new")} />}
+        {isNew && <Badge variant="cgn" text={I18n.t("services.new")} />}
       </View>
       <View style={styles.cardTitle}>
         <H4

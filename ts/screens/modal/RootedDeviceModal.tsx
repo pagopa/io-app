@@ -1,8 +1,8 @@
 import {
+  BodySmall,
   ButtonLink,
   ContentWrapper,
   H3,
-  BodySmall,
   Pictogram,
   VSpacer,
   ButtonSolid

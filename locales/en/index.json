@@ -587,7 +587,7 @@
                 "idpayTest": "IDPay",
                 "idpayTestAlert": "This change requires app reboot"
             },
-            "designSystemEnvironment": "Experimental Design System",
+            "experimentalEnvironment": "Experimental interface",
             "newScanSection": "New 'Scan' feature",
             "sessionRefresh": "Activate Session Refresh",
             "appVersion": "Version",
@@ -604,6 +604,10 @@
                 "title": "Do you want to display your fiscal code?",
                 "action": "Go to \"Your data\" section",
                 "close": "Close the banner and do not show it again"
+            },
+            "appearanceBanner": {
+                "title": "Do you want to change the typeface used in the app?",
+                "action": "Edit typeface style"
             }
         },
         "data": {
@@ -2335,7 +2339,7 @@
                     "subtitle": "Ha 18 cifre, lo trovi vicino al codice QR.",
                     "validationError": "It has 18 digits, starts with 0, 1 or 3.",
                     "placeholder": "Codice avviso",
-                     "a11y": "Error. Incorrect notice code. It has 18 digits, you find it near the code QR."
+                    "a11y": "Error. Incorrect notice code. It has 18 digits, you find it near the code QR."
                 },
                 "fiscalCode": {
                     "title": "Inserisci il codice fiscale dell’Ente Creditore",
@@ -2943,7 +2947,7 @@
             "useFingerPrintOrUnlockCodeA11y": "use your fingerprint or use your unlock code",
             "useFaceIdOrUnlockCode": "use your **face** or use your **unlock code**",
             "useFaceIdOrUnlockCodeA11y": "use your face or use your unlock code",
-            "useUnlockCode":" use your **unlock code**",
+            "useUnlockCode": " use your **unlock code**",
             "useUnlockCodeA11y": "use your unlock code"
         },
         "title": "Hi {{name}}!",
@@ -4581,7 +4585,7 @@
                     "action": "Cosa posso fare?"
                 },
                 "modal": {
-                    "title": "Nessuna connessione", 
+                    "title": "Nessuna connessione",
                     "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
                     "action": "Ricarica l'app IO"
                 }

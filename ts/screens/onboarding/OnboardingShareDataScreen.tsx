@@ -104,7 +104,6 @@ const OnboardingShareDataScreen = (): ReactElement => {
             )}
             color="neutral"
             pictogramName="settings"
-            size="small"
           />
         </View>
         <VSpacer size={16} />

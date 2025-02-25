@@ -166,7 +166,7 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
         label: I18n.t("global.buttons.retry"),
         onPress: getMessageDataCallback
       }}
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       secondaryAction={{
         label: I18n.t("global.buttons.cancel"),
         onPress: onCancelCallback

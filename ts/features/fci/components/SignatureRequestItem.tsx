@@ -31,7 +31,7 @@ const SignatureRequestItem = (props: Props) => {
       case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
         return (
           <Badge
-            variant="blue"
+            variant="default"
             text={I18n.t("features.fci.requests.signingInProgress")}
             testID={"FciSignatureRequestItemBadgeInProgress"}
           />
@@ -39,7 +39,7 @@ const SignatureRequestItem = (props: Props) => {
       case SignatureRequestStatusEnum.SIGNED:
         return (
           <Badge
-            variant="turquoise"
+            variant="highlight"
             text={I18n.t("features.fci.requests.signed")}
             testID={"FciSignatureRequestItemBadgeSigned"}
           />

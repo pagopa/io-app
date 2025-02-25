@@ -374,8 +374,8 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 17,
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -398,7 +398,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                             {},
                             {
                               "color": "#2B2E38",
-                              "fontFamily": "Titillium Sans Pro",
+                              "fontFamily": "Titillio",
                               "fontSize": 16,
                               "fontStyle": "normal",
                               "fontWeight": "400",
@@ -506,7 +506,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -652,7 +652,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             {},
                                             {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -679,7 +679,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                               "paddingVertical": 6,
                                             },
                                             {
-                                              "backgroundColor": "#F4F5F8",
+                                              "backgroundColor": "#E7ECFC",
                                             },
                                           ]
                                         }
@@ -693,8 +693,8 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             [
                                               {},
                                               {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "color": "#031344",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 12,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -879,7 +879,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             {},
                                             {
                                               "color": "#0B3EE3",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -906,7 +906,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                               "paddingVertical": 6,
                                             },
                                             {
-                                              "backgroundColor": "#F4F5F8",
+                                              "backgroundColor": "#E7ECFC",
                                             },
                                           ]
                                         }
@@ -920,8 +920,8 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             [
                                               {},
                                               {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "color": "#031344",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 12,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -2447,8 +2447,8 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 17,
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -2471,7 +2471,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             {},
                             {
                               "color": "#2B2E38",
-                              "fontFamily": "Titillium Sans Pro",
+                              "fontFamily": "Titillio",
                               "fontSize": 16,
                               "fontStyle": "normal",
                               "fontWeight": "400",
@@ -2584,7 +2584,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                     {},
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2611,7 +2611,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                       "paddingVertical": 6,
                                     },
                                     {
-                                      "backgroundColor": "#F4F5F8",
+                                      "backgroundColor": "#E7ECFC",
                                     },
                                   ]
                                 }
@@ -2625,8 +2625,8 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                     [
                                       {},
                                       {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "color": "#031344",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",

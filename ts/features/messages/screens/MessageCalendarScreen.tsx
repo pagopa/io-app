@@ -102,7 +102,7 @@ export const MessageCalendarScreen = () => {
       <>
         <MessageCalendarHeaderComponent />
         <OperationResultScreenContent
-          pictogram={"umbrellaNew"}
+          pictogram={"umbrella"}
           title={I18n.t("messages.cta.errors.fetchCalendars")}
           action={{
             label: I18n.t("global.buttons.retry"),

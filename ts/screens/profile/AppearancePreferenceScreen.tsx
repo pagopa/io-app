@@ -1,14 +1,25 @@
 import {
   ListItemHeader,
   RadioGroup,
+  useIONewTypeface,
   VStack
 } from "@pagopa/io-app-design-system";
 import { ReactElement, useState } from "react";
 import { View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
-
-type TypefaceChoice = "comfortable" | "standard";
+import { useIODispatch, useIOStore } from "../../store/hooks";
+import {
+  preferencesFontSet,
+  TypefaceChoice
+} from "../../store/actions/persistedPreferences";
+import { FONT_PERSISTENCE_KEY } from "../../common/context/DSTypefaceContext";
+import {
+  trackAppearancePreferenceScreenView,
+  trackAppearancePreferenceTypefaceUpdate
+} from "./analytics";
 
 type ColorModeChoice = "system" | "dark" | "light";
 
@@ -18,8 +29,25 @@ type ColorModeChoice = "system" | "dark" | "light";
  * @constructor
  */
 const AppearancePreferenceScreen = (): ReactElement => {
-  const [selectedTypeface, setSelectedTypeface] =
-    useState<TypefaceChoice>("comfortable");
+  const store = useIOStore();
+  const dispatch = useIODispatch();
+  const { newTypefaceEnabled, setNewTypefaceEnabled } = useIONewTypeface();
+
+  useFocusEffect(() => {
+    trackAppearancePreferenceScreenView();
+  });
+
+  const selectedTypeface: TypefaceChoice = newTypefaceEnabled
+    ? "comfortable"
+    : "standard";
+
+  const handleTypefaceChange = (choice: TypefaceChoice) => {
+    trackAppearancePreferenceTypefaceUpdate(choice, store.getState());
+    AsyncStorage.setItem(FONT_PERSISTENCE_KEY, choice).finally(() => {
+      dispatch(preferencesFontSet(choice));
+      setNewTypefaceEnabled(choice === "comfortable");
+    });
+  };
 
   const [selectedColorMode, setSelectedColorMode] =
     useState<ColorModeChoice>("light");
@@ -82,7 +110,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
       <VStack space={24}>
         <View>
           <ListItemHeader
-            iconName="gallery"
+            iconName="typeface"
             label={I18n.t(
               "profile.preferences.list.appearance.typefaceStyle.title"
             )}
@@ -91,13 +119,13 @@ const AppearancePreferenceScreen = (): ReactElement => {
             type="radioListItem"
             items={typefaceOptions}
             selectedItem={selectedTypeface}
-            onPress={setSelectedTypeface}
+            onPress={handleTypefaceChange}
           />
         </View>
 
         <View>
           <ListItemHeader
-            iconName="gallery"
+            iconName="theme"
             label={I18n.t("profile.preferences.list.appearance.theme.title")}
             endElement={{
               type: "badge",
@@ -105,7 +133,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
                 text: I18n.t(
                   "profile.preferences.list.appearance.theme.comingSoon"
                 ),
-                variant: "info"
+                variant: "highlight"
               }
             }}
           />

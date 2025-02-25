@@ -203,9 +203,8 @@ const checkErrorView = (component: RenderAPI, errorMessage: string) => {
   const errorView = component.queryByTestId("errorView");
   expect(errorView).not.toBeNull();
   const texts = errorView?.findAllByType(Text);
-  expect(texts).toHaveLength(2);
-  expect(texts?.[0]).toHaveTextContent("Error");
-  expect(texts?.[1]).toHaveTextContent(errorMessage);
+  expect(texts).toHaveLength(1);
+  expect(texts?.[0]).toHaveTextContent(errorMessage);
 };
 
 const checkSuccessView = (component: RenderAPI) => {

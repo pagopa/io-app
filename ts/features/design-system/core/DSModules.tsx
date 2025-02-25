@@ -12,7 +12,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { Alert, ImageSourcePropType } from "react-native";
+import { Alert } from "react-native";
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnLogo from "../../../../img/bonus/cgn/cgn_logo.png";
 import { ModuleCgnDiscount } from "../../bonus/cgn/components/merchants/ModuleCgnDiscount";
@@ -329,46 +329,76 @@ const renderModuleCgnDiscount = () => (
   </VStack>
 );
 
-const mockIDPProviderItem = {
-  id: "posteid",
-  name: "Poste ID",
-  logo: "",
-  localLogo: require("../../../../img/spid-idp-posteid.png"),
-  profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
+const mockIDPProviderItems = {
+  poste: {
+    id: "posteid",
+    name: "Poste ID",
+    logo: {
+      light: require("../../../../img/spid-idp-posteid.png")
+    },
+    profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
+  },
+  intesiGroup: {
+    id: "intesiGroup",
+    name: "Intesi Group",
+    logo: {
+      light: require("../../../../img/spid-idp-intesigroupspid.png"),
+      dark: require("../../../../img/spid-idp-intesigroupspid-dark.png")
+    }
+  }
 };
 
-const renderModuleIDP = () => (
-  <VStack space={componentMargin}>
-    <DSComponentViewerBox name="ModuleIDP, default variant">
-      <ModuleIDP
-        name={mockIDPProviderItem.name}
-        logo={mockIDPProviderItem.logo as ImageSourcePropType}
-        localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-        onPress={onButtonPress}
-        testID={`idp-${mockIDPProviderItem.id}-button`}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleIDP, loose spacing (saved) variant">
-      <ModuleIDP
-        withLooseSpacing
-        name={mockIDPProviderItem.name}
-        logo={mockIDPProviderItem.logo as ImageSourcePropType}
-        localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-        onPress={onButtonPress}
-        testID={`idp-${mockIDPProviderItem.id}-button`}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleIDP, default variant, stress test">
-      <ModuleIDP
-        name={"This is a very loooooong IDP provider name"}
-        logo={mockIDPProviderItem.logo as ImageSourcePropType}
-        localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-        onPress={onButtonPress}
-        testID={`idp-${mockIDPProviderItem.id}-button`}
-      />
-    </DSComponentViewerBox>
-  </VStack>
-);
+const renderModuleIDP = () => {
+  const { poste: posteItem, intesiGroup: intesiGroupItem } =
+    mockIDPProviderItems;
+
+  return (
+    <VStack space={componentMargin}>
+      <DSComponentViewerBox name="ModuleIDP, default variant">
+        <ModuleIDP
+          name={posteItem.name}
+          logo={{
+            light: posteItem.logo.light
+          }}
+          onPress={onButtonPress}
+          testID={`idp-${posteItem.id}-button`}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="ModuleIDP, loose spacing (saved) variant">
+        <ModuleIDP
+          withLooseSpacing
+          name={posteItem.name}
+          logo={{
+            light: posteItem.logo.light
+          }}
+          onPress={onButtonPress}
+          testID={`idp-${posteItem.id}-button`}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="ModuleIDP, both color modes supported">
+        <ModuleIDP
+          name={intesiGroupItem.name}
+          logo={{
+            light: intesiGroupItem.logo.light,
+            dark: intesiGroupItem.logo.dark
+          }}
+          onPress={onButtonPress}
+          testID={`idp-${intesiGroupItem.id}-button`}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="ModuleIDP, default variant, stress test">
+        <ModuleIDP
+          name={"This is a very loooooong IDP provider name"}
+          logo={{
+            light: posteItem.logo.light
+          }}
+          onPress={onButtonPress}
+          testID={`idp-${posteItem.id}-button`}
+        />
+      </DSComponentViewerBox>
+    </VStack>
+  );
+};
 
 const renderModuleCredential = () => (
   <VStack space={componentMargin}>
@@ -389,7 +419,7 @@ const renderModuleCredential = () => (
         onPress={onButtonPress}
         badge={{
           text: "predefinita",
-          variant: "info"
+          variant: "highlight"
         }}
       />
     </DSComponentViewerBox>
@@ -400,7 +430,7 @@ const renderModuleCredential = () => (
         onPress={onButtonPress}
         badge={{
           text: "predefinita",
-          variant: "info"
+          variant: "highlight"
         }}
       />
     </DSComponentViewerBox>
@@ -454,7 +484,7 @@ const renderModuleNavigation = () => (
         onPress={onButtonPress}
         badge={{
           text: "In arrivo",
-          variant: "blue",
+          variant: "default",
           outline: true
         }}
       />
@@ -467,7 +497,7 @@ const renderModuleNavigation = () => (
         onPress={onButtonPress}
         badge={{
           text: "In arrivo",
-          variant: "blue",
+          variant: "default",
           outline: true
         }}
       />

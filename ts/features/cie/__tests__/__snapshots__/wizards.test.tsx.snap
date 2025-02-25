@@ -45,8 +45,8 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
               {},
               {
                 "color": "#0E0F13",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 28,
+                "fontFamily": "Titillio",
+                "fontSize": 26,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 34,
@@ -80,7 +80,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
               {},
               {
                 "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
+                "fontFamily": "Titillio",
                 "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "400",
@@ -198,7 +198,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   {},
                   {
                     "color": "#0E0F13",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
@@ -397,20 +397,23 @@ To enter the IO app without physically using the Electronic Identity Card, you m
             [
               {
                 "alignItems": "center",
-                "borderRadius": 4,
+                "borderCurve": "continuous",
+                "borderRadius": 8,
                 "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
-                "paddingHorizontal": 16,
+                "paddingHorizontal": 24,
                 "textAlignVertical": "center",
               },
               {
-                "backgroundColor": "#0073E6",
+                "height": 48,
+              },
+              {
+                "backgroundColor": "#0B3EE3",
                 "overflow": "hidden",
               },
-              false,
               {
-                "height": 40,
+                "paddingHorizontal": 16,
               },
               {},
               false,
@@ -448,7 +451,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   {},
                   {
                     "color": "#FFFFFF",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
@@ -563,7 +566,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   {},
                   {
                     "color": "#0E0F13",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
@@ -635,8 +638,8 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               {},
               {
                 "color": "#0E0F13",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 28,
+                "fontFamily": "Titillio",
+                "fontSize": 26,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 34,
@@ -670,7 +673,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               {},
               {
                 "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
+                "fontFamily": "Titillio",
                 "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "400",
@@ -786,7 +789,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   {},
                   {
                     "color": "#0E0F13",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
@@ -827,7 +830,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   {},
                   {
                     "color": "#555C70",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
@@ -891,7 +894,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                           {},
                           {
                             "color": "#555C70",
-                            "fontFamily": "Titillium Sans Pro",
+                            "fontFamily": "Titillio",
                             "fontSize": 16,
                             "fontStyle": "normal",
                             "fontWeight": "400",
@@ -931,7 +934,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                             {},
                             {
                               "color": "#555C70",
-                              "fontFamily": "Titillium Sans Pro",
+                              "fontFamily": "Titillio",
                               "fontSize": 16,
                               "fontStyle": "normal",
                               "fontWeight": "400",
@@ -961,7 +964,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                           {},
                           {
                             "color": "#555C70",
-                            "fontFamily": "Titillium Sans Pro",
+                            "fontFamily": "Titillio",
                             "fontSize": 16,
                             "fontStyle": "normal",
                             "fontWeight": "400",
@@ -1001,7 +1004,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                             {},
                             {
                               "color": "#555C70",
-                              "fontFamily": "Titillium Sans Pro",
+                              "fontFamily": "Titillio",
                               "fontSize": 16,
                               "fontStyle": "normal",
                               "fontWeight": "400",
@@ -1033,7 +1036,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   {},
                   {
                     "color": "#555C70",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
@@ -1135,7 +1138,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     {},
                     {
                       "color": "#0E0F13",
-                      "fontFamily": "Titillium Sans Pro",
+                      "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",
                       "fontWeight": "600",
@@ -1342,20 +1345,23 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             [
               {
                 "alignItems": "center",
-                "borderRadius": 4,
+                "borderCurve": "continuous",
+                "borderRadius": 8,
                 "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
-                "paddingHorizontal": 16,
+                "paddingHorizontal": 24,
                 "textAlignVertical": "center",
               },
               {
-                "backgroundColor": "#0073E6",
+                "height": 48,
+              },
+              {
+                "backgroundColor": "#0B3EE3",
                 "overflow": "hidden",
               },
-              false,
               {
-                "height": 40,
+                "paddingHorizontal": 16,
               },
               {},
               false,
@@ -1393,7 +1399,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   {},
                   {
                     "color": "#FFFFFF",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
@@ -1508,7 +1514,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   {},
                   {
                     "color": "#0E0F13",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
@@ -1580,8 +1586,8 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               {},
               {
                 "color": "#0E0F13",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 28,
+                "fontFamily": "Titillio",
+                "fontSize": 26,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 34,
@@ -1615,7 +1621,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               {},
               {
                 "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
+                "fontFamily": "Titillio",
                 "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "400",
@@ -1657,8 +1663,8 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               {},
               {
                 "color": "#0E0F13",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 17,
+                "fontFamily": "Titillio",
+                "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 24,
@@ -1824,7 +1830,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                       {},
                       {
                         "color": "#0B3EE3",
-                        "fontFamily": "Titillium Sans Pro",
+                        "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
                         "fontWeight": "600",
@@ -2030,7 +2036,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                       {},
                       {
                         "color": "#0B3EE3",
-                        "fontFamily": "Titillium Sans Pro",
+                        "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
                         "fontWeight": "600",
@@ -2194,7 +2200,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                       {},
                       {
                         "color": "#0B3EE3",
-                        "fontFamily": "Titillium Sans Pro",
+                        "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
                         "fontWeight": "600",
@@ -2386,20 +2392,23 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
             [
               {
                 "alignItems": "center",
-                "borderRadius": 4,
+                "borderCurve": "continuous",
+                "borderRadius": 8,
                 "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
-                "paddingHorizontal": 16,
+                "paddingHorizontal": 24,
                 "textAlignVertical": "center",
               },
               {
-                "backgroundColor": "#0073E6",
+                "height": 48,
+              },
+              {
+                "backgroundColor": "#0B3EE3",
                 "overflow": "hidden",
               },
-              false,
               {
-                "height": 40,
+                "paddingHorizontal": 16,
               },
               {},
               false,
@@ -2437,7 +2446,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   {},
                   {
                     "color": "#FFFFFF",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
@@ -2504,8 +2513,8 @@ exports[`SpidWizard Should match the snapshot 1`] = `
               {},
               {
                 "color": "#0E0F13",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 28,
+                "fontFamily": "Titillio",
+                "fontSize": 26,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 34,
@@ -2539,7 +2548,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
               {},
               {
                 "color": "#555C70",
-                "fontFamily": "Titillium Sans Pro",
+                "fontFamily": "Titillio",
                 "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "400",
@@ -2728,20 +2737,23 @@ exports[`SpidWizard Should match the snapshot 1`] = `
             [
               {
                 "alignItems": "center",
-                "borderRadius": 4,
+                "borderCurve": "continuous",
+                "borderRadius": 8,
                 "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
-                "paddingHorizontal": 16,
+                "paddingHorizontal": 24,
                 "textAlignVertical": "center",
               },
               {
-                "backgroundColor": "#0073E6",
+                "height": 48,
+              },
+              {
+                "backgroundColor": "#0B3EE3",
                 "overflow": "hidden",
               },
-              false,
               {
-                "height": 40,
+                "paddingHorizontal": 16,
               },
               {},
               false,
@@ -2779,7 +2791,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   {},
                   {
                     "color": "#FFFFFF",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
@@ -2894,7 +2906,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   {},
                   {
                     "color": "#0E0F13",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",

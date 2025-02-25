@@ -205,7 +205,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
         {},
         {
           "color": "#2B2E38",
-          "fontFamily": "Titillium Sans Pro",
+          "fontFamily": "Titillio",
           "fontSize": 22,
           "fontStyle": "normal",
           "fontWeight": "600",
@@ -236,7 +236,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
         {},
         {
           "color": "#555C70",
-          "fontFamily": "Titillium Sans Pro",
+          "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "400",
