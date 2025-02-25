@@ -4,6 +4,7 @@ import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import ROUTES from "../../../navigation/routes";
+import { TypefaceChoice } from "../../../store/actions/persistedPreferences";
 import { profileLoadSuccess } from "../../../store/actions/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { FlowType, buildEventProperties } from "../../../utils/analytics";
@@ -255,4 +256,27 @@ export function trackSettingsDiscoverBannerClosure() {
     banner_landing: ROUTES.SETTINGS_MAIN
   });
   void mixpanelTrack(eventName, props);
+}
+
+export function trackAppearancePreferenceScreenView() {
+  void mixpanelTrack(
+    "SETTINGS_PREFERENCES_UI",
+    buildEventProperties("UX", "screen_view")
+  );
+}
+
+export function trackAppearancePreferenceTypefaceUpdate(
+  choice: TypefaceChoice,
+  state: GlobalState
+) {
+  void mixpanelTrack(
+    "SETTINGS_PREFERENCES_UI_FONT_UPDATE",
+    buildEventProperties("UX", "action", {
+      current_font: choice
+    })
+  );
+  void updateMixpanelProfileProperties(state, {
+    property: "FONT_PREFERENCE",
+    value: choice
+  });
 }

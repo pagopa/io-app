@@ -34,6 +34,7 @@ import { trialSystemActivationStatusReducer } from "../../features/trialSystem/s
 import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
 import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
+import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -253,12 +254,16 @@ export function createRootReducer(
               },
               profileSettings: {
                 ...profileSettingsReducerInitialState,
-                showProfileBanner:
-                  state.features.profileSettings.showProfileBanner,
                 hasUserAcknowledgedSettingsBanner:
                   state.features.profileSettings
                     .hasUserAcknowledgedSettingsBanner,
                 _persist: state.features.profileSettings._persist
+              },
+              appearanceSettings: {
+                ...appearanceSettingsReducerInitialState,
+                showAppearanceBanner:
+                  state.features.appearanceSettings.showAppearanceBanner,
+                _persist: state.features.appearanceSettings._persist
               },
               /**
                * IT Wallet state persists across sessions and is explicitly reset on session changes
