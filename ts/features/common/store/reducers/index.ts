@@ -68,6 +68,10 @@ import { isIOMarkdownDisabledForMessagesAndServices } from "../../../../store/re
 import { isIOMarkdownEnabledLocallySelector } from "../../../../store/reducers/persistedPreferences";
 import { utmLinkReducer, UtmLinkState } from "../../../utmLink/store/reducers";
 import {
+  appearanceSettingsReducerPersistor,
+  AppearanceSettingsState
+} from "../../../appearanceSettings/store/reducers";
+import {
   loginPreferencesPersistor,
   LoginPreferencesState
 } from "../../../login/preferences/store/reducers";
@@ -94,6 +98,7 @@ export type FeaturesState = {
   fims: FimsState;
   itWallet: PersistedItWalletState;
   profileSettings: ProfileSettingsState & PersistPartial;
+  appearanceSettings: AppearanceSettingsState & PersistPartial;
   mixpanel: MixpanelState;
   ingress: IngressScreenState;
   landingBanners: LandingScreenBannerState;
@@ -123,6 +128,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   fims: fimsReducer,
   itWallet: itWalletReducer,
   profileSettings: profileSettingsReducerPersistor,
+  appearanceSettings: appearanceSettingsReducerPersistor,
   mixpanel: mixpanelReducer,
   ingress: ingressScreenReducer,
   landingBanners: landingScreenBannersReducer,

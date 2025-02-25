@@ -366,8 +366,8 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                 {},
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 28,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 26,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 34,
@@ -393,7 +393,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -451,8 +451,8 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -517,7 +517,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -538,8 +538,8 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 17,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -613,7 +613,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -634,8 +634,8 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 17,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -827,20 +827,23 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "height": 48,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {},
                                   false,
@@ -878,7 +881,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1276,8 +1279,8 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                 {},
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 28,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 26,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 34,
@@ -1462,20 +1465,23 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "height": 48,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {},
                                   false,
@@ -1513,7 +1519,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1911,8 +1917,8 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                 {},
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 28,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 26,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 34,
@@ -1938,7 +1944,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1959,7 +1965,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -1982,7 +1988,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -2044,8 +2050,8 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -2110,7 +2116,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -2131,8 +2137,8 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 17,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -2206,7 +2212,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -2227,8 +2233,8 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 17,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -2420,20 +2426,23 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "height": 48,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {},
                                   false,
@@ -2471,7 +2480,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",

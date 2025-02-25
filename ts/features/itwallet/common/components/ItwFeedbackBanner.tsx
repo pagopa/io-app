@@ -32,7 +32,6 @@ const ItwFeedbackBanner = () => {
         action={I18n.t("features.itWallet.feedback.banner.action")}
         pictogramName="feedback"
         color="neutral"
-        size="big"
         onPress={handleOnPress}
         labelClose={I18n.t("global.buttons.close")}
         onClose={handleOnClose}

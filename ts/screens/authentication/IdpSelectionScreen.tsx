@@ -15,7 +15,7 @@ import I18n from "../../i18n";
 import { idpSelected } from "../../store/actions/authentication";
 import { idpsRemoteValueSelector } from "../../store/reducers/content";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
+import { idps as idpsFallback } from "../../utils/idps";
 import { loadIdps } from "../../store/actions/content";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import {
@@ -86,12 +86,8 @@ const IdpSelectionScreen = (): ReactElement => {
 
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
   const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
-  const randomIdps = useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>(
-    randomOrderIdps(idpValue)
-  );
-  const firstIdpsRef = useRef<ReadonlyArray<SpidIdp> | LocalIdpsFallback>(
-    idpValue
-  );
+  const randomIdps = useRef<ReadonlyArray<SpidIdp>>(randomOrderIdps(idpValue));
+  const firstIdpsRef = useRef<ReadonlyArray<SpidIdp>>(idpValue);
 
   const requestIdps = useCallback(
     () => dispatch(loadIdps.request()),
@@ -130,7 +126,7 @@ const IdpSelectionScreen = (): ReactElement => {
       (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 13)) &&
     nativeLoginFeature.enabled &&
     isNativeLoginFeatureFlagEnabled;
-  const onIdpSelected = (idp: LocalIdpsFallback) => {
+  const onIdpSelected = (idp: SpidIdp) => {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
     void trackLoginSpidIdpSelected(idp.id, store.getState());
@@ -183,7 +179,6 @@ const IdpSelectionScreen = (): ReactElement => {
           <Banner
             viewRef={viewRef}
             color="neutral"
-            size="small"
             content={
               isFastLoginFeatureFlagEnabled
                 ? I18n.t("login.expiration_info_FL")

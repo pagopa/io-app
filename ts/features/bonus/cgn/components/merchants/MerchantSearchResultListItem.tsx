@@ -63,7 +63,7 @@ export function MerchantSearchResultListItem({
             {item.newDiscounts && (
               <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
                 <Badge
-                  variant="purple"
+                  variant="cgn"
                   text={I18n.t("bonus.cgn.merchantsList.news")}
                 />
               </View>

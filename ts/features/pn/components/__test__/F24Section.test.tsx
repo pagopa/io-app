@@ -3,7 +3,6 @@ import { F24Section } from "../F24Section";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { UIMessageId } from "../../../messages/types";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import * as thirdPartyById from "../../../messages/store/reducers/thirdPartyById";
@@ -113,11 +112,7 @@ describe("F24Section", () => {
 
 const renderComponent = (isCancelled: boolean = false) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, designSystemState as any);
+  const store = createStore(appReducer, initialState as any);
 
   return renderScreenWithNavigationStoreContext(
     () => (

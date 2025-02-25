@@ -257,7 +257,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           ? {
               badgeProps: {
                 text: I18n.t("profile.preferences.list.wip"),
-                variant: "info"
+                variant: "highlight"
               }
             }
           : undefined,
@@ -274,7 +274,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           ? {
               badgeProps: {
                 text: I18n.t("profile.preferences.list.wip"),
-                variant: "info"
+                variant: "highlight"
               }
             }
           : undefined,

@@ -364,8 +364,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -387,7 +387,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -468,8 +468,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -498,7 +498,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -541,8 +541,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -564,7 +564,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -643,8 +643,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -673,7 +673,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -716,8 +716,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -739,7 +739,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -818,8 +818,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -848,7 +848,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -891,8 +891,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -914,7 +914,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -993,8 +993,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1023,7 +1023,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1066,8 +1066,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1089,7 +1089,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1168,8 +1168,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1198,7 +1198,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1241,8 +1241,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1264,7 +1264,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1343,8 +1343,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1373,7 +1373,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1416,8 +1416,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1439,7 +1439,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1518,8 +1518,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1548,7 +1548,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1591,8 +1591,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1614,7 +1614,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1693,8 +1693,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1723,7 +1723,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1766,8 +1766,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1789,7 +1789,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1868,8 +1868,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1898,7 +1898,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1941,8 +1941,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1964,7 +1964,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -2043,8 +2043,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -2073,7 +2073,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -2116,8 +2116,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -2139,7 +2139,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -2218,8 +2218,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -2248,7 +2248,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -2291,8 +2291,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -2314,7 +2314,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -2395,8 +2395,8 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -2425,7 +2425,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                 },
                                 {
                                   "color": "#99A3C1",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",

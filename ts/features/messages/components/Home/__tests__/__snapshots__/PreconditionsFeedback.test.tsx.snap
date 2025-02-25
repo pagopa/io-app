@@ -529,7 +529,7 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
                               {},
                               {
                                 "color": "#2B2E38",
-                                "fontFamily": "Titillium Sans Pro",
+                                "fontFamily": "Titillio",
                                 "fontSize": 22,
                                 "fontStyle": "normal",
                                 "fontWeight": "600",
@@ -1086,7 +1086,7 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                               {},
                               {
                                 "color": "#2B2E38",
-                                "fontFamily": "Titillium Sans Pro",
+                                "fontFamily": "Titillio",
                                 "fontSize": 22,
                                 "fontStyle": "normal",
                                 "fontWeight": "600",
@@ -1116,7 +1116,7 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                               {},
                               {
                                 "color": "#555C70",
-                                "fontFamily": "Titillium Sans Pro",
+                                "fontFamily": "Titillio",
                                 "fontSize": 14,
                                 "fontStyle": "normal",
                                 "fontWeight": "400",

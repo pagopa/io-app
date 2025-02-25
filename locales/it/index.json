@@ -590,7 +590,7 @@
             "trial": {
                 "titleSection": "Partecipa alla sperimentazione"
             },
-            "designSystemEnvironment": "Design System sperimentale",
+            "experimentalEnvironment": "Interfaccia sperimentale",
             "newScanSection": "Nuova funzione 'Inquadra'",
             "sessionRefresh": "Attiva il refresh della sessione",
             "appVersion": "Versione",
@@ -604,6 +604,10 @@
                 "title": "Vuoi visualizzare il tuo Codice Fiscale?",
                 "action": "Vai alla sezione “I tuoi dati”",
                 "close": "Chiudi il banner e non mostrarlo più"
+            },
+            "appearanceBanner": {
+                "title": "Vuoi modificare il carattere usato per i testi in app?",
+                "action": "Modifica stile carattere"
             }
         },
         "data": {
@@ -643,6 +647,31 @@
                 "send_email_messages": {
                     "title": "Inoltro dei messaggi via email",
                     "subtitle": "Ricevi un’anteprima dei messaggi"
+                },
+                "appearance": {
+                    "title": "Aspetto dell'app",
+                    "subtitle": "Personalizza l'app in base alle tue esigenze",
+                    "typefaceStyle": {
+                        "title": "Stile carattere",
+                        "comfortable": {
+                            "title": "Confortevole",
+                            "description": "Progettato per una migliore leggibilità dei testi"
+                        },
+                        "standard": {
+                            "title": "Standard",
+                            "description": "Lo stile di sempre, con forme strette e geometriche"
+                        }
+                    },
+                    "theme": {
+                        "title": "Tema",
+                        "comingSoon": "In arrivo",
+                        "automatic": {
+                            "title": "Automatico",
+                            "description": "Cambia in base alle impostazioni di sistema"
+                        },
+                        "light": "Chiaro",
+                        "dark": "Scuro"
+                    }
                 },
                 "language": {
                     "title": "Lingua",
@@ -2309,13 +2338,15 @@
                     "title": "Inserisci il codice avviso",
                     "subtitle": "Ha 18 cifre, lo trovi vicino al codice QR.",
                     "validationError": "Ha 18 cifre, inizia con 0, 1 o 3.",
-                    "placeholder": "Codice avviso"
+                    "placeholder": "Codice avviso",
+                    "a11y": "Errore. Codice avviso non corretto. Ha 18 cifre, lo trovi vicino al codice QR."
                 },
                 "fiscalCode": {
                     "title": "Inserisci il codice fiscale dell’Ente Creditore",
                     "subtitle": "Ha 11 cifre, lo trovi vicino al codice QR.",
                     "validationError": "Inserisci 11 cifre.",
-                    "placeholder": "Codice fiscale Ente Creditore"
+                    "placeholder": "Codice fiscale Ente Creditore",
+                    "a11y": "Errore. Codice fiscale dell’Ente Creditore non corretto. Ha 11 cifre, lo trovi vicino al codice QR"
                 }
             },
             "abortDialog": {
@@ -4554,7 +4585,7 @@
                     "action": "Cosa posso fare?"
                 },
                 "modal": {
-                    "title": "Nessuna connessione", 
+                    "title": "Nessuna connessione",
                     "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
                     "action": "Ricarica l'app IO"
                 }

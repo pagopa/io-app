@@ -235,7 +235,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
               {},
               {
                 "color": "#2B2E38",
-                "fontFamily": "Titillium Sans Pro",
+                "fontFamily": "Titillio",
                 "fontSize": 22,
                 "fontStyle": "normal",
                 "fontWeight": "600",

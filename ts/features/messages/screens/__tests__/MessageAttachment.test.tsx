@@ -7,7 +7,6 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { MessageAttachmentScreen } from "../MessageAttachmentScreen";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { downloadAttachment } from "../../store/actions";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 
 describe("MessageAttachment", () => {
@@ -34,12 +33,8 @@ const renderScreen = (
   configuration: "failure" | "success"
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const withDownloadState = appReducer(
-    designSystemState,
+    initialState,
     downloadAttachment.success({
       attachment: { id: attachmentId } as ThirdPartyAttachment,
       messageId,
@@ -48,7 +43,7 @@ const renderScreen = (
   );
   const store = createStore(
     appReducer,
-    (configuration === "success" ? withDownloadState : designSystemState) as any
+    (configuration === "success" ? withDownloadState : initialState) as any
   );
 
   return renderScreenWithNavigationStoreContext(
