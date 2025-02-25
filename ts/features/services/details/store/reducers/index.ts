@@ -15,7 +15,7 @@ import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { isStrictSome } from "../../../../../utils/pot";
-import { ServiceMetadataInfo } from "../../types/ServiceMetadataInfo";
+import { ServiceMetadataInfo } from "../../types";
 import {
   ServicePreferenceResponse,
   WithServiceID,
@@ -26,6 +26,8 @@ import {
   loadServicePreference,
   upsertServicePreference
 } from "../actions/preference";
+import { ServiceKind } from "../../components/ServiceDetailsScreenComponent";
+import { EnabledChannels } from "../../../../../utils/profile";
 
 export type ServicesDetailsState = {
   byId: Record<string, pot.Pot<ServicePublic, Error>>;
@@ -173,7 +175,8 @@ export const serviceMetadataInfoSelector = createSelector(
         if (SpecialServiceMetadata.is(serviceMetadata)) {
           return O.some({
             isSpecialService: true,
-            customSpecialFlow: serviceMetadata.custom_special_flow as string
+            serviceKind:
+              serviceMetadata.custom_special_flow as NonNullable<ServiceKind>
           });
         }
         return O.none;
@@ -214,3 +217,19 @@ export const isErrorServicePreferenceSelector = (state: GlobalState) =>
       (isStrictSome(servicePreferencePot) &&
         !isServicePreferenceResponseSuccess(servicePreferencePot.value))
   );
+
+/**
+ * Select the preference by channel
+ * @param channel - The channel of the preference to select
+ */
+export const servicePreferenceByChannelPotSelector = createSelector(
+  servicePreferencePotSelector,
+  (_: GlobalState, channel: keyof EnabledChannels) => channel,
+  (servicePreferencePot, channel) =>
+    pot.mapNullable(servicePreferencePot, servicePreference => {
+      if (isServicePreferenceResponseSuccess(servicePreference)) {
+        return servicePreference.value[channel];
+      }
+      return undefined;
+    })
+);
