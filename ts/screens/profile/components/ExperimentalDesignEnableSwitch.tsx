@@ -5,28 +5,36 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { useIOSelector, useIODispatch } from "../../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { preferencesDesignSystemSetEnabled } from "../../../store/actions/persistedPreferences";
+import { isExperimentalDesignEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { preferencesExperimentalDesignEnabled } from "../../../store/actions/persistedPreferences";
 import { DS_PERSISTENCE_KEY } from "../../../common/context/DSExperimentalContext";
 
 const ExperimentalDesignEnableSwitch = () => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const isExperimentalDesignEnabled = useIOSelector(
+    isExperimentalDesignEnabledSelector
+  );
   const dispatch = useIODispatch();
   const { isExperimental, setExperimental } = useIOExperimentalDesign();
-  const onSwitchValueChange = (isDesignSystemEnabled: boolean) => {
+  const onSwitchValueChange = (
+    internalIsExperimentalDesignEnabled: boolean
+  ) => {
     AsyncStorage.setItem(
       DS_PERSISTENCE_KEY,
-      JSON.stringify(isDesignSystemEnabled)
+      JSON.stringify(internalIsExperimentalDesignEnabled)
     ).finally(() => {
-      dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled }));
-      setExperimental(isDesignSystemEnabled);
+      dispatch(
+        preferencesExperimentalDesignEnabled({
+          isExperimentalDesignEnabled: internalIsExperimentalDesignEnabled
+        })
+      );
+      setExperimental(internalIsExperimentalDesignEnabled);
     });
   };
 
   return (
     <ListItemSwitch
       label={I18n.t("profile.main.experimentalEnvironment")}
-      value={isDesignSystemEnabled && isExperimental}
+      value={isExperimentalDesignEnabled && isExperimental}
       onSwitchValueChange={onSwitchValueChange}
     />
   );
