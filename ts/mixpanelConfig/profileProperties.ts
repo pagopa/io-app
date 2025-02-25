@@ -25,9 +25,9 @@ import {
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
+import { fontPreferenceSelector } from "../store/reducers/persistedPreferences.ts";
 import {
   cgnStatusHandler,
-  fontPreferenceHandler,
   loginSessionConfigHandler,
   mixpanelOptInHandler,
   MixpanelOptInTrackingType,
@@ -82,7 +82,7 @@ export const updateMixpanelProfileProperties = async (
   const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
   const CGN_STATUS = cgnStatusHandler(state);
   const WELFARE_STATUS = welfareStatusHandler(state);
-  const FONT_PREFERENCE = fontPreferenceHandler(state);
+  const FONT_PREFERENCE = fontPreferenceSelector(state);
 
   const profilePropertiesObject: ProfileProperties = {
     LOGIN_SESSION,

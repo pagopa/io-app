@@ -10,15 +10,16 @@ import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
-import { mixpanelTrack } from "../../mixpanel";
-import { buildEventProperties } from "../../utils/analytics";
 import { useIODispatch, useIOStore } from "../../store/hooks";
-import { updateMixpanelProfileProperties } from "../../mixpanelConfig/profileProperties";
 import {
   preferencesFontSet,
   TypefaceChoice
 } from "../../store/actions/persistedPreferences";
 import { FONT_PERSISTENCE_KEY } from "../../common/context/DSTypefaceContext";
+import {
+  trackAppearancePreferenceScreenView,
+  trackAppearancePreferenceTypefaceUpdate
+} from "./analytics";
 
 type ColorModeChoice = "system" | "dark" | "light";
 
@@ -33,26 +34,14 @@ const AppearancePreferenceScreen = (): ReactElement => {
   const { newTypefaceEnabled, setNewTypefaceEnabled } = useIONewTypeface();
 
   useFocusEffect(() => {
-    void mixpanelTrack(
-      "SETTINGS_PREFERENCES_UI",
-      buildEventProperties("UX", "screen_view")
-    );
+    trackAppearancePreferenceScreenView();
   });
   const selectedTypeface: TypefaceChoice = newTypefaceEnabled
     ? "comfortable"
     : "standard";
 
   const handleTypefaceChange = (choice: TypefaceChoice) => {
-    void mixpanelTrack(
-      "SETTINGS_PREFERENCES_UI_FONT_UPDATE",
-      buildEventProperties("UX", "action", {
-        current_font: choice
-      })
-    );
-    void updateMixpanelProfileProperties(store.getState(), {
-      property: "FONT_PREFERENCE",
-      value: choice
-    });
+    trackAppearancePreferenceTypefaceUpdate(choice, store.getState());
     AsyncStorage.setItem(FONT_PERSISTENCE_KEY, choice).finally(() => {
       dispatch(preferencesFontSet(choice));
       setNewTypefaceEnabled(choice === "comfortable");

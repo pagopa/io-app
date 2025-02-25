@@ -17,11 +17,7 @@ import {
   profileServicePreferencesModeSelector
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
-import { TypefaceChoice } from "../store/actions/persistedPreferences";
-import {
-  fontPreferenceSelector,
-  isMixpanelEnabled
-} from "./../store/reducers/persistedPreferences";
+import { isMixpanelEnabled } from "./../store/reducers/persistedPreferences";
 
 export type Property<K, T extends keyof K> = {
   property: T;
@@ -105,6 +101,3 @@ export const welfareStatusHandler = (
   ) as Array<WalletCardBonus>;
   return idPayCards.map(card => card.name);
 };
-
-export const fontPreferenceHandler = (state: GlobalState): TypefaceChoice =>
-  fontPreferenceSelector(state);
