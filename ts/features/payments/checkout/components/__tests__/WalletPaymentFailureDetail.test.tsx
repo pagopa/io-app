@@ -3,7 +3,10 @@ import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import { usePaymentFailureSupportModal } from "../../hooks/usePaymentFailureSupportModal";
-import { WalletPaymentFailureDetail } from "../WalletPaymentFailureDetail";
+import {
+  HC_PAYMENT_CANCELED_ERROR_ID,
+  WalletPaymentFailureDetail
+} from "../WalletPaymentFailureDetail";
 import * as analytics from "../../analytics";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -13,12 +16,15 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { openWebUrl } from "../../../../../utils/url";
+import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
+import { CHECKOUT_ASSISTANCE_ARTICLE } from "../../utils";
 
 jest.mock("../../hooks/usePaymentFailureSupportModal", () => ({
   usePaymentFailureSupportModal: jest.fn()
 }));
 
 jest.mock("../../analytics");
+jest.mock("../../../../../utils/analytics");
 
 jest.mock("../../../../../utils/url");
 
@@ -178,6 +184,23 @@ describe("WalletPaymentFailureDetail", () => {
       expect.objectContaining({
         error: "PAYMENT_UNAVAILABLE"
       })
+    );
+  });
+
+  it("tracks help center analytics when status faultCodeCategory is PAYMENT_CANCELED_ERROR", () => {
+    const { getByTestId } = renderComponent(
+      "PAYMENT_CANCELED" as WalletPaymentFailure["faultCodeCategory"]
+    );
+    const discoverMoreBtn = getByTestId(
+      "wallet-payment-failure-discover-more-button"
+    );
+    expect(discoverMoreBtn).toBeTruthy();
+
+    fireEvent.press(discoverMoreBtn);
+    expect(trackHelpCenterCtaTapped).toHaveBeenCalledWith(
+      HC_PAYMENT_CANCELED_ERROR_ID,
+      CHECKOUT_ASSISTANCE_ARTICLE,
+      expect.anything()
     );
   });
 
