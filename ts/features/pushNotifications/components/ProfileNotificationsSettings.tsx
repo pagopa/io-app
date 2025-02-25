@@ -74,7 +74,6 @@ export const ProfileNotificationSettings = ({
           content={I18n.t(
             "profile.main.privacy.shareData.screen.profileSettings"
           )}
-          size="small"
           color="neutral"
         />
       )}

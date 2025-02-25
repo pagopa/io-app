@@ -152,7 +152,7 @@ export const SearchScreen = () => {
     if (data?.institutions.length === 0) {
       return (
         <EmptyState
-          pictogram="umbrellaNew"
+          pictogram="umbrella"
           title={I18n.t("services.search.emptyState.noResults.title")}
           subtitle={I18n.t("services.search.emptyState.noResults.subtitle")}
         />

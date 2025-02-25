@@ -103,7 +103,7 @@ const GenericErrorComponent = (props: Props) => {
           {props.image ? (
             <Image accessibilityIgnoresInvertColors source={props.image} />
           ) : (
-            <Pictogram name="umbrellaNew" />
+            <Pictogram name="umbrella" />
           )}
           <VSpacer size={40} />
           <View style={IOStyles.alignCenter}>

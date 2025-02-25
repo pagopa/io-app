@@ -107,7 +107,6 @@ const ZendeskChooseSubCategory = (props: Props) => {
         <ContentWrapper>
           <Banner
             pictogramName="help"
-            size="big"
             color="neutral"
             title={getOrFallback(bannerEducational.title, locale, "it-IT")}
             content={getOrFallback(bannerEducational.content, locale, "it-IT")}

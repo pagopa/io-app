@@ -698,7 +698,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
                               {},
                               {
                                 "color": "#0E0F13",
-                                "fontFamily": "Titillium Sans Pro",
+                                "fontFamily": "Titillio",
                                 "fontSize": 22,
                                 "fontStyle": "normal",
                                 "fontWeight": "600",

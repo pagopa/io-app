@@ -218,8 +218,7 @@ export const ServicesHomeScreen = () => {
     headerProps: {
       title: I18n.t("services.title"),
       animatedFlatListRef: scrollViewContentRef,
-      secondAction: actionSettings,
-      thirdAction: actionSearch
+      actions: [actionSearch, actionSettings]
     }
   });
 

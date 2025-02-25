@@ -1,6 +1,6 @@
 import { IOStyles } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useState, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Animated, {
   LinearTransition,
   useAnimatedRef

@@ -9,6 +9,7 @@ const ItwOfflineWalletScreen = () => (
     <HeaderFirstLevel
       title={I18n.t("wallet.wallet")}
       ignoreSafeAreaMargin={true}
+      actions={[]}
     />
     <IOScrollView excludeSafeAreaMargins={true}>
       <ItwWalletCardsContainer />
