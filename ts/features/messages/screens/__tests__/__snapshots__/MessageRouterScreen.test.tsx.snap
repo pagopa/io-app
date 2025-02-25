@@ -426,7 +426,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                   {},
                                   {
                                     "color": "#2B2E38",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -465,7 +465,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -670,7 +670,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1272,7 +1272,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                   {},
                                   {
                                     "color": "#2B2E38",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -1311,7 +1311,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1516,7 +1516,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2120,7 +2120,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -2192,21 +2192,22 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderRadius": 4,
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 16,
+                                          "paddingHorizontal": 24,
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "backgroundColor": "#0073E6",
+                                          "height": 48,
+                                        },
+                                        {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "height": 40,
-                                        },
                                         {},
                                         false,
                                         {
@@ -2243,7 +2244,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                             {},
                                             {
                                               "color": "#FFFFFF",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -2359,7 +2360,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -2577,7 +2578,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -3179,7 +3180,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                   {},
                                   {
                                     "color": "#2B2E38",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -3218,7 +3219,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -3423,7 +3424,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -4025,7 +4026,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                   {},
                                   {
                                     "color": "#2B2E38",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -4064,7 +4065,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -4269,7 +4270,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",

@@ -86,7 +86,6 @@ export const ItwIdentityNotMatchingScreen = () => {
               "features.itWallet.identification.notMatchingIdentityScreen.banner.title"
             )}
             pictogramName="security"
-            size="small"
             color="neutral"
           />
         </VStack>

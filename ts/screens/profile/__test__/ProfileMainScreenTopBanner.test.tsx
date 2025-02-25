@@ -2,8 +2,8 @@ import { fireEvent, render } from "@testing-library/react-native";
 import { PropsWithChildren, ReactElement } from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import { setShowProfileBanner } from "../../../features/profileSettings/store/actions";
-import * as profileBannerImport from "../../../features/profileSettings/store/selectors";
+import { setShowAppearanceSettingsBanner } from "../../../features/appearanceSettings/store/actions";
+import * as profileBannerImport from "../../../features/appearanceSettings/store/selectors";
 import * as analytics from "../../../features/pushNotifications/analytics";
 import * as settingsNavigate from "../../../features/pushNotifications/utils";
 import TypedI18n from "../../../i18n";
@@ -36,15 +36,15 @@ describe("ProfileMainScreenTopBanner", () => {
     jest.resetAllMocks();
     mockAccessibilityInfo(false);
   });
-  it("should match snapshot for all possible results of profileBannerToShowSelector", () => {
+  it("should match snapshot for all possible results of settingsBannerToShowSelector", () => {
     const testCases = [
       {
         selectorValue: "NOTIFICATIONS",
         description: "notifications banner"
       },
       {
-        selectorValue: "PROFILE_BANNER",
-        description: "profile banner"
+        selectorValue: "APPEARANCE_SETTINGS_BANNER",
+        description: "Appearance Settings banner"
       },
       {
         selectorValue: undefined,
@@ -53,7 +53,7 @@ describe("ProfileMainScreenTopBanner", () => {
     ] as const;
     testCases.forEach(({ selectorValue, description }) => {
       jest
-        .spyOn(profileBannerImport, "profileBannerToShowSelector")
+        .spyOn(profileBannerImport, "settingsBannerToShowSelector")
         .mockImplementation((_: GlobalState) => selectorValue);
 
       const component = renderComponent(<ProfileMainScreenTopBanner />);
@@ -64,7 +64,7 @@ describe("ProfileMainScreenTopBanner", () => {
 
   it("should call openNotificationSettingsScreen on notification banner tap", () => {
     jest
-      .spyOn(profileBannerImport, "profileBannerToShowSelector")
+      .spyOn(profileBannerImport, "settingsBannerToShowSelector")
       .mockImplementation((_: GlobalState) => "NOTIFICATIONS");
     const spyOnMockTrackPushNotificationsBannerVisualized = jest
       .spyOn(analytics, "trackPushNotificationsBannerVisualized")
@@ -89,24 +89,24 @@ describe("ProfileMainScreenTopBanner", () => {
   });
   it("should call navigate on fiscalCode banner tap", () => {
     jest
-      .spyOn(profileBannerImport, "profileBannerToShowSelector")
-      .mockImplementation((_: GlobalState) => "PROFILE_BANNER");
+      .spyOn(profileBannerImport, "settingsBannerToShowSelector")
+      .mockImplementation((_: GlobalState) => "APPEARANCE_SETTINGS_BANNER");
 
     const root = renderComponent(<ProfileMainScreenTopBanner />);
-    const component = root.getByTestId("fiscal-code-banner");
+    const component = root.getByTestId("appearance-settings-banner");
 
     expect(component).toBeDefined();
 
     fireEvent.press(component);
 
     expect(mockNavigate).toHaveBeenCalledWith(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_DATA
+      screen: ROUTES.PROFILE_PREFERENCES_APPEARANCE
     });
   });
   it("should dispatch close action on fiscalCode banner close", () => {
     jest
-      .spyOn(profileBannerImport, "profileBannerToShowSelector")
-      .mockImplementation((_: GlobalState) => "PROFILE_BANNER");
+      .spyOn(profileBannerImport, "settingsBannerToShowSelector")
+      .mockImplementation((_: GlobalState) => "APPEARANCE_SETTINGS_BANNER");
 
     const root = renderComponent(<ProfileMainScreenTopBanner />);
     const component = root.getByA11yLabel(
@@ -117,11 +117,13 @@ describe("ProfileMainScreenTopBanner", () => {
 
     fireEvent.press(component);
 
-    expect(mockDispatch).toHaveBeenCalledWith(setShowProfileBanner(false));
+    expect(mockDispatch).toHaveBeenCalledWith(
+      setShowAppearanceSettingsBanner(false)
+    );
   });
   it(`should call 'trackPushNotificationsBannerVisualized' on first rendering if the push notification banner is the one to show`, () => {
     jest
-      .spyOn(profileBannerImport, "profileBannerToShowSelector")
+      .spyOn(profileBannerImport, "settingsBannerToShowSelector")
       .mockImplementation((_: GlobalState) => "NOTIFICATIONS");
     const spyOnMockTrackPushNotificationsBannerVisualized = jest
       .spyOn(analytics, "trackPushNotificationsBannerVisualized")
@@ -136,8 +138,8 @@ describe("ProfileMainScreenTopBanner", () => {
   });
   it(`should not have called 'trackPushNotificationsBannerVisualized' on first rendering if the push notification banner is not the shown one`, () => {
     jest
-      .spyOn(profileBannerImport, "profileBannerToShowSelector")
-      .mockImplementation((_: GlobalState) => "PROFILE_BANNER");
+      .spyOn(profileBannerImport, "settingsBannerToShowSelector")
+      .mockImplementation((_: GlobalState) => "APPEARANCE_SETTINGS_BANNER");
     const spyOnMockTrackPushNotificationsBannerVisualized = jest
       .spyOn(analytics, "trackPushNotificationsBannerVisualized")
       .mockImplementation(_ => undefined);

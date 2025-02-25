@@ -30,7 +30,7 @@ const UnsupportedDeviceScreen = () => {
   return (
     <Modal>
       <OperationResultScreenContent
-        pictogram="umbrellaNew"
+        pictogram="umbrella"
         title={title}
         subtitle={subtitle}
         secondaryAction={{

@@ -80,7 +80,6 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
         action={I18n.t("features.messages.pushNotifications.banner.CTA")}
         pictogramName="notification"
         color="turquoise"
-        size="big"
         onClose={onClose}
         labelClose={I18n.t("global.buttons.close")}
         onPress={onPress}

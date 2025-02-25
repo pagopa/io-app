@@ -377,8 +377,8 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -412,7 +412,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -522,8 +522,8 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 17,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -542,7 +542,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -709,8 +709,8 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 17,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -729,7 +729,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",

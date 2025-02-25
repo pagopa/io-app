@@ -3,8 +3,6 @@ import { IOColors } from "@pagopa/io-app-design-system";
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 type LoadingProps = {
   isLoading: true;
@@ -31,11 +29,7 @@ export const BonusCardStatusContent = ({ children }: BaseProps) => (
 );
 
 const BonusCardStatusSkeleton = () => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-
-  const placeholderColor = isDesignSystemEnabled
-    ? IOColors["blueItalia-100"]
-    : IOColors["blueIO-100"];
+  const placeholderColor = IOColors["blueItalia-100"];
 
   return (
     <View style={styles.container} testID="BonusCardStatusSkeletonTestID">

@@ -906,7 +906,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -927,7 +927,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -959,8 +959,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1479,7 +1479,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1500,7 +1500,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1537,7 +1537,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                         "paddingVertical": 6,
                                       },
                                       {
-                                        "backgroundColor": "#F4F5F8",
+                                        "backgroundColor": "#E7ECFC",
                                       },
                                     ]
                                   }
@@ -1551,8 +1551,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                       [
                                         {},
                                         {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "color": "#031344",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 12,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",

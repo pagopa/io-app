@@ -119,7 +119,7 @@ const AuthErrorComponent = ({
         ...footerWithCloseAndRetryButtons
       },
       [AUTH_ERRORS.CIEID_IOS_INVALID_OPERATION_MESSAGE]: {
-        pictogram: "umbrellaNew",
+        pictogram: "umbrella",
         title: I18n.t("authentication.auth_errors.generic.title"),
         subtitle: I18n.t("authentication.auth_errors.generic.subtitle"),
         ...footerWithCloseAndRetryButtons
@@ -133,7 +133,7 @@ const AuthErrorComponent = ({
         ...footerWithCloseAndRetryButtons
       },
       [AUTH_ERRORS.GENERIC_ERROR]: {
-        pictogram: "umbrellaNew",
+        pictogram: "umbrella",
         title: I18n.t("authentication.auth_errors.generic.title"),
         subtitle: I18n.t("authentication.auth_errors.generic.subtitle"),
         ...footerWithCloseAndRetryButtons
