@@ -61,3 +61,9 @@ export const itwIsPendingReviewSelector = (state: GlobalState) =>
  */
 export const itwAuthLevelSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.authLevel;
+
+/**
+ * Returns whether claim values are hidden in credentials detail. Defaults to false.
+ */
+export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.claimValuesHidden ?? false;

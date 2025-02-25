@@ -11,6 +11,7 @@ import {
   multiRequiredCriteriaSelector,
   selectCurrentMultiSelfDeclarationPage
 } from "../machine/selectors";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
 const MultiValuePrerequisitesScreen = () => {
   const pagerRef = useRef<PagerView>(null);
@@ -77,6 +78,8 @@ const MultiValuePrerequisiteItemScreenContent = ({
         label: I18n.t("idpay.onboarding.multiPrerequisites.header"),
         section: I18n.t("idpay.onboarding.headerTitle")
       }}
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{ showHelp: true }}
       goBack={handleGoBack}
       includeContentMargins
       actions={{
