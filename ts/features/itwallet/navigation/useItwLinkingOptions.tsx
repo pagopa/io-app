@@ -1,8 +1,8 @@
 import { PathConfigMap } from "@react-navigation/native";
 import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { itwLifecycleIsValidSelector } from "../lifecycle/store/selectors";
+import { ITW_REMOTE_ROUTES } from "../presentation/remote/navigation/routes.ts";
 import { ITW_ROUTES } from "./routes";
 
 /**
@@ -11,24 +11,29 @@ import { ITW_ROUTES } from "./routes";
  */
 export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
   return {
     [ITW_ROUTES.MAIN]: {
       path: "itw",
       screens: {
-        ...(isItwEnabled && {
-          [ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
-            "credential/issuance",
-          [isItwValid
-            ? ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN
-            : ITW_ROUTES.DISCOVERY.INFO]: "discovery/info",
-          [isItwValid
-            ? ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL
-            : ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]: {
-            path: "presentation/credential-detail/:credentialType"
-          }
-        })
+        [ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
+          "credential/issuance",
+        [isItwValid
+          ? ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN
+          : ITW_ROUTES.DISCOVERY.INFO]: "discovery/info",
+        [isItwValid
+          ? ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL
+          : ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]: {
+          path: "presentation/credential-detail/:credentialType"
+        }
+      }
+    },
+    [ITW_REMOTE_ROUTES.MAIN]: {
+      path: "itw/auth",
+      screens: {
+        [ITW_REMOTE_ROUTES.REQUEST_VALIDATION]: {
+          path: ""
+        }
       }
     }
   };

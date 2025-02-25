@@ -1,13 +1,15 @@
-import { IOColors, IOStyles, useIOToast } from "@pagopa/io-app-design-system";
+import {
+  FooterActions,
+  FooterActionsMeasurements,
+  IOColors,
+  IOStyles,
+  useIOToast
+} from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
 import Share from "react-native-share";
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  FooterActions,
-  FooterActionsMeasurements
-} from "../../../../../components/ui/FooterActions.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import I18n from "../../../../../i18n.ts";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";

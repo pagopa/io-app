@@ -36,6 +36,8 @@ import { WalletActions } from "../../features/wallet/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
+import { ConnectivityActions } from "../../features/connectivity/store/actions";
+import { LoginPreferencesActions } from "../../features/login/preferences/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -109,7 +111,9 @@ export type Action =
   | IngressScreenActions
   | MixpanelFeatureActions
   | LandingScreenBannerActions
-  | SpidConfigActions;
+  | SpidConfigActions
+  | ConnectivityActions
+  | LoginPreferencesActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

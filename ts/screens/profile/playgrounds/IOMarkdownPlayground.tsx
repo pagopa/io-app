@@ -1,3 +1,13 @@
+import {
+  ContentWrapper,
+  HSpacer,
+  IconButton,
+  IOColors,
+  IOStyles,
+  ListItemSwitch,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { useState } from "react";
 import {
   Keyboard,
@@ -8,19 +18,11 @@ import {
   TextInput,
   View
 } from "react-native";
-import {
-  ContentWrapper,
-  HSpacer,
-  IconButton,
-  IOColors,
-  IOStyles,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useHeaderHeight } from "@react-navigation/elements";
 import LinearGradient from "react-native-linear-gradient";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import IOMarkdown from "../../../components/IOMarkdown";
+import { generateMessagesAndServicesRules } from "../../../features/common/components/IOMarkdown/customRules";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import IOMarkdownSuggestions from "./IOMarkdownSuggestions";
 
@@ -128,29 +130,37 @@ const styles = StyleSheet.create({
 
 export const IOMarkdownPlayground = () => {
   const [content, setContent] = useState("");
+  const [messageSpecificStyle, setMessageSpecificStyle] = useState(true);
   const { bottom } = useSafeAreaInsets();
   const headerHeight = useHeaderHeight();
 
   const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
     title: "Components",
     component: (
-      <IOMarkdownSuggestions
-        setContent={setContent}
-        suggestions={[
-          [
-            { label: "All", content: ALL },
-            { label: "Headings", content: HEADINGS }
-          ],
-          [
-            { label: "Paragraph", content: PARAGRAPH },
-            { label: "List", content: LIST }
-          ],
-          [
-            { label: "Banner", content: BANNER },
-            { label: "Link", content: LINK }
-          ]
-        ]}
-      />
+      <>
+        <ListItemSwitch
+          label={"Enable specific style for Messages"}
+          onSwitchValueChange={setMessageSpecificStyle}
+          value={messageSpecificStyle}
+        />
+        <IOMarkdownSuggestions
+          setContent={setContent}
+          suggestions={[
+            [
+              { label: "All", content: ALL },
+              { label: "Headings", content: HEADINGS }
+            ],
+            [
+              { label: "Paragraph", content: PARAGRAPH },
+              { label: "List", content: LIST }
+            ],
+            [
+              { label: "Banner", content: BANNER },
+              { label: "Link", content: LINK }
+            ]
+          ]}
+        />
+      </>
     )
   });
 
@@ -163,7 +173,14 @@ export const IOMarkdownPlayground = () => {
       <ScrollView
         style={[IOStyles.horizontalContentPadding, { flex: 1, flexGrow: 1 }]}
       >
-        <IOMarkdown content={content} />
+        <IOMarkdown
+          content={content}
+          rules={
+            messageSpecificStyle
+              ? generateMessagesAndServicesRules(() => "")
+              : undefined
+          }
+        />
       </ScrollView>
       <VSpacer />
       <KeyboardAvoidingView

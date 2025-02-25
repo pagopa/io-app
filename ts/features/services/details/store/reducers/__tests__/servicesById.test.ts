@@ -261,7 +261,7 @@ describe("serviceById selectors", () => {
             service_metadata: {
               category: SpecialServiceCategoryEnum.SPECIAL,
               scope: ServiceScopeEnum.NATIONAL,
-              custom_special_flow: "custom_special_flow" as NonEmptyString
+              custom_special_flow: "pn" as NonEmptyString
             }
           })
         ),
@@ -269,7 +269,7 @@ describe("serviceById selectors", () => {
       );
       expect(serviceById).toStrictEqual({
         isSpecialService: true,
-        customSpecialFlow: "custom_special_flow"
+        serviceKind: "pn"
       });
     });
 

@@ -2,8 +2,8 @@
 
 exports[`featuresPersistor should match snapshot 1`] = `
 {
-  "appearanceSettings": {
-    "showAppearanceBanner": true,
+  "connectivityStatus": {
+    "isConnected": true,
   },
   "fci": {
     "documentPreview": {
@@ -142,6 +142,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "landingBanners": {
     "ITW_DISCOVERY": true,
+    "LV_EXPIRATION_REMINDER": true,
     "PUSH_NOTIFICATIONS_REMINDER": true,
     "SETTINGS_DISCOVERY": true,
   },
@@ -171,6 +172,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "loginInfo": {
       "userFromSuccessLogin": false,
+    },
+    "loginPreferences": {
+      "showSessionExpirationBanner": true,
     },
     "nativeLogin": {
       "enabled": true,
