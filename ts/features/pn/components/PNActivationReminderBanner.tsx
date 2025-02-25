@@ -15,7 +15,6 @@ export const PNActivationReminderBanner = ({ handleOnClose }: Props) => (
       color="neutral"
       onPress={() => null}
       pictogramName="message"
-      size="big"
       onClose={handleOnClose}
       labelClose={I18n.t("global.buttons.close")}
     />
