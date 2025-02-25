@@ -1,10 +1,8 @@
 import {
-  BodySmall,
   H3,
   H6,
   IOColors,
   IOColorsExtra,
-  IOColorsLegacy,
   IOColorsNeutral,
   IOColorsStatus,
   IOColorsTints,
@@ -256,23 +254,6 @@ export const DSColors = () => {
               colorObjectLightMode={themeStatusColorsLightMode}
               colorObjectDarkMode={themeStatusColorsDarkMode}
             />
-          </VStack>
-        </VStack>
-
-        {/* LEGACY */}
-        <VStack space={sectionTitleMargin}>
-          <View>
-            <H3 color={theme["textHeading-default"]}>Legacy palette (†2023)</H3>
-            <BodySmall weight={"Regular"} color={theme["textBody-tertiary"]}>
-              Not moved to the &ldquo;Legacy&rdquo; category yet, because
-              it&apos;s currently used everywhere
-            </BodySmall>
-          </View>
-
-          <VStack space={colorItemMargin}>
-            {Object.entries(IOColorsLegacy).map(([name, colorValue]) => (
-              <ColorBox key={name} name={name} color={colorValue} />
-            ))}
           </VStack>
         </VStack>
       </VStack>

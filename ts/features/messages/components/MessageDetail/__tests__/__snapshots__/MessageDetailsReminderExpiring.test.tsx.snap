@@ -464,7 +464,6 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               style={
                                 [
                                   false,
-                                  false,
                                   {
                                     "flex": 1,
                                   },
@@ -491,7 +490,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                       {},
                                       {
                                         "color": "#614C15",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -512,7 +511,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                       {},
                                       {
                                         "color": "#614C15",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",

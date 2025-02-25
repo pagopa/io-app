@@ -472,7 +472,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 12,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -584,7 +584,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -612,7 +612,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -654,7 +654,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   {},
                                   {
                                     "color": "#2B2E38",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -853,7 +853,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           {},
                                           {
                                             "color": "#0B3EE3",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1058,7 +1058,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           {},
                                           {
                                             "color": "#0B3EE3",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1155,8 +1155,8 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   {},
                                                   {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 17,
+                                                    "fontFamily": "Titillio",
+                                                    "fontSize": 16,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                     "lineHeight": 24,
@@ -1257,7 +1257,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   {},
                                                   {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Sans Pro",
+                                                    "fontFamily": "Titillio",
                                                     "fontSize": 14,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "400",
@@ -1278,8 +1278,8 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   {},
                                                   {
                                                     "color": "#0B3EE3",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 17,
+                                                    "fontFamily": "Titillio",
+                                                    "fontSize": 16,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                     "lineHeight": 24,
@@ -1394,8 +1394,8 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   {},
                                                   {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 17,
+                                                    "fontFamily": "Titillio",
+                                                    "fontSize": 16,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                     "lineHeight": 24,
@@ -1496,7 +1496,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   {},
                                                   {
                                                     "color": "#555C70",
-                                                    "fontFamily": "Titillium Sans Pro",
+                                                    "fontFamily": "Titillio",
                                                     "fontSize": 14,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "400",
@@ -1517,8 +1517,8 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   {},
                                                   {
                                                     "color": "#0B3EE3",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 17,
+                                                    "fontFamily": "Titillio",
+                                                    "fontSize": 16,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
                                                     "lineHeight": 24,

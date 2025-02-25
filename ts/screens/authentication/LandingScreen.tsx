@@ -134,7 +134,7 @@ export const LandingScreen = () => {
           icon="device"
           testID="bottom-sheet-login-with-cie-id"
           badge={{
-            variant: "turquoise",
+            variant: "highlight",
             text: I18n.t(
               "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
             )
@@ -159,7 +159,6 @@ export const LandingScreen = () => {
           action={I18n.t(
             "authentication.landing.cie_bottom_sheet.help_banner.action"
           )}
-          size="small"
         />
         <VSpacer />
       </View>

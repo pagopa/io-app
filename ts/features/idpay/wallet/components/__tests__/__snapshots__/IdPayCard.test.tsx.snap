@@ -54,8 +54,8 @@ exports[`IdPayCard should match the snapshot 1`] = `
               {},
               {
                 "color": "#001F3D",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 17,
+                "fontFamily": "Titillio",
+                "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 24,
@@ -137,7 +137,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
             {},
             {
               "color": "#0E0F13",
-              "fontFamily": "Titillium Sans Pro",
+              "fontFamily": "Titillio",
               "fontSize": 16,
               "fontStyle": "normal",
               "fontWeight": "600",
@@ -157,7 +157,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
             {},
             {
               "color": "#0066CC",
-              "fontFamily": "Titillium Sans Pro",
+              "fontFamily": "Titillio",
               "fontSize": 22,
               "fontStyle": "normal",
               "fontWeight": "600",
@@ -178,7 +178,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
           {},
           {
             "color": "#001F3D",
-            "fontFamily": "Titillium Sans Pro",
+            "fontFamily": "Titillio",
             "fontSize": 16,
             "fontStyle": "normal",
             "fontWeight": "600",

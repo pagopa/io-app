@@ -94,8 +94,8 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                 {},
                 {
                   "color": "#0E0F13",
-                  "fontFamily": "Titillium Sans Pro",
-                  "fontSize": 17,
+                  "fontFamily": "Titillio",
+                  "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "600",
                   "lineHeight": 24,
@@ -114,7 +114,7 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                 {},
                 {
                   "color": "#555C70",
-                  "fontFamily": "Titillium Sans Pro",
+                  "fontFamily": "Titillio",
                   "fontSize": 14,
                   "fontStyle": "normal",
                   "fontWeight": "400",
@@ -185,7 +185,7 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                     "width": 24,
                   },
                   {
-                    "borderColor": "#555C70",
+                    "borderColor": "#636B82",
                   },
                 ]
               }
@@ -205,7 +205,7 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                     "width": 24,
                   },
                   {
-                    "backgroundColor": "#0073E6",
+                    "backgroundColor": "#0B3EE3",
                   },
                   {
                     "opacity": 0,
@@ -315,8 +315,8 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                 {},
                 {
                   "color": "#0E0F13",
-                  "fontFamily": "Titillium Sans Pro",
-                  "fontSize": 17,
+                  "fontFamily": "Titillio",
+                  "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "600",
                   "lineHeight": 24,
@@ -335,7 +335,7 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                 {},
                 {
                   "color": "#555C70",
-                  "fontFamily": "Titillium Sans Pro",
+                  "fontFamily": "Titillio",
                   "fontSize": 14,
                   "fontStyle": "normal",
                   "fontWeight": "400",
@@ -406,7 +406,7 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                     "width": 24,
                   },
                   {
-                    "borderColor": "#555C70",
+                    "borderColor": "#636B82",
                   },
                 ]
               }
@@ -426,7 +426,7 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                     "width": 24,
                   },
                   {
-                    "backgroundColor": "#0073E6",
+                    "backgroundColor": "#0B3EE3",
                   },
                   {
                     "opacity": 0,
@@ -536,8 +536,8 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                 {},
                 {
                   "color": "#0E0F13",
-                  "fontFamily": "Titillium Sans Pro",
-                  "fontSize": 17,
+                  "fontFamily": "Titillio",
+                  "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "600",
                   "lineHeight": 24,
@@ -556,7 +556,7 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                 {},
                 {
                   "color": "#555C70",
-                  "fontFamily": "Titillium Sans Pro",
+                  "fontFamily": "Titillio",
                   "fontSize": 14,
                   "fontStyle": "normal",
                   "fontWeight": "400",
@@ -627,7 +627,7 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                     "width": 24,
                   },
                   {
-                    "borderColor": "#555C70",
+                    "borderColor": "#636B82",
                   },
                 ]
               }
@@ -647,7 +647,7 @@ exports[`ItwOptionalClaimsList should match snapshot 1`] = `
                     "width": 24,
                   },
                   {
-                    "backgroundColor": "#0073E6",
+                    "backgroundColor": "#0B3EE3",
                   },
                   {
                     "opacity": 0,
@@ -698,8 +698,8 @@ exports[`ItwRequiredClaimsList should match snapshot 1`] = `
             {},
             {
               "color": "#0E0F13",
-              "fontFamily": "Titillium Sans Pro",
-              "fontSize": 17,
+              "fontFamily": "Titillio",
+              "fontSize": 16,
               "fontStyle": "normal",
               "fontWeight": "600",
               "lineHeight": 24,
@@ -718,7 +718,7 @@ exports[`ItwRequiredClaimsList should match snapshot 1`] = `
             {},
             {
               "color": "#555C70",
-              "fontFamily": "Titillium Sans Pro",
+              "fontFamily": "Titillio",
               "fontSize": 14,
               "fontStyle": "normal",
               "fontWeight": "400",
@@ -820,8 +820,8 @@ exports[`ItwRequiredClaimsList should match snapshot 1`] = `
             {},
             {
               "color": "#0E0F13",
-              "fontFamily": "Titillium Sans Pro",
-              "fontSize": 17,
+              "fontFamily": "Titillio",
+              "fontSize": 16,
               "fontStyle": "normal",
               "fontWeight": "600",
               "lineHeight": 24,
@@ -840,7 +840,7 @@ exports[`ItwRequiredClaimsList should match snapshot 1`] = `
             {},
             {
               "color": "#555C70",
-              "fontFamily": "Titillium Sans Pro",
+              "fontFamily": "Titillio",
               "fontSize": 14,
               "fontStyle": "normal",
               "fontWeight": "400",
@@ -942,8 +942,8 @@ exports[`ItwRequiredClaimsList should match snapshot 1`] = `
             {},
             {
               "color": "#0E0F13",
-              "fontFamily": "Titillium Sans Pro",
-              "fontSize": 17,
+              "fontFamily": "Titillio",
+              "fontSize": 16,
               "fontStyle": "normal",
               "fontWeight": "600",
               "lineHeight": 24,
@@ -962,7 +962,7 @@ exports[`ItwRequiredClaimsList should match snapshot 1`] = `
             {},
             {
               "color": "#555C70",
-              "fontFamily": "Titillium Sans Pro",
+              "fontFamily": "Titillio",
               "fontSize": 14,
               "fontStyle": "normal",
               "fontWeight": "400",

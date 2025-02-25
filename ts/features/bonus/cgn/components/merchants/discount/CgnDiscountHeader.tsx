@@ -48,13 +48,13 @@ export const CgnDiscountHeader = ({
             <View style={[IOStyles.row, { gap: 8 }]}>
               {isNew && (
                 <Badge
-                  variant="purple"
+                  variant="cgn"
                   text={I18n.t("bonus.cgn.merchantsList.news")}
                 />
               )}
               {isValidDiscount(discount) && (
                 <Badge
-                  variant="purple"
+                  variant="cgn"
                   outline
                   text={`-${normalizedDiscountPercentage(discount)}%`}
                 />

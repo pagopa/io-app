@@ -9,10 +9,7 @@ import { randomOrderIdps } from "../../../../screens/authentication/IdpSelection
 import { loadIdps } from "../../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpsRemoteValueSelector } from "../../../../store/reducers/content";
-import {
-  LocalIdpsFallback,
-  idps as idpsFallback
-} from "../../../../utils/idps";
+import { idps as idpsFallback } from "../../../../utils/idps";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
   trackItWalletSpidIDPSelected,
@@ -25,9 +22,7 @@ export const ItwIdentificationIdpSelectionScreen = () => {
 
   const idps = useIOSelector(idpsRemoteValueSelector);
   const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
-  const randomIdps = useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>(
-    randomOrderIdps(idpValue)
-  );
+  const randomIdps = useRef<ReadonlyArray<SpidIdp>>(randomOrderIdps(idpValue));
 
   useFocusEffect(
     useCallback(() => {
@@ -36,7 +31,7 @@ export const ItwIdentificationIdpSelectionScreen = () => {
     }, [dispatch])
   );
 
-  const onIdpSelected = (idp: LocalIdpsFallback) => {
+  const onIdpSelected = (idp: SpidIdp) => {
     trackItWalletSpidIDPSelected({ idp: idp.name });
     machineRef.send({ type: "select-spid-idp", idp });
   };

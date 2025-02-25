@@ -98,3 +98,6 @@ export const getSubCategoryFromFaultCode = (
   // if not, return nullable
   return null;
 };
+
+export const CHECKOUT_ASSISTANCE_ARTICLE =
+  "https://assistenza.ioapp.it/hc/it/articles/31007989155985-L-avviso-pagoPA-%C3%A8-revocato";

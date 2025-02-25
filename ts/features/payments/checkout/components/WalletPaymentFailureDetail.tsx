@@ -1,5 +1,5 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -23,15 +23,17 @@ import { paymentsCalculatePaymentFeesAction } from "../store/actions/networking"
 import { paymentCompletedSuccess } from "../store/actions/orchestration";
 import { selectWalletPaymentCurrentStep } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import { getPaymentPhaseFromStep } from "../utils";
+import { CHECKOUT_ASSISTANCE_ARTICLE, getPaymentPhaseFromStep } from "../utils";
+import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
+
+export const HC_PAYMENT_CANCELED_ERROR_ID = "PAYMENT_CANCELED_ERROR";
 
 type Props = {
   failure: WalletPaymentFailure;
 };
 
 const WalletPaymentFailureDetail = ({ failure }: Props) => {
-  const CHECKOUT_ASSISTANCE_ARTICLE =
-    "https://assistenza.ioapp.it/hc/it/articles/31007989155985-L-avviso-pagoPA-%C3%A8-revocato";
+  const { name: routeName } = useRoute();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const supportModal = usePaymentFailureSupportModal({ failure });
   const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
@@ -77,6 +79,11 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   };
 
   const handleDiscoverMore = () => {
+    trackHelpCenterCtaTapped(
+      HC_PAYMENT_CANCELED_ERROR_ID,
+      CHECKOUT_ASSISTANCE_ARTICLE,
+      routeName
+    );
     openWebUrl(CHECKOUT_ASSISTANCE_ARTICLE, () =>
       IOToast.error(I18n.t("genericError"))
     );
@@ -97,7 +104,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   };
 
   const genericErrorProps: OperationResultScreenContentProps = {
-    pictogram: "umbrellaNew",
+    pictogram: "umbrella",
     title: I18n.t("wallet.payment.failure.GENERIC_ERROR.title"),
     subtitle: I18n.t("wallet.payment.failure.GENERIC_ERROR.subtitle"),
     action: closeAction,
@@ -190,7 +197,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         };
       case "PAYMENT_VERIFY_GENERIC_ERROR":
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           title: I18n.t(
             "wallet.payment.failure.PAYMENT_VERIFY_GENERIC_ERROR.title"
           ),
@@ -213,7 +220,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         };
       case "PAYMENT_SLOWDOWN_ERROR":
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           title: I18n.t("wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.title"),
           subtitle: I18n.t(
             "wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.subtitle"
