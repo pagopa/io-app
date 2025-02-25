@@ -9,7 +9,6 @@ import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { NotificationsPreferencesScreen } from "../NotificationsPreferencesScreen";
-import { preferencesDesignSystemSetEnabled } from "../../../store/actions/persistedPreferences";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 
 describe("NotificationsPreferencesScreen", () => {
@@ -189,16 +188,12 @@ const renderScreen = (
   isUpdatingProfile: boolean = false
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const dsEnabledState = appReducer(
-    globalState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const profile = {
     push_notifications_content_type: previewValue,
     reminder_status: reminderValue
   } as InitializedProfile;
   const finalState = {
-    ...dsEnabledState,
+    ...globalState,
     profile: isUpdatingProfile ? pot.noneUpdating(profile) : pot.some(profile)
   } as GlobalState;
   const store = createStore(appReducer, finalState as any);

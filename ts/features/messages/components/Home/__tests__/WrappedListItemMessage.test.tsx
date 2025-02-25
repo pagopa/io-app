@@ -2,7 +2,6 @@ import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { UIMessage } from "../../../types";
@@ -153,16 +152,12 @@ const renderComponent = (
   paymentId: string = "09173824650012345678991378264"
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const stateWithPayment = {
-    ...designSystemState,
+    ...initialState,
     entities: {
-      ...designSystemState.entities,
+      ...initialState.entities,
       paymentByRptId: {
-        ...designSystemState.entities.paymentByRptId,
+        ...initialState.entities.paymentByRptId,
         [paymentId]: {
           kind: "COMPLETED"
         }
