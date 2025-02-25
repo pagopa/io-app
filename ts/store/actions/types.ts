@@ -36,6 +36,7 @@ import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
 import { LandingScreenBannerActions } from "../../features/landingScreenMultiBanner/store/actions";
 import { SpidConfigActions } from "../../features/spidLogin/store/actions";
 import { UtmLinkActions } from "../../features/utmLink/store/actions";
+import { ConnectivityActions } from "../../features/connectivity/store/actions";
 import { LoginPreferencesActions } from "../../features/login/preferences/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
@@ -111,6 +112,7 @@ export type Action =
   | LandingScreenBannerActions
   | SpidConfigActions
   | UtmLinkActions
+  | ConnectivityActions
   | LoginPreferencesActions;
 
 export type Dispatch = DispatchAPI<Action>;
