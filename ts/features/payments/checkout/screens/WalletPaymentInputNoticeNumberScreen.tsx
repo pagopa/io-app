@@ -11,7 +11,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
@@ -20,6 +19,7 @@ import {
 } from "../../common/utils/validation";
 import * as analytics from "../analytics";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
+import { TextInputValidationRefProps } from "../types";
 import { trimAndLimitValue } from "../utils";
 
 type InputState = {
@@ -50,21 +50,17 @@ const WalletPaymentInputNoticeNumberScreen = () => {
       inputState.noticeNumber,
       O.fold(() => {
         Keyboard.dismiss();
-        focusTextInput();
+        textInputRef.current?.validateInput();
       }, navigateToFiscalCodeInput)
     );
-
-  const focusTextInput = () => {
-    if (O.isNone(inputState.noticeNumber)) {
-      setAccessibilityFocus(textInputWrappperRef);
-    }
-  };
 
   useOnFirstRender(() => {
     analytics.trackPaymentNoticeDataEntry();
   });
 
-  const textInputWrappperRef = useRef<View>(null);
+  const textInputWrapperRef = useRef<View>(null);
+
+  const textInputRef = useRef<TextInputValidationRefProps>(null);
 
   return (
     <>
@@ -89,15 +85,21 @@ const WalletPaymentInputNoticeNumberScreen = () => {
             : undefined
         }
         includeContentMargins
-        ref={textInputWrappperRef}
+        ref={textInputWrapperRef}
       >
         <TextInputValidation
+          testID="noticeNumberInput"
+          ref={textInputRef}
+          validationMode="onContinue"
           placeholder={I18n.t("wallet.payment.manual.noticeNumber.placeholder")}
           accessibilityLabel={I18n.t(
             "wallet.payment.manual.noticeNumber.placeholder"
           )}
           errorMessage={I18n.t(
             "wallet.payment.manual.noticeNumber.validationError"
+          )}
+          accessibilityErrorLabel={I18n.t(
+            "wallet.payment.manual.noticeNumber.a11y"
           )}
           value={inputState.noticeNumberText}
           icon="docPaymentCode"

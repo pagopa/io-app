@@ -2334,13 +2334,15 @@
                     "title": "Inserisci il codice avviso",
                     "subtitle": "Ha 18 cifre, lo trovi vicino al codice QR.",
                     "validationError": "Ha 18 cifre, inizia con 0, 1 o 3.",
-                    "placeholder": "Codice avviso"
+                    "placeholder": "Codice avviso",
+                    "a11y": "Errore. Codice avviso non corretto. Ha 18 cifre, lo trovi vicino al codice QR."
                 },
                 "fiscalCode": {
                     "title": "Inserisci il codice fiscale dell’Ente Creditore",
                     "subtitle": "Ha 11 cifre, lo trovi vicino al codice QR.",
                     "validationError": "Inserisci 11 cifre.",
-                    "placeholder": "Codice fiscale Ente Creditore"
+                    "placeholder": "Codice fiscale Ente Creditore",
+                    "a11y": "Errore. Codice fiscale dell’Ente Creditore non corretto. Ha 11 cifre, lo trovi vicino al codice QR"
                 }
             },
             "abortDialog": {
