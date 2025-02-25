@@ -21,7 +21,9 @@ import {
   preferencesIdPayTestSetEnabled,
   preferencesExperimentalDesignEnabled,
   setIOMarkdownEnabledOnMessagesAndServices,
-  setItwOfflineAccessEnabled
+  setItwOfflineAccessEnabled,
+  preferencesFontSet,
+  TypefaceChoice
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -48,6 +50,7 @@ export type PersistedPreferencesState = Readonly<{
   isDesignSystemEnabled: boolean; // TODO: rename to isExperimentalDesignEnabled (with a migration)
   isIOMarkdownEnabledOnMessagesAndServices: boolean;
   isItwOfflineAccessEnabled: boolean;
+  fontPreference: TypefaceChoice;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -63,9 +66,11 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isIdPayTestEnabled: false,
   isDesignSystemEnabled: false, // TODO: rename to isExperimentalDesignEnabled (with a migration)
   isIOMarkdownEnabledOnMessagesAndServices: false,
-  isItwOfflineAccessEnabled: false
+  isItwOfflineAccessEnabled: false,
+  fontPreference: "comfortable"
 };
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
   action: Action
@@ -143,6 +148,13 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(preferencesFontSet, action)) {
+    return {
+      ...state,
+      fontPreference: action.payload
+    };
+  }
+
   // when the current user is different from the previous logged one
   // reset the mixpanel opt-in preference
   if (isActionOf(differentProfileLoggedIn, action)) {
@@ -217,6 +229,9 @@ export const isIdPayLocallyEnabledSelector = (state: GlobalState) =>
 export const isExperimentalDesignEnabledSelector = (state: GlobalState) =>
   // TODO: rename to isExperimentalDesignEnabled (with a migration)
   state.persistedPreferences.isDesignSystemEnabled ?? false;
+
+export const fontPreferenceSelector = (state: GlobalState): TypefaceChoice =>
+  state.persistedPreferences.fontPreference ?? "comfortable";
 
 export const isIOMarkdownEnabledLocallySelector = (
   state: GlobalState

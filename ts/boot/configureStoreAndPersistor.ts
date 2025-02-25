@@ -54,7 +54,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 40;
+const CURRENT_REDUX_STORE_VERSION = 41;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -475,6 +475,17 @@ const migrations: MigrationManifest = {
       persistedPreferences: {
         ...typedState.persistedPreferences,
         isItwOfflineAccessEnabled: false
+      }
+    };
+  },
+  // Add 'fontPreference' to 'persistedPreferences'
+  "41": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...typedState.persistedPreferences,
+        fontPreference: "comfortable"
       }
     };
   }

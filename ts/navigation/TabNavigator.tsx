@@ -8,13 +8,14 @@ import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
-import { WalletHomeScreen } from "../features/wallet/screens/WalletHomeScreen";
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
+import { WalletHomeScreen } from "../features/wallet/screens/WalletHomeScreen";
 import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle";
 import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
+import { fontPreferenceSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
@@ -27,6 +28,7 @@ export const MainTabNavigator = () => {
   const navigation = useIONavigation();
 
   const startupLoaded = useIOSelector(isStartupLoaded);
+  const typefacePreference = useIOSelector(fontPreferenceSelector);
 
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
@@ -41,7 +43,14 @@ export const MainTabNavigator = () => {
     >
       <Tab.Navigator
         screenOptions={{
-          tabBarLabelStyle: makeFontStyleObject(11, "Titillio", 11, "Regular"),
+          tabBarLabelStyle: makeFontStyleObject(
+            11,
+            typefacePreference === "comfortable"
+              ? "Titillio"
+              : "TitilliumSansPro",
+            11,
+            "Regular"
+          ),
           tabBarHideOnKeyboard: true,
           tabBarAllowFontScaling: false,
           tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],

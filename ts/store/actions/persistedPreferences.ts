@@ -5,6 +5,8 @@ import { Calendar } from "react-native-calendar-events";
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { Locales } from "../../../locales/locales";
 
+export type TypefaceChoice = "comfortable" | "standard";
+
 export const preferenceFingerprintIsEnabledSaveSuccess = createStandardAction(
   "PREFERENCES_FINGERPRINT_SAVE_SUCCESS"
 )<{ isFingerprintEnabled: boolean }>();
@@ -49,6 +51,10 @@ export const preferencesExperimentalDesignEnabled = createStandardAction(
   "PREFERENCES_EXPERIMENTAL_DESIGN_ENABLED"
 )<{ isExperimentalDesignEnabled: boolean }>();
 
+export const preferencesFontSet = createStandardAction(
+  "PREFERENCES_DESIGN_SYSTEM_SET_ENABLED"
+)<TypefaceChoice>();
+
 export const setIOMarkdownEnabledOnMessagesAndServices = createStandardAction(
   "PREFERENCES_IO_MARKDOWN_ON_MESSAGES_AND_SERVICES_SET"
 )<{ enabledOnMessagesAndServices: boolean }>();
@@ -71,4 +77,5 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesExperimentalDesignEnabled
   | typeof setIOMarkdownEnabledOnMessagesAndServices
   | typeof setItwOfflineAccessEnabled
+  | typeof preferencesFontSet
 >;
