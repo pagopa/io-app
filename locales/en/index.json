@@ -2327,6 +2327,9 @@
                 "fastPayPalPayment": "PayPal pagamento veloce"
             },
             "methodSelection": {
+                "a11y": {
+                  "pageStatus": "Page {{currentPage}} of {{totalPages}}"
+                },
                 "header": "Seleziona un metodo",
                 "yourMethods": "Saved",
                 "otherMethods": "All methods",

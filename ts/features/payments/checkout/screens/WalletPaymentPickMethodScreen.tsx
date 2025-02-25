@@ -4,7 +4,9 @@ import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { AccessibilityInfo } from "react-native";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -27,6 +29,7 @@ import {
   paymentsGetRecentPaymentMethodUsedAction
 } from "../store/actions/networking";
 import {
+  selectWalletPaymentCurrentStep,
   walletPaymentAmountSelector,
   walletPaymentDetailsSelector
 } from "../store/selectors";
@@ -42,10 +45,14 @@ import {
   walletPaymentTransactionSelector
 } from "../store/selectors/transaction";
 import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { WalletPaymentStepEnum } from "../types";
+import { PAYMENT_STEPS_TOTAL_PAGES } from "../utils";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const titleRef = useRef<any>(null);
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
@@ -66,6 +73,7 @@ const WalletPaymentPickMethodScreen = () => {
   const selectedPaymentMethodIdOption = useIOSelector(
     walletPaymentSelectedPaymentMethodIdOptionSelector
   );
+  const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
   const [waitingTransactionActivation, setWaitingTransactionActivation] =
     useState(false);
 
@@ -80,8 +88,20 @@ const WalletPaymentPickMethodScreen = () => {
   );
 
   useOnFirstRender(() => {
+    AccessibilityInfo.announceForAccessibility(
+      I18n.t("wallet.payment.methodSelection.a11y.pageStatus", {
+        currentPage: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
+        totalPages: PAYMENT_STEPS_TOTAL_PAGES
+      })
+    );
     dispatch(paymentsGetRecentPaymentMethodUsedAction.request());
   });
+
+  useEffect(() => {
+    if (currentStep === WalletPaymentStepEnum.PICK_PAYMENT_METHOD) {
+      setAccessibilityFocus(titleRef, 200 as Millisecond);
+    }
+  }, [currentStep]);
 
   const calculateFeesForSelectedPaymentMethod = useCallback(() => {
     pipe(
@@ -277,7 +297,9 @@ const WalletPaymentPickMethodScreen = () => {
           : undefined
       }
     >
-      <H2>{I18n.t("wallet.payment.methodSelection.header")}</H2>
+      <H2 accessibilityRole="header" ref={titleRef}>
+        {I18n.t("wallet.payment.methodSelection.header")}
+      </H2>
       <VSpacer size={16} />
       {isLoading ? (
         <CheckoutPaymentMethodsListSkeleton />

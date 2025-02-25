@@ -11,6 +11,8 @@ import {
 } from "../../common/types/PaymentAnalytics";
 import { WalletPaymentStepEnum } from "../types";
 
+export const PAYMENT_STEPS_TOTAL_PAGES = 4;
+
 export const WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL =
   "https://www.pagopa.gov.it/it/cittadini/dove-pagare/";
 
