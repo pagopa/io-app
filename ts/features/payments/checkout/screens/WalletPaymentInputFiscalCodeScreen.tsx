@@ -16,7 +16,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
@@ -26,6 +25,7 @@ import {
 import * as analytics from "../analytics";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
+import { TextInputValidationRefProps } from "../types";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -52,10 +52,9 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     fiscalCode: O.none
   });
 
-  const textInputWrappperRef = useRef<View>(null);
-  const focusTextInput = () => {
-    setAccessibilityFocus(textInputWrappperRef);
-  };
+  const textInputWrapperRef = useRef<View>(null);
+
+  const textInputRef = useRef<TextInputValidationRefProps>(null);
 
   const navigateToTransactionSummary = () => {
     pipe(
@@ -82,7 +81,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
       inputState.fiscalCode,
       O.fold(() => {
         Keyboard.dismiss();
-        focusTextInput();
+        textInputRef.current?.validateInput();
       }, navigateToTransactionSummary)
     );
 
@@ -112,16 +111,22 @@ const WalletPaymentInputFiscalCodeScreen = () => {
               }
             : undefined
         }
-        ref={textInputWrappperRef}
+        ref={textInputWrapperRef}
         includeContentMargins
       >
         <TextInputValidation
+          testID="fiscalCodeInput"
+          validationMode="onContinue"
+          ref={textInputRef}
           placeholder={I18n.t("wallet.payment.manual.fiscalCode.placeholder")}
           accessibilityLabel={I18n.t(
             "wallet.payment.manual.fiscalCode.placeholder"
           )}
           errorMessage={I18n.t(
             "wallet.payment.manual.fiscalCode.validationError"
+          )}
+          accessibilityErrorLabel={I18n.t(
+            "wallet.payment.manual.fiscalCode.a11y"
           )}
           value={inputState.fiscalCodeText}
           icon="fiscalCodeIndividual"

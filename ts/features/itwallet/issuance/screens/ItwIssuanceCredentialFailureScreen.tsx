@@ -131,7 +131,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
           return {
             title: I18n.t("features.itWallet.issuance.genericError.title"),
             subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
-            pictogram: "umbrellaNew",
+            pictogram: "umbrella",
             ...(supportModal.hasContactMethods
               ? { action: supportModalAction, secondaryAction: closeAction }
               : { action: closeAction, secondaryAction: supportModalAction })

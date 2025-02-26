@@ -33,6 +33,7 @@ import {
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { ReactNavigationInstrumentation } from "../App";
+import { useStoredFontPreference } from "../common/context/DSTypefaceContext";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -57,6 +58,7 @@ export const AppStackNavigator = (): ReactElement => {
   // to setup the experimental design system value from AsyncStorage
   // remove this once the experimental design system is stable
   useStoredExperimentalDesign();
+  useStoredFontPreference();
 
   const dispatch = useIODispatch();
 

@@ -74,10 +74,10 @@ const LoadingView = () => {
   );
 };
 
-const ErrorView = (title: string, content: string) => (
+const ErrorView = (content: string) => (
   <View style={IOStyles.flex} testID="errorView">
     <VSpacer size={16} />
-    <Alert variant="error" title={title} content={content} />
+    <Alert variant="error" content={content} />
     <VSpacer size={16} />
   </View>
 );
@@ -200,7 +200,7 @@ const TestAuthenticationScreen = () => {
       <VSpacer size={16} />
       <VersionView />
       {isLoading && <LoadingView />}
-      {isError && ErrorView("Error", loginState.errorMessage)}
+      {isError && ErrorView(loginState.errorMessage)}
       {isSuccessful && SuccessfulView()}
     </IOScrollView>
   );

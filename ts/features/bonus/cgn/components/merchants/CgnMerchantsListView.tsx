@@ -22,7 +22,7 @@ export const CgnMerchantListViewRenderItem =
               {item.newDiscounts && (
                 <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
                   <Badge
-                    variant="purple"
+                    variant="cgn"
                     text={
                       item.numberOfNewDiscounts
                         ? item.numberOfNewDiscounts.toString()

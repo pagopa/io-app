@@ -15,8 +15,6 @@ import {
 } from "react-native-responsive-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Placeholder from "rn-placeholder";
-import { useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { BonusCardCounter } from "./BonusCardCounter";
 import { BonusCardShape } from "./BonusCardShape";
 import { BonusCardStatus } from "./BonusCardStatus";
@@ -133,11 +131,7 @@ export const BonusCard = (props: BonusCard) => {
 };
 
 const BonusCardSkeleton = (props: BaseProps) => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-
-  const placeholderColor = isDesignSystemEnabled
-    ? IOColors["blueItalia-100"]
-    : IOColors["blueIO-100"];
+  const placeholderColor = IOColors["blueItalia-100"];
 
   return (
     <View style={styles.content} testID="BonusCardSkeletonTestID">

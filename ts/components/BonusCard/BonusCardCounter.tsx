@@ -1,14 +1,12 @@
 import { H3, IOColors, LabelMini, VSpacer } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { ColorValue, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
 import Placeholder from "rn-placeholder";
-import { useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 type CounterType = "Value" | "ValueWithProgress";
 
@@ -75,11 +73,7 @@ type BonusProgressBarProps = {
 };
 
 const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-
-  const progressBarColor = isDesignSystemEnabled
-    ? IOColors["blueItalia-500"]
-    : IOColors["blue-500"];
+  const progressBarColor: ColorValue = IOColors["blueItalia-500"];
 
   const width = useSharedValue(100);
   useEffect(() => {
@@ -113,11 +107,7 @@ type BonusCardCounterSkeletonProps = {
 };
 
 const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-
-  const placeholderColor = isDesignSystemEnabled
-    ? IOColors["blueItalia-100"]
-    : IOColors["blueIO-100"];
+  const placeholderColor = IOColors["blueItalia-100"];
 
   return (
     <View

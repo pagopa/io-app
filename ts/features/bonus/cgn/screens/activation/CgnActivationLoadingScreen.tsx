@@ -57,7 +57,7 @@ const ErrorComponent = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram={"umbrellaNew"}
+      pictogram={"umbrella"}
       title={I18n.t("bonus.cgn.activation.error.title")}
       subtitle={I18n.t("bonus.cgn.activation.error.body")}
       action={{

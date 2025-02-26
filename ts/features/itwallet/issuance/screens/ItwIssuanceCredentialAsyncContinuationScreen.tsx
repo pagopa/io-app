@@ -58,7 +58,7 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = ({
     O.fold(
       () => (
         <OperationResultScreenContent
-          pictogram="umbrellaNew"
+          pictogram="umbrella"
           title={I18n.t("genericError")}
           action={{
             label: I18n.t("global.buttons.close"),

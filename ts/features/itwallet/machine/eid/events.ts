@@ -1,5 +1,5 @@
 import { ErrorActorEvent } from "xstate";
-import { LocalIdpsFallback } from "../../../../utils/idps";
+import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
@@ -38,7 +38,7 @@ export type SelectIdentificationMode = {
 
 export type SelectSpidIdp = {
   type: "select-spid-idp";
-  idp: LocalIdpsFallback;
+  idp: SpidIdp;
 };
 
 export type CiePinEntered = {
