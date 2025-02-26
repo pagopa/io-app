@@ -21,7 +21,7 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.
 import { ItwRemotePresentationClaimsMock } from "../../../common/utils/itwMocksUtils.ts";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
-import { DisclosureClaim } from "../../../issuance/components/ItwRequestedClaimsList.tsx";
+import { DisclosureClaim } from "../../../common/utils/itwClaimsUtils.ts";
 
 type ClaimItem = ComponentProps<typeof ClaimsSelector>["items"][number];
 

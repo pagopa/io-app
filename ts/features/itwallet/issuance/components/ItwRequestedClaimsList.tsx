@@ -15,6 +15,7 @@ import {
   BoolClaim,
   ClaimDisplayFormat,
   ClaimValue,
+  DisclosureClaim,
   DrivingPrivilegesClaim,
   EmptyStringClaim,
   extractFiscalCode,
@@ -26,11 +27,6 @@ import {
   StringClaim
 } from "../../common/utils/itwClaimsUtils";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
-
-export type DisclosureClaim = {
-  claim: ClaimDisplayFormat;
-  source: string;
-};
 
 type ItwRequiredClaimsListProps = {
   items: ReadonlyArray<DisclosureClaim>;
