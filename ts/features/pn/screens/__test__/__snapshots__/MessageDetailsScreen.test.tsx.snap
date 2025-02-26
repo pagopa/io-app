@@ -535,13 +535,16 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   Ċentru tas-Saħħa
                                 </Text>
                                 <Text
+                                  accessibilityRole="link"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.5}
                                   onPress={[Function]}
                                   style={
                                     [
-                                      {},
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
                                       {
                                         "color": "#0B3EE3",
                                         "fontFamily": "Titillio",
