@@ -372,16 +372,14 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                             #### organization_name ####
                           </Text>
                           <Text
-                            accessibilityRole="link"
+                            accessibilityRole="button"
                             allowFontScaling={true}
                             dynamicTypeRamp="footnote"
                             maxFontSizeMultiplier={1.5}
                             onPress={[Function]}
                             style={
                               [
-                                {
-                                  "textDecorationLine": "underline",
-                                },
+                                {},
                                 {
                                   "color": "#0B3EE3",
                                   "fontFamily": "Titillio",
