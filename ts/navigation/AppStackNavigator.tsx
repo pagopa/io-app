@@ -11,7 +11,7 @@ import {
 } from "@react-navigation/native";
 import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
 
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import { ReactNavigationInstrumentation } from "../App";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import { useStoredFontPreference } from "../common/context/DSTypefaceContext";
@@ -24,6 +24,7 @@ import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { processUtmLink } from "../features/utmLink";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
@@ -35,6 +36,7 @@ import {
   IONavigationLightTheme
 } from "../theme/navigations";
 import { isTestEnv } from "../utils/environment";
+import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
@@ -142,6 +144,21 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
     },
     subscribe: linkingSubscription(dispatch, store)
   };
+
+  /**
+   * If the app is swiped closed and it's opened with a deep link,
+   * the linking event in the NavigationContainer is not triggered.
+   * `Linking` has the option to get the initial URL when the app is opened.
+   * We can use this to check if the app was opened with a deep link and
+   * check if it has a `utm_medium` and `utm_source` parameters
+   */
+  useOnFirstRender(() => {
+    void Linking.getInitialURL().then(initialUrl => {
+      if (initialUrl) {
+        processUtmLink(initialUrl, dispatch);
+      }
+    });
+  });
 
   return (
     <NavigationContainer
