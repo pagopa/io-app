@@ -29,10 +29,6 @@ import paymentsReducer, {
   PaymentsState
 } from "../../../payments/common/store/reducers";
 import { PnState, pnReducer } from "../../../pn/store/reducers";
-import {
-  ProfileSettingsState,
-  profileSettingsReducerPersistor
-} from "../../../profileSettings/store/reducers";
 import servicesReducer, {
   ServicesState
 } from "../../../services/common/store/reducers";
@@ -96,7 +92,6 @@ export type FeaturesState = {
   wallet: WalletState;
   fims: FimsState;
   itWallet: PersistedItWalletState;
-  profileSettings: ProfileSettingsState & PersistPartial;
   appearanceSettings: AppearanceSettingsState & PersistPartial;
   mixpanel: MixpanelState;
   ingress: IngressScreenState;
@@ -125,7 +120,6 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   wallet: walletReducer,
   fims: fimsReducer,
   itWallet: itWalletReducer,
-  profileSettings: profileSettingsReducerPersistor,
   appearanceSettings: appearanceSettingsReducerPersistor,
   mixpanel: mixpanelReducer,
   ingress: ingressScreenReducer,

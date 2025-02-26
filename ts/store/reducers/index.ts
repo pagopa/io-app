@@ -32,7 +32,6 @@ import { fastLoginOptInInitialState } from "../../features/fastLogin/store/reduc
 import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
-import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
 import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
 import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
 import appStateReducer from "./appState";
@@ -251,13 +250,6 @@ export function createRootReducer(
                 loginPreferences: {
                   ...state.features.loginFeatures.loginPreferences
                 }
-              },
-              profileSettings: {
-                ...profileSettingsReducerInitialState,
-                hasUserAcknowledgedSettingsBanner:
-                  state.features.profileSettings
-                    .hasUserAcknowledgedSettingsBanner,
-                _persist: state.features.profileSettings._persist
               },
               appearanceSettings: {
                 ...appearanceSettingsReducerInitialState,

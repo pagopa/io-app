@@ -147,7 +147,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "ITW_DISCOVERY": true,
     "LV_EXPIRATION_REMINDER": true,
     "PUSH_NOTIFICATIONS_REMINDER": true,
-    "SETTINGS_DISCOVERY": true,
   },
   "loginFeatures": {
     "cieLogin": {
@@ -295,9 +294,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "activation": {
       "kind": "PotNone",
     },
-  },
-  "profileSettings": {
-    "hasUserAcknowledgedSettingsBanner": false,
   },
   "services": {
     "details": {

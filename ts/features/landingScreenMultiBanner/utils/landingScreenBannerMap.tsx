@@ -1,9 +1,7 @@
 import { ReactElement } from "react";
-import { SettingsDiscoveryBanner } from "../../../screens/profile/components/SettingsDiscoveryBanner";
 import { GlobalState } from "../../../store/reducers/types";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
 import { isItwPersistedDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/selectors";
-import { hasUserAcknowledgedSettingsBannerSelector } from "../../profileSettings/store/selectors";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
 import { LoginExpirationBanner } from "../../login/preferences/components/LoginExpirationBanner";
@@ -24,7 +22,6 @@ export type LandingScreenBannerId =
 export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
   PUSH_NOTIFICATIONS_REMINDER: true,
   ITW_DISCOVERY: true,
-  SETTINGS_DISCOVERY: true,
   LV_EXPIRATION_REMINDER: true
 } as const;
 
@@ -40,13 +37,6 @@ export const landingScreenBannerMap: BannerMapById = {
       <ItwDiscoveryBanner closable handleOnClose={closeHandler} />
     ),
     isRenderableSelector: isItwPersistedDiscoveryBannerRenderableSelector
-  },
-  SETTINGS_DISCOVERY: {
-    component: closeHandler => (
-      <SettingsDiscoveryBanner handleOnClose={closeHandler} />
-    ),
-    isRenderableSelector: (state: GlobalState) =>
-      !hasUserAcknowledgedSettingsBannerSelector(state)
   },
   LV_EXPIRATION_REMINDER: {
     component: closeHandler => (

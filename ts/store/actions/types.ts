@@ -23,7 +23,6 @@ import { MessagesActions } from "../../features/messages/store/actions";
 import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
 import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
-import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
 import { NotificationPermissionsActions } from "../../features/pushNotifications/store/actions/environment";
 import { NotificationsActions } from "../../features/pushNotifications/store/actions/installation";
 import { PendingMessageActions } from "../../features/pushNotifications/store/actions/pendingMessage";
@@ -106,7 +105,6 @@ export type Action =
   | FimsActions
   | ItwActions
   | TrialSystemActions
-  | ProfileSettingsActions
   | AppearanceSettingsActions
   | IngressScreenActions
   | MixpanelFeatureActions
