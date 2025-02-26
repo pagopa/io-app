@@ -57,7 +57,6 @@ const ProfileAboutApp = () => {
         <Banner
           viewRef={viewRef}
           color="neutral"
-          size="big"
           content={I18n.t("profile.main.appInfo.bannerBody")}
           pictogramName="charity"
           onPress={onNavigateToIOSite}

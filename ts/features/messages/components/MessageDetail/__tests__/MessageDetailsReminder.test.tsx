@@ -2,7 +2,6 @@ import { createStore } from "redux";
 import { MessageDetailsReminder } from "../MessageDetailsReminder";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { UIMessageId } from "../../../types";
 import * as payments from "../../../store/reducers/payments";
@@ -55,11 +54,7 @@ describe("MessageDetailsReminder", () => {
 
 const renderScreen = (dueDateOrUndefined?: Date) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-  const store = createStore(appReducer, designSystemState as any);
+  const store = createStore(appReducer, initialState as any);
 
   return renderScreenWithNavigationStoreContext(
     () => (

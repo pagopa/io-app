@@ -383,11 +383,10 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "flexDirection": "row",
+                                  "padding": 16,
                                 },
                                 {
                                   "backgroundColor": "#DBF9FA",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
                                 },
                                 {
                                   "transform": [
@@ -423,8 +422,8 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                                     {},
                                     {
                                       "color": "#031344",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 17,
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -450,7 +449,7 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -524,7 +523,7 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",

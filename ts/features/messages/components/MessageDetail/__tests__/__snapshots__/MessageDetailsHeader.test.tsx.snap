@@ -361,7 +361,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             {},
                             {
                               "color": "#0E0F13",
-                              "fontFamily": "Titillium Sans Pro",
+                              "fontFamily": "Titillio",
                               "fontSize": 22,
                               "fontStyle": "normal",
                               "fontWeight": "600",
@@ -389,7 +389,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             {},
                             {
                               "color": "#555C70",
-                              "fontFamily": "Titillium Sans Pro",
+                              "fontFamily": "Titillio",
                               "fontSize": 14,
                               "fontStyle": "normal",
                               "fontWeight": "400",
@@ -441,7 +441,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
@@ -462,7 +462,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 {},
                                 {
                                   "color": "#0B3EE3",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 14,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",

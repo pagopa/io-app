@@ -388,7 +388,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                   {},
                                   {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -415,7 +415,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                     "paddingVertical": 6,
                                   },
                                   {
-                                    "backgroundColor": "#F4F5F8",
+                                    "backgroundColor": "#E7ECFC",
                                   },
                                 ]
                               }
@@ -429,8 +429,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                   [
                                     {},
                                     {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "color": "#031344",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1070,7 +1070,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                     {},
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1097,7 +1097,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                       "paddingVertical": 6,
                                     },
                                     {
-                                      "backgroundColor": "#F4F5F8",
+                                      "backgroundColor": "#E7ECFC",
                                     },
                                   ]
                                 }
@@ -1111,8 +1111,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                     [
                                       {},
                                       {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "color": "#031344",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1596,7 +1596,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   {},
                                   {
                                     "color": "#0B3EE3",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -1623,7 +1623,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                     "paddingVertical": 6,
                                   },
                                   {
-                                    "backgroundColor": "#F4F5F8",
+                                    "backgroundColor": "#E7ECFC",
                                   },
                                 ]
                               }
@@ -1637,8 +1637,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   [
                                     {},
                                     {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "color": "#031344",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2169,7 +2169,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                     {},
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2196,7 +2196,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                       "paddingVertical": 6,
                                     },
                                     {
-                                      "backgroundColor": "#F4F5F8",
+                                      "backgroundColor": "#E7ECFC",
                                     },
                                   ]
                                 }
@@ -2210,8 +2210,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                     [
                                       {},
                                       {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "color": "#031344",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",

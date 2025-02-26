@@ -2,7 +2,6 @@ import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { TimelineListItem } from "../TimelineListItem";
 import PN_ROUTES from "../../navigation/routes";
@@ -87,12 +86,8 @@ const renderComponent = (
   frontendUrlDefined: boolean = true
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const dsEnabledState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const finalState: GlobalState = {
-    ...dsEnabledState,
+    ...initialState,
     remoteConfig: frontendUrlDefined
       ? O.some({
           cgn: {

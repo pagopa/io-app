@@ -62,7 +62,6 @@ const ItwDiscoveryBannerOnboarding = () => {
         action={I18n.t("features.itWallet.discovery.banner.onboarding.action")}
         pictogramName="itWallet"
         color="neutral"
-        size="big"
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}
       />

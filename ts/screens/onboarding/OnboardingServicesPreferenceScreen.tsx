@@ -202,7 +202,6 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
             />
             <VSpacer size={16} />
             <Banner
-              size="small"
               color="neutral"
               pictogramName="settings"
               content={I18n.t("services.optIn.preferences.banner")}

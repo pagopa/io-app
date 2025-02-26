@@ -60,7 +60,6 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
         )}
         pictogramName="identityCheck"
         color="neutral"
-        size="big"
         onClose={closeHandler}
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}

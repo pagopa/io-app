@@ -79,7 +79,7 @@ export const TimelineOperationListItem = (
         title=""
         subtitle=""
         transaction={{
-          badge: { text: "", variant: "info" }
+          badge: { text: "", variant: "highlight" }
         }}
         isLoading={true}
       />

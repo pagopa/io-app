@@ -138,7 +138,7 @@ const OptInScreen = () => {
         <View style={IOStyles.selfCenter}>
           <Badge
             text={I18n.t("authentication.opt_in.news")}
-            variant="info"
+            variant="highlight"
             testID="badge-test"
           />
         </View>
