@@ -42,6 +42,10 @@ const WalletPaymentMakeScreen = () => {
       <View key="3">
         <WalletPaymentConfirmScreen />
       </View>
+      {/* This View is used by a11y purposes on Android in order to make the screen reader, read the correct total pages number. */}
+      <View key="4">
+        <View />
+      </View>
     </PagerView>
   );
 };
