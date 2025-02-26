@@ -109,7 +109,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
           return {
             title: I18n.t("features.itWallet.issuance.genericError.title"),
             subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
-            pictogram: "umbrellaNew",
+            pictogram: "umbrella",
             action: {
               label: I18n.t(
                 "features.itWallet.issuance.genericError.primaryAction"
@@ -193,7 +193,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             subtitle: I18n.t(
               "features.itWallet.walletRevocation.failureScreen.subtitle"
             ),
-            pictogram: "umbrellaNew",
+            pictogram: "umbrella",
             action: {
               label: I18n.t("global.buttons.retry"),
               onPress: () => machineRef.send({ type: "revoke-wallet-instance" })

@@ -1,8 +1,4 @@
-import {
-  IOVisualCostants,
-  VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -11,8 +7,11 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { logosForService } from "../../common/utils";
-import { CTA, CTAS } from "../../../messages/types/MessageCTA";
 import { getServiceCTA, handleCtaAction } from "../../../messages/utils/ctas";
+import { useFIMSFromServiceId } from "../../../fims/common/hooks";
+import { ServiceDetailsScreenComponent } from "../components/ServiceDetailsScreenComponent";
+import { CTA } from "../../../messages/types/MessageCTA";
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import * as analytics from "../../common/analytics";
 import { CtaCategoryType } from "../../common/analytics";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
@@ -25,10 +24,6 @@ import {
 import { ServiceDetailsFailure } from "../components/ServiceDetailsFailure";
 import { ServiceDetailsMetadata } from "../components/ServiceDetailsMetadata";
 import { ServiceDetailsPreferences } from "../components/ServiceDetailsPreferences";
-import {
-  ServiceActionsProps,
-  ServiceDetailsScreenComponent
-} from "../components/ServiceDetailsScreenComponent";
 import { ServiceDetailsTosAndPrivacy } from "../components/ServiceDetailsTosAndPrivacy";
 import { loadServiceDetail } from "../store/actions/details";
 import { loadServicePreference } from "../store/actions/preference";
@@ -39,8 +34,6 @@ import {
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
 } from "../store/reducers";
-import { ServiceMetadataInfo } from "../types/ServiceMetadataInfo";
-import { useFIMSFromServiceId } from "../../../fims/common/hooks";
 
 export type ServiceDetailsScreenRouteParams = {
   serviceId: ServiceId;
@@ -60,8 +53,7 @@ const headerPaddingBottom: number = 138;
 const styles = StyleSheet.create({
   cardContainer: {
     marginTop: -headerPaddingBottom,
-    minHeight: headerPaddingBottom,
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    minHeight: headerPaddingBottom
   }
 });
 
@@ -134,9 +126,11 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
           extraBottomPadding={headerPaddingBottom}
           isLoading={true}
         />
-        <View style={styles.cardContainer}>
-          <CardWithMarkdownContentSkeleton />
-        </View>
+        <VStack space={40}>
+          <View style={styles.cardContainer}>
+            <CardWithMarkdownContentSkeleton />
+          </View>
+        </VStack>
       </ServiceDetailsScreenComponent>
     );
   }
@@ -155,14 +149,25 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     );
   };
 
-  const actionsProps = getActionsProps(
-    activate,
-    handlePressCta,
-    serviceId,
-    serviceMetadataInfo,
-    serviceCtas
+  return (
+    <ServiceDetailsScreenComponent
+      activate={activate}
+      ctas={serviceCtas}
+      kind={serviceMetadataInfo.serviceKind}
+      onPressCta={handlePressCta}
+      serviceId={serviceId}
+      title={service.service_name}
+    >
+      <ServiceDetailsContent service={service} />
+    </ServiceDetailsScreenComponent>
   );
+};
 
+type ServiceDetailsContentProps = {
+  service: ServicePublic;
+};
+
+const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
   const {
     organization_name,
     organization_fiscal_code,
@@ -173,23 +178,19 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   } = service;
 
   return (
-    <ServiceDetailsScreenComponent
-      actionsProps={actionsProps}
-      title={service_name}
-    >
+    <>
       <ServicesHeaderSection
         extraBottomPadding={headerPaddingBottom}
         logoUri={logosForService(service)}
         title={service_name}
         subTitle={organization_name}
       />
-      {service_metadata?.description && (
-        <View style={styles.cardContainer}>
-          <CardWithMarkdownContent content={service_metadata.description} />
-        </View>
-      )}
-      <VSpacer size={40} />
       <VStack space={40}>
+        {service_metadata?.description && (
+          <View style={styles.cardContainer}>
+            <CardWithMarkdownContent content={service_metadata.description} />
+          </View>
+        )}
         <ServiceDetailsTosAndPrivacy serviceId={service_id} />
         <ServiceDetailsPreferences
           serviceId={service_id}
@@ -200,106 +201,6 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
           serviceId={service_id}
         />
       </VStack>
-    </ServiceDetailsScreenComponent>
+    </>
   );
-};
-
-const getActionsProps = (
-  activate: boolean,
-  onPress: (cta: CTA, ctaType: CtaCategoryType) => void,
-  serviceId: ServiceId,
-  serviceMetadataInfo: ServiceMetadataInfo,
-  ctas?: CTAS
-): ServiceActionsProps | undefined => {
-  const { isSpecialService, customSpecialFlow } = serviceMetadataInfo;
-
-  if (isSpecialService && ctas?.cta_1 && ctas.cta_2) {
-    const { cta_1, cta_2 } = ctas;
-
-    return {
-      type: "ThreeCtas",
-      primaryActionProps: {
-        type: "SpecialCta",
-        serviceId,
-        activate,
-        customSpecialFlowOpt: customSpecialFlow
-      },
-      secondaryActionProps: {
-        label: cta_1.text,
-        accessibilityLabel: cta_1.text,
-        onPress: () => onPress(cta_1, "custom_1")
-      },
-      tertiaryActionProps: {
-        label: cta_2.text,
-        accessibilityLabel: cta_2.text,
-        onPress: () => onPress(cta_2, "custom_2")
-      }
-    };
-  }
-
-  if (isSpecialService && ctas?.cta_1) {
-    const { cta_1 } = ctas;
-
-    return {
-      type: "TwoCtas",
-      primaryActionProps: {
-        type: "SpecialCta",
-        serviceId,
-        activate,
-        customSpecialFlowOpt: customSpecialFlow
-      },
-      secondaryActionProps: {
-        label: cta_1.text,
-        accessibilityLabel: cta_1.text,
-        onPress: () => onPress(cta_1, "custom_1")
-      }
-    };
-  }
-
-  if (ctas?.cta_1 && ctas?.cta_2) {
-    const { cta_1, cta_2 } = ctas;
-
-    return {
-      type: "TwoCtas",
-      primaryActionProps: {
-        type: "StandardCta",
-        label: cta_1.text,
-        accessibilityLabel: cta_1.text,
-        onPress: () => onPress(cta_1, "custom_1")
-      },
-      secondaryActionProps: {
-        label: cta_2.text,
-        accessibilityLabel: cta_2.text,
-        onPress: () => onPress(cta_2, "custom_2")
-      }
-    };
-  }
-
-  if (ctas?.cta_1) {
-    const { cta_1 } = ctas;
-
-    return {
-      type: "SingleCta",
-      primaryActionProps: {
-        type: "StandardCta",
-        label: cta_1.text,
-        accessibilityLabel: cta_1.text,
-        onPress: () => onPress(cta_1, "custom_1")
-      }
-    };
-  }
-
-  if (isSpecialService) {
-    return {
-      type: "SingleCta",
-      primaryActionProps: {
-        type: "SpecialCta",
-        serviceId,
-        activate,
-        customSpecialFlowOpt: customSpecialFlow
-      }
-    };
-  }
-
-  return undefined;
 };

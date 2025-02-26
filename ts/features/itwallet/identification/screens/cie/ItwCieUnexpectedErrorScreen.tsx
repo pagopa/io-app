@@ -36,7 +36,7 @@ export const ItwCieUnexpectedErrorScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="umbrellaNew"
+      pictogram="umbrella"
       title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
       subtitle={I18n.t("authentication.cie.card.error.genericErrorSubtitle")}
       action={action}

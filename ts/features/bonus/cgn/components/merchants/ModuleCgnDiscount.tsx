@@ -92,13 +92,13 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
               <HStack space={8} style={{ flexWrap: "wrap" }}>
                 {discount.isNew && (
                   <Badge
-                    variant="purple"
+                    variant="cgn"
                     text={I18n.t("bonus.cgn.merchantsList.news")}
                   />
                 )}
                 {isValidDiscount(discount.discount) && (
                   <Badge
-                    variant="purple"
+                    variant="cgn"
                     outline
                     text={`-${normalizedDiscountPercentage(
                       discount.discount

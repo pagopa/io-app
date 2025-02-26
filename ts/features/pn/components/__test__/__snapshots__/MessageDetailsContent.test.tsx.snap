@@ -18,7 +18,7 @@ exports[`MessageDetailsContent component should match the snapshot when abstract
         {},
         {
           "color": "#2B2E38",
-          "fontFamily": "Titillium Sans Pro",
+          "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "400",

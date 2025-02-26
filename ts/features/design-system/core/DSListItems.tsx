@@ -122,7 +122,7 @@ const renderListItemNav = () => (
             }}
           >
             <H6>Nome del valoreeeeee eeeeeeeeee</H6>
-            <Badge text={"3"} variant="purple" />
+            <Badge text={"3"} variant="cgn" />
           </View>
         }
         onPress={onButtonPress}
@@ -155,7 +155,7 @@ const renderListItemNav = () => (
         topElement={{
           badgeProps: {
             text: "Novità",
-            variant: "blue"
+            variant: "default"
           }
         }}
       />
@@ -175,7 +175,7 @@ const renderListItemNav = () => (
         topElement={{
           badgeProps: {
             text: "Novità",
-            variant: "blue"
+            variant: "default"
           }
         }}
         hideChevron

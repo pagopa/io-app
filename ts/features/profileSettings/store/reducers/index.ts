@@ -7,21 +7,17 @@ import {
   persistReducer
 } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  setHasUserAcknowledgedSettingsBanner,
-  setShowProfileBanner
-} from "../actions";
+import _ from "lodash";
+import { setHasUserAcknowledgedSettingsBanner } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 import { isDevEnv } from "../../../../utils/environment";
 
 export type ProfileSettingsState = {
-  showProfileBanner: boolean;
   hasUserAcknowledgedSettingsBanner: boolean;
 };
 
 export const profileSettingsReducerInitialState = {
-  showProfileBanner: true,
   hasUserAcknowledgedSettingsBanner: false
 };
 
@@ -30,12 +26,6 @@ const profileSettingsReducer = (
   action: Action
 ): ProfileSettingsState => {
   switch (action.type) {
-    case getType(setShowProfileBanner): {
-      return {
-        ...state,
-        showProfileBanner: action.payload
-      };
-    }
     case getType(differentProfileLoggedIn): {
       return profileSettingsReducerInitialState;
     }
@@ -49,7 +39,7 @@ const profileSettingsReducer = (
       return state;
   }
 };
-const CURRENT_REDUX_PROFILE_SETTINGS_STORE_VERSION = 0;
+const CURRENT_REDUX_PROFILE_SETTINGS_STORE_VERSION = 1;
 
 const migrations: MigrationManifest = {
   // we changed the way we compute the installation ID
@@ -59,6 +49,10 @@ const migrations: MigrationManifest = {
       ...prevState,
       hasUserAcknowledgedSettingsBanner: false
     };
+  },
+  "1": (state): ProfileSettingsState & PersistPartial => {
+    const prevState = state as ProfileSettingsState & PersistPartial;
+    return _.omit(prevState, "showProfileBanner");
   }
 };
 const persistConfig: PersistConfig = {
@@ -66,7 +60,7 @@ const persistConfig: PersistConfig = {
   storage: AsyncStorage,
   migrate: createMigrate(migrations, { debug: isDevEnv }),
   version: CURRENT_REDUX_PROFILE_SETTINGS_STORE_VERSION,
-  whitelist: ["showProfileBanner", "hasUserAcknowledgedSettingsBanner"]
+  whitelist: ["hasUserAcknowledgedSettingsBanner"]
 };
 
 export const profileSettingsReducerPersistor = persistReducer(

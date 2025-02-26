@@ -1,6 +1,5 @@
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../../store/reducers";
 import { PaymentData, UIMessageDetails, UIMessageId } from "../../../types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -29,12 +28,8 @@ describe("MessageDetailsPayment", () => {
 
 const renderScreen = (messageId: UIMessageId, paymentData?: PaymentData) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const designSystemState = appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
   const finalState = appReducer(
-    designSystemState,
+    initialState,
     loadMessageDetails.success({
       id: messageId,
       paymentData

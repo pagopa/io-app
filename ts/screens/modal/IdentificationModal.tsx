@@ -7,7 +7,8 @@ import {
   IconButton,
   Pictogram,
   ToastNotification,
-  VSpacer
+  VSpacer,
+  useIOFontDynamicScale
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
@@ -37,7 +38,6 @@ import I18n from "../../i18n";
 import {
   identificationCancel,
   identificationFailure,
-  identificationForceLogout,
   identificationPinReset,
   identificationSuccess
 } from "../../store/actions/identification";
@@ -76,8 +76,8 @@ const IdentificationModal = () => {
   const errorStatusRef = useRef<View>(null);
   const colorScheme: ColorSchemeName = "light";
   const numberPadVariant = colorScheme ? "dark" : "light";
-
   const { isDeviceScreenSmall } = useDetectSmallScreen();
+  const { hugeFontEnabled } = useIOFontDynamicScale();
 
   const blueColor = useAppBackgroundAccentColorName();
 
@@ -133,9 +133,11 @@ const IdentificationModal = () => {
     },
     [dispatch]
   );
-  const onIdentificationForceLogout = useCallback(() => {
-    dispatch(identificationForceLogout());
+
+  const onPinResetHandler = useCallback(() => {
+    dispatch(identificationPinReset());
   }, [dispatch]);
+
   const onIdentificationFailure = useCallback(() => {
     dispatch(identificationFailure());
   }, [dispatch]);
@@ -158,15 +160,13 @@ const IdentificationModal = () => {
       O.getOrElse(() => false)
     );
     if (forceLogout) {
-      onIdentificationForceLogout();
+      // eslint-disable-next-line functional/immutable-data
+      showRetryText.current = false;
+      onPinResetHandler();
     } else {
       onIdentificationFailure();
     }
-  }, [
-    identificationFailState,
-    onIdentificationFailure,
-    onIdentificationForceLogout
-  ]);
+  }, [identificationFailState, onIdentificationFailure, onPinResetHandler]);
 
   const onIdentificationSuccessHandler = useCallback(
     (isBiometric: boolean) => {
@@ -237,10 +237,6 @@ const IdentificationModal = () => {
     [biometricType, onFingerprintRequest]
   );
 
-  const onPinResetHandler = useCallback(() => {
-    dispatch(identificationPinReset());
-  }, [dispatch]);
-
   const confirmResetAlert = useCallback(
     () =>
       Alert.alert(
@@ -296,7 +292,11 @@ const IdentificationModal = () => {
     />
   ));
 
-  const { top: topInset } = useSafeAreaInsets();
+  const { top: safeAreaTop } = useSafeAreaInsets();
+  const topInset =
+    Platform.OS === "android"
+      ? safeAreaTop || StatusBar.currentHeight || 0
+      : safeAreaTop;
 
   const pictogramKey: IOPictograms = isValidatingTask ? "passcode" : "key";
 
@@ -428,7 +428,8 @@ const IdentificationModal = () => {
                     variant="warning"
                   />
                 </View>
-              ) : isDeviceScreenSmall && isValidatingTask ? null : (
+              ) : (isDeviceScreenSmall || hugeFontEnabled) &&
+                isValidatingTask ? null : (
                 <View style={IOStyles.alignCenter}>
                   <Pictogram
                     pictogramStyle="light-content"
@@ -449,18 +450,10 @@ const IdentificationModal = () => {
                 />
               </View>
             </View>
-            {isDeviceScreenSmall ? (
-              <VSpacer size={16} />
-            ) : (
-              <VSpacer size={32} />
-            )}
+            <VSpacer size={isDeviceScreenSmall ? 16 : 32} />
             <NumberPad />
             <View>
-              {isDeviceScreenSmall ? (
-                <VSpacer size={16} />
-              ) : (
-                <VSpacer size={32} />
-              )}
+              <VSpacer size={isDeviceScreenSmall ? 16 : 32} />
               <View style={IOStyles.selfCenter}>
                 <ButtonLink
                   textAlign="center"

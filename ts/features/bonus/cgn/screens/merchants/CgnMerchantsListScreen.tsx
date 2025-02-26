@@ -108,7 +108,7 @@ const CgnMerchantsListScreen: FunctionComponent<Props> = (props: Props) => {
       {(isError(props.onlineMerchants) || isError(props.offlineMerchants)) && (
         <OperationResultScreenContent
           title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
-          pictogram="umbrellaNew"
+          pictogram="umbrella"
           action={{
             label: I18n.t("global.buttons.retry"),
             onPress: initLoadingLists

@@ -424,7 +424,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -582,7 +582,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -609,7 +609,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "backgroundColor": "#E7ECFC",
                                               },
                                             ]
                                           }
@@ -623,8 +623,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               [
                                                 {},
                                                 {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "color": "#031344",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -809,7 +809,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -836,7 +836,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "backgroundColor": "#E7ECFC",
                                               },
                                             ]
                                           }
@@ -850,8 +850,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               [
                                                 {},
                                                 {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "color": "#031344",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -1036,7 +1036,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -1063,7 +1063,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "backgroundColor": "#E7ECFC",
                                               },
                                             ]
                                           }
@@ -1077,8 +1077,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               [
                                                 {},
                                                 {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "color": "#031344",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -1263,7 +1263,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -1290,7 +1290,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "backgroundColor": "#E7ECFC",
                                               },
                                             ]
                                           }
@@ -1304,8 +1304,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               [
                                                 {},
                                                 {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "color": "#031344",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -1490,7 +1490,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -1517,7 +1517,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "backgroundColor": "#E7ECFC",
                                               },
                                             ]
                                           }
@@ -1531,8 +1531,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               [
                                                 {},
                                                 {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "color": "#031344",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -1717,7 +1717,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -1744,7 +1744,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "backgroundColor": "#E7ECFC",
                                               },
                                             ]
                                           }
@@ -1758,8 +1758,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               [
                                                 {},
                                                 {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "color": "#031344",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -1944,7 +1944,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -1971,7 +1971,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "backgroundColor": "#E7ECFC",
                                               },
                                             ]
                                           }
@@ -1985,8 +1985,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               [
                                                 {},
                                                 {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "color": "#031344",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -2171,7 +2171,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -2198,7 +2198,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "backgroundColor": "#E7ECFC",
                                               },
                                             ]
                                           }
@@ -2212,8 +2212,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               [
                                                 {},
                                                 {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "color": "#031344",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -2398,7 +2398,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -2425,7 +2425,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "backgroundColor": "#E7ECFC",
                                               },
                                             ]
                                           }
@@ -2439,8 +2439,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               [
                                                 {},
                                                 {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "color": "#031344",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -2625,7 +2625,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -2652,7 +2652,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "backgroundColor": "#E7ECFC",
                                               },
                                             ]
                                           }
@@ -2666,8 +2666,8 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               [
                                                 {},
                                                 {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "color": "#031344",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -3192,7 +3192,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -3696,7 +3696,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -3854,7 +3854,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -3881,7 +3881,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "#F4F5F8",
+                                                "backgroundColor": "#E7ECFC",
                                               },
                                             ]
                                           }
@@ -3895,8 +3895,8 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                               [
                                                 {},
                                                 {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "color": "#031344",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",

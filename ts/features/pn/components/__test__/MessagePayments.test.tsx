@@ -1,7 +1,6 @@
 import { createStore } from "redux";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
 import { MessagePayments } from "../MessagePayments";
@@ -37,7 +36,7 @@ const notificationPaymentInfosFromPaymentIds = (paymentIds: Array<string>) =>
 
 describe("MessagePayments", () => {
   it("should match snapshot when cancelled, without payments, without cancelled-completed-payments", () => {
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const component = renderComponent(
       globalMessageId,
       true,
@@ -48,7 +47,7 @@ describe("MessagePayments", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot when cancelled with payments without completed payments", () => {
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const paymentIds = [
       "01234567890012345678912345610",
       "01234567890012345678912345620",
@@ -100,7 +99,7 @@ describe("MessagePayments", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot when cancelled, without payments, with cancelled-completed-payments", () => {
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const paymentIds = [
       "01234567890012345678912345610",
       "01234567890012345678912345620",
@@ -121,7 +120,7 @@ describe("MessagePayments", () => {
   });
   it("should match snapshot when cancelled, with payments, with cancelled-completed-payments", () => {
     const messageId = "01HTFFDYS8VQ779EA4M5WB9YWA" as UIMessageId;
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const paymentIds = [
       "01234567890012345678912345610",
       "01234567890012345678912345620",
@@ -173,7 +172,7 @@ describe("MessagePayments", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot when not cancelled, without payments, without cancelled-completed-payments", () => {
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const component = renderComponent(
       globalMessageId,
       false,
@@ -184,7 +183,7 @@ describe("MessagePayments", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot when not cancelled, without payments, with cancelled-completed-payments", () => {
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const paymentIds = [
       "01234567890012345678912345610",
       "01234567890012345678912345620",
@@ -204,7 +203,7 @@ describe("MessagePayments", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot when not cancelled, with one payable payment, with cancelled-completed-payments", () => {
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const paymentIds = ["01234567890012345678912345610"];
     const paymentsState: GlobalState = {
       ...initialState,
@@ -234,7 +233,7 @@ describe("MessagePayments", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot when not cancelled, with one payable payment, without cancelled-completed-payments", () => {
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const paymentIds = ["01234567890012345678912345610"];
     const paymentsState: GlobalState = {
       ...initialState,
@@ -264,7 +263,7 @@ describe("MessagePayments", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot when not cancelled, with five (max-visible-payments) payable payments, with cancelled-completed-payments", () => {
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const paymentIds = [
       "01234567890012345678912345610",
       "01234567890012345678912345620",
@@ -310,7 +309,7 @@ describe("MessagePayments", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot when not cancelled, with five (max-visible-payments) payable payments, without cancelled-completed-payments", () => {
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const paymentIds = [
       "01234567890012345678912345610",
       "01234567890012345678912345620",
@@ -356,7 +355,7 @@ describe("MessagePayments", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot when not cancelled, with more-than-five (max-visible-payments) payable payments, with cancelled-completed-payments", () => {
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const paymentIds = [
       "01234567890012345678912345610",
       "01234567890012345678912345620",
@@ -408,7 +407,7 @@ describe("MessagePayments", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot when not cancelled, with more-than-five (max-visible-payments) payable payments, without cancelled-completed-payments", () => {
-    const initialState = dsEnabledGlobalState();
+    const initialState = globalState();
     const paymentIds = [
       "01234567890012345678912345610",
       "01234567890012345678912345620",
@@ -461,13 +460,8 @@ describe("MessagePayments", () => {
   });
 });
 
-const dsEnabledGlobalState = (): GlobalState => {
-  const initialState = appReducer(undefined, applicationChangeState("active"));
-  return appReducer(
-    initialState,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-  );
-};
+const globalState = (): GlobalState =>
+  appReducer(undefined, applicationChangeState("active"));
 
 const renderComponent = (
   messageId: UIMessageId,

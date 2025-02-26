@@ -191,7 +191,7 @@ function EmptyListNoResults() {
   return (
     <View style={styles.emptyListContainer}>
       <View style={IOStyles.alignCenter}>
-        <Pictogram name="umbrellaNew" size={120} />
+        <Pictogram name="umbrella" size={120} />
         <VSpacer size={24} />
       </View>
       <H6 style={styles.emptyListText}>

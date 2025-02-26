@@ -587,7 +587,7 @@
                 "idpayTest": "IDPay",
                 "idpayTestAlert": "This change requires app reboot"
             },
-            "designSystemEnvironment": "Experimental Design System",
+            "experimentalEnvironment": "Experimental interface",
             "newScanSection": "New 'Scan' feature",
             "sessionRefresh": "Activate Session Refresh",
             "appVersion": "Version",
@@ -604,6 +604,10 @@
                 "title": "Do you want to display your fiscal code?",
                 "action": "Go to \"Your data\" section",
                 "close": "Close the banner and do not show it again"
+            },
+            "appearanceBanner": {
+                "title": "Do you want to change the typeface used in the app?",
+                "action": "Edit typeface style"
             }
         },
         "data": {
@@ -643,6 +647,31 @@
                 "send_email_messages": {
                     "title": "Forwarding messages by email",
                     "subtitle": "Receive message previews"
+                },
+                "appearance": {
+                    "title": "Appearance",
+                    "subtitle": "Customize the app to your needs",
+                    "typefaceStyle": {
+                        "title": "Typeface style",
+                        "comfortable": {
+                            "title": "Comfortable",
+                            "description": "Designed for better text readability"
+                        },
+                        "standard": {
+                            "title": "Standard",
+                            "description": "The usual style with narrow, geometric shapes"
+                        }
+                    },
+                    "theme": {
+                        "title": "Theme",
+                        "comingSoon": "Coming soon",
+                        "automatic": {
+                            "title": "Automatic",
+                            "description": "Based on system settings"
+                        },
+                        "light": "Light",
+                        "dark": "Dark"
+                    }
                 },
                 "language": {
                     "title": "Language",
@@ -2309,13 +2338,15 @@
                     "title": "Inserisci il codice avviso",
                     "subtitle": "Ha 18 cifre, lo trovi vicino al codice QR.",
                     "validationError": "It has 18 digits, starts with 0, 1 or 3.",
-                    "placeholder": "Codice avviso"
+                    "placeholder": "Codice avviso",
+                    "a11y": "Error. Incorrect notice code. It has 18 digits, you find it near the code QR."
                 },
                 "fiscalCode": {
                     "title": "Inserisci il codice fiscale dell’Ente Creditore",
                     "subtitle": "Ha 11 cifre, lo trovi vicino al codice QR.",
                     "validationError": "Enter 11 digits.",
-                    "placeholder": "Codice fiscale Ente Creditore"
+                    "placeholder": "Codice fiscale Ente Creditore",
+                    "a11y": "Error. Tax code of the incorrect creditor. It has 11 digits, you can find it close to the QR code"
                 }
             },
             "abortDialog": {
@@ -2327,6 +2358,9 @@
                 "fastPayPalPayment": "PayPal pagamento veloce"
             },
             "methodSelection": {
+                "a11y": {
+                  "pageStatus": "Page {{currentPage}} of {{totalPages}}"
+                },
                 "header": "Seleziona un metodo",
                 "yourMethods": "Saved",
                 "otherMethods": "All methods",
@@ -2912,13 +2946,12 @@
     },
     "identification": {
         "instructions": {
-            "unlockCode": "unlock code",
-            "unlockCodepPrefix": "use your",
-            "fingerprint": "fingerprint",
-            "fingerprintPrefix": "use your",
-            "faceId": "face",
-            "faceIdPrefix": "use your",
-            "congiunction": "or"
+            "useFingerPrintOrUnlockCode": "use your **fingerprint** or use your **unlock code**",
+            "useFingerPrintOrUnlockCodeA11y": "use your fingerprint or use your unlock code",
+            "useFaceIdOrUnlockCode": "use your **face** or use your **unlock code**",
+            "useFaceIdOrUnlockCodeA11y": "use your face or use your unlock code",
+            "useUnlockCode": " use your **unlock code**",
+            "useUnlockCodeA11y": "use your unlock code"
         },
         "title": "Hi {{name}}!",
         "titleProfileName": "Hi {{profileName}}!",
@@ -4547,6 +4580,17 @@
                         "title": "Hai disattivato Documenti su IO",
                         "content": "Se cambi idea, potrai riattivare Documenti su IO in futuro."
                     }
+                }
+            },
+            "offline": {
+                "alert": {
+                    "title": "Nessuna connessione",
+                    "action": "Cosa posso fare?"
+                },
+                "modal": {
+                    "title": "Nessuna connessione",
+                    "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
+                    "action": "Ricarica l'app IO"
                 }
             }
         }
