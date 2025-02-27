@@ -19,7 +19,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
 import { loadServiceDetail } from "../../../../services/details/store/actions/details";
 import { FIMS_ROUTES } from "../../navigation";
-import { FimsServiceConfiguration_config } from "../../../../../../definitions/content/FimsServiceConfiguration";
+import { FimsServiceConfiguration } from "../../../../../../definitions/content/FimsServiceConfiguration";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -298,7 +298,7 @@ describe("index", () => {
   describe("useFIMSRemoteServiceConfiguration", () => {
     it(`should call 'navigation.navigate' with proper parameters and return proper service data for analytics`, () => {
       const configurationId = "configId";
-      const configuration: FimsServiceConfiguration_config = {
+      const configuration: FimsServiceConfiguration = {
         configuration_id: configurationId,
         organization_fiscal_code: "01234567890",
         organization_name: "Organization name",
@@ -337,7 +337,7 @@ describe("index", () => {
       });
     });
     it(`should not call 'navigation.navigate' and return undefined serviceData when configuration id does not match`, () => {
-      const configuration: FimsServiceConfiguration_config = {
+      const configuration: FimsServiceConfiguration = {
         configuration_id: "configId",
         organization_fiscal_code: "01234567890",
         organization_name: "Organization name",
@@ -397,7 +397,7 @@ describe("index", () => {
   });
   describe("serviceDataFromConfigurationId", () => {
     it(`should return service data when the configuration id matches`, () => {
-      const configuration: FimsServiceConfiguration_config = {
+      const configuration: FimsServiceConfiguration = {
         configuration_id: "configId",
         organization_fiscal_code: "01234567890",
         organization_name: "Organization name",
@@ -424,7 +424,7 @@ describe("index", () => {
       });
     });
     it(`should return 'undefined' when the configuration id does not match`, () => {
-      const configuration: FimsServiceConfiguration_config = {
+      const configuration: FimsServiceConfiguration = {
         configuration_id: "configId",
         organization_fiscal_code: "01234567890",
         organization_name: "Organization name",
@@ -621,7 +621,7 @@ const renderFromAuthenticationFlowHook = (
 };
 
 const renderFromRemoteConfigurationHook = (
-  configuration: FimsServiceConfiguration_config,
+  configuration: FimsServiceConfiguration,
   hookConfigurationId: string
 ) => {
   const appState = {

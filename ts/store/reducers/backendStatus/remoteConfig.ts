@@ -22,7 +22,7 @@ import { Action } from "../../actions/types";
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
-import { FimsServiceConfiguration_config } from "../../../../definitions/content/FimsServiceConfiguration";
+import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -129,7 +129,7 @@ export const fimsServiceConfiguration = createSelector(
   (
     remoteConfig,
     configurationId: string
-  ): FimsServiceConfiguration_config | undefined =>
+  ): FimsServiceConfiguration | undefined =>
     pipe(
       remoteConfig,
       O.chainNullableK(config => config.fims.services),
