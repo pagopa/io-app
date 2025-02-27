@@ -296,6 +296,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "kind": "PotNone",
     },
   },
+  "profileSettings": {},
   "services": {
     "details": {
       "byId": {},
