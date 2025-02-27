@@ -43,7 +43,7 @@ import { DSIOScrollView } from "../core/DSIOScrollView";
 import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredContent";
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
-import { DSIOScrollViewWithListItemsLarge } from "../core/DSIOScrollViewWithListItemsLarge";
+import { DSIOListViewWithLargeHeader } from "../core/DSIOListViewWithLargeHeader";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
@@ -451,7 +451,7 @@ export const DesignSystemNavigator = () => {
 
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.SCREENS.IOLISTVIEW_LARGE_HEADER.route}
-          component={DSIOScrollViewWithListItemsLarge}
+          component={DSIOListViewWithLargeHeader}
           options={{ headerShown: true }}
         />
 
