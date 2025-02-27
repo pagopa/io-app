@@ -74,10 +74,7 @@ export const CgnMerchantCategoriesListScreen = () => {
     }
   }, [potCategories]);
 
-  const renderItem = (
-    category: ProductCategoryWithNewDiscountsCount,
-    i: number
-  ) => {
+  const renderItem = (category: ProductCategoryWithNewDiscountsCount) => {
     const specs = getCategorySpecs(category.productCategory);
     const countAvailable = category.newDiscounts > 0;
 
@@ -87,7 +84,7 @@ export const CgnMerchantCategoriesListScreen = () => {
         () => null,
         s => (
           <ListItemNav
-            key={i}
+            key={category.productCategory}
             value={
               countAvailable ? (
                 <View

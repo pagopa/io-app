@@ -66,9 +66,9 @@ export const CgnMerchantsListScreen = () => {
     [navigator]
   );
 
-  const renderItem = (item: MerchantsAll, index: number) => (
+  const renderItem = (item: MerchantsAll) => (
     <ListItemNav
-      key={index}
+      key={item.id}
       onPress={() => onItemPress(item.id)}
       value={
         <View style={IOStyles.rowSpaceBetween}>

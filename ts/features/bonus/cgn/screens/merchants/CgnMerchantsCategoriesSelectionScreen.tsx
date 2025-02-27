@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import { IOScrollViewLargeHeaderWithList } from "../../../../../components/ui/IOScrollViewLargeHeaderWithList";
+import { IOListViewWithLargeHeader } from "../../../../../components/ui/IOListViewWithLargeHeader";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
@@ -63,9 +63,10 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       : merchantsScreen;
 
   return (
-    <IOScrollViewLargeHeaderWithList<
+    <IOListViewWithLargeHeader<
       MerchantsAll | ProductCategoryWithNewDiscountsCount
     >
+      keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
       title={{
         label: I18n.t("bonus.cgn.merchantsList.screenTitle")
       }}
@@ -88,7 +89,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       renderItem={renderItem as any}
       data={[...data]}
       refreshControlProps={refreshControlProps}
-      listHeaderComponent={
+      ListHeaderComponent={
         <>
           <TabNavigation
             tabAlignment="start"
@@ -117,8 +118,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
         </>
       }
       skeleton={skeleton}
-      listFooterComponent={ListFooterComponent}
-      listEmptyComponent={ListEmptyComponent}
+      ListFooterComponent={ListFooterComponent}
+      ListEmptyComponent={ListEmptyComponent}
     />
   );
 };

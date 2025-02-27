@@ -450,10 +450,7 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={
-            DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGE_WITH_LIST_ITEMS
-              .route
-          }
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOLISTVIEW_LARGE_HEADER.route}
           component={DSIOScrollViewWithListItemsLarge}
           options={{ headerShown: true }}
         />

@@ -74,9 +74,9 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "IOSCROLLVIEW_WITH_LIST_ITEMS",
       title: "IOScrollView w/ List items"
     },
-    IOSCROLLVIEW_LARGE_WITH_LIST_ITEMS: {
-      route: "IOSCROLLVIEW_LARGE_WITH_LIST_ITEMS",
-      title: "IOScrollView w/ Large header with list items"
+    IOLISTVIEW_LARGE_HEADER: {
+      route: "IOLISTVIEW_LARGE_HEADER",
+      title: "IOListView w/ Large header"
     },
     BONUS_CARD_SCREEN: {
       route: "BONUS_CARD_SCREEN",
