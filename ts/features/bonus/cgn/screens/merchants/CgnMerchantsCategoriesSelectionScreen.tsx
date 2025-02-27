@@ -1,24 +1,18 @@
-import { useCallback } from "react";
-import { View } from "react-native";
 import {
-  H2,
-  TabNavigation,
+  IOIcons,
   TabItem,
-  VSpacer,
-  IOIcons
+  TabNavigation,
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import {
-  MaterialTopTabBarProps,
-  createMaterialTopTabNavigator
-} from "@react-navigation/material-top-tabs";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { useState } from "react";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+import { IOScrollViewLargeHeaderWithList } from "../../../../../components/ui/IOScrollViewLargeHeaderWithList";
 import I18n from "../../../../../i18n";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import CGN_ROUTES from "../../navigation/routes";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
-import CgnMerchantsListScreen from "./CgnMerchantsListScreen";
+import CGN_ROUTES from "../../navigation/routes";
 import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
+import { CgnMerchantsListScreen, MerchantsAll } from "./CgnMerchantsListScreen";
 
 export const CgnMerchantsHomeTabRoutes = {
   CGN_CATEGORIES: "CGN_CATEGORIES",
@@ -29,8 +23,6 @@ export type CgnMerchantsHomeTabParamsList = {
   [CgnMerchantsHomeTabRoutes.CGN_CATEGORIES]: undefined;
   [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: undefined;
 };
-
-const Tab = createMaterialTopTabNavigator<CgnMerchantsHomeTabParamsList>();
 
 type TabOption = {
   title: string;
@@ -48,93 +40,88 @@ const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
   }
 };
 
-const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
-  const isFocused = useCallback((i: number) => state.index === i, [state]);
-
-  return (
-    <View>
-      <TabNavigation tabAlignment="start" selectedIndex={state.index}>
-        {state.routes.map((route, index) => {
-          const onPress = () => {
-            const event = navigation.emit({
-              type: "tabPress",
-              target: route.key,
-              canPreventDefault: true
-            });
-
-            if (!isFocused(index) && !event.defaultPrevented) {
-              navigation.navigate(route.name);
-            }
-          };
-
-          const label =
-            tabOptions[route.name as keyof CgnMerchantsHomeTabParamsList].title;
-          return (
-            <TabItem
-              testID={`cgn-merchants-tab-${route.name}`}
-              icon={
-                tabOptions[route.name as keyof CgnMerchantsHomeTabParamsList]
-                  .icon
-              }
-              label={label}
-              accessibilityLabel={label}
-              key={route.key}
-              onPress={onPress}
-            />
-          );
-        })}
-      </TabNavigation>
-      <VSpacer size={16} />
-    </View>
-  );
-};
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
   useDisableRootNavigatorGesture();
-  useHeaderSecondLevel({
-    title: "",
-    supportRequest: true,
-    secondAction: {
-      icon: "search",
-      testID: "search-button",
-      onPress() {
-        navigate(CGN_ROUTES.DETAILS.MAIN, {
-          screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
-        });
-      },
-      accessibilityLabel: I18n.t(
-        "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
-      )
-    }
-  });
+  const [selectedTab, setSelectedTab] = useState<
+    keyof CgnMerchantsHomeTabParamsList
+  >(CgnMerchantsHomeTabRoutes.CGN_CATEGORIES);
+
+  const categoriesScreen = CgnMerchantCategoriesListScreen();
+  const merchantsScreen = CgnMerchantsListScreen();
+
+  const {
+    data,
+    renderItem,
+    refreshControlProps,
+    ListFooterComponent,
+    ListEmptyComponent,
+    skeleton
+  } =
+    selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES
+      ? categoriesScreen
+      : merchantsScreen;
 
   return (
-    <>
-      <View style={IOStyles.horizontalContentPadding}>
-        <H2 accessibilityRole="header">
-          {I18n.t("bonus.cgn.merchantsList.screenTitle")}
-        </H2>
-      </View>
-      <VSpacer />
-      <Tab.Navigator
-        initialRouteName={CgnMerchantsHomeTabRoutes.CGN_CATEGORIES}
-        tabBarPosition="top"
-        tabBar={CgnTabBar}
-        screenOptions={{
-          lazy: true,
-          swipeEnabled: false
-        }}
-      >
-        <Tab.Screen
-          name={CgnMerchantsHomeTabRoutes.CGN_CATEGORIES}
-          component={CgnMerchantCategoriesListScreen}
-        />
-        <Tab.Screen
-          name={CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL}
-          component={CgnMerchantsListScreen}
-        />
-      </Tab.Navigator>
-    </>
+    <IOScrollViewLargeHeaderWithList<
+      MerchantsAll | ProductCategoryWithNewDiscountsCount
+    >
+      title={{
+        label: I18n.t("bonus.cgn.merchantsList.screenTitle")
+      }}
+      headerActionsProp={{
+        showHelp: true,
+        headerType: "twoActions",
+        secondAction: {
+          icon: "search",
+          testID: "search-button",
+          onPress() {
+            navigate(CGN_ROUTES.DETAILS.MAIN, {
+              screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
+            });
+          },
+          accessibilityLabel: I18n.t(
+            "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
+          )
+        }
+      }}
+      renderItem={renderItem as any}
+      data={[...data]}
+      refreshControlProps={refreshControlProps}
+      listHeaderComponent={
+        <>
+          <TabNavigation
+            tabAlignment="start"
+            selectedIndex={Object.keys(CgnMerchantsHomeTabRoutes).indexOf(
+              selectedTab
+            )}
+          >
+            {Object.keys(CgnMerchantsHomeTabRoutes).map(routeKey => {
+              const route = routeKey as keyof CgnMerchantsHomeTabParamsList;
+              const onPress = () => {
+                setSelectedTab(route);
+              };
+
+              const label = tabOptions[route].title;
+              return (
+                <TabItem
+                  testID={`cgn-merchants-tab-${route}`}
+                  icon={tabOptions[route].icon}
+                  label={label}
+                  accessibilityLabel={label}
+                  key={route}
+                  onPress={onPress}
+                />
+              );
+            })}
+          </TabNavigation>
+          <VSpacer size={16} />
+        </>
+      }
+      skeleton={skeleton}
+      listFooterComponent={ListFooterComponent}
+      listEmptyComponent={ListEmptyComponent}
+    />
   );
 };
 
