@@ -2,7 +2,7 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import {
   fetch as fetchNetInfo,
   NetInfoState
@@ -56,18 +56,6 @@ export const IngressScreen = () => {
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [contentTitle, setContentTitle] = useState(I18n.t("startup.title"));
 
-  const visualizeOfflineWallet = useMemo(
-    () =>
-      !isConnected &&
-      selectItwLifecycleIsOperationalOrValid &&
-      isOfflineAccessEnabled,
-    [
-      isConnected,
-      selectItwLifecycleIsOperationalOrValid,
-      isOfflineAccessEnabled
-    ]
-  );
-
   useEffect(() => {
     // Since the screen is shown for a very short time,
     // we prefer to announce the content to the screen reader,
@@ -114,6 +102,11 @@ export const IngressScreen = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    const visualizeOfflineWallet =
+      !isConnected &&
+      selectItwLifecycleIsOperationalOrValid &&
+      isOfflineAccessEnabled;
+
     if (visualizeOfflineWallet) {
       dispatch(
         identificationRequest(false, false, undefined, undefined, {
@@ -126,9 +119,19 @@ export const IngressScreen = () => {
         })
       );
     }
-  }, [dispatch, visualizeOfflineWallet]);
+  }, [
+    dispatch,
+    isConnected,
+    isOfflineAccessEnabled,
+    selectItwLifecycleIsOperationalOrValid
+  ]);
 
-  if (!visualizeOfflineWallet) {
+  // TODO: understand why there is a glitch (only variables)
+  if (
+    !isConnected ||
+    (!isConnected &&
+      (!selectItwLifecycleIsOperationalOrValid || !isOfflineAccessEnabled))
+  ) {
     return <IngressScreenNoInternetConnection />;
   }
 
