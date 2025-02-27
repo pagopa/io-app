@@ -14,6 +14,7 @@ import {
   ColorValue,
   LayoutChangeEvent,
   LayoutRectangle,
+  ListRenderItemInfo,
   RefreshControl,
   StyleSheet,
   View
@@ -34,7 +35,7 @@ export type IOListViewActions = IOScrollViewActions;
 type IOListView<T> = ComponentProps<typeof IOScrollView> &
   ComponentProps<typeof Animated.FlatList<T>> & {
     data: Array<T>;
-    renderItem: (item: T) => ReactElement | null;
+    renderItem: (item: ListRenderItemInfo<T>) => ReactElement | null;
     keyExtractor: ((item: T, index: number) => string) | undefined;
     animatedRef?: AnimatedRef<Animated.FlatList<T>>;
     skeleton?: ReactElement;
@@ -167,9 +168,9 @@ export const IOListView = <T,>({
       ref={animatedRef}
       keyExtractor={keyExtractor}
       data={data}
-      renderItem={({ item }) =>
+      renderItem={
         // If the refresh control is active, show the skeleton (if present) instead of the content
-        refreshControlProps?.refreshing ? skeleton ?? null : renderItem(item)
+        renderItem
       }
       testID={testID}
       onScroll={handleScroll}

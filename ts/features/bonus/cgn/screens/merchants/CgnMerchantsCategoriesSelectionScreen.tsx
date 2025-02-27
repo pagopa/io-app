@@ -5,14 +5,13 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { IOListViewWithLargeHeader } from "../../../../../components/ui/IOListViewWithLargeHeader";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
 import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
-import { CgnMerchantsListScreen, MerchantsAll } from "./CgnMerchantsListScreen";
+import { CgnMerchantsListScreen } from "./CgnMerchantsListScreen";
 
 export const CgnMerchantsHomeTabRoutes = {
   CGN_CATEGORIES: "CGN_CATEGORIES",
@@ -63,9 +62,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       : merchantsScreen;
 
   return (
-    <IOListViewWithLargeHeader<
-      MerchantsAll | ProductCategoryWithNewDiscountsCount
-    >
+    <IOListViewWithLargeHeader
       keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
       title={{
         label: I18n.t("bonus.cgn.merchantsList.screenTitle")
@@ -86,7 +83,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           )
         }
       }}
-      renderItem={renderItem as any}
+      renderItem={({ item }) => renderItem(item as any)}
       data={[...data]}
       refreshControlProps={refreshControlProps}
       ListHeaderComponent={

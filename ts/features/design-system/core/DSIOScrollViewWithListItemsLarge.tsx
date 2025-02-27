@@ -94,7 +94,7 @@ export const DSIOScrollViewWithListItemsLarge = () => {
       headerActionsProp={{
         showHelp: true
       }}
-      renderItem={(item: any) => (
+      renderItem={({ item }) => (
         <ListItemInfo
           {...item}
           accessibilityLabel={`${item.label}; ${item.value}`}
