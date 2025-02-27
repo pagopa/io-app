@@ -17,6 +17,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from "react";
 import { AppState, StyleSheet, View } from "react-native";
@@ -25,6 +26,7 @@ import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import {
@@ -67,6 +69,7 @@ import {
   IOBarcodeType
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { CameraPermissionView } from "./CameraPermissionView";
 
 type HelpProps = {
@@ -140,6 +143,7 @@ const BarcodeScanBaseScreenComponent = ({
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const route = useRoute();
+  const scanItemRef = useRef<View>(null);
 
   const currentScreenName = useIOSelector(currentRouteSelector);
 
@@ -163,11 +167,17 @@ const BarcodeScanBaseScreenComponent = ({
     const subscription = AppState.addEventListener("change", nextAppState => {
       setIsAppInBackground(nextAppState !== "active");
     });
-
     return () => {
       subscription.remove();
     };
   }, []);
+
+  useFocusEffect(
+    useCallback(
+      () => setAccessibilityFocus(scanItemRef, 200 as Millisecond),
+      []
+    )
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -313,6 +323,7 @@ const BarcodeScanBaseScreenComponent = ({
       <View style={styles.navigationContainer}>
         <TabNavigation tabAlignment="stretch" selectedIndex={0} color="dark">
           <TabItem
+            ref={scanItemRef}
             testID="barcodeScanBaseScreenTabScan"
             label={I18n.t("barcodeScan.tabs.scan")}
             accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.scan")}
@@ -344,6 +355,10 @@ const BarcodeScanBaseScreenComponent = ({
           />
           {/* FIXME: replace with new header */}
           <BaseHeader
+            accessibilityEvents={{
+              avoidNavigationEventsUsage: true,
+              disableAccessibilityFocus: true
+            }}
             hideSafeArea={true}
             dark={true}
             backgroundColor={"transparent"}
