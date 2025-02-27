@@ -2,7 +2,7 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import {
   fetch as fetchNetInfo,
   NetInfoState
@@ -10,7 +10,10 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "../../../i18n";
-import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import {
+  isItwOfflineAccessEnabledSelector,
+  isMixpanelEnabled as isMixpanelEnabledSelector
+} from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../../screens/profile/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
@@ -27,6 +30,11 @@ import {
 } from "../analytics";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import waiting from "../../../../assets/animated-pictograms/Waiting.json";
+import { startupLoadSuccess } from "../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../store/reducers/startup";
+import { isConnectedSelector } from "../../connectivity/store/selectors";
+import { itwLifecycleIsOperationalOrValid } from "../../itwallet/lifecycle/store/selectors";
+import { identificationRequest } from "../../../store/actions/identification";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -35,9 +43,29 @@ export const IngressScreen = () => {
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const dispatch = useIODispatch();
-  const [netInfo, setNetInfo] = useState<NetInfoState>();
+  const isConnected = useIOSelector(isConnectedSelector);
+  const selectItwLifecycleIsOperationalOrValid = useIOSelector(
+    itwLifecycleIsOperationalOrValid
+  );
+  const isOfflineAccessEnabled = useIOSelector(
+    isItwOfflineAccessEnabledSelector
+  );
+
+  const [_, setNetInfo] = useState<NetInfoState>();
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [contentTitle, setContentTitle] = useState(I18n.t("startup.title"));
+
+  const visualizeOfflineWallet = useMemo(
+    () =>
+      !isConnected &&
+      selectItwLifecycleIsOperationalOrValid &&
+      isOfflineAccessEnabled,
+    [
+      isConnected,
+      selectItwLifecycleIsOperationalOrValid,
+      isOfflineAccessEnabled
+    ]
+  );
 
   useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -84,7 +112,18 @@ export const IngressScreen = () => {
     };
   }, [dispatch]);
 
-  if (netInfo && !netInfo.isConnected) {
+  useEffect(() => {
+    if (visualizeOfflineWallet) {
+      dispatch(
+        identificationRequest(false, false, undefined, undefined, {
+          onSuccess: () =>
+            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE))
+        })
+      );
+    }
+  }, [dispatch, visualizeOfflineWallet]);
+
+  if (!visualizeOfflineWallet) {
     return <IngressScreenNoInternetConnection />;
   }
 
