@@ -26,6 +26,7 @@ import { DSButtons } from "../core/DSButtons";
 import { DSCards } from "../core/DSCards";
 import { DSColors } from "../core/DSColors";
 import { DSDynamicBackground } from "../core/DSDynamicBackground";
+import { DSDynamicCardRotation } from "../core/DSDynamicCardRotation";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFooterActions } from "../core/DSFooterActions";
 import { DSFooterActionsInline } from "../core/DSFooterActionsInline";
@@ -42,6 +43,7 @@ import { DSIOScrollView } from "../core/DSIOScrollView";
 import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredContent";
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
+import { DSIOScrollViewWithListItemsLarge } from "../core/DSIOScrollViewWithListItemsLarge";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
@@ -67,7 +69,6 @@ import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
-import { DSDynamicCardRotation } from "../core/DSDynamicCardRotation";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -445,6 +446,15 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WITH_LIST_ITEMS.route}
           component={DSIOScrollViewWithListItems}
+          options={{ headerShown: true }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGE_WITH_LIST_ITEMS
+              .route
+          }
+          component={DSIOScrollViewWithListItemsLarge}
           options={{ headerShown: true }}
         />
 
