@@ -9,6 +9,8 @@ import Color from "color";
 import { memo } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import I18n from "../../../../../i18n";
+import { useIOSelector } from "../../../../../store/hooks";
+import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import { CardColorScheme } from "./types";
 
 type DigitalVersionBadgeProps = {
@@ -60,6 +62,8 @@ const DigitalVersionBadge = ({
   credentialType,
   colorScheme = "default"
 }: DigitalVersionBadgeProps) => {
+  const typefacePreference = useIOSelector(fontPreferenceSelector);
+
   const colorProps = getColorPropsByScheme(credentialType, colorScheme);
 
   // If a credential does not have the color configuration means that we should not display the badge
@@ -77,12 +81,20 @@ const DigitalVersionBadge = ({
           numberOfLines={1}
           ellipsizeMode="tail"
           allowFontScaling={false}
-          style={[
-            styles.label,
-            {
-              color: foreground
-            }
-          ]}
+          style={{
+            color: foreground,
+            alignSelf: "center",
+            textTransform: "uppercase",
+            flexShrink: 1,
+            ...makeFontStyleObject(
+              12,
+              typefacePreference === "comfortable"
+                ? "Titillio"
+                : "TitilliumSansPro",
+              16,
+              "Regular"
+            )
+          }}
         >
           {`${I18n.t("features.itWallet.card.digital")}`}
         </Text>
@@ -119,12 +131,6 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     opacity: 0.6,
     zIndex: 10
-  },
-  label: {
-    alignSelf: "center",
-    textTransform: "uppercase",
-    flexShrink: 1,
-    ...makeFontStyleObject(12, "Titillio", 16, "Regular")
   }
 });
 
