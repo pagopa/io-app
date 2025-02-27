@@ -147,6 +147,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "ITW_DISCOVERY": true,
     "LV_EXPIRATION_REMINDER": true,
     "PUSH_NOTIFICATIONS_REMINDER": true,
+    "SEND_ACTIVATION_REMINDER": false,
     "SETTINGS_DISCOVERY": true,
   },
   "loginFeatures": {
@@ -327,6 +328,11 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
     },
+  },
+  "utmLink": {
+    "utmCampaign": undefined,
+    "utmMedium": undefined,
+    "utmSource": undefined,
   },
   "wallet": {
     "cards": {},

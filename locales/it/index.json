@@ -2358,6 +2358,9 @@
                 "fastPayPalPayment": "PayPal pagamento veloce"
             },
             "methodSelection": {
+                "a11y": {
+                  "pageStatus": "Pagina {{currentPage}} di {{totalPages}}"
+                },
                 "header": "Seleziona un metodo",
                 "yourMethods": "Salvati",
                 "otherMethods": "Tutti i metodi",
@@ -3717,6 +3720,11 @@
             "title": "Questo servizio non è più attivo su IO"
         },
         "pn": {
+            "reminderBanner":{
+              "title":"Ricevi le tue comunicazioni a valore legale su IO!",
+              "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
+              "cta": "Attiva SEND su IO"
+            },
             "service": {
                 "activate": "Attiva il servizio",
                 "deactivate": "Disattiva il servizio",
