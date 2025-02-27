@@ -128,9 +128,8 @@ export const IngressScreen = () => {
 
   // TODO: understand why there is a glitch (only variables)
   if (
-    !isConnected ||
-    (!isConnected &&
-      (!selectItwLifecycleIsOperationalOrValid || !isOfflineAccessEnabled))
+    !isConnected &&
+    (!selectItwLifecycleIsOperationalOrValid || !isOfflineAccessEnabled)
   ) {
     return <IngressScreenNoInternetConnection />;
   }
