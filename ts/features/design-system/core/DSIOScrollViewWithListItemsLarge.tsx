@@ -1,8 +1,4 @@
-import {
-  Body,
-  ListItemHeader,
-  ListItemInfo
-} from "@pagopa/io-app-design-system";
+import { ListItemHeader, ListItemInfo } from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import { Alert } from "react-native";
 import { IOScrollViewLargeHeaderWithList } from "../../../components/ui/IOScrollViewLargeHeaderWithList";
