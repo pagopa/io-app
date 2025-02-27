@@ -13782,7 +13782,7 @@ __metadata:
     react-native-calendar-events: 2.2.0
     react-native-config: ^1.4.5
     react-native-crypto: ^2.1.0
-    react-native-device-info: ^10.8.0
+    react-native-device-info: ^14.0.4
     react-native-document-picker: ^9.1.1
     react-native-easing-gradient: ^1.1.1
     react-native-exception-handler: ^2.10.8
@@ -18946,12 +18946,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-device-info@npm:^10.8.0":
-  version: 10.8.0
-  resolution: "react-native-device-info@npm:10.8.0"
+"react-native-device-info@npm:^14.0.4":
+  version: 14.0.4
+  resolution: "react-native-device-info@npm:14.0.4"
   peerDependencies:
     react-native: "*"
-  checksum: 9875ad17a8b73a418befd010c4a33a5a43d5c09c2f63a445c1cec35746014c392c35dee487e81e9ff7c0568ff08fbd51ccee33f3c7bc4f71a065e7d47c205b6b
+  checksum: aa839dbe7df1246a4b5f9bcfeb3d4cc4be585f13a0d3ff6a03f57a0c2cfe7590291ac292dda4c51fd8765f94c870857676463e8e2f1660b057f3ae2b4335db29
   languageName: node
   linkType: hard
 
