@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-rc.2](https://github.com/pagopa/io-app/compare/3.0.0-rc.1...3.0.0-rc.2) (2025-02-26)
+
+
+### Features
+
+* [[IOCOM-2086](https://pagopa.atlassian.net/browse/IOCOM-2086)] addition of SEND activation banner ([#6756](https://github.com/pagopa/io-app/issues/6756)) ([2cbb289](https://github.com/pagopa/io-app/commit/2cbb289e262227f37e20c9d317a5ac21168f288c))
+* [[IOPID-2740](https://pagopa.atlassian.net/browse/IOPID-2740)] Add support for external campaign tracking ([#6738](https://github.com/pagopa/io-app/issues/6738)) ([d70b544](https://github.com/pagopa/io-app/commit/d70b544a691e1bf617fbb197ff670c64e42e8c22)), closes [/#diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaR66](https://github.com/pagopa///issues/diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaR66) [/#diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaR97](https://github.com/pagopa///issues/diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaR97) [/#diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaL122-R125](https://github.com/pagopa///issues/diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaL122-R125) [/#diff-fa995360b02f1b9964e18e579b05ae55ee852d765d264ac9733cb929fa4a58caR1-R34](https://github.com/pagopa///issues/diff-fa995360b02f1b9964e18e579b05ae55ee852d765d264ac9733cb929fa4a58caR1-R34) [/#diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aL10-R10](https://github.com/pagopa///issues/diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aL10-R10) [/#diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aR36-R37](https://github.com/pagopa///issues/diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aR36-R37) [/#diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aR140-R154](https://github.com/pagopa///issues/diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aR140-R154) [/#diff-6d3727c4000eb50e5a58a25a8209be045a27818db1832518820cfc4caf24fa05R6](https://github.com/pagopa///issues/diff-6d3727c4000eb50e5a58a25a8209be045a27818db1832518820cfc4caf24fa05R6) [/#diff-6d3727c4000eb50e5a58a25a8209be045a27818db1832518820cfc4caf24fa05R22-R25](https://github.com/pagopa///issues/diff-6d3727c4000eb50e5a58a25a8209be045a27818db1832518820cfc4caf24fa05R22-R25) [/#diff-10c9841de377572536ae14fb004623c793cc3c78ad7947684f9c0c8d7801acffR7](https://github.com/pagopa///issues/diff-10c9841de377572536ae14fb004623c793cc3c78ad7947684f9c0c8d7801acffR7) [/#diff-10c9841de377572536ae14fb004623c793cc3c78ad7947684f9c0c8d7801acffR30](https://github.com/pagopa///issues/diff-10c9841de377572536ae14fb004623c793cc3c78ad7947684f9c0c8d7801acffR30)
+
+
+### Bug Fixes
+
+* [[IOAPPX-489](https://pagopa.atlassian.net/browse/IOAPPX-489)] Enable the new typeface in the `ItwCredentialCard` ([#6762](https://github.com/pagopa/io-app/issues/6762)) ([360de61](https://github.com/pagopa/io-app/commit/360de615259e8980bf565ad0227adfe6a2e0b87c))
+
+
+### Chores
+
+* [[IOBP-1192](https://pagopa.atlassian.net/browse/IOBP-1192),[IOBP-1223](https://pagopa.atlassian.net/browse/IOBP-1223),[IOBP-1224](https://pagopa.atlassian.net/browse/IOBP-1224)] a11y improvements on payment method selection screen ([#6751](https://github.com/pagopa/io-app/issues/6751)) ([9932ddb](https://github.com/pagopa/io-app/commit/9932ddb5ae6d7b298a21f94f423efe6638aafc13))
+* [[IOBP-1194](https://pagopa.atlassian.net/browse/IOBP-1194),[IOBP-1196](https://pagopa.atlassian.net/browse/IOBP-1196)] a11y focus improvements on Barcode scan screen ([#6759](https://github.com/pagopa/io-app/issues/6759)) ([c75273a](https://github.com/pagopa/io-app/commit/c75273a1c50951ccc645b547168de0dc03de0bbb))
+
 ## [3.0.0-rc.1](https://github.com/pagopa/io-app/compare/3.0.0-rc.0...3.0.0-rc.1) (2025-02-25)
 
 ## [3.0.0-rc.0](https://github.com/pagopa/io-app/compare/2.83.0-rc.7...3.0.0-rc.0) (2025-02-25)
