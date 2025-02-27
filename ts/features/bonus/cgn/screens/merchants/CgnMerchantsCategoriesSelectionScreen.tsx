@@ -98,9 +98,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           >
             {Object.keys(CgnMerchantsHomeTabRoutes).map(routeKey => {
               const route = routeKey as keyof CgnMerchantsHomeTabParamsList;
-              const onPress = () => {
-                setSelectedTab(route);
-              };
+              const onPress = () => setSelectedTab(route);
 
               const label = tabOptions[route].title;
               return (
