@@ -19,7 +19,7 @@ import LoadingScreenContent from "../../../components/screens/LoadingScreenConte
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { setIsBlockingScreen } from "../store/actions";
+import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
 import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
 import {
@@ -35,6 +35,7 @@ import { StartupStatusEnum } from "../../../store/reducers/startup";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { itwLifecycleIsOperationalOrValid } from "../../itwallet/lifecycle/store/selectors";
 import { identificationRequest } from "../../../store/actions/identification";
+import { OfflineAccessReasonEnum } from "../store/reducer";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -116,8 +117,12 @@ export const IngressScreen = () => {
     if (visualizeOfflineWallet) {
       dispatch(
         identificationRequest(false, false, undefined, undefined, {
-          onSuccess: () =>
-            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE))
+          onSuccess: () => {
+            dispatch(
+              setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE)
+            );
+            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
+          }
         })
       );
     }
