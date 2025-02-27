@@ -66,6 +66,7 @@ import connectivityStateReducer, {
 import { GlobalState } from "../../../../store/reducers/types";
 import { isIOMarkdownDisabledForMessagesAndServices } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isIOMarkdownEnabledLocallySelector } from "../../../../store/reducers/persistedPreferences";
+import { utmLinkReducer, UtmLinkState } from "../../../utmLink/store/reducers";
 import {
   appearanceSettingsReducerPersistor,
   AppearanceSettingsState
@@ -101,6 +102,7 @@ export type FeaturesState = {
   mixpanel: MixpanelState;
   ingress: IngressScreenState;
   landingBanners: LandingScreenBannerState;
+  utmLink: UtmLinkState;
   connectivityStatus: ConnectivityState;
 };
 
@@ -130,6 +132,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   mixpanel: mixpanelReducer,
   ingress: ingressScreenReducer,
   landingBanners: landingScreenBannersReducer,
+  utmLink: utmLinkReducer,
   connectivityStatus: connectivityStateReducer
 });
 
