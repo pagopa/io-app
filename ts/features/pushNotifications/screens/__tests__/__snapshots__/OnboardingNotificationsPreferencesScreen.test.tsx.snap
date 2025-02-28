@@ -1079,7 +1079,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -1219,7 +1224,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -2493,7 +2498,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -2634,7 +2644,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -3908,7 +3918,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -4049,7 +4064,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -5323,7 +5338,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -5464,7 +5484,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -7030,7 +7050,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -7315,7 +7340,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
