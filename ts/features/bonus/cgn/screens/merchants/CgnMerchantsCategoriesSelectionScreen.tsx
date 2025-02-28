@@ -64,6 +64,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   const ListHeaderComponent = (
     <>
       <TabNavigation
+        includeContentMargins={false}
         tabAlignment="start"
         selectedIndex={Object.keys(CgnMerchantsHomeTabRoutes).indexOf(
           selectedTab
