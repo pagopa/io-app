@@ -2,12 +2,26 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { generateTokenRegistrationTime } from "../../../utils";
 import {
   canSkipTokenRegistrationSelector,
+  generateInitialState,
   InstallationState,
   notificationsInstallationSelector,
   TokenRegistrationResendDelay
 } from "../installation";
 
 describe("installation", () => {
+  describe("generateInitialState", () => {
+    it("should generate expected initial state", () => {
+      const initialState = generateInitialState();
+      expect(initialState.id).toBeDefined();
+      expect(initialState.token).toBeUndefined();
+      expect(initialState.registeredToken).toBeUndefined();
+      expect(initialState.tokenStatus).toEqual({ status: "unsent" });
+
+      const anotherInitialState = generateInitialState();
+      expect(anotherInitialState.id).toBeDefined();
+      expect(initialState.id).not.toEqual(anotherInitialState.id);
+    });
+  });
   describe("notificationsInstallationSelector", () => {
     it("should return the installation state", () => {
       const installationState: InstallationState = {
