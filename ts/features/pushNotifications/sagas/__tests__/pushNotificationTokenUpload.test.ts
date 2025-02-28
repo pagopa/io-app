@@ -12,7 +12,8 @@ import {
 import {
   canSkipTokenRegistrationSelector,
   InstallationState,
-  notificationsInstallationSelector
+  notificationsInstallationSelector,
+  TokenRegistrationResendDelay
 } from "../../store/reducers/installation";
 import {
   trackNotificationInstallationTokenNotChanged,
@@ -49,25 +50,6 @@ describe("pushNotificationTokenUpload", () => {
       .put(pushNotificationsTokenUploaded(installation.token!))
       .next()
       .call(trackPushNotificationTokenUploadSucceeded)
-      .next()
-      .isDone();
-  });
-  it("when the push token is available and registered, it should call 'trackNotificationInstallationTokenNotChanged' and end", () => {
-    const backendAPI = jest.fn();
-    const installation: InstallationState = {
-      id: "001abe9de70768541f2ad76d62636797f4f",
-      token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad",
-      registeredToken:
-        "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad",
-      tokenStatus: { status: "sentUnconfirmed", date: new Date().getTime() }
-    };
-    testSaga(pushNotificationTokenUpload, backendAPI)
-      .next()
-      .call(awaitForPushNotificationRegistration)
-      .next(installation)
-      .select(canSkipTokenRegistrationSelector)
-      .next(true)
-      .call(trackNotificationInstallationTokenNotChanged)
       .next()
       .isDone();
   });
@@ -162,6 +144,91 @@ describe("pushNotificationTokenUpload", () => {
       })
       .throw(error)
       .call(trackPushNotificationTokenUploadFailure, `${error}`)
+      .next()
+      .isDone();
+  });
+  it("when the push token is available and was registered less then one day ago, it should call 'trackNotificationInstallationTokenNotChanged' and end", () => {
+    const backendAPI = jest.fn();
+    const installation: InstallationState = {
+      id: "001abe9de70768541f2ad76d62636797f4f",
+      token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad",
+      registeredToken:
+        "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad",
+      tokenStatus: { status: "sentUnconfirmed", date: new Date().getTime() }
+    };
+    testSaga(pushNotificationTokenUpload, backendAPI)
+      .next()
+      .call(awaitForPushNotificationRegistration)
+      .next(installation)
+      .select(canSkipTokenRegistrationSelector)
+      .next(true)
+      .call(trackNotificationInstallationTokenNotChanged)
+      .next()
+      .isDone();
+  });
+  it("when the push token is available and registered more than one day ago, it should invoke the backend API and, upon success, dispatch 'pushNotificationStokenUploaded(token)' and call 'trackPushNotificationTokenUploadSucceeded'", () => {
+    const backendAPI = jest.fn();
+    const installation: InstallationState = {
+      id: "001abe9de70768541f2ad76d62636797f4f",
+      token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad",
+      registeredToken:
+        "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad",
+      tokenStatus: { status: "sentUnconfirmed", date: new Date().getTime() - 2 * TokenRegistrationResendDelay }
+    };
+    testSaga(pushNotificationTokenUpload, backendAPI)
+      .next()
+      .call(awaitForPushNotificationRegistration)
+      .next(installation)
+      .select(canSkipTokenRegistrationSelector)
+      .next(false)
+      .call(backendAPI, {
+        installationID: installation.id,
+        body: {
+          platform: notificationsPlatform,
+          pushChannel: installation.token
+        }
+      })
+      .next(
+        E.right({
+          status: 200
+        })
+      )
+      .put(pushNotificationsTokenUploaded(installation.token!))
+      .next()
+      .call(trackPushNotificationTokenUploadSucceeded)
+      .next()
+      .isDone();
+  });
+  it("when 'token' and 'registered token' are different, regardless of the 'tokenStatus'' value, it should invoke the backend API and, upon success, dispatch 'pushNotificationStokenUploaded(token)' and call 'trackPushNotificationTokenUploadSucceeded'", () => {
+    const backendAPI = jest.fn();
+    const installation: InstallationState = {
+      id: "001abe9de70768541f2ad76d62636797f4f",
+      token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad",
+      registeredToken:
+        "5f6aa01da5ddb387462c7eaf61bb78ad740f4707bebcf74f9b7c25d48e335894",
+      tokenStatus: { status: "sentConfirmed" }
+    };
+    testSaga(pushNotificationTokenUpload, backendAPI)
+      .next()
+      .call(awaitForPushNotificationRegistration)
+      .next(installation)
+      .select(canSkipTokenRegistrationSelector)
+      .next(true)
+      .call(backendAPI, {
+        installationID: installation.id,
+        body: {
+          platform: notificationsPlatform,
+          pushChannel: installation.token
+        }
+      })
+      .next(
+        E.right({
+          status: 200
+        })
+      )
+      .put(pushNotificationsTokenUploaded(installation.token!))
+      .next()
+      .call(trackPushNotificationTokenUploadSucceeded)
       .next()
       .isDone();
   });
