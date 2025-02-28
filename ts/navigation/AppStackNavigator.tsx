@@ -37,7 +37,6 @@ import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import { processUtmLink } from "../features/utmLink";
 import { useStoredFontPreference } from "../common/context/DSTypefaceContext";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -47,6 +46,7 @@ import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 import { linkingSubscription } from "./linkingSubscription";
+import OfflineStackNavigator from "./OfflineStackNavigator";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
@@ -56,7 +56,7 @@ const isMainNavigatorReady = (state: OnStateChangeStateType) =>
     state.routes &&
     state.routes.length > 0 &&
     state.routes[0].name === ROUTES.MAIN) ||
-  (state && state.routes[0].name === ITW_ROUTES.OFFLINE.WALLET);
+  (state && state.routes[0].name === ITW_ROUTES.MAIN);
 
 export const AppStackNavigator = (): ReactElement => {
   // This hook is used since we are in a child of the Context Provider
@@ -74,7 +74,7 @@ export const AppStackNavigator = (): ReactElement => {
   }, [dispatch]);
 
   if (startupStatus === StartupStatusEnum.OFFLINE) {
-    return <ItwStackNavigator />;
+    return <OfflineStackNavigator />;
   }
 
   if (startupStatus === StartupStatusEnum.NOT_AUTHENTICATED) {
