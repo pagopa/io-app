@@ -12,7 +12,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 
 describe("Main pushNotifications reducer", () => {
   it("persistor version should be -1", () => {
-    expect(NOTIFICATIONS_STORE_VERSION).toBe(0);
+    expect(NOTIFICATIONS_STORE_VERSION).toBe(1);
   });
   it("notificationsPersistConfig should match expected values", () => {
     expect(notificationsPersistConfig.key).toBe("notifications");

@@ -1,4 +1,5 @@
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import { captureMessage } from "@sentry/react-native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
@@ -93,6 +94,12 @@ function configurePushNotifications() {
   PushNotification.configure({
     // Called when token is generated
     onRegister: token => {
+      if (token == null || token.token == null) {
+        captureMessage(
+          `PushNotification.configure received a nullish token (or inner 'token' instance) (${token})`
+        );
+        return;
+      }
       // Dispatch an action to save the token in the store
       store.dispatch(newPushNotificationsToken(token.token));
       trackNewPushNotificationsTokenGenerated();

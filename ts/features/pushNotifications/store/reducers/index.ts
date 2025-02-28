@@ -13,12 +13,18 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { isDevEnv } from "../../../../utils/environment";
 import { userFromSuccessLoginSelector } from "../../../login/info/store/selectors";
 import { hasUserSeenSystemNotificationsPromptSelector } from "../selectors";
+import { generateTokenRegistrationTime } from "../../utils";
 import { environmentReducer, EnvironmentState } from "./environment";
-import { installationReducer, InstallationState } from "./installation";
+import {
+  installationReducer,
+  InstallationState,
+  TokenRegistrationResendDelay,
+  TokenStatus
+} from "./installation";
 import { pendingMessageReducer, PendingMessageState } from "./pendingMessage";
 import { userBehaviourReducer, UserBehaviourState } from "./userBehaviour";
 
-export const NOTIFICATIONS_STORE_VERSION = 0;
+export const NOTIFICATIONS_STORE_VERSION = 1;
 
 export type PersistedNotificationsState = NotificationsState & PersistPartial;
 
@@ -30,7 +36,26 @@ const migrations: MigrationManifest = {
       pushNotificationBannerDismissalCount: 0,
       pushNotificationBannerForceDismissionDate: undefined
     }
-  })
+  }),
+  "1": (state: PersistedState) => {
+    const typedState = state as PersistedNotificationsState;
+    const tokenRegistered =
+      typedState.installation.token != null &&
+      typedState.installation.token === typedState.installation.registeredToken;
+    const newTokenStatus: TokenStatus = tokenRegistered
+      ? {
+          status: "sentUnconfirmed",
+          date: generateTokenRegistrationTime() - TokenRegistrationResendDelay
+        }
+      : { status: "unsent" };
+    return {
+      ...typedState,
+      installation: {
+        ...typedState.installation,
+        tokenStatus: newTokenStatus
+      }
+    };
+  }
 };
 
 export type NotificationsState = {

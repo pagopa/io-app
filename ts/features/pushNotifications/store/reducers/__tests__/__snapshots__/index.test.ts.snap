@@ -12,6 +12,9 @@ exports[`Main pushNotifications reducer notificationsReducer initial state shoul
   "installation": {
     "registeredToken": undefined,
     "token": undefined,
+    "tokenStatus": {
+      "status": "unsent",
+    },
   },
   "pendingMessage": null,
   "userBehaviour": {
@@ -33,6 +36,9 @@ exports[`Main pushNotifications reducer persistedNotificationsReducer initial st
   "installation": {
     "registeredToken": undefined,
     "token": undefined,
+    "tokenStatus": {
+      "status": "unsent",
+    },
   },
   "pendingMessage": null,
   "userBehaviour": {
