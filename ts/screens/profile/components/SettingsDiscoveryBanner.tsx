@@ -50,7 +50,6 @@ export const SettingsDiscoveryBanner = ({
         action={I18n.t("settings.informativeBanner.action")}
         pictogramName="settings"
         color="neutral"
-        size="big"
         onClose={closeHandler}
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}

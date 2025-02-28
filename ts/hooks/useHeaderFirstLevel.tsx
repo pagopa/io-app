@@ -1,8 +1,5 @@
-import {
-  HeaderActionProps,
-  HeaderFirstLevel
-} from "@pagopa/io-app-design-system";
-import { useLayoutEffect } from "react";
+import { HeaderFirstLevel } from "@pagopa/io-app-design-system";
+import { useLayoutEffect, useMemo } from "react";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../navigation/params/MainTabParamsList";
 import { useHeaderFirstLevelActionPropHelp } from "./useHeaderFirstLevelActionPropHelp";
@@ -20,9 +17,9 @@ has a default behaviour but can be overridden
 (as in `ServicesHomeScreen') */
 type HeaderFirstLevelHookProps = Omit<
   HeaderFirstLevel,
-  "firstAction" | "secondAction" | "ignoreSafeAreaMargin"
+  "ignoreSafeAreaMargin" | "actions"
 > & {
-  secondAction?: HeaderActionProps;
+  actions?: HeaderFirstLevel["actions"];
 };
 
 /**
@@ -33,24 +30,49 @@ export const useHeaderFirstLevel = ({
   headerProps
 }: useHeaderFirstLevelProps) => {
   const navigation = useIONavigation();
+  const { actions: incomingActions, ...rest } = headerProps;
 
   const actionHelp = useHeaderFirstLevelActionPropHelp(currentRoute);
   const actionSettings = useHeaderFirstLevelActionPropSettings();
   const alertProps = useStatusAlertProps(currentRoute);
 
+  const actions: HeaderFirstLevel["actions"] = useMemo(() => {
+    const fallbackActions: HeaderFirstLevel["actions"] = [
+      actionSettings,
+      actionHelp
+    ];
+
+    /* Undefined means we render fallback actions */
+    if (incomingActions === undefined) {
+      return fallbackActions;
+    }
+
+    /* Empty array means we don't render any actions */
+    if (incomingActions.length === 0) {
+      return [];
+    }
+
+    /* Filter undefined elements */
+    const filteredActions = incomingActions.filter(
+      action => action !== undefined
+    );
+
+    return [
+      filteredActions?.[0],
+      filteredActions?.[1] ?? actionSettings,
+      filteredActions?.[2] ?? actionHelp
+    ];
+  }, [actionSettings, actionHelp, incomingActions]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <HeaderFirstLevel
-          /* Settings action may be overwritten
-          (like in `ServicesHomeScreen`), so we
-          put it before the spreading props. */
-          secondAction={actionSettings}
-          {...headerProps}
-          firstAction={actionHelp}
+          {...rest}
+          actions={actions}
           ignoreSafeAreaMargin={!!alertProps}
         />
       )
     });
-  }, [navigation, headerProps, actionHelp, actionSettings, alertProps]);
+  }, [navigation, alertProps, rest, actions]);
 };

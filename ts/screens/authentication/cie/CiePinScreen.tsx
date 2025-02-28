@@ -248,7 +248,6 @@ const CiePinScreen = () => {
               <Banner
                 viewRef={bannerRef}
                 color="neutral"
-                size="small"
                 content={
                   isFastLoginFeatureFlagEnabled
                     ? I18n.t("login.expiration_info_FL")

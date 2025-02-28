@@ -506,7 +506,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1041,7 +1041,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1576,7 +1576,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2111,7 +2111,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2646,7 +2646,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2810,7 +2810,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -3345,7 +3345,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -3509,7 +3509,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4044,7 +4044,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4208,7 +4208,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4743,7 +4743,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4907,7 +4907,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",

@@ -409,7 +409,6 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
         key={getTxtNodeKey(blockQuote)}
         pictogramName={getPictogramName(pictogramName?.[1])}
         color="neutral"
-        size="big"
         title={title?.[1]}
         content={content}
       />

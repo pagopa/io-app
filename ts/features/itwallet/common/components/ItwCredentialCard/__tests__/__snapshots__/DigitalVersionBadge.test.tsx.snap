@@ -36,21 +36,17 @@ exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in s
       ellipsizeMode="tail"
       numberOfLines={1}
       style={
-        [
-          {
-            "alignSelf": "center",
-            "flexShrink": 1,
-            "fontFamily": "Titillio",
-            "fontSize": 12,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": 16,
-            "textTransform": "uppercase",
-          },
-          {
-            "color": "#01527F",
-          },
-        ]
+        {
+          "alignSelf": "center",
+          "color": "#01527F",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "400",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+        }
       }
     >
       Versione digitale
@@ -109,21 +105,17 @@ exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in s
       ellipsizeMode="tail"
       numberOfLines={1}
       style={
-        [
-          {
-            "alignSelf": "center",
-            "flexShrink": 1,
-            "fontFamily": "Titillio",
-            "fontSize": 12,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": 16,
-            "textTransform": "uppercase",
-          },
-          {
-            "color": "#01527F",
-          },
-        ]
+        {
+          "alignSelf": "center",
+          "color": "#01527F",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "400",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+        }
       }
     >
       Versione digitale
@@ -182,21 +174,17 @@ exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in s
       ellipsizeMode="tail"
       numberOfLines={1}
       style={
-        [
-          {
-            "alignSelf": "center",
-            "flexShrink": 1,
-            "fontFamily": "Titillio",
-            "fontSize": 12,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": 16,
-            "textTransform": "uppercase",
-          },
-          {
-            "color": "#3F3F3F",
-          },
-        ]
+        {
+          "alignSelf": "center",
+          "color": "#3F3F3F",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "400",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+        }
       }
     >
       Versione digitale
@@ -241,21 +229,17 @@ exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard
       ellipsizeMode="tail"
       numberOfLines={1}
       style={
-        [
-          {
-            "alignSelf": "center",
-            "flexShrink": 1,
-            "fontFamily": "Titillio",
-            "fontSize": 12,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": 16,
-            "textTransform": "uppercase",
-          },
-          {
-            "color": "#032D5C",
-          },
-        ]
+        {
+          "alignSelf": "center",
+          "color": "#032D5C",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "400",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+        }
       }
     >
       Versione digitale
@@ -314,21 +298,17 @@ exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard
       ellipsizeMode="tail"
       numberOfLines={1}
       style={
-        [
-          {
-            "alignSelf": "center",
-            "flexShrink": 1,
-            "fontFamily": "Titillio",
-            "fontSize": 12,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": 16,
-            "textTransform": "uppercase",
-          },
-          {
-            "color": "#032D5C",
-          },
-        ]
+        {
+          "alignSelf": "center",
+          "color": "#032D5C",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "400",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+        }
       }
     >
       Versione digitale
@@ -387,21 +367,17 @@ exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard
       ellipsizeMode="tail"
       numberOfLines={1}
       style={
-        [
-          {
-            "alignSelf": "center",
-            "flexShrink": 1,
-            "fontFamily": "Titillio",
-            "fontSize": 12,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": 16,
-            "textTransform": "uppercase",
-          },
-          {
-            "color": "#262626",
-          },
-        ]
+        {
+          "alignSelf": "center",
+          "color": "#262626",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "400",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+        }
       }
     >
       Versione digitale
@@ -448,21 +424,17 @@ exports[`DigitalVersionBadge should render correctly MDL in state default 1`] = 
       ellipsizeMode="tail"
       numberOfLines={1}
       style={
-        [
-          {
-            "alignSelf": "center",
-            "flexShrink": 1,
-            "fontFamily": "Titillio",
-            "fontSize": 12,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": 16,
-            "textTransform": "uppercase",
-          },
-          {
-            "color": "#5E303E",
-          },
-        ]
+        {
+          "alignSelf": "center",
+          "color": "#5E303E",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "400",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+        }
       }
     >
       Versione digitale
@@ -521,21 +493,17 @@ exports[`DigitalVersionBadge should render correctly MDL in state faded 1`] = `
       ellipsizeMode="tail"
       numberOfLines={1}
       style={
-        [
-          {
-            "alignSelf": "center",
-            "flexShrink": 1,
-            "fontFamily": "Titillio",
-            "fontSize": 12,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": 16,
-            "textTransform": "uppercase",
-          },
-          {
-            "color": "#5E303E",
-          },
-        ]
+        {
+          "alignSelf": "center",
+          "color": "#5E303E",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "400",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+        }
       }
     >
       Versione digitale
@@ -594,21 +562,17 @@ exports[`DigitalVersionBadge should render correctly MDL in state greyscale 1`] 
       ellipsizeMode="tail"
       numberOfLines={1}
       style={
-        [
-          {
-            "alignSelf": "center",
-            "flexShrink": 1,
-            "fontFamily": "Titillio",
-            "fontSize": 12,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": 16,
-            "textTransform": "uppercase",
-          },
-          {
-            "color": "#3F3F3F",
-          },
-        ]
+        {
+          "alignSelf": "center",
+          "color": "#3F3F3F",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "400",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+        }
       }
     >
       Versione digitale

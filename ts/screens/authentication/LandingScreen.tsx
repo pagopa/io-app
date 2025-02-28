@@ -22,7 +22,6 @@ import {
   useRef,
   ComponentProps
 } from "react";
-import DeviceInfo from "react-native-device-info";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Alert, View } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
@@ -58,6 +57,7 @@ import { cieIDDisableTourGuide } from "../../features/cieLogin/store/actions";
 import { SpidLevel } from "../../features/cieLogin/utils";
 import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../config";
 import { trackHelpCenterCtaTapped } from "../../utils/analytics";
+import { isTablet } from "../../utils/device";
 import { LandingSessionExpiredComponent } from "./components/LandingSessionExpiredComponent";
 import {
   loginCieWizardSelected,
@@ -134,7 +134,7 @@ export const LandingScreen = () => {
           icon="device"
           testID="bottom-sheet-login-with-cie-id"
           badge={{
-            variant: "turquoise",
+            variant: "highlight",
             text: I18n.t(
               "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
             )
@@ -159,7 +159,6 @@ export const LandingScreen = () => {
           action={I18n.t(
             "authentication.landing.cie_bottom_sheet.help_banner.action"
           )}
-          size="small"
         />
         <VSpacer />
       </View>
@@ -442,7 +441,7 @@ export const LandingScreen = () => {
   if (O.isNone(isRootedOrJailbroken)) {
     return <LoadingScreen />;
   } else {
-    if (DeviceInfo.isTablet()) {
+    if (isTablet()) {
       displayTabletAlert();
     }
     return <LandingScreenComponent />;
