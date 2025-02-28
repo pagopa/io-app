@@ -18,7 +18,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { ComponentProps, FunctionComponent, ReactElement } from "react";
-import { SpidIdp } from "../../definitions/content/SpidIdp";
+import { SpidIdp } from "../utils/idps";
 
 type OwnProps = {
   contentContainerStyle?: StyleProp<ViewStyle>;
@@ -50,6 +50,7 @@ const renderItem =
     const { onIdpSelected } = props;
     const { item } = info;
     const { id, name, logo } = item;
+    const { light, dark } = logo;
 
     const onPress = () => onIdpSelected(item);
 
@@ -58,7 +59,8 @@ const renderItem =
         key={id}
         name={name}
         logo={{
-          light: { uri: logo }
+          light,
+          dark
         }}
         onPress={onPress}
         testID={`idp-${item.id}-button`}

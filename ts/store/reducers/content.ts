@@ -11,7 +11,7 @@ import { Idp } from "../../../definitions/content/Idp";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
-import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { SpidIdp as GeneratedSpidIdpType } from "../../../definitions/content/SpidIdp";
 import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import {
   isReady,
@@ -23,7 +23,7 @@ import {
 } from "../../common/model/RemoteValue";
 import { getRemoteLocale } from "../../features/messages/utils/ctas";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { idps as idpsFallback } from "../../utils/idps";
+import { idps as idpsFallback, SpidIdp } from "../../utils/idps";
 import { getCurrentLocale } from "../../utils/locale";
 import {
   contentMunicipalityLoad,
@@ -76,7 +76,7 @@ export const idpsStateSelector = createSelector(
 
 export const idpsSelector = createSelector(
   idpsStateSelector,
-  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp> =>
+  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp | GeneratedSpidIdpType> =>
     isReady(idps) ? idps.value.items : idpsFallback
 );
 
