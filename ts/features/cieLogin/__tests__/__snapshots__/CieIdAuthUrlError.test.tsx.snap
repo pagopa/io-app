@@ -267,7 +267,8 @@ exports[`CieIdAuthUrlError Should match the snapshot 1`] = `
             onStartShouldSetResponder={[Function]}
             style={
               {
-                "alignSelf": "flex-start",
+                "alignSelf": "auto",
+                "flexShrink": 1,
               }
             }
           >
