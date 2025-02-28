@@ -4,8 +4,8 @@ import mdl from "../../__mocks__/mdl.json";
 import statusAttestation from "../../__mocks__/statusAttestation.json";
 import ts from "../../__mocks__/ts.json";
 import presentationClaims from "../../__mocks__/presentationClaims.json";
-import { type DisclosureClaim } from "../components/ItwClaimsDisclosure";
 import { ParsedStatusAttestation, StoredCredential } from "./itwTypesUtils";
+import { DisclosureClaim } from "./itwClaimsUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 

@@ -51,7 +51,7 @@ import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
-import { ItwRequiredClaimsList } from "../../common/components/ItwClaimsDisclosure";
+import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -178,7 +178,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           iconName="security"
           iconColor="grey-700"
         />
-        <ItwRequiredClaimsList items={requiredClaims} />
+        <ItwRequestedClaimsList items={requiredClaims} />
         <VSpacer size={24} />
         <FeatureInfo
           iconName="fornitori"

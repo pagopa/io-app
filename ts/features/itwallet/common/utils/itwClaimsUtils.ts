@@ -74,6 +74,14 @@ export type ClaimDisplayFormat = {
 };
 
 /**
+ * Type for disclosable claims.
+ */
+export type DisclosureClaim = {
+  claim: ClaimDisplayFormat;
+  source: string;
+};
+
+/**
  * Parses the claims from the credential.
  * For each Record entry it maps the key and the attribute value to a label and a value.
  * The label is taken from the attribute name which is either a string or a record of locale and string.

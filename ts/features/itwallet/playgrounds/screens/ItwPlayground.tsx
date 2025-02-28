@@ -4,6 +4,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwOfflineSection } from "../components/ItwOfflineSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
+import { ItwRemotePresentationSection } from "../components/ItwRemotePresentationSection";
 
 /**
  * ITW Playground screen
@@ -20,6 +21,7 @@ const ItwPlayground = () => {
         <VStack space={8}>
           <ItwOfflineSection />
           <ItwLifecycleSection />
+          <ItwRemotePresentationSection />
           <ItwSkeumorphicCredentialSection />
         </VStack>
       </ContentWrapper>
