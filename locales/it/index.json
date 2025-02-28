@@ -2956,6 +2956,7 @@
         "title": "Ciao {{name}}!",
         "titleProfileName": "Ciao {{profileName}}!",
         "titleValidation": "Autorizza l'operazione",
+        "titleOffline": "Titolo placeholder (da cambiare)",
         "logout": "Esci",
         "logoutProfileName": "Non sei {{profileName}}?",
         "logoutDescription": "Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.",

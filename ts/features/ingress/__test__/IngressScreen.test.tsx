@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { createStore } from "redux";
-import * as netInfo from "@react-native-community/netinfo";
 import { waitFor } from "@testing-library/react-native";
 import { act } from "react-test-renderer";
 import { IngressScreen } from "../screens/IngressScreen";
@@ -9,6 +7,11 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import I18n from "../../../i18n";
 import * as backendStatusSelectors from "../../../store/reducers/backendStatus/remoteConfig";
+import * as selectors from "../../connectivity/store/selectors";
+import * as persistedSelectors from "../../../store/reducers/persistedPreferences";
+import * as lifecycleSelectors from "../../itwallet/lifecycle/store/selectors";
+import * as ioHook from "../../../store/hooks";
+import { identificationRequest } from "../../../store/actions/identification";
 
 jest.useFakeTimers();
 
@@ -38,20 +41,54 @@ describe(IngressScreen, () => {
   describe("IngressScreen with device connection disabled", () => {
     it("Should display OperationResultsScreenContent", async () => {
       jest
-        .spyOn(netInfo, "fetch")
-        // @ts-ignore
-        .mockResolvedValueOnce({ isConnected: false });
+        .spyOn(selectors, "isConnectedSelector")
+        .mockImplementation(() => false);
+      jest
+        .spyOn(persistedSelectors, "isItwOfflineAccessEnabledSelector")
+        .mockImplementation(() => false);
+
       const { findByTestId, queryByTestId } = renderComponent();
-      // Before the effect is resolved the loader should be displayed
-      expect(queryByTestId("ingress-screen-loader-id")).toBeTruthy();
 
       const operationResults = await findByTestId("device-connection-lost-id");
 
-      // Once the effect is resolved the loader shouldn't be displayed
       expect(queryByTestId("ingress-screen-loader-id")).toBeNull();
       expect(operationResults).toBeTruthy();
     });
+    it("It should begin the identification flow", async () => {
+      const testDispatch = jest.fn();
+      jest
+        .spyOn(selectors, "isConnectedSelector")
+        .mockImplementation(() => false);
+      jest
+        .spyOn(persistedSelectors, "isItwOfflineAccessEnabledSelector")
+        .mockImplementation(() => true);
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsOperationalOrValid")
+        .mockImplementation(() => true);
+      jest
+        .spyOn(ioHook, "useIODispatch")
+        .mockImplementation(() => testDispatch);
+
+      renderComponent();
+
+      await waitFor(() => {
+        expect(testDispatch).toHaveBeenCalled();
+      });
+
+      await waitFor(() => {
+        expect(testDispatch).toHaveBeenCalledWith(
+          identificationRequest(
+            false,
+            false,
+            undefined,
+            undefined,
+            expect.any(Object)
+          )
+        );
+      });
+    });
   });
+
   describe("IngressScreen when slowdowns occur", () => {
     beforeEach(() => {
       jest.clearAllTimers();

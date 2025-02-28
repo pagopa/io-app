@@ -65,7 +65,7 @@ const InnerNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={ITW_ROUTES.DISCOVERY.INFO}
+      initialRouteName={ITW_ROUTES.OFFLINE.WALLET}
       screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
       screenListeners={{
         beforeRemove: () => {
