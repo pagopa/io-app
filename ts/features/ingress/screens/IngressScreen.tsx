@@ -3,10 +3,6 @@
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 import { memo, useEffect, useRef, useState } from "react";
-import {
-  fetch as fetchNetInfo,
-  NetInfoState
-} from "@react-native-community/netinfo";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "../../../i18n";
@@ -52,7 +48,6 @@ export const IngressScreen = () => {
     isItwOfflineAccessEnabledSelector
   );
 
-  const [_, setNetInfo] = useState<NetInfoState>();
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [contentTitle, setContentTitle] = useState(I18n.t("startup.title"));
 
@@ -74,12 +69,14 @@ export const IngressScreen = () => {
 
   useEffect(() => {
     const timeouts: Array<number> = [];
+
     timeouts.push(
       setTimeout(() => {
         setContentTitle(I18n.t("startup.title2"));
         timeouts.shift();
       }, TIMEOUT_CHANGE_LABEL)
     );
+
     timeouts.push(
       setTimeout(() => {
         setShowBlockingScreen(true);
@@ -87,14 +84,6 @@ export const IngressScreen = () => {
         timeouts.shift();
       }, TIMEOUT_BLOCKING_SCREEN)
     );
-    void fetchNetInfo()
-      .then(info => {
-        if (!info.isConnected) {
-          timeouts.forEach(clearTimeout);
-        }
-        setNetInfo(info);
-      })
-      .catch();
 
     return () => {
       timeouts?.forEach(clearTimeout);
@@ -126,7 +115,6 @@ export const IngressScreen = () => {
     selectItwLifecycleIsOperationalOrValid
   ]);
 
-  // TODO: understand why there is a glitch (only variables)
   if (
     !isConnected &&
     (!selectItwLifecycleIsOperationalOrValid || !isOfflineAccessEnabled)
