@@ -173,7 +173,10 @@ describe("pushNotificationTokenUpload", () => {
       token: "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad",
       registeredToken:
         "740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad",
-      tokenStatus: { status: "sentUnconfirmed", date: new Date().getTime() - 2 * TokenRegistrationResendDelay }
+      tokenStatus: {
+        status: "sentUnconfirmed",
+        date: new Date().getTime() - 2 * TokenRegistrationResendDelay
+      }
     };
     testSaga(pushNotificationTokenUpload, backendAPI)
       .next()
