@@ -63,6 +63,7 @@ import {
 import { isGestureEnabled } from "../utils/navigation";
 import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
 import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
+import { NoConnectivityScreen } from "../features/connectivity/screen/NoConnectivityScreen.tsx";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -93,6 +94,12 @@ const AuthenticatedStackNavigator = () => {
         name={ROUTES.MAIN}
         options={{ headerShown: false }}
         component={MainTabNavigator}
+      />
+
+      <Stack.Screen
+        name={ROUTES.NO_CONNECTIVITY}
+        options={hideHeaderOptions}
+        component={NoConnectivityScreen}
       />
 
       <Stack.Screen
