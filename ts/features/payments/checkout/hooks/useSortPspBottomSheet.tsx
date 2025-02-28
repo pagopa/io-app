@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RadioGroup, RadioItem } from "@pagopa/io-app-design-system";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { WalletPaymentPspSortType } from "../types";
 import I18n from "../../../../i18n";
 
@@ -46,7 +46,7 @@ const useSortPspBottomSheet = ({
     />
   );
 
-  const modal = useIOBottomSheetAutoresizableModal({
+  const modal = useIOBottomSheetModal({
     component: getModalContent(),
     title: ""
   });

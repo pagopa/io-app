@@ -812,9 +812,9 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         </View>
       </View>
       <RCTScrollView
+        overScrollMode="never"
         style={
           {
-            "flex": 1,
             "paddingHorizontal": 24,
           }
         }
@@ -1159,6 +1159,13 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               </Text>
             </View>
           </View>
+          <View
+            style={
+              {
+                "height": undefined,
+              }
+            }
+          />
         </View>
       </RCTScrollView>
     </View>

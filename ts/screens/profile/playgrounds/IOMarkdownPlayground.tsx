@@ -21,9 +21,9 @@ import {
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import IOMarkdown from "../../../components/IOMarkdown";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { generateMessagesAndServicesRules } from "../../../features/common/components/IOMarkdown/customRules";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import IOMarkdownSuggestions from "./IOMarkdownSuggestions";
 
 const ALL = `# Lorem Ipsum
@@ -134,7 +134,7 @@ export const IOMarkdownPlayground = () => {
   const { bottom } = useSafeAreaInsets();
   const headerHeight = useHeaderHeight();
 
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
+  const { present, bottomSheet } = useIOBottomSheetModal({
     title: "Components",
     component: (
       <>
