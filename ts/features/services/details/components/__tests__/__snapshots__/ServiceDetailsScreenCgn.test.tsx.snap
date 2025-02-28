@@ -405,7 +405,12 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="service-cgn-deactivate-bonus-button"
                           >
                             <View
@@ -659,7 +664,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -1259,7 +1264,12 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="service-activate-bonus-button"
                           >
                             <View
@@ -1513,7 +1523,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -2119,7 +2129,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -2725,7 +2735,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,

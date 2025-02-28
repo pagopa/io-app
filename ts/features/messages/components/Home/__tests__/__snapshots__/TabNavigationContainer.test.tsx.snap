@@ -347,10 +347,10 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                           contentContainerStyle={
                             [
                               {
-                                "flexGrow": 1,
                                 "paddingHorizontal": 24,
                               },
                               {
+                                "flexGrow": 1,
                                 "justifyContent": "flex-start",
                               },
                             ]
@@ -1068,10 +1068,10 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                           contentContainerStyle={
                             [
                               {
-                                "flexGrow": 1,
                                 "paddingHorizontal": 24,
                               },
                               {
+                                "flexGrow": 1,
                                 "justifyContent": "flex-start",
                               },
                             ]
