@@ -1,20 +1,22 @@
-import * as O from "fp-ts/lib/Option";
-import { getType } from "typesafe-actions";
-import { PersistConfig, persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as O from "fp-ts/lib/Option";
+import { PersistConfig, persistReducer } from "redux-persist";
+import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
+import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
-  itwIntegritySetServiceIsReady,
   itwRemoveIntegrityKeyTag,
+  itwSetIntegrityServiceStatus,
   itwStoreIntegrityKeyTag
 } from "../actions";
-import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 
 const CURRENT_REDUX_ITW_ISSUANCE_STORE_VERSION = -1;
 
+export type IntegrityServiceStatus = "ready" | "unavailable" | "error";
+
 export type ItwIssuanceState = {
   integrityKeyTag: O.Option<string>;
-  integrityServiceReady?: boolean;
+  integrityServiceStatus?: IntegrityServiceStatus;
 };
 
 export const itwIssuanceInitialState: ItwIssuanceState = {
@@ -26,6 +28,11 @@ const reducer = (
   action: Action
 ): ItwIssuanceState => {
   switch (action.type) {
+    case getType(itwSetIntegrityServiceStatus):
+      return {
+        ...state,
+        integrityServiceStatus: action.payload
+      };
     case getType(itwStoreIntegrityKeyTag):
       return {
         ...state,
@@ -36,11 +43,6 @@ const reducer = (
       return {
         ...state,
         integrityKeyTag: O.none
-      };
-    case getType(itwIntegritySetServiceIsReady):
-      return {
-        ...state,
-        integrityServiceReady: action.payload
       };
   }
   return state;

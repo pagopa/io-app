@@ -1,20 +1,20 @@
+import * as O from "fp-ts/lib/Option";
 import { type DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
-import * as O from "fp-ts/lib/Option";
+import { sessionTokenSelector } from "../../../../../store/reducers/authentication";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { getWalletInstanceStatus } from "../../../common/utils/itwAttestationUtils";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { itwIntegrityServiceStatusSelector } from "../../../issuance/store/selectors";
+import { itwIsWalletInstanceAttestationValidSelector } from "../../../walletInstance/store/selectors";
+import { ItwLifecycleState } from "../../store/reducers";
+import { checkIntegrityServiceReadySaga } from "../checkIntegrityServiceReadySaga";
 import {
   checkWalletInstanceStateSaga,
   getStatusOrResetWalletInstance
 } from "../checkWalletInstanceStateSaga";
-import { ItwLifecycleState } from "../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { getWalletInstanceStatus } from "../../../common/utils/itwAttestationUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
-import { sessionTokenSelector } from "../../../../../store/reducers/authentication";
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
-import { ensureIntegrityServiceIsReady } from "../../../common/utils/itwIntegrityUtils";
-import { itwIntegrityServiceReadySelector } from "../../../issuance/store/selectors";
-import { itwIsWalletInstanceAttestationValidSelector } from "../../../walletInstance/store/selectors";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
@@ -34,8 +34,8 @@ describe("checkWalletInstanceStateSaga", () => {
     };
     return expectSaga(checkWalletInstanceStateSaga)
       .withState(store)
-      .provide([[matchers.call.fn(ensureIntegrityServiceIsReady), true]])
-      .call.fn(ensureIntegrityServiceIsReady)
+      .provide([[matchers.call.fn(checkIntegrityServiceReadySaga), true]])
+      .call.fn(checkIntegrityServiceReadySaga)
       .not.call.fn(getStatusOrResetWalletInstance)
       .run();
   });
@@ -46,7 +46,7 @@ describe("checkWalletInstanceStateSaga", () => {
         itWallet: {
           lifecycle: ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
           issuance: {
-            integrityServiceReady: true,
+            integrityServiceStatus: "ready",
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
           credentials: { eid: O.none, credentials: [] }
@@ -59,11 +59,11 @@ describe("checkWalletInstanceStateSaga", () => {
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
         [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
-        [matchers.select(itwIntegrityServiceReadySelector), true],
+        [matchers.select(itwIntegrityServiceStatusSelector), "ready"],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: false }],
-        [matchers.call.fn(ensureIntegrityServiceIsReady), true]
+        [matchers.call.fn(checkIntegrityServiceReadySaga), true]
       ])
-      .call.fn(ensureIntegrityServiceIsReady)
+      .call.fn(checkIntegrityServiceReadySaga)
       .call.fn(getStatusOrResetWalletInstance)
       .not.call.fn(handleWalletInstanceResetSaga)
       .run();
@@ -88,9 +88,9 @@ describe("checkWalletInstanceStateSaga", () => {
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
         [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: true }],
-        [matchers.call.fn(ensureIntegrityServiceIsReady), true]
+        [matchers.call.fn(checkIntegrityServiceReadySaga), true]
       ])
-      .call.fn(ensureIntegrityServiceIsReady)
+      .call.fn(checkIntegrityServiceReadySaga)
       .call.fn(getStatusOrResetWalletInstance)
       .call.fn(handleWalletInstanceResetSaga)
       .run();
@@ -115,9 +115,9 @@ describe("checkWalletInstanceStateSaga", () => {
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
         [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: false }],
-        [matchers.call.fn(ensureIntegrityServiceIsReady), true]
+        [matchers.call.fn(checkIntegrityServiceReadySaga), true]
       ])
-      .call.fn(ensureIntegrityServiceIsReady)
+      .call.fn(checkIntegrityServiceReadySaga)
       .call.fn(getStatusOrResetWalletInstance)
       .not.call.fn(handleWalletInstanceResetSaga)
       .run();
@@ -142,9 +142,9 @@ describe("checkWalletInstanceStateSaga", () => {
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
         [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
         [matchers.call.fn(getWalletInstanceStatus), { is_revoked: true }],
-        [matchers.call.fn(ensureIntegrityServiceIsReady), true]
+        [matchers.call.fn(checkIntegrityServiceReadySaga), true]
       ])
-      .call.fn(ensureIntegrityServiceIsReady)
+      .call.fn(checkIntegrityServiceReadySaga)
       .call.fn(getStatusOrResetWalletInstance)
       .call.fn(handleWalletInstanceResetSaga)
       .run();

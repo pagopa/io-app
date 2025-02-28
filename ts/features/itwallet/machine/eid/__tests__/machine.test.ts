@@ -123,8 +123,9 @@ describe("itwEidIssuanceMachine", () => {
     }
   });
 
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it("Should obtain an eID (SPID)", async () => {
@@ -706,6 +707,8 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should return to TOS acceptance if session expires when creating a Wallet Instance", async () => {
+    hasValidWalletInstanceAttestation.mockImplementation(() => false);
+
     const actor = createActor(mockedMachine);
     actor.start();
 

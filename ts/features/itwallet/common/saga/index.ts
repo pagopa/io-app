@@ -4,6 +4,7 @@ import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAttestation } from "../../credentials/saga/checkCredentialsStatusAttestation";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
+import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";
 import { checkWalletInstanceStateSaga } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 
 function* checkWalletInstanceAndCredentialsValiditySaga() {
@@ -14,6 +15,7 @@ function* checkWalletInstanceAndCredentialsValiditySaga() {
 }
 
 export function* watchItwSaga(): SagaIterator {
+  yield* fork(warmUpIntegrityServiceSaga);
   yield* fork(checkWalletInstanceAndCredentialsValiditySaga);
   yield* fork(handleWalletCredentialsRehydration);
   yield* fork(watchItwCredentialsSaga);
