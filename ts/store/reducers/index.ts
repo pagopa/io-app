@@ -254,9 +254,6 @@ export function createRootReducer(
               },
               profileSettings: {
                 ...profileSettingsReducerInitialState,
-                hasUserAcknowledgedSettingsBanner:
-                  state.features.profileSettings
-                    .hasUserAcknowledgedSettingsBanner,
                 _persist: state.features.profileSettings._persist
               },
               appearanceSettings: {
