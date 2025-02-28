@@ -291,7 +291,8 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
           onStartShouldSetResponder={[Function]}
           style={
             {
-              "alignSelf": "flex-start",
+              "alignSelf": "auto",
+              "flexShrink": 1,
             }
           }
           testID="loadingSpinnerOverlayCancelButton"

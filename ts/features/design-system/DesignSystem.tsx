@@ -1,14 +1,14 @@
 import {
   BodySmall,
   Divider,
-  H3,
+  H2,
   IOVisualCostants,
   ListItemNav,
   VSpacer,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { SectionList, StatusBar, useColorScheme } from "react-native";
+import { SectionList } from "react-native";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useScreenEndMargin } from "../../hooks/useScreenEndMargin";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
@@ -85,7 +85,6 @@ const DESIGN_SYSTEM_SECTION_DATA: Array<SectionDataProps> = [
 
 export const DesignSystem = () => {
   const theme = useIOTheme();
-  const colorScheme = useColorScheme();
   const navigation = useIONavigation();
 
   const { screenEndMargin } = useScreenEndMargin();
@@ -108,9 +107,9 @@ export const DesignSystem = () => {
     section: { title: string; description?: string };
   }) => (
     <VStack space={4}>
-      <H3 weight="Bold" color={theme["textHeading-default"]}>
+      <H2 weight="Bold" color={theme["textHeading-default"]}>
         {title}
-      </H3>
+      </H2>
       {description && (
         <BodySmall weight={"Regular"} color={theme["textBody-tertiary"]}>
           {description}
@@ -128,28 +127,22 @@ export const DesignSystem = () => {
     ) : null;
 
   return (
-    <>
-      <StatusBar
-        barStyle={colorScheme === "dark" ? "light-content" : "default"}
-        backgroundColor={theme["appBackground-primary"]}
-      />
-      <SectionList
-        keyExtractor={(item, index) => `${item.route}-${index}`}
-        stickySectionHeadersEnabled={false}
-        contentContainerStyle={[
-          IOStyles.horizontalContentPadding,
-          {
-            paddingTop: IOVisualCostants.appMarginDefault,
-            paddingBottom: screenEndMargin
-          }
-        ]}
-        renderSectionHeader={renderDSSection}
-        renderSectionFooter={renderDSSectionFooter}
-        SectionSeparatorComponent={() => <VSpacer size={8} />}
-        renderItem={renderDSNavItem}
-        ItemSeparatorComponent={() => <Divider />}
-        sections={DESIGN_SYSTEM_SECTION_DATA}
-      />
-    </>
+    <SectionList
+      keyExtractor={(item, index) => `${item.route}-${index}`}
+      stickySectionHeadersEnabled={false}
+      contentContainerStyle={[
+        IOStyles.horizontalContentPadding,
+        {
+          paddingTop: IOVisualCostants.appMarginDefault,
+          paddingBottom: screenEndMargin
+        }
+      ]}
+      renderSectionHeader={renderDSSection}
+      renderSectionFooter={renderDSSectionFooter}
+      SectionSeparatorComponent={() => <VSpacer size={8} />}
+      renderItem={renderDSNavItem}
+      ItemSeparatorComponent={() => <Divider />}
+      sections={DESIGN_SYSTEM_SECTION_DATA}
+    />
   );
 };

@@ -1081,7 +1081,12 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -1562,7 +1567,12 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={

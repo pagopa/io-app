@@ -735,7 +735,12 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="export-button"
                           >
                             <View
@@ -1564,7 +1569,12 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="export-button"
                           >
                             <View
@@ -3949,7 +3959,12 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="export-button"
                           >
                             <View
@@ -4845,7 +4860,12 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="export-button"
                           >
                             <View
@@ -5892,7 +5912,12 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="export-button"
                           >
                             <View
@@ -6794,7 +6819,12 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="export-button"
                           >
                             <View
