@@ -55,7 +55,7 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
     }
 
     if (failure.type === IssuanceFailureType.UNEXPECTED) {
-      /* 
+      /*
        * Some errors have an empty object as `failure.reason`, but `failure.reason.message` is still defined.
        * In these cases, we use the `serializeFailureReason` function to provide a more informative message on Mixpanel.
        * To maintain compatibility with the existing failure tracking, we keep the original `failure` object when `failure.reason` is not empty.
