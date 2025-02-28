@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-rc.3](https://github.com/pagopa/io-app/compare/3.0.0-rc.2...3.0.0-rc.3) (2025-02-27)
+
+
+### Chores
+
+* [[IOAPPX-487](https://pagopa.atlassian.net/browse/IOAPPX-487)] Latest version of `react-native-device-info` ([#6753](https://github.com/pagopa/io-app/issues/6753)) ([99a2fbc](https://github.com/pagopa/io-app/commit/99a2fbcd7ca5d80b1e3ae0138c1f022df5253d37))
+
 ## [3.0.0-rc.2](https://github.com/pagopa/io-app/compare/3.0.0-rc.1...3.0.0-rc.2) (2025-02-26)
 
 
