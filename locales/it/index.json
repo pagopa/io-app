@@ -2204,32 +2204,8 @@
             "text": "Qualsiasi operazione di trasferimento di denaro (in contanti o in moneta elettronica) ha un costo, che serve a garantirti che quel pagamento sia sicuro e arrivi a buon fine. \nOgni gestore (o PSP, Prestatore di Servizi di Pagamento), propone un costo di transazione, a seconda delle proprie politiche commerciali e condizioni contrattuali.\nCon pagoPA, questi costi sono trasparenti e il cittadino può scegliere liberamente l’opzione più comoda e conveniente. Verifica l'importo applicato dal PSP che hai scelto, prima di procedere al pagamento."
         },
         "errors": {
-            "TECHNICAL": "C’è un problema tecnico con questo avviso",
-            "DATA": "I dati dell’avviso non sono corretti",
-            "EC": "L’Ente Creditore sta avendo problemi nella risposta",
-            "ONGOING": "Il pagamento è già in corso, riprova tra qualche minuto",
-            "ONGOING_SUBTITLE": "Se è passato troppo tempo, segnalacelo!",
-            "REVOKED": "L’Ente Creditore ha revocato questo avviso",
-            "EXPIRED": "L’avviso è scaduto e non è più possibile pagarlo",
             "GENERIC_ERROR": "Si è verificato un errore imprevisto",
-            "GENERIC_ERROR_SUBTITLE": "Riprova o contattaci per ricevere assistenza.",
-            "DUPLICATED": "Questo avviso è stato già pagato!",
-            "NOT_FOUND": "Non riusciamo a trovare l'avviso",
-            "NOT_FOUND_SUBTITLE": "L’avviso potrebbe essere stato già pagato.\nPer ricevere assistenza, contatta l’Ente Creditore che lo ha emesso.",
-            "INVALID_AMOUNT": "L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.",
-            "PAYMENT_EXPIRED": "Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.",
-            "PAYMENT_UNAVAILABLE": "Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.",
-            "PAYMENT_UNKNOWN": "Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.",
-            "DOMAIN_UNKNOWN": "Questo avviso è stato emesso da un ente non accreditato su pagoPA, il pagamento non può essere effettuato.",
-            "MISSING_PAYMENT_ID": "L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!",
-            "PAYMENT_ONGOING_NOCANCEL": "Un pagamento per questo avviso è già in corso, riprova tra 30 minuti.",
-            "PAYMENT_ONGOING_NOCANCEL_TIMEOUT": "Se hai già atteso 30 minuti e il pagamento risulta ancora bloccato utilizza il pulsante qui sotto per inviarci una segnalazione.",
-            "PAYMENT_ONGOING_CANCELLED": "È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.",
-            "PAYMENT_ONGOING_CANCELLED_TIMEOUT": "L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.",
-            "contactECsubtitle": "Contatta l’Ente per maggiori informazioni.",
-            "assistanceLabel": "Per ricevere assistenza usa il codice:",
-            "sendReport": "Invia segnalazione",
-            "loadingData": "Errore durante il caricamento, riprova."
+            "GENERIC_ERROR_SUBTITLE": "Riprova o contattaci per ricevere assistenza."
         },
         "walletCardTransaction": {
             "contextualHelpTitle": "Transazioni effettuate con questo metodo",

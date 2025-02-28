@@ -2074,32 +2074,8 @@
             "title": "Warum Transaktionsgebühren?"
         },
         "errors": {
-            "TECHNICAL": "Es gibt ein technisches Problem mit dieser Zahlungsmitteilung",
-            "DATA": "Die Angaben in der Zahlungsmitteilung sind falsch",
-            "EC": "Die Körperschaft hat Probleme bei der Beantwortung",
-            "ONGOING": "Die Zahlung ist bereits im Gange, bitte versuche es in ein paar Minuten erneut.",
-            "ONGOING_SUBTITLE": "Wenn es zu lange her ist, lasse es uns wissen!",
-            "REVOKED": "Die Körperschaft hat diese Zahlungsmitteilung widerrufen",
-            "EXPIRED": "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr gezahlt werden",
             "GENERIC_ERROR": "Ein unerwarteter Fehler ist aufgetreten",
-            "GENERIC_ERROR_SUBTITLE": "Bitte versuche es erneut oder kontaktiere uns.",
-            "DUPLICATED": "Diese Aufforderung wurde bereits bezahlt!",
-            "NOT_FOUND": "Wir können die Zahlungsmitteilung nicht finden",
-            "NOT_FOUND_SUBTITLE": "Möglicherweise wurde die Zahlungsmitteilung bereits bezahlt. Wende dich bitte an die Körperschaft, die sie ausgestellt hat.",
-            "INVALID_AMOUNT": "Der in der Zahlungsmitteilung angegebene Betrag ist falsch. Wenn du die Daten manuell eingegeben hast, überprüfe bitte, ob sie korrekt sind und versuche es erneut.",
-            "PAYMENT_EXPIRED": "Die Zahlung für diese Zahlungsmitteilung ist nicht mehr möglich, da sie abgelaufen ist.",
-            "PAYMENT_UNAVAILABLE": "Die Zahlung für diese Zahlungsmitteilung ist zur Zeit nicht möglich. Bitte versuche es später noch einmal.",
-            "PAYMENT_UNKNOWN": "Diese Zahlungsmitteilung wird von der ausstellenden Körperschaft nicht anerkannt, die Zahlung kann nicht durchgeführt werden.",
-            "DOMAIN_UNKNOWN": "Dieser Zahlungsmitteilung wurde von einer nicht bei pagoPA akkreditierten Körperschaft ausgestellt, die Zahlung kann nicht durchgeführt werden.",
-            "MISSING_PAYMENT_ID": "Die Körperschaft, die diese Zahlungsmitteilung ausgestellt hat, hat zur Zeit Probleme mit der Zahlungsabwicklung. Versuche es erneut!",
-            "PAYMENT_ONGOING_NOCANCEL": "Eine Zahlung für diese Zahlungsmitteilung ist bereits im Gange, bitte versuche es in 30 Minuten erneut.",
-            "PAYMENT_ONGOING_NOCANCEL_TIMEOUT": "Wenn du bereits 30 Minuten gewartet hast und die Zahlung immer noch blockiert ist, verwende bitte die Schaltfläche unten, um uns eine Nachricht zu senden.",
-            "PAYMENT_ONGOING_CANCELLED": "Dein vorheriger Zahlungsversuch wird abgebrochen, du kannst es in {{remainingMinutes}} Minuten erneut versuchen.",
-            "PAYMENT_ONGOING_CANCELLED_TIMEOUT": "Der Abbruch dieser Zahlung wurde vor mehr als 15 Minuten beantragt, ist aber immer noch blockiert. Bitte benutze die Schaltfläche unten, um uns eine Nachricht zu senden.",
-            "contactECsubtitle": "Wende dich für weitere Informationen an die Körperschaft.",
-            "assistanceLabel": "Verwende für die Unterstützung den Code:",
-            "sendReport": "Schreib uns",
-            "loadingData": "Fehler beim Laden, bitte versuche es erneut."
+            "GENERIC_ERROR_SUBTITLE": "Bitte versuche es erneut oder kontaktiere uns."
         },
         "walletCardTransaction": {
             "contextualHelpTitle": "Mit dieser Zahlungsmethode durchgeführte Transaktionen"
