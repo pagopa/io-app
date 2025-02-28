@@ -387,7 +387,7 @@ export const IOScrollView = ({
   );
 };
 
-const renderActionButtons = (
+export const renderActionButtons = (
   actions: IOScrollViewActions,
   extraBottomMargin: number
 ) => {

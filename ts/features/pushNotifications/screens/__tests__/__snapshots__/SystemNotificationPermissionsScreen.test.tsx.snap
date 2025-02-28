@@ -784,7 +784,12 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="notifications-modal-open-system-settings-button"
                           >
                             <View
