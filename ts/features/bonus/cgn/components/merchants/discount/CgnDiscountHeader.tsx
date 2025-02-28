@@ -6,7 +6,6 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useHeaderHeight } from "@react-navigation/elements";
 import { StyleSheet, View } from "react-native";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import I18n from "../../../../../../i18n";
@@ -26,8 +25,6 @@ export const CgnDiscountHeader = ({
     ? styles.backgroundNewItem
     : styles.backgroundDefault;
 
-  const headerHeight = useHeaderHeight();
-
   const { isNew, discount, name, productCategories } = discountDetails;
 
   return (
@@ -36,7 +33,6 @@ export const CgnDiscountHeader = ({
       style={[
         IOStyles.horizontalContentPadding,
         {
-          paddingTop: headerHeight,
           backgroundColor: discountColor.backgroundColor,
           paddingBottom: 24
         }
@@ -63,7 +59,7 @@ export const CgnDiscountHeader = ({
             <VSpacer size={12} />
           </>
         )}
-        <H3>{name}</H3>
+        <H3 color="grey-850">{name}</H3>
         <VSpacer size={12} />
         <HStack space={4} style={{ flexWrap: "wrap" }}>
           {productCategories.map(categoryKey => (

@@ -5,7 +5,6 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -175,7 +174,6 @@ const ReceiptDetailsScreen = () => {
           : undefined
       }
     >
-      <FocusAwareStatusBar barStyle={"dark-content"} />
       <View style={[styles.wrapper, { backgroundColor }]}>
         {/* The following line is used to show the background color gray that overlay the basic one which is white */}
         <View style={[styles.bottomBackground, { backgroundColor }]} />
