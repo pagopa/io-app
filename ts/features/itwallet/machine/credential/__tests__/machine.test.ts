@@ -116,6 +116,8 @@ describe("itwCredentialIssuanceMachine", () => {
   const handleSessionExpired = jest.fn();
   const trackStartAddCredential = jest.fn();
   const trackAddCredential = jest.fn();
+  const trackCredentialIssuingDataShare = jest.fn();
+  const trackCredentialIssuingDataShareAccepted = jest.fn();
 
   const getWalletAttestation = jest.fn();
   const requestCredential = jest.fn();
@@ -143,7 +145,9 @@ describe("itwCredentialIssuanceMachine", () => {
       unflagCredentialAsRequested,
       handleSessionExpired,
       trackStartAddCredential,
-      trackAddCredential
+      trackAddCredential,
+      trackCredentialIssuingDataShare,
+      trackCredentialIssuingDataShareAccepted
     },
     actors: {
       getWalletAttestation:
