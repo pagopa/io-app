@@ -276,6 +276,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                               />
                               <React.Fragment>
                                 <TabNavigation
+                                  includeContentMargins={false}
                                   selectedIndex={0}
                                   tabAlignment="start"
                                 >
@@ -382,9 +383,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                               collapsable={false}
                               contentContainerStyle={
                                 [
-                                  {
-                                    "paddingHorizontal": 24,
-                                  },
+                                  {},
                                   {
                                     "flexGrow": 1,
                                     "justifyContent": "flex-start",
