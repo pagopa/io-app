@@ -1,4 +1,3 @@
-import { StyleSheet, View } from "react-native";
 import {
   Body,
   ContentWrapper,
@@ -6,13 +5,17 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useRef } from "react";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { isCgnActivationLoading } from "../../store/reducers/activation";
-import { cgnActivationCancel } from "../../store/actions/activation";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { cgnActivationCancel } from "../../store/actions/activation";
+import { isCgnActivationLoading } from "../../store/reducers/activation";
 
 const styles = StyleSheet.create({
   container: {
@@ -28,27 +31,35 @@ const styles = StyleSheet.create({
   }
 });
 
-const LoadingComponent = () => (
-  <SafeAreaView style={styles.container}>
-    <ContentWrapper>
-      <View style={styles.content}>
-        <View
-          accessible={false}
-          accessibilityElementsHidden={true}
-          importantForAccessibility={"no-hide-descendants"}
-        >
-          <LoadingIndicator />
+const LoadingComponent = () => {
+  const ref = useRef<View>(null);
+
+  useOnFirstRender(() => {
+    setAccessibilityFocus(ref);
+  });
+
+  return (
+    <SafeAreaView style={styles.container} accessible ref={ref}>
+      <ContentWrapper>
+        <View style={styles.content}>
+          <View
+            accessible={false}
+            accessibilityElementsHidden={true}
+            importantForAccessibility={"no-hide-descendants"}
+          >
+            <LoadingIndicator />
+          </View>
+          <VSpacer size={24} />
+          <H3 style={styles.contentTitle}>
+            {I18n.t("bonus.cgn.activation.loading.caption")}
+          </H3>
+          <VSpacer size={24} />
+          <Body>{I18n.t("bonus.cgn.activation.loading.subCaption")}</Body>
         </View>
-        <VSpacer size={24} />
-        <H3 style={styles.contentTitle}>
-          {I18n.t("bonus.cgn.activation.loading.caption")}
-        </H3>
-        <VSpacer size={24} />
-        <Body>{I18n.t("bonus.cgn.activation.loading.subCaption")}</Body>
-      </View>
-    </ContentWrapper>
-  </SafeAreaView>
-);
+      </ContentWrapper>
+    </SafeAreaView>
+  );
+};
 
 const ErrorComponent = () => {
   const dispatch = useIODispatch();
