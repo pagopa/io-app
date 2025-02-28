@@ -1,7 +1,7 @@
 import {
   BodySmall,
   Divider,
-  H3,
+  H2,
   IOVisualCostants,
   ListItemNav,
   VSpacer,
@@ -108,9 +108,9 @@ export const DesignSystem = () => {
     section: { title: string; description?: string };
   }) => (
     <VStack space={4}>
-      <H3 weight="Bold" color={theme["textHeading-default"]}>
+      <H2 weight="Bold" color={theme["textHeading-default"]}>
         {title}
-      </H3>
+      </H2>
       {description && (
         <BodySmall weight={"Regular"} color={theme["textBody-tertiary"]}>
           {description}

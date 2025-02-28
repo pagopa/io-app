@@ -4,14 +4,15 @@ import Placeholder from "rn-placeholder";
 
 type Props = {
   hasIcons?: boolean;
+  count?: number;
 };
 
 export function CgnMerchantListSkeleton(props: Props) {
-  const { hasIcons = false } = props;
+  const { hasIcons = false, count = 6 } = props;
 
   return (
     <View testID="CgnMerchantListSkeleton">
-      {new Array(6).fill(null).map((_, index) => (
+      {new Array(count).fill(null).map((_, index) => (
         <View key={index} testID={`CgnMerchantListSkeleton-Item-${index}`}>
           <View
             style={{

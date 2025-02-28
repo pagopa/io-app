@@ -479,7 +479,8 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >

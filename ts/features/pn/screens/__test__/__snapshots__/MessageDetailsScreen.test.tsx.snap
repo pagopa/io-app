@@ -2262,7 +2262,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -3105,7 +3105,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,

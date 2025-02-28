@@ -411,7 +411,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -1011,7 +1011,12 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -1264,7 +1269,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -1864,7 +1869,12 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -2236,7 +2246,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,

@@ -366,7 +366,12 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
                         onResponderTerminate={[Function]}
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
-                        style={{}}
+                        style={
+                          {
+                            "alignSelf": "stretch",
+                            "flexShrink": 0,
+                          }
+                        }
                       >
                         <View
                           style={
@@ -968,7 +973,12 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                         onResponderTerminate={[Function]}
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
-                        style={{}}
+                        style={
+                          {
+                            "alignSelf": "stretch",
+                            "flexShrink": 0,
+                          }
+                        }
                       >
                         <View
                           style={
