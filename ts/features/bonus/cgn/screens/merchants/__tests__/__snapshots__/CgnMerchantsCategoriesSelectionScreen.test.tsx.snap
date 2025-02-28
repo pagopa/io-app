@@ -194,6 +194,113 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                       }
                     >
                       <RCTScrollView
+                        ItemSeparatorComponent={[Function]}
+                        ListFooterComponent={
+                          <React.Fragment>
+                            <React.Fragment>
+                              <Divider />
+                              <ListItemAction
+                                accessibilityLabel="How are categories ordered by?"
+                                label="How are categories ordered by?"
+                                onPress={[Function]}
+                                variant="primary"
+                              />
+                              <Modal
+                                accessibilityPositionChangeAnnouncement=""
+                                accessible={false}
+                                backdropComponent={[Function]}
+                                enableDismissOnClose={true}
+                                footerComponent={[Function]}
+                                handleComponent={[Function]}
+                                handleComponentAccessibility={
+                                  {
+                                    "accessible": false,
+                                  }
+                                }
+                                hardwareAccelerated={false}
+                                importantForAccessibility="yes"
+                                onDismiss={[Function]}
+                                snapPoints={
+                                  [
+                                    10,
+                                  ]
+                                }
+                                style={
+                                  {
+                                    "borderCurve": "continuous",
+                                    "borderTopLeftRadius": 24,
+                                    "borderTopRightRadius": 24,
+                                    "overflow": "hidden",
+                                  }
+                                }
+                                visible={true}
+                              >
+                                <BottomSheetContent>
+                                  <View
+                                    onLayout={[Function]}
+                                  >
+                                    <View
+                                      style={
+                                        {
+                                          "paddingBottom": 0,
+                                        }
+                                      }
+                                    >
+                                      <ForwardRef>
+                                        To facilitate your search and improve your experience, we have organized the categories according to frequency of use. This information is not tied to your profile, but is based on aggregate data from all users who use Carta Giovani Nazionale and have consented to data processing.
+                                      </ForwardRef>
+                                    </View>
+                                  </View>
+                                </BottomSheetContent>
+                              </Modal>
+                            </React.Fragment>
+                          </React.Fragment>
+                        }
+                        ListHeaderComponent={
+                          <React.Fragment>
+                            <View
+                              accessible={true}
+                              onLayout={[Function]}
+                            >
+                              <ForwardRef
+                                accessibilityLabel="Discover opportunities"
+                                accessibilityRole="header"
+                                color="black"
+                              >
+                                Discover opportunities
+                              </ForwardRef>
+                            </View>
+                            <React.Fragment>
+                              <VSpacer
+                                size={16}
+                              />
+                              <React.Fragment>
+                                <TabNavigation
+                                  selectedIndex={0}
+                                  tabAlignment="start"
+                                >
+                                  <ForwardRef
+                                    accessibilityLabel="By category"
+                                    icon="initiatives"
+                                    label="By category"
+                                    onPress={[Function]}
+                                    testID="cgn-merchants-tab-CGN_CATEGORIES"
+                                  />
+                                  <ForwardRef
+                                    accessibilityLabel="By partner"
+                                    icon="merchant"
+                                    label="By partner"
+                                    onPress={[Function]}
+                                    testID="cgn-merchants-tab-CGN_MERCHANTS_ALL"
+                                  />
+                                </TabNavigation>
+                                <VSpacer
+                                  size={16}
+                                />
+                              </React.Fragment>
+                            </React.Fragment>
+                          </React.Fragment>
+                        }
                         collapsable={false}
                         contentContainerStyle={
                           [
@@ -204,597 +311,621 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                             {},
                           ]
                         }
+                        data={[]}
                         decelerationRate="normal"
+                        getItem={[Function]}
+                        getItemCount={[Function]}
+                        keyExtractor={[Function]}
+                        onContentSizeChange={[Function]}
+                        onLayout={[Function]}
+                        onMomentumScrollBegin={[Function]}
+                        onMomentumScrollEnd={[Function]}
                         onScroll={[Function]}
+                        onScrollBeginDrag={[Function]}
+                        onScrollEndDrag={[Function]}
                         refreshControl={
                           <RefreshControlMock
                             onRefresh={[Function]}
                             refreshing={false}
                           />
                         }
+                        refreshing={false}
+                        removeClippedSubviews={false}
+                        renderItem={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
+                        stickyHeaderIndices={[]}
+                        viewabilityConfigCallbackPairs={[]}
                       >
                         <RCTRefreshControl />
                         <View>
                           <View
-                            accessible={true}
+                            collapsable={false}
                             onLayout={[Function]}
                           >
-                            <Text
-                              accessibilityLabel="Discover opportunities"
-                              accessibilityRole="header"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title1"
-                              maxFontSizeMultiplier={1.5}
+                            <View
+                              accessible={true}
+                              onLayout={[Function]}
+                            >
+                              <Text
+                                accessibilityLabel="Discover opportunities"
+                                accessibilityRole="header"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title1"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 26,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 34,
+                                    },
+                                  ]
+                                }
+                              >
+                                Discover opportunities
+                              </Text>
+                            </View>
+                            <View
                               style={
+                                {
+                                  "height": 16,
+                                }
+                              }
+                            />
+                            <RCTScrollView
+                              centerContent={true}
+                              collapsable={false}
+                              contentContainerStyle={
                                 [
-                                  {},
                                   {
-                                    "color": "#0E0F13",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 26,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 34,
+                                    "flexGrow": 1,
+                                    "paddingHorizontal": 24,
+                                  },
+                                  {
+                                    "justifyContent": "flex-start",
+                                  },
+                                ]
+                              }
+                              handlerTag={2}
+                              handlerType="NativeViewGestureHandler"
+                              horizontal={true}
+                              onGestureHandlerEvent={[Function]}
+                              onGestureHandlerStateChange={[Function]}
+                              showsHorizontalScrollIndicator={false}
+                              waitFor={
+                                [
+                                  {
+                                    "current": null,
                                   },
                                 ]
                               }
                             >
-                              Discover opportunities
-                            </Text>
+                              <View>
+                                <View
+                                  onLayout={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexBasis": 100,
+                                        "flexGrow": 0,
+                                        "flexShrink": 1,
+                                      },
+                                      {
+                                        "marginEnd": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    accessibilityLabel="By category"
+                                    accessibilityRole="button"
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": false,
+                                        "expanded": undefined,
+                                        "selected": true,
+                                      }
+                                    }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
+                                    testID="cgn-merchants-tab-CGN_CATEGORIES"
+                                  >
+                                    <View
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "alignSelf": "flex-start",
+                                            "borderCurve": "continuous",
+                                            "borderRadius": 64,
+                                            "borderWidth": 1,
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
+                                            "paddingHorizontal": 16,
+                                            "paddingVertical": 8,
+                                          },
+                                          {
+                                            "columnGap": 4,
+                                          },
+                                          false,
+                                          {
+                                            "backgroundColor": undefined,
+                                            "borderColor": undefined,
+                                          },
+                                          false,
+                                          false,
+                                        ]
+                                      }
+                                    >
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={16}
+                                        bbWidth={16}
+                                        focusable={false}
+                                        height={16}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 16,
+                                              "width": 16,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={16}
+                                      >
+                                        <RNSVGGroup
+                                          color="#0B3EE3"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M3 0a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3zM2 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3zm1 10a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3v-5a3 3 0 0 0-3-3H3zm-1 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-5zm14-3a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3v-5a3 3 0 0 0-3-3h-5zm-1 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5zm1-16a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3h-5zm-1 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V3z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                      <Text
+                                        allowFontScaling={true}
+                                        maxFontSizeMultiplier={1.5}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0B3EE3",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 14,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": undefined,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        By category
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                                <View
+                                  onLayout={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexBasis": 100,
+                                        "flexGrow": 0,
+                                        "flexShrink": 1,
+                                      },
+                                      {
+                                        "marginEnd": 0,
+                                      },
+                                      false,
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    accessibilityLabel="By partner"
+                                    accessibilityRole="button"
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": false,
+                                        "expanded": undefined,
+                                        "selected": false,
+                                      }
+                                    }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
+                                    testID="cgn-merchants-tab-CGN_MERCHANTS_ALL"
+                                  >
+                                    <View
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "alignSelf": "flex-start",
+                                            "borderCurve": "continuous",
+                                            "borderRadius": 64,
+                                            "borderWidth": 1,
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
+                                            "paddingHorizontal": 16,
+                                            "paddingVertical": 8,
+                                          },
+                                          {
+                                            "columnGap": 4,
+                                          },
+                                          false,
+                                          {
+                                            "backgroundColor": undefined,
+                                            "borderColor": undefined,
+                                          },
+                                          false,
+                                          false,
+                                        ]
+                                      }
+                                    >
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={16}
+                                        bbWidth={16}
+                                        focusable={false}
+                                        height={16}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0E0F13",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 16,
+                                              "width": 16,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0E0F13"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={16}
+                                      >
+                                        <RNSVGGroup
+                                          color="#0E0F13"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M0 5V9C0 10.6602 0.776973 12.1764 2 13.0935V22H1C0.447715 22 0 22.4477 0 23C0 23.5523 0.447716 24 1 24H2V24H22V24H23C23.5523 24 24 23.5523 24 23C24 22.4477 23.5523 22 23 22H22V13.0935C23.223 12.1764 24 10.6602 24 9V5C24 2.23858 21.7614 0 19 0H5C2.23858 0 0 2.23858 0 5ZM20 13.9446C19.7697 13.9811 19.5332 14 19.2916 14C17.9025 14 16.6807 13.3699 15.8304 12.3893C15.7456 12.2914 15.5914 12.2909 15.5059 12.3883C14.6426 13.3716 13.4024 14 11.9996 14C10.597 14 9.35702 13.3718 8.49367 12.3887C8.40819 12.2914 8.25406 12.2919 8.1692 12.3897C7.31896 13.3701 6.09726 14 4.70842 14C4.46675 14 4.23027 13.9811 4 13.9446V22H8V18C8 16.8954 8.89543 16 10 16H14C15.1046 16 16 16.8954 16 18V22H20V13.9446ZM4.70842 12C3.28253 12 2 10.7295 2 9V5C2 3.34315 3.34315 2 5 2H7.30078V9.87156C6.95182 11.148 5.88415 12 4.70842 12ZM9.30078 9.69118C9.30852 9.71511 9.31542 9.7395 9.32144 9.76433C9.64273 11.0892 10.7528 12 11.9996 12C13.2464 12 14.3565 11.0892 14.6778 9.76433C14.684 9.73866 14.6912 9.71347 14.6992 9.68878V2H9.30078V9.69118ZM19.2916 12C18.1159 12 17.0482 11.148 16.6992 9.87156V2H19C20.6569 2 22 3.34315 22 5V9C22 10.7295 20.7175 12 19.2916 12ZM14 18V22H10V18H14Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                      <Text
+                                        allowFontScaling={true}
+                                        maxFontSizeMultiplier={1.5}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 14,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": undefined,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        By partner
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </RCTScrollView>
+                            <View
+                              style={
+                                {
+                                  "height": 16,
+                                }
+                              }
+                            />
                           </View>
                           <View
-                            style={
-                              {
-                                "height": 16,
-                              }
-                            }
-                          />
-                          <RCTScrollView
-                            centerContent={true}
-                            collapsable={false}
-                            contentContainerStyle={
-                              [
-                                {
-                                  "flexGrow": 1,
-                                  "paddingHorizontal": 24,
-                                },
-                                {
-                                  "justifyContent": "flex-start",
-                                },
-                              ]
-                            }
-                            handlerTag={2}
-                            handlerType="NativeViewGestureHandler"
-                            horizontal={true}
-                            onGestureHandlerEvent={[Function]}
-                            onGestureHandlerStateChange={[Function]}
-                            showsHorizontalScrollIndicator={false}
-                            waitFor={
-                              [
-                                {
-                                  "current": null,
-                                },
-                              ]
-                            }
-                          >
-                            <View>
-                              <View
-                                onLayout={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "alignItems": "center",
-                                      "flexBasis": 100,
-                                      "flexGrow": 0,
-                                      "flexShrink": 1,
-                                    },
-                                    {
-                                      "marginEnd": 8,
-                                    },
-                                    false,
-                                  ]
-                                }
-                              >
-                                <View
-                                  accessibilityLabel="By category"
-                                  accessibilityRole="button"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": false,
-                                      "expanded": undefined,
-                                      "selected": true,
-                                    }
-                                  }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
-                                  testID="cgn-merchants-tab-CGN_CATEGORIES"
-                                >
-                                  <View
-                                    style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "alignSelf": "flex-start",
-                                          "borderCurve": "continuous",
-                                          "borderRadius": 64,
-                                          "borderWidth": 1,
-                                          "flexDirection": "row",
-                                          "justifyContent": "center",
-                                          "paddingHorizontal": 16,
-                                          "paddingVertical": 8,
-                                        },
-                                        {
-                                          "columnGap": 4,
-                                        },
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                          "borderColor": undefined,
-                                        },
-                                        false,
-                                        false,
-                                      ]
-                                    }
-                                  >
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={16}
-                                      bbWidth={16}
-                                      focusable={false}
-                                      height={16}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 16,
-                                            "width": 16,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0B3EE3"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={16}
-                                    >
-                                      <RNSVGGroup
-                                        color="#0B3EE3"
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M3 0a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3zM2 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3zm1 10a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3v-5a3 3 0 0 0-3-3H3zm-1 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-5zm14-3a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3v-5a3 3 0 0 0-3-3h-5zm-1 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5zm1-16a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3h-5zm-1 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V3z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
-                                            [
-                                              "fill",
-                                              "fillRule",
-                                            ]
-                                          }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
-                                    <Text
-                                      allowFontScaling={true}
-                                      maxFontSizeMultiplier={1.5}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 14,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": undefined,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      By category
-                                    </Text>
-                                  </View>
-                                </View>
-                              </View>
-                              <View
-                                onLayout={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "alignItems": "center",
-                                      "flexBasis": 100,
-                                      "flexGrow": 0,
-                                      "flexShrink": 1,
-                                    },
-                                    {
-                                      "marginEnd": 0,
-                                    },
-                                    false,
-                                  ]
-                                }
-                              >
-                                <View
-                                  accessibilityLabel="By partner"
-                                  accessibilityRole="button"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": false,
-                                      "expanded": undefined,
-                                      "selected": false,
-                                    }
-                                  }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
-                                  testID="cgn-merchants-tab-CGN_MERCHANTS_ALL"
-                                >
-                                  <View
-                                    style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "alignSelf": "flex-start",
-                                          "borderCurve": "continuous",
-                                          "borderRadius": 64,
-                                          "borderWidth": 1,
-                                          "flexDirection": "row",
-                                          "justifyContent": "center",
-                                          "paddingHorizontal": 16,
-                                          "paddingVertical": 8,
-                                        },
-                                        {
-                                          "columnGap": 4,
-                                        },
-                                        false,
-                                        {
-                                          "backgroundColor": undefined,
-                                          "borderColor": undefined,
-                                        },
-                                        false,
-                                        false,
-                                      ]
-                                    }
-                                  >
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={16}
-                                      bbWidth={16}
-                                      focusable={false}
-                                      height={16}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 16,
-                                            "width": 16,
-                                          },
-                                        ]
-                                      }
-                                      tintColor="#0E0F13"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={16}
-                                    >
-                                      <RNSVGGroup
-                                        color="#0E0F13"
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M0 5V9C0 10.6602 0.776973 12.1764 2 13.0935V22H1C0.447715 22 0 22.4477 0 23C0 23.5523 0.447716 24 1 24H2V24H22V24H23C23.5523 24 24 23.5523 24 23C24 22.4477 23.5523 22 23 22H22V13.0935C23.223 12.1764 24 10.6602 24 9V5C24 2.23858 21.7614 0 19 0H5C2.23858 0 0 2.23858 0 5ZM20 13.9446C19.7697 13.9811 19.5332 14 19.2916 14C17.9025 14 16.6807 13.3699 15.8304 12.3893C15.7456 12.2914 15.5914 12.2909 15.5059 12.3883C14.6426 13.3716 13.4024 14 11.9996 14C10.597 14 9.35702 13.3718 8.49367 12.3887C8.40819 12.2914 8.25406 12.2919 8.1692 12.3897C7.31896 13.3701 6.09726 14 4.70842 14C4.46675 14 4.23027 13.9811 4 13.9446V22H8V18C8 16.8954 8.89543 16 10 16H14C15.1046 16 16 16.8954 16 18V22H20V13.9446ZM4.70842 12C3.28253 12 2 10.7295 2 9V5C2 3.34315 3.34315 2 5 2H7.30078V9.87156C6.95182 11.148 5.88415 12 4.70842 12ZM9.30078 9.69118C9.30852 9.71511 9.31542 9.7395 9.32144 9.76433C9.64273 11.0892 10.7528 12 11.9996 12C13.2464 12 14.3565 11.0892 14.6778 9.76433C14.684 9.73866 14.6912 9.71347 14.6992 9.68878V2H9.30078V9.69118ZM19.2916 12C18.1159 12 17.0482 11.148 16.6992 9.87156V2H19C20.6569 2 22 3.34315 22 5V9C22 10.7295 20.7175 12 19.2916 12ZM14 18V22H10V18H14Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
-                                            [
-                                              "fill",
-                                              "fillRule",
-                                            ]
-                                          }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
-                                    <Text
-                                      allowFontScaling={true}
-                                      maxFontSizeMultiplier={1.5}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 14,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": undefined,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      By partner
-                                    </Text>
-                                  </View>
-                                </View>
-                              </View>
-                            </View>
-                          </RCTScrollView>
-                          <View
-                            style={
-                              {
-                                "height": 16,
-                              }
-                            }
-                          />
-                          <View
-                            style={
-                              {
-                                "backgroundColor": "#D2D6E3",
-                                "height": 0.5,
-                              }
-                            }
-                          />
-                          <View
-                            accessibilityLabel="How are categories ordered by?"
-                            accessibilityRole="button"
-                            accessibilityState={
-                              {
-                                "busy": undefined,
-                                "checked": undefined,
-                                "disabled": undefined,
-                                "expanded": undefined,
-                                "selected": undefined,
-                              }
-                            }
-                            accessibilityValue={
-                              {
-                                "max": undefined,
-                                "min": undefined,
-                                "now": undefined,
-                                "text": undefined,
-                              }
-                            }
-                            accessible={true}
-                            collapsable={false}
-                            focusable={true}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onResponderGrant={[Function]}
-                            onResponderMove={[Function]}
-                            onResponderRelease={[Function]}
-                            onResponderTerminate={[Function]}
-                            onResponderTerminationRequest={[Function]}
-                            onStartShouldSetResponder={[Function]}
-                            onTouchEnd={[Function]}
+                            onLayout={[Function]}
                           >
                             <View
-                              accessibilityElementsHidden={true}
-                              importantForAccessibility="no-hide-descendants"
                               style={
-                                [
-                                  {
-                                    "marginHorizontal": -24,
-                                    "paddingHorizontal": 24,
-                                    "paddingVertical": 12,
-                                  },
-                                  {
-                                    "backgroundColor": undefined,
-                                  },
-                                ]
+                                {
+                                  "backgroundColor": "#D2D6E3",
+                                  "height": 0.5,
+                                }
                               }
+                            />
+                            <View
+                              accessibilityLabel="How are categories ordered by?"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": undefined,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
+                                accessibilityElementsHidden={true}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   [
                                     {
-                                      "alignItems": "center",
-                                      "flexDirection": "row",
-                                      "justifyContent": "space-between",
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
                                     },
                                     {
-                                      "columnGap": 18,
-                                    },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "backgroundColor": undefined,
                                     },
                                   ]
                                 }
                               >
                                 <View
                                   style={
-                                    {
-                                      "flexGrow": 1,
-                                      "flexShrink": 1,
-                                    }
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                    ]
                                   }
-                                >
-                                  <Text
-                                    allowFontScaling={true}
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#0B3EE3",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 20,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    How are categories ordered by?
-                                  </Text>
-                                </View>
-                              </View>
-                            </View>
-                          </View>
-                          <Modal
-                            accessibilityPositionChangeAnnouncement=""
-                            accessible={false}
-                            backdropComponent={[Function]}
-                            enableDismissOnClose={true}
-                            footerComponent={[Function]}
-                            handleComponent={[Function]}
-                            handleComponentAccessibility={
-                              {
-                                "accessible": false,
-                              }
-                            }
-                            hardwareAccelerated={false}
-                            importantForAccessibility="yes"
-                            onDismiss={[Function]}
-                            snapPoints={
-                              [
-                                10,
-                              ]
-                            }
-                            style={
-                              {
-                                "borderCurve": "continuous",
-                                "borderTopLeftRadius": 24,
-                                "borderTopRightRadius": 24,
-                                "overflow": "hidden",
-                              }
-                            }
-                            visible={true}
-                          >
-                            <RCTScrollView
-                              style={
-                                {
-                                  "flex": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View>
-                                <View
-                                  onLayout={[Function]}
                                 >
                                   <View
                                     style={
                                       {
-                                        "paddingBottom": 0,
+                                        "flexGrow": 1,
+                                        "flexShrink": 1,
                                       }
                                     }
                                   >
                                     <Text
                                       allowFontScaling={true}
-                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
-                                            "color": "#555C70",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                            "lineHeight": 24,
+                                            "fontWeight": "600",
+                                            "lineHeight": 20,
                                           },
                                         ]
                                       }
                                     >
-                                      To facilitate your search and improve your experience, we have organized the categories according to frequency of use. This information is not tied to your profile, but is based on aggregate data from all users who use Carta Giovani Nazionale and have consented to data processing.
+                                      How are categories ordered by?
                                     </Text>
                                   </View>
                                 </View>
                               </View>
-                            </RCTScrollView>
-                          </Modal>
+                            </View>
+                            <Modal
+                              accessibilityPositionChangeAnnouncement=""
+                              accessible={false}
+                              backdropComponent={[Function]}
+                              enableDismissOnClose={true}
+                              footerComponent={[Function]}
+                              handleComponent={[Function]}
+                              handleComponentAccessibility={
+                                {
+                                  "accessible": false,
+                                }
+                              }
+                              hardwareAccelerated={false}
+                              importantForAccessibility="yes"
+                              onDismiss={[Function]}
+                              snapPoints={
+                                [
+                                  10,
+                                ]
+                              }
+                              style={
+                                {
+                                  "borderCurve": "continuous",
+                                  "borderTopLeftRadius": 24,
+                                  "borderTopRightRadius": 24,
+                                  "overflow": "hidden",
+                                }
+                              }
+                              visible={true}
+                            >
+                              <RCTScrollView
+                                style={
+                                  {
+                                    "flex": 1,
+                                    "paddingHorizontal": 24,
+                                  }
+                                }
+                              >
+                                <View>
+                                  <View
+                                    onLayout={[Function]}
+                                  >
+                                    <View
+                                      style={
+                                        {
+                                          "paddingBottom": 0,
+                                        }
+                                      }
+                                    >
+                                      <Text
+                                        allowFontScaling={true}
+                                        dynamicTypeRamp="body"
+                                        maxFontSizeMultiplier={1.5}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                              "lineHeight": 24,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        To facilitate your search and improve your experience, we have organized the categories according to frequency of use. This information is not tied to your profile, but is based on aggregate data from all users who use Carta Giovani Nazionale and have consented to data processing.
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                              </RCTScrollView>
+                            </Modal>
+                          </View>
                         </View>
                       </RCTScrollView>
                     </View>

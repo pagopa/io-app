@@ -39,6 +39,7 @@ type IOListView<T> = ComponentProps<typeof IOScrollView> &
     keyExtractor: ((item: T, index: number) => string) | undefined;
     animatedRef?: AnimatedRef<Animated.FlatList<T>>;
     skeleton?: ReactElement;
+    loading?: boolean;
   };
 
 /* Extended gradient area above the actions */
@@ -107,7 +108,8 @@ export const IOListView = <T,>({
   ListEmptyComponent,
   skeleton,
   ItemSeparatorComponent,
-  testID
+  testID,
+  loading
 }: IOListView<T>) => {
   const theme = useIOTheme();
 
@@ -168,14 +170,16 @@ export const IOListView = <T,>({
       ref={animatedRef}
       keyExtractor={keyExtractor}
       data={data}
-      renderItem={
+      renderItem={item =>
         // If the refresh control is active, show the skeleton (if present) instead of the content
-        renderItem
+        loading || refreshControlProps?.refreshing
+          ? skeleton ?? null
+          : renderItem(item)
       }
       testID={testID}
       onScroll={handleScroll}
       ListEmptyComponent={
-        refreshControlProps?.refreshing && skeleton
+        (loading || refreshControlProps?.refreshing) && skeleton
           ? skeleton
           : ListEmptyComponent
       }
