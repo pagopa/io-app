@@ -568,7 +568,12 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={

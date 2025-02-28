@@ -855,7 +855,12 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
-                              style={{}}
+                              style={
+                                {
+                                  "alignSelf": "stretch",
+                                  "flexShrink": 0,
+                                }
+                              }
                             >
                               <View
                                 style={

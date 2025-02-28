@@ -415,7 +415,12 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="message_preconditions_footer_continue"
                           >
                             <View
@@ -1390,7 +1395,12 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="message_preconditions_footer_update"
                           >
                             <View
