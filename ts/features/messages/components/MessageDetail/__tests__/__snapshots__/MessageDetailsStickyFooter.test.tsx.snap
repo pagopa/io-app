@@ -395,7 +395,12 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -1002,7 +1007,12 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -1119,7 +1129,12 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -2068,7 +2083,12 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -2901,7 +2921,12 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -3533,7 +3558,12 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={
@@ -4020,7 +4050,12 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          style={{}}
+                          style={
+                            {
+                              "alignSelf": "stretch",
+                              "flexShrink": 0,
+                            }
+                          }
                         >
                           <View
                             style={

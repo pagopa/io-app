@@ -1,12 +1,16 @@
+import {
+  HeaderSecondLevel,
+  IOCategoryIcons
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import { IOCategoryIcons } from "@pagopa/io-app-design-system";
-import { TranslationKeys } from "../../../../../locales/locales";
+import { StatusBarProps } from "react-native";
 import {
   ProductCategory,
   ProductCategoryEnum
 } from "../../../../../definitions/cgn/merchants/ProductCategory";
-import I18n from "../../../../i18n";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+import { TranslationKeys } from "../../../../../locales/locales";
+import I18n from "../../../../i18n";
 
 export type Category = {
   type: ProductCategory;
@@ -14,6 +18,8 @@ export type Category = {
   nameKey: TranslationKeys;
   colors: string;
   textColor: "white" | "black";
+  statusBarStyle: StatusBarProps["barStyle"];
+  headerVariant: HeaderSecondLevel["variant"];
 };
 
 export const categories: Record<ProductCategory, Category> = {
@@ -22,70 +28,90 @@ export const categories: Record<ProductCategory, Category> = {
     icon: "categCulture",
     nameKey: "bonus.cgn.merchantDetail.categories.cultureAndEntertainment",
     colors: "#AA338B",
-    textColor: "white"
+    textColor: "white",
+    statusBarStyle: "light-content",
+    headerVariant: "contrast"
   },
   [ProductCategoryEnum.health]: {
     type: ProductCategoryEnum.health,
     icon: "categWellness",
     nameKey: "bonus.cgn.merchantDetail.categories.health",
     colors: "#B5D666",
-    textColor: "black"
+    textColor: "black",
+    statusBarStyle: "dark-content",
+    headerVariant: "neutral"
   },
   [ProductCategoryEnum.learning]: {
     type: ProductCategoryEnum.learning,
     icon: "categLearning",
     nameKey: "bonus.cgn.merchantDetail.categories.learning",
     colors: "#2A61AE",
-    textColor: "white"
+    textColor: "white",
+    statusBarStyle: "light-content",
+    headerVariant: "contrast"
   },
   [ProductCategoryEnum.sports]: {
     type: ProductCategoryEnum.sports,
     icon: "categSport",
     nameKey: "bonus.cgn.merchantDetail.categories.sport",
     colors: "#65BE72",
-    textColor: "black"
+    textColor: "black",
+    statusBarStyle: "dark-content",
+    headerVariant: "neutral"
   },
   [ProductCategoryEnum.home]: {
     type: ProductCategoryEnum.home,
     icon: "categHome",
     nameKey: "bonus.cgn.merchantDetail.categories.home",
     colors: "#F8D547",
-    textColor: "black"
+    textColor: "black",
+    statusBarStyle: "dark-content",
+    headerVariant: "neutral"
   },
   [ProductCategoryEnum.telephonyAndInternet]: {
     type: ProductCategoryEnum.telephonyAndInternet,
     icon: "categTelco",
     nameKey: "bonus.cgn.merchantDetail.categories.telco",
     colors: "#0089C7",
-    textColor: "white"
+    textColor: "white",
+    statusBarStyle: "light-content",
+    headerVariant: "contrast"
   },
   [ProductCategoryEnum.bankingServices]: {
     type: ProductCategoryEnum.bankingServices,
     icon: "categFinance",
     nameKey: "bonus.cgn.merchantDetail.categories.finance",
     colors: "#4F51A3",
-    textColor: "white"
+    textColor: "white",
+    statusBarStyle: "light-content",
+    headerVariant: "contrast"
   },
   [ProductCategoryEnum.travelling]: {
     type: ProductCategoryEnum.travelling,
     icon: "categTravel",
     nameKey: "bonus.cgn.merchantDetail.categories.travel",
     colors: "#E02F6E",
-    textColor: "white"
+    textColor: "white",
+    statusBarStyle: "light-content",
+    headerVariant: "contrast"
   },
   [ProductCategoryEnum.sustainableMobility]: {
     type: ProductCategoryEnum.sustainableMobility,
     icon: "categMobility",
     nameKey: "bonus.cgn.merchantDetail.categories.mobility",
     colors: "#00AEB1",
-    textColor: "black"
+    textColor: "black",
+    statusBarStyle: "dark-content",
+    headerVariant: "neutral"
   },
   [ProductCategoryEnum.jobOffers]: {
     type: ProductCategoryEnum.jobOffers,
     icon: "categJobOffers",
     nameKey: "bonus.cgn.merchantDetail.categories.job",
     colors: "#FAAE56",
-    textColor: "black"
+    textColor: "black",
+    statusBarStyle: "dark-content",
+    headerVariant: "neutral"
   }
 };
 
