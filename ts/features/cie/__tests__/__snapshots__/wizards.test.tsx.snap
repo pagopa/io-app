@@ -389,7 +389,12 @@ To enter the IO app without physically using the Electronic Identity Card, you m
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={{}}
+        style={
+          {
+            "alignSelf": "stretch",
+            "flexShrink": 0,
+          }
+        }
         testID="cie-id-wizard-login-with-cie-id"
       >
         <View
@@ -1330,7 +1335,12 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={{}}
+        style={
+          {
+            "alignSelf": "stretch",
+            "flexShrink": 0,
+          }
+        }
         testID="cie-pin-wizard-navigate-to-cie-pin-screen"
       >
         <View
@@ -2378,7 +2388,12 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={{}}
+        style={
+          {
+            "alignSelf": "stretch",
+            "flexShrink": 0,
+          }
+        }
       >
         <View
           style={
@@ -2722,7 +2737,12 @@ exports[`SpidWizard Should match the snapshot 1`] = `
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={{}}
+        style={
+          {
+            "alignSelf": "stretch",
+            "flexShrink": 0,
+          }
+        }
         testID="spid-wizard-navigate-to-idp-selection"
       >
         <View

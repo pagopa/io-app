@@ -333,8 +333,8 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                             >
                               <Text
                                 allowFontScaling={true}
-                                dynamicTypeRamp="title2"
-                                maxFontSizeMultiplier={1.5}
+                                dynamicTypeRamp="title1"
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -342,10 +342,10 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     {
                                       "color": "#0E0F13",
                                       "fontFamily": "Titillio",
-                                      "fontSize": 22,
+                                      "fontSize": 26,
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
-                                      "lineHeight": 33,
+                                      "lineHeight": 34,
                                     },
                                     {
                                       "flexShrink": 1,

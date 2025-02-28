@@ -839,7 +839,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -1771,7 +1776,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -1888,7 +1898,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -2935,7 +2950,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -3875,7 +3895,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -4696,7 +4721,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -4813,7 +4843,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -5749,7 +5784,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -6777,7 +6817,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -7686,7 +7731,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -7803,7 +7853,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -8827,7 +8882,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -9744,7 +9804,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -10542,7 +10607,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -10659,7 +10729,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
@@ -11572,7 +11647,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
