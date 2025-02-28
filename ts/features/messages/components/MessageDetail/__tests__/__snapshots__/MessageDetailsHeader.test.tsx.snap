@@ -453,6 +453,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             Ċentru tas-Saħħa
                           </Text>
                           <Text
+                            accessibilityRole="button"
                             allowFontScaling={true}
                             dynamicTypeRamp="footnote"
                             maxFontSizeMultiplier={1.5}
