@@ -61,6 +61,35 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       ? categoriesScreen
       : merchantsScreen;
 
+  const ListHeaderComponent = (
+    <>
+      <TabNavigation
+        tabAlignment="start"
+        selectedIndex={Object.keys(CgnMerchantsHomeTabRoutes).indexOf(
+          selectedTab
+        )}
+      >
+        {Object.keys(CgnMerchantsHomeTabRoutes).map(routeKey => {
+          const route = routeKey as keyof CgnMerchantsHomeTabParamsList;
+          const onPress = () => setSelectedTab(route);
+
+          const label = tabOptions[route].title;
+          return (
+            <TabItem
+              testID={`cgn-merchants-tab-${route}`}
+              icon={tabOptions[route].icon}
+              label={label}
+              accessibilityLabel={label}
+              key={route}
+              onPress={onPress}
+            />
+          );
+        })}
+      </TabNavigation>
+      <VSpacer size={16} />
+    </>
+  );
+
   return (
     <IOListViewWithLargeHeader
       keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
@@ -86,34 +115,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       renderItem={({ item }) => renderItem(item as any)}
       data={[...data]}
       refreshControlProps={refreshControlProps}
-      ListHeaderComponent={
-        <>
-          <TabNavigation
-            tabAlignment="start"
-            selectedIndex={Object.keys(CgnMerchantsHomeTabRoutes).indexOf(
-              selectedTab
-            )}
-          >
-            {Object.keys(CgnMerchantsHomeTabRoutes).map(routeKey => {
-              const route = routeKey as keyof CgnMerchantsHomeTabParamsList;
-              const onPress = () => setSelectedTab(route);
-
-              const label = tabOptions[route].title;
-              return (
-                <TabItem
-                  testID={`cgn-merchants-tab-${route}`}
-                  icon={tabOptions[route].icon}
-                  label={label}
-                  accessibilityLabel={label}
-                  key={route}
-                  onPress={onPress}
-                />
-              );
-            })}
-          </TabNavigation>
-          <VSpacer size={16} />
-        </>
-      }
+      ListHeaderComponent={ListHeaderComponent}
       skeleton={skeleton}
       ListFooterComponent={ListFooterComponent}
       ListEmptyComponent={ListEmptyComponent}
