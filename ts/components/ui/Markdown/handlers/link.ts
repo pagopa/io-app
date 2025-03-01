@@ -2,27 +2,14 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import I18n from "../../../../i18n";
-import {
-  IO_FIMS_LINK_PREFIX,
-  IO_FIMS_LINK_PROTOCOL,
-  IO_INTERNAL_LINK_PREFIX
-} from "../../../../utils/navigation";
+import { IO_INTERNAL_LINK_PREFIX } from "../../../../utils/navigation";
 import { openWebUrl } from "../../../../utils/url";
 
 export const isIoInternalLink = (href: string): boolean =>
   href.toLowerCase().startsWith(IO_INTERNAL_LINK_PREFIX);
 
-export const isIoFIMSLink = (href: string): boolean =>
-  href.toLowerCase().startsWith(IO_FIMS_LINK_PREFIX);
-
 export const isHttpsLink = (href: string): boolean =>
   href.toLowerCase().startsWith("https://");
-
-export const removeFIMSPrefixFromUrl = (fimsUrlWithProtocol: string) => {
-  // eslint-disable-next-line no-useless-escape
-  const regexp = new RegExp(`^${IO_FIMS_LINK_PROTOCOL}\/\/`, "i");
-  return fimsUrlWithProtocol.replace(regexp, "");
-};
 
 /**
  * a dedicated codec for CustomHandledLink
