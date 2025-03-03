@@ -1165,7 +1165,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                   testID="home_emptyList_retry"
@@ -6827,7 +6828,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                   testID="home_emptyList_retry"

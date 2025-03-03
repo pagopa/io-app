@@ -817,7 +817,12 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
-                              style={{}}
+                              style={
+                                {
+                                  "alignSelf": "stretch",
+                                  "flexShrink": 0,
+                                }
+                              }
                             >
                               <View
                                 style={
