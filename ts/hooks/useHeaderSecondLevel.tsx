@@ -16,6 +16,7 @@ import { useStatusAlertProps } from "./useStatusAlertProps";
 
 type SpecificHookProps = {
   canGoBack?: boolean;
+  ignoreAccessibilityCheck?: boolean;
   /* On the surface, this prop seems useless, but it's used
   to programmatically hide the header.
   See PR#5795 for more details. */
@@ -104,6 +105,7 @@ export const useHeaderSecondLevel = ({
   variant,
   backgroundColor,
   enableDiscreteTransition,
+  ignoreAccessibilityCheck,
   animatedRef
 }: HeaderSecondLevelHookProps) => {
   const alertProps = useStatusAlertProps();
@@ -197,11 +199,12 @@ export const useHeaderSecondLevel = ({
   const headerComponentProps = useMemo(
     () => ({
       title,
+      ignoreAccessibilityCheck,
       ...graphicProps,
       ...backProps,
       ...helpProps
     }),
-    [title, graphicProps, backProps, helpProps]
+    [title, ignoreAccessibilityCheck, graphicProps, backProps, helpProps]
   ) as HeaderProps;
 
   useLayoutEffect(() => {
@@ -209,6 +212,7 @@ export const useHeaderSecondLevel = ({
       header: () => (
         <HeaderSecondLevel
           {...headerComponentProps}
+          ignoreAccessibilityCheck
           transparent={transparent}
         />
       ),
