@@ -57,7 +57,7 @@ export const IdPayCard = (props: IdPayCardProps) => {
               <Body weight="Semibold" color="black">
                 Disponibile
               </Body>
-              <H3 color="blueItalia-500">
+              <H3 testID="idpay-card-amount" color="blueItalia-500">
                 {formatNumberCentsToAmount(props.amount, true, "right")}
               </H3>
             </>
