@@ -34,6 +34,7 @@ import { watchFimsSaga } from "../features/fims/common/saga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import { watchItwSaga } from "../features/itwallet/common/saga";
+import { handleWalletCredentialsRehydration } from "../features/itwallet/credentials/saga/handleWalletCredentialsRehydration";
 import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
@@ -224,6 +225,9 @@ export function* initializeApplicationSaga(
     return;
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
+
+  // Rehydrate wallet with ITW credentials
+  yield* fork(handleWalletCredentialsRehydration);
 
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
