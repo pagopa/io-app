@@ -993,7 +993,12 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="settings-btn"
                           >
                             <View

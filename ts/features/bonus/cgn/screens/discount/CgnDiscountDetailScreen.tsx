@@ -46,6 +46,7 @@ import {
 } from "../../store/reducers/merchants";
 import { cgnOtpDataSelector } from "../../store/reducers/otp";
 import { getCgnUserAgeRange } from "../../utils/dates";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 
 const gradientSafeAreaHeight: IOSpacingScale = 96;
 
@@ -203,7 +204,8 @@ const CgnDiscountDetailScreen = () => {
     },
     backgroundColor,
     canGoBack: true,
-    supportRequest: true
+    supportRequest: true,
+    variant: "neutral"
   });
 
   useEffect(() => {
@@ -256,6 +258,10 @@ const CgnDiscountDetailScreen = () => {
   if (discountDetails && merchantDetails) {
     return (
       <>
+        <FocusAwareStatusBar
+          backgroundColor={backgroundColor}
+          barStyle={"dark-content"}
+        />
         <Animated.ScrollView
           style={{ flexGrow: 1 }}
           onScroll={scrollHandler}

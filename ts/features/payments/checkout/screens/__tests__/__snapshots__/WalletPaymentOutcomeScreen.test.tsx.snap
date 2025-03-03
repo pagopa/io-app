@@ -473,7 +473,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                   testID="wallet-payment-outcome-success-button"
@@ -1785,7 +1786,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -2392,7 +2393,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -3703,7 +3705,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -4291,7 +4293,8 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -5602,7 +5605,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -6175,7 +6178,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -7486,7 +7490,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -8073,7 +8077,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -9384,7 +9389,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -9927,7 +9932,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -11358,7 +11364,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -11873,7 +11879,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -13304,7 +13311,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -13877,7 +13884,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -15188,7 +15196,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -15711,7 +15719,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -17022,7 +17031,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -17629,7 +17638,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -18940,7 +18950,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -19527,7 +19537,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -20838,7 +20849,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -21445,7 +21456,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -22756,7 +22768,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -23299,7 +23311,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -24730,7 +24743,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -25337,7 +25350,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -26648,7 +26662,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -27255,7 +27269,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -28566,7 +28581,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -29181,7 +29196,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -30492,7 +30508,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -31079,7 +31095,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -32390,7 +32407,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -32935,7 +32952,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -34366,7 +34384,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -34953,7 +34971,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -36264,7 +36283,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -36857,7 +36876,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -38400,7 +38420,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -39029,7 +39049,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -40340,7 +40361,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -40886,7 +40907,8 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -42317,7 +42339,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -42924,7 +42946,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -44355,7 +44378,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -44928,7 +44951,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -46239,7 +46263,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -46854,7 +46878,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -48165,7 +48190,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -48752,7 +48777,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -50063,7 +50089,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -50670,7 +50696,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -51981,7 +52008,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
