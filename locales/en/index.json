@@ -375,7 +375,8 @@
             "alertTitle": "Do you want to logout?",
             "alertMessage": "You will need to login again with SPID or CIE to use the app.",
             "loading": "You're leaving IO",
-            "exit": "Exit"
+            "exit": "Exit",
+            "bottomsheetMessage": "Dovrai entrare di nuovo con SPID o CIE per usare l’app.\n\nSe accedi a IO da un dispositivo diverso da quello abituale, per motivi di sicurezza la funzionalità Documenti su IO verrà reimpostata."
         },
         "errors": {
             "load": "Error loading the profile",
