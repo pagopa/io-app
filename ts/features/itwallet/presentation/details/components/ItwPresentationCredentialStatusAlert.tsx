@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Alert, Body } from "@pagopa/io-app-design-system";
+import { Alert } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import {
@@ -121,7 +121,7 @@ const IssuerDynamicErrorAlert = ({ message }: IssuerDynamicErrorAlertProps) => {
   const bottomSheet = useIOBottomSheetAutoresizableModal(
     {
       title: localizedMessage.title,
-      component: <Body>{localizedMessage.description}</Body>
+      component: <IOMarkdown content={localizedMessage.description} />
     },
     128
   );
