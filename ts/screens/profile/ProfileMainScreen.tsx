@@ -30,8 +30,10 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
+import { itwLifecycleIsOperationalOrValid } from "../../features/itwallet/lifecycle/store/selectors";
 import DeveloperModeSection from "./DeveloperModeSection";
 import { ProfileMainScreenTopBanner } from "./ProfileMainScreenTopBanner";
+import { useLogoutBottomsheet } from "./components/LogoutBottomsheet";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
@@ -54,8 +56,19 @@ const ProfileMainScreenFC = () => {
   const navigation = useIONavigation();
   const { show } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
+  const selectItwLifecycleIsOperationalOrValid = useIOSelector(
+    itwLifecycleIsOperationalOrValid
+  );
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
   const idResetTap = useRef<number>();
+
+  const handleContinue = useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.PROFILE_LOGOUT
+    });
+  }, [navigation]);
+
+  const logoutBottomsheet = useLogoutBottomsheet(handleContinue);
 
   useEffect(
     () => () => {
@@ -68,24 +81,29 @@ const ProfileMainScreenFC = () => {
   );
 
   const onLogoutPress = useCallback(() => {
-    Alert.alert(
-      I18n.t("profile.logout.alertTitle"),
-      I18n.t("profile.logout.alertMessage"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel")
-        },
-        {
-          text: I18n.t("profile.logout.exit"),
-          onPress: () =>
-            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-              screen: ROUTES.PROFILE_LOGOUT
-            })
-        }
-      ],
-      { cancelable: true }
-    );
-  }, [navigation]);
+    if (selectItwLifecycleIsOperationalOrValid) {
+      logoutBottomsheet.present();
+    } else {
+      Alert.alert(
+        I18n.t("profile.logout.alertTitle"),
+        I18n.t("profile.logout.alertMessage"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel")
+          },
+          {
+            text: I18n.t("profile.logout.exit"),
+            onPress: handleContinue
+          }
+        ],
+        { cancelable: true }
+      );
+    }
+  }, [
+    handleContinue,
+    logoutBottomsheet,
+    selectItwLifecycleIsOperationalOrValid
+  ]);
 
   const resetAppTapCounter = useCallback(() => {
     setTapsOnAppVersion(0);
@@ -233,6 +251,7 @@ const ProfileMainScreenFC = () => {
       </ContentWrapper>
       {/* Developer Section */}
       {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
+      {logoutBottomsheet.bottomSheet}
     </>
   );
 };
