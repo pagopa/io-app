@@ -394,5 +394,6 @@ describe("generateTokenRegistrationTime", () => {
     jest.useFakeTimers().setSystemTime(generationDate);
     const tokenRegistrationTime = generateTokenRegistrationTime();
     expect(tokenRegistrationTime).toBe(generationDate.getTime());
+    jest.useRealTimers();
   });
 });
