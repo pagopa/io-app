@@ -4070,6 +4070,9 @@
                 }
             },
             "details": {
+                "a11y": {
+                  "announce": "Dettaglio metodo di pagamento"
+                },
                 "payPal": {
                     "banner": {
                         "title": "Vuoi pagare in 3 rate?",

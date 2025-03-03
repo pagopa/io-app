@@ -8,7 +8,13 @@ import {
 } from "@pagopa/io-app-design-system";
 
 import { PropsWithChildren, useState } from "react";
-import { ColorValue, LayoutChangeEvent, StyleSheet, View } from "react-native";
+import {
+  AccessibilityInfo,
+  ColorValue,
+  LayoutChangeEvent,
+  StyleSheet,
+  View
+} from "react-native";
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
@@ -21,6 +27,8 @@ import {
   PaymentCard,
   PaymentCardComponentProps
 } from "../../common/components/PaymentCard";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import I18n from "../../../../i18n";
 
 type Props = {
   card: PaymentCardComponentProps;
@@ -54,6 +62,7 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
       contentOffsetY: translationY,
       triggerOffset: titleHeight
     },
+    ignoreAccessibilityCheck: true,
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef
   });
@@ -69,6 +78,12 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
       setTitleHeight(height - insets.top - IOVisualCostants.headerHeight);
     }
   };
+
+  useOnFirstRender(() => {
+    AccessibilityInfo.announceForAccessibility(
+      I18n.t("features.payments.details.a11y.announce")
+    );
+  });
 
   return (
     <Animated.ScrollView
