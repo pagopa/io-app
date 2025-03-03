@@ -1,5 +1,3 @@
-import { View } from "react-native";
-import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import {
   ButtonOutline,
   ButtonSolid,
@@ -9,11 +7,16 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { EmailString } from "@pagopa/ts-commons/lib/strings";
+import { View } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import I18n from "../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { WithTestID } from "../../../types/WithTestID";
 import {
   addTicketCustomField,
@@ -23,14 +26,11 @@ import {
   zendeskFCICategory,
   zendeskFciId
 } from "../../../utils/supportAssistance";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../zendesk/store/actions";
 import { fciSignatureRequestIdSelector } from "../store/reducers/fciSignatureRequest";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { InfoScreenComponent } from "./InfoScreenComponent";
 
 export type Props = WithTestID<{
