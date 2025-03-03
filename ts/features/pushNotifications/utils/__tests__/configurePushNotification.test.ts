@@ -1,7 +1,7 @@
 import { constNull, constUndefined } from "fp-ts/lib/function";
 import PushNotification from "react-native-push-notification";
 import { Platform } from "react-native";
-import configurePushNotifications from "../configurePushNotification";
+import { configurePushNotifications } from "../configurePushNotification";
 
 jest.mock("../../../../boot/configureStoreAndPersistor", () => ({
   get store() {
