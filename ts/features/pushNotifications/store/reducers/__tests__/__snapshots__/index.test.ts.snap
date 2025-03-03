@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Main pushNotifications reducer notificationsReducer initial state should match snapshot 1`] = `
+exports[`index Main pushNotifications reducer notificationsReducer initial state should match snapshot 1`] = `
 {
   "environment": {
     "applicationInitialized": false,
@@ -24,7 +24,7 @@ exports[`Main pushNotifications reducer notificationsReducer initial state shoul
 }
 `;
 
-exports[`Main pushNotifications reducer persistedNotificationsReducer initial state should match snapshot 1`] = `
+exports[`index Main pushNotifications reducer persistedNotificationsReducer initial state should match snapshot 1`] = `
 {
   "environment": {
     "applicationInitialized": false,

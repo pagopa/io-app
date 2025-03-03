@@ -10,7 +10,7 @@ import {
 } from "redux-persist";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { isDevEnv } from "../../../../utils/environment";
+import { isDevEnv, isTestEnv } from "../../../../utils/environment";
 import { userFromSuccessLoginSelector } from "../../../login/info/store/selectors";
 import { hasUserSeenSystemNotificationsPromptSelector } from "../selectors";
 import { generateTokenRegistrationTime } from "../../utils";
@@ -93,3 +93,5 @@ export const shouldShowEngagementScreenSelector = (state: GlobalState) =>
   !hasUserSeenSystemNotificationsPromptSelector(state) &&
   state.notifications.environment.applicationInitialized &&
   !state.notifications.environment.onboardingInstructionsShown;
+
+export const testable = isTestEnv ? { migrations } : undefined;
