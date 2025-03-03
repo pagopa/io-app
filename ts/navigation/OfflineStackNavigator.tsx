@@ -3,13 +3,12 @@ import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavig
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { isGestureEnabled } from "../utils/navigation";
 import { AppParamsList } from "./params/AppParamsList";
-import ROUTES from "./routes";
 
 const Stack = createStackNavigator<AppParamsList>();
 
 const OfflineStackNavigator = () => (
   <Stack.Navigator
-    initialRouteName={ROUTES.MAIN}
+    initialRouteName={ITW_ROUTES.MAIN}
     screenOptions={{
       gestureEnabled: false,
       headerMode: "screen"
