@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-rc.4](https://github.com/pagopa/io-app/compare/3.0.0-rc.3...3.0.0-rc.4) (2025-02-28)
+
+
+### Features
+
+* [[PE-988](https://pagopa.atlassian.net/browse/PE-988),[PE-919](https://pagopa.atlassian.net/browse/PE-919),[IOBP-1193](https://pagopa.atlassian.net/browse/IOBP-1193)] CGN merchants swipe back, `IOListViewWithLargeHeader ` ([#6764](https://github.com/pagopa/io-app/issues/6764)) ([a49b20e](https://github.com/pagopa/io-app/commit/a49b20e1e5315c826dda74f9be8746a3e7247e16))
+
+
+### Bug Fixes
+
+* [[IOPLT-996](https://pagopa.atlassian.net/browse/IOPLT-996)] Enable quick dev access in the `IdentificationLockScreen` with screen reader enabled ([#6769](https://github.com/pagopa/io-app/issues/6769)) ([2da6efc](https://github.com/pagopa/io-app/commit/2da6efce71aaef12883a705218d380bfba91a446))
+
+
+### Chores
+
+* [[IOAPPX-476](https://pagopa.atlassian.net/browse/IOAPPX-476)] Change `StatusBar` style according to the current color scheme ([#6680](https://github.com/pagopa/io-app/issues/6680)) ([04d2853](https://github.com/pagopa/io-app/commit/04d2853a3b061562465eca2aab189a5ced8f195b))
+* [[PE-996](https://pagopa.atlassian.net/browse/PE-996)] Accessibility for CGN loading component ([#6754](https://github.com/pagopa/io-app/issues/6754)) ([c72ba19](https://github.com/pagopa/io-app/commit/c72ba1935ee943656c42f72e394f26d5a9e4d578))
+
 ## [3.0.0-rc.3](https://github.com/pagopa/io-app/compare/3.0.0-rc.2...3.0.0-rc.3) (2025-02-27)
 
 
