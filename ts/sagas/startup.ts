@@ -96,6 +96,7 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import {
+  isStartupLoaded,
   StartupStatusEnum,
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
@@ -224,6 +225,11 @@ export function* initializeApplicationSaga(
     return;
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
+
+  const startupStatus = yield* select(isStartupLoaded);
+  if (startupStatus === StartupStatusEnum.OFFLINE) {
+    return;
+  }
 
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF

@@ -1,7 +1,10 @@
 import { getType } from "typesafe-actions";
-import { setIsBlockingScreen, setOfflineAccessReason } from "../actions";
+import {
+  resetOfflineAccessReason,
+  setIsBlockingScreen,
+  setOfflineAccessReason
+} from "../actions";
 import { Action } from "../../../../store/actions/types";
-import { setConnectionStatus } from "../../../connectivity/store/actions";
 
 export enum OfflineAccessReasonEnum {
   DEVICE_OFFLINE = "DEVICE_OFFLINE", // The device is offline when the app is started
@@ -34,12 +37,10 @@ export const ingressScreenReducer = (
       };
     // reset value of offlineAccessReason when user back online
     // Evaluate whether this data reset is needed
-    case getType(setConnectionStatus):
+    case getType(resetOfflineAccessReason):
       return {
         ...state,
-        offlineAccessReason: action.payload
-          ? undefined
-          : state.offlineAccessReason
+        offlineAccessReason: undefined
       };
     default:
       return state;
