@@ -76,6 +76,7 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
       scrollEventThrottle={8}
       snapToOffsets={[0, titleHeight]}
       snapToEnd={false}
+      importantForAccessibility="no"
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: 48,
@@ -88,7 +89,11 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
         barStyle="light-content"
       />
       <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
-        <View style={styles.cardContainer} onLayout={getTitleHeight}>
+        <View
+          style={styles.cardContainer}
+          onLayout={getTitleHeight}
+          accessibilityRole="summary"
+        >
           <PaymentCard {...card} />
         </View>
       </View>
