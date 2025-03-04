@@ -2956,6 +2956,7 @@
         "title": "Ciao {{name}}!",
         "titleProfileName": "Ciao {{profileName}}!",
         "titleValidation": "Autorizza l'operazione",
+        "titleOffline": "Ciao!",
         "logout": "Esci",
         "logoutProfileName": "Non sei {{profileName}}?",
         "logoutDescription": "Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.",
@@ -4495,6 +4496,7 @@
                     "optionalClaims": "Dati facoltativi",
                     "claimUnavailable": "Non disponibile",
                     "optionalClaimsAlert": "I dati facoltativi ti offrono servizi più completi.",
+                    "missingClaimsAlert": "Alcuni dati facoltativi non sono disponibili nel tuo Portafoglio.",
                     "disclaimer": [
                         "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
                         "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."

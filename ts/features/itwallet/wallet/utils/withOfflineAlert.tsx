@@ -5,8 +5,12 @@ import {
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
 import { startApplicationInitialization } from "../../../../store/actions/application";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { isConnectedSelector } from "../../../connectivity/store/selectors";
+import { startupLoadSuccess } from "../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../store/reducers/startup";
+import { resetOfflineAccessReason } from "../../../ingress/store/actions";
 
 const MODAL_BOTTOM_PADDING = 150;
 
@@ -19,9 +23,19 @@ const MODAL_BOTTOM_PADDING = 150;
 export const withOfflineAlert =
   (Screen: React.ComponentType<any>) => (props: any) => {
     const dispatch = useIODispatch();
+    const isConnected = useIOSelector(isConnectedSelector);
 
     const handleAppRestart = () => {
-      dispatch(startApplicationInitialization());
+      if (isConnected) {
+        // Reset the offline access reason.
+        // Since this state is `undefined` when the user is online,
+        // the startup saga will proceed without blocking.
+        dispatch(resetOfflineAccessReason());
+        // Dispatch this action to mount the correct navigator.
+        dispatch(startupLoadSuccess(StartupStatusEnum.INITIAL));
+        // restart startup saga
+        dispatch(startApplicationInitialization());
+      }
     };
 
     const offlineInfoModal = useIOBottomSheetAutoresizableModal(

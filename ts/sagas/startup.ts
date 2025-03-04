@@ -32,7 +32,10 @@ import {
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
-import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
+import {
+  isBlockingScreenSelector,
+  offlineAccessReasonSelector
+} from "../features/ingress/store/selectors";
 import { watchItwSaga } from "../features/itwallet/common/saga";
 import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
@@ -224,6 +227,18 @@ export function* initializeApplicationSaga(
     return;
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
+
+  // `isConnectedSelector` was **discarded** as it might be unclear.
+  // `isStartupLoaded` was **not used** because it required dispatching the action
+  // that initializes the new navigator before user authentication,
+  // leading to visual issues.
+  // `offlineAccessReasonSelector` was **chosen** because it reliably checks
+  // if the user is offline, resets to `undefined` when back online,
+  // and can be dispatched without causing visual glitches.
+  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
+  if (offlineAccessReason) {
+    return;
+  }
 
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
