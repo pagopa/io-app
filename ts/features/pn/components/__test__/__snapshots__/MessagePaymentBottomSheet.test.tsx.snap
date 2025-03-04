@@ -335,19 +335,15 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
                       }
                     >
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -365,14 +361,22 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <View />
+                          <View>
+                            <View
+                              style={
+                                {
+                                  "height": 0,
+                                }
+                              }
+                            />
+                          </View>
                         </RCTScrollView>
                       </Modal>
                     </View>
@@ -723,19 +727,15 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                       }
                     >
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -753,9 +753,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -2498,6 +2498,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                 </View>
                               </View>
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 0,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>

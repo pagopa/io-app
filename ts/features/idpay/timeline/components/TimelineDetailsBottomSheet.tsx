@@ -24,7 +24,7 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   IOBottomSheetModal,
-  useIOBottomSheetAutoresizableModal
+  useIOBottomSheetModal
 } from "../../../../utils/hooks/bottomSheet";
 import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
@@ -126,14 +126,11 @@ const useTimelineDetailsBottomSheet = (
     </ContentWrapper>
   );
 
-  const modal = useIOBottomSheetAutoresizableModal(
-    {
-      component: getModalContent(),
-      title: titleComponent,
-      footer: modalFooter
-    },
-    150
-  );
+  const modal = useIOBottomSheetModal({
+    component: getModalContent(),
+    title: titleComponent,
+    footer: modalFooter
+  });
 
   const present = (operation: OperationListDTO) =>
     pipe(
