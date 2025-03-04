@@ -97,13 +97,11 @@ export const IngressScreen = () => {
       isOfflineAccessEnabled;
 
     if (visualizeOfflineWallet) {
-      dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
+      dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE));
       dispatch(
         identificationRequest(false, false, undefined, undefined, {
           onSuccess: () => {
-            dispatch(
-              setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE)
-            );
+            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
           }
         })
       );

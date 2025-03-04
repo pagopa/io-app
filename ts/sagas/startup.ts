@@ -32,7 +32,10 @@ import {
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
-import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
+import {
+  isBlockingScreenSelector,
+  offlineAccessReasonSelector
+} from "../features/ingress/store/selectors";
 import { watchItwSaga } from "../features/itwallet/common/saga";
 import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
@@ -96,7 +99,6 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import {
-  isStartupLoaded,
   StartupStatusEnum,
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
@@ -226,8 +228,13 @@ export function* initializeApplicationSaga(
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
 
-  const startupStatus = yield* select(isStartupLoaded);
-  if (startupStatus === StartupStatusEnum.OFFLINE) {
+  // The startup saga should stop when the offline stream starts.
+  // Using `offlineAccessReasonSelector` instead of `isStartupLoaded`
+  // prevents dispatching the state set action too early, avoiding
+  // mounting the new route before biometric authentication, which
+  // would cause a graphical glitch.
+  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
+  if (offlineAccessReason && offlineAccessReason !== undefined) {
     return;
   }
 
