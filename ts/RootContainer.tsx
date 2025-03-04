@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
-import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
+import { configurePushNotifications } from "./features/pushNotifications/utils/configurePushNotification";
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
