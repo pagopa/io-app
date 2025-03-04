@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-rc.5](https://github.com/pagopa/io-app/compare/3.0.0-rc.4...3.0.0-rc.5) (2025-03-03)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2042](https://pagopa.atlassian.net/browse/SIW-2042)] Use IOMarkdown when displaying a remote message inside credential presentation  ([#6768](https://github.com/pagopa/io-app/issues/6768)) ([d15e769](https://github.com/pagopa/io-app/commit/d15e769cd4168cde2733b63ce70b7d09791ee3ad))
+
+
+### Bug Fixes
+
+* [[IOPID-2484](https://pagopa.atlassian.net/browse/IOPID-2484)] Fix `MIXPANEL_SET_ENABLED` event tracking in the onBoarding flow ([#6766](https://github.com/pagopa/io-app/issues/6766)) ([8e26261](https://github.com/pagopa/io-app/commit/8e2626195acde1aa763b3d54019540b009608ffa))
+
+
+### Chores
+
+* [[IOBP-1231](https://pagopa.atlassian.net/browse/IOBP-1231)] Removed total amount from IdPayCard if reward type is `EXPENSE` ([#6771](https://github.com/pagopa/io-app/issues/6771)) ([191a24e](https://github.com/pagopa/io-app/commit/191a24ea70b8fa73c18faae143eea2a1ddf08b73))
+* **IT Wallet:** [[SIW-2019](https://pagopa.atlassian.net/browse/SIW-2019)] Improve integrity service warm up and availability check ([#6746](https://github.com/pagopa/io-app/issues/6746)) ([085181b](https://github.com/pagopa/io-app/commit/085181ba76299a59301013957c1d3856f829e3cf))
+
+## [3.0.0-rc.4](https://github.com/pagopa/io-app/compare/3.0.0-rc.3...3.0.0-rc.4) (2025-02-28)
+
+
+### Features
+
+* [[PE-988](https://pagopa.atlassian.net/browse/PE-988),[PE-919](https://pagopa.atlassian.net/browse/PE-919),[IOBP-1193](https://pagopa.atlassian.net/browse/IOBP-1193)] CGN merchants swipe back, `IOListViewWithLargeHeader ` ([#6764](https://github.com/pagopa/io-app/issues/6764)) ([a49b20e](https://github.com/pagopa/io-app/commit/a49b20e1e5315c826dda74f9be8746a3e7247e16))
+
+
+### Bug Fixes
+
+* [[IOPLT-996](https://pagopa.atlassian.net/browse/IOPLT-996)] Enable quick dev access in the `IdentificationLockScreen` with screen reader enabled ([#6769](https://github.com/pagopa/io-app/issues/6769)) ([2da6efc](https://github.com/pagopa/io-app/commit/2da6efce71aaef12883a705218d380bfba91a446))
+
+
+### Chores
+
+* [[IOAPPX-476](https://pagopa.atlassian.net/browse/IOAPPX-476)] Change `StatusBar` style according to the current color scheme ([#6680](https://github.com/pagopa/io-app/issues/6680)) ([04d2853](https://github.com/pagopa/io-app/commit/04d2853a3b061562465eca2aab189a5ced8f195b))
+* [[PE-996](https://pagopa.atlassian.net/browse/PE-996)] Accessibility for CGN loading component ([#6754](https://github.com/pagopa/io-app/issues/6754)) ([c72ba19](https://github.com/pagopa/io-app/commit/c72ba1935ee943656c42f72e394f26d5a9e4d578))
+
+## [3.0.0-rc.3](https://github.com/pagopa/io-app/compare/3.0.0-rc.2...3.0.0-rc.3) (2025-02-27)
+
+
+### Chores
+
+* [[IOAPPX-487](https://pagopa.atlassian.net/browse/IOAPPX-487)] Latest version of `react-native-device-info` ([#6753](https://github.com/pagopa/io-app/issues/6753)) ([99a2fbc](https://github.com/pagopa/io-app/commit/99a2fbcd7ca5d80b1e3ae0138c1f022df5253d37))
+
 ## [3.0.0-rc.2](https://github.com/pagopa/io-app/compare/3.0.0-rc.1...3.0.0-rc.2) (2025-02-26)
 
 

@@ -662,7 +662,8 @@ exports[`fimshistoryKoScreen should match snapshot 1`] = `
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                   testID="test-retry"
