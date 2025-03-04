@@ -33,7 +33,6 @@ import { isDevEnv } from "../../utils/environment";
 import { itwLifecycleIsOperationalOrValid } from "../../features/itwallet/lifecycle/store/selectors";
 import DeveloperModeSection from "./DeveloperModeSection";
 import { ProfileMainScreenTopBanner } from "./ProfileMainScreenTopBanner";
-import { useLogoutBottomsheet } from "./components/LogoutBottomsheet";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
@@ -68,8 +67,6 @@ const ProfileMainScreenFC = () => {
     });
   }, [navigation]);
 
-  const logoutBottomsheet = useLogoutBottomsheet(handleContinue);
-
   useEffect(
     () => () => {
       hideModal();
@@ -81,29 +78,23 @@ const ProfileMainScreenFC = () => {
   );
 
   const onLogoutPress = useCallback(() => {
-    if (selectItwLifecycleIsOperationalOrValid) {
-      logoutBottomsheet.present();
-    } else {
-      Alert.alert(
-        I18n.t("profile.logout.alertTitle"),
-        I18n.t("profile.logout.alertMessage"),
-        [
-          {
-            text: I18n.t("global.buttons.cancel")
-          },
-          {
-            text: I18n.t("profile.logout.exit"),
-            onPress: handleContinue
-          }
-        ],
-        { cancelable: true }
-      );
-    }
-  }, [
-    handleContinue,
-    logoutBottomsheet,
-    selectItwLifecycleIsOperationalOrValid
-  ]);
+    Alert.alert(
+      I18n.t("profile.logout.alertTitle"),
+      selectItwLifecycleIsOperationalOrValid
+        ? I18n.t("profile.logout.activeWiAlertMessage")
+        : I18n.t("profile.logout.alertMessage"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel")
+        },
+        {
+          text: I18n.t("profile.logout.exit"),
+          onPress: handleContinue
+        }
+      ],
+      { cancelable: true }
+    );
+  }, [handleContinue, selectItwLifecycleIsOperationalOrValid]);
 
   const resetAppTapCounter = useCallback(() => {
     setTapsOnAppVersion(0);
@@ -251,7 +242,6 @@ const ProfileMainScreenFC = () => {
       </ContentWrapper>
       {/* Developer Section */}
       {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
-      {logoutBottomsheet.bottomSheet}
     </>
   );
 };
