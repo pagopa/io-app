@@ -11,7 +11,10 @@ import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { trackAuthenticationError } from "../../common/analytics";
+import {
+  trackAuthenticationError,
+  trackAuthenticationStart
+} from "../../common/analytics";
 import { FimsUpdateAppAlert } from "../../common/components/FimsUpdateAppAlert";
 import { FimsParamsList } from "../../common/navigation";
 import { FimsSSOFullScreenError } from "../components/FimsFullScreenErrors";
@@ -25,10 +28,29 @@ import {
   fimsAuthenticationFailedSelector,
   fimsLoadingStateSelector
 } from "../store/selectors";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 export type FimsFlowHandlerScreenRouteParams = {
+  /* The label on the button that started the FIMS flow */
   ctaText: string;
+  /* The Relying Party's url that starts the FIMS flow,
+   * without the iosso:// protocol prefix */
   ctaUrl: string;
+  /* A Relying Party is always associated with a service.
+   * This is the fiscal code of the service organization */
+  organizationFiscalCode: string | undefined;
+  /* A Relying Party is always associated with a service.
+   * This is the name of the service organization */
+  organizationName: string | undefined;
+  /* A Relying Party is always associated with a service.
+   * This is service id */
+  serviceId: ServiceId;
+  /* A Relying Party is always associated with a service.
+   * This is service name */
+  serviceName: string | undefined;
+  /* This is the entry point from which the FIMS's flow
+   * has been starded (e.g., the screen's route name) */
+  source: string;
 };
 
 type FimsFlowHandlerScreenRouteProps = IOStackNavigationRouteProps<
@@ -39,7 +61,15 @@ type FimsFlowHandlerScreenRouteProps = IOStackNavigationRouteProps<
 export const FimsFlowHandlerScreen = (
   props: FimsFlowHandlerScreenRouteProps
 ) => {
-  const { ctaText, ctaUrl } = props.route.params;
+  const {
+    ctaText,
+    ctaUrl,
+    organizationFiscalCode,
+    organizationName,
+    serviceId,
+    serviceName,
+    source
+  } = props.route.params;
   const dispatch = useIODispatch();
 
   const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
@@ -73,6 +103,14 @@ export const FimsFlowHandlerScreen = (
 
   useEffect(() => {
     if (ctaUrl && !requiresAppUpdate) {
+      trackAuthenticationStart(
+        serviceId,
+        serviceName,
+        organizationName,
+        organizationFiscalCode,
+        ctaText,
+        source
+      );
       dispatch(fimsGetConsentsListAction.request({ ctaText, ctaUrl }));
     } else if (requiresAppUpdate) {
       trackAuthenticationError(
@@ -83,7 +121,17 @@ export const FimsFlowHandlerScreen = (
         "update_required"
       );
     }
-  }, [ctaText, ctaUrl, dispatch, requiresAppUpdate]);
+  }, [
+    ctaText,
+    ctaUrl,
+    dispatch,
+    organizationFiscalCode,
+    organizationName,
+    requiresAppUpdate,
+    serviceId,
+    serviceName,
+    source
+  ]);
 
   if (requiresAppUpdate) {
     return <FimsUpdateAppAlert />;

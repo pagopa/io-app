@@ -3,14 +3,12 @@ import { memo, ReactNode, useMemo } from "react";
 import { Alert, View } from "react-native";
 import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";
 import I18n from "../../../../../i18n.ts";
-import NavigationService from "../../../../../navigation/NavigationService.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../../store/hooks.ts";
-import { FIMS_ROUTES } from "../../../../fims/common/navigation";
 import {
   CREDENTIALS_MAP,
   trackCredentialDeleteProperties,
@@ -20,8 +18,7 @@ import {
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsRemove } from "../../../credentials/store/actions";
-import { trackAuthenticationStart } from "../../../../fims/common/analytics";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId.ts";
+import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks/index.tsx";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -133,6 +130,8 @@ const getCredentialActions = (credentialType: string): ReactNode =>
  * Renders the IPatente service action item
  */
 const IPatenteListItemAction = () => {
+  const { startFIMSAuthenticationFlow } =
+    useFIMSRemoteServiceConfiguration("iPatente");
   const ctaConfig = useIOSelector(itwIPatenteCtaConfigSelector);
 
   if (!ctaConfig?.visibility) {
@@ -143,32 +142,13 @@ const IPatenteListItemAction = () => {
     "features.itWallet.presentation.credentialDetails.actions.openIPatente"
   );
 
-  const trackIPatenteAuthenticationStart = (label: string) =>
-    trackAuthenticationStart(
-      ctaConfig.service_id as ServiceId,
-      ctaConfig.service_name,
-      ctaConfig.service_organization_name,
-      ctaConfig.service_organization_fiscal_code,
-      label,
-      "credential_detail"
-    );
-
   return (
     <ListItemAction
       testID="openIPatenteActionTestID"
       variant="primary"
       icon="externalLink"
       label={label}
-      onPress={() => {
-        trackIPatenteAuthenticationStart(label);
-        NavigationService.navigate(FIMS_ROUTES.MAIN, {
-          screen: FIMS_ROUTES.CONSENTS,
-          params: {
-            ctaText: label,
-            ctaUrl: ctaConfig.url
-          }
-        });
-      }}
+      onPress={() => startFIMSAuthenticationFlow(label, ctaConfig.url)}
     />
   );
 };
