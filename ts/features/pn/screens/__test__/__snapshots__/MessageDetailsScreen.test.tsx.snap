@@ -535,6 +535,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   Ċentru tas-Saħħa
                                 </Text>
                                 <Text
+                                  accessibilityRole="button"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.5}

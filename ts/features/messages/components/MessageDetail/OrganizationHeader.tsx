@@ -68,6 +68,7 @@ export const OrganizationHeader = ({
           {organizationName}
         </Body>
         <BodySmall
+          accessibilityRole="button"
           color={theme["interactiveElem-default"]}
           onPress={navigateToServiceDetails}
           weight="Semibold"
