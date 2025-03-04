@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-rc.5](https://github.com/pagopa/io-app/compare/3.0.0-rc.4...3.0.0-rc.5) (2025-03-03)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2042](https://pagopa.atlassian.net/browse/SIW-2042)] Use IOMarkdown when displaying a remote message inside credential presentation  ([#6768](https://github.com/pagopa/io-app/issues/6768)) ([d15e769](https://github.com/pagopa/io-app/commit/d15e769cd4168cde2733b63ce70b7d09791ee3ad))
+
+
+### Bug Fixes
+
+* [[IOPID-2484](https://pagopa.atlassian.net/browse/IOPID-2484)] Fix `MIXPANEL_SET_ENABLED` event tracking in the onBoarding flow ([#6766](https://github.com/pagopa/io-app/issues/6766)) ([8e26261](https://github.com/pagopa/io-app/commit/8e2626195acde1aa763b3d54019540b009608ffa))
+
+
+### Chores
+
+* [[IOBP-1231](https://pagopa.atlassian.net/browse/IOBP-1231)] Removed total amount from IdPayCard if reward type is `EXPENSE` ([#6771](https://github.com/pagopa/io-app/issues/6771)) ([191a24e](https://github.com/pagopa/io-app/commit/191a24ea70b8fa73c18faae143eea2a1ddf08b73))
+* **IT Wallet:** [[SIW-2019](https://pagopa.atlassian.net/browse/SIW-2019)] Improve integrity service warm up and availability check ([#6746](https://github.com/pagopa/io-app/issues/6746)) ([085181b](https://github.com/pagopa/io-app/commit/085181ba76299a59301013957c1d3856f829e3cf))
+
 ## [3.0.0-rc.4](https://github.com/pagopa/io-app/compare/3.0.0-rc.3...3.0.0-rc.4) (2025-02-28)
 
 
