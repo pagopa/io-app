@@ -7,7 +7,6 @@ import {
   getAppVersion,
   isVersionSupported
 } from "../../../../../utils/appVersion";
-import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 
 const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 
@@ -18,14 +17,11 @@ const itwRemoteConfigSelector = (state: GlobalState) =>
   );
 
 /**
- * Returns the remote config about IT-WALLET feature flag
- * If the app is offline, we assume IT-WALLET is enabled to ensure
- * its usage on offline contexts
+ * Returns the remote config for IT-WALLET
  */
 export const isItwEnabledSelector = createSelector(
   itwRemoteConfigSelector,
-  isConnectedSelector,
-  (itwConfig, isConnected): boolean =>
+  (itwConfig): boolean =>
     pipe(
       itwConfig,
       O.map(
@@ -37,7 +33,7 @@ export const isItwEnabledSelector = createSelector(
             getAppVersion()
           ) && itw.enabled
       ),
-      O.getOrElse(() => !isConnected) // If app is offline, we assume IT-WALLET is enabled
+      O.getOrElse(() => false)
     )
 );
 
