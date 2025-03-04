@@ -37,6 +37,7 @@ import {
   offlineAccessReasonSelector
 } from "../features/ingress/store/selectors";
 import { watchItwSaga } from "../features/itwallet/common/saga";
+import { handleWalletCredentialsRehydration } from "../features/itwallet/credentials/saga/handleWalletCredentialsRehydration";
 import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
@@ -227,6 +228,9 @@ export function* initializeApplicationSaga(
     return;
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
+
+  // Rehydrate wallet with ITW credentials
+  yield* fork(handleWalletCredentialsRehydration);
 
   // `isConnectedSelector` was **discarded** as it might be unclear.
   // `isStartupLoaded` was **not used** because it required dispatching the action
@@ -528,7 +532,7 @@ export function* initializeApplicationSaga(
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
-  userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
+  userProfile = yield* call(checkEmailSaga) ?? userProfile;
 
   // Check for both profile notifications permissions (anonymous
   // content && reminder) and system notifications permissions.
