@@ -4471,6 +4471,7 @@
                     "optionalClaims": "Dati facoltativi",
                     "claimUnavailable": "Non disponibile",
                     "optionalClaimsAlert": "I dati facoltativi ti offrono servizi più completi.",
+                    "missingClaimsAlert": "Alcuni dati facoltativi non sono disponibili nel tuo Portafoglio.",
                     "disclaimer": [
                         "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
                         "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
