@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { VSpacer } from "@pagopa/io-app-design-system";
+import { useLinkTo } from "@react-navigation/native";
 import {
   useIODispatch,
   useIOSelector,
@@ -24,7 +25,7 @@ import {
 import { trackDisclaimerLoadError } from "../../analytics";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../common/store/reducers";
-import { generatePreconditionsRules } from "../../../common/components/IOMarkdown/customRules";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { PreconditionsFeedback } from "./PreconditionsFeedback";
 
 type PreconditionsContentProps = {
@@ -53,6 +54,7 @@ const PreconditionsContentMarkdown = ({
 }: PreconditionsContentProps) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
+  const linkTo = useLinkTo();
 
   const useIOMarkdown = useIOSelector(
     isIOMarkdownEnabledOnMessagesAndServicesSelector
@@ -86,7 +88,7 @@ const PreconditionsContentMarkdown = ({
         <IOMarkdown
           content={markdown}
           onError={onErrorCallback}
-          rules={generatePreconditionsRules()}
+          rules={generateMessagesAndServicesRules(linkTo)}
         />
       ) : (
         <MessageMarkdown
