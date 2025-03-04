@@ -30,6 +30,7 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
+import { itwLifecycleIsOperationalOrValid } from "../../features/itwallet/lifecycle/store/selectors";
 import DeveloperModeSection from "./DeveloperModeSection";
 import { ProfileMainScreenTopBanner } from "./ProfileMainScreenTopBanner";
 
@@ -54,8 +55,17 @@ const ProfileMainScreenFC = () => {
   const navigation = useIONavigation();
   const { show } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
+  const selectItwLifecycleIsOperationalOrValid = useIOSelector(
+    itwLifecycleIsOperationalOrValid
+  );
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
   const idResetTap = useRef<number>();
+
+  const handleContinue = useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.PROFILE_LOGOUT
+    });
+  }, [navigation]);
 
   useEffect(
     () => () => {
@@ -70,22 +80,21 @@ const ProfileMainScreenFC = () => {
   const onLogoutPress = useCallback(() => {
     Alert.alert(
       I18n.t("profile.logout.alertTitle"),
-      I18n.t("profile.logout.alertMessage"),
+      selectItwLifecycleIsOperationalOrValid
+        ? I18n.t("profile.logout.activeWiAlertMessage")
+        : I18n.t("profile.logout.alertMessage"),
       [
         {
           text: I18n.t("global.buttons.cancel")
         },
         {
           text: I18n.t("profile.logout.exit"),
-          onPress: () =>
-            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-              screen: ROUTES.PROFILE_LOGOUT
-            })
+          onPress: handleContinue
         }
       ],
       { cancelable: true }
     );
-  }, [navigation]);
+  }, [handleContinue, selectItwLifecycleIsOperationalOrValid]);
 
   const resetAppTapCounter = useCallback(() => {
     setTapsOnAppVersion(0);
