@@ -33,13 +33,13 @@ const WalletPaymentMakeScreen = () => {
       ref={ref}
       scrollEnabled={false}
     >
-      <View key="1">
+      <View key="1" style={IOStyles.flex}>
         <WalletPaymentPickMethodScreen />
       </View>
-      <View key="2">
+      <View key="2" style={IOStyles.flex}>
         <WalletPaymentPickPspScreen />
       </View>
-      <View key="3">
+      <View key="3" style={IOStyles.flex}>
         <WalletPaymentConfirmScreen />
       </View>
       {/* This View is used by a11y purposes on Android in order to make the screen reader, read the correct total pages number. */}
