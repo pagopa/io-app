@@ -27,8 +27,13 @@ export const withOfflineAlert =
 
     const handleAppRestart = () => {
       if (isConnected) {
+        // Reset the offline access reason.
+        // Since this state is `undefined` when the user is online,
+        // the startup saga will proceed without blocking.
         dispatch(resetOfflineAccessReason());
+        // Dispatch this action to mount the correct navigator.
         dispatch(startupLoadSuccess(StartupStatusEnum.INITIAL));
+        // restart startup saga
         dispatch(startApplicationInitialization());
       }
     };

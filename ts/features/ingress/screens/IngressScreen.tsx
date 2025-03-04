@@ -97,10 +97,15 @@ export const IngressScreen = () => {
       isOfflineAccessEnabled;
 
     if (visualizeOfflineWallet) {
+      // This dispatch could be placed inside `onSuccess`,
+      // but executing it here ensures the startup saga stops immediately.
       dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE));
       dispatch(
         identificationRequest(false, false, undefined, undefined, {
           onSuccess: () => {
+            // This dispatch mounts the new offline navigator.
+            // It must be initialized **after** the user completes
+            // biometric authentication to prevent graphical glitches.
             dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
           }
         })

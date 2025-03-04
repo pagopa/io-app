@@ -228,13 +228,15 @@ export function* initializeApplicationSaga(
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
 
-  // The startup saga should stop when the offline stream starts.
-  // Using `offlineAccessReasonSelector` instead of `isStartupLoaded`
-  // prevents dispatching the state set action too early, avoiding
-  // mounting the new route before biometric authentication, which
-  // would cause a graphical glitch.
+  // `isConnectedSelector` was **discarded** as it might be unclear.
+  // `isStartupLoaded` was **not used** because it required dispatching the action
+  // that initializes the new navigator before user authentication,
+  // leading to visual issues.
+  // `offlineAccessReasonSelector` was **chosen** because it reliably checks
+  // if the user is offline, resets to `undefined` when back online,
+  // and can be dispatched without causing visual glitches.
   const offlineAccessReason = yield* select(offlineAccessReasonSelector);
-  if (offlineAccessReason && offlineAccessReason !== undefined) {
+  if (offlineAccessReason) {
     return;
   }
 
