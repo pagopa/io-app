@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,14 +19,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="sfondo" translatesAutoresizingMaskIntoConstraints="NO" id="DPp-fO-Sok">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_io" translatesAutoresizingMaskIntoConstraints="NO" id="pdm-K5-7Ya">
                                 <rect key="frame" x="155.5" y="259.5" width="64" height="52"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZQ-jS-lo4">
-                                <rect key="frame" x="97" y="319.5" width="181.5" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZQ-jS-lo4">
+                                <rect key="frame" x="97" y="327.5" width="181.5" height="20.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="l’app dei servizi pubblici">
                                         <attributes>
@@ -52,21 +49,17 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.109803915" green="0.23921570180000001" blue="0.85490196939999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="aL7-ys-jhQ" secondAttribute="bottom" constant="48" id="1g8-n7-WYZ"/>
                             <constraint firstItem="pdm-K5-7Ya" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="APm-2L-EAF"/>
-                            <constraint firstAttribute="trailing" secondItem="DPp-fO-Sok" secondAttribute="trailing" id="MgL-AC-X2a"/>
                             <constraint firstItem="pdm-K5-7Ya" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="OBs-ee-kkB"/>
                             <constraint firstItem="JZQ-jS-lo4" firstAttribute="top" secondItem="pdm-K5-7Ya" secondAttribute="bottom" constant="8" id="OEo-H1-u0B"/>
-                            <constraint firstItem="DPp-fO-Sok" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="TOF-qK-UX1"/>
                             <constraint firstItem="aL7-ys-jhQ" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="8" id="Vqb-vz-bVi"/>
-                            <constraint firstItem="DPp-fO-Sok" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Ylg-bg-Ae3"/>
                             <constraint firstItem="pdm-K5-7Ya" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-48" id="ayz-qR-dOQ"/>
                             <constraint firstItem="aL7-ys-jhQ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="nr1-zv-P1U"/>
                             <constraint firstItem="JZQ-jS-lo4" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="ods-Ud-rpo"/>
                             <constraint firstItem="Tei-FP-Id0" firstAttribute="centerX" secondItem="pdm-K5-7Ya" secondAttribute="centerX" id="pZI-tr-LRI"/>
-                            <constraint firstAttribute="bottom" secondItem="DPp-fO-Sok" secondAttribute="bottom" id="tET-pj-opH"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -80,6 +73,5 @@
         <image name="logo_consiglio_ministri" width="43" height="48"/>
         <image name="logo_io" width="64" height="52"/>
         <image name="logo_pagopa" width="101" height="28"/>
-        <image name="sfondo" width="375" height="667"/>
     </resources>
 </document>
