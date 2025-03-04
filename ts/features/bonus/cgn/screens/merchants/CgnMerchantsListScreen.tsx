@@ -66,31 +66,44 @@ export const CgnMerchantsListScreen = () => {
     [navigator]
   );
 
-  const renderItem = (item: MerchantsAll) => (
-    <ListItemNav
-      key={item.id}
-      onPress={() => onItemPress(item.id)}
-      value={
-        <View style={IOStyles.rowSpaceBetween}>
-          <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{item.name}</H6>
-          <HSpacer />
-          {item.newDiscounts && (
-            <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
-              <Badge
-                variant="cgn"
-                text={
-                  item?.numberOfNewDiscounts
-                    ? item.numberOfNewDiscounts.toString()
-                    : I18n.t("bonus.cgn.merchantsList.news")
-                }
-              />
-            </View>
-          )}
-        </View>
-      }
-      accessibilityLabel={item?.name}
-    />
-  );
+  const renderItem = (item: MerchantsAll) => {
+    const accessibilityLabel = item?.numberOfNewDiscounts
+      ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
+          name: item.name,
+          count: item.numberOfNewDiscounts,
+          defaultValue: item.name
+        })
+      : item.newDiscounts
+      ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
+      : item.name;
+
+    return (
+      <ListItemNav
+        key={item.id}
+        onPress={() => onItemPress(item.id)}
+        accessibilityLabel={accessibilityLabel}
+        value={
+          <View style={IOStyles.rowSpaceBetween}>
+            <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{item.name}</H6>
+            <HSpacer />
+            {item.newDiscounts && (
+              <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+                <Badge
+                  accessible={false}
+                  variant="cgn"
+                  text={
+                    item?.numberOfNewDiscounts
+                      ? item.numberOfNewDiscounts.toString()
+                      : I18n.t("bonus.cgn.merchantsList.news")
+                  }
+                />
+              </View>
+            )}
+          </View>
+        }
+      />
+    );
+  };
 
   const refreshControlProps = {
     refreshing: isLoading(onlineMerchants) || isLoading(offlineMerchants),
