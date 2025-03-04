@@ -93,13 +93,13 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
   const renderBankLogo = () => {
     if (props.holderEmail) {
       return (
-        <PayPalLogo
-          testID="paymentCardPayPalLogoTestId"
-          accessible={true}
-          accessibilityLabel="PayPal"
-          height={48}
-          width={113}
-        />
+        <View accessibilityLabel="PayPal">
+          <PayPalLogo
+            testID="paymentCardPayPalLogoTestId"
+            height={48}
+            width={113}
+          />
+        </View>
       );
     }
 
