@@ -532,7 +532,7 @@ export function* initializeApplicationSaga(
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
-  userProfile = yield* call(checkEmailSaga) ?? userProfile;
+  userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
   // Check for both profile notifications permissions (anonymous
   // content && reminder) and system notifications permissions.
