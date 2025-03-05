@@ -1,5 +1,4 @@
-import { PersistedState } from "redux-persist";
-import { GlobalState } from "../../store/reducers/types";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testable } from "../configureStoreAndPersistor";
 
 jest.mock("redux-persist", () => ({
@@ -37,9 +36,24 @@ describe("configureStoreAndPersistor", () => {
     [false, true].forEach(dsEnabled =>
       [false, true].forEach(markdownEnabled =>
         it(`should migrate from 41 to 42 (isDesignSystemEnabled: ${dsEnabled}, isIOMarkdownEnabledOnMessagesAndServices: ${markdownEnabled})`, () => {
+          const basePersistedPreferencesAt41 = {
+            isFingerprintEnabled: undefined,
+            preferredCalendar: undefined,
+            preferredLanguage: undefined,
+            wasServiceAlertDisplayedOnce: false,
+            isPagoPATestEnabled: false,
+            isCustomEmailChannelEnabled: pot.none,
+            continueWithRootOrJailbreak: false,
+            isMixpanelEnabled: null,
+            isPnTestEnabled: false,
+            isIdPayTestEnabled: false,
+            isItwOfflineAccessEnabled: false,
+            fontPreference: "comfortable"
+          };
           const globalStateAt41 = {
             // Other properties have been omitted for brevity
             persistedPreferences: {
+              ...basePersistedPreferencesAt41,
               isDesignSystemEnabled: dsEnabled,
               isIOMarkdownEnabledOnMessagesAndServices: markdownEnabled
             },
@@ -53,6 +67,7 @@ describe("configureStoreAndPersistor", () => {
           const globalStateAt42 = from41To42Migration(globalStateAt41);
           expect(globalStateAt42).toEqual({
             persistedPreferences: {
+              ...basePersistedPreferencesAt41,
               isExperimentalDesignEnabled: dsEnabled
             },
             _persist: {
