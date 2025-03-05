@@ -1,10 +1,10 @@
 import * as E from "fp-ts/lib/Either";
 import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { Platform } from "react-native";
-import DeviceInfo from "react-native-device-info";
 import semver, { SemVer } from "semver";
 import { pipe } from "fp-ts/lib/function";
 import { NumberFromString } from "./number";
+import { getDeviceAppVersion } from "./device";
 
 export const storeUrl = Platform.select({
   ios: "itms-apps://itunes.apple.com/it/app/io/id1501681835",
@@ -85,8 +85,4 @@ export const isVersionSupported = (
   return semSatisfies;
 };
 
-export const getAppVersion = () =>
-  Platform.select({
-    ios: DeviceInfo.getReadableVersion(),
-    default: DeviceInfo.getVersion()
-  });
+export const getAppVersion = (): string => getDeviceAppVersion();

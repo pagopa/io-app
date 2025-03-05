@@ -499,7 +499,8 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                 >
@@ -755,7 +756,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
