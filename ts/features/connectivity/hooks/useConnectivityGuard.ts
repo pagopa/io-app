@@ -25,7 +25,7 @@ export const useConnectivityGuard = <T>(fn: ConnectivityCheckFunction<T>) => {
   return useCallback(
     (...args: Array<T>) => {
       if (!isConnected) {
-        navigation.navigate(ROUTES.NO_CONNECTIVITY);
+        navigation.navigate(ROUTES.NO_CONNECTION);
         return;
       }
 

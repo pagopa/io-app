@@ -1,13 +1,13 @@
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 
-type NoConnectivityScreenContentProps = {
+type NoConnectionScreenContentProps = {
   onRetry?: () => void;
 };
 
-export const NoConnectivityScreenContent = ({
+export const NoConnectionScreenContent = ({
   onRetry
-}: NoConnectivityScreenContentProps) => (
+}: NoConnectionScreenContentProps) => (
   <OperationResultScreenContent
     pictogram="lostConnection"
     title="Nessuna connessione"
@@ -23,7 +23,7 @@ export const NoConnectivityScreenContent = ({
   />
 );
 
-export const NoConnectivityScreen = () => {
+export const NoConnectionScreen = () => {
   useHeaderSecondLevel({ title: "" });
-  return <NoConnectivityScreenContent />;
+  return <NoConnectionScreenContent />;
 };

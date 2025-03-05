@@ -73,7 +73,7 @@ describe("useConnectivityGuard", () => {
     // Function should not be called
     expect(mockFn).not.toHaveBeenCalled();
     // Should navigate to NO_CONNECTIVITY screen
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.NO_CONNECTIVITY);
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.NO_CONNECTION);
   });
 
   it("should handle async functions when connected", async () => {
@@ -106,6 +106,6 @@ describe("useConnectivityGuard", () => {
     // Function should not be called
     expect(mockAsyncFn).not.toHaveBeenCalled();
     // Should navigate to NO_CONNECTIVITY screen
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.NO_CONNECTIVITY);
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.NO_CONNECTION);
   });
 });

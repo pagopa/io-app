@@ -66,7 +66,7 @@ import { ProfileParamsList } from "./ProfileParamsList";
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
   [ROUTES.UNSUPPORTED_DEVICE]: undefined;
-  [ROUTES.NO_CONNECTIVITY]: undefined;
+  [ROUTES.NO_CONNECTION]: undefined;
   [ROUTES.BACKGROUND]: undefined;
   [ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
   [ROUTES.CHECK_EMAIL]: NavigatorScreenParams<CheckEmailParamsList>;

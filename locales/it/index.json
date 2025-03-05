@@ -251,6 +251,10 @@
             "invalidSearchBarText": "Inserisci almeno {{minCharacter}} caratteri",
             "noResultsFound": "Non ci sono risultati per questa ricerca: prova qualcos'altro.",
             "noResultsTitle": "Nessun risultato."
+        },
+        "noConnection": {
+            "title": "Nessuna connessione",
+            "subtitle": "Collegati a internet per continuare ad usare tutti i servizi di app IO."
         }
     },
     "tablet": {

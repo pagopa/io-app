@@ -251,6 +251,10 @@
             "invalidSearchBarText": "Enter at least {{minCharacter}} characters",
             "noResultsFound": "There are no results for this search: try something else.",
             "noResultsTitle": "No results."
+        },
+        "noConnection": {
+            "title": "No connection",
+            "subtitle": "Connect to the internet to continue using all IO services."
         }
     },
     "tablet": {
