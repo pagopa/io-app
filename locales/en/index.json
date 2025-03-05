@@ -384,6 +384,10 @@
             "spid": "SPID PROFILE"
         },
         "unknown": "UNKNOWN",
+        "appFeedback": {
+            "reviewLabel": "Valuta l'app",
+            "feedbackLabel": "Hai un suggerimento? Scrivici"
+        },
         "logout": {
             "menulabel": "Logout from IO",
             "alertTitle": "Do you want to logout?",
