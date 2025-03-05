@@ -374,7 +374,7 @@
             "menulabel": "Logout from IO",
             "alertTitle": "Do you want to logout?",
             "alertMessage": "You will need to login again with SPID or CIE to use the app.",
-            "activeWiAlertMessage": "Dovrai entrare di nuovo con SPID o CIE per usare l’app.\n\nSe accedi a IO da un dispositivo diverso da quello abituale, per motivi di sicurezza la funzionalità Documenti su IO verrà reimpostata.",
+            "activeWiAlertMessage": "You will need to log in again with SPID or CIE to use the app.\n\nIf you log in to IO from a device other than your usual one, the Documenti su IO feature will be reset for security reasons.",
             "loading": "You're leaving IO",
             "exit": "Exit"
         },
