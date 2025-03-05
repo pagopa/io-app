@@ -8,11 +8,11 @@ type ConnectivityCheckFunction<T> = (...args: Array<T>) => void | Promise<void>;
 
 /**
  * A hook that executes a function if there is connectivity, otherwise navigates to NoConnectivityScreen.
- * Use this hook to wrap functions that require an internet connection to work.
+ * Use this hook to wrap functions that trigger a navigation to screens that require an internet connection to work.
  *
  * @example
  * ```typescript
- * const yourFunctionWithConnectivity = useConnectivityGuard(yourFunction);
+ * const yourWrappedFunction = useConnectivityGuard(yourFunction);
  * ```
  *
  * @param fn The function to execute when there is connectivity
