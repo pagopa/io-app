@@ -384,11 +384,10 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "flexDirection": "row",
+                                  "padding": 16,
                                 },
                                 {
                                   "backgroundColor": "#DBF9FA",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
                                 },
                                 {
                                   "transform": [
@@ -424,8 +423,8 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     {},
                                     {
                                       "color": "#031344",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 17,
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -451,7 +450,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -473,8 +472,36 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Turn on push notifications"
                                 accessibilityRole="button"
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
                                 accessible={true}
+                                collapsable={false}
+                                focusable={true}
                                 importantForAccessibility="no-hide-descendants"
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                                 pointerEvents="none"
                               >
                                 <View
@@ -497,7 +524,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -835,7 +862,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",

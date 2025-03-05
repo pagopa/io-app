@@ -11,7 +11,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useLayoutEffect, useMemo } from "react";
+import { useCallback, useLayoutEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -80,10 +80,14 @@ const ContentView = ({ eid }: ContentViewProps) => {
     [eid.credentialType]
   );
 
-  useFocusEffect(() => {
-    trackCredentialPreview(mixPanelCredential);
-    trackItwRequestSuccess(identification?.mode);
-  });
+  useFocusEffect(
+    useCallback(() => {
+      trackCredentialPreview(mixPanelCredential);
+      if (identification) {
+        trackItwRequestSuccess(identification?.mode, identification?.level);
+      }
+    }, [identification, mixPanelCredential])
+  );
 
   useDebugInfo({
     parsedCredential: eid.parsedCredential

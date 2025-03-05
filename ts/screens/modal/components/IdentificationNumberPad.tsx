@@ -85,9 +85,6 @@ export const IdentificationNumberPad = (
       </View>
       {isDevEnv && (
         <View
-          accessible={false}
-          importantForAccessibility="no-hide-descendants"
-          accessibilityElementsHidden
           style={{
             zIndex: 10,
             opacity: 0.75,
@@ -104,7 +101,7 @@ export const IdentificationNumberPad = (
             onPress={() => {
               setValue(pin);
             }}
-            accessibilityLabel={"Insert valid pin button (dev only)"}
+            accessibilityLabel={"Inserisci il PIN predefinito per sviluppatori"}
           />
         </View>
       )}

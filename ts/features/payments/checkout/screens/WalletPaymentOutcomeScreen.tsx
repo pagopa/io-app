@@ -299,7 +299,7 @@ const WalletPaymentOutcomeScreen = () => {
       case WalletPaymentOutcomeEnum.GENERIC_ERROR:
       default:
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           title: I18n.t("wallet.payment.outcome.GENERIC_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.GENERIC_ERROR.subtitle"),
           action: closeFailureAction
@@ -467,7 +467,7 @@ const WalletPaymentOutcomeScreen = () => {
         };
       case WalletPaymentOutcomeEnum.BE_NODE_KO:
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           title: I18n.t("wallet.payment.outcome.BE_NODE_KO.title"),
           subtitle: I18n.t("wallet.payment.outcome.BE_NODE_KO.subtitle"),
           action: closeFailureAction,
@@ -483,7 +483,7 @@ const WalletPaymentOutcomeScreen = () => {
         };
       case WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR:
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           title: I18n.t("wallet.payment.outcome.AUTH_REQUEST_ERROR.title"),
           subtitle: I18n.t(
             "wallet.payment.outcome.AUTH_REQUEST_ERROR.subtitle"

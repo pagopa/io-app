@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { assertEvent, assign, fromPromise, not, setup, and } from "xstate";
-import { assert } from "../../../../utils/assert";
+import { and, assertEvent, assign, fromPromise, not, setup } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
+import { assert } from "../../../../utils/assert.ts";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
@@ -50,10 +50,10 @@ export const itwEidIssuanceMachine = setup({
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
     handleSessionExpired: notImplemented,
-    abortIdentification: notImplemented,
     resetWalletInstance: notImplemented,
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
+    storeAuthLevel: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     onInit: notImplemented,
     /**
@@ -95,6 +95,7 @@ export const itwEidIssuanceMachine = setup({
     issuedEidMatchesAuthenticatedUser: notImplemented,
     isSessionExpired: notImplemented,
     isOperationAborted: notImplemented,
+    hasIntegrityKeyTag: ({ context }) => context.integrityKeyTag !== undefined,
     hasValidWalletInstanceAttestation: notImplemented,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
     isReissuing: ({ context }) => context.isReissuing === true
@@ -147,15 +148,21 @@ export const itwEidIssuanceMachine = setup({
       on: {
         "accept-tos": [
           {
-            guard: ({ context }) => !context.integrityKeyTag,
-            target: "WalletInstanceCreation"
+            // If the wallet instance attestation is valid, we can proceed to the IPZS privacy acceptance
+            guard: "hasValidWalletInstanceAttestation",
+            target: "IpzsPrivacyAcceptance"
           },
           {
-            guard: not("hasValidWalletInstanceAttestation"),
+            // If do not have a valid wallet instance attestation but integrity key tag is present, we can
+            // assume the wallet instance was already created and we can proceed to the wallet instance
+            // attestation obtainment
+            guard: "hasIntegrityKeyTag",
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            target: "IpzsPrivacyAcceptance"
+            // If do not have a valid wallet instance attestation and integrity key tag, we need to create a
+            // new wallet instance first
+            target: "WalletInstanceCreation"
           }
         ]
       }
@@ -171,8 +178,8 @@ export const itwEidIssuanceMachine = setup({
             assign(({ event }) => ({
               integrityKeyTag: event.output
             })),
-            { type: "storeIntegrityKeyTag" },
-            { type: "setWalletInstanceToOperational" }
+            "storeIntegrityKeyTag",
+            "setWalletInstanceToOperational"
           ],
           target: "WalletInstanceAttestationObtainment"
         },
@@ -232,7 +239,7 @@ export const itwEidIssuanceMachine = setup({
               assign(({ event }) => ({
                 walletInstanceAttestation: event.output
               })),
-              { type: "storeWalletInstanceAttestation" }
+              "storeWalletInstanceAttestation"
             ],
             target: "UserIdentification"
           },
@@ -241,7 +248,7 @@ export const itwEidIssuanceMachine = setup({
               assign(({ event }) => ({
                 walletInstanceAttestation: event.output
               })),
-              { type: "storeWalletInstanceAttestation" }
+              "storeWalletInstanceAttestation"
             ],
             target: "IpzsPrivacyAcceptance"
           }
@@ -301,7 +308,7 @@ export const itwEidIssuanceMachine = setup({
                 actions: assign(() => ({
                   identification: {
                     mode: "cieId",
-                    abortController: new AbortController()
+                    level: "L2"
                   }
                 })),
                 target: "CieID"
@@ -326,7 +333,7 @@ export const itwEidIssuanceMachine = setup({
             StartingCieIDAuthFlow: {
               entry: [
                 assign(() => ({ authenticationContext: undefined })),
-                { type: "navigateToCieIdLoginScreen" }
+                "navigateToCieIdLoginScreen"
               ],
               invoke: {
                 src: "startAuthFlow",
@@ -352,7 +359,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: "completeUserIdentification"
+                  actions: ["completeUserIdentification", "storeAuthLevel"]
                 },
                 error: {
                   actions: "setFailure",
@@ -380,13 +387,17 @@ export const itwEidIssuanceMachine = setup({
             IdpSelection: {
               entry: [
                 assign(() => ({ authenticationContext: undefined })),
-                { type: "navigateToIdpSelectionScreen" }
+                "navigateToIdpSelectionScreen"
               ],
               on: {
                 "select-spid-idp": {
                   target: "StartingSpidAuthFlow",
                   actions: assign(({ event }) => ({
-                    identification: { mode: "spid", idpId: event.idp.id }
+                    identification: {
+                      mode: "spid",
+                      level: "L2",
+                      idpId: event.idp.id
+                    }
                   }))
                 },
                 back: {
@@ -425,7 +436,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: "completeUserIdentification"
+                  actions: ["completeUserIdentification", "storeAuthLevel"]
                 },
                 back: {
                   target: "IdpSelection"
@@ -448,7 +459,7 @@ export const itwEidIssuanceMachine = setup({
             InsertingCardPin: {
               entry: [
                 assign(() => ({ authenticationContext: undefined })), // Reset the authentication context, otherwise retries will use stale data
-                { type: "navigateToCiePinScreen" }
+                "navigateToCiePinScreen"
               ],
               on: {
                 "cie-pin-entered": [
@@ -456,14 +467,22 @@ export const itwEidIssuanceMachine = setup({
                     guard: "isNFCEnabled",
                     target: "StartingCieAuthFlow",
                     actions: assign(({ event }) => ({
-                      identification: { mode: "ciePin", pin: event.pin }
+                      identification: {
+                        mode: "ciePin",
+                        level: "L3",
+                        pin: event.pin
+                      }
                     }))
                   },
                   {
                     target:
                       "#itwEidIssuanceMachine.UserIdentification.CiePin.RequestingNfcActivation",
                     actions: assign(({ event }) => ({
-                      identification: { mode: "ciePin", pin: event.pin }
+                      identification: {
+                        level: "L3",
+                        mode: "ciePin",
+                        pin: event.pin
+                      }
                     }))
                   }
                 ],
@@ -522,7 +541,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: "completeUserIdentification"
+                  actions: ["completeUserIdentification", "storeAuthLevel"]
                 },
                 close: {
                   target: "#itwEidIssuanceMachine.UserIdentification"

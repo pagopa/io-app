@@ -2,6 +2,193 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-rc.6](https://github.com/pagopa/io-app/compare/3.0.0-rc.5...3.0.0-rc.6) (2025-03-04)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2055](https://pagopa.atlassian.net/browse/SIW-2055)] Update Mixpanel events ITW_DATA_SHARE and ITW_DATA_SHARE_ACCEPTED for async driving license flow ([#6757](https://github.com/pagopa/io-app/issues/6757)) ([f66da68](https://github.com/pagopa/io-app/commit/f66da68d66eba94b4712bf89f23eb5133e19cc6d))
+* [[IOPLT-999](https://pagopa.atlassian.net/browse/IOPLT-999)] Update iOS/Android splash screens to new UI ([#6781](https://github.com/pagopa/io-app/issues/6781)) ([33d350b](https://github.com/pagopa/io-app/commit/33d350b32c884f16c2cedec63394266fd124d55f))
+* **IT Wallet:** [[SIW-2032](https://pagopa.atlassian.net/browse/SIW-2032)] Add collapsible credential claims in RP trust screen ([#6749](https://github.com/pagopa/io-app/issues/6749)) ([48e3be8](https://github.com/pagopa/io-app/commit/48e3be80fd80be308e5678f2a4573109f028969a))
+
+## [3.0.0-rc.5](https://github.com/pagopa/io-app/compare/3.0.0-rc.4...3.0.0-rc.5) (2025-03-03)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2042](https://pagopa.atlassian.net/browse/SIW-2042)] Use IOMarkdown when displaying a remote message inside credential presentation  ([#6768](https://github.com/pagopa/io-app/issues/6768)) ([d15e769](https://github.com/pagopa/io-app/commit/d15e769cd4168cde2733b63ce70b7d09791ee3ad))
+
+
+### Bug Fixes
+
+* [[IOPID-2484](https://pagopa.atlassian.net/browse/IOPID-2484)] Fix `MIXPANEL_SET_ENABLED` event tracking in the onBoarding flow ([#6766](https://github.com/pagopa/io-app/issues/6766)) ([8e26261](https://github.com/pagopa/io-app/commit/8e2626195acde1aa763b3d54019540b009608ffa))
+
+
+### Chores
+
+* [[IOBP-1231](https://pagopa.atlassian.net/browse/IOBP-1231)] Removed total amount from IdPayCard if reward type is `EXPENSE` ([#6771](https://github.com/pagopa/io-app/issues/6771)) ([191a24e](https://github.com/pagopa/io-app/commit/191a24ea70b8fa73c18faae143eea2a1ddf08b73))
+* **IT Wallet:** [[SIW-2019](https://pagopa.atlassian.net/browse/SIW-2019)] Improve integrity service warm up and availability check ([#6746](https://github.com/pagopa/io-app/issues/6746)) ([085181b](https://github.com/pagopa/io-app/commit/085181ba76299a59301013957c1d3856f829e3cf))
+
+## [3.0.0-rc.4](https://github.com/pagopa/io-app/compare/3.0.0-rc.3...3.0.0-rc.4) (2025-02-28)
+
+
+### Features
+
+* [[PE-988](https://pagopa.atlassian.net/browse/PE-988),[PE-919](https://pagopa.atlassian.net/browse/PE-919),[IOBP-1193](https://pagopa.atlassian.net/browse/IOBP-1193)] CGN merchants swipe back, `IOListViewWithLargeHeader ` ([#6764](https://github.com/pagopa/io-app/issues/6764)) ([a49b20e](https://github.com/pagopa/io-app/commit/a49b20e1e5315c826dda74f9be8746a3e7247e16))
+
+
+### Bug Fixes
+
+* [[IOPLT-996](https://pagopa.atlassian.net/browse/IOPLT-996)] Enable quick dev access in the `IdentificationLockScreen` with screen reader enabled ([#6769](https://github.com/pagopa/io-app/issues/6769)) ([2da6efc](https://github.com/pagopa/io-app/commit/2da6efce71aaef12883a705218d380bfba91a446))
+
+
+### Chores
+
+* [[IOAPPX-476](https://pagopa.atlassian.net/browse/IOAPPX-476)] Change `StatusBar` style according to the current color scheme ([#6680](https://github.com/pagopa/io-app/issues/6680)) ([04d2853](https://github.com/pagopa/io-app/commit/04d2853a3b061562465eca2aab189a5ced8f195b))
+* [[PE-996](https://pagopa.atlassian.net/browse/PE-996)] Accessibility for CGN loading component ([#6754](https://github.com/pagopa/io-app/issues/6754)) ([c72ba19](https://github.com/pagopa/io-app/commit/c72ba1935ee943656c42f72e394f26d5a9e4d578))
+
+## [3.0.0-rc.3](https://github.com/pagopa/io-app/compare/3.0.0-rc.2...3.0.0-rc.3) (2025-02-27)
+
+
+### Chores
+
+* [[IOAPPX-487](https://pagopa.atlassian.net/browse/IOAPPX-487)] Latest version of `react-native-device-info` ([#6753](https://github.com/pagopa/io-app/issues/6753)) ([99a2fbc](https://github.com/pagopa/io-app/commit/99a2fbcd7ca5d80b1e3ae0138c1f022df5253d37))
+
+## [3.0.0-rc.2](https://github.com/pagopa/io-app/compare/3.0.0-rc.1...3.0.0-rc.2) (2025-02-26)
+
+
+### Features
+
+* [[IOCOM-2086](https://pagopa.atlassian.net/browse/IOCOM-2086)] addition of SEND activation banner ([#6756](https://github.com/pagopa/io-app/issues/6756)) ([2cbb289](https://github.com/pagopa/io-app/commit/2cbb289e262227f37e20c9d317a5ac21168f288c))
+* [[IOPID-2740](https://pagopa.atlassian.net/browse/IOPID-2740)] Add support for external campaign tracking ([#6738](https://github.com/pagopa/io-app/issues/6738)) ([d70b544](https://github.com/pagopa/io-app/commit/d70b544a691e1bf617fbb197ff670c64e42e8c22)), closes [/#diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaR66](https://github.com/pagopa///issues/diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaR66) [/#diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaR97](https://github.com/pagopa///issues/diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaR97) [/#diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaL122-R125](https://github.com/pagopa///issues/diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982aaL122-R125) [/#diff-fa995360b02f1b9964e18e579b05ae55ee852d765d264ac9733cb929fa4a58caR1-R34](https://github.com/pagopa///issues/diff-fa995360b02f1b9964e18e579b05ae55ee852d765d264ac9733cb929fa4a58caR1-R34) [/#diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aL10-R10](https://github.com/pagopa///issues/diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aL10-R10) [/#diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aR36-R37](https://github.com/pagopa///issues/diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aR36-R37) [/#diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aR140-R154](https://github.com/pagopa///issues/diff-8ffd33dd28dd9183ce57e6c092f399f95ee4843340c184fe84f0659ed9a1b66aR140-R154) [/#diff-6d3727c4000eb50e5a58a25a8209be045a27818db1832518820cfc4caf24fa05R6](https://github.com/pagopa///issues/diff-6d3727c4000eb50e5a58a25a8209be045a27818db1832518820cfc4caf24fa05R6) [/#diff-6d3727c4000eb50e5a58a25a8209be045a27818db1832518820cfc4caf24fa05R22-R25](https://github.com/pagopa///issues/diff-6d3727c4000eb50e5a58a25a8209be045a27818db1832518820cfc4caf24fa05R22-R25) [/#diff-10c9841de377572536ae14fb004623c793cc3c78ad7947684f9c0c8d7801acffR7](https://github.com/pagopa///issues/diff-10c9841de377572536ae14fb004623c793cc3c78ad7947684f9c0c8d7801acffR7) [/#diff-10c9841de377572536ae14fb004623c793cc3c78ad7947684f9c0c8d7801acffR30](https://github.com/pagopa///issues/diff-10c9841de377572536ae14fb004623c793cc3c78ad7947684f9c0c8d7801acffR30)
+
+
+### Bug Fixes
+
+* [[IOAPPX-489](https://pagopa.atlassian.net/browse/IOAPPX-489)] Enable the new typeface in the `ItwCredentialCard` ([#6762](https://github.com/pagopa/io-app/issues/6762)) ([360de61](https://github.com/pagopa/io-app/commit/360de615259e8980bf565ad0227adfe6a2e0b87c))
+
+
+### Chores
+
+* [[IOBP-1192](https://pagopa.atlassian.net/browse/IOBP-1192),[IOBP-1223](https://pagopa.atlassian.net/browse/IOBP-1223),[IOBP-1224](https://pagopa.atlassian.net/browse/IOBP-1224)] a11y improvements on payment method selection screen ([#6751](https://github.com/pagopa/io-app/issues/6751)) ([9932ddb](https://github.com/pagopa/io-app/commit/9932ddb5ae6d7b298a21f94f423efe6638aafc13))
+* [[IOBP-1194](https://pagopa.atlassian.net/browse/IOBP-1194),[IOBP-1196](https://pagopa.atlassian.net/browse/IOBP-1196)] a11y focus improvements on Barcode scan screen ([#6759](https://github.com/pagopa/io-app/issues/6759)) ([c75273a](https://github.com/pagopa/io-app/commit/c75273a1c50951ccc645b547168de0dc03de0bbb))
+
+## [3.0.0-rc.1](https://github.com/pagopa/io-app/compare/3.0.0-rc.0...3.0.0-rc.1) (2025-02-25)
+
+## [3.0.0-rc.0](https://github.com/pagopa/io-app/compare/2.83.0-rc.7...3.0.0-rc.0) (2025-02-25)
+
+
+### Features
+
+* [[IOAPPX-453](https://pagopa.atlassian.net/browse/IOAPPX-453)] Add the new static `Appearance` profile screen ([#6573](https://github.com/pagopa/io-app/issues/6573)) ([92390c8](https://github.com/pagopa/io-app/commit/92390c8b28eb0d1b2c4dbf6b3e3d580e1b06173e))
+* [[IOAPPX-458](https://pagopa.atlassian.net/browse/IOAPPX-458)] Enable the new UI + Add dynamic typeface selection ([#6590](https://github.com/pagopa/io-app/issues/6590)) ([90f891b](https://github.com/pagopa/io-app/commit/90f891b8e2f42aa2758ffc8a946a09f9fac12fcf))
+* [[IOPLT-951](https://pagopa.atlassian.net/browse/IOPLT-951)] Add the new typeface selection banner to the `Settings` screen ([#6695](https://github.com/pagopa/io-app/issues/6695)) ([b4e78a7](https://github.com/pagopa/io-app/commit/b4e78a74fcb0b8c613d3a9c2839067f24387f063))
+* [[IOPLT-959](https://pagopa.atlassian.net/browse/IOPLT-959)] Implements the Offline check loop feature ([#6734](https://github.com/pagopa/io-app/issues/6734)) ([fe2edab](https://github.com/pagopa/io-app/commit/fe2edab575dee8e006798469b1f083afd97bafef)), closes [pagopa/io-backend#1184](https://github.com/pagopa/io-backend/issues/1184)
+
+
+### Bug Fixes
+
+* [[IOBP-1206](https://pagopa.atlassian.net/browse/IOBP-1206),[IOBP-1209](https://pagopa.atlassian.net/browse/IOBP-1209)] Payment checkout accessibility input text ([#6745](https://github.com/pagopa/io-app/issues/6745)) ([4f5acaf](https://github.com/pagopa/io-app/commit/4f5acaf2ad8cbb2eb4079e278dd6fb13646c1cad))
+* [[IOBP-1216](https://pagopa.atlassian.net/browse/IOBP-1216)] Add missing contextual help properties ([#6748](https://github.com/pagopa/io-app/issues/6748)) ([69c0c48](https://github.com/pagopa/io-app/commit/69c0c48420e8542e8be7b623c58c00a389352607))
+* [[IOCOM-2095](https://pagopa.atlassian.net/browse/IOCOM-2095)] Preconditions scroll ([#6718](https://github.com/pagopa/io-app/issues/6718)) ([6d90444](https://github.com/pagopa/io-app/commit/6d90444197817f686d5f39c62a0cc3ea90080b95))
+* [[IOPID-2632](https://pagopa.atlassian.net/browse/IOPID-2632)] Identification modal regressions ([#6743](https://github.com/pagopa/io-app/issues/6743)) ([ac1be07](https://github.com/pagopa/io-app/commit/ac1be077361a3fea399cfe3ab0021af59d327b8f))
+* package.json generating changes ([#6755](https://github.com/pagopa/io-app/issues/6755)) ([64216b4](https://github.com/pagopa/io-app/commit/64216b4c90fb1087442451f52c306d12a2eab198))
+
+
+### Chores
+
+* [[IOBP-1217](https://pagopa.atlassian.net/browse/IOBP-1217)] Add mixpanel tracking help center CTA on payment checkout failure screen ([#6752](https://github.com/pagopa/io-app/issues/6752)) ([65a8c57](https://github.com/pagopa/io-app/commit/65a8c57507b3b19bcee23064dc2b2554dee14e34))
+* [[IOPID-2612](https://pagopa.atlassian.net/browse/IOPID-2612)] edit publiccode.yml file ([#6723](https://github.com/pagopa/io-app/issues/6723)) ([a80ec32](https://github.com/pagopa/io-app/commit/a80ec32bd1c9c7ad382eb07567bf57498b0c6b88))
+* **IT Wallet:** [[SIW-1990](https://pagopa.atlassian.net/browse/SIW-1990)] Persist user preference for hiding claim values in credential details ([#6742](https://github.com/pagopa/io-app/issues/6742)) ([47e4257](https://github.com/pagopa/io-app/commit/47e4257fb8dce0ad1dca219b62c9b7f971182824))
+* **IT Wallet:** [[SIW-2016](https://pagopa.atlassian.net/browse/SIW-2016)] Remove remote feature flag from linking options ([#6706](https://github.com/pagopa/io-app/issues/6706)) ([82033be](https://github.com/pagopa/io-app/commit/82033be86f1c29478c8ecbf941c32cb6adb7d9ab))
+* [[IOPLT-973](https://pagopa.atlassian.net/browse/IOPLT-973)] Improve formatting of `IOMarkdown` for messages/services ([#6737](https://github.com/pagopa/io-app/issues/6737)) ([ec8e3b2](https://github.com/pagopa/io-app/commit/ec8e3b2207c456389257daba7846daf989abc796))
+* **IT Wallet:** [[SIW-2037](https://pagopa.atlassian.net/browse/SIW-2037)] Add alert with modal in offline wallet screen ([#6739](https://github.com/pagopa/io-app/issues/6739)) ([6548fab](https://github.com/pagopa/io-app/commit/6548fab01c849e491063dd1a321136a2ed845e4d))
+
+## [2.83.0-rc.7](https://github.com/pagopa/io-app/compare/2.83.0-rc.6...2.83.0-rc.7) (2025-02-20)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1961](https://pagopa.atlassian.net/browse/SIW-1961)]  Handle invalid payload in deeplink for Remote presentation ([#6724](https://github.com/pagopa/io-app/issues/6724)) ([b90b49e](https://github.com/pagopa/io-app/commit/b90b49e4eaf0922c49e30d9212efc31f9e255484))
+* [[IOPID-2634](https://pagopa.atlassian.net/browse/IOPID-2634)] Implement Zendesk FAQ Banner in the `accesso_a_io` subCategories screen ([#6714](https://github.com/pagopa/io-app/issues/6714)) ([13c6767](https://github.com/pagopa/io-app/commit/13c676737b62705177795dd91c8b5fa92d0f4125))
+
+
+### Chores
+
+* [[IOAPPX-485](https://pagopa.atlassian.net/browse/IOAPPX-485)] Add some additional information to the `Design System` section of the README ([#6732](https://github.com/pagopa/io-app/issues/6732)) ([bbbbd94](https://github.com/pagopa/io-app/commit/bbbbd94371fdaaab132fa985ca149aaa424aa70d))
+* **IT Wallet:** [[SIW-2012](https://pagopa.atlassian.net/browse/SIW-2012)] Notify the user 30 days before credential expiration ([#6727](https://github.com/pagopa/io-app/issues/6727)) ([4532159](https://github.com/pagopa/io-app/commit/4532159ff97d5d9e35db0450ea3e5991e800629b))
+
+## [2.83.0-rc.6](https://github.com/pagopa/io-app/compare/2.83.0-rc.5...2.83.0-rc.6) (2025-02-19)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1963](https://pagopa.atlassian.net/browse/SIW-1963)]  Handle eid expired in Remote Presentation ([#6716](https://github.com/pagopa/io-app/issues/6716)) ([3564712](https://github.com/pagopa/io-app/commit/35647125d020ae7452239727587df169213df164))
+* [[IOPID-2666](https://pagopa.atlassian.net/browse/IOPID-2666)] FastLogin expiration Banner ([#6736](https://github.com/pagopa/io-app/issues/6736)) ([0fc1157](https://github.com/pagopa/io-app/commit/0fc115798ba4243559916cb1c52b39a8a34b6e9f))
+* **IT Wallet:** [[SIW-1972](https://pagopa.atlassian.net/browse/SIW-1972)] Remote presentation same device ([#6689](https://github.com/pagopa/io-app/issues/6689)) ([436fb3f](https://github.com/pagopa/io-app/commit/436fb3fac44da694864cc420720632852aac90bc))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2039](https://pagopa.atlassian.net/browse/SIW-2039)] Refactor IT Wallet discovery screen ([#6733](https://github.com/pagopa/io-app/issues/6733)) ([11c621c](https://github.com/pagopa/io-app/commit/11c621cdf74794e6ddbb1432eb3d59cb6ada78c7))
+* [[IOPID-2664](https://pagopa.atlassian.net/browse/IOPID-2664)] Change session expired card component ([#6720](https://github.com/pagopa/io-app/issues/6720)) ([73f2d47](https://github.com/pagopa/io-app/commit/73f2d47f8d95ab0d4fab5b3ce06fbacdfd98f2c6)), closes [/#diff-0f5e4629af7b77f0b21af3a54fe1d4d21314eb44c8a54193316d9d80ba2654bfR108-R118](https://github.com/pagopa///issues/diff-0f5e4629af7b77f0b21af3a54fe1d4d21314eb44c8a54193316d9d80ba2654bfR108-R118) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L12-R13](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L12-R13) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L27-R28](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L27-R28) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L38-R46](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L38-R46) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R59-R61](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R59-R61) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R83](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R83) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L188-L189](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L188-L189) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R273-R276](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0R273-R276) [/#diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L336-R361](https://github.com/pagopa///issues/diff-f134f623c08338e8be17e9a28472ad5d11d19b2c55bbde47268552f5b4b3c6d0L336-R361) [/#diff-f963522b870f04775f600b4d3638b625908f5faeb9dfca0a87637a8c006603bbR1-R81](https://github.com/pagopa///issues/diff-f963522b870f04775f600b4d3638b625908f5faeb9dfca0a87637a8c006603bbR1-R81) [/#diff-972a2c234b6a6865885c41c7e12280bce9e61e71b5bcd78bf1efcc4e42cfe1e2R1-R63](https://github.com/pagopa///issues/diff-972a2c234b6a6865885c41c7e12280bce9e61e71b5bcd78bf1efcc4e42cfe1e2R1-R63) [/#diff-a425aab9658df7526ca2afd44dfd12ab19227f77c49e80436ef35388f2266627R206-R230](https://github.com/pagopa///issues/diff-a425aab9658df7526ca2afd44dfd12ab19227f77c49e80436ef35388f2266627R206-R230)
+
+## [2.83.0-rc.5](https://github.com/pagopa/io-app/compare/2.83.0-rc.4...2.83.0-rc.5) (2025-02-18)
+
+
+### Bug Fixes
+
+* [[IOPAE-1758](https://pagopa.atlassian.net/browse/IOPAE-1758),[IOPAE-1759](https://pagopa.atlassian.net/browse/IOPAE-1759),[IOPAE-1761](https://pagopa.atlassian.net/browse/IOPAE-1761),[IOPAE-1762](https://pagopa.atlassian.net/browse/IOPAE-1762)] Accessibility improvements ([#6698](https://github.com/pagopa/io-app/issues/6698)) ([90cfeb1](https://github.com/pagopa/io-app/commit/90cfeb11cf9eeb8c57f0afb8d46d7dbd506447f3))
+* **IT Wallet:** [[SIW-2003](https://pagopa.atlassian.net/browse/SIW-2003)] Fix redux migration logic ([#6728](https://github.com/pagopa/io-app/issues/6728)) ([f2db628](https://github.com/pagopa/io-app/commit/f2db6281eeb01244dec66b30fead5f67dbeae614))
+
+
+### Chores
+
+* [[IOBP-1164](https://pagopa.atlassian.net/browse/IOBP-1164)] Add a11y description to the receipt PDF preview page ([#6730](https://github.com/pagopa/io-app/issues/6730)) ([3151da2](https://github.com/pagopa/io-app/commit/3151da23d79ec913180b74ec3446a47f8e73378d))
+* [[IOBP-1191](https://pagopa.atlassian.net/browse/IOBP-1191)] Add a11y description to button inside the barcode scan screen ([#6729](https://github.com/pagopa/io-app/issues/6729)) ([5f92407](https://github.com/pagopa/io-app/commit/5f9240778dde1e8a708627bf96d9086cb0ae63ac))
+* [[IOPID-2690](https://pagopa.atlassian.net/browse/IOPID-2690)] Support back navigation from `CieIdLoginScreen` and `CieConsentDataUsageScreen` ([#6721](https://github.com/pagopa/io-app/issues/6721)) ([a676e00](https://github.com/pagopa/io-app/commit/a676e0053aabd051b53c8a991bc6a597791d90dd)), closes [/#diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R40](https://github.com/pagopa///issues/diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R40) [/#diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R40](https://github.com/pagopa///issues/diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R40) [/#diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R274-R284](https://github.com/pagopa///issues/diff-8525a47a8c535183fa25dcb03b4edd382aaed38fc026f3ff0e12d9cf206d02c8R274-R284) [/#diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L27-R27](https://github.com/pagopa///issues/diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L27-R27) [/#diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L27-R27](https://github.com/pagopa///issues/diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L27-R27) [/#diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L79-R83](https://github.com/pagopa///issues/diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3L79-R83) [/#diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL8-R8](https://github.com/pagopa///issues/diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL8-R8) [/#diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL8-R8](https://github.com/pagopa///issues/diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL8-R8) [/#diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL18-R19](https://github.com/pagopa///issues/diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daL18-R19) [/#diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daR32-R45](https://github.com/pagopa///issues/diff-1ff1c2eaf85533773b6b879ffe60014cadc233bfdedae3cd1fa60f274b38a1daR32-R45) [/#diff-4b4bec9087f67cc00d09dc51404a059bae24a78ad98e066916f1046a78b5b9f9R1-R78](https://github.com/pagopa///issues/diff-4b4bec9087f67cc00d09dc51404a059bae24a78ad98e066916f1046a78b5b9f9R1-R78) [/#diff-ad2b53460d1d1097a95454f9788b1a4f1a50f7d37cf641c6db1d64e05f3fac7bR133](https://github.com/pagopa///issues/diff-ad2b53460d1d1097a95454f9788b1a4f1a50f7d37cf641c6db1d64e05f3fac7bR133)
+
+## [2.83.0-rc.4](https://github.com/pagopa/io-app/compare/2.83.0-rc.3...2.83.0-rc.4) (2025-02-17)
+
+
+### Bug Fixes
+
+* [[IOBP-1179](https://pagopa.atlassian.net/browse/IOBP-1179)] `a11y` banner focus order ([#6725](https://github.com/pagopa/io-app/issues/6725)) ([29718a3](https://github.com/pagopa/io-app/commit/29718a3bbae3a13d1609d663fe942f64aa2c78af))
+* [[IOCOM-2097](https://pagopa.atlassian.net/browse/IOCOM-2097)] Special link support removed from IOMarkdown on messages and services ([#6722](https://github.com/pagopa/io-app/issues/6722)) ([b1cc73f](https://github.com/pagopa/io-app/commit/b1cc73f1fd0c8cef5f87fa713d8a6ad75916b9a0))
+* [[PE-937](https://pagopa.atlassian.net/browse/PE-937)] a11y on `CgnCard` expiry date ([#6726](https://github.com/pagopa/io-app/issues/6726)) ([1de394f](https://github.com/pagopa/io-app/commit/1de394f830ceea87854d1ae41df6a9bde3e794a1))
+* [[PE-965](https://pagopa.atlassian.net/browse/PE-965)] CGN Swipe back gesture to root stack navigator ([#6708](https://github.com/pagopa/io-app/issues/6708)) ([f969b17](https://github.com/pagopa/io-app/commit/f969b1754c3964eb4fa84b5009ac91cf7ea1e5db))
+* **IT Wallet:** [[SIW-2003](https://pagopa.atlassian.net/browse/SIW-2003)] ITW auth level tracking  ([#6710](https://github.com/pagopa/io-app/issues/6710)) ([ca154f3](https://github.com/pagopa/io-app/commit/ca154f395048cdf757e4d0981c9b491a21ad988a))
+
+
+### Chores
+
+* [[IOPAE-1744](https://pagopa.atlassian.net/browse/IOPAE-1744),[IOPAE-1749](https://pagopa.atlassian.net/browse/IOPAE-1749)] Remove transparent header to solve accessibility problems ([#6692](https://github.com/pagopa/io-app/issues/6692)) ([4359b93](https://github.com/pagopa/io-app/commit/4359b93d338bf663ae25a3bd9274b2e14c32e223))
+
+## [2.83.0-rc.3](https://github.com/pagopa/io-app/compare/2.83.0-rc.2...2.83.0-rc.3) (2025-02-14)
+
+
+### Bug Fixes
+
+* [[IOBP-1156](https://pagopa.atlassian.net/browse/IOBP-1156)] `a11y` InputForm error message ([#6703](https://github.com/pagopa/io-app/issues/6703)) ([a5d2865](https://github.com/pagopa/io-app/commit/a5d286575ab37ed6359acab09def60403612766e))
+* [[PE-959](https://pagopa.atlassian.net/browse/PE-959),[PE-960](https://pagopa.atlassian.net/browse/PE-960),[PE-961](https://pagopa.atlassian.net/browse/PE-961),[PE-962](https://pagopa.atlassian.net/browse/PE-962)] Remove transparent header in `CGN` ([#6709](https://github.com/pagopa/io-app/issues/6709)) ([84a1f99](https://github.com/pagopa/io-app/commit/84a1f995cb9df4435a217890b2715ae576054d6c))
+
+
+### Chores
+
+* **IDPay:** [[IOBP-1205](https://pagopa.atlassian.net/browse/IOBP-1205)] Removed the missing configuration alert for `EXPENSE` initiatives ([#6719](https://github.com/pagopa/io-app/issues/6719)) ([6099525](https://github.com/pagopa/io-app/commit/60995255f1e0cb7ecfba92bc4f5795356c8254be))
+
+## [2.83.0-rc.2](https://github.com/pagopa/io-app/compare/2.83.0-rc.1...2.83.0-rc.2) (2025-02-13)
+
+
+### Bug Fixes
+
+* **IDPay:** [[IOBP-1203](https://pagopa.atlassian.net/browse/IOBP-1203)] Show some IDPay features not needed under local feature flag ([#6712](https://github.com/pagopa/io-app/issues/6712)) ([487d9b9](https://github.com/pagopa/io-app/commit/487d9b92c240b25203a80486aeffbfa0bf060106))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1964](https://pagopa.atlassian.net/browse/SIW-1964)] Add failure screen for missing credentials in presentation ([#6702](https://github.com/pagopa/io-app/issues/6702)) ([c89685c](https://github.com/pagopa/io-app/commit/c89685c1c4f5564491b97d998de4106f0f9359b2))
+
 ## [2.83.0-rc.1](https://github.com/pagopa/io-app/compare/2.83.0-rc.0...2.83.0-rc.1) (2025-02-12)
 
 

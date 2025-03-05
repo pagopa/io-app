@@ -1,6 +1,7 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import {
   IODSExperimentalContextProvider,
+  IONewTypefaceContextProvider,
   IOThemeContextProvider,
   ToastProvider
 } from "@pagopa/io-app-design-system";
@@ -20,10 +21,6 @@ import { StatusMessages } from "./components/StatusMessages";
 export type ReactNavigationInstrumentation = ReturnType<
   typeof Sentry.reactNavigationIntegration
 >;
-
-export const navigationIntegration = Sentry.reactNavigationIntegration({
-  enableTimeToInitialDisplay: true
-});
 
 const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
   event: T
@@ -48,11 +45,14 @@ Sentry.init({
     return removeUserFromEvent(event);
   },
   ignoreErrors: ["HTTPClientError"],
-  integrations: integrations => [...integrations, navigationIntegration],
+  integrations: integrations => [
+    ...integrations,
+    Sentry.reactNativeTracingIntegration()
+  ],
   enabled: !isDevEnv,
-  // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-the-message-in-my-error-being-truncated
+  // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-message-in-my-error-being-truncated
   maxValueLength: 3000,
-  tracesSampleRate: 0.3,
+  tracesSampleRate: 0.2,
   sampleRate: 0.3
 });
 
@@ -68,23 +68,23 @@ const App = (): JSX.Element => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaProvider>
       <IODSExperimentalContextProvider>
-        <IOThemeContextProvider theme={"light"}>
-          <ToastProvider>
-            <Provider store={store}>
-              <PersistGate loading={undefined} persistor={persistor}>
-                <BottomSheetModalProvider>
-                  <LightModalProvider>
-                    <StatusMessages>
-                      <RootContainer
-                        routingInstumentation={navigationIntegration}
-                      />
-                    </StatusMessages>
-                  </LightModalProvider>
-                </BottomSheetModalProvider>
-              </PersistGate>
-            </Provider>
-          </ToastProvider>
-        </IOThemeContextProvider>
+        <IONewTypefaceContextProvider>
+          <IOThemeContextProvider theme={"light"}>
+            <ToastProvider>
+              <Provider store={store}>
+                <PersistGate loading={undefined} persistor={persistor}>
+                  <BottomSheetModalProvider>
+                    <LightModalProvider>
+                      <StatusMessages>
+                        <RootContainer />
+                      </StatusMessages>
+                    </LightModalProvider>
+                  </BottomSheetModalProvider>
+                </PersistGate>
+              </Provider>
+            </ToastProvider>
+          </IOThemeContextProvider>
+        </IONewTypefaceContextProvider>
       </IODSExperimentalContextProvider>
     </SafeAreaProvider>
   </GestureHandlerRootView>

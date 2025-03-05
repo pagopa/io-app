@@ -9,8 +9,7 @@ process.env.NODE_ENV = "test";
 const mockState = {
   features: {
     landingBanners: {
-      ITW_DISCOVERY: true,
-      SETTINGS_DISCOVERY: false
+      ITW_DISCOVERY: true
     }
   }
 } as GlobalState;

@@ -1,23 +1,40 @@
-import { Fragment } from "react";
+import {
+  Body,
+  IOSpacer,
+  IOToast,
+  MdH1,
+  MdH2,
+  MdH3
+} from "@pagopa/io-app-design-system";
 import {
   TxtHeaderNode,
   TxtHtmlNode,
-  TxtLinkNode
+  TxtLinkNode,
+  TxtStrNode
 } from "@textlint/ast-node-types";
-import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
-import { isIoInternalLink } from "../../../../components/ui/Markdown/handlers/link";
-import { handleInternalLink } from "../../../../utils/internalLink";
-import { openWebUrl } from "../../../../utils/url";
-import I18n from "../../../../i18n";
 import {
-  generateAccesibilityLinkViewsIfNeeded,
-  getTxtNodeKey
+  headerNodeToReactNative,
+  htmlNodeToReactNative,
+  linkNodeToReactNative,
+  strNodeToReactNative
 } from "../../../../components/IOMarkdown/renderRules";
 import {
   IOMarkdownRenderRules,
   Renderer
 } from "../../../../components/IOMarkdown/types";
-import { extractAllLinksFromRootNode } from "../../../../components/IOMarkdown/markdownRenderer";
+import {
+  isHttpsLink,
+  isIoInternalLink
+} from "../../../../components/ui/Markdown/handlers/link";
+import I18n from "../../../../i18n";
+import { isTestEnv } from "../../../../utils/environment";
+import { handleInternalLink } from "../../../../utils/internalLink";
+import { openWebUrl } from "../../../../utils/url";
+
+type HeadingMargins = {
+  marginStart: IOSpacer;
+  marginEnd: IOSpacer;
+};
 
 const HEADINGS_MAP = {
   1: MdH1,
@@ -28,13 +45,27 @@ const HEADINGS_MAP = {
   6: Body
 };
 
+const SPACER_VALUES: {
+  [key: number]: HeadingMargins;
+} = {
+  1: { marginStart: 16, marginEnd: 4 },
+  2: { marginStart: 16, marginEnd: 8 }
+};
+
+const DEFAULT_HEADING_MARGINS: HeadingMargins = {
+  marginStart: 8,
+  marginEnd: 4
+};
+
 const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
   if (isIoInternalLink(url)) {
     handleInternalLink(linkTo, url);
-  } else {
+  } else if (isHttpsLink(url)) {
     openWebUrl(url, () => {
       IOToast.error(I18n.t("global.jserror.title"));
     });
+  } else {
+    IOToast.warning(I18n.t("messageDetails.markdownLinkUnsupported"));
   }
 };
 
@@ -46,42 +77,44 @@ export const generateMessagesAndServicesRules = (
     render: Renderer,
     screenReaderEnabled: boolean
   ) {
-    const Heading = HEADINGS_MAP[header.depth];
-
-    const allLinkData = extractAllLinksFromRootNode(
+    const { marginStart, marginEnd } =
+      SPACER_VALUES[header.depth] || DEFAULT_HEADING_MARGINS;
+    return headerNodeToReactNative(
       header,
-      screenReaderEnabled
-    );
-    const nodeKey = getTxtNodeKey(header);
-
-    return (
-      <Fragment key={nodeKey}>
-        <Heading>{header.children.map(render)}</Heading>
-        {generateAccesibilityLinkViewsIfNeeded(
-          allLinkData,
-          nodeKey,
-          (url: string) => handleOpenLink(linkTo, url),
-          screenReaderEnabled
-        )}
-      </Fragment>
+      HEADINGS_MAP,
+      (url: string) => handleOpenLink(linkTo, url),
+      render,
+      screenReaderEnabled,
+      marginStart,
+      marginEnd
     );
   },
   Link(link: TxtLinkNode, render: Renderer) {
-    return (
-      <Body
-        weight="Semibold"
-        asLink
-        key={getTxtNodeKey(link)}
-        onPress={() => handleOpenLink(linkTo, link.url)}
-      >
-        {link.children.map(render)}
-      </Body>
+    return linkNodeToReactNative(
+      link,
+      () => handleOpenLink(linkTo, link.url),
+      render
     );
   },
-  Html: (_html: TxtHtmlNode) => undefined
+  Html: (html: TxtHtmlNode) => {
+    const backwardCompatibleValue = replaceBrWithNewline(html.value);
+    return htmlNodeToReactNative(backwardCompatibleValue, html, html.parent);
+  },
+  Str(str: TxtStrNode) {
+    const backwardCompatibleValue = replaceBrWithNewline(str.value);
+    return strNodeToReactNative(backwardCompatibleValue, str);
+  }
 });
 
-export const generatePreconditionsRules =
-  (): Partial<IOMarkdownRenderRules> => ({
-    Html: (_html: TxtHtmlNode) => undefined
-  });
+const replaceBrWithNewline = (input: string): string =>
+  input.replace(/<br\s*\/?>/gi, "\n");
+
+export const testable = isTestEnv
+  ? {
+      DEFAULT_HEADING_MARGINS,
+      HEADINGS_MAP,
+      SPACER_VALUES,
+      handleOpenLink,
+      replaceBrWithNewline
+    }
+  : undefined;

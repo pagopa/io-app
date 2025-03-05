@@ -550,7 +550,7 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -613,7 +613,8 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                   onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "alignSelf": "auto",
+                                      "flexShrink": 1,
                                     }
                                   }
                                   testID="generate-button"
@@ -623,21 +624,22 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderRadius": 4,
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 16,
+                                          "paddingHorizontal": 24,
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "backgroundColor": "#0073E6",
+                                          "height": 48,
+                                        },
+                                        {
+                                          "backgroundColor": "#0B3EE3",
                                           "overflow": "hidden",
                                         },
                                         false,
-                                        {
-                                          "height": 40,
-                                        },
                                         {},
                                         false,
                                         {
@@ -674,7 +676,7 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                             {},
                                             {
                                               "color": "#FFFFFF",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -791,7 +793,7 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",

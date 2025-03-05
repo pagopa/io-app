@@ -9,7 +9,8 @@ import {
   ContentWrapper,
   ModuleNavigation,
   VSpacer,
-  Tooltip
+  Tooltip,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
@@ -21,10 +22,9 @@ import {
   useRef,
   ComponentProps
 } from "react";
-import DeviceInfo from "react-native-device-info";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Alert, View } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import _isEqual from "lodash/isEqual";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -35,12 +35,14 @@ import {
   isCieIDTourGuideEnabledSelector,
   isCieLoginUatEnabledSelector
 } from "../../features/cieLogin/store/selectors";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
-import { resetAuthenticationState } from "../../store/actions/authentication";
+import {
+  resetAuthenticationState,
+  sessionExpired
+} from "../../store/actions/authentication";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
@@ -53,6 +55,10 @@ import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { cieIDDisableTourGuide } from "../../features/cieLogin/store/actions";
 import { SpidLevel } from "../../features/cieLogin/utils";
+import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../config";
+import { trackHelpCenterCtaTapped } from "../../utils/analytics";
+import { isTablet } from "../../utils/device";
+import { LandingSessionExpiredComponent } from "./components/LandingSessionExpiredComponent";
 import {
   loginCieWizardSelected,
   trackCieBottomSheetScreenView,
@@ -74,6 +80,7 @@ const SPACE_AROUND_BUTTON_LINK = 16;
 const SPID_LEVEL: SpidLevel = "SpidL2";
 
 export const LandingScreen = () => {
+  const { error } = useIOToast();
   const store = useIOStore();
   const insets = useSafeAreaInsets();
   const isCieIDTourGuideEnabled = useIOSelector(
@@ -127,7 +134,7 @@ export const LandingScreen = () => {
           icon="device"
           testID="bottom-sheet-login-with-cie-id"
           badge={{
-            variant: "turquoise",
+            variant: "highlight",
             text: I18n.t(
               "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
             )
@@ -152,7 +159,6 @@ export const LandingScreen = () => {
           action={I18n.t(
             "authentication.landing.cie_bottom_sheet.help_banner.action"
           )}
-          size="small"
         />
         <VSpacer />
       </View>
@@ -184,8 +190,6 @@ export const LandingScreen = () => {
   const isContinueWithRootOrJailbreak = useIOSelector(
     continueWithRootOrJailbreakSelector
   );
-
-  const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
 
   const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
 
@@ -265,12 +269,7 @@ export const LandingScreen = () => {
       contextualHelpMarkdown
     });
 
-    const sessionExpiredCardContent = I18n.t(
-      "authentication.landing.session_expired.body",
-      {
-        days: isFastLoginEnabled ? "365" : "30"
-      }
-    );
+    const { name: routeName } = useRoute();
 
     const carouselCards: ReadonlyArray<
       ComponentProps<typeof LandingCardComponent>
@@ -333,15 +332,28 @@ export const LandingScreen = () => {
     return (
       <View style={IOStyles.flex}>
         {isSessionExpiredRef.current ? (
-          <LandingCardComponent
-            id={0}
+          <LandingSessionExpiredComponent
             ref={accessibilityFirstFocuseViewRef}
-            pictogramName={"time"}
+            pictogramName={"identityCheck"}
             title={I18n.t("authentication.landing.session_expired.title")}
-            content={sessionExpiredCardContent}
-            accessibilityLabel={`${I18n.t(
-              "authentication.landing.session_expired.title"
-            )} ${sessionExpiredCardContent}`}
+            content={I18n.t("authentication.landing.session_expired.body")}
+            buttonLink={{
+              label: I18n.t(
+                "authentication.landing.session_expired.linkButtonLabel"
+              ),
+              color: "primary",
+              icon: "instruction",
+              onPress: () => {
+                trackHelpCenterCtaTapped(
+                  sessionExpired.toString(),
+                  helpCenterHowToDoWhenSessionIsExpiredUrl,
+                  routeName
+                );
+                openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
+                  error(I18n.t("global.jserror.title"));
+                });
+              }
+            }}
           />
         ) : (
           <Carousel
@@ -429,7 +441,7 @@ export const LandingScreen = () => {
   if (O.isNone(isRootedOrJailbroken)) {
     return <LoadingScreen />;
   } else {
-    if (DeviceInfo.isTablet()) {
+    if (isTablet()) {
       displayTabletAlert();
     }
     return <LandingScreenComponent />;

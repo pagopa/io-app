@@ -160,7 +160,7 @@ const IngressScreenBlockingError = memo(() => {
             subtitle: I18n.t("startup.slowdowns_results_screen.subtitle")
           }
         : {
-            pictogram: "umbrellaNew",
+            pictogram: "umbrella",
             title: I18n.t("startup.cdn_unreachable_results_screen.title"),
             subtitle: I18n.t("startup.cdn_unreachable_results_screen.subtitle")
           })}

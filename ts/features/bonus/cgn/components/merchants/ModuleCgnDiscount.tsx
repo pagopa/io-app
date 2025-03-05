@@ -49,6 +49,7 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
   return O.isSome(categorySpecs) ? (
     <Tag
       text={I18n.t(categorySpecs.value.nameKey)}
+      forceLightMode
       variant="custom"
       icon={{
         name: categorySpecs.value.icon,
@@ -92,13 +93,13 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
               <HStack space={8} style={{ flexWrap: "wrap" }}>
                 {discount.isNew && (
                   <Badge
-                    variant="purple"
+                    variant="cgn"
                     text={I18n.t("bonus.cgn.merchantsList.news")}
                   />
                 )}
                 {isValidDiscount(discount.discount) && (
                   <Badge
-                    variant="purple"
+                    variant="cgn"
                     outline
                     text={`-${normalizedDiscountPercentage(
                       discount.discount
@@ -108,7 +109,7 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
               </HStack>
             )}
 
-            <H6>{discount.name}</H6>
+            <H6 color={"grey-850"}>{discount.name}</H6>
             <HStack space={4} style={{ flexWrap: "wrap" }}>
               {discount.productCategories.map(categoryKey => (
                 <CategoryTag key={categoryKey} category={categoryKey} />

@@ -386,7 +386,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 22,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -417,7 +417,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -670,7 +670,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 22,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -701,7 +701,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -945,7 +945,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 22,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -976,7 +976,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -1125,7 +1125,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 22,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -1156,7 +1156,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -1302,7 +1302,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 22,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -1333,7 +1333,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -1481,7 +1481,12 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
-                              style={{}}
+                              style={
+                                {
+                                  "alignSelf": "stretch",
+                                  "flexShrink": 0,
+                                }
+                              }
                               testID="landing-button-login-cie"
                             >
                               <View
@@ -1489,20 +1494,23 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderRadius": 4,
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 8,
                                       "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "paddingHorizontal": 16,
+                                      "paddingHorizontal": 24,
                                       "textAlignVertical": "center",
                                     },
                                     {
-                                      "backgroundColor": "#0073E6",
+                                      "height": 48,
+                                    },
+                                    {
+                                      "backgroundColor": "#0B3EE3",
                                       "overflow": "hidden",
                                     },
-                                    false,
                                     {
-                                      "height": 40,
+                                      "paddingHorizontal": 16,
                                     },
                                     {},
                                     false,
@@ -1601,7 +1609,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         {},
                                         {
                                           "color": "#FFFFFF",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -1658,7 +1666,12 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="landing-button-login-spid"
                           >
                             <View
@@ -1666,20 +1679,23 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "height": 48,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {},
                                   false,
@@ -1778,7 +1794,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1891,7 +1907,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2032,7 +2048,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                                 {},
                                                 {
                                                   "color": "#0B3EE3",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 14,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -2055,7 +2071,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                                 {},
                                                 {
                                                   "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "400",
@@ -2241,7 +2257,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                                 {},
                                                 {
                                                   "color": "#0B3EE3",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 14,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -2264,7 +2280,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                                 {},
                                                 {
                                                   "color": "#555C70",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "400",
@@ -2308,7 +2324,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                               {},
                                               {
                                                 "color": "#003B3D",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 12,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -2377,11 +2393,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           "borderCurve": "continuous",
                                           "borderRadius": 8,
                                           "flexDirection": "row",
+                                          "padding": 16,
                                         },
                                         {
                                           "backgroundColor": "#DBF9FA",
-                                          "paddingHorizontal": 16,
-                                          "paddingVertical": 12,
                                         },
                                         {
                                           "transform": [
@@ -2417,8 +2432,8 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                             {},
                                             {
                                               "color": "#031344",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 17,
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                               "lineHeight": 24,
@@ -2439,8 +2454,36 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         accessibilityElementsHidden={true}
                                         accessibilityLabel="We give you a hand"
                                         accessibilityRole="button"
+                                        accessibilityState={
+                                          {
+                                            "busy": undefined,
+                                            "checked": undefined,
+                                            "disabled": undefined,
+                                            "expanded": undefined,
+                                            "selected": undefined,
+                                          }
+                                        }
+                                        accessibilityValue={
+                                          {
+                                            "max": undefined,
+                                            "min": undefined,
+                                            "now": undefined,
+                                            "text": undefined,
+                                          }
+                                        }
                                         accessible={true}
+                                        collapsable={false}
+                                        focusable={true}
                                         importantForAccessibility="no-hide-descendants"
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onResponderGrant={[Function]}
+                                        onResponderMove={[Function]}
+                                        onResponderRelease={[Function]}
+                                        onResponderTerminate={[Function]}
+                                        onResponderTerminationRequest={[Function]}
+                                        onStartShouldSetResponder={[Function]}
                                         pointerEvents="none"
                                       >
                                         <View
@@ -2463,7 +2506,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                               {},
                                               {
                                                 "color": "#0B3EE3",
-                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
@@ -2490,10 +2533,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     >
                                       <RNSVGSvgView
                                         align="xMidYMid"
-                                        bbHeight={64}
-                                        bbWidth={64}
+                                        bbHeight={80}
+                                        bbWidth={80}
                                         focusable={false}
-                                        height={64}
+                                        height={80}
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
@@ -2505,14 +2548,14 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                             },
                                             {
                                               "flex": 0,
-                                              "height": 64,
-                                              "width": 64,
+                                              "height": 80,
+                                              "width": 80,
                                             },
                                           ]
                                         }
                                         vbHeight={240}
                                         vbWidth={240}
-                                        width={64}
+                                        width={80}
                                       >
                                         <RNSVGGroup
                                           fill={
@@ -2684,7 +2727,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -2703,7 +2746,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",

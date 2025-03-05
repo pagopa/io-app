@@ -561,7 +561,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                               "width": 44,
                                             },
                                             {
-                                              "backgroundColor": "#0073E6",
+                                              "backgroundColor": "#0B3EE3",
                                             },
                                             {
                                               "opacity": 0,
@@ -603,8 +603,8 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -627,7 +627,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -659,7 +659,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -680,7 +680,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -700,7 +700,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -832,7 +832,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 12,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -1522,7 +1522,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                               "width": 44,
                                             },
                                             {
-                                              "backgroundColor": "#0073E6",
+                                              "backgroundColor": "#0B3EE3",
                                             },
                                             {
                                               "opacity": 0,
@@ -1564,8 +1564,8 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -1588,7 +1588,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -1620,7 +1620,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -1641,7 +1641,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -1661,7 +1661,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -1848,7 +1848,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 12,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -2660,7 +2660,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                               "width": 44,
                                             },
                                             {
-                                              "backgroundColor": "#0073E6",
+                                              "backgroundColor": "#0B3EE3",
                                             },
                                             {
                                               "opacity": 0,
@@ -2702,8 +2702,8 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -2726,7 +2726,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -2758,7 +2758,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -2779,7 +2779,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -2799,7 +2799,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -2931,7 +2931,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 12,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -3652,7 +3652,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                               "width": 44,
                                             },
                                             {
-                                              "backgroundColor": "#0073E6",
+                                              "backgroundColor": "#0B3EE3",
                                             },
                                             {
                                               "opacity": 0,
@@ -3694,8 +3694,8 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -3718,7 +3718,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -3750,7 +3750,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -3771,7 +3771,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -3791,7 +3791,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -3978,7 +3978,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 12,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -4699,7 +4699,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                               "width": 44,
                                             },
                                             {
-                                              "backgroundColor": "#0073E6",
+                                              "backgroundColor": "#0B3EE3",
                                             },
                                             {
                                               "opacity": 0,
@@ -4741,8 +4741,8 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -4765,7 +4765,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -4797,7 +4797,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -4818,7 +4818,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -4838,7 +4838,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -5552,7 +5552,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                               "width": 44,
                                             },
                                             {
-                                              "backgroundColor": "#0073E6",
+                                              "backgroundColor": "#0B3EE3",
                                             },
                                             {
                                               "opacity": 0,
@@ -5594,8 +5594,8 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -5618,7 +5618,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -5650,7 +5650,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -5671,7 +5671,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -5691,7 +5691,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -6338,7 +6338,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                               "width": 44,
                                             },
                                             {
-                                              "backgroundColor": "#0073E6",
+                                              "backgroundColor": "#0B3EE3",
                                             },
                                             {
                                               "opacity": 0,
@@ -6380,8 +6380,8 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -6404,7 +6404,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -6436,7 +6436,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -6457,7 +6457,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -6477,7 +6477,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -7069,7 +7069,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                               "width": 44,
                                             },
                                             {
-                                              "backgroundColor": "#0073E6",
+                                              "backgroundColor": "#0B3EE3",
                                             },
                                             {
                                               "opacity": 0,
@@ -7111,8 +7111,8 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -7135,7 +7135,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -7167,7 +7167,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -7188,7 +7188,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -7208,7 +7208,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",

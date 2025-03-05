@@ -46,7 +46,7 @@ const customVariables = {
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
   */
-  brandPrimary: IOColors["blue-500"],
+  brandPrimary: IOColors["blueIO-500"],
 
   cardShadow: IOColors.black,
 
@@ -67,7 +67,6 @@ const customVariables = {
   contentPadding: 24,
   contentPaddingLarge: 48,
   contentBackground: IOColors.white,
-  contentPrimaryBackground: IOColors["blue-500"],
 
   // Footer
   footerBackground: IOColors.white,
@@ -93,8 +92,6 @@ const customVariables = {
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
   headerBodyFontWeight: "600" as FontWeight,
-
-  androidStatusBarColor: IOColors.white,
 
   // Text
   textColor: IOColors["grey-700"],

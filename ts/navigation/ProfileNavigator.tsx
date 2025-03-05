@@ -30,6 +30,7 @@ import TrialSystemPlayground from "../screens/profile/TrialSystemPlayground";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import { IOMarkdownPlayground } from "../screens/profile/playgrounds/IOMarkdownPlayground";
 import { AppFeedbackPlayground } from "../screens/profile/playgrounds/AppFeedbackPlayground";
+import AppearancePreferenceScreen from "../screens/profile/AppearancePreferenceScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -66,6 +67,10 @@ const ProfileStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.PROFILE_PREFERENCES_SERVICES}
       component={ServicesPreferenceScreen}
+    />
+    <Stack.Screen
+      name={ROUTES.PROFILE_PREFERENCES_APPEARANCE}
+      component={AppearancePreferenceScreen}
     />
     <Stack.Screen
       name={ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING}

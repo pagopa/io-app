@@ -124,7 +124,6 @@ export const DSWallet = () => {
                 <Banner
                   color="turquoise"
                   pictogramName="idea"
-                  size="small"
                   content="Categories can have a top element!"
                 />
                 <VSpacer size={16} />

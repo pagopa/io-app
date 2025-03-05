@@ -37,6 +37,7 @@ import {
   IO_LOGIN_CIE_SOURCE_APP,
   IO_LOGIN_CIE_URL_SCHEME
 } from "../../../utils/cie";
+import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -270,20 +271,17 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     [navigateToCieIdAuthenticationError]
   );
 
+  const { showAlert } = useOnboardingAbortAlert();
+
   const headerProps: HeaderSecondLevelHookProps = useMemo(() => {
-    if (webviewSource && !authenticatedUrl && !isLoadingWebView) {
-      return { title: "", goBack: navigateToLandingScreen };
+    if (webviewSource && !isLoadingWebView) {
+      return { title: "", goBack: () => showAlert(navigateToLandingScreen) };
     }
     return {
       title: "",
       canGoBack: false
     };
-  }, [
-    authenticatedUrl,
-    isLoadingWebView,
-    navigateToLandingScreen,
-    webviewSource
-  ]);
+  }, [isLoadingWebView, navigateToLandingScreen, showAlert, webviewSource]);
 
   useHeaderSecondLevel(headerProps);
 

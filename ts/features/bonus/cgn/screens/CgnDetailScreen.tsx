@@ -117,7 +117,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
     // subText is a blank space to avoid default value when it is undefined
     return (
       <OperationResultScreenContent
-        pictogram="umbrellaNew"
+        pictogram="umbrella"
         title={I18n.t("wallet.methodDetails.error.title")}
         isHeaderVisible
         subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
@@ -196,6 +196,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
       }
       cardFooter={
         <H4
+          color="black"
           style={{
             textAlign: "center",
             marginHorizontal: 16,

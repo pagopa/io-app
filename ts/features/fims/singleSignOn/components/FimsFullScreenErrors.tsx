@@ -39,7 +39,7 @@ export const FimsSSOFullScreenError = () => {
             "FIMS.consentsScreen.errorStates.authentication.body"
           ),
           isHeaderVisible: true,
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           action: {
             label: I18n.t("global.buttons.close"),
             onPress: handleClose
@@ -65,7 +65,7 @@ export const FimsSSOFullScreenError = () => {
           title: I18n.t("FIMS.consentsScreen.errorStates.general.title"),
           subtitle: I18n.t("FIMS.consentsScreen.errorStates.general.body"),
           isHeaderVisible: true,
-          pictogram: "umbrellaNew",
+          pictogram: "umbrella",
           action: {
             label: I18n.t("global.buttons.close"),
             onPress: handleClose

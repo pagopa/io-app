@@ -68,17 +68,13 @@ const OnboardingShareDataScreen = (): ReactElement => {
           // We wait some time to allow mixpanel to be enabled
           // before tracking the event
           setTimeout(() => {
-            void trackMixpanelSetEnabled(
-              true,
-              getFlowType(false, isFirstOnBoarding),
-              store.getState()
-            );
+            void trackMixpanelSetEnabled(true, flow, store.getState());
           }, 1000);
         },
         testID: "share-data-confirm-button"
       }
     }),
-    [isFirstOnBoarding, present, store, dispatch]
+    [flow, present, store, dispatch]
   );
 
   return (
@@ -104,7 +100,6 @@ const OnboardingShareDataScreen = (): ReactElement => {
             )}
             color="neutral"
             pictogramName="settings"
-            size="small"
           />
         </View>
         <VSpacer size={16} />

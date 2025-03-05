@@ -2,7 +2,9 @@
 
 IO_BACKEND_VERSION=v16.7.4-RELEASE
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.58
+IO_SERVICES_METADATA_VERSION=1.0.59
+# Session manager version
+IO_SESSION_MANAGER_VERSION=1.4.0
 
 declare -a apis=(
   # Backend APIs
@@ -17,7 +19,7 @@ declare -a apis=(
   "./definitions/pagopa/cobadge/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/cobadge/abi_definitions.yml"
   "./definitions/pagopa/privative/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/privative/definitions.yml"
   # IDPay APIs
-  "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v11.7.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml"
+  "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v12.2.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml"
   # Services APIs
   "./definitions/services https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_services_app_backend.yaml"
   # Lollipop APIs
@@ -30,8 +32,8 @@ declare -a apis=(
   # CDN APIs
   "./definitions/content https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/definitions.yml"
   # Session Manager APIs
-  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/internal.yaml"
-  "./definitions/fast_login https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/fast-login.yaml"
+  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@$IO_SESSION_MANAGER_VERSION/apps/io-session-manager/api/internal.yaml"
+  "./definitions/fast_login https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@$IO_SESSION_MANAGER_VERSION/apps/io-session-manager/api/fast-login.yaml"
   # CGN APIs
   "./definitions/cgn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn.yaml"
   "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn_operator_search.yaml"
@@ -49,7 +51,7 @@ wait
 
 declare -a apisNoClient=(
   "./definitions/backend https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml"
-  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/public.yaml"
+  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@$IO_SESSION_MANAGER_VERSION/apps/io-session-manager/api/public.yaml"
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/consumed/api-piattaforma-notifiche.yaml"
 )
 

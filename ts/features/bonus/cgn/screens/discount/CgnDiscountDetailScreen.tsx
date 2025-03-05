@@ -46,6 +46,7 @@ import {
 } from "../../store/reducers/merchants";
 import { cgnOtpDataSelector } from "../../store/reducers/otp";
 import { getCgnUserAgeRange } from "../../utils/dates";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 
 const gradientSafeAreaHeight: IOSpacingScale = 96;
 
@@ -191,15 +192,20 @@ const CgnDiscountDetailScreen = () => {
     }
   };
 
+  const { backgroundColor } = discountDetails?.isNew
+    ? styles.backgroundNewItem
+    : styles.backgroundDefault;
+
   useHeaderSecondLevel({
     title: discountDetails?.name || "",
     scrollValues: {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
     },
-    transparent: true,
+    backgroundColor,
     canGoBack: true,
-    supportRequest: true
+    supportRequest: true,
+    variant: "neutral"
   });
 
   useEffect(() => {
@@ -249,13 +255,13 @@ const CgnDiscountDetailScreen = () => {
     );
   };
 
-  const discountColor = discountDetails?.isNew
-    ? styles.backgroundNewItem
-    : styles.backgroundDefault;
-
   if (discountDetails && merchantDetails) {
     return (
       <>
+        <FocusAwareStatusBar
+          backgroundColor={backgroundColor}
+          barStyle={"dark-content"}
+        />
         <Animated.ScrollView
           style={{ flexGrow: 1 }}
           onScroll={scrollHandler}
@@ -272,7 +278,7 @@ const CgnDiscountDetailScreen = () => {
               style={{
                 position: "absolute",
                 height: 1000,
-                backgroundColor: discountColor.backgroundColor,
+                backgroundColor,
                 top: -1000,
                 right: 0,
                 left: 0

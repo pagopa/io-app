@@ -728,11 +728,10 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "flexDirection": "row",
+                                  "padding": 16,
                                 },
                                 {
                                   "backgroundColor": "#F4F5F8",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
                                 },
                                 {
                                   "transform": [
@@ -768,7 +767,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -790,8 +789,36 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
                                 accessibilityRole="button"
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
                                 accessible={true}
+                                collapsable={false}
+                                focusable={true}
                                 importantForAccessibility="no-hide-descendants"
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                                 pointerEvents="none"
                               >
                                 <View
@@ -814,7 +841,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",

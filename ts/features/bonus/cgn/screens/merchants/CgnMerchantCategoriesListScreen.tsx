@@ -3,37 +3,36 @@ import {
   Body,
   Divider,
   H6,
-  IOStyles,
   IOToast,
   ListItemAction,
-  ListItemNav
+  ListItemNav,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useState, useEffect, useMemo } from "react";
-import { FlatList, RefreshControl, View } from "react-native";
+import { useEffect, useMemo, useState } from "react";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
-import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 
 export const CgnMerchantCategoriesListScreen = () => {
+  const theme = useIOTheme();
   const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const [isPullRefresh, setIsPullRefresh] = useState(false);
   const potCategories = useIOSelector(cgnCategoriesListSelector);
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   const navigation =
     useNavigation<
@@ -77,19 +76,17 @@ export const CgnMerchantCategoriesListScreen = () => {
     }
   }, [potCategories]);
 
-  const renderCategoryElement = (
-    category: ProductCategoryWithNewDiscountsCount,
-    i: number
-  ) => {
+  const renderItem = (category: ProductCategoryWithNewDiscountsCount) => {
     const specs = getCategorySpecs(category.productCategory);
     const countAvailable = category.newDiscounts > 0;
+
     return pipe(
       specs,
       O.fold(
         () => null,
         s => (
           <ListItemNav
-            key={i}
+            key={category.productCategory}
             value={
               countAvailable ? (
                 <View
@@ -100,7 +97,7 @@ export const CgnMerchantCategoriesListScreen = () => {
                   }}
                 >
                   <H6>{I18n.t(s.nameKey)}</H6>
-                  <Badge text={`${category.newDiscounts}`} variant="purple" />
+                  <Badge text={`${category?.newDiscounts}`} variant="cgn" />
                 </View>
               ) : (
                 I18n.t(s.nameKey)
@@ -115,7 +112,7 @@ export const CgnMerchantCategoriesListScreen = () => {
                 }
               );
             }}
-            iconColor="grey-300"
+            iconColor={theme["icon-decorative"]}
             icon={s.icon}
           />
         )
@@ -129,44 +126,30 @@ export const CgnMerchantCategoriesListScreen = () => {
       [potCategories]
     );
 
-  return (
-    <>
-      {bottomSheet}
-      <FlatList
-        ListEmptyComponent={() => <CgnMerchantListSkeleton hasIcons />}
-        data={pot.isNone(potCategories) ? [] : categoriesToArray}
-        style={[
-          IOStyles.horizontalContentPadding,
-          IOStyles.flex,
-          { paddingBottom: insets.bottom }
-        ]}
-        keyExtractor={pc => pc.productCategory}
-        renderItem={({ item, index }) => renderCategoryElement(item, index)}
-        refreshControl={
-          <RefreshControl
-            refreshing={isPullRefresh}
-            onRefresh={onPullRefresh}
-          />
-        }
-        ItemSeparatorComponent={() => <Divider />}
-        ListFooterComponent={
-          isDesignSystemEnabled ? (
-            <>
-              <Divider />
-              <ListItemAction
-                onPress={present}
-                accessibilityLabel={I18n.t(
-                  "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
-                )}
-                label={I18n.t(
-                  "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
-                )}
-                variant="primary"
-              />
-            </>
-          ) : null
-        }
-      />
-    </>
-  );
+  return {
+    data: categoriesToArray,
+    renderItem,
+    refreshControlProps: {
+      refreshing: isPullRefresh,
+      onRefresh: onPullRefresh
+    },
+    ListFooterComponent: (
+      <>
+        <Divider />
+        <ListItemAction
+          onPress={present}
+          accessibilityLabel={I18n.t(
+            "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
+          )}
+          label={I18n.t(
+            "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
+          )}
+          variant="primary"
+        />
+        {bottomSheet}
+      </>
+    ),
+    ListEmptyComponent: undefined,
+    skeleton: <CgnMerchantListSkeleton hasIcons count={10} />
+  };
 };

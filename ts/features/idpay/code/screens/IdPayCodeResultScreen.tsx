@@ -40,7 +40,7 @@ const IdPayCodeResultScreen = () => {
       title={I18n.t(
         `idpay.initiative.discountDetails.IDPayCode.failureScreen.header.GENERIC`
       )}
-      pictogram={"umbrellaNew"}
+      pictogram={"umbrella"}
       action={{
         label: I18n.t(
           "idpay.initiative.discountDetails.IDPayCode.failureScreen.cta"

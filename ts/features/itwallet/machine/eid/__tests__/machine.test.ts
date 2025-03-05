@@ -47,7 +47,6 @@ describe("itwEidIssuanceMachine", () => {
   const setWalletInstanceToOperational = jest.fn();
   const setWalletInstanceToValid = jest.fn();
   const handleSessionExpired = jest.fn();
-  const abortIdentification = jest.fn();
   const onInit = jest.fn();
 
   const createWalletInstance = jest.fn();
@@ -64,6 +63,7 @@ describe("itwEidIssuanceMachine", () => {
   const trackWalletInstanceCreation = jest.fn();
   const trackWalletInstanceRevocation = jest.fn();
   const revokeWalletInstance = jest.fn();
+  const storeAuthLevel = jest.fn();
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
@@ -90,10 +90,10 @@ describe("itwEidIssuanceMachine", () => {
       setWalletInstanceToOperational,
       setWalletInstanceToValid,
       handleSessionExpired,
-      abortIdentification,
       resetWalletInstance,
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
+      storeAuthLevel,
       onInit: assign(onInit),
       setIsReissuing: assign({
         isReissuing: true
@@ -123,8 +123,9 @@ describe("itwEidIssuanceMachine", () => {
     }
   });
 
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it("Should obtain an eID (SPID)", async () => {
@@ -236,6 +237,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "spid",
+        level: "L2",
         idpId: idps[0].id
       }
     });
@@ -287,6 +289,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "spid",
+        level: "L2",
         idpId: idps[0].id
       },
       authenticationContext: expect.objectContaining({
@@ -345,7 +348,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "cieId",
-        abortController: new AbortController()
+        level: "L2"
       }
     });
     expect(navigateToCieIdLoginScreen).toHaveBeenCalledTimes(1);
@@ -446,6 +449,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "ciePin",
+        level: "L3",
         pin: "12345678"
       },
       cieContext: {
@@ -537,6 +541,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "ciePin",
+        level: "L3",
         pin: "12345678"
       },
       cieContext: {
@@ -565,6 +570,7 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: T_WIA,
       identification: {
         mode: "ciePin",
+        level: "L3",
         pin: "12345678"
       },
       cieContext: {
@@ -701,6 +707,8 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should return to TOS acceptance if session expires when creating a Wallet Instance", async () => {
+    hasValidWalletInstanceAttestation.mockImplementation(() => false);
+
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -1061,6 +1069,7 @@ describe("itwEidIssuanceMachine", () => {
       isReissuing: true,
       identification: {
         mode: "spid",
+        level: "L2",
         idpId: idps[0].id
       }
     });
@@ -1114,6 +1123,7 @@ describe("itwEidIssuanceMachine", () => {
       isReissuing: true,
       identification: {
         mode: "spid",
+        level: "L2",
         idpId: idps[0].id
       },
       authenticationContext: expect.objectContaining({

@@ -188,7 +188,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
             {},
             {
               "color": "#0E0F13",
-              "fontFamily": "Titillium Sans Pro",
+              "fontFamily": "Titillio",
               "fontSize": 22,
               "fontStyle": "normal",
               "fontWeight": "600",
@@ -218,7 +218,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
             {},
             {
               "color": "#555C70",
-              "fontFamily": "Titillium Sans Pro",
+              "fontFamily": "Titillio",
               "fontSize": 16,
               "fontStyle": "normal",
               "fontWeight": "400",
@@ -281,7 +281,8 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
             onStartShouldSetResponder={[Function]}
             style={
               {
-                "alignSelf": "flex-start",
+                "alignSelf": "auto",
+                "flexShrink": 1,
               }
             }
             testID="cie-id-error-primary-action"
@@ -291,21 +292,22 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                 [
                   {
                     "alignItems": "center",
-                    "borderRadius": 4,
+                    "borderCurve": "continuous",
+                    "borderRadius": 8,
                     "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
-                    "paddingHorizontal": 16,
+                    "paddingHorizontal": 24,
                     "textAlignVertical": "center",
                   },
                   {
-                    "backgroundColor": "#0073E6",
+                    "height": 48,
+                  },
+                  {
+                    "backgroundColor": "#0B3EE3",
                     "overflow": "hidden",
                   },
                   false,
-                  {
-                    "height": 40,
-                  },
                   {},
                   false,
                   {
@@ -342,7 +344,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                       {},
                       {
                         "color": "#FFFFFF",
-                        "fontFamily": "Titillium Sans Pro",
+                        "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
                         "fontWeight": "600",
@@ -459,7 +461,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     {},
                     {
                       "color": "#0E0F13",
-                      "fontFamily": "Titillium Sans Pro",
+                      "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",
                       "fontWeight": "600",
@@ -675,7 +677,7 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
             {},
             {
               "color": "#0E0F13",
-              "fontFamily": "Titillium Sans Pro",
+              "fontFamily": "Titillio",
               "fontSize": 22,
               "fontStyle": "normal",
               "fontWeight": "600",
@@ -705,7 +707,7 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
             {},
             {
               "color": "#555C70",
-              "fontFamily": "Titillium Sans Pro",
+              "fontFamily": "Titillio",
               "fontSize": 16,
               "fontStyle": "normal",
               "fontWeight": "400",
@@ -770,7 +772,8 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
             onStartShouldSetResponder={[Function]}
             style={
               {
-                "alignSelf": "flex-start",
+                "alignSelf": "auto",
+                "flexShrink": 1,
               }
             }
             testID="cie-id-error-primary-action"
@@ -780,21 +783,22 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                 [
                   {
                     "alignItems": "center",
-                    "borderRadius": 4,
+                    "borderCurve": "continuous",
+                    "borderRadius": 8,
                     "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
-                    "paddingHorizontal": 16,
+                    "paddingHorizontal": 24,
                     "textAlignVertical": "center",
                   },
                   {
-                    "backgroundColor": "#0073E6",
+                    "height": 48,
+                  },
+                  {
+                    "backgroundColor": "#0B3EE3",
                     "overflow": "hidden",
                   },
                   false,
-                  {
-                    "height": 40,
-                  },
                   {},
                   false,
                   {
@@ -831,7 +835,7 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                       {},
                       {
                         "color": "#FFFFFF",
-                        "fontFamily": "Titillium Sans Pro",
+                        "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
                         "fontWeight": "600",
@@ -948,7 +952,7 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     {},
                     {
                       "color": "#0E0F13",
-                      "fontFamily": "Titillium Sans Pro",
+                      "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",
                       "fontWeight": "600",

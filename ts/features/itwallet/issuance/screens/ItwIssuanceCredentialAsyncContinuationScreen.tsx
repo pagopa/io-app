@@ -58,7 +58,7 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = ({
     O.fold(
       () => (
         <OperationResultScreenContent
-          pictogram="umbrellaNew"
+          pictogram="umbrella"
           title={I18n.t("genericError")}
           action={{
             label: I18n.t("global.buttons.close"),
@@ -168,7 +168,8 @@ const WrappedItwIssuanceCredentialTrustIssuerScreen = ({
     machineRef.send({
       type: "select-credential",
       credentialType,
-      skipNavigation: true
+      skipNavigation: true,
+      asyncContinuation: true
     });
     setIsMachineReady(true);
   });

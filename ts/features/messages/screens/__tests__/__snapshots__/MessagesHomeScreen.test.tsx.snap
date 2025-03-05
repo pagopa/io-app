@@ -333,19 +333,19 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                             >
                               <Text
                                 allowFontScaling={true}
-                                dynamicTypeRamp="title2"
-                                maxFontSizeMultiplier={1.5}
+                                dynamicTypeRamp="title1"
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 22,
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 26,
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
-                                      "lineHeight": 33,
+                                      "lineHeight": 34,
                                     },
                                     {
                                       "flexShrink": 1,
@@ -442,7 +442,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0073E6",
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "flex": 0,
@@ -451,13 +451,13 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
+                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0073E6"
+                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -558,7 +558,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0073E6",
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "flex": 0,
@@ -567,13 +567,13 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
+                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0073E6"
+                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -677,7 +677,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0073E6",
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "flex": 0,
@@ -686,13 +686,13 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
+                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0073E6"
+                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,

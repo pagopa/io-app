@@ -10,7 +10,6 @@ import {
   IconButtonSolid,
   ListItemSwitch,
   VStack,
-  useIOExperimentalDesign,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
@@ -19,11 +18,6 @@ import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
-  primaryBlockLegacy: {
-    backgroundColor: IOColors["blue-500"],
-    padding: 16,
-    borderRadius: 8
-  },
   primaryBlock: {
     backgroundColor: IOColors["blueIO-500"],
     padding: 16,
@@ -42,7 +36,6 @@ const buttonBlockInnerSpacing = 8;
 const buttonBlockInnerSpacingLoose = 16;
 
 export const DSButtons = () => {
-  const { isExperimental } = useIOExperimentalDesign();
   const theme = useIOTheme();
 
   return (
@@ -50,41 +43,41 @@ export const DSButtons = () => {
       <VStack space={sectionMargin}>
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ButtonSolid</H4>
-          {renderButtonSolid(isExperimental)}
+          {renderButtonSolid()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ButtonOutline</H4>
-          {renderButtonOutline(isExperimental)}
+          {renderButtonOutline()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ButtonLink</H4>
-          {renderButtonLink(isExperimental)}
+          {renderButtonLink()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>IconButton</H4>
-          {renderIconButton(isExperimental)}
+          {renderIconButton()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>IconButtonSolid</H4>
-          {renderIconButtonSolid(isExperimental)}
+          {renderIconButtonSolid()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>
             IconButtonContained (Icebox)
           </H4>
-          {renderIconButtonContained(isExperimental)}
+          {renderIconButtonContained()}
         </VStack>
       </VStack>
     </DesignSystemScreen>
   );
 };
 
-const renderButtonSolid = (isExperimental: boolean) => (
+const renderButtonSolid = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="ButtonSolid · Primary variant">
       <VStack space={buttonBlockInnerSpacing}>
@@ -213,9 +206,7 @@ const renderButtonSolid = (isExperimental: boolean) => (
       </VStack>
     </DSComponentViewerBox>
 
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <VStack space={buttonBlockMargin}>
         <DSComponentViewerBox
           name="ButtonSolid · Contrast variant"
@@ -310,7 +301,7 @@ const renderButtonSolid = (isExperimental: boolean) => (
   </VStack>
 );
 
-const renderButtonOutline = (isExperimental: boolean) => (
+const renderButtonOutline = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="ButtonOutline · Primary variant">
       <VStack space={buttonBlockInnerSpacing}>
@@ -372,9 +363,7 @@ const renderButtonOutline = (isExperimental: boolean) => (
       </VStack>
     </DSComponentViewerBox>
 
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <VStack space={buttonBlockMargin}>
         <DSComponentViewerBox
           name="ButtonOutline · Contrast variant"
@@ -448,7 +437,7 @@ const renderButtonOutline = (isExperimental: boolean) => (
   </VStack>
 );
 
-const renderButtonLink = (isExperimental: boolean) => (
+const renderButtonLink = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="ButtonLink · Primary variant">
       <VStack space={buttonBlockInnerSpacingLoose}>
@@ -502,9 +491,7 @@ const renderButtonLink = (isExperimental: boolean) => (
       </VStack>
     </DSComponentViewerBox>
 
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <VStack space={buttonBlockMargin}>
         <DSComponentViewerBox
           name="ButtonLink · Contrast variant"
@@ -575,7 +562,7 @@ const renderButtonLink = (isExperimental: boolean) => (
   </VStack>
 );
 
-const renderIconButton = (isExperimental: boolean) => (
+const renderIconButton = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="IconButton · Primary variant">
       <HStack space={buttonBlockInnerSpacingLoose}>
@@ -624,9 +611,7 @@ const renderIconButton = (isExperimental: boolean) => (
         />
       </HStack>
     </DSComponentViewerBox>
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <DSComponentViewerBox
         name="IconButton · Contrast variant"
         colorMode="dark"
@@ -659,7 +644,7 @@ const renderIconButton = (isExperimental: boolean) => (
   </VStack>
 );
 
-const renderIconButtonSolid = (isExperimental: boolean) => (
+const renderIconButtonSolid = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="IconButtonSolid · Primary variant, large">
       <HStack space={buttonBlockInnerSpacingLoose}>
@@ -679,9 +664,7 @@ const renderIconButtonSolid = (isExperimental: boolean) => (
         />
       </HStack>
     </DSComponentViewerBox>
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <DSComponentViewerBox
         name="IconButtonSolid · Contrast variant, large"
         colorMode="dark"
@@ -707,7 +690,7 @@ const renderIconButtonSolid = (isExperimental: boolean) => (
   </VStack>
 );
 
-const renderIconButtonContained = (isExperimental: boolean) => (
+const renderIconButtonContained = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="IconButtonContained · Primary variant">
       <HStack space={buttonBlockInnerSpacing}>
@@ -743,9 +726,7 @@ const renderIconButtonContained = (isExperimental: boolean) => (
         />
       </HStack>
     </DSComponentViewerBox>
-    <View
-      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
-    >
+    <View style={styles.primaryBlock}>
       <DSComponentViewerBox
         name="IconButtonContained · Contrast variant"
         colorMode="dark"

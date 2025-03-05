@@ -492,7 +492,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                     {},
                                     {
                                       "color": "#031344",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 20,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1026,7 +1026,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                       {},
                                       {
                                         "color": "#5517E3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1064,7 +1064,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                     {},
                                     {
                                       "color": "#1A0744",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 20,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",

@@ -173,7 +173,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - pagopa-react-native-zendesk (0.3.29):
+  - pagopa-react-native-zendesk (0.3.30):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1818,7 +1818,7 @@ PODS:
     - React-Core
   - RNCPushNotificationIOS (1.8.0):
     - React-Core
-  - RNDeviceInfo (10.8.0):
+  - RNDeviceInfo (14.0.4):
     - React-Core
   - RNFlashList (1.7.0):
     - DoubleConversion
@@ -2488,7 +2488,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-jwt: 78511df5928a85c210f7ead75174726d23d8e7bd
   pagopa-io-react-native-login-utils: 2e6ec74e7d03cfef7dc6e6eda0df6f1294ef64ac
   pagopa-io-react-native-secure-storage: 0297d41360d93f89e9f89c8412b99916e0dbf520
-  pagopa-react-native-zendesk: af3ab0174baaaa7565f2475d43d8c5afafd1a863
+  pagopa-react-native-zendesk: c2a9da883eeba042919e0aa8b5c426ce4af81096
   RCT-Folly: 34124ae2e667a0e5f0ea378db071d27548124321
   RCTDeprecation: 726d24248aeab6d7180dac71a936bbca6a994ed1
   RCTRequired: a94e7febda6db0345d207e854323c37e3a31d93b
@@ -2569,7 +2569,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 40367e8d25522dca9c3513c7b9815a184669bd97
   RNCClipboard: 47593431a9e763a71950798683b28f691f16b98d
   RNCPushNotificationIOS: 9f3ee8e3b19b6d1941990d0e6306e89fc7610c83
-  RNDeviceInfo: 55dd986d234bf6d56469fb70a5a3ae972fc59330
+  RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFlashList: 1e697d1f5c2ead424948f8b8ac01e403d77eb861
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 27a63f2218affdf1a426d56682f9b174904838b3

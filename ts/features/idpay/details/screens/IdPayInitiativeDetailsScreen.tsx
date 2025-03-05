@@ -247,10 +247,6 @@ const IdPayInitiativeDetailsScreen = () => {
             case InitiativeRewardTypeEnum.EXPENSE:
               return (
                 <ContentWrapper>
-                  <MissingConfigurationAlert
-                    initiativeId={initiativeId}
-                    status={initiative.status}
-                  />
                   <VSpacer size={8} />
                   <InitiativeTimelineComponent
                     initiativeId={initiativeId}

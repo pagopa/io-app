@@ -3,9 +3,7 @@ import {
   H3,
   HSpacer,
   IOColors,
-  IOVisualCostants,
   Icon,
-  VSpacer,
   hexToRgba
 } from "@pagopa/io-app-design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
@@ -13,18 +11,8 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  Dimensions,
-  LayoutChangeEvent,
-  Platform,
-  RefreshControl,
-  View
-} from "react-native";
-import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue
-} from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Platform, RefreshControl, View } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import {
@@ -59,23 +47,11 @@ export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
 }>;
 
 const CgnMerchantsListByCategory = () => {
-  const screenHeight = Dimensions.get("window").height;
-  const [titleHeight, setTitleHeight] = useState(0);
-  const translationY = useSharedValue(0);
+  // const screenHeight = Dimensions.get("window").height;
+  // const translationY = useSharedValue(0);
 
-  const getTitleHeight = (event: LayoutChangeEvent) => {
-    const { height } = event.nativeEvent.layout;
-    if (titleHeight === 0) {
-      setTitleHeight(height - insets.top - IOVisualCostants.headerHeight);
-    }
-  };
+  const animatedFlatListRef = useAnimatedRef<Animated.FlatList<any>>();
 
-  const scrollHandler = useAnimatedScrollHandler(event => {
-    // eslint-disable-next-line functional/immutable-data
-    translationY.value = event.contentOffset.y;
-  });
-
-  const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const route =
     useRoute<
@@ -148,11 +124,10 @@ const CgnMerchantsListByCategory = () => {
         )
       )
     ),
-    scrollValues: {
-      contentOffsetY: translationY,
-      triggerOffset: titleHeight
-    },
-    transparent: true,
+    enableDiscreteTransition: true,
+    animatedRef: animatedFlatListRef,
+    backgroundColor: categorySpecs?.colors,
+    variant: categorySpecs?.headerVariant,
     supportRequest: true,
     secondAction: {
       icon: "search",
@@ -191,18 +166,14 @@ const CgnMerchantsListByCategory = () => {
       )}
       {categorySpecs && (
         <View
-          onLayout={getTitleHeight}
           style={[
             IOStyles.horizontalContentPadding,
             {
-              paddingTop: insets.top,
               backgroundColor: categorySpecs.colors,
               paddingBottom: 24
             }
           ]}
         >
-          <VSpacer size={48} />
-          <VSpacer size={32} />
           <View style={[IOStyles.row, { alignItems: "center" }]}>
             <View
               style={{
@@ -234,7 +205,7 @@ const CgnMerchantsListByCategory = () => {
   const refreshControl = (
     <RefreshControl
       style={{ zIndex: 1 }}
-      progressViewOffset={Platform.OS === "ios" ? titleHeight : undefined}
+      tintColor={IOColors[categorySpecs?.textColor ?? "black"]}
       refreshing={isListRefreshing}
       onRefresh={() => {
         initLoadingLists();
@@ -243,25 +214,16 @@ const CgnMerchantsListByCategory = () => {
     />
   );
 
-  const getPaddingBottom = () => {
-    const ELEMENT_HEIGHT = 49;
-    const totalListElementsHeight = ELEMENT_HEIGHT * merchantsAll.length;
-    const usedVerticalSpace =
-      titleHeight + totalListElementsHeight + insets.bottom;
-    const availableVerticalSpace = screenHeight - usedVerticalSpace;
-
-    return availableVerticalSpace < titleHeight ? availableVerticalSpace : 0;
-  };
-
   return (
     <>
       <FocusAwareStatusBar
+        animated
         backgroundColor={categorySpecs?.colors}
-        barStyle={"dark-content"}
+        barStyle={categorySpecs?.statusBarStyle}
       />
       {isError(onlineMerchants) && isError(offlineMerchants) ? (
         <OperationResultScreenContent
-          pictogram="umbrellaNew"
+          pictogram="umbrella"
           title={I18n.t("wallet.errors.GENERIC_ERROR")}
           subtitle={I18n.t("wallet.errorTransaction.submitBugText")}
           action={{
@@ -272,14 +234,12 @@ const CgnMerchantsListByCategory = () => {
         />
       ) : (
         <Animated.FlatList
+          ref={animatedFlatListRef}
           style={{ flexGrow: 1 }}
-          onScroll={scrollHandler}
           scrollEventThrottle={8}
-          snapToOffsets={[0, titleHeight]}
           snapToEnd={false}
           contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: getPaddingBottom()
+            flexGrow: 1
           }}
           refreshControl={refreshControl}
           data={merchantsAll}

@@ -733,11 +733,10 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                     "borderCurve": "continuous",
                                     "borderRadius": 8,
                                     "flexDirection": "row",
+                                    "padding": 16,
                                   },
                                   {
                                     "backgroundColor": "#DBF9FA",
-                                    "paddingHorizontal": 16,
-                                    "paddingVertical": 16,
                                   },
                                   {
                                     "transform": [
@@ -773,8 +772,8 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                       {},
                                       {
                                         "color": "#031344",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -800,7 +799,7 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -822,8 +821,36 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel="Inizia"
                                   accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
                                   accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
                                   importantForAccessibility="no-hide-descendants"
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
                                   pointerEvents="none"
                                 >
                                   <View
@@ -846,7 +873,7 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                         {},
                                         {
                                           "color": "#0B3EE3",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",

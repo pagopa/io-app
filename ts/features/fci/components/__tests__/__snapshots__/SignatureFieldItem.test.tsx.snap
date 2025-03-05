@@ -107,8 +107,8 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                   {},
                   {
                     "color": "#0E0F13",
-                    "fontFamily": "Titillium Sans Pro",
-                    "fontSize": 17,
+                    "fontFamily": "Titillio",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
                     "lineHeight": 24,
@@ -188,7 +188,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                       "width": 36,
                     },
                     {
-                      "borderColor": "#555C70",
+                      "borderColor": "#636B82",
                     },
                   ]
                 }
@@ -208,7 +208,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                       "width": 36,
                     },
                     {
-                      "backgroundColor": "#0073E6",
+                      "backgroundColor": "#0B3EE3",
                     },
                     {
                       "opacity": 0,
@@ -255,7 +255,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
           },
           {
             "color": "#0B3EE3",
-            "fontFamily": "Titillium Sans Pro",
+            "fontFamily": "Titillio",
             "fontSize": 16,
             "fontStyle": "normal",
             "fontWeight": "600",

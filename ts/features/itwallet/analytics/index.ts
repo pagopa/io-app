@@ -6,6 +6,7 @@ import { buildEventProperties } from "../../../utils/analytics";
 import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
 import { ItwCredentialStatus } from "../common/utils/itwTypesUtils";
+import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -146,11 +147,16 @@ export const ID_STATUS_MAP: Record<
   unknown: "unknown"
 };
 
+type ItwWalletDataShare = {
+  credential: MixPanelCredential;
+  phase?: "initial_request" | "async_continuation";
+};
+
 // #region SCREEN VIEW EVENTS
-export const trackWalletDataShare = (credential: MixPanelCredential) => {
+export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_DATA_SHARE,
-    buildEventProperties("UX", "screen_view", { credential })
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
@@ -267,11 +273,11 @@ export const trackItwCredentialDelete = (credential: MixPanelCredential) => {
 };
 
 export const trackWalletDataShareAccepted = (
-  credential: MixPanelCredential
+  properties: ItwWalletDataShare
 ) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_DATA_SHARE_ACCEPTED,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action", properties)
   );
 };
 
@@ -776,22 +782,25 @@ export const trackBackToWallet = ({ exit_page, credential }: BackToWallet) => {
 
 // #region TECH
 
-export const trackItwRequest = (ITW_ID_method?: ItwIdMethod) => {
-  if (ITW_ID_method) {
+export const trackItwRequest = (method?: ItwIdMethod) => {
+  if (method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST,
-      buildEventProperties("TECH", undefined, { ITW_ID_method })
+      buildEventProperties("TECH", undefined, { ITW_ID_method: method })
     );
   }
 };
 
-export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
-  if (ITW_ID_method) {
+export const trackItwRequestSuccess = (
+  method?: ItwIdMethod,
+  status?: ItwStatus
+) => {
+  if (method) {
     void mixpanelTrack(
       ITW_TECH_EVENTS.ITW_ID_REQUEST_SUCCESS,
       buildEventProperties("TECH", undefined, {
-        ITW_ID_method,
-        ITW_ID_V2: "L2"
+        ITW_ID_method: method,
+        ITW_ID_V2: status
       })
     );
   }
@@ -801,13 +810,18 @@ export const trackItwRequestSuccess = (ITW_ID_method?: ItwIdMethod) => {
 // #region PROFILE AND SUPER PROPERTIES UPDATE
 
 export const updateITWStatusAndIDProperties = (state: GlobalState) => {
+  const authLevel = itwAuthLevelSelector(state);
+  if (!authLevel) {
+    return;
+  }
+
   void updateMixpanelProfileProperties(state, {
     property: "ITW_STATUS_V2",
-    value: "L2"
+    value: authLevel
   });
   void updateMixpanelSuperProperties(state, {
     property: "ITW_STATUS_V2",
-    value: "L2"
+    value: authLevel
   });
   void updateMixpanelProfileProperties(state, {
     property: "ITW_ID_V2",

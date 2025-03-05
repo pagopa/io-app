@@ -427,7 +427,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     {},
                                     {
                                       "color": "#2B2E38",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 22,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -490,7 +490,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
-                                "height": 4,
+                                "height": 0,
                                 "position": "absolute",
                                 "shadowColor": "#0E0F13",
                                 "shadowOffset": {
@@ -548,27 +548,35 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                           >
                             <View
                               style={
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "height": 48,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {},
                                   false,
@@ -606,7 +614,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -798,7 +806,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -817,7 +825,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1421,7 +1429,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -1451,7 +1459,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -1641,7 +1649,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,
@@ -1660,7 +1668,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",

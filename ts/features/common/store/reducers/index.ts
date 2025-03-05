@@ -60,6 +60,9 @@ import {
   spidLoginReducer,
   SpidLoginState
 } from "../../../spidLogin/store/reducers";
+import connectivityStateReducer, {
+  ConnectivityState
+} from "../../../connectivity/store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isIOMarkdownDisabledForMessagesAndServices } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isIOMarkdownEnabledLocallySelector } from "../../../../store/reducers/persistedPreferences";
@@ -67,6 +70,15 @@ import {
   appFeedbackPersistor,
   AppFeedbackState
 } from "../../../appReviews/store/reducers";
+import { utmLinkReducer, UtmLinkState } from "../../../utmLink/store/reducers";
+import {
+  appearanceSettingsReducerPersistor,
+  AppearanceSettingsState
+} from "../../../appearanceSettings/store/reducers";
+import {
+  loginPreferencesPersistor,
+  LoginPreferencesState
+} from "../../../login/preferences/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -75,6 +87,7 @@ type LoginFeaturesState = {
   cieLogin: CieLoginState & PersistPartial;
   loginInfo: LoginInfoState;
   spidLogin: SpidLoginState;
+  loginPreferences: LoginPreferencesState & PersistPartial;
 };
 
 export type FeaturesState = {
@@ -89,10 +102,13 @@ export type FeaturesState = {
   fims: FimsState;
   itWallet: PersistedItWalletState;
   profileSettings: ProfileSettingsState & PersistPartial;
+  appearanceSettings: AppearanceSettingsState & PersistPartial;
   mixpanel: MixpanelState;
   ingress: IngressScreenState;
   landingBanners: LandingScreenBannerState;
   appFeedback: AppFeedbackState & PersistPartial;
+  utmLink: UtmLinkState;
+  connectivityStatus: ConnectivityState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -110,16 +126,20 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     fastLogin: fastLoginReducer,
     cieLogin: cieLoginPersistor,
     loginInfo: loginInfoReducer,
-    spidLogin: spidLoginReducer
+    spidLogin: spidLoginReducer,
+    loginPreferences: loginPreferencesPersistor
   }),
   wallet: walletReducer,
   fims: fimsReducer,
   itWallet: itWalletReducer,
   profileSettings: profileSettingsReducerPersistor,
+  appearanceSettings: appearanceSettingsReducerPersistor,
   mixpanel: mixpanelReducer,
   ingress: ingressScreenReducer,
   landingBanners: landingScreenBannersReducer,
-  appFeedback: appFeedbackPersistor
+  appFeedback: appFeedbackPersistor,
+  utmLink: utmLinkReducer,
+  connectivityStatus: connectivityStateReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;
