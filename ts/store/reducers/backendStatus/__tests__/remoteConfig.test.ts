@@ -8,7 +8,8 @@ import {
   generateDynamicUrlSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
-  landingScreenBannerOrderSelector
+  landingScreenBannerOrderSelector,
+  pnMessageServiceIdSelector
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
 
@@ -247,4 +248,40 @@ describe("landingScreenBannerOrderSelector", () => {
       expect(output).toStrictEqual(testCase.expected);
     });
   }
+});
+
+describe("pnMessageServiceIdSelector", () => {
+  const someState = {
+    remoteConfig: O.some({
+      pn: {
+        notificationServiceId: "NOTIF_SID"
+      }
+    })
+  } as GlobalState;
+  const noneState = {
+    remoteConfig: O.some({
+      pn: {}
+    })
+  } as GlobalState;
+  const emptyStringState = {
+    remoteConfig: O.some({
+      pn: { notificationServiceId: "" }
+    })
+  } as GlobalState;
+  const undefinedState = {
+    remoteConfig: O.some({
+      pn: { notificationServiceId: undefined }
+    })
+  } as GlobalState;
+
+  it("should return a serviceId when present, or undefined when missing", () => {
+    const resultSome = pnMessageServiceIdSelector(someState);
+    const resultNone = pnMessageServiceIdSelector(noneState);
+    const resultEmpty = pnMessageServiceIdSelector(emptyStringState);
+    const resultUndef = pnMessageServiceIdSelector(undefinedState);
+    expect(resultSome).toBe("NOTIF_SID");
+    expect(resultNone).toBe(undefined);
+    expect(resultEmpty).toBe("");
+    expect(resultUndef).toBe(undefined);
+  });
 });
