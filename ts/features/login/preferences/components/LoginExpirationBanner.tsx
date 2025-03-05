@@ -3,7 +3,7 @@ import {
   IOVisualCostants,
   useIOToast
 } from "@pagopa/io-app-design-system";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -13,8 +13,11 @@ import { closeSessionExpirationBanner } from "../store/actions";
 import { formattedExpirationDateSelector } from "../../../../store/reducers/authentication";
 import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../config";
 import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
-
-const HC_ID = "SESSION_ABOUT_TO_EXPIRE";
+import {
+  BANNER_ID,
+  trackLoginExpirationBannerClosure,
+  trackLoginExpirationBannerPrompt
+} from "../analytics";
 
 type Props = {
   handleOnClose: () => void;
@@ -29,9 +32,13 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   const { error } = useIOToast();
   const dispatch = useIODispatch();
 
+  useEffect(() => {
+    trackLoginExpirationBannerPrompt();
+  }, []);
+
   const handleOnPress = useCallback(() => {
     trackHelpCenterCtaTapped(
-      HC_ID,
+      BANNER_ID,
       helpCenterHowToDoWhenSessionIsExpiredUrl,
       routeName
     );
@@ -41,6 +48,7 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   }, [error, routeName]);
 
   const closeHandler = useCallback(() => {
+    trackLoginExpirationBannerClosure();
     dispatch(closeSessionExpirationBanner());
     handleOnClose();
   }, [dispatch, handleOnClose]);
