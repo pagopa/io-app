@@ -4,6 +4,7 @@ import { Body } from "@pagopa/io-app-design-system";
 import * as Sentry from "@sentry/react-native";
 import { useIOSelector } from "../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
+import I18n from "../../i18n";
 import { IOMarkdownRenderRules } from "./types";
 import {
   getRenderMarkdown,
@@ -56,7 +57,7 @@ const IOMarkdown = ({ content, rules, onError }: Props) => (
   <Sentry.ErrorBoundary
     fallback={
       <View>
-        <Body>{"C'è stato un problema con il caricamento del contenuto"}</Body>
+        <Body>{I18n.t("global.markdown.decodeError")}</Body>
       </View>
     }
     onError={onError}
