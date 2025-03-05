@@ -7,6 +7,7 @@ import {
   Icon,
   IOStyles,
   IOVisualCostants,
+  useFooterActionsInlineMeasurements,
   VStack
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -80,6 +81,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
     [eid.credentialType]
   );
 
+  const {
+    footerActionsInlineMeasurements,
+    handleFooterActionsInlineMeasurements
+  } = useFooterActionsInlineMeasurements();
+
   useFocusEffect(
     useCallback(() => {
       trackCredentialPreview(mixPanelCredential);
@@ -134,7 +140,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
   }, [navigation, dismissDialog]);
 
   return (
-    <ForceScrollDownView contentContainerStyle={styles.scroll}>
+    <ForceScrollDownView
+      threshold={footerActionsInlineMeasurements.safeBottomAreaHeight}
+      contentContainerStyle={styles.scroll}
+    >
       <VStack space={24} style={styles.contentWrapper}>
         <HStack space={8} style={IOStyles.alignCenter}>
           <Icon name="legalValue" color="blueIO-500" />
@@ -148,6 +157,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
         </View>
       </VStack>
       <FooterActions
+        onMeasure={handleFooterActionsInlineMeasurements}
         fixed={false}
         actions={{
           type: "TwoButtons",

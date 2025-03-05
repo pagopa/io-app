@@ -3,6 +3,7 @@ import {
   ForceScrollDownView,
   H2,
   IOVisualCostants,
+  useFooterActionsInlineMeasurements,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
@@ -89,6 +90,11 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
     [credentialType]
   );
 
+  const {
+    footerActionsInlineMeasurements,
+    handleFooterActionsInlineMeasurements
+  } = useFooterActionsInlineMeasurements();
+
   useFocusEffect(() => {
     trackCredentialPreview(mixPanelCredential);
   });
@@ -136,7 +142,8 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
 
   return (
     <ForceScrollDownView
-      contentContainerStyle={styles.scrollView}
+      contentContainerStyle={{ flexGrow: 1 }}
+      threshold={footerActionsInlineMeasurements.safeBottomAreaHeight}
       onThresholdCrossed={trackScrollToBottom}
     >
       <View style={styles.container}>
@@ -149,6 +156,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
         <ItwCredentialPreviewClaimsList data={credential} />
       </View>
       <FooterActions
+        onMeasure={handleFooterActionsInlineMeasurements}
         fixed={false}
         actions={{
           type: "TwoButtons",
@@ -173,9 +181,6 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    flexGrow: 1
-  },
   container: {
     flex: 1,
     marginHorizontal: IOVisualCostants.appMarginDefault

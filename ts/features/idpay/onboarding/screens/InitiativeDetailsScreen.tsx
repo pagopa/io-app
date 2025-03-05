@@ -1,6 +1,7 @@
 import {
   FooterActions,
   ForceScrollDownView,
+  useFooterActionsInlineMeasurements,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
@@ -32,6 +33,11 @@ type InitiativeDetailsScreenParamsRouteProps = RouteProp<
 
 export const InitiativeDetailsScreen = () => {
   const { params } = useRoute<InitiativeDetailsScreenParamsRouteProps>();
+
+  const {
+    footerActionsInlineMeasurements,
+    handleFooterActionsInlineMeasurements
+  } = useFooterActionsInlineMeasurements();
 
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
@@ -78,7 +84,7 @@ export const InitiativeDetailsScreen = () => {
 
   return (
     <ForceScrollDownView
-      threshold={50}
+      threshold={footerActionsInlineMeasurements.safeBottomAreaHeight}
       contentContainerStyle={styles.scrollContainer}
     >
       <View style={styles.container}>
@@ -92,6 +98,7 @@ export const InitiativeDetailsScreen = () => {
         {onboardingPrivacyAdvice}
       </View>
       <FooterActions
+        onMeasure={handleFooterActionsInlineMeasurements}
         key={"continue"}
         fixed={false}
         actions={{

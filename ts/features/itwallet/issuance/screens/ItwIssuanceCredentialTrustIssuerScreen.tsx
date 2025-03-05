@@ -5,6 +5,7 @@ import {
   ForceScrollDownView,
   H2,
   ListItemHeader,
+  useFooterActionsInlineMeasurements,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
@@ -100,6 +101,11 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
 
+  const {
+    footerActionsInlineMeasurements,
+    handleFooterActionsInlineMeasurements
+  } = useFooterActionsInlineMeasurements();
+
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
@@ -140,7 +146,10 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   };
 
   return (
-    <ForceScrollDownView onThresholdCrossed={trackScrollToBottom}>
+    <ForceScrollDownView
+      threshold={footerActionsInlineMeasurements.safeBottomAreaHeight}
+      onThresholdCrossed={trackScrollToBottom}
+    >
       <ContentWrapper>
         <VSpacer size={24} />
         <ItwDataExchangeIcons
@@ -192,6 +201,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
         />
       </ContentWrapper>
       <FooterActions
+        onMeasure={handleFooterActionsInlineMeasurements}
         fixed={false}
         actions={{
           type: "TwoButtons",

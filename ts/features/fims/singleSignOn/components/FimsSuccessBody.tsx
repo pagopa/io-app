@@ -13,6 +13,7 @@ import {
   IOStyles,
   IOVisualCostants,
   ListItemHeader,
+  useFooterActionsInlineMeasurements,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -49,6 +50,11 @@ export const FimsFlowSuccessBody = ({
   const dispatch = useIODispatch();
   const store = useIOStore();
   const serviceId = consents.service_id as ServiceId;
+
+  const {
+    footerActionsInlineMeasurements,
+    handleFooterActionsInlineMeasurements
+  } = useFooterActionsInlineMeasurements();
 
   const servicePot = useAutoFetchingServiceByIdPot(serviceId);
   const serviceData = pot.toUndefined(servicePot);
@@ -100,19 +106,10 @@ export const FimsFlowSuccessBody = ({
   return (
     <ForceScrollDownView
       scrollEnabled
-      threshold={150}
-      contentContainerStyle={{
-        minHeight: "100%"
-      }}
+      threshold={footerActionsInlineMeasurements.safeBottomAreaHeight}
+      contentContainerStyle={{ flexGrow: 1 }}
     >
-      <View
-        style={[
-          IOStyles.horizontalContentPadding,
-          {
-            flexGrow: 1
-          }
-        ]}
-      >
+      <View style={IOStyles.horizontalContentPadding}>
         <VSpacer size={24} />
         <HStack space={8} style={{ alignItems: "center" }}>
           {/* TODO: We need to add a variant of `Avatar` that
@@ -148,6 +145,7 @@ export const FimsFlowSuccessBody = ({
         <VSpacer size={32} />
       </View>
       <FooterActions
+        onMeasure={handleFooterActionsInlineMeasurements}
         fixed={false}
         actions={{
           type: "TwoButtons",

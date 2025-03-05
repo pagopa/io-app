@@ -8,6 +8,7 @@ import {
   ForceScrollDownView,
   H2,
   ListItemHeader,
+  useFooterActionsInlineMeasurements,
   VStack
 } from "@pagopa/io-app-design-system";
 import { View, StyleSheet } from "react-native";
@@ -50,6 +51,11 @@ const ItwRemoteClaimsDisclosureScreen = () => {
  */
 const ContentView = () => {
   useHeaderSecondLevel({ title: "" });
+
+  const {
+    footerActionsInlineMeasurements,
+    handleFooterActionsInlineMeasurements
+  } = useFooterActionsInlineMeasurements();
 
   const [selectedOptionalClaims, setSelectedOptionalClaims] = useState<
     Array<string>
@@ -125,7 +131,9 @@ const ContentView = () => {
   );
 
   return (
-    <ForceScrollDownView>
+    <ForceScrollDownView
+      threshold={footerActionsInlineMeasurements.safeBottomAreaHeight}
+    >
       <ContentWrapper>
         <VStack space={24}>
           <ItwDataExchangeIcons
@@ -184,6 +192,7 @@ const ContentView = () => {
         </VStack>
       </ContentWrapper>
       <FooterActions
+        onMeasure={handleFooterActionsInlineMeasurements}
         fixed={false}
         actions={{
           type: "TwoButtons",
