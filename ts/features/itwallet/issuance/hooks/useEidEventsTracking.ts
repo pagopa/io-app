@@ -61,16 +61,13 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
        * 2. If failure.reason is an empty object with no keys, we serialize it to extract message property.
        * To maintain compatibility with the existing failure tracking, we keep the original `failure` object when `failure.reason` is not empty.
        */
-      if (!failure.reason) {
-        return trackItwIdRequestUnexpectedFailure(
-          serializeFailureReason(failure)
-        );
-      }
+      const shouldSerializeReason =
+        !failure.reason ||
+        (typeof failure.reason === "object" &&
+          Object.keys(failure.reason).length === 0);
+
       return trackItwIdRequestUnexpectedFailure(
-        typeof failure.reason === "object" &&
-          Object.keys(failure.reason).length === 0
-          ? serializeFailureReason(failure)
-          : failure
+        shouldSerializeReason ? serializeFailureReason(failure) : failure
       );
     }
   }, [failure, identification]);
