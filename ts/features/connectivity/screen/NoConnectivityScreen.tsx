@@ -1,4 +1,5 @@
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 
 type NoConnectivityScreenContentProps = {
   onRetry?: () => void;
@@ -22,4 +23,7 @@ export const NoConnectivityScreenContent = ({
   />
 );
 
-export const NoConnectivityScreen = () => <NoConnectivityScreenContent />;
+export const NoConnectivityScreen = () => {
+  useHeaderSecondLevel({ title: "" });
+  return <NoConnectivityScreenContent />;
+};
