@@ -52,7 +52,7 @@ import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBa
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { generateMessagesAndServicesRules } from "../../common/components/IOMarkdown/customRules";
-import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../common/store/reducers";
+import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -82,7 +82,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   const scrollViewRef = useRef<ScrollView>(null);
 
   const useIOMarkdown = useIOSelector(
-    isIOMarkdownEnabledOnMessagesAndServicesSelector
+    isIOMarkdownEnabledForMessagesAndServicesSelector
   );
 
   const message = pipe(
