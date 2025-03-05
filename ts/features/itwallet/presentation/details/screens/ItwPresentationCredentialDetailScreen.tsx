@@ -42,6 +42,7 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
 import { identificationRequest } from "../../../../../store/actions/identification.ts";
+import { useConnectivityGuard } from "../../../../connectivity/hooks/useConnectivityGuard.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -119,7 +120,7 @@ const ItwPresentationCredentialDetail = ({
   /**
    * Show the credential trustmark screen after user identification
    */
-  const handleTrustmarkPress = () => {
+  const handleTrustmarkPress = useConnectivityGuard(() => {
     trackWalletCredentialShowTrustmark(
       CREDENTIALS_MAP[credential.credentialType]
     );
@@ -144,7 +145,7 @@ const ItwPresentationCredentialDetail = ({
         }
       )
     );
-  };
+  });
 
   if (status === "unknown") {
     return <ItwPresentationCredentialUnknownStatus credential={credential} />;
