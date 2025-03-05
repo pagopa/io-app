@@ -10,7 +10,7 @@ import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewReque
  * If isPendingReview is true, request an app review and then set isPendingReview to false.
  */
 export const useItwPendingReviewRequest = () => {
-  const requestFeedback = useAppReviewRequest("itw");
+  const { requestFeedback, bottomSheet } = useAppReviewRequest("itw");
   const isPendingReview = useSelector(itwIsPendingReviewSelector);
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -21,4 +21,6 @@ export const useItwPendingReviewRequest = () => {
       dispatch(itwSetReviewPending(false));
     }
   }, [isPendingReview, dispatch, isFocused, requestFeedback]);
+
+  return bottomSheet;
 };

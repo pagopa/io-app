@@ -262,6 +262,12 @@
             "description": "Useremo la tua risposta per migliorare",
             "continue": "Sì, mi piace",
             "discard": "Non mi piace"
+        },
+        "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "description": "Puoi raccontarci cosa è anddato storto nella tua esperienza con l'app. Useremo i tuoi suggerimenti per migliorare le funzionalità di app IO.",
+            "continue": "Dai un suggerimento",
+            "discard": "Non ora"
         }
     },
     "rooted": {

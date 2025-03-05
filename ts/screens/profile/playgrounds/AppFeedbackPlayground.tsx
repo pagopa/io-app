@@ -9,9 +9,18 @@ import {
 import { useAppReviewRequest } from "../../../features/appReviews/hooks/useAppReviewRequest";
 
 export const AppFeedbackPlayground = () => {
-  const requestFeedbackItw = useAppReviewRequest("itw");
-  const requestFeedbackPayment = useAppReviewRequest("payments");
-  const requestFeedbackGeneral = useAppReviewRequest();
+  const {
+    requestFeedback: requestFeedbackItw,
+    bottomSheet: itwFeedbackBottomSheet
+  } = useAppReviewRequest("itw");
+  const {
+    requestFeedback: requestFeedbackPayment,
+    bottomSheet: paymentsFeedbackBottomSheet
+  } = useAppReviewRequest("payments");
+  const {
+    requestFeedback: requestFeedbackGeneral,
+    bottomSheet: generalFeedbackBottomSheet
+  } = useAppReviewRequest();
   const dispatch = useIODispatch();
   const appReviewPositiveFeedbackLog = useIOSelector(
     appReviewPositiveFeedbackLogSelector
@@ -56,6 +65,9 @@ export const AppFeedbackPlayground = () => {
         onPress={requestFeedbackGeneral}
         label="Richiedi feedback generale"
       />
+      {generalFeedbackBottomSheet}
+      {itwFeedbackBottomSheet}
+      {paymentsFeedbackBottomSheet}
     </IOScrollViewWithLargeHeader>
   );
 };

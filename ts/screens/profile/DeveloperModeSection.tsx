@@ -83,7 +83,7 @@ type DevActionButton = {
 
 const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
-  const requestFeedback = useAppReviewRequest("general");
+  const { requestFeedback, bottomSheet } = useAppReviewRequest("general");
 
   const handleClearCachePress = () => {
     Alert.alert(
@@ -186,19 +186,22 @@ const DeveloperActionsSection = () => {
   );
 
   return (
-    <FlatList
-      ListHeaderComponent={<ListItemHeader label="Actions" />}
-      scrollEnabled={false}
-      keyExtractor={(item: DevActionButton, index: number) =>
-        `${item.label}-${index}`
-      }
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
-      data={filteredDevActionButtons}
-      renderItem={renderDevActionButton}
-      ItemSeparatorComponent={() => <VSpacer size={8} />}
-    />
+    <>
+      {bottomSheet}
+      <FlatList
+        ListHeaderComponent={<ListItemHeader label="Actions" />}
+        scrollEnabled={false}
+        keyExtractor={(item: DevActionButton, index: number) =>
+          `${item.label}-${index}`
+        }
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={filteredDevActionButtons}
+        renderItem={renderDevActionButton}
+        ItemSeparatorComponent={() => <VSpacer size={8} />}
+      />
+    </>
   );
 };
 
