@@ -106,5 +106,5 @@ export function* getMessageIdAndCategoryTag(): Generator<
 }
 
 export const testMessagePreconditionWorker = isTestEnv
-  ? messagePreconditionWorker
+  ? { messagePreconditionWorker }
   : undefined;

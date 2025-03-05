@@ -1,4 +1,4 @@
-import * as B from "fp-ts/lib/Boolean";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";

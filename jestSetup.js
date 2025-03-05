@@ -168,3 +168,29 @@ jest
 jest.mock("@react-native-community/netinfo", () => ({
   fetch: jest.fn().mockResolvedValue({ isConnected: true })
 }));
+
+// eslint-disable-next-line functional/immutable-data
+window.navigator = {};
+jest.mock("reactotron-react-native", () => ({
+  default: {
+    configure: jest.fn().mockReturnThis(),
+    setAsyncStorageHandler: jest.fn().mockReturnThis(),
+    useReactNative: jest.fn().mockReturnThis(),
+    use: jest.fn().mockReturnThis(),
+    connect: jest.fn().mockReturnThis(),
+    onCustomCommand: jest.fn()
+  }
+}));
+
+jest.mock("uuid", () => ({
+  v4: () => {
+    const chars = "abcdefghijklmnopqrstuvwxyz0123456789".split("");
+    return Array.from({ length: 36 })
+      .map((_, i) =>
+        i === 8 || i === 13 || i === 18 || i === 23
+          ? "-"
+          : chars[Math.floor(Math.random() * chars.length)]
+      )
+      .join("");
+  }
+}));

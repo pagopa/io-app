@@ -49,9 +49,10 @@ import { getInitialState as getInstallationInitialState } from "../features/push
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
-import { isDevEnv } from "../utils/environment";
+import { isDevEnv, isTestEnv } from "../utils/environment";
 import { PersistedPreferencesState } from "../store/reducers/persistedPreferences";
 import { configureReactotron } from "./configureRectotron";
+
 /**
  * Redux persist will migrate the store to the current version
  */
@@ -597,3 +598,6 @@ function configureStoreAndPersistor(): {
 }
 
 export const { store, persistor } = configureStoreAndPersistor();
+export const testable = isTestEnv
+  ? { CURRENT_REDUX_STORE_VERSION, migrations }
+  : undefined;
