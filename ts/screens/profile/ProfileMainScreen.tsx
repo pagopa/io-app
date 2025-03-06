@@ -18,7 +18,13 @@ import {
   useRef,
   useState
 } from "react";
-import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
+import {
+  Alert,
+  FlatList,
+  ListRenderItemInfo,
+  Platform,
+  ScrollView
+} from "react-native";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import AppVersion from "../../components/AppVersion";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
@@ -37,6 +43,7 @@ import {
   appFeedbackUriConfigSelector
 } from "../../store/reducers/backendStatus/remoteConfig";
 import { requestAppReview } from "../../features/appReviews/utils/storeReview";
+import { openWebUrl } from "../../utils/url";
 import DeveloperModeSection from "./DeveloperModeSection";
 import { ProfileMainScreenTopBanner } from "./ProfileMainScreenTopBanner";
 
@@ -257,7 +264,13 @@ const ProfileMainScreenFC = () => {
           icon="starEmpty"
           variant="primary"
           testID="reviewButton"
-          onPress={requestAppReview}
+          onPress={Platform.select({
+            ios: () =>
+              openWebUrl(
+                "https://apps.apple.com/app/id1501681835?action=write-review"
+              ),
+            default: requestAppReview
+          })}
           accessibilityLabel={reviewLabel}
         />
         <ListItemAction
