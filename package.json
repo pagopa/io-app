@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.0.0-rc.4",
+  "version": "3.0.0-rc.7",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -67,7 +67,7 @@
     "@pagopa/io-react-native-login-utils": "^1.0.8",
     "@pagopa/io-react-native-secure-storage": "^0.2.0",
     "@pagopa/io-react-native-wallet": "^0.27.0",
-    "@pagopa/io-react-native-zendesk": "^0.3.29",
+    "@pagopa/io-react-native-zendesk": "^0.3.30",
     "@pagopa/react-native-cie": "^1.4.2",
     "@pagopa/ts-commons": "^10.15.0",
     "@react-native-async-storage/async-storage": "^2.0.0",

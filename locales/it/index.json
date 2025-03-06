@@ -374,6 +374,7 @@
             "menulabel": "Esci da IO",
             "alertTitle": "Vuoi davvero uscire?",
             "alertMessage": "Dovrai entrare di nuovo con SPID o CIE per usare l’app.",
+            "activeWiAlertMessage": "Dovrai entrare di nuovo con SPID o CIE per usare l’app.\n\nSe accedi a IO da un dispositivo diverso da quello abituale, per motivi di sicurezza la funzionalità Documenti su IO verrà reimpostata.",
             "loading": "Stai uscendo da IO",
             "exit": "Esci"
         },
@@ -4501,6 +4502,7 @@
                     "optionalClaims": "Dati facoltativi",
                     "claimUnavailable": "Non disponibile",
                     "optionalClaimsAlert": "I dati facoltativi ti offrono servizi più completi.",
+                    "missingClaimsAlert": "Alcuni dati facoltativi non sono disponibili nel tuo Portafoglio.",
                     "disclaimer": [
                         "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
                         "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
