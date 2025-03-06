@@ -43,7 +43,6 @@ const CgnMerchantLandingWebview: FunctionComponent<Props> = () => {
         source={{
           uri: landingPageUrl as string,
           headers: {
-            referer: landingPageReferrer,
             "X-PagoPa-CGN-Referer": landingPageReferrer
           }
         }}
