@@ -47,7 +47,8 @@ describe("configureStoreAndPersistor", () => {
               idps: remoteUndefined
             },
             crossSessions: {
-              hashedFiscalCode: "6494e783ad296f016b2105f8fe7dc2979551a37d3a5c40624e2ee8eee64e8017"
+              hashedFiscalCode:
+                "6494e783ad296f016b2105f8fe7dc2979551a37d3a5c40624e2ee8eee64e8017"
             },
             installation: {
               isFirstRunAfterInstall: false,
