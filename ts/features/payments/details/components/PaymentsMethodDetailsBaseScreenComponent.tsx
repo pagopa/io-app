@@ -104,12 +104,10 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
         barStyle="light-content"
       />
       <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
-        <View
-          style={styles.cardContainer}
-          onLayout={getTitleHeight}
-          accessibilityRole="summary"
-        >
-          <PaymentCard {...card} />
+        <View style={styles.cardContainer} onLayout={getTitleHeight}>
+          <View accessible accessibilityRole="summary">
+            <PaymentCard {...card} />
+          </View>
         </View>
       </View>
       <VSpacer size={24} />
