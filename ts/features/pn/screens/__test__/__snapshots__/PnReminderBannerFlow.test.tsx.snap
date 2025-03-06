@@ -2359,7 +2359,12 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="enable-pn-cta"
                           >
                             <View
