@@ -27,8 +27,7 @@ import {
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-
-const HIDDEN_CLAIM = "******";
+import { HIDDEN_CLAIM } from "../utils/constants.ts";
 
 /**
  * Component which renders a place of birth type claim.

@@ -10,15 +10,17 @@ import {
   StringClaim
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
+import { HIDDEN_CLAIM } from "../../utils/constants.ts";
 import { CardClaim, CardClaimContainer, CardClaimRenderer } from "./CardClaim";
 import { ClaimLabel } from "./ClaimLabel";
 import { CardSide } from "./types";
 
 type DataComponentProps = {
   claims: ParsedCredential;
+  valuesHidden: boolean;
 };
 
-const MdlFrontData = ({ claims }: DataComponentProps) => {
+const MdlFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
   const row = 11.6; // Row padding, defines the first row position
   const rowStep = 6.9; // Row step, defines the space between each row
   const rows: ReadonlyArray<number> = Array.from(
@@ -36,53 +38,63 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
           width: "22.5%",
           aspectRatio: 77 / 93 // This aspect ration was extracted from the Figma design
         }}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["family_name"]}
         position={{ left: `${cols[0]}%`, top: `${rows[0]}%` }}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["given_name"]}
         position={{ left: `${cols[0]}%`, top: `${rows[1]}%` }}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["birth_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[2]}%` }}
         dateFormat="DD/MM/YY"
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["place_of_birth"]}
         position={{ left: `${cols[0] + 17}%`, top: `${rows[2]}%` }}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["issue_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[3]}%` }}
         fontWeight={"Bold"}
         dateFormat={"DD/MM/YYYY"}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["issuing_authority"]}
         position={{ left: `${cols[1]}%`, top: `${rows[3]}%` }}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["expiry_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[4]}%` }}
         fontWeight={"Bold"}
         dateFormat={"DD/MM/YYYY"}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["document_number"]}
         position={{ left: `${cols[0]}%`, top: `${rows[5]}%` }}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["driving_privileges"]}
         position={{ left: "8%", bottom: "17.9%" }}
+        valuesHidden={valuesHidden}
       />
     </View>
   );
 };
 
-const MdlBackData = ({ claims }: DataComponentProps) => {
+const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
   // Driving privilges list with the same order as on the Driving License physical card
   const drivingPrivileges = [
     "AM",
@@ -134,7 +146,9 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
                   }}
                 >
                   <ClaimLabel fontSize={9}>
-                    {issue_date.toString("DD/MM/YY")}
+                    {valuesHidden
+                      ? HIDDEN_CLAIM
+                      : issue_date.toString("DD/MM/YY")}
                   </ClaimLabel>
                 </CardClaimContainer>
                 <CardClaimContainer
@@ -145,7 +159,9 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
                   }}
                 >
                   <ClaimLabel fontSize={9}>
-                    {expiry_date.toString("DD/MM/YY")}
+                    {valuesHidden
+                      ? HIDDEN_CLAIM
+                      : expiry_date.toString("DD/MM/YY")}
                   </ClaimLabel>
                 </CardClaimContainer>
                 {restrictions_conditions && (
@@ -170,12 +186,13 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
         claim={claims["restrictions_conditions"]}
         position={{ left: "8%", bottom: "6.5%" }}
         fontSize={9}
+        valuesHidden={valuesHidden}
       />
     </View>
   );
 };
 
-const DcFrontData = ({ claims }: DataComponentProps) => {
+const DcFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
   const row = 44.5; // Row padding, defines the first row position
   const rowStep = 11.4; // Row step, defines the space between each row
 
@@ -193,26 +210,32 @@ const DcFrontData = ({ claims }: DataComponentProps) => {
           width: "24.7%",
           aspectRatio: 73 / 106 // This aspect ration was extracted from the Figma design
         }}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["given_name"]}
         position={{ right: "3.5%", top: `${rows[0]}%` }}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["family_name"]}
         position={{ right: "3.5%", top: `${rows[1]}%` }}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["birth_date"]}
         position={{ right: "3.5%", top: `${rows[2]}%` }}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["document_number"]}
         position={{ right: "3.5%", top: `${rows[3]}%` }}
+        valuesHidden={valuesHidden}
       />
       <CardClaim
         claim={claims["expiry_date"]}
         position={{ right: "3.5%", top: `${rows[4]}%` }}
+        valuesHidden={valuesHidden}
       />
     </View>
   );
@@ -248,9 +271,10 @@ const dataComponentMap: Record<
 type CardDataProps = {
   credential: StoredCredential;
   side: CardSide;
+  valuesHidden: boolean;
 };
 
-const CardData = ({ credential, side }: CardDataProps) =>
+const CardData = ({ credential, side, valuesHidden }: CardDataProps) =>
   pipe(
     O.fromNullable(dataComponentMap[credential.credentialType]),
     O.map(components => components[side]),
@@ -258,6 +282,7 @@ const CardData = ({ credential, side }: CardDataProps) =>
       <DataComponent
         key={`credential_data_${credential.credentialType}_${side}`}
         claims={credential.parsedCredential}
+        valuesHidden={valuesHidden}
       />
     )),
     O.toNullable

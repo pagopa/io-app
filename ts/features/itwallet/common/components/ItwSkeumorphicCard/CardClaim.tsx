@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 
 import { ReactElement, ReactNode, memo, useMemo } from "react";
-import { Image, StyleSheet, View, ViewStyle } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import { Either, Prettify } from "../../../../../types/helpers";
 import {
   ClaimValue,
@@ -15,7 +15,9 @@ import {
   SimpleDateFormat
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
+import { HIDDEN_CLAIM } from "../../utils/constants.ts";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
+import { BlurredImage } from "./BlurredImage.tsx";
 
 export type PercentPosition = `${number}%`;
 
@@ -49,6 +51,8 @@ export type CardClaimProps = Prettify<
     dimensions?: ClaimDimensions;
     // Optional format for dates contained in the claim component
     dateFormat?: SimpleDateFormat;
+    // If true, the claim value will be hidden
+    valuesHidden?: boolean;
   } & ClaimLabelProps
 >;
 
@@ -62,6 +66,7 @@ const CardClaim = ({
   dimensions,
   testID,
   dateFormat = "DD/MM/YY",
+  valuesHidden,
   ...labelProps
 }: WithTestID<CardClaimProps>) => {
   const claimContent = useMemo(
@@ -69,20 +74,22 @@ const CardClaim = ({
       pipe(
         claim?.value,
         ClaimValue.decode,
-        E.fold(constNull, decoded => {
+        E.fold(constNull, _decoded => {
+          const decoded = valuesHidden
+            ? ImageClaim.is(_decoded)
+              ? _decoded
+              : HIDDEN_CLAIM
+            : _decoded;
           if (SimpleDateClaim.is(decoded)) {
             const formattedDate = decoded.toString(dateFormat);
             return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
           } else if (ImageClaim.is(decoded)) {
             return (
-              <Image
-                source={{ uri: decoded }}
-                resizeMode="contain"
-                style={{
-                  width: "100%",
-                  height: "100%"
-                }}
-                accessibilityIgnoresInvertColors
+              <BlurredImage
+                base64={decoded}
+                width={100}
+                height={100}
+                blur={valuesHidden ? 7 : 0}
               />
             );
           } else if (DrivingPrivilegesClaim.is(decoded)) {
@@ -95,7 +102,7 @@ const CardClaim = ({
           }
         })
       ),
-    [claim, labelProps, dateFormat]
+    [claim, labelProps, dateFormat, valuesHidden]
   );
 
   if (!claimContent) {
