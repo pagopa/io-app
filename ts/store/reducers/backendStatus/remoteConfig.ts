@@ -21,6 +21,7 @@ import { Action } from "../../actions/types";
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -408,4 +409,14 @@ export const isIOMarkdownDisabledForMessagesAndServices = (
     O.chainNullableK(config => config.ioMarkdown),
     O.chainNullableK(ioMarkdown => ioMarkdown.disabledForMessagesAndServices),
     O.getOrElse(() => false)
+  );
+
+export const pnMessagingServiceIdSelector = (
+  state: GlobalState
+): ServiceId | undefined =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config => config.pn.notificationServiceId as ServiceId),
+    O.toUndefined
   );
