@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-rc.8](https://github.com/pagopa/io-app/compare/3.0.0-rc.7...3.0.0-rc.8) (2025-03-06)
+
+
+### Bug Fixes
+
+* [[PE-998](https://pagopa.atlassian.net/browse/PE-998),[PE-999](https://pagopa.atlassian.net/browse/PE-999),[PE-1000](https://pagopa.atlassian.net/browse/PE-1000),[PE-1001](https://pagopa.atlassian.net/browse/PE-1001)] CGN list item `a11y` ([#6773](https://github.com/pagopa/io-app/issues/6773)) ([4653284](https://github.com/pagopa/io-app/commit/4653284bfee25cca814d7989c23b70730e237040))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2022](https://pagopa.atlassian.net/browse/SIW-2022)] Increased serialization for unexpected errors during eID issuance ([#6770](https://github.com/pagopa/io-app/issues/6770)) ([5a91614](https://github.com/pagopa/io-app/commit/5a916149b41e38c0619125efd81f2e56f3d320e0))
+* [[IOBP-1190](https://pagopa.atlassian.net/browse/IOBP-1190)] Add a11y announcement inside the payment method details screen ([#6776](https://github.com/pagopa/io-app/issues/6776)) ([c69bce7](https://github.com/pagopa/io-app/commit/c69bce721e929800a61007de5d58691674b5dd57))
+
 ## [3.0.0-rc.7](https://github.com/pagopa/io-app/compare/3.0.0-rc.6...3.0.0-rc.7) (2025-03-05)
 
 
