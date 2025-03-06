@@ -172,7 +172,13 @@ export const itwCredentialIssuanceMachine = setup({
       }
     },
     DisplayingTrustIssuer: {
-      entry: ["navigateToTrustIssuerScreen", "trackCredentialIssuingDataShare"],
+      entry: ["trackCredentialIssuingDataShare"],
+      always: {
+        // If we are in the async continuation flow means we are already showing the trust issuer screen
+        // but on a different route. We need to avoid a navigation to show a "double" navigation animation.
+        guard: ({ context }) => !context.isAsyncContinuation,
+        actions: "navigateToTrustIssuerScreen"
+      },
       on: {
         "confirm-trust-data": {
           actions: "trackCredentialIssuingDataShareAccepted",

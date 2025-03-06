@@ -1,24 +1,23 @@
-import { useCallback, useState } from "react";
-import * as t from "io-ts";
+import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useFocusEffect } from "@react-navigation/native";
-import I18n from "../../../../i18n";
+import * as t from "io-ts";
+import { useCallback } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../../i18n";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
 export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
@@ -160,23 +159,17 @@ const WrappedItwIssuanceCredentialTrustIssuerScreen = ({
   credentialType: string;
 }) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const [isMachineReady, setIsMachineReady] = useState(false);
 
   // Transition the credential machine to the correct state when the credential selection screen is bypassed.
   // During this transition we should not render ItwIssuanceCredentialTrustIssuerScreen to avoid the generic error screen.
-  useOnFirstRender(() => {
+  useOnFirstRender(() =>
     machineRef.send({
       type: "select-credential",
       credentialType,
       skipNavigation: true,
       asyncContinuation: true
-    });
-    setIsMachineReady(true);
-  });
-
-  return isMachineReady ? (
-    <ItwIssuanceCredentialTrustIssuerScreen />
-  ) : (
-    <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    })
   );
+
+  return <ItwIssuanceCredentialTrustIssuerScreen />;
 };
