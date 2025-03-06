@@ -9,7 +9,7 @@ import {
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { pnMessagesServiceIdSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { pnMessagingServiceIdSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { useServicePreferenceByChannel } from "../../services/details/hooks/useServicePreference";
 import { loadServicePreference } from "../../services/details/store/actions/preference";
 import { pnActivationUpsert } from "../store/actions";
@@ -25,7 +25,7 @@ export const pnBannerFlowStateEnum = {
 type FlowEnumT = typeof pnBannerFlowStateEnum;
 export type PnBannerFlowStateKey = FlowEnumT[keyof FlowEnumT];
 export const PNActivationBannerFlowScreen = () => {
-  const pnServiceId = useIOSelector(pnMessagesServiceIdSelector);
+  const pnServiceId = useIOSelector(pnMessagingServiceIdSelector);
 
   if (pnServiceId === undefined) {
     return <ErrorScreen flowState="MISSING-SID" />; // UI WISE: "COULD NOT FETCH"

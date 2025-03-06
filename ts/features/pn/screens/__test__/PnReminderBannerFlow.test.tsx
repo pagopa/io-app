@@ -22,7 +22,7 @@ import {
 
 const WAITING_USER_INPUT_BASE_MOCKS = () => {
   jest
-    .spyOn(SID_SELECTOR, "pnMessageServiceIdSelector")
+    .spyOn(SID_SELECTOR, "pnMessagingServiceIdSelector")
     .mockImplementation(() => "SOME_SID" as ServiceId);
   jest
     .spyOn(LOADING_PN_ACTIVATION, "isLoadingPnActivationSelector")
@@ -82,7 +82,7 @@ describe("error screens", () => {
       const mockDispatch = jest.fn();
       jest.spyOn(USEIO, "useIODispatch").mockImplementation(() => mockDispatch);
       jest
-        .spyOn(SID_SELECTOR, "pnMessageServiceIdSelector")
+        .spyOn(SID_SELECTOR, "pnMessagingServiceIdSelector")
         .mockImplementation(() =>
           error === "missing_sid" ? undefined : ("SOME_SID" as ServiceId)
         );
@@ -115,7 +115,7 @@ describe("error screens", () => {
 describe("loading screens + error interop", () => {
   beforeEach(() => {
     jest
-      .spyOn(SID_SELECTOR, "pnMessageServiceIdSelector")
+      .spyOn(SID_SELECTOR, "pnMessagingServiceIdSelector")
       .mockImplementation(() => "SOME_SID" as ServiceId);
     jest.spyOn(USEIO, "useIODispatch").mockImplementation(() => jest.fn());
   });
