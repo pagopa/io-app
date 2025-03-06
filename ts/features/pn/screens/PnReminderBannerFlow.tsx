@@ -43,6 +43,9 @@ const PNFlowScreenPicker = ({ serviceId }: { serviceId: ServiceId }) => {
     dispatch(loadServicePreference.request(serviceId));
   }, [dispatch, serviceId]);
 
+  // since there's no preference indexing, dispatching the preference load request
+  // is crucial to force a loading state and not display wrong or dirty data.
+
   const {
     isErrorServicePreferenceByChannel,
     isLoadingServicePreferenceByChannel,
