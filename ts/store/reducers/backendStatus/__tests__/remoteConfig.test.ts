@@ -258,10 +258,13 @@ describe("pnMessageServiceIdSelector", () => {
       }
     })
   } as GlobalState;
-  const noneState = {
+  const emptyObjectState = {
     remoteConfig: O.some({
       pn: {}
     })
+  } as GlobalState;
+  const noneState = {
+    remoteConfig: O.none
   } as GlobalState;
   const emptyStringState = {
     remoteConfig: O.some({
@@ -274,14 +277,34 @@ describe("pnMessageServiceIdSelector", () => {
     })
   } as GlobalState;
 
-  it("should return a serviceId when present, or undefined when missing", () => {
-    const resultSome = pnMessageServiceIdSelector(someState);
-    const resultNone = pnMessageServiceIdSelector(noneState);
-    const resultEmpty = pnMessageServiceIdSelector(emptyStringState);
-    const resultUndef = pnMessageServiceIdSelector(undefinedState);
-    expect(resultSome).toBe("NOTIF_SID");
-    expect(resultNone).toBe(undefined);
-    expect(resultEmpty).toBe("");
-    expect(resultUndef).toBe(undefined);
-  });
+  const testCases = [
+    {
+      result: "NOTIF_SID",
+      input: someState
+    },
+    {
+      result: undefined,
+      input: emptyObjectState
+    },
+    {
+      result: "",
+      input: emptyStringState
+    },
+    {
+      result: undefined,
+      input: noneState
+    },
+    {
+      result: undefined,
+      input: undefinedState
+    }
+  ];
+  for (const { result, input } of testCases) {
+    it(`should return the correct result for input : ${JSON.stringify(
+      input
+    )}`, () => {
+      const output = pnMessageServiceIdSelector(input);
+      expect(output).toBe(result);
+    });
+  }
 });

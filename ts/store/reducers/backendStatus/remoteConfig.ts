@@ -411,12 +411,12 @@ export const isIOMarkdownDisabledForMessagesAndServices = (
     O.getOrElse(() => false)
   );
 
-export const pnMessageServiceIdSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): ServiceId | undefined =>
-    pipe(
-      remoteConfig,
-      O.map(config => config.pn.notificationServiceId as ServiceId),
-      O.toUndefined
-    )
-);
+export const pnMessageServiceIdSelector = (
+  state: GlobalState
+): ServiceId | undefined =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config => config.pn.notificationServiceId as ServiceId),
+    O.toUndefined
+  );
