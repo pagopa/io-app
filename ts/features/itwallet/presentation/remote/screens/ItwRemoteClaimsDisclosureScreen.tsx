@@ -4,25 +4,24 @@ import {
   ClaimsSelector,
   ContentWrapper,
   FeatureInfo,
-  FooterActions,
   ForceScrollDownView,
   H2,
   ListItemHeader,
-  useFooterActionsInlineMeasurements,
+  useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
-import { View, StyleSheet } from "react-native";
 import { ComponentProps, useState } from "react";
+import { View } from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-import I18n from "../../../../../i18n";
-import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
-import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
-import { ItwRemotePresentationClaimsMock } from "../../../common/utils/itwMocksUtils.ts";
-import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
+import I18n from "../../../../../i18n";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
+import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
+import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { DisclosureClaim } from "../../../common/utils/itwClaimsUtils.ts";
+import { ItwRemotePresentationClaimsMock } from "../../../common/utils/itwMocksUtils.ts";
 
 type ClaimItem = ComponentProps<typeof ClaimsSelector>["items"][number];
 
@@ -52,10 +51,7 @@ const ItwRemoteClaimsDisclosureScreen = () => {
 const ContentView = () => {
   useHeaderSecondLevel({ title: "" });
 
-  const {
-    footerActionsInlineMeasurements,
-    handleFooterActionsInlineMeasurements
-  } = useFooterActionsInlineMeasurements();
+  const theme = useIOTheme();
 
   const [selectedOptionalClaims, setSelectedOptionalClaims] = useState<
     Array<string>
@@ -89,9 +85,9 @@ const ContentView = () => {
             "features.itWallet.presentation.selectiveDisclosure.optionalClaims"
           )}
           iconName="security"
-          iconColor="grey-700"
+          iconColor={theme["icon-default"]}
         />
-        <View style={styles.claimsSelection}>
+        <View style={{ alignSelf: "flex-end" }}>
           <ButtonLink
             label={I18n.t(
               `global.buttons.${
@@ -132,7 +128,19 @@ const ContentView = () => {
 
   return (
     <ForceScrollDownView
-      threshold={footerActionsInlineMeasurements.safeBottomAreaHeight}
+      footerActions={{
+        actions: {
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t("global.buttons.continue"),
+            onPress: () => null // TODO
+          },
+          secondary: {
+            label: I18n.t("global.buttons.cancel"),
+            onPress: () => null // TODO
+          }
+        }
+      }}
     >
       <ContentWrapper>
         <VStack space={24}>
@@ -160,7 +168,7 @@ const ContentView = () => {
                 "features.itWallet.presentation.selectiveDisclosure.requiredClaims"
               )}
               iconName="security"
-              iconColor="grey-700"
+              iconColor={theme["icon-default"]}
             />
             <ClaimsSelector
               title="Identità digitale"
@@ -191,29 +199,8 @@ const ContentView = () => {
           />
         </VStack>
       </ContentWrapper>
-      <FooterActions
-        onMeasure={handleFooterActionsInlineMeasurements}
-        fixed={false}
-        actions={{
-          type: "TwoButtons",
-          primary: {
-            label: I18n.t("global.buttons.continue"),
-            onPress: () => null // TODO
-          },
-          secondary: {
-            label: I18n.t("global.buttons.cancel"),
-            onPress: () => null // TODO
-          }
-        }}
-      />
     </ForceScrollDownView>
   );
 };
-
-const styles = StyleSheet.create({
-  claimsSelection: {
-    marginLeft: "auto"
-  }
-});
 
 export { ItwRemoteClaimsDisclosureScreen };

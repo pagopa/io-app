@@ -1,14 +1,12 @@
 import {
-  FooterActions,
+  ContentWrapper,
   ForceScrollDownView,
-  useFooterActionsInlineMeasurements,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -33,11 +31,6 @@ type InitiativeDetailsScreenParamsRouteProps = RouteProp<
 
 export const InitiativeDetailsScreen = () => {
   const { params } = useRoute<InitiativeDetailsScreenParamsRouteProps>();
-
-  const {
-    footerActionsInlineMeasurements,
-    handleFooterActionsInlineMeasurements
-  } = useFooterActionsInlineMeasurements();
 
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
@@ -84,10 +77,21 @@ export const InitiativeDetailsScreen = () => {
 
   return (
     <ForceScrollDownView
-      threshold={footerActionsInlineMeasurements.safeBottomAreaHeight}
-      contentContainerStyle={styles.scrollContainer}
+      contentContainerStyle={{ flexGrow: 1 }}
+      footerActions={{
+        actions: {
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("global.buttons.continue"),
+            onPress: handleContinuePress,
+            testID: "IDPayOnboardingContinue",
+            loading: isLoading,
+            disabled: isLoading
+          }
+        }
+      }}
     >
-      <View style={styles.container}>
+      <ContentWrapper>
         <VSpacer size={24} />
         <OnboardingServiceHeader initiative={initiative} />
         <VSpacer size={24} />
@@ -96,33 +100,7 @@ export const InitiativeDetailsScreen = () => {
         <ItemSeparatorComponent noPadded={true} />
         <VSpacer size={16} />
         {onboardingPrivacyAdvice}
-      </View>
-      <FooterActions
-        onMeasure={handleFooterActionsInlineMeasurements}
-        key={"continue"}
-        fixed={false}
-        actions={{
-          type: "SingleButton",
-          primary: {
-            label: I18n.t("global.buttons.continue"),
-            accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: handleContinuePress,
-            testID: "IDPayOnboardingContinue",
-            loading: isLoading,
-            disabled: isLoading
-          }
-        }}
-      />
+      </ContentWrapper>
     </ForceScrollDownView>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1
-  },
-  container: {
-    flexGrow: 1,
-    paddingHorizontal: 24
-  }
-});
