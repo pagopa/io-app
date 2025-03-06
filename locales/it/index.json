@@ -2336,7 +2336,7 @@
             },
             "methodSelection": {
                 "a11y": {
-                  "pageStatus": "Pagina {{currentPage}} di {{totalPages}}"
+                    "pageStatus": "Pagina {{currentPage}} di {{totalPages}}"
                 },
                 "header": "Seleziona un metodo",
                 "yourMethods": "Salvati",
@@ -3457,6 +3457,7 @@
                     "filter": "Filtra"
                 },
                 "categoriesList": {
+                    "a11y": "{{name}} {{count}} nuove opportunità trovate",
                     "title": "Seleziona una categoria e scopri agevolazioni e opportunità",
                     "bottomSheet": {
                         "cta": "Come vengono ordinate le categorie?",
@@ -3697,10 +3698,10 @@
             "title": "Questo servizio non è più attivo su IO"
         },
         "pn": {
-            "reminderBanner":{
-              "title":"Ricevi le tue comunicazioni a valore legale su IO!",
-              "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
-              "cta": "Attiva SEND su IO"
+            "reminderBanner": {
+                "title": "Ricevi le tue comunicazioni a valore legale su IO!",
+                "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
+                "cta": "Attiva SEND su IO"
             },
             "service": {
                 "activate": "Attiva il servizio",
@@ -4047,6 +4048,9 @@
                 }
             },
             "details": {
+                "a11y": {
+                  "announce": "Dettaglio metodo di pagamento"
+                },
                 "payPal": {
                     "banner": {
                         "title": "Vuoi pagare in 3 rate?",

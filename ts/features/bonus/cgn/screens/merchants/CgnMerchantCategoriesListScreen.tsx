@@ -84,38 +84,51 @@ export const CgnMerchantCategoriesListScreen = () => {
       specs,
       O.fold(
         () => null,
-        s => (
-          <ListItemNav
-            key={category.productCategory}
-            value={
-              countAvailable ? (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center"
-                  }}
-                >
-                  <H6>{I18n.t(s.nameKey)}</H6>
-                  <Badge text={`${category?.newDiscounts}`} variant="cgn" />
-                </View>
-              ) : (
-                I18n.t(s.nameKey)
-              )
-            }
-            accessibilityLabel={I18n.t(s.nameKey)}
-            onPress={() => {
-              navigation.navigate(
-                CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
-                {
-                  category: s.type
-                }
-              );
-            }}
-            iconColor={theme["icon-decorative"]}
-            icon={s.icon}
-          />
-        )
+        s => {
+          const accessibilityLabel = countAvailable
+            ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
+                name: I18n.t(s.nameKey),
+                count: category.newDiscounts,
+                defaultValue: I18n.t(s.nameKey)
+              })
+            : I18n.t(s.nameKey);
+          return (
+            <ListItemNav
+              key={category.productCategory}
+              value={
+                countAvailable ? (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center"
+                    }}
+                  >
+                    <H6>{I18n.t(s.nameKey)}</H6>
+                    <Badge
+                      accessible={false}
+                      text={`${category?.newDiscounts}`}
+                      variant="cgn"
+                    />
+                  </View>
+                ) : (
+                  I18n.t(s.nameKey)
+                )
+              }
+              accessibilityLabel={accessibilityLabel}
+              onPress={() => {
+                navigation.navigate(
+                  CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
+                  {
+                    category: s.type
+                  }
+                );
+              }}
+              iconColor={theme["icon-decorative"]}
+              icon={s.icon}
+            />
+          );
+        }
       )
     );
   };
