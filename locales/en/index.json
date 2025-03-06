@@ -384,10 +384,6 @@
             "spid": "SPID PROFILE"
         },
         "unknown": "UNKNOWN",
-        "appFeedback": {
-            "reviewLabel": "Valuta l'app",
-            "feedbackLabel": "Hai un suggerimento? Scrivici"
-        },
         "logout": {
             "menulabel": "Logout from IO",
             "alertTitle": "Do you want to logout?",
@@ -1512,7 +1508,10 @@
             "feeAppliedBy": "Applicata da",
             "editButton": "Modifica",
             "termsAndConditions": "Proseguendo dichiari di aver letto e compreso i",
-            "termsAndConditionsLink": "Termini e condizioni d'uso e l'Informativa Privacy"
+            "termsAndConditionsLink": "Termini e condizioni d'uso e l'Informativa Privacy",
+            "a11y": {
+                "announce": "Payment Summary"
+            }
         }
     },
     "wallet": {
@@ -2032,6 +2031,9 @@
                 "errorCode": "Codice errore",
                 "messageId": "ID messaggio",
                 "copyToClipboard": "Copia dati per l'assistenza"
+            },
+            "a11y": {
+                "announce": "Notice Summary"
             }
         },
         "insertManually": {
@@ -2378,7 +2380,7 @@
             },
             "methodSelection": {
                 "a11y": {
-                  "pageStatus": "Page {{currentPage}} of {{totalPages}}"
+                    "pageStatus": "Page {{currentPage}} of {{totalPages}}"
                 },
                 "header": "Seleziona un metodo",
                 "yourMethods": "Saved",
@@ -2402,7 +2404,13 @@
                 "sortBottomSheet": {
                     "default": "Default",
                     "amount": "Per importo",
-                    "name": "Per nome"
+                    "name": "Per nome",
+                    "a11y": {
+                        "default": "Sort handlers by default order",
+                        "amount": "Sort handlers by amount",
+                        "name": "Sort handlers by name",
+                        "announce": "Select the sorting criteria for the handlers"
+                    }
                 }
             },
             "failure": {
@@ -2775,7 +2783,7 @@
             "actions": {
                 "call": "Call",
                 "email": "Send email"
-        }
+            }
         },
         "markdownLinkUnsupported": "This link is not supported"
     },
@@ -3740,10 +3748,10 @@
             "title": "Questo servizio non è più attivo su IO"
         },
         "pn": {
-            "reminderBanner":{
-              "title":"Ricevi le tue comunicazioni a valore legale su IO!",
-              "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
-              "cta": "Attiva SEND su IO"
+            "reminderBanner": {
+                "title": "Ricevi le tue comunicazioni a valore legale su IO!",
+                "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
+                "cta": "Attiva SEND su IO"
             },
             "service": {
                 "activate": "Attiva il servizio",
@@ -4091,7 +4099,7 @@
             },
             "details": {
                 "a11y": {
-                  "announce": "Payment method details"
+                    "announce": "Payment method details"
                 },
                 "payPal": {
                     "banner": {
