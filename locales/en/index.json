@@ -4072,6 +4072,9 @@
                 }
             },
             "details": {
+                "a11y": {
+                  "announce": "Payment method details"
+                },
                 "payPal": {
                     "banner": {
                         "title": "Do you want to pay in 3?",
