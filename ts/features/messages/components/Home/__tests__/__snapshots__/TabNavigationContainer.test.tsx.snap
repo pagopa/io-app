@@ -393,10 +393,10 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": false,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": false,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
@@ -567,10 +567,10 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": true,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": true,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
@@ -1114,10 +1114,10 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": true,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": true,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
@@ -1301,10 +1301,10 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": false,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": false,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
