@@ -161,7 +161,6 @@ const WrappedItwIssuanceCredentialTrustIssuerScreen = ({
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
   // Transition the credential machine to the correct state when the credential selection screen is bypassed.
-  // During this transition we should not render ItwIssuanceCredentialTrustIssuerScreen to avoid the generic error screen.
   useOnFirstRender(() =>
     machineRef.send({
       type: "select-credential",

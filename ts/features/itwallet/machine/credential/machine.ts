@@ -72,9 +72,9 @@ export const itwCredentialIssuanceMachine = setup({
   entry: "onInit",
   states: {
     Idle: {
-      tags: [ItwTags.Loading],
       description:
         "Waits for a credential selection in order to proceed with the issuance",
+      tags: [ItwTags.Loading],
       on: {
         "select-credential": [
           {
@@ -108,9 +108,9 @@ export const itwCredentialIssuanceMachine = setup({
       }
     },
     CheckingWalletInstanceAttestation: {
-      tags: [ItwTags.Loading],
       description:
         "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not",
+      tags: [ItwTags.Loading],
       always: [
         {
           guard: not("hasValidWalletInstanceAttestation"),
@@ -187,7 +187,8 @@ export const itwCredentialIssuanceMachine = setup({
           target: "Issuance"
         },
         close: {
-          actions: ["closeIssuance"]
+          target: "Completed",
+          actions: "closeIssuance"
         }
       }
     },
@@ -261,9 +262,13 @@ export const itwCredentialIssuanceMachine = setup({
           ]
         },
         close: {
-          actions: ["closeIssuance"]
+          target: "Completed",
+          actions: "closeIssuance"
         }
       }
+    },
+    Completed: {
+      type: "final"
     },
     Failure: {
       entry: ["navigateToFailureScreen"],
@@ -279,10 +284,7 @@ export const itwCredentialIssuanceMachine = setup({
       ],
       on: {
         close: {
-          actions: ["closeIssuance"]
-        },
-        reset: {
-          target: "Idle"
+          actions: "closeIssuance"
         },
         retry: {
           target: "#itwCredentialIssuanceMachine.RequestingCredential"
