@@ -9,7 +9,7 @@ import {
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { pnMessageServiceIdSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { pnMessagesServiceIdSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { useServicePreferenceByChannel } from "../../services/details/hooks/useServicePreference";
 import { loadServicePreference } from "../../services/details/store/actions/preference";
 import { pnActivationUpsert } from "../store/actions";
@@ -25,7 +25,7 @@ export const pnBannerFlowStateEnum = {
 type FlowEnumT = typeof pnBannerFlowStateEnum;
 export type PnBannerFlowStateKey = FlowEnumT[keyof FlowEnumT];
 export const PNActivationBannerFlowScreen = () => {
-  const pnServiceId = useIOSelector(pnMessageServiceIdSelector);
+  const pnServiceId = useIOSelector(pnMessagesServiceIdSelector);
 
   if (pnServiceId === undefined) {
     return <ErrorScreen flowState="MISSING-SID" />; // UI WISE: "COULD NOT FETCH"
@@ -43,8 +43,8 @@ const PNFlowScreenPicker = ({ serviceId }: { serviceId: ServiceId }) => {
     dispatch(loadServicePreference.request(serviceId));
   }, [dispatch, serviceId]);
 
-  // since there's no preference indexing, dispatching the preference load request
-  // is crucial to force a loading state and not display wrong or dirty data.
+  // useServicePreferenceByChannel always returns data based on the last loaded service,
+  // so it's crucial that the request is always called on first component render, to clear dirty data
 
   const {
     isErrorServicePreferenceByChannel,

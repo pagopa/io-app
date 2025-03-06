@@ -9,7 +9,7 @@ import {
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
   landingScreenBannerOrderSelector,
-  pnMessageServiceIdSelector
+  pnMessagesServiceIdSelector
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
 
@@ -303,7 +303,7 @@ describe("pnMessageServiceIdSelector", () => {
     it(`should return the correct result for input : ${JSON.stringify(
       input
     )}`, () => {
-      const output = pnMessageServiceIdSelector(input);
+      const output = pnMessagesServiceIdSelector(input);
       expect(output).toBe(result);
     });
   }

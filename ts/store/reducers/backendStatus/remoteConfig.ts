@@ -411,7 +411,7 @@ export const isIOMarkdownDisabledForMessagesAndServices = (
     O.getOrElse(() => false)
   );
 
-export const pnMessageServiceIdSelector = (
+export const pnMessagesServiceIdSelector = (
   state: GlobalState
 ): ServiceId | undefined =>
   pipe(
