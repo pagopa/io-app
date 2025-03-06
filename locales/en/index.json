@@ -2390,7 +2390,13 @@
         "sortBottomSheet": {
           "default": "Default",
           "amount": "Per importo",
-          "name": "Per nome"
+          "name": "Per nome",
+          "a11y": {
+            "default": "Sort handlers by default order",
+            "amount": "Sort handlers by amount",
+            "name": "Sort handlers by name",
+            "announce": "Select the sorting criteria for the handlers"
+          }
         }
       },
       "failure": {
