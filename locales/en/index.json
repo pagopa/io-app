@@ -374,6 +374,7 @@
             "menulabel": "Logout from IO",
             "alertTitle": "Do you want to logout?",
             "alertMessage": "You will need to login again with SPID or CIE to use the app.",
+            "activeWiAlertMessage": "You will need to log in again with SPID or CIE to use the app.\n\nIf you log in to IO from a device other than your usual one, the Documenti su IO feature will be reset for security reasons.",
             "loading": "You're leaving IO",
             "exit": "Exit"
         },
@@ -3480,6 +3481,7 @@
                     "filter": "Filter"
                 },
                 "categoriesList": {
+                    "a11y": "{{name}} {{count}} new opportunities found",
                     "title": "Select a category and discover the benefits",
                     "bottomSheet": {
                         "cta": "How are categories ordered by?",
@@ -4070,6 +4072,9 @@
                 }
             },
             "details": {
+                "a11y": {
+                  "announce": "Payment method details"
+                },
                 "payPal": {
                     "banner": {
                         "title": "Do you want to pay in 3?",
@@ -4495,6 +4500,7 @@
                     "optionalClaims": "Dati facoltativi",
                     "claimUnavailable": "Non disponibile",
                     "optionalClaimsAlert": "I dati facoltativi ti offrono servizi più completi.",
+                    "missingClaimsAlert": "Alcuni dati facoltativi non sono disponibili nel tuo Portafoglio.",
                     "disclaimer": [
                         "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
                         "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."

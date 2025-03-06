@@ -8,6 +8,7 @@ export type SelectCredential = {
   type: "select-credential";
   credentialType: string;
   skipNavigation?: boolean;
+  asyncContinuation?: boolean;
 };
 
 export type ConfirmTrustData = {

@@ -3888,13 +3888,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-zendesk@npm:^0.3.29":
-  version: 0.3.29
-  resolution: "@pagopa/io-react-native-zendesk@npm:0.3.29"
+"@pagopa/io-react-native-zendesk@npm:^0.3.30":
+  version: 0.3.30
+  resolution: "@pagopa/io-react-native-zendesk@npm:0.3.30"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 916d3d1002d28a40d29a043c2ed9e418959eaf273947f14f58de6fbcbe997a39f7846f9b0218d53d3a42bd5c4f1a360ef6cddff1b5ddb3d946dea8fef69c307c
+  checksum: b8a761b2cc6cb9636cb22ccd916ec515b49979b43b38a68ca2f657f51e22dfb6cd86e8f42d09fec337d359a69e18a5b9ca895f268c76be44f43b9f0c133fe880
   languageName: node
   linkType: hard
 
@@ -13667,7 +13667,7 @@ __metadata:
     "@pagopa/io-react-native-login-utils": ^1.0.8
     "@pagopa/io-react-native-secure-storage": ^0.2.0
     "@pagopa/io-react-native-wallet": ^0.27.0
-    "@pagopa/io-react-native-zendesk": ^0.3.29
+    "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.0.0
     "@pagopa/react-native-cie": ^1.4.2
     "@pagopa/ts-commons": ^10.15.0
