@@ -37,7 +37,7 @@ describe("configureStoreAndPersistor", () => {
     [false, true].forEach(dsEnabled =>
       [false, true].forEach(markdownEnabled =>
         it(`should migrate from 41 to 42 (isDesignSystemEnabled: ${dsEnabled}, isIOMarkdownEnabledOnMessagesAndServices: ${markdownEnabled})`, () => {
-          const basePersistedPreferencesAt41 = {
+          const basePersistedGlobalStateAt41 = {
             content: {
               municipality: {
                 codiceCatastale: pot.none,
@@ -87,21 +87,21 @@ describe("configureStoreAndPersistor", () => {
               rehydrated: false
             }
           };
-          const globalStateAt41 = {
-            ...basePersistedPreferencesAt41,
+          const persistedStateAt41 = {
+            ...basePersistedGlobalStateAt41,
             persistedPreferences: {
-              ...basePersistedPreferencesAt41.persistedPreferences,
+              ...basePersistedGlobalStateAt41.persistedPreferences,
               isDesignSystemEnabled: dsEnabled,
               isIOMarkdownEnabledOnMessagesAndServices: markdownEnabled
             }
           };
           const from41To42Migration = testable!.migrations[42];
           expect(from41To42Migration).toBeDefined();
-          const globalStateAt42 = from41To42Migration(globalStateAt41);
+          const globalStateAt42 = from41To42Migration(persistedStateAt41);
           expect(globalStateAt42).toEqual({
-            ...basePersistedPreferencesAt41,
+            ...basePersistedGlobalStateAt41,
             persistedPreferences: {
-              ...basePersistedPreferencesAt41.persistedPreferences,
+              ...basePersistedGlobalStateAt41.persistedPreferences,
               isExperimentalDesignEnabled: dsEnabled
             }
           });
