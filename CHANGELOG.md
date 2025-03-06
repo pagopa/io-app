@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-rc.7](https://github.com/pagopa/io-app/compare/3.0.0-rc.6...3.0.0-rc.7) (2025-03-05)
+
+
+### Features
+
+* [[IOCOM-2096](https://pagopa.atlassian.net/browse/IOCOM-2096)] New lines on messages' IOMarkdown, when a `br` tag is encountered ([#6783](https://github.com/pagopa/io-app/issues/6783)) ([a3d4e93](https://github.com/pagopa/io-app/commit/a3d4e93e13993628b177589094ec0b50ba65355a))
+* [[IOPID-2797](https://pagopa.atlassian.net/browse/IOPID-2797)] Add `LoginExpirationBanner` events  ([#6786](https://github.com/pagopa/io-app/issues/6786)) ([ae6c924](https://github.com/pagopa/io-app/commit/ae6c92462d32796fce52ad91bd3bc4cd7f7e267f))
+* [[IOPID-2798](https://pagopa.atlassian.net/browse/IOPID-2798)] Add new copy on logout alert if there is an active wallet instance  ([#6772](https://github.com/pagopa/io-app/issues/6772)) ([f591e0a](https://github.com/pagopa/io-app/commit/f591e0a8762193fc88ecd25d8da2629f38dc7ecb))
+
+
+### Chores
+
+* [[IOPLT-940](https://pagopa.atlassian.net/browse/IOPLT-940)] Bumps @pagopa/react-native-zendesk to 0.3.30 to upgrade dependency on android ([#6785](https://github.com/pagopa/io-app/issues/6785)) ([8db6f35](https://github.com/pagopa/io-app/commit/8db6f35eaf49f18270d29f1edcbb245f806e29fb))
+* [[IOPLT-989](https://pagopa.atlassian.net/browse/IOPLT-989)] Remove local `ForceScrollDownView` from the codebase ([#6784](https://github.com/pagopa/io-app/issues/6784)) ([087c872](https://github.com/pagopa/io-app/commit/087c8729bcc67c66e29756752a71683d00f16b72))
+
+## [3.0.0-rc.6](https://github.com/pagopa/io-app/compare/3.0.0-rc.5...3.0.0-rc.6) (2025-03-04)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2055](https://pagopa.atlassian.net/browse/SIW-2055)] Update Mixpanel events ITW_DATA_SHARE and ITW_DATA_SHARE_ACCEPTED for async driving license flow ([#6757](https://github.com/pagopa/io-app/issues/6757)) ([f66da68](https://github.com/pagopa/io-app/commit/f66da68d66eba94b4712bf89f23eb5133e19cc6d))
+* [[IOPLT-999](https://pagopa.atlassian.net/browse/IOPLT-999)] Update iOS/Android splash screens to new UI ([#6781](https://github.com/pagopa/io-app/issues/6781)) ([33d350b](https://github.com/pagopa/io-app/commit/33d350b32c884f16c2cedec63394266fd124d55f))
+* **IT Wallet:** [[SIW-2032](https://pagopa.atlassian.net/browse/SIW-2032)] Add collapsible credential claims in RP trust screen ([#6749](https://github.com/pagopa/io-app/issues/6749)) ([48e3be8](https://github.com/pagopa/io-app/commit/48e3be80fd80be308e5678f2a4573109f028969a))
+
+## [3.0.0-rc.5](https://github.com/pagopa/io-app/compare/3.0.0-rc.4...3.0.0-rc.5) (2025-03-03)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2042](https://pagopa.atlassian.net/browse/SIW-2042)] Use IOMarkdown when displaying a remote message inside credential presentation  ([#6768](https://github.com/pagopa/io-app/issues/6768)) ([d15e769](https://github.com/pagopa/io-app/commit/d15e769cd4168cde2733b63ce70b7d09791ee3ad))
+
+
+### Bug Fixes
+
+* [[IOPID-2484](https://pagopa.atlassian.net/browse/IOPID-2484)] Fix `MIXPANEL_SET_ENABLED` event tracking in the onBoarding flow ([#6766](https://github.com/pagopa/io-app/issues/6766)) ([8e26261](https://github.com/pagopa/io-app/commit/8e2626195acde1aa763b3d54019540b009608ffa))
+
+
+### Chores
+
+* [[IOBP-1231](https://pagopa.atlassian.net/browse/IOBP-1231)] Removed total amount from IdPayCard if reward type is `EXPENSE` ([#6771](https://github.com/pagopa/io-app/issues/6771)) ([191a24e](https://github.com/pagopa/io-app/commit/191a24ea70b8fa73c18faae143eea2a1ddf08b73))
+* **IT Wallet:** [[SIW-2019](https://pagopa.atlassian.net/browse/SIW-2019)] Improve integrity service warm up and availability check ([#6746](https://github.com/pagopa/io-app/issues/6746)) ([085181b](https://github.com/pagopa/io-app/commit/085181ba76299a59301013957c1d3856f829e3cf))
+
 ## [3.0.0-rc.4](https://github.com/pagopa/io-app/compare/3.0.0-rc.3...3.0.0-rc.4) (2025-02-28)
 
 
