@@ -37,7 +37,9 @@ export const itwCredentialIssuanceMachine = setup({
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     handleSessionExpired: notImplemented,
     trackStartAddCredential: notImplemented,
-    trackAddCredential: notImplemented
+    trackAddCredential: notImplemented,
+    trackCredentialIssuingDataShare: notImplemented,
+    trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
     getWalletAttestation:
@@ -84,7 +86,8 @@ export const itwCredentialIssuanceMachine = setup({
             target: "CheckingWalletInstanceAttestation",
             actions: [
               assign(({ event }) => ({
-                credentialType: event.credentialType
+                credentialType: event.credentialType,
+                isAsyncContinuation: event.asyncContinuation
               })),
               "trackStartAddCredential"
             ]
@@ -93,7 +96,8 @@ export const itwCredentialIssuanceMachine = setup({
             target: "CheckingWalletInstanceAttestation",
             actions: [
               assign(({ event }) => ({
-                credentialType: event.credentialType
+                credentialType: event.credentialType,
+                isAsyncContinuation: event.asyncContinuation
               })),
               "navigateToTrustIssuerScreen",
               "trackStartAddCredential"
@@ -168,9 +172,10 @@ export const itwCredentialIssuanceMachine = setup({
       }
     },
     DisplayingTrustIssuer: {
-      entry: "navigateToTrustIssuerScreen",
+      entry: ["navigateToTrustIssuerScreen", "trackCredentialIssuingDataShare"],
       on: {
         "confirm-trust-data": {
+          actions: "trackCredentialIssuingDataShareAccepted",
           target: "Issuance"
         },
         close: {
