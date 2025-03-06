@@ -1487,6 +1487,9 @@
             }
         },
         "confirm": {
+            "a11y": {
+                "announce": "Riepilogo del tuo pagamento"
+            },
             "totalAmount": "Totale da pagare",
             "pay": "Paga",
             "payWith": "Paga con",
@@ -1988,6 +1991,9 @@
             }
         },
         "firstTransactionSummary": {
+            "a11y": {
+                "announce": "Riepilogo dati avviso"
+            },
             "loading": "Recupero delle informazioni in corso",
             "title": "Dati del pagamento",
             "amount": "Importo",
