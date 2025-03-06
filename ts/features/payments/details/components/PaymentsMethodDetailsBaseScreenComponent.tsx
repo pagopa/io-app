@@ -91,6 +91,7 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
       scrollEventThrottle={8}
       snapToOffsets={[0, titleHeight]}
       snapToEnd={false}
+      importantForAccessibility="no"
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: 48,
@@ -104,7 +105,9 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
       />
       <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
         <View style={styles.cardContainer} onLayout={getTitleHeight}>
-          <PaymentCard {...card} />
+          <View accessible accessibilityRole="summary">
+            <PaymentCard {...card} />
+          </View>
         </View>
       </View>
       <VSpacer size={24} />

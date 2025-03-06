@@ -429,10 +429,10 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                     accessibilityState={
                                       {
                                         "busy": undefined,
-                                        "checked": undefined,
+                                        "checked": true,
                                         "disabled": false,
                                         "expanded": undefined,
-                                        "selected": true,
+                                        "selected": undefined,
                                       }
                                     }
                                     accessibilityValue={
@@ -590,10 +590,10 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                     accessibilityState={
                                       {
                                         "busy": undefined,
-                                        "checked": undefined,
+                                        "checked": false,
                                         "disabled": false,
                                         "expanded": undefined,
-                                        "selected": false,
+                                        "selected": undefined,
                                       }
                                     }
                                     accessibilityValue={
