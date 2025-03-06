@@ -20,8 +20,8 @@ import {
 } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback, ComponentProps, useLayoutEffect } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { ComponentProps, useCallback, useLayoutEffect } from "react";
+import { AccessibilityInfo, SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
@@ -88,6 +88,9 @@ const WalletPaymentDetailScreen = () => {
 
   useOnFirstRender(
     () => {
+      AccessibilityInfo.announceForAccessibility(
+        I18n.t("wallet.firstTransactionSummary.a11y.announce")
+      );
       analytics.trackPaymentSummaryLoading();
     },
     () => pot.isLoading(paymentDetailsPot)
