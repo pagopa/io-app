@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testable } from "../configureStoreAndPersistor";
+import { remoteUndefined } from "../../common/model/RemoteValue";
 
 jest.mock("redux-persist", () => ({
   createMigrate: jest.fn(),
@@ -37,42 +38,71 @@ describe("configureStoreAndPersistor", () => {
       [false, true].forEach(markdownEnabled =>
         it(`should migrate from 41 to 42 (isDesignSystemEnabled: ${dsEnabled}, isIOMarkdownEnabledOnMessagesAndServices: ${markdownEnabled})`, () => {
           const basePersistedPreferencesAt41 = {
-            isFingerprintEnabled: undefined,
-            preferredCalendar: undefined,
-            preferredLanguage: undefined,
-            wasServiceAlertDisplayedOnce: false,
-            isPagoPATestEnabled: false,
-            isCustomEmailChannelEnabled: pot.none,
-            continueWithRootOrJailbreak: false,
-            isMixpanelEnabled: null,
-            isPnTestEnabled: false,
-            isIdPayTestEnabled: false,
-            isItwOfflineAccessEnabled: false,
-            fontPreference: "comfortable"
-          };
-          const globalStateAt41 = {
-            // Other properties have been omitted for brevity
-            persistedPreferences: {
-              ...basePersistedPreferencesAt41,
-              isDesignSystemEnabled: dsEnabled,
-              isIOMarkdownEnabledOnMessagesAndServices: markdownEnabled
+            content: {
+              municipality: {
+                codiceCatastale: pot.none,
+                data: pot.none
+              },
+              contextualHelp: pot.none,
+              idps: remoteUndefined
             },
+            crossSessions: {
+              hashedFiscalCode: "746d574702be9e9c8dd9b632e6cf5150"
+            },
+            installation: {
+              isFirstRunAfterInstall: false,
+              appVersionHistory: [
+                "2.77.0.3",
+                "2.77.1.0",
+                "2.78.0.11",
+                "2.79.0.9",
+                "2.80.0.9",
+                "2.81.0.8",
+                "2.81.1.1",
+                "2.82.0.7",
+                "2.83.0.7",
+                "3.0.0.7"
+              ]
+            },
+            onboarding: {
+              isFingerprintAcknowledged: false
+            },
+            persistedPreferences: {
+              isFingerprintEnabled: undefined,
+              preferredCalendar: undefined,
+              preferredLanguage: undefined,
+              wasServiceAlertDisplayedOnce: false,
+              isPagoPATestEnabled: false,
+              isCustomEmailChannelEnabled: pot.none,
+              continueWithRootOrJailbreak: false,
+              isMixpanelEnabled: null,
+              isPnTestEnabled: false,
+              isIdPayTestEnabled: false,
+              isItwOfflineAccessEnabled: false,
+              fontPreference: "comfortable"
+            },
+            profile: pot.none,
             _persist: {
               version: 41,
               rehydrated: false
+            }
+          };
+          const globalStateAt41 = {
+            ...basePersistedPreferencesAt41,
+            persistedPreferences: {
+              ...basePersistedPreferencesAt41.persistedPreferences,
+              isDesignSystemEnabled: dsEnabled,
+              isIOMarkdownEnabledOnMessagesAndServices: markdownEnabled
             }
           };
           const from41To42Migration = testable!.migrations[42];
           expect(from41To42Migration).toBeDefined();
           const globalStateAt42 = from41To42Migration(globalStateAt41);
           expect(globalStateAt42).toEqual({
+            ...basePersistedPreferencesAt41,
             persistedPreferences: {
-              ...basePersistedPreferencesAt41,
+              ...basePersistedPreferencesAt41.persistedPreferences,
               isExperimentalDesignEnabled: dsEnabled
-            },
-            _persist: {
-              version: 41,
-              rehydrated: false
             }
           });
         })
