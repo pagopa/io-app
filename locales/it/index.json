@@ -251,6 +251,14 @@
             "invalidSearchBarText": "Inserisci almeno {{minCharacter}} caratteri",
             "noResultsFound": "Non ci sono risultati per questa ricerca: prova qualcos'altro.",
             "noResultsTitle": "Nessun risultato."
+        },
+        "noConnection": {
+            "screen": {
+                "title": "Nessuna connessione",
+                "subtitle": "Collegati a internet per continuare ad usare tutti i servizi di app IO.",
+                "action": "Riprova"
+            },
+            "toast": "Nessuna connessione. Funzionalità non disponibile in assenza di rete."
         }
     },
     "tablet": {
@@ -2957,6 +2965,7 @@
         "title": "Ciao {{name}}!",
         "titleProfileName": "Ciao {{profileName}}!",
         "titleValidation": "Autorizza l'operazione",
+        "titleOffline": "Ciao!",
         "logout": "Esci",
         "logoutProfileName": "Non sei {{profileName}}?",
         "logoutDescription": "Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.",

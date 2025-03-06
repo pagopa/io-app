@@ -3,20 +3,19 @@
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 import { memo, useEffect, useRef, useState } from "react";
-import {
-  fetch as fetchNetInfo,
-  NetInfoState
-} from "@react-native-community/netinfo";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "../../../i18n";
-import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import {
+  isItwOfflineAccessEnabledSelector,
+  isMixpanelEnabled as isMixpanelEnabledSelector
+} from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../../screens/profile/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { setIsBlockingScreen } from "../store/actions";
+import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
 import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
 import {
@@ -27,6 +26,12 @@ import {
 } from "../analytics";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import waiting from "../../../../assets/animated-pictograms/Waiting.json";
+import { startupLoadSuccess } from "../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../store/reducers/startup";
+import { isConnectedSelector } from "../../connectivity/store/selectors";
+import { itwLifecycleIsOperationalOrValid } from "../../itwallet/lifecycle/store/selectors";
+import { identificationRequest } from "../../../store/actions/identification";
+import { OfflineAccessReasonEnum } from "../store/reducer";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -35,7 +40,14 @@ export const IngressScreen = () => {
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const dispatch = useIODispatch();
-  const [netInfo, setNetInfo] = useState<NetInfoState>();
+  const isConnected = useIOSelector(isConnectedSelector);
+  const selectItwLifecycleIsOperationalOrValid = useIOSelector(
+    itwLifecycleIsOperationalOrValid
+  );
+  const isOfflineAccessEnabled = useIOSelector(
+    isItwOfflineAccessEnabledSelector
+  );
+
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [contentTitle, setContentTitle] = useState(I18n.t("startup.title"));
 
@@ -57,12 +69,14 @@ export const IngressScreen = () => {
 
   useEffect(() => {
     const timeouts: Array<number> = [];
+
     timeouts.push(
       setTimeout(() => {
         setContentTitle(I18n.t("startup.title2"));
         timeouts.shift();
       }, TIMEOUT_CHANGE_LABEL)
     );
+
     timeouts.push(
       setTimeout(() => {
         setShowBlockingScreen(true);
@@ -70,21 +84,44 @@ export const IngressScreen = () => {
         timeouts.shift();
       }, TIMEOUT_BLOCKING_SCREEN)
     );
-    void fetchNetInfo()
-      .then(info => {
-        if (!info.isConnected) {
-          timeouts.forEach(clearTimeout);
-        }
-        setNetInfo(info);
-      })
-      .catch();
 
     return () => {
       timeouts?.forEach(clearTimeout);
     };
   }, [dispatch]);
 
-  if (netInfo && !netInfo.isConnected) {
+  useEffect(() => {
+    const visualizeOfflineWallet =
+      !isConnected &&
+      selectItwLifecycleIsOperationalOrValid &&
+      isOfflineAccessEnabled;
+
+    if (visualizeOfflineWallet) {
+      // This dispatch could be placed inside `onSuccess`,
+      // but executing it here ensures the startup saga stops immediately.
+      dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE));
+      dispatch(
+        identificationRequest(false, false, undefined, undefined, {
+          onSuccess: () => {
+            // This dispatch mounts the new offline navigator.
+            // It must be initialized **after** the user completes
+            // biometric authentication to prevent graphical glitches.
+            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
+          }
+        })
+      );
+    }
+  }, [
+    dispatch,
+    isConnected,
+    isOfflineAccessEnabled,
+    selectItwLifecycleIsOperationalOrValid
+  ]);
+
+  if (
+    !isConnected &&
+    (!selectItwLifecycleIsOperationalOrValid || !isOfflineAccessEnabled)
+  ) {
     return <IngressScreenNoInternetConnection />;
   }
 
