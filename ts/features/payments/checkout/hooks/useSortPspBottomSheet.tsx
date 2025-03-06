@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { RadioGroup, RadioItem } from "@pagopa/io-app-design-system";
+import { AccessibilityInfo } from "react-native";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { WalletPaymentPspSortType } from "../types";
 import I18n from "../../../../i18n";
@@ -7,15 +8,20 @@ import I18n from "../../../../i18n";
 const sortPspListOptions: Array<RadioItem<WalletPaymentPspSortType>> = [
   {
     id: "default",
-    value: I18n.t("wallet.payment.psp.sortBottomSheet.default")
+    value: I18n.t("wallet.payment.psp.sortBottomSheet.default"),
+    accessibilityLabel: I18n.t(
+      "wallet.payment.psp.sortBottomSheet.a11y.default"
+    )
   },
   {
     id: "name",
-    value: I18n.t("wallet.payment.psp.sortBottomSheet.name")
+    value: I18n.t("wallet.payment.psp.sortBottomSheet.name"),
+    accessibilityLabel: I18n.t("wallet.payment.psp.sortBottomSheet.a11y.name")
   },
   {
     id: "amount",
-    value: I18n.t("wallet.payment.psp.sortBottomSheet.amount")
+    value: I18n.t("wallet.payment.psp.sortBottomSheet.amount"),
+    accessibilityLabel: I18n.t("wallet.payment.psp.sortBottomSheet.a11y.amount")
   }
 ];
 
@@ -32,9 +38,16 @@ const useSortPspBottomSheet = ({
 }: WalletPaymentSortPspBottomSheetProps) => {
   const [sortType, setSortType] = useState<WalletPaymentPspSortType>("default");
 
-  const handleChangeSort = (sortType: WalletPaymentPspSortType) => {
-    setSortType(sortType);
-    onSortChange(sortType);
+  const handleChangeSort = (changedSortType: WalletPaymentPspSortType) => {
+    setSortType(changedSortType);
+    onSortChange(changedSortType);
+  };
+
+  const present = () => {
+    modal.present();
+    AccessibilityInfo.announceForAccessibility(
+      I18n.t("wallet.payment.psp.sortBottomSheet.a11y.announce")
+    );
   };
 
   const getModalContent = () => (
@@ -51,7 +64,7 @@ const useSortPspBottomSheet = ({
     title: ""
   });
 
-  return { sortType, ...modal };
+  return { sortType, ...modal, present };
 };
 
 export { useSortPspBottomSheet };
