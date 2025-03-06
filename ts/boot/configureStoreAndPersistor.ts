@@ -502,12 +502,12 @@ const migrations: MigrationManifest = {
     const {
       isDesignSystemEnabled,
       isIOMarkdownEnabledOnMessagesAndServices,
-      ...rest
+      ...remaining
     } = typedState.persistedPreferences;
     return {
       ...state,
       persistedPreferences: {
-        ...rest,
+        ...remaining,
         isExperimentalDesignEnabled: isDesignSystemEnabled
       }
     };
