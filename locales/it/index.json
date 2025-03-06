@@ -374,6 +374,7 @@
             "menulabel": "Esci da IO",
             "alertTitle": "Vuoi davvero uscire?",
             "alertMessage": "Dovrai entrare di nuovo con SPID o CIE per usare l’app.",
+            "activeWiAlertMessage": "Dovrai entrare di nuovo con SPID o CIE per usare l’app.\n\nSe accedi a IO da un dispositivo diverso da quello abituale, per motivi di sicurezza la funzionalità Documenti su IO verrà reimpostata.",
             "loading": "Stai uscendo da IO",
             "exit": "Esci"
         },
@@ -2359,7 +2360,7 @@
             },
             "methodSelection": {
                 "a11y": {
-                  "pageStatus": "Pagina {{currentPage}} di {{totalPages}}"
+                    "pageStatus": "Pagina {{currentPage}} di {{totalPages}}"
                 },
                 "header": "Seleziona un metodo",
                 "yourMethods": "Salvati",
@@ -3480,6 +3481,7 @@
                     "filter": "Filtra"
                 },
                 "categoriesList": {
+                    "a11y": "{{name}} {{count}} nuove opportunità trovate",
                     "title": "Seleziona una categoria e scopri agevolazioni e opportunità",
                     "bottomSheet": {
                         "cta": "Come vengono ordinate le categorie?",
@@ -3720,10 +3722,10 @@
             "title": "Questo servizio non è più attivo su IO"
         },
         "pn": {
-            "reminderBanner":{
-              "title":"Ricevi le tue comunicazioni a valore legale su IO!",
-              "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
-              "cta": "Attiva SEND su IO"
+            "reminderBanner": {
+                "title": "Ricevi le tue comunicazioni a valore legale su IO!",
+                "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
+                "cta": "Attiva SEND su IO"
             },
             "service": {
                 "activate": "Attiva il servizio",
@@ -4070,6 +4072,9 @@
                 }
             },
             "details": {
+                "a11y": {
+                  "announce": "Dettaglio metodo di pagamento"
+                },
                 "payPal": {
                     "banner": {
                         "title": "Vuoi pagare in 3 rate?",
@@ -4495,6 +4500,7 @@
                     "optionalClaims": "Dati facoltativi",
                     "claimUnavailable": "Non disponibile",
                     "optionalClaimsAlert": "I dati facoltativi ti offrono servizi più completi.",
+                    "missingClaimsAlert": "Alcuni dati facoltativi non sono disponibili nel tuo Portafoglio.",
                     "disclaimer": [
                         "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
                         "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."

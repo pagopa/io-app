@@ -1481,7 +1481,12 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
-                              style={{}}
+                              style={
+                                {
+                                  "alignSelf": "stretch",
+                                  "flexShrink": 0,
+                                }
+                              }
                               testID="landing-button-login-cie"
                             >
                               <View
@@ -1661,7 +1666,12 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="landing-button-login-spid"
                           >
                             <View
@@ -2717,7 +2727,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
-                              importantForAccessibility="no-hide-descendants"
+                              importantForAccessibility="yes"
                               style={
                                 {
                                   "flexGrow": 1,

@@ -374,7 +374,8 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   {
-                    "alignSelf": "flex-start",
+                    "alignSelf": "auto",
+                    "flexShrink": 1,
                   }
                 }
                 testID="loadingSpinnerOverlayCancelButton"

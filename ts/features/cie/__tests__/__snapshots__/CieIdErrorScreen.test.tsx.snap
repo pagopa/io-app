@@ -281,7 +281,8 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
             onStartShouldSetResponder={[Function]}
             style={
               {
-                "alignSelf": "flex-start",
+                "alignSelf": "auto",
+                "flexShrink": 1,
               }
             }
             testID="cie-id-error-primary-action"
@@ -771,7 +772,8 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
             onStartShouldSetResponder={[Function]}
             style={
               {
-                "alignSelf": "flex-start",
+                "alignSelf": "auto",
+                "flexShrink": 1,
               }
             }
             testID="cie-id-error-primary-action"
