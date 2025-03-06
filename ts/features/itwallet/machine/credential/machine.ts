@@ -72,6 +72,7 @@ export const itwCredentialIssuanceMachine = setup({
   entry: "onInit",
   states: {
     Idle: {
+      tags: [ItwTags.Loading],
       description:
         "Waits for a credential selection in order to proceed with the issuance",
       on: {
@@ -107,6 +108,7 @@ export const itwCredentialIssuanceMachine = setup({
       }
     },
     CheckingWalletInstanceAttestation: {
+      tags: [ItwTags.Loading],
       description:
         "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not",
       always: [
