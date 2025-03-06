@@ -10,6 +10,7 @@ import {
   trackItwIdRequestUnexpectedFailure,
   trackItwUnsupportedDevice
 } from "../../analytics";
+import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 
 type Params = {
   failure: IssuanceFailure;
@@ -54,7 +55,20 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
     }
 
     if (failure.type === IssuanceFailureType.UNEXPECTED) {
-      return trackItwIdRequestUnexpectedFailure(failure);
+      /*
+       * We handle two cases here:
+       * 1. If failure.reason is undefined/null, we serialize the failure to provide a default message with "Reason not provided".
+       * 2. If failure.reason is an empty object with no keys, we serialize it to extract message property.
+       * To maintain compatibility with the existing failure tracking, we keep the original `failure` object when `failure.reason` is not empty.
+       */
+      const shouldSerializeReason =
+        !failure.reason ||
+        (typeof failure.reason === "object" &&
+          Object.keys(failure.reason).length === 0);
+
+      return trackItwIdRequestUnexpectedFailure(
+        shouldSerializeReason ? serializeFailureReason(failure) : failure
+      );
     }
   }, [failure, identification]);
 };
