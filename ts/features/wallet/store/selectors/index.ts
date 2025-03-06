@@ -15,6 +15,7 @@ import {
 } from "../../types";
 import { WalletCardCategoryFilter } from "../../types/index";
 import { isItwEnabledSelector } from "../../../itwallet/common/store/selectors/remoteConfig";
+import { isConnectedSelector } from "../../../connectivity/store/selectors";
 
 /**
  * Returns the list of cards excluding hidden cards
@@ -169,11 +170,11 @@ export const shouldRenderWalletCategorySelector = createSelector(
 /**
  * Determines whether the IT Wallet cards section is rendered in the wallet screen.
  * The section is rendered if:
- * - the IT Wallet feature flag is enabled
+ * - the IT Wallet feature flag is enabled OR the app is in offline mode
  * - the IT Wallet is in a valid lifecycle state
  * - the IT Wallet WI does not have an error
  */
 export const shouldRenderItwCardsContainerSelector = (state: GlobalState) =>
-  isItwEnabledSelector(state) &&
+  (isItwEnabledSelector(state) || !isConnectedSelector(state)) &&
   itwLifecycleIsValidSelector(state) &&
   !itwIsWalletInstanceStatusFailureSelector(state);
