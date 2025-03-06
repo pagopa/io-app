@@ -259,13 +259,13 @@
     "appFeedback": {
         "alert": {
             "title": "Do you like IO app?",
-            "description": "We'll use your answer to get better",
+            "description": "We'll use your answer to improve our services.",
             "continue": "Yes, I like it",
             "discard": "I don't like it"
         },
         "bottomSheet": {
             "title": "Ti va di dirci perché?",
-            "description": "Puoi raccontarci cosa è anddato storto nella tua esperienza con l'app. Useremo i tuoi suggerimenti per migliorare le funzionalità di app IO.",
+            "description": "Raccontaci cosa è andato storto nella tua esperienza con IO: useremo i tuoi suggerimenti per rendere l'app ancora più efficiente.",
             "continue": "Dai un suggerimento",
             "discard": "Non ora"
         }
@@ -386,7 +386,7 @@
         "unknown": "UNKNOWN",
         "appFeedback": {
             "reviewLabel": "Valuta l'app",
-            "feedbackLabel": "Hai un suggerimento? Scrivici"
+            "feedbackLabel": "Hai un suggerimento?"
         },
         "logout": {
             "menulabel": "Logout from IO",
