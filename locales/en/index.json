@@ -3499,6 +3499,7 @@
                     "filter": "Filter"
                 },
                 "categoriesList": {
+                    "a11y": "{{name}} {{count}} new opportunities found",
                     "title": "Select a category and discover the benefits",
                     "bottomSheet": {
                         "cta": "How are categories ordered by?",
@@ -4089,6 +4090,9 @@
                 }
             },
             "details": {
+                "a11y": {
+                  "announce": "Payment method details"
+                },
                 "payPal": {
                     "banner": {
                         "title": "Do you want to pay in 3?",
