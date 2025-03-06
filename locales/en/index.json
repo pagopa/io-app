@@ -253,8 +253,12 @@
             "noResultsTitle": "No results."
         },
         "noConnection": {
-            "title": "No connection",
-            "subtitle": "Connect to the internet to continue using all IO services."
+            "screen": {
+                "title": "Nessuna connessione",
+                "subtitle": "Collegati a internet per continuare ad usare tutti i servizi di app IO.",
+                "action": "Riprova"
+            },
+            "toast": "Nessuna connessione. Funzionalità non disponibile in assenza di rete."
         }
     },
     "tablet": {

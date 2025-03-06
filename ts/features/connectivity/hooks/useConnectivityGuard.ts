@@ -1,10 +1,19 @@
+import { useIOToast } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
-import { useIOSelector } from "../../../store/hooks";
-import { isConnectedSelector } from "../store/selectors";
+import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
+import { useIOSelector } from "../../../store/hooks";
+import { isConnectedSelector } from "../store/selectors";
 
-type ConnectivityCheckFunction<T> = (...args: Array<T>) => void | Promise<void>;
+type ConnectivityCheckFunction = (...args: Array<any>) => void | Promise<void>;
+
+/**
+ * The type of connectivity guard to use.
+ * - `screen`: Navigate to the NoConnectivityScreen - Use this if the wrapped function triggers a navigation to a screen that requires an internet connection to work.
+ * - `toast`: Show a toast - Use this if the wrapped function trigger a network request
+ */
+export type ConnectivityGuardType = "screen" | "toast";
 
 /**
  * A hook that executes a function if there is connectivity, otherwise navigates to NoConnectivityScreen.
@@ -18,19 +27,24 @@ type ConnectivityCheckFunction<T> = (...args: Array<T>) => void | Promise<void>;
  * @param fn The function to execute when there is connectivity
  * @returns A wrapped function that either executes the provided function or navigates to NoConnectivityScreen
  */
-export const useConnectivityGuard = <T>(fn: ConnectivityCheckFunction<T>) => {
+export const useConnectivityGuard = (
+  fn: ConnectivityCheckFunction,
+  type: ConnectivityGuardType = "screen"
+) => {
   const isConnected = useIOSelector(isConnectedSelector);
   const navigation = useIONavigation();
+  const toast = useIOToast();
 
-  return useCallback(
-    (...args: Array<T>) => {
-      if (!isConnected) {
-        navigation.navigate(ROUTES.NO_CONNECTION);
-        return;
-      }
+  /**
+   * The function that will be executed if there is no connectivity.
+   */
+  const guardFn = useCallback(() => {
+    if (type === "screen") {
+      navigation.navigate(ROUTES.NO_CONNECTION);
+    } else if (type === "toast") {
+      toast.error(I18n.t("global.noConnection.toast"));
+    }
+  }, [navigation, toast, type]);
 
-      return fn(...args);
-    },
-    [isConnected, navigation, fn]
-  );
+  return isConnected ? fn : guardFn;
 };

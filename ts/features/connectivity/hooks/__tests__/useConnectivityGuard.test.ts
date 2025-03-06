@@ -2,10 +2,13 @@ import { createStore } from "redux";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { useConnectivityGuard } from "../useConnectivityGuard";
+import {
+  ConnectivityGuardType,
+  useConnectivityGuard
+} from "../useConnectivityGuard";
 import ROUTES from "../../../../navigation/routes";
 import * as connectivitySelectors from "../../store/selectors";
-
+import I18n from "../../../../i18n";
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual<typeof import("@react-navigation/native")>(
@@ -16,15 +19,25 @@ jest.mock("@react-navigation/native", () => ({
   })
 }));
 
+const mockToast = jest.fn();
+jest.mock("@pagopa/io-app-design-system", () => ({
+  ...jest.requireActual<typeof import("@pagopa/io-app-design-system")>(
+    "@pagopa/io-app-design-system"
+  ),
+  useIOToast: () => ({
+    error: mockToast
+  })
+}));
 /**
  * Helper function to render a component that uses the hook and executes a function
  */
 const renderWithConnectivityGuard = (
   fn: (...args: Array<any>) => any,
-  args: Array<any> = []
+  args: Array<any> = [],
+  type: ConnectivityGuardType = "screen"
 ) => {
   const TestComponent = () => {
-    const wrappedFunction = useConnectivityGuard(fn);
+    const wrappedFunction = useConnectivityGuard(fn, type);
     // Call the wrapped function inside the component to ensure it's called with the hook's latest value
     void wrappedFunction(...args);
     return null;
@@ -61,7 +74,7 @@ describe("useConnectivityGuard", () => {
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
-  it("should navigate to NO_CONNECTIVITY screen when not connected", () => {
+  it("should navigate to NO_CONNECTION screen when not connected", () => {
     // Mock the connectivity selector to return disconnected state
     jest
       .spyOn(connectivitySelectors, "isConnectedSelector")
@@ -107,5 +120,22 @@ describe("useConnectivityGuard", () => {
     expect(mockAsyncFn).not.toHaveBeenCalled();
     // Should navigate to NO_CONNECTIVITY screen
     expect(mockNavigate).toHaveBeenCalledWith(ROUTES.NO_CONNECTION);
+  });
+
+  it("should show error toast when not connected", () => {
+    // Mock the connectivity selector to return disconnected state
+    jest
+      .spyOn(connectivitySelectors, "isConnectedSelector")
+      .mockReturnValue(false);
+
+    const mockFn = jest.fn();
+    renderWithConnectivityGuard(mockFn, ["test", 123], "toast");
+
+    // Function should not be called
+    expect(mockFn).not.toHaveBeenCalled();
+    // Should not navigate to NO_CONNECTIVITY screen
+    expect(mockNavigate).not.toHaveBeenCalledWith(ROUTES.NO_CONNECTION);
+    // Should show error toast
+    expect(mockToast).toHaveBeenCalledWith(I18n.t("global.noConnection.toast"));
   });
 });

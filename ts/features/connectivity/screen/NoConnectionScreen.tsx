@@ -1,6 +1,6 @@
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-
+import I18n from "../../../i18n";
 type NoConnectionScreenContentProps = {
   onRetry?: () => void;
 };
@@ -10,12 +10,12 @@ export const NoConnectionScreenContent = ({
 }: NoConnectionScreenContentProps) => (
   <OperationResultScreenContent
     pictogram="lostConnection"
-    title="Nessuna connessione"
-    subtitle="Collegati a internet per continuare ad usare tutti i servizi di app IO."
+    title={I18n.t("global.noConnection.screen.title")}
+    subtitle={I18n.t("global.noConnection.screen.subtitle")}
     secondaryAction={
       onRetry
         ? {
-            label: "Riprova",
+            label: I18n.t("global.noConnection.screen.action"),
             onPress: onRetry
           }
         : undefined
