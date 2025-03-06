@@ -11,6 +11,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect } from "react";
+import { AccessibilityInfo } from "react-native";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
@@ -186,6 +187,14 @@ const WalletPaymentConfirmScreen = () => {
     O.map(({ taxFee, paymentAmount }) => +paymentAmount + +taxFee),
     O.getOrElse(() => 0)
   );
+
+  useEffect(() => {
+    if (currentStep === WalletPaymentStepEnum.CONFIRM_TRANSACTION) {
+      AccessibilityInfo.announceForAccessibility(
+        I18n.t("payment.confirm.a11y.announce")
+      );
+    }
+  }, [currentStep]);
 
   return (
     <IOScrollView
