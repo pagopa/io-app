@@ -1,6 +1,7 @@
 import {
   AlertEdgeToEdgeWrapper,
-  FooterActions
+  FooterActions,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
@@ -22,6 +23,7 @@ const MODAL_BOTTOM_PADDING = 150;
  */
 export const withOfflineAlert =
   (Screen: React.ComponentType<any>) => (props: any) => {
+    const toast = useIOToast();
     const dispatch = useIODispatch();
     const isConnected = useIOSelector(isConnectedSelector);
 
@@ -35,6 +37,8 @@ export const withOfflineAlert =
         dispatch(startupLoadSuccess(StartupStatusEnum.INITIAL));
         // restart startup saga
         dispatch(startApplicationInitialization());
+      } else {
+        toast.error(I18n.t("features.itWallet.offline.modal.failure"));
       }
     };
 
