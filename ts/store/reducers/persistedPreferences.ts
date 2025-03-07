@@ -20,7 +20,6 @@ import {
   preferencesPnTestEnvironmentSetEnabled,
   preferencesIdPayTestSetEnabled,
   preferencesExperimentalDesignEnabled,
-  setIOMarkdownEnabledOnMessagesAndServices,
   setItwOfflineAccessEnabled,
   preferencesFontSet,
   TypefaceChoice
@@ -42,13 +41,13 @@ export type PersistedPreferencesState = Readonly<{
   isMixpanelEnabled: boolean | null;
   isPnTestEnabled: boolean;
   isIdPayTestEnabled?: boolean;
-  // 'isDesignSystemEnabled' has been introduced without a migration
-  // (PR https://github.com/pagopa/io-app/pull/4427) so there are cases
-  // where its value is `undefined` (when the user updates the app without
+  // 'isDesignSystemEnabled' (now known as 'isExperimentalDesignEnabled')
+  // has been introduced without a migration (PR
+  // https://github.com/pagopa/io-app/pull/4427) so there are cases where
+  // its value is `undefined` (when the user updates the app without
   // changing the variable value later). Typescript cannot detect this so
   // be sure to handle such case when reading and using this value
-  isDesignSystemEnabled: boolean; // TODO: rename to isExperimentalDesignEnabled (with a migration)
-  isIOMarkdownEnabledOnMessagesAndServices: boolean;
+  isExperimentalDesignEnabled: boolean;
   isItwOfflineAccessEnabled: boolean;
   fontPreference: TypefaceChoice;
 }>;
@@ -64,13 +63,11 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isMixpanelEnabled: null,
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
-  isDesignSystemEnabled: false, // TODO: rename to isExperimentalDesignEnabled (with a migration)
-  isIOMarkdownEnabledOnMessagesAndServices: false,
+  isExperimentalDesignEnabled: false,
   isItwOfflineAccessEnabled: false,
   fontPreference: "comfortable"
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
   action: Action
@@ -143,8 +140,7 @@ export default function preferencesReducer(
   if (isActionOf(preferencesExperimentalDesignEnabled, action)) {
     return {
       ...state,
-      // TODO: rename to isExperimentalDesignEnabled (with a migration)
-      isDesignSystemEnabled: action.payload.isExperimentalDesignEnabled
+      isExperimentalDesignEnabled: action.payload.isExperimentalDesignEnabled
     };
   }
 
@@ -169,14 +165,6 @@ export default function preferencesReducer(
     return {
       ...state,
       isIdPayTestEnabled: action.payload.isIdPayTestEnabled
-    };
-  }
-
-  if (isActionOf(setIOMarkdownEnabledOnMessagesAndServices, action)) {
-    return {
-      ...state,
-      isIOMarkdownEnabledOnMessagesAndServices:
-        action.payload.enabledOnMessagesAndServices
     };
   }
 
@@ -227,16 +215,10 @@ export const isIdPayLocallyEnabledSelector = (state: GlobalState) =>
 // changing the variable value later). Typescript cannot detect this so
 // we must make sure that the signature's return type is respected
 export const isExperimentalDesignEnabledSelector = (state: GlobalState) =>
-  // TODO: rename to isExperimentalDesignEnabled (with a migration)
-  state.persistedPreferences.isDesignSystemEnabled ?? false;
+  state.persistedPreferences.isExperimentalDesignEnabled ?? false;
 
 export const fontPreferenceSelector = (state: GlobalState): TypefaceChoice =>
   state.persistedPreferences.fontPreference ?? "comfortable";
-
-export const isIOMarkdownEnabledLocallySelector = (
-  state: GlobalState
-): boolean =>
-  state.persistedPreferences.isIOMarkdownEnabledOnMessagesAndServices;
 
 export const isItwOfflineAccessEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isItwOfflineAccessEnabled;

@@ -386,6 +386,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                   {},
                                   {
                                     "flexGrow": 1,
+                                    "gap": 8,
                                     "justifyContent": "flex-start",
                                   },
                                 ]
@@ -414,9 +415,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                         "flexBasis": 100,
                                         "flexGrow": 0,
                                         "flexShrink": 1,
-                                      },
-                                      {
-                                        "marginEnd": 8,
                                       },
                                       false,
                                     ]
@@ -478,7 +476,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                             "backgroundColor": undefined,
                                             "borderColor": undefined,
                                           },
-                                          false,
                                           false,
                                         ]
                                       }
@@ -576,9 +573,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                         "flexGrow": 0,
                                         "flexShrink": 1,
                                       },
-                                      {
-                                        "marginEnd": 0,
-                                      },
                                       false,
                                     ]
                                   }
@@ -639,7 +633,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                             "backgroundColor": undefined,
                                             "borderColor": undefined,
                                           },
-                                          false,
                                           false,
                                         ]
                                       }

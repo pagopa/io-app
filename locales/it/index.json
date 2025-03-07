@@ -5042,14 +5042,10 @@
                 }
             },
             "multiPrerequisites": {
-                "header": "Dichiari inoltre di:",
-                "body": "L’autodichiarazione è resa ai sensi del",
-                "link": "Dpr 28 dicembre 2000 n. 445 art 46 e 47"
+                "header": "Dichiari inoltre di:"
             },
             "boolPrerequisites": {
-                "header": "Per aderire, dichiari di:",
-                "body": "L’autodichiarazione è resa ai sensi del",
-                "link": "Dpr 28 dicembre 2000 n. 445 art 46 e 47"
+                "header": "Per aderire, dichiari di:"
             }
         },
         "configuration": {
