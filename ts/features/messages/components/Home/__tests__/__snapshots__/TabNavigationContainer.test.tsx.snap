@@ -347,10 +347,11 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                           contentContainerStyle={
                             [
                               {
-                                "flexGrow": 1,
                                 "paddingHorizontal": 24,
                               },
                               {
+                                "flexGrow": 1,
+                                "gap": 8,
                                 "justifyContent": "flex-start",
                               },
                             ]
@@ -380,9 +381,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     "flexGrow": 0,
                                     "flexShrink": 1,
                                   },
-                                  {
-                                    "marginEnd": 8,
-                                  },
                                   false,
                                 ]
                               }
@@ -393,10 +391,10 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": false,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": false,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
@@ -443,7 +441,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "backgroundColor": undefined,
                                         "borderColor": undefined,
                                       },
-                                      false,
                                       false,
                                     ]
                                   }
@@ -554,9 +551,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     "flexGrow": 0,
                                     "flexShrink": 1,
                                   },
-                                  {
-                                    "marginEnd": 0,
-                                  },
                                   false,
                                 ]
                               }
@@ -567,10 +561,10 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": true,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": true,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
@@ -617,7 +611,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "backgroundColor": undefined,
                                         "borderColor": undefined,
                                       },
-                                      false,
                                       false,
                                     ]
                                   }
@@ -1068,10 +1061,11 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                           contentContainerStyle={
                             [
                               {
-                                "flexGrow": 1,
                                 "paddingHorizontal": 24,
                               },
                               {
+                                "flexGrow": 1,
+                                "gap": 8,
                                 "justifyContent": "flex-start",
                               },
                             ]
@@ -1101,9 +1095,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     "flexGrow": 0,
                                     "flexShrink": 1,
                                   },
-                                  {
-                                    "marginEnd": 8,
-                                  },
                                   false,
                                 ]
                               }
@@ -1114,10 +1105,10 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": true,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": true,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
@@ -1164,7 +1155,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "backgroundColor": undefined,
                                         "borderColor": undefined,
                                       },
-                                      false,
                                       false,
                                     ]
                                   }
@@ -1288,9 +1278,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     "flexGrow": 0,
                                     "flexShrink": 1,
                                   },
-                                  {
-                                    "marginEnd": 0,
-                                  },
                                   false,
                                 ]
                               }
@@ -1301,10 +1288,10 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                 accessibilityState={
                                   {
                                     "busy": undefined,
-                                    "checked": undefined,
+                                    "checked": false,
                                     "disabled": false,
                                     "expanded": undefined,
-                                    "selected": false,
+                                    "selected": undefined,
                                   }
                                 }
                                 accessibilityValue={
@@ -1351,7 +1338,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "backgroundColor": undefined,
                                         "borderColor": undefined,
                                       },
-                                      false,
                                       false,
                                     ]
                                   }

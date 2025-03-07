@@ -2,6 +2,8 @@ import { HStack, IOText, Tag } from "@pagopa/io-app-design-system";
 import Color from "color";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import { useIOSelector } from "../../../../../store/hooks";
+import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import {
   getCredentialNameFromType,
   tagPropsByStatus,
@@ -29,6 +31,8 @@ export const ItwCredentialCard = ({
   status = "valid",
   credentialType
 }: ItwCredentialCard) => {
+  const typefacePreference = useIOSelector(fontPreferenceSelector);
+
   const borderColorMap = useBorderColorByStatus();
   const statusTagProps = tagPropsByStatus[status];
 
@@ -70,7 +74,11 @@ export const ItwCredentialCard = ({
           <IOText
             size={16}
             lineHeight={20}
-            font="TitilliumSansPro"
+            font={
+              typefacePreference === "comfortable"
+                ? "Titillio"
+                : "TitilliumSansPro"
+            }
             weight="Semibold"
             maxFontSizeMultiplier={1.25}
             style={{

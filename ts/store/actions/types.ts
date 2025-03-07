@@ -23,7 +23,6 @@ import { MessagesActions } from "../../features/messages/store/actions";
 import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
 import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
-import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
 import { NotificationPermissionsActions } from "../../features/pushNotifications/store/actions/environment";
 import { NotificationsActions } from "../../features/pushNotifications/store/actions/installation";
 import { PendingMessageActions } from "../../features/pushNotifications/store/actions/pendingMessage";
@@ -31,6 +30,7 @@ import { ProfileNotificationPermissionsActions } from "../../features/pushNotifi
 import { UserBehaviourActions } from "../../features/pushNotifications/store/actions/userBehaviour";
 import { ServicesActions } from "../../features/services/common/store/actions";
 import { SpidConfigActions } from "../../features/spidLogin/store/actions";
+import { UtmLinkActions } from "../../features/utmLink/store/actions";
 import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { WalletActions } from "../../features/wallet/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
@@ -106,12 +106,12 @@ export type Action =
   | FimsActions
   | ItwActions
   | TrialSystemActions
-  | ProfileSettingsActions
   | AppearanceSettingsActions
   | IngressScreenActions
   | MixpanelFeatureActions
   | LandingScreenBannerActions
   | SpidConfigActions
+  | UtmLinkActions
   | ConnectivityActions
   | LoginPreferencesActions;
 

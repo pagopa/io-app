@@ -6,29 +6,27 @@ import {
   AppState,
   AppStateStatus,
   EmitterSubscription,
-  NativeEventSubscription,
-  StatusBar
+  NativeEventSubscription
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
-import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
+import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
 import { applicationChangeState } from "./store/actions/application";
 import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateBack } from "./store/actions/navigation";
+import { setScreenReaderEnabled } from "./store/actions/preferences";
 import { isDebugModeEnabledSelector } from "./store/reducers/debug";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
-import customVariables from "./theme/variables";
-import { setScreenReaderEnabled } from "./store/actions/preferences";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -109,11 +107,6 @@ class RootContainer extends PureComponent<Props> {
 
     return (
       <>
-        <StatusBar
-          barStyle={"dark-content"}
-          backgroundColor={customVariables.androidStatusBarColor}
-        />
-
         <IONavigationContainer />
 
         {/* When debug mode is enabled, the following information

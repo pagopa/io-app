@@ -6,7 +6,6 @@ import FingerprintScanner, {
   FingerprintScannerError,
   Errors
 } from "react-native-fingerprint-scanner";
-import { isPinOrFingerprintSet } from "react-native-device-info";
 import { isDebugBiometricIdentificationEnabled } from "../config";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
@@ -114,15 +113,6 @@ export const getBometricState = (): Promise<biometricState> =>
       });
   });
 
-export const isDevicePinSet = (): Promise<boolean> =>
-  new Promise(resolve => {
-    isPinOrFingerprintSet()
-      .then(value => {
-        resolve(value);
-      })
-      .catch(_ => resolve(false));
-  });
-
 export type BiometriActivationUserType =
   | "ACTIVATED"
   | "AUTH_FAILED"
@@ -130,10 +120,10 @@ export type BiometriActivationUserType =
   | "SENSOR_ERROR";
 
 const mayUserActivateBiometricWithDependency = (
-  getBiometricsType: Promise<BiometricsType>
+  getBiometricsTypeInternal: Promise<BiometricsType>
 ): Promise<BiometriActivationUserType> =>
   new Promise((resolve, reject) => {
-    getBiometricsType
+    getBiometricsTypeInternal
       .then(value => {
         if (value === "FACE_ID") {
           FingerprintScanner.authenticate({

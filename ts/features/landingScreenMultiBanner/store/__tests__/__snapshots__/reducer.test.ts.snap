@@ -5,6 +5,6 @@ exports[`landingScreenBannersReducer should match snapshot: undefined_no_action 
   "ITW_DISCOVERY": true,
   "LV_EXPIRATION_REMINDER": true,
   "PUSH_NOTIFICATIONS_REMINDER": true,
-  "SETTINGS_DISCOVERY": true,
+  "SEND_ACTIVATION_REMINDER": false,
 }
 `;

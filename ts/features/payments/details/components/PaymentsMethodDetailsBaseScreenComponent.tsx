@@ -8,7 +8,13 @@ import {
 } from "@pagopa/io-app-design-system";
 
 import { PropsWithChildren, useState } from "react";
-import { ColorValue, LayoutChangeEvent, StyleSheet, View } from "react-native";
+import {
+  AccessibilityInfo,
+  ColorValue,
+  LayoutChangeEvent,
+  StyleSheet,
+  View
+} from "react-native";
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
@@ -21,6 +27,8 @@ import {
   PaymentCard,
   PaymentCardComponentProps
 } from "../../common/components/PaymentCard";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import I18n from "../../../../i18n";
 
 type Props = {
   card: PaymentCardComponentProps;
@@ -54,6 +62,7 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
       contentOffsetY: translationY,
       triggerOffset: titleHeight
     },
+    ignoreAccessibilityCheck: true,
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef
   });
@@ -70,12 +79,19 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
     }
   };
 
+  useOnFirstRender(() => {
+    AccessibilityInfo.announceForAccessibility(
+      I18n.t("features.payments.details.a11y.announce")
+    );
+  });
+
   return (
     <Animated.ScrollView
       onScroll={scrollHandler}
       scrollEventThrottle={8}
       snapToOffsets={[0, titleHeight]}
       snapToEnd={false}
+      importantForAccessibility="no"
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: 48,
@@ -89,7 +105,9 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
       />
       <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
         <View style={styles.cardContainer} onLayout={getTitleHeight}>
-          <PaymentCard {...card} />
+          <View accessible accessibilityRole="summary">
+            <PaymentCard {...card} />
+          </View>
         </View>
       </View>
       <VSpacer size={24} />

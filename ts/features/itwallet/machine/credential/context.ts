@@ -18,6 +18,7 @@ export type Context = {
   requestedCredential: RequestObject | undefined;
   credential: StoredCredential | undefined;
   failure: CredentialIssuanceFailure | undefined;
+  isAsyncContinuation: boolean;
 };
 
 export const InitialContext: Context = {
@@ -30,5 +31,6 @@ export const InitialContext: Context = {
   credentialDefinition: undefined,
   requestedCredential: undefined,
   credential: undefined,
-  failure: undefined
+  failure: undefined,
+  isAsyncContinuation: false
 };
