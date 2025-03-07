@@ -32,8 +32,7 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled,
-  setIOMarkdownEnabledOnMessagesAndServices
+  preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
@@ -44,7 +43,6 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,
-  isIOMarkdownEnabledLocallySelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -299,13 +297,8 @@ const DeveloperDataSection = () => {
 };
 
 const DesignSystemSection = () => {
-  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const { themeType, setTheme } = useIOThemeContext();
-
-  const ioMarkdownEnabledOnMessagesAndServices = useIOSelector(
-    isIOMarkdownEnabledLocallySelector
-  );
 
   return (
     <ContentWrapper>
@@ -328,19 +321,6 @@ const DesignSystemSection = () => {
         value={themeType === "dark"}
         onSwitchValueChange={() =>
           setTheme(themeType === "dark" ? "light" : "dark")
-        }
-      />
-      <Divider />
-      <ListItemSwitch
-        label="IOMarkdown (Messaggi/Servizi)"
-        value={ioMarkdownEnabledOnMessagesAndServices}
-        onSwitchValueChange={() =>
-          dispatch(
-            setIOMarkdownEnabledOnMessagesAndServices({
-              enabledOnMessagesAndServices:
-                !ioMarkdownEnabledOnMessagesAndServices
-            })
-          )
         }
       />
     </ContentWrapper>
