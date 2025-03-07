@@ -90,23 +90,6 @@ const MultiValuePrerequisiteItemScreenContent = ({
           label: I18n.t("global.buttons.continue")
         }
       }}
-      description={[
-        {
-          text: I18n.t("idpay.onboarding.multiPrerequisites.body")
-        },
-        {
-          text: "\n"
-        },
-        {
-          //  TODO: Add a proper `onPress` function to the following link.
-          //  It was a `<Link>` without anything else before
-          text: I18n.t("idpay.onboarding.multiPrerequisites.link"),
-          weight: "Semibold",
-          asLink: true,
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          onPress: () => {}
-        }
-      ]}
     >
       <H6>{selfDeclaration.description}</H6>
       <RadioGroup<string>
