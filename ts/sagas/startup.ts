@@ -32,10 +32,7 @@ import {
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
-import {
-  isBlockingScreenSelector,
-  offlineAccessReasonSelector
-} from "../features/ingress/store/selectors";
+import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import { watchItwSaga } from "../features/itwallet/common/saga";
 import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
@@ -99,6 +96,7 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import {
+  isStartupLoaded,
   StartupStatusEnum,
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
@@ -228,18 +226,6 @@ export function* initializeApplicationSaga(
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
 
-  // `isConnectedSelector` was **discarded** as it might be unclear.
-  // `isStartupLoaded` was **not used** because it required dispatching the action
-  // that initializes the new navigator before user authentication,
-  // leading to visual issues.
-  // `offlineAccessReasonSelector` was **chosen** because it reliably checks
-  // if the user is offline, resets to `undefined` when back online,
-  // and can be dispatched without causing visual glitches.
-  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
-  if (offlineAccessReason) {
-    return;
-  }
-
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
   // before using them.
@@ -248,10 +234,21 @@ export function* initializeApplicationSaga(
     yield* take(backendStatusLoadSuccess);
   }
 
+  /**
+   * To prevent cases where the user goes back online and the saga continues,
+   * we need to explicitly stop the flow at this point.
+   * If `backendStatusLoadSuccess` is dispatched, it means the user is back online,
+   * **BUT** they must continue navigating within the offline flow.
+   * The best way to ensure this is to exit the startup saga at this stage.
+   */
+  const startupStatus = yield* select(isStartupLoaded);
+  if (startupStatus === StartupStatusEnum.OFFLINE) {
+    return;
+  }
+
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
     yield* select(sessionTokenSelector);
-
   // workaround to send keychainError
   // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
   yield* call(trackKeychainFailures);
