@@ -42,7 +42,8 @@ import {
 } from "../../../common/types/PaymentAnalytics";
 import {
   getPaymentsReceiptDetailsAction,
-  getPaymentsLatestReceiptAction
+  getPaymentsLatestReceiptAction,
+  getPaymentsReceiptDownloadAction
 } from "../../../receipts/store/actions";
 import * as receiptsAnalytics from "../../../receipts/analytics";
 import { createSetTransform } from "../../../../../store/transforms/setTransform";
@@ -52,11 +53,13 @@ export type PaymentsHistoryState = {
   ongoingPayment?: PaymentHistory;
   archive: ReadonlyArray<PaymentHistory>;
   receiptsOpened: Set<string>;
+  PDFsOpened: Set<string>;
 };
 
 const INITIAL_STATE: PaymentsHistoryState = {
   archive: [],
-  receiptsOpened: new Set()
+  receiptsOpened: new Set(),
+  PDFsOpened: new Set()
 };
 
 export const ARCHIVE_SIZE = 15;
@@ -200,7 +203,7 @@ const reducer = (
           )
         }
       };
-    case getType(getPaymentsReceiptDetailsAction.request):
+    case getType(getPaymentsReceiptDetailsAction.request): {
       const isFirstTimeOpening = !state.receiptsOpened.has(
         action.payload.transactionId
       );
@@ -215,6 +218,7 @@ const reducer = (
           action.payload.transactionId
         )
       };
+    }
     case getType(getPaymentsReceiptDetailsAction.success):
       receiptsAnalytics.trackPaymentsOpenReceipt({
         organization_name: action.payload.carts?.[0]?.payee?.name,
@@ -231,6 +235,19 @@ const reducer = (
           receiptPayerFiscalCode: action.payload.infoNotice?.payer?.taxCode
         }
       };
+    case getType(getPaymentsReceiptDownloadAction.request): {
+      const isFirstTimePDFOpening = !state.PDFsOpened.has(
+        action.payload.transactionId
+      );
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          receiptFirstTimePDF: isFirstTimePDFOpening
+        },
+        PDFsOpened: new Set(state.PDFsOpened).add(action.payload.transactionId)
+      };
+    }
     case getType(differentProfileLoggedIn):
     case getType(clearCache):
       return INITIAL_STATE;
@@ -293,7 +310,8 @@ const updatePaymentHistory = (
       analyticsData: state.analyticsData,
       ongoingPayment: updatedOngoingPaymentHistory,
       archive: appendItemToArchive(state.archive, updatedOngoingPaymentHistory),
-      receiptsOpened: state.receiptsOpened
+      receiptsOpened: state.receiptsOpened,
+      PDFsOpened: state.PDFsOpened
     };
   }
 
@@ -301,7 +319,8 @@ const updatePaymentHistory = (
     analyticsData: state.analyticsData,
     ongoingPayment: updatedOngoingPaymentHistory,
     archive: [..._.dropRight(state.archive), updatedOngoingPaymentHistory],
-    receiptsOpened: state.receiptsOpened
+    receiptsOpened: state.receiptsOpened,
+    PDFsOpened: state.PDFsOpened
   };
 };
 
