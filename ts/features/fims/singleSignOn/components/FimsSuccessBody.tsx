@@ -2,7 +2,7 @@ import {
   Avatar,
   Body,
   ButtonLink,
-  FooterActions,
+  ContentWrapper,
   ForceScrollDownView,
   H2,
   H6,
@@ -10,7 +10,6 @@ import {
   HStack,
   Icon,
   IOColors,
-  IOStyles,
   IOVisualCostants,
   ListItemHeader,
   useIOTheme,
@@ -99,20 +98,34 @@ export const FimsFlowSuccessBody = ({
 
   return (
     <ForceScrollDownView
+      contentContainerStyle={{ flexGrow: 1 }}
       scrollEnabled
-      threshold={150}
-      contentContainerStyle={{
-        minHeight: "100%"
+      footerActions={{
+        actions: {
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t("global.buttons.consent"),
+            icon: "security",
+            iconPosition: "end",
+            onPress: () => {
+              const state = store.getState();
+              computeAndTrackDataShareAccepted(serviceId, state);
+              dispatch(
+                fimsAcceptConsentsAction(
+                  // eslint-disable-next-line no-underscore-dangle
+                  { acceptUrl: consents._links.consent.href }
+                )
+              );
+            }
+          },
+          secondary: {
+            label: I18n.t("global.buttons.cancel"),
+            onPress: onAbort
+          }
+        }
       }}
     >
-      <View
-        style={[
-          IOStyles.horizontalContentPadding,
-          {
-            flexGrow: 1
-          }
-        ]}
-      >
+      <ContentWrapper>
         <VSpacer size={24} />
         <HStack space={8} style={{ alignItems: "center" }}>
           {/* TODO: We need to add a variant of `Avatar` that
@@ -146,32 +159,7 @@ export const FimsFlowSuccessBody = ({
         <FimsPrivacyInfo privacyUrl={privacyUrl} />
 
         <VSpacer size={32} />
-      </View>
-      <FooterActions
-        fixed={false}
-        actions={{
-          type: "TwoButtons",
-          primary: {
-            label: I18n.t("global.buttons.consent"),
-            icon: "security",
-            iconPosition: "end",
-            onPress: () => {
-              const state = store.getState();
-              computeAndTrackDataShareAccepted(serviceId, state);
-              dispatch(
-                fimsAcceptConsentsAction(
-                  // eslint-disable-next-line no-underscore-dangle
-                  { acceptUrl: consents._links.consent.href }
-                )
-              );
-            }
-          },
-          secondary: {
-            label: I18n.t("global.buttons.cancel"),
-            onPress: onAbort
-          }
-        }}
-      />
+      </ContentWrapper>
       {BottomSheet.bottomSheet}
     </ForceScrollDownView>
   );
