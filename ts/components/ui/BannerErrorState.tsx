@@ -34,9 +34,6 @@ const styles = StyleSheet.create({
     borderCurve: "continuous",
     padding: IOBannerBigSpacing,
     backgroundColor: IOColors["grey-50"]
-  },
-  textCenter: {
-    textAlign: "center"
   }
 });
 
@@ -100,7 +97,7 @@ export const BannerErrorState = ({
         )}
         {label && (
           <>
-            <Body color={colorContent} textStyle={styles.textCenter}>
+            <Body color={colorContent} textStyle={{ textAlign: "center" }}>
               {label}
             </Body>
             {actionText && <VSpacer size={8} />}
