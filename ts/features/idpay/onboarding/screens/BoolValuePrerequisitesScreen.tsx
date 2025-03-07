@@ -4,9 +4,7 @@ import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDec
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
-import { dpr28Dec2000Url } from "../../../../urls";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { openWebUrl } from "../../../../utils/url";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
@@ -46,20 +44,6 @@ const InitiativeSelfDeclarationsScreen = () => {
         label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
         section: I18n.t("idpay.onboarding.navigation.header")
       }}
-      description={[
-        {
-          text: I18n.t("idpay.onboarding.boolPrerequisites.body")
-        },
-        {
-          text: "\n"
-        },
-        {
-          text: I18n.t("idpay.onboarding.boolPrerequisites.link"),
-          weight: "Semibold",
-          asLink: true,
-          onPress: () => openWebUrl(dpr28Dec2000Url)
-        }
-      ]}
       goBack={goBackOnPress}
       contextualHelp={emptyContextualHelp}
       headerActionsProp={{ showHelp: true }}
