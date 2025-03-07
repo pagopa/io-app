@@ -10,7 +10,7 @@ import {
   StringClaim
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
-import { HIDDEN_CLAIM } from "../../utils/constants.ts";
+import { HIDDEN_CLAIM_TEXT } from "../../utils/constants.ts";
 import { CardClaim, CardClaimContainer, CardClaimRenderer } from "./CardClaim";
 import { ClaimLabel } from "./ClaimLabel";
 import { CardSide } from "./types";
@@ -147,7 +147,7 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
                 >
                   <ClaimLabel fontSize={9}>
                     {valuesHidden
-                      ? HIDDEN_CLAIM
+                      ? HIDDEN_CLAIM_TEXT
                       : issue_date.toString("DD/MM/YY")}
                   </ClaimLabel>
                 </CardClaimContainer>
@@ -160,7 +160,7 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
                 >
                   <ClaimLabel fontSize={9}>
                     {valuesHidden
-                      ? HIDDEN_CLAIM
+                      ? HIDDEN_CLAIM_TEXT
                       : expiry_date.toString("DD/MM/YY")}
                   </ClaimLabel>
                 </CardClaimContainer>

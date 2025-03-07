@@ -15,7 +15,7 @@ import {
   SimpleDateFormat
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
-import { HIDDEN_CLAIM } from "../../utils/constants.ts";
+import { HIDDEN_CLAIM_TEXT } from "../../utils/constants.ts";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
 import { BlurredImage } from "./BlurredImage.tsx";
 
@@ -78,7 +78,7 @@ const CardClaim = ({
           const decoded = valuesHidden
             ? ImageClaim.is(_decoded)
               ? _decoded
-              : HIDDEN_CLAIM
+              : HIDDEN_CLAIM_TEXT
             : _decoded;
           if (SimpleDateClaim.is(decoded)) {
             const formattedDate = decoded.toString(dateFormat);

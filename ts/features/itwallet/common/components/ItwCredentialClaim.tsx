@@ -27,7 +27,7 @@ import {
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { HIDDEN_CLAIM } from "../utils/constants.ts";
+import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 
 /**
  * Component which renders a place of birth type claim.
@@ -91,7 +91,7 @@ const PlainTextClaimItem = ({
         isCopyable ? () => clipboardSetStringWithFeedback(safeValue) : undefined
       }
       accessibilityLabel={`${label} ${
-        claim === HIDDEN_CLAIM
+        claim === HIDDEN_CLAIM_TEXT
           ? I18n.t(
               "features.itWallet.presentation.credentialDetails.hiddenClaim"
             )
@@ -321,7 +321,7 @@ export const ItwCredentialClaim = ({
       () => <UnknownClaimItem label={claim.label} />,
       // eslint-disable-next-line sonarjs/cognitive-complexity
       _decoded => {
-        const decoded = hidden ? HIDDEN_CLAIM : _decoded;
+        const decoded = hidden ? HIDDEN_CLAIM_TEXT : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
           return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
         } else if (SimpleDateClaim.is(decoded)) {
@@ -364,7 +364,7 @@ export const ItwCredentialClaim = ({
           return null; // We want to hide the claim if it's empty
         }
         if (StringClaim.is(decoded)) {
-          // This is needed because otherwise empty string will be rendered as a claim due to the decoded value being HIDDEN_CLAIM
+          // This is needed because otherwise empty string will be rendered as a claim due to the decoded value being HIDDEN_CLAIM_TEXT
           if (hidden && EmptyStringClaim.is(_decoded)) {
             return null;
           }
