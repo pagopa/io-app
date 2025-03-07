@@ -16,7 +16,7 @@ import {
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
-import { ClaimImage} from "./ClaimImage.tsx";
+import { ClaimImage } from "./ClaimImage.tsx";
 
 export type PercentPosition = `${number}%`;
 
