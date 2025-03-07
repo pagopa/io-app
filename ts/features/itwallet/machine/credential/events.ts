@@ -1,9 +1,5 @@
 import { ErrorActorEvent } from "xstate";
 
-export type Reset = {
-  type: "reset";
-};
-
 export type SelectCredential = {
   type: "select-credential";
   credentialType: string;
@@ -32,7 +28,6 @@ export type Close = {
 };
 
 export type CredentialIssuanceEvents =
-  | Reset
   | SelectCredential
   | ConfirmTrustData
   | AddToWallet
