@@ -14,7 +14,10 @@ import {
   preconditionsContentSelector
 } from "../../store/reducers/messagePrecondition";
 import I18n from "../../../../i18n";
-import { pnMinAppVersionSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  isIOMarkdownEnabledForMessagesAndServicesSelector,
+  pnMinAppVersionSelector
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
 import {
   errorPreconditionStatusAction,
@@ -24,7 +27,6 @@ import {
 } from "../../store/actions/preconditions";
 import { trackDisclaimerLoadError } from "../../analytics";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../common/store/reducers";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { PreconditionsFeedback } from "./PreconditionsFeedback";
 
@@ -57,7 +59,7 @@ const PreconditionsContentMarkdown = ({
   const linkTo = useLinkTo();
 
   const useIOMarkdown = useIOSelector(
-    isIOMarkdownEnabledOnMessagesAndServicesSelector
+    isIOMarkdownEnabledForMessagesAndServicesSelector
   );
   const markdown = useIOSelector(preconditionsContentMarkdownSelector);
 

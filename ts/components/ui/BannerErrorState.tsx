@@ -97,7 +97,9 @@ export const BannerErrorState = ({
         )}
         {label && (
           <>
-            <Body color={colorContent}>{label}</Body>
+            <Body color={colorContent} textStyle={{ textAlign: "center" }}>
+              {label}
+            </Body>
             {actionText && <VSpacer size={8} />}
           </>
         )}
