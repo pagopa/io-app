@@ -1,24 +1,25 @@
-import { useState } from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Platform, View } from "react-native";
-import Share from "react-native-share";
 import {
   FooterActions,
   FooterActionsMeasurements,
   IOColors,
   IOStyles
 } from "@pagopa/io-app-design-system";
-import Pdf from "react-native-pdf";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp } from "@react-navigation/native";
+import { useState } from "react";
+import { Platform, View } from "react-native";
+import Pdf from "react-native-pdf";
+import Share from "react-native-share";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import * as analytics from "../analytics";
 import { PaymentsReceiptParamsList } from "../navigation/params";
 import { walletReceiptPotSelector } from "../store/selectors";
-import { useIOSelector } from "../../../../store/hooks";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { RECEIPT_DOCUMENT_TYPE_PREFIX } from "../utils";
-import * as analytics from "../analytics";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 export type ReceiptPreviewScreenProps = RouteProp<
   PaymentsReceiptParamsList,
@@ -26,7 +27,7 @@ export type ReceiptPreviewScreenProps = RouteProp<
 >;
 
 const ReceiptPreviewScreen = () => {
-  const [footerActionsMeasurements, setfooterActionsMeasurements] =
+  const [footerActionsMeasurements, setFooterActionsMeasurements] =
     useState<FooterActionsMeasurements>({
       actionBlockHeight: 0,
       safeBottomAreaHeight: 0
@@ -34,6 +35,16 @@ const ReceiptPreviewScreen = () => {
 
   const transactionReceiptPot = useIOSelector(walletReceiptPotSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+
+  useOnFirstRender(() => {
+    analytics.trackPaymentsDownloadReceiptSuccess({
+      organization_name: paymentAnalyticsData?.receiptOrganizationName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
+      first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpeningPDF,
+      user: paymentAnalyticsData?.receiptUser
+    });
+  });
 
   useHeaderSecondLevel({
     title: "",
@@ -71,7 +82,7 @@ const ReceiptPreviewScreen = () => {
   const handleFooterActionsMeasurements = (
     values: FooterActionsMeasurements
   ) => {
-    setfooterActionsMeasurements(values);
+    setFooterActionsMeasurements(values);
   };
 
   if (pot.isSome(transactionReceiptPot)) {
