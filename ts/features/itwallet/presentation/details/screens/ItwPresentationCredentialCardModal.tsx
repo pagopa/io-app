@@ -28,6 +28,7 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 export type ItwPresentationCredentialCardModalNavigationParams = {
   credential: StoredCredential;
   status: ItwCredentialStatus;
+  valuesHidden: boolean;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -39,7 +40,7 @@ type Props = IOStackNavigationRouteProps<
  * Dispalys a full screen modal with the credential card.
  */
 const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
-  const { credential, status } = route.params;
+  const { credential, status, valuesHidden } = route.params;
   const safeAreaInsets = useSafeAreaInsets();
   const [isFlipped, setFlipped] = useState(false);
   const theme = useIOTheme();
@@ -96,6 +97,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
             credential={credential}
             status={status}
             isFlipped={isFlipped}
+            valuesHidden={valuesHidden}
           />
         </FlipGestureDetector>
       </View>

@@ -1,4 +1,8 @@
-import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import {
+  ListItemHeader,
+  ListItemSwitch,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import { View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -15,28 +19,41 @@ const credentialsWithCard: ReadonlyArray<string> = [
   "EuropeanDisabilityCard"
 ];
 
-export const ItwSkeumorphicCredentialSection = () => (
-  <View>
-    <ListItemHeader label="Skeumorphic credential card" />
-    <VStack space={16}>
-      {Object.values(ItwStoredCredentialsMocks)
-        .filter(({ credentialType }) =>
-          credentialsWithCard.includes(credentialType)
-        )
-        .map(credential => (
-          <ItwSkeumorphicCredentialItem
-            key={credential.credentialType}
-            credential={credential}
-          />
-        ))}
-    </VStack>
-  </View>
-);
+export const ItwSkeumorphicCredentialSection = () => {
+  const [valuesHidden, setValuesHidden] = useState(false);
+  return (
+    <View>
+      <ListItemHeader label="Skeumorphic credential card" />
+      <ListItemSwitch
+        label="Hide claim values"
+        value={valuesHidden}
+        onSwitchValueChange={() => {
+          setValuesHidden(!valuesHidden);
+        }}
+      />
+      <VStack space={16}>
+        {Object.values(ItwStoredCredentialsMocks)
+          .filter(({ credentialType }) =>
+            credentialsWithCard.includes(credentialType)
+          )
+          .map(credential => (
+            <ItwSkeumorphicCredentialItem
+              key={credential.credentialType}
+              credential={credential}
+              valuesHidden={valuesHidden}
+            />
+          ))}
+      </VStack>
+    </View>
+  );
+};
 
 const ItwSkeumorphicCredentialItem = ({
-  credential
+  credential,
+  valuesHidden
 }: {
   credential: StoredCredential;
+  valuesHidden: boolean;
 }) => {
   const navigation = useIONavigation();
   const [isFlipped, setFlipped] = useState(false);
@@ -47,7 +64,8 @@ const ItwSkeumorphicCredentialItem = ({
       screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
       params: {
         credential,
-        status
+        status,
+        valuesHidden
       }
     });
   };
@@ -60,6 +78,7 @@ const ItwSkeumorphicCredentialItem = ({
           status={status}
           isFlipped={isFlipped}
           onPress={handleOnPress}
+          valuesHidden={valuesHidden}
         />
       </FlipGestureDetector>
       <ItwPresentationCredentialCardFlipButton

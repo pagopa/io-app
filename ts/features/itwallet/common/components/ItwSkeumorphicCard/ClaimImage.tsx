@@ -13,6 +13,11 @@ type ClaimImageProps = {
   blur?: number;
 };
 
+/**
+ * Renders an image from a base64 encoded string with an optional blur effect.
+ * The image is displayed on a Skia canvas, and the blur level can be adjusted
+ * via the `blur` prop.
+ */
 export const ClaimImage = ({ base64, blur = 0 }: ClaimImageProps) => {
   const [dimensions, setDimensions] = useState<{
     width: number;

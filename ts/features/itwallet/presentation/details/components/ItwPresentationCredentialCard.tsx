@@ -35,12 +35,15 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     setIsFlipped(_ => !_);
   }, [credential.credentialType]);
 
+  const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
+
   const handleCardPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
       params: {
         credential,
-        status
+        status,
+        valuesHidden
       }
     });
   };
@@ -48,8 +51,6 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType
   );
-
-  const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
 
   return (
     <VStack space={8}>
