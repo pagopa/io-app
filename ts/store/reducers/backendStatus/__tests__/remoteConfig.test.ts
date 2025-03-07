@@ -7,6 +7,7 @@ import {
   barcodesScannerConfigSelector,
   fimsServiceConfiguration,
   generateDynamicUrlSelector,
+  isIOMarkdownEnabledForMessagesAndServicesSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
   landingScreenBannerOrderSelector
@@ -15,7 +16,10 @@ import * as appVersion from "../../../../utils/appVersion";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 describe("remoteConfig", () => {
-  afterEach(() => jest.restoreAllMocks());
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.clearAllMocks();
+  });
 
   // smoke tests: valid / invalid
   const noneStore = {
@@ -315,4 +319,104 @@ describe("remoteConfig", () => {
       expect(serviceConfiguration).toBeUndefined();
     });
   });
+});
+describe("isIOMarkdownEnabledForMessagesAndServicesSelector", () => {
+  (
+    [
+      [
+        {
+          remoteConfig: O.none
+        } as GlobalState,
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({})
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {}
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {}
+            }
+          })
+        },
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            }
+          })
+        },
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "1.0.0.0",
+                ios: "1.0.0.0"
+              }
+            }
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "2.0.0.0",
+                ios: "2.0.0.0"
+              }
+            }
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "2.0.0.1",
+                ios: "2.0.0.1"
+              }
+            }
+          })
+        },
+        false
+      ]
+    ] as ReadonlyArray<[GlobalState, boolean]>
+  ).forEach(testData =>
+    it(`should return '${testData[1]}' for '${JSON.stringify(
+      testData[0]
+    )}'`, () => {
+      jest
+        .spyOn(appVersion, "getAppVersion")
+        .mockImplementation(() => "2.0.0.0");
+      const output = isIOMarkdownEnabledForMessagesAndServicesSelector(
+        testData[0]
+      );
+      expect(output).toBe(testData[1]);
+    })
+  );
 });
