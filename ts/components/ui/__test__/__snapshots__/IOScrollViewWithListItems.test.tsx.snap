@@ -819,7 +819,12 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="action-button"
                           >
                             <View
@@ -1457,7 +1462,12 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="action-button"
                           >
                             <View
@@ -2418,7 +2428,12 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={{}}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
                             testID="action-button"
                           >
                             <View
