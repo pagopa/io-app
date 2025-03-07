@@ -53,7 +53,7 @@ import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { requestAppReview } from "../../utils/storeReview";
+import { useAppReviewRequest } from "../../features/appReviews/hooks/useAppReviewRequest";
 import ExperimentalDesignEnableSwitch from "./components/ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -83,6 +83,7 @@ type DevActionButton = {
 
 const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
+  const { requestFeedback, bottomSheet } = useAppReviewRequest("general");
 
   const handleClearCachePress = () => {
     Alert.alert(
@@ -163,7 +164,7 @@ const DeveloperActionsSection = () => {
       condition: true,
       color: "primary",
       label: I18n.t("profile.main.storeReview"),
-      onPress: requestAppReview
+      onPress: () => requestFeedback()
     }
   ];
 
@@ -185,19 +186,22 @@ const DeveloperActionsSection = () => {
   );
 
   return (
-    <FlatList
-      ListHeaderComponent={<ListItemHeader label="Actions" />}
-      scrollEnabled={false}
-      keyExtractor={(item: DevActionButton, index: number) =>
-        `${item.label}-${index}`
-      }
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
-      data={filteredDevActionButtons}
-      renderItem={renderDevActionButton}
-      ItemSeparatorComponent={() => <VSpacer size={8} />}
-    />
+    <>
+      {bottomSheet}
+      <FlatList
+        ListHeaderComponent={<ListItemHeader label="Actions" />}
+        scrollEnabled={false}
+        keyExtractor={(item: DevActionButton, index: number) =>
+          `${item.label}-${index}`
+        }
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={filteredDevActionButtons}
+        renderItem={renderDevActionButton}
+        ItemSeparatorComponent={() => <VSpacer size={8} />}
+      />
+    </>
   );
 };
 
@@ -401,6 +405,13 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS
+        })
+    },
+    {
+      value: "App Feedback",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.APP_FEEDBACK_PLAYGROUND
         })
     }
   ];

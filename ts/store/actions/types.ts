@@ -30,6 +30,7 @@ import { ProfileNotificationPermissionsActions } from "../../features/pushNotifi
 import { UserBehaviourActions } from "../../features/pushNotifications/store/actions/userBehaviour";
 import { ServicesActions } from "../../features/services/common/store/actions";
 import { SpidConfigActions } from "../../features/spidLogin/store/actions";
+import { AppFeedbackActions } from "../../features/appReviews/store/actions";
 import { UtmLinkActions } from "../../features/utmLink/store/actions";
 import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { WalletActions } from "../../features/wallet/store/actions";
@@ -111,6 +112,7 @@ export type Action =
   | MixpanelFeatureActions
   | LandingScreenBannerActions
   | SpidConfigActions
+  | AppFeedbackActions
   | UtmLinkActions
   | ConnectivityActions
   | LoginPreferencesActions;
