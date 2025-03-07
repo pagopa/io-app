@@ -11,6 +11,7 @@ import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUti
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
+import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
@@ -34,6 +35,8 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     setIsFlipped(_ => !_);
   }, [credential.credentialType]);
 
+  const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
+
   const handleCardPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
@@ -56,6 +59,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
             credential={credential}
             isFlipped={isFlipped}
             status={status}
+            valuesHidden={valuesHidden}
             onPress={handleCardPress}
           />
         </FlipGestureDetector>

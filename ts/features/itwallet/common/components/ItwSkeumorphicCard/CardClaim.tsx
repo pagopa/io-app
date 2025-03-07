@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 
 import { ReactElement, ReactNode, memo, useMemo } from "react";
-import { Image, StyleSheet, View, ViewStyle } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import { Either, Prettify } from "../../../../../types/helpers";
 import {
   ClaimValue,
@@ -16,6 +16,7 @@ import {
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
+import { ClaimImage } from "./ClaimImage";
 
 export type PercentPosition = `${number}%`;
 
@@ -75,15 +76,7 @@ const CardClaim = ({
             return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
           } else if (ImageClaim.is(decoded)) {
             return (
-              <Image
-                source={{ uri: decoded }}
-                resizeMode="contain"
-                style={{
-                  width: "100%",
-                  height: "100%"
-                }}
-                accessibilityIgnoresInvertColors
-              />
+              <ClaimImage base64={decoded} blur={labelProps.hidden ? 7 : 0} />
             );
           } else if (DrivingPrivilegesClaim.is(decoded)) {
             const privileges = decoded.map(p => p.driving_privilege).join(" ");
