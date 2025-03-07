@@ -1375,7 +1375,10 @@
       "feeAppliedBy": "Angewandt von: ",
       "editButton": "Ändern",
       "termsAndConditions": "Wenn du fortfährst, erklärst du folgende Informationen gelesen und verstanden zu haben: ",
-      "termsAndConditionsLink": "Nutzungsbedingungen und Datenschutzrichtlinie"
+      "termsAndConditionsLink": "Nutzungsbedingungen und Datenschutzrichtlinie",
+      "a11y": {
+        "announce": "Zusammenfassung Ihrer Zahlung"
+      }
     }
   },
   "wallet": {
@@ -1891,6 +1894,9 @@
         "errorCode": "Fehlercode",
         "messageId": "ID der Nachricht",
         "copyToClipboard": "Daten für die Assistenz kopieren"
+      },
+      "a11y": {
+        "announce": "Riepilogo dati avviso"
       }
     },
     "errorTransaction": {
