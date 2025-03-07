@@ -49,12 +49,14 @@ import { generateInitialState } from "../features/pushNotifications/store/reduce
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
-import { isDevEnv } from "../utils/environment";
+import { isDevEnv, isTestEnv } from "../utils/environment";
+import { PersistedPreferencesState } from "../store/reducers/persistedPreferences";
 import { configureReactotron } from "./configureRectotron";
+
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 41;
+const CURRENT_REDUX_STORE_VERSION = 42;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -492,6 +494,27 @@ const migrations: MigrationManifest = {
         fontPreference: "comfortable"
       }
     };
+  },
+  // Remove 'isIOMarkdownEnabledOnMessagesAndServices' and rename 'isDesignSystemEnabled' to 'isExperimentalDesignEnabled'
+  "42": (state: PersistedState) => {
+    const typedState = state as GlobalState & {
+      persistedPreferences: PersistedPreferencesState & {
+        isDesignSystemEnabled: boolean;
+        isIOMarkdownEnabledOnMessagesAndServices: boolean;
+      };
+    };
+    const {
+      isDesignSystemEnabled,
+      isIOMarkdownEnabledOnMessagesAndServices,
+      ...remaining
+    } = typedState.persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...remaining,
+        isExperimentalDesignEnabled: isDesignSystemEnabled
+      }
+    };
   }
 };
 
@@ -502,16 +525,12 @@ const rootPersistConfig: PersistConfig = {
   storage: AsyncStorage,
   version: CURRENT_REDUX_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv }),
-  // Entities and features implement a persisted reduce that avoids persisting messages.
-  // Other entities section will be persisted
-  blacklist: ["debug", "entities", "features", "lollipop"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
     "profile",
     "persistedPreferences",
     "installation",
-    "payments",
     "content",
     "crossSessions"
   ],
@@ -579,3 +598,6 @@ function configureStoreAndPersistor(): {
 }
 
 export const { store, persistor } = configureStoreAndPersistor();
+export const testable = isTestEnv
+  ? { CURRENT_REDUX_STORE_VERSION, migrations }
+  : undefined;
