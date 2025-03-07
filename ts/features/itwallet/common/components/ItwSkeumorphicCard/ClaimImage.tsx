@@ -6,14 +6,14 @@ import {
 } from "@shopify/react-native-skia";
 import { useMemo, useState } from "react";
 
-type BlurredImageProps = {
+type ClaimImageProps = {
   base64: string;
   width: number;
   height: number;
   blur?: number;
 };
 
-export const BlurredImage = ({ base64, blur = 0 }: BlurredImageProps) => {
+export const ClaimImage = ({ base64, blur = 0 }: ClaimImageProps) => {
   const [dimensions, setDimensions] = useState<{
     width: number;
     height: number;

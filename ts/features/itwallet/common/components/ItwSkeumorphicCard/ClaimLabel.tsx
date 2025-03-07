@@ -5,11 +5,13 @@ import {
 import { FunctionComponent, PropsWithChildren } from "react";
 
 import { Text, TextStyle, useWindowDimensions } from "react-native";
+import { HIDDEN_CLAIM_TEXT } from "../../utils/constants.ts";
 
 export type ClaimLabelProps = {
   fontSize?: number;
   fontWeight?: IOFontWeight;
   textTransform?: TextStyle["textTransform"];
+  valuesHidden?: boolean;
 };
 
 /**
@@ -21,6 +23,7 @@ export const ClaimLabel: FunctionComponent<
   fontSize = 11,
   fontWeight = "Semibold",
   textTransform = "none",
+  valuesHidden,
   ...props
 }) => {
   const { width } = useWindowDimensions();
@@ -51,7 +54,7 @@ export const ClaimLabel: FunctionComponent<
         textTransform
       }}
     >
-      {props.children}
+      {valuesHidden ? HIDDEN_CLAIM_TEXT : props.children}
     </Text>
   );
 };

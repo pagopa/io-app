@@ -10,7 +10,6 @@ import {
   StringClaim
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
-import { HIDDEN_CLAIM_TEXT } from "../../utils/constants.ts";
 import { CardClaim, CardClaimContainer, CardClaimRenderer } from "./CardClaim";
 import { ClaimLabel } from "./ClaimLabel";
 import { CardSide } from "./types";
@@ -145,10 +144,8 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
                     top: `${privilegesTableRows[driving_privilege] || 0}%`
                   }}
                 >
-                  <ClaimLabel fontSize={9}>
-                    {valuesHidden
-                      ? HIDDEN_CLAIM_TEXT
-                      : issue_date.toString("DD/MM/YY")}
+                  <ClaimLabel fontSize={9} valuesHidden={valuesHidden}>
+                    {issue_date.toString("DD/MM/YY")}
                   </ClaimLabel>
                 </CardClaimContainer>
                 <CardClaimContainer
@@ -158,10 +155,8 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
                     top: `${privilegesTableRows[driving_privilege] || 0}%`
                   }}
                 >
-                  <ClaimLabel fontSize={9}>
-                    {valuesHidden
-                      ? HIDDEN_CLAIM_TEXT
-                      : expiry_date.toString("DD/MM/YY")}
+                  <ClaimLabel fontSize={9} valuesHidden={valuesHidden}>
+                    {expiry_date.toString("DD/MM/YY")}
                   </ClaimLabel>
                 </CardClaimContainer>
                 {restrictions_conditions && (

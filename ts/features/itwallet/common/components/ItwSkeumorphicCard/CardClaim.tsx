@@ -15,9 +15,8 @@ import {
   SimpleDateFormat
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
-import { HIDDEN_CLAIM_TEXT } from "../../utils/constants.ts";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
-import { BlurredImage } from "./BlurredImage.tsx";
+import { ClaimImage} from "./ClaimImage.tsx";
 
 export type PercentPosition = `${number}%`;
 
@@ -74,18 +73,17 @@ const CardClaim = ({
       pipe(
         claim?.value,
         ClaimValue.decode,
-        E.fold(constNull, _decoded => {
-          const decoded = valuesHidden
-            ? ImageClaim.is(_decoded)
-              ? _decoded
-              : HIDDEN_CLAIM_TEXT
-            : _decoded;
+        E.fold(constNull, decoded => {
           if (SimpleDateClaim.is(decoded)) {
             const formattedDate = decoded.toString(dateFormat);
-            return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
+            return (
+              <ClaimLabel {...labelProps} valuesHidden={valuesHidden}>
+                {formattedDate}
+              </ClaimLabel>
+            );
           } else if (ImageClaim.is(decoded)) {
             return (
-              <BlurredImage
+              <ClaimImage
                 base64={decoded}
                 width={100}
                 height={100}
@@ -94,11 +92,23 @@ const CardClaim = ({
             );
           } else if (DrivingPrivilegesClaim.is(decoded)) {
             const privileges = decoded.map(p => p.driving_privilege).join(" ");
-            return <ClaimLabel {...labelProps}>{privileges}</ClaimLabel>;
+            return (
+              <ClaimLabel {...labelProps} valuesHidden={valuesHidden}>
+                {privileges}
+              </ClaimLabel>
+            );
           } else if (PlaceOfBirthClaim.is(decoded)) {
-            return <ClaimLabel {...labelProps}>{decoded.locality}</ClaimLabel>;
+            return (
+              <ClaimLabel {...labelProps} valuesHidden={valuesHidden}>
+                {decoded.locality}
+              </ClaimLabel>
+            );
           } else {
-            return <ClaimLabel {...labelProps}>{decoded}</ClaimLabel>;
+            return (
+              <ClaimLabel {...labelProps} valuesHidden={valuesHidden}>
+                {decoded}
+              </ClaimLabel>
+            );
           }
         })
       ),
