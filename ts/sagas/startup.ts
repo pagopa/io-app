@@ -249,6 +249,7 @@ export function* initializeApplicationSaga(
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
     yield* select(sessionTokenSelector);
+
   // workaround to send keychainError
   // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
   yield* call(trackKeychainFailures);
