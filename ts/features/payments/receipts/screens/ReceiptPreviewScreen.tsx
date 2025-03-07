@@ -41,7 +41,7 @@ const ReceiptPreviewScreen = () => {
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       organization_fiscal_code:
         paymentAnalyticsData?.verifiedData?.paFiscalCode,
-      first_time_opening: paymentAnalyticsData?.receiptFirstTimePDF,
+      first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpeningPDF,
       user: paymentAnalyticsData?.receiptUser
     });
   });

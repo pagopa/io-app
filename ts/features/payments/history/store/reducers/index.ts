@@ -243,7 +243,7 @@ const reducer = (
         ...state,
         analyticsData: {
           ...state.analyticsData,
-          receiptFirstTimePDF: isFirstTimePDFOpening
+          receiptFirstTimeOpeningPDF: isFirstTimePDFOpening
         },
         PDFsOpened: new Set(state.PDFsOpened).add(action.payload.transactionId)
       };
