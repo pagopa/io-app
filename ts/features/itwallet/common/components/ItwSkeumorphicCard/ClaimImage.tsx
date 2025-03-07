@@ -8,8 +8,6 @@ import { useMemo, useState } from "react";
 
 type ClaimImageProps = {
   base64: string;
-  width: number;
-  height: number;
   blur?: number;
 };
 

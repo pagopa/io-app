@@ -64,8 +64,7 @@ const ItwSkeumorphicCredentialItem = ({
       screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
       params: {
         credential,
-        status,
-        valuesHidden
+        status
       }
     });
   };

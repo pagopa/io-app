@@ -24,11 +24,12 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton.tsx";
 import { CREDENTIALS_MAP, trackCredentialCardModal } from "../../../analytics";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
   credential: StoredCredential;
   status: ItwCredentialStatus;
-  valuesHidden: boolean;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -40,10 +41,11 @@ type Props = IOStackNavigationRouteProps<
  * Dispalys a full screen modal with the credential card.
  */
 const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
-  const { credential, status, valuesHidden } = route.params;
+  const { credential, status } = route.params;
   const safeAreaInsets = useSafeAreaInsets();
   const [isFlipped, setFlipped] = useState(false);
   const theme = useIOTheme();
+  const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
 
   usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });

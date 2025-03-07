@@ -37,57 +37,57 @@ const MdlFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
           width: "22.5%",
           aspectRatio: 77 / 93 // This aspect ration was extracted from the Figma design
         }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["family_name"]}
         position={{ left: `${cols[0]}%`, top: `${rows[0]}%` }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["given_name"]}
         position={{ left: `${cols[0]}%`, top: `${rows[1]}%` }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["birth_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[2]}%` }}
         dateFormat="DD/MM/YY"
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["place_of_birth"]}
         position={{ left: `${cols[0] + 17}%`, top: `${rows[2]}%` }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["issue_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[3]}%` }}
         fontWeight={"Bold"}
         dateFormat={"DD/MM/YYYY"}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["issuing_authority"]}
         position={{ left: `${cols[1]}%`, top: `${rows[3]}%` }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["expiry_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[4]}%` }}
         fontWeight={"Bold"}
         dateFormat={"DD/MM/YYYY"}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["document_number"]}
         position={{ left: `${cols[0]}%`, top: `${rows[5]}%` }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["driving_privileges"]}
         position={{ left: "8%", bottom: "17.9%" }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
     </View>
   );
@@ -144,7 +144,7 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
                     top: `${privilegesTableRows[driving_privilege] || 0}%`
                   }}
                 >
-                  <ClaimLabel fontSize={9} valuesHidden={valuesHidden}>
+                  <ClaimLabel fontSize={9} hidden={valuesHidden}>
                     {issue_date.toString("DD/MM/YY")}
                   </ClaimLabel>
                 </CardClaimContainer>
@@ -155,7 +155,7 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
                     top: `${privilegesTableRows[driving_privilege] || 0}%`
                   }}
                 >
-                  <ClaimLabel fontSize={9} valuesHidden={valuesHidden}>
+                  <ClaimLabel fontSize={9} hidden={valuesHidden}>
                     {expiry_date.toString("DD/MM/YY")}
                   </ClaimLabel>
                 </CardClaimContainer>
@@ -181,7 +181,7 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
         claim={claims["restrictions_conditions"]}
         position={{ left: "8%", bottom: "6.5%" }}
         fontSize={9}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
     </View>
   );
@@ -205,32 +205,32 @@ const DcFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
           width: "24.7%",
           aspectRatio: 73 / 106 // This aspect ration was extracted from the Figma design
         }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["given_name"]}
         position={{ right: "3.5%", top: `${rows[0]}%` }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["family_name"]}
         position={{ right: "3.5%", top: `${rows[1]}%` }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["birth_date"]}
         position={{ right: "3.5%", top: `${rows[2]}%` }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["document_number"]}
         position={{ right: "3.5%", top: `${rows[3]}%` }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
       <CardClaim
         claim={claims["expiry_date"]}
         position={{ right: "3.5%", top: `${rows[4]}%` }}
-        valuesHidden={valuesHidden}
+        hidden={valuesHidden}
       />
     </View>
   );

@@ -11,7 +11,7 @@ export type ClaimLabelProps = {
   fontSize?: number;
   fontWeight?: IOFontWeight;
   textTransform?: TextStyle["textTransform"];
-  valuesHidden?: boolean;
+  hidden?: boolean;
 };
 
 /**
@@ -23,7 +23,7 @@ export const ClaimLabel: FunctionComponent<
   fontSize = 11,
   fontWeight = "Semibold",
   textTransform = "none",
-  valuesHidden,
+  hidden,
   ...props
 }) => {
   const { width } = useWindowDimensions();
@@ -54,7 +54,7 @@ export const ClaimLabel: FunctionComponent<
         textTransform
       }}
     >
-      {valuesHidden ? HIDDEN_CLAIM_TEXT : props.children}
+      {hidden ? HIDDEN_CLAIM_TEXT : props.children}
     </Text>
   );
 };

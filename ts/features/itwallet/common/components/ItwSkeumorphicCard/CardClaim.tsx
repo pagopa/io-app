@@ -16,7 +16,7 @@ import {
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
-import { ClaimImage } from "./ClaimImage.tsx";
+import { ClaimImage } from "./ClaimImage";
 
 export type PercentPosition = `${number}%`;
 
@@ -50,8 +50,6 @@ export type CardClaimProps = Prettify<
     dimensions?: ClaimDimensions;
     // Optional format for dates contained in the claim component
     dateFormat?: SimpleDateFormat;
-    // If true, the claim value will be hidden
-    valuesHidden?: boolean;
   } & ClaimLabelProps
 >;
 
@@ -65,7 +63,6 @@ const CardClaim = ({
   dimensions,
   testID,
   dateFormat = "DD/MM/YY",
-  valuesHidden,
   ...labelProps
 }: WithTestID<CardClaimProps>) => {
   const claimContent = useMemo(
@@ -76,43 +73,22 @@ const CardClaim = ({
         E.fold(constNull, decoded => {
           if (SimpleDateClaim.is(decoded)) {
             const formattedDate = decoded.toString(dateFormat);
-            return (
-              <ClaimLabel {...labelProps} valuesHidden={valuesHidden}>
-                {formattedDate}
-              </ClaimLabel>
-            );
+            return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
           } else if (ImageClaim.is(decoded)) {
             return (
-              <ClaimImage
-                base64={decoded}
-                width={100}
-                height={100}
-                blur={valuesHidden ? 7 : 0}
-              />
+              <ClaimImage base64={decoded} blur={labelProps.hidden ? 7 : 0} />
             );
           } else if (DrivingPrivilegesClaim.is(decoded)) {
             const privileges = decoded.map(p => p.driving_privilege).join(" ");
-            return (
-              <ClaimLabel {...labelProps} valuesHidden={valuesHidden}>
-                {privileges}
-              </ClaimLabel>
-            );
+            return <ClaimLabel {...labelProps}>{privileges}</ClaimLabel>;
           } else if (PlaceOfBirthClaim.is(decoded)) {
-            return (
-              <ClaimLabel {...labelProps} valuesHidden={valuesHidden}>
-                {decoded.locality}
-              </ClaimLabel>
-            );
+            return <ClaimLabel {...labelProps}>{decoded.locality}</ClaimLabel>;
           } else {
-            return (
-              <ClaimLabel {...labelProps} valuesHidden={valuesHidden}>
-                {decoded}
-              </ClaimLabel>
-            );
+            return <ClaimLabel {...labelProps}>{decoded}</ClaimLabel>;
           }
         })
       ),
-    [claim, labelProps, dateFormat, valuesHidden]
+    [claim, labelProps, dateFormat]
   );
 
   if (!claimContent) {
