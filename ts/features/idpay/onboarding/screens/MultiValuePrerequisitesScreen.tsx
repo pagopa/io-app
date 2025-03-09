@@ -54,17 +54,17 @@ const MultiValuePrerequisiteItemScreenContent = ({
 }: MultiValuePrerequisiteItemScreenContentProps) => {
   const machine = IdPayOnboardingMachineContext.useActorRef();
 
-  const [selectedValue, setSelectedValue] = useState<string | undefined>(
-    undefined
-  );
+  const [selectedValueIndex, setSelectedValueIndex] = useState<
+    number | undefined
+  >(undefined);
 
   const handleContinuePress = () => {
-    if (selectedValue !== undefined) {
+    if (selectedValueIndex !== undefined) {
       machine.send({
         type: "select-multi-consent",
         data: {
           _type: selfDeclaration._type,
-          value: selectedValue,
+          value: selfDeclaration.value[selectedValueIndex],
           code: selfDeclaration.code
         }
       });
@@ -86,20 +86,20 @@ const MultiValuePrerequisiteItemScreenContent = ({
         type: "SingleButton",
         primary: {
           onPress: handleContinuePress,
-          disabled: selectedValue === undefined,
+          disabled: selectedValueIndex === undefined,
           label: I18n.t("global.buttons.continue")
         }
       }}
     >
       <H6>{selfDeclaration.description}</H6>
-      <RadioGroup<string>
+      <RadioGroup<number>
         type="radioListItem"
         items={selfDeclaration.value.map((answer, index) => ({
-          id: index.toString(),
+          id: index,
           value: answer
         }))}
-        selectedItem={selectedValue}
-        onPress={value => setSelectedValue(value)}
+        selectedItem={selectedValueIndex}
+        onPress={value => setSelectedValueIndex(value)}
       />
     </IOScrollViewWithLargeHeader>
   );
