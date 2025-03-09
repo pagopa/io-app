@@ -28,7 +28,8 @@ describe("Test Wallet payment history reducers and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.payments.history).toStrictEqual({
       archive: [],
-      receiptsOpened: new Set()
+      receiptsOpened: new Set(),
+      PDFsOpened: new Set()
     });
     expect(selectPaymentsHistoryArchive(globalState)).toStrictEqual([]);
     expect(selectOngoingPaymentHistory(globalState)).toBeUndefined();
