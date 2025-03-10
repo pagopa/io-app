@@ -22,6 +22,7 @@ export type PaymentAnalyticsData = {
   transactionsHomeLength?: number;
   receiptUser?: PaymentsAnalyticsReceiptUser;
   receiptFirstTimeOpening?: boolean;
+  receiptFirstTimeOpeningPDF?: boolean;
   receiptOrganizationName?: string;
   receiptPayerFiscalCode?: string;
 };
