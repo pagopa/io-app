@@ -9,7 +9,8 @@ import {
   selectWalletCardsByType,
   selectWalletCategories,
   shouldRenderWalletCategorySelector,
-  shouldRenderWalletEmptyStateSelector
+  shouldRenderWalletEmptyStateSelector,
+  shouldRenderItwCardsContainerSelector
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -19,6 +20,9 @@ import {
 } from "../../../../itwallet/common/utils/itwMocksUtils";
 import { ItwLifecycleState } from "../../../../itwallet/lifecycle/store/reducers";
 import * as itwLifecycleSelectors from "../../../../itwallet/lifecycle/store/selectors";
+import * as itwWalletInstanceSelectors from "../../../../itwallet/walletInstance/store/selectors";
+import * as itwSelectors from "../../../../itwallet/common/store/selectors/remoteConfig";
+import * as connectivitySelectors from "../../../../connectivity/store/selectors";
 import { walletCardCategoryFilters } from "../../../types";
 import { WalletCardsState } from "../../reducers/cards";
 
@@ -365,4 +369,129 @@ describe("shouldRenderWalletCategorySelector", () => {
       expect(shouldRenderWalletCategory).toBe(true);
     }
   );
+});
+
+describe("shouldRenderItwCardsContainerSelector", () => {
+  it("should return true when ITW is enabled, lifecycle is valid, and no WI error", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockImplementation(() => true);
+
+    jest
+      .spyOn(
+        itwWalletInstanceSelectors,
+        "itwIsWalletInstanceStatusFailureSelector"
+      )
+      .mockImplementation(() => false);
+
+    jest
+      .spyOn(itwSelectors, "isItwEnabledSelector")
+      .mockImplementation(() => true);
+
+    const shouldRenderItwCardsContainer =
+      shouldRenderItwCardsContainerSelector(globalState);
+    expect(shouldRenderItwCardsContainer).toBe(true);
+  });
+
+  it("should return true when offline, lifecycle is valid, and no WI error, even if ITW is disabled", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockImplementation(() => true);
+
+    jest
+      .spyOn(
+        itwWalletInstanceSelectors,
+        "itwIsWalletInstanceStatusFailureSelector"
+      )
+      .mockImplementation(() => false);
+
+    jest
+      .spyOn(itwSelectors, "isItwEnabledSelector")
+      .mockImplementation(() => false);
+
+    jest
+      .spyOn(connectivitySelectors, "isConnectedSelector")
+      .mockImplementation(() => false);
+
+    const shouldRenderItwCardsContainer =
+      shouldRenderItwCardsContainerSelector(globalState);
+    expect(shouldRenderItwCardsContainer).toBe(true);
+  });
+
+  it("should return false when ITW is disabled and online", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockImplementation(() => true);
+
+    jest
+      .spyOn(
+        itwWalletInstanceSelectors,
+        "itwIsWalletInstanceStatusFailureSelector"
+      )
+      .mockImplementation(() => false);
+
+    jest
+      .spyOn(itwSelectors, "isItwEnabledSelector")
+      .mockImplementation(() => false);
+
+    jest
+      .spyOn(connectivitySelectors, "isConnectedSelector")
+      .mockImplementation(() => true);
+
+    const shouldRenderItwCardsContainer =
+      shouldRenderItwCardsContainerSelector(globalState);
+    expect(shouldRenderItwCardsContainer).toBe(false);
+  });
+
+  it("should return false when lifecycle is not valid", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockImplementation(() => false);
+
+    jest
+      .spyOn(
+        itwWalletInstanceSelectors,
+        "itwIsWalletInstanceStatusFailureSelector"
+      )
+      .mockImplementation(() => false);
+
+    jest
+      .spyOn(itwSelectors, "isItwEnabledSelector")
+      .mockImplementation(() => true);
+
+    const shouldRenderItwCardsContainer =
+      shouldRenderItwCardsContainerSelector(globalState);
+    expect(shouldRenderItwCardsContainer).toBe(false);
+  });
+
+  it("should return false when there is a WI error", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockImplementation(() => true);
+
+    jest
+      .spyOn(
+        itwWalletInstanceSelectors,
+        "itwIsWalletInstanceStatusFailureSelector"
+      )
+      .mockImplementation(() => true);
+
+    jest
+      .spyOn(itwSelectors, "isItwEnabledSelector")
+      .mockImplementation(() => true);
+
+    const shouldRenderItwCardsContainer =
+      shouldRenderItwCardsContainerSelector(globalState);
+    expect(shouldRenderItwCardsContainer).toBe(false);
+  });
 });
