@@ -56,8 +56,15 @@ export const pollForStoreValue = <T>({
  */
 export const serializeFailureReason = (
   failure: IssuanceFailure | CredentialIssuanceFailure | RemoteFailure
-) => ({
-  ...failure,
-  reason:
-    failure.reason instanceof Error ? failure.reason.message : failure.reason
-});
+) => {
+  const reason = !failure.reason
+    ? "Reason not provided"
+    : failure.reason instanceof Error
+    ? failure.reason.message
+    : failure.reason;
+
+  return {
+    ...failure,
+    reason
+  };
+};

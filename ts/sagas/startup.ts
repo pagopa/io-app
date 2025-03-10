@@ -100,6 +100,7 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import {
+  isStartupLoaded,
   StartupStatusEnum,
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
@@ -250,6 +251,18 @@ export function* initializeApplicationSaga(
   const remoteConfig = yield* select(remoteConfigSelector);
   if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
+  }
+
+  /**
+   * To prevent cases where the user goes back online and the saga continues,
+   * we need to explicitly stop the flow at this point.
+   * If `backendStatusLoadSuccess` is dispatched, it means the user is back online,
+   * **BUT** they must continue navigating within the offline flow.
+   * The best way to ensure this is to exit the startup saga at this stage.
+   */
+  const startupStatus = yield* select(isStartupLoaded);
+  if (startupStatus === StartupStatusEnum.OFFLINE) {
+    return;
   }
 
   // Whether the user is currently logged in.

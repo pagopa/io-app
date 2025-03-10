@@ -42,7 +42,10 @@ import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteC
 import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
-import { startupTransientErrorInitialState } from "../../store/reducers/startup";
+import {
+  isStartupLoaded,
+  startupTransientErrorInitialState
+} from "../../store/reducers/startup";
 import {
   isBlockingScreenSelector,
   offlineAccessReasonSelector
@@ -126,6 +129,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -185,6 +190,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -238,6 +245,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -296,6 +305,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -367,6 +378,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -425,6 +438,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)

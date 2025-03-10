@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-rc.8](https://github.com/pagopa/io-app/compare/3.0.0-rc.7...3.0.0-rc.8) (2025-03-06)
+
+
+### Bug Fixes
+
+* [[PE-998](https://pagopa.atlassian.net/browse/PE-998),[PE-999](https://pagopa.atlassian.net/browse/PE-999),[PE-1000](https://pagopa.atlassian.net/browse/PE-1000),[PE-1001](https://pagopa.atlassian.net/browse/PE-1001)] CGN list item `a11y` ([#6773](https://github.com/pagopa/io-app/issues/6773)) ([4653284](https://github.com/pagopa/io-app/commit/4653284bfee25cca814d7989c23b70730e237040))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2022](https://pagopa.atlassian.net/browse/SIW-2022)] Increased serialization for unexpected errors during eID issuance ([#6770](https://github.com/pagopa/io-app/issues/6770)) ([5a91614](https://github.com/pagopa/io-app/commit/5a916149b41e38c0619125efd81f2e56f3d320e0))
+* [[IOBP-1190](https://pagopa.atlassian.net/browse/IOBP-1190)] Add a11y announcement inside the payment method details screen ([#6776](https://github.com/pagopa/io-app/issues/6776)) ([c69bce7](https://github.com/pagopa/io-app/commit/c69bce721e929800a61007de5d58691674b5dd57))
+
+## [3.0.0-rc.7](https://github.com/pagopa/io-app/compare/3.0.0-rc.6...3.0.0-rc.7) (2025-03-05)
+
+
+### Features
+
+* [[IOCOM-2096](https://pagopa.atlassian.net/browse/IOCOM-2096)] New lines on messages' IOMarkdown, when a `br` tag is encountered ([#6783](https://github.com/pagopa/io-app/issues/6783)) ([a3d4e93](https://github.com/pagopa/io-app/commit/a3d4e93e13993628b177589094ec0b50ba65355a))
+* [[IOPID-2797](https://pagopa.atlassian.net/browse/IOPID-2797)] Add `LoginExpirationBanner` events  ([#6786](https://github.com/pagopa/io-app/issues/6786)) ([ae6c924](https://github.com/pagopa/io-app/commit/ae6c92462d32796fce52ad91bd3bc4cd7f7e267f))
+* [[IOPID-2798](https://pagopa.atlassian.net/browse/IOPID-2798)] Add new copy on logout alert if there is an active wallet instance  ([#6772](https://github.com/pagopa/io-app/issues/6772)) ([f591e0a](https://github.com/pagopa/io-app/commit/f591e0a8762193fc88ecd25d8da2629f38dc7ecb))
+
+
+### Chores
+
+* [[IOPLT-940](https://pagopa.atlassian.net/browse/IOPLT-940)] Bumps @pagopa/react-native-zendesk to 0.3.30 to upgrade dependency on android ([#6785](https://github.com/pagopa/io-app/issues/6785)) ([8db6f35](https://github.com/pagopa/io-app/commit/8db6f35eaf49f18270d29f1edcbb245f806e29fb))
+* [[IOPLT-989](https://pagopa.atlassian.net/browse/IOPLT-989)] Remove local `ForceScrollDownView` from the codebase ([#6784](https://github.com/pagopa/io-app/issues/6784)) ([087c872](https://github.com/pagopa/io-app/commit/087c8729bcc67c66e29756752a71683d00f16b72))
+
 ## [3.0.0-rc.6](https://github.com/pagopa/io-app/compare/3.0.0-rc.5...3.0.0-rc.6) (2025-03-04)
 
 

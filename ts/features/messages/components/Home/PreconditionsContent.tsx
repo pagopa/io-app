@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { VSpacer } from "@pagopa/io-app-design-system";
+import { useLinkTo } from "@react-navigation/native";
 import {
   useIODispatch,
   useIOSelector,
@@ -13,7 +14,10 @@ import {
   preconditionsContentSelector
 } from "../../store/reducers/messagePrecondition";
 import I18n from "../../../../i18n";
-import { pnMinAppVersionSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  isIOMarkdownEnabledForMessagesAndServicesSelector,
+  pnMinAppVersionSelector
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
 import {
   errorPreconditionStatusAction,
@@ -23,8 +27,7 @@ import {
 } from "../../store/actions/preconditions";
 import { trackDisclaimerLoadError } from "../../analytics";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../common/store/reducers";
-import { generatePreconditionsRules } from "../../../common/components/IOMarkdown/customRules";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { PreconditionsFeedback } from "./PreconditionsFeedback";
 
 type PreconditionsContentProps = {
@@ -53,9 +56,10 @@ const PreconditionsContentMarkdown = ({
 }: PreconditionsContentProps) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
+  const linkTo = useLinkTo();
 
   const useIOMarkdown = useIOSelector(
-    isIOMarkdownEnabledOnMessagesAndServicesSelector
+    isIOMarkdownEnabledForMessagesAndServicesSelector
   );
   const markdown = useIOSelector(preconditionsContentMarkdownSelector);
 
@@ -86,7 +90,7 @@ const PreconditionsContentMarkdown = ({
         <IOMarkdown
           content={markdown}
           onError={onErrorCallback}
-          rules={generatePreconditionsRules()}
+          rules={generateMessagesAndServicesRules(linkTo)}
         />
       ) : (
         <MessageMarkdown

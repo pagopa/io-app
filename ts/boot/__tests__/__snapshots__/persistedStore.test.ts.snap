@@ -83,9 +83,8 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
   "isCustomEmailChannelEnabled": {
     "kind": "PotNone",
   },
-  "isDesignSystemEnabled": false,
+  "isExperimentalDesignEnabled": false,
   "isFingerprintEnabled": undefined,
-  "isIOMarkdownEnabledOnMessagesAndServices": false,
   "isIdPayTestEnabled": false,
   "isItwOfflineAccessEnabled": false,
   "isMixpanelEnabled": null,

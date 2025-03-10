@@ -5,7 +5,6 @@ import PushNotificationIOS, {
 } from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
 import NotificationsUtils from "react-native-notifications-utils";
-import * as uuid from "uuid";
 import {
   AuthorizationStatus as AS,
   cancellAllLocalNotifications,
@@ -41,7 +40,8 @@ jest.mock("@sentry/react-native", () => ({
 }));
 
 // As above
-jest.mock("uuid");
+const mockUUID = "1896a22a-978b-49e9-856b-1cd74f2de3d8";
+jest.mock("uuid", () => ({ v4: () => mockUUID }));
 
 // eslint-disable-next-line functional/no-let
 let mockisIOS: boolean = false;
@@ -366,9 +366,6 @@ describe("cancellAllLocalNotifications", () => {
 
 describe("generateInstallationId", () => {
   it("should return an UUID without dashes, prefixed with '001'", () => {
-    const originalUUID = "1896a22a-978b-49e9-856b-1cd74f2de3d8";
-    jest.spyOn(uuid, "v4").mockImplementation(_ => originalUUID);
-
     const generatedUUID = generateInstallationId();
 
     const noDashUUID = "1896a22a978b49e9856b1cd74f2de3d8";
