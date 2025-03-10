@@ -1,9 +1,19 @@
 import { getType } from "typesafe-actions";
-import { setIsBlockingScreen } from "../actions";
+import {
+  resetOfflineAccessReason,
+  setIsBlockingScreen,
+  setOfflineAccessReason
+} from "../actions";
 import { Action } from "../../../../store/actions/types";
 
+export enum OfflineAccessReasonEnum {
+  DEVICE_OFFLINE = "DEVICE_OFFLINE", // The device is offline when the app is started
+  SESSION_REFRESH = "SESSION_REFRESH", // Error on session refresh
+  SESSION_EXPIRED = "SESSION_EXPIRED" // Session has expired or user has logged out
+}
 export type IngressScreenState = {
   isBlockingScreen: boolean;
+  offlineAccessReason?: OfflineAccessReasonEnum;
 };
 
 export const initialIngressScreenState: IngressScreenState = {
@@ -19,6 +29,18 @@ export const ingressScreenReducer = (
       return {
         ...state,
         isBlockingScreen: true
+      };
+    case getType(setOfflineAccessReason):
+      return {
+        ...state,
+        offlineAccessReason: action.payload
+      };
+    // reset value of offlineAccessReason when user back online
+    // Evaluate whether this data reset is needed
+    case getType(resetOfflineAccessReason):
+      return {
+        ...state,
+        offlineAccessReason: undefined
       };
     default:
       return state;
