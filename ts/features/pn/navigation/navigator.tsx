@@ -1,7 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
+import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
+import { PNActivationBannerFlowScreen } from "../screens/PnReminderBannerFlow";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -20,6 +21,10 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.CANCELLED_MESSAGE_PAID_PAYMENT}
       component={PaidPaymentScreen}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.ACTIVATION_BANNER_FLOW}
+      component={PNActivationBannerFlowScreen}
     />
   </Stack.Navigator>
 );
