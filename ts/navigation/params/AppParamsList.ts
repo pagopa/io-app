@@ -66,7 +66,6 @@ import { ProfileParamsList } from "./ProfileParamsList";
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
   [ROUTES.UNSUPPORTED_DEVICE]: undefined;
-  [ROUTES.NO_CONNECTION]: undefined;
   [ROUTES.BACKGROUND]: undefined;
   [ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
   [ROUTES.CHECK_EMAIL]: NavigatorScreenParams<CheckEmailParamsList>;
@@ -87,6 +86,7 @@ export type AppParamsList = {
   [CGN_ROUTES.EYCA.ACTIVATION
     .MAIN]: NavigatorScreenParams<CgnEYCAActivationParamsList>;
 
+  [ROUTES.OFFLINE_FAILURE]: undefined;
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: undefined;
   [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>;
   [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;

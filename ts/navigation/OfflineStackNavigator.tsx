@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { NoConnectionScreen } from "../features/connectivity/screen/NoConnectionScreen";
+import { OfflineFailureScreen } from "../components/error/OfflineFailure";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { isGestureEnabled } from "../utils/navigation";
@@ -23,9 +23,9 @@ const OfflineStackNavigator = () => (
     />
 
     <Stack.Screen
-      name={ROUTES.NO_CONNECTION}
+      name={ROUTES.OFFLINE_FAILURE}
       options={{ headerShown: false }}
-      component={NoConnectionScreen}
+      component={OfflineFailureScreen}
     />
   </Stack.Navigator>
 );

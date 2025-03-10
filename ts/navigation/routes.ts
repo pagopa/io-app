@@ -5,9 +5,6 @@ const ROUTES = {
   // UNSUPPORTED_DEVICE
   UNSUPPORTED_DEVICE: "UNSUPPORTED_DEVICE",
 
-  // No internet connection
-  NO_CONNECTION: "NO_CONNECTION",
-
   // Authentication
   AUTHENTICATION: "AUTHENTICATION",
   AUTHENTICATION_LANDING: "AUTHENTICATION_LANDING",
@@ -120,6 +117,9 @@ const ROUTES = {
 
   // Used when the App is in background
   BACKGROUND: "BACKGROUND",
+
+  // No internet connection or missing session
+  OFFLINE_FAILURE: "OFFLINE_FAILURE",
 
   WORKUNIT_GENERIC_FAILURE: "WORKUNIT_GENERIC_FAILURE"
 } as const;

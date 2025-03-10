@@ -252,7 +252,7 @@
       "noResultsFound": "There are no results for this search: try something else.",
       "noResultsTitle": "No results."
     },
-    "noConnection": {
+    "offline": {
       "screen": {
         "title": "Nessuna connessione",
         "subtitle": "Collegati a internet per continuare ad usare tutti i servizi di app IO.",

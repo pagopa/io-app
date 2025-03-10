@@ -7,7 +7,7 @@ import { selectIsLoading } from "../../machine/eid/selectors";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { useConnectivityGuard } from "../../../connectivity/hooks/useConnectivityGuard";
+import { useOfflineGuard } from "../../../../hooks/useOfflineGuard";
 
 const RevocationLoadingScreen = () => {
   useItwDisableGestureNavigation();
@@ -32,9 +32,9 @@ export const ItwLifecycleWalletRevocationScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
-  const handleRevokeWalletInstance = useConnectivityGuard(
+  const handleRevokeWalletInstance = useOfflineGuard(
     () => machineRef.send({ type: "revoke-wallet-instance" }),
-    "toast"
+    { type: "toast" }
   );
 
   if (isLoading) {
