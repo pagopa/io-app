@@ -15,17 +15,23 @@ import { isConnectedSelector } from "../store/selectors";
 export type ConnectivityGuardType = "screen" | "toast";
 
 /**
- * A hook that executes a function if there is connectivity, otherwise navigates to NoConnectivityScreen.
- * Use this hook to wrap functions that trigger a navigation to screens that require an internet
- * connection to work.
+ * A hook that checks connectivity before executing a function.
+ * If there is no connectivity, it either navigates to NoConnectivityScreen or shows a toast
+ * based on the specified guard type.
  *
  * @example
  * ```typescript
- * const yourWrappedFunction = useConnectivityGuard(yourFunction);
+ * // Navigate to NO_CONNECTION screen when offline
+ * const navigateWithConnectivity = useConnectivityGuard(navigateToProtectedScreen);
+ *
+ * // Show toast when offline
+ * const fetchWithConnectivity = useConnectivityGuard(fetchData, "toast");
  * ```
  *
  * @param fn The function to execute when there is connectivity
- * @returns A wrapped function that either executes the provided function or navigates to NoConnectivityScreen
+ * @param type The type of guard to apply: "screen" (default) or "toast"
+ * @returns A wrapped function that either executes the provided function (when online)
+ *          or performs the fallback action based on the specified guard type (when offline)
  */
 export const useConnectivityGuard = (
   fn: (...args: Array<any>) => void | Promise<void>,
