@@ -6,13 +6,13 @@ import {
 import { StatusBar } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
-import { startApplicationInitialization } from "../../../../store/actions/ap
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { resetOfflineAccessReason } from "../../../ingress/store/actions";
+import { startApplicationInitialization } from "../../../../store/actions/application";
 
 /**
  * HOC that wraps a screen with an Alert which informs the user that the app is offline
