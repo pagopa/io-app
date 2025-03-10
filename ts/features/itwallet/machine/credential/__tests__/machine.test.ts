@@ -210,7 +210,7 @@ describe("itwCredentialIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
     actor.send({
       type: "select-credential",
@@ -354,7 +354,7 @@ describe("itwCredentialIssuanceMachine", () => {
       ...InitialContext,
       walletInstanceAttestation: T_WIA
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
     actor.send({
       type: "select-credential",
@@ -416,9 +416,7 @@ describe("itwCredentialIssuanceMachine", () => {
       type: "close"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "DisplayingCredentialPreview"
-    );
+    expect(actor.getSnapshot().value).toStrictEqual("Completed");
     expect(storeCredential).toHaveBeenCalledTimes(0);
     expect(navigateToWallet).toHaveBeenCalledTimes(0);
     expect(closeIssuance).toHaveBeenCalledTimes(1);
@@ -431,7 +429,7 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
     /**
      * Initialize wallet and start credential issuance
@@ -486,7 +484,7 @@ describe("itwCredentialIssuanceMachine", () => {
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
     /**
      * Initialize wallet and start credential issuance
@@ -548,7 +546,7 @@ describe("itwCredentialIssuanceMachine", () => {
       type: "close"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual("DisplayingTrustIssuer");
+    expect(actor.getSnapshot().value).toStrictEqual("Completed");
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
 
