@@ -6,18 +6,18 @@ import ROUTES from "../../../navigation/routes";
 import { useIOSelector } from "../../../store/hooks";
 import { isConnectedSelector } from "../store/selectors";
 
-type ConnectivityCheckFunction = (...args: Array<any>) => void | Promise<void>;
-
 /**
  * The type of connectivity guard to use.
- * - `screen`: Navigate to the NoConnectivityScreen - Use this if the wrapped function triggers a navigation to a screen that requires an internet connection to work.
+ * - `screen`: Navigate to the NoConnectivityScreen - Use this if the wrapped function triggers
+ *    a navigation to a screen that requires an internet connection to work.
  * - `toast`: Show a toast - Use this if the wrapped function trigger a network request
  */
 export type ConnectivityGuardType = "screen" | "toast";
 
 /**
  * A hook that executes a function if there is connectivity, otherwise navigates to NoConnectivityScreen.
- * Use this hook to wrap functions that trigger a navigation to screens that require an internet connection to work.
+ * Use this hook to wrap functions that trigger a navigation to screens that require an internet
+ * connection to work.
  *
  * @example
  * ```typescript
@@ -28,7 +28,7 @@ export type ConnectivityGuardType = "screen" | "toast";
  * @returns A wrapped function that either executes the provided function or navigates to NoConnectivityScreen
  */
 export const useConnectivityGuard = (
-  fn: ConnectivityCheckFunction,
+  fn: (...args: Array<any>) => void | Promise<void>,
   type: ConnectivityGuardType = "screen"
 ) => {
   const isConnected = useIOSelector(isConnectedSelector);
