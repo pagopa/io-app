@@ -105,6 +105,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
+import { handleWalletCredentialsRehydration } from "../features/itwallet/credentials/saga/handleWalletCredentialsRehydration";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -225,6 +226,9 @@ export function* initializeApplicationSaga(
     return;
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
+
+  // Rehydrate wallet with ITW credentials
+  yield* fork(handleWalletCredentialsRehydration);
 
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF

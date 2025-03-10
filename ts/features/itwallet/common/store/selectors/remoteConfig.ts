@@ -17,9 +17,7 @@ const itwRemoteConfigSelector = (state: GlobalState) =>
   );
 
 /**
- * Return the remote config about IT-WALLET enabled/disabled
- * if there is no data or the local Feature Flag is disabled,
- * false is the default value -> (IT-WALLET disabled)
+ * Returns the remote config for IT-WALLET
  */
 export const isItwEnabledSelector = createSelector(
   itwRemoteConfigSelector,
