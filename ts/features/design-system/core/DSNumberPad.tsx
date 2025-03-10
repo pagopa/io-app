@@ -21,7 +21,7 @@ const PIN_LENGTH = 6;
 
 export const DSNumberPad = () => {
   const [value, setValue] = useState("");
-  const [darkBackground, setDarkBackground] = useState(false);
+  const [primaryBackground, setPrimaryBackground] = useState(false);
 
   const insets = useSafeAreaInsets();
 
@@ -38,12 +38,12 @@ export const DSNumberPad = () => {
   useEffect(() => {
     navigation.setOptions({
       headerStyle: {
-        backgroundColor: darkBackground
+        backgroundColor: primaryBackground
           ? IOColors["blueIO-500"]
           : IOColors.white
       }
     });
-  }, [darkBackground, navigation]);
+  }, [primaryBackground, navigation]);
   return (
     <View
       style={[
@@ -55,7 +55,7 @@ export const DSNumberPad = () => {
           paddingHorizontal: IOVisualCostants.appMarginDefault
         },
         {
-          backgroundColor: darkBackground
+          backgroundColor: primaryBackground
             ? IOColors["blueIO-500"]
             : IOColors.white
         }
@@ -72,17 +72,17 @@ export const DSNumberPad = () => {
       >
         <ListItemSwitch
           label="Attiva sfondo blu"
-          value={darkBackground}
-          onSwitchValueChange={() => setDarkBackground(v => !v)}
+          value={primaryBackground}
+          onSwitchValueChange={() => setPrimaryBackground(v => !v)}
         />
       </View>
       <View style={{ alignItems: "center" }}>
         <VSpacer size={16} />
         <Pictogram name="key" size={64} />
         <VSpacer size={8} />
-        <H2 color={darkBackground ? "white" : "black"}>Ciao {`{name}`},</H2>
+        <H2 color={primaryBackground ? "white" : "black"}>Ciao {`{name}`},</H2>
         <VSpacer size={8} />
-        <Body color={darkBackground ? "white" : "black"}>
+        <Body color={primaryBackground ? "white" : "black"}>
           {"per accedere usa il volto o il codice di sblocco"}
         </Body>
       </View>
@@ -98,7 +98,7 @@ export const DSNumberPad = () => {
         >
           <BodySmall
             weight="Semibold"
-            color={darkBackground ? "white" : "black"}
+            color={primaryBackground ? "white" : "black"}
           >
             {value}
           </BodySmall>
@@ -106,7 +106,7 @@ export const DSNumberPad = () => {
         <CodeInput
           value={value}
           length={PIN_LENGTH}
-          variant={darkBackground ? "light" : "dark"}
+          variant={primaryBackground ? "primary" : "neutral"}
           onValueChange={setValue}
           onValidate={v => v === "123456"}
         />
@@ -117,7 +117,7 @@ export const DSNumberPad = () => {
           deleteAccessibilityLabel="Delete"
           onDeletePress={onDeletePress}
           onNumberPress={onValueChange}
-          variant={darkBackground ? "dark" : "light"}
+          variant={primaryBackground ? "primary" : "neutral"}
           biometricType="FACE_ID"
           biometricAccessibilityLabel="Face ID"
           onBiometricPress={() => Alert.alert("biometric")}
@@ -125,7 +125,7 @@ export const DSNumberPad = () => {
         <VSpacer size={32} />
         <View style={{ alignSelf: "center" }}>
           <ButtonLink
-            color={darkBackground ? "contrast" : "primary"}
+            color={primaryBackground ? "contrast" : "primary"}
             onPress={() => Alert.alert("Forgot unlock code")}
             label="Hai dimenticato il codice di sblocco?"
           />

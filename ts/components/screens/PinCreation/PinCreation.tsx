@@ -250,7 +250,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
           <NumberPad
             onNumberPress={handlePinChange}
             onDeletePress={onDeletePress}
-            variant="light"
+            variant="neutral"
             deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
           />
           <VSpacer />

@@ -6,7 +6,7 @@ import {
   NumberPad,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useCallback, useState } from "react";
+import { ComponentProps, useCallback, useState } from "react";
 import { View } from "react-native";
 import I18n from "../../../i18n";
 import { isDevEnv } from "../../../utils/environment";
@@ -29,7 +29,7 @@ type BiometricConfigType =
 type IdentificationNumberPadProps = {
   pin: string;
   pinValidation: (success: boolean) => void;
-  numberPadVariant: "light" | "dark";
+  numberPadVariant: ComponentProps<typeof NumberPad>["variant"];
   biometricsConfig: BiometricConfigType;
 };
 
@@ -78,7 +78,7 @@ export const IdentificationNumberPad = (
         <CodeInput
           value={value}
           length={PIN_LENGTH}
-          variant={"light"}
+          variant={numberPadVariant}
           onValueChange={onCodeInputValueChange}
           onValidate={onPinValidated}
         />

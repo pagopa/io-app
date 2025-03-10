@@ -1,7 +1,6 @@
 import {
   ContentWrapper,
   FeatureInfo,
-  FooterActions,
   ForceScrollDownView,
   H2,
   ListItemHeader,
@@ -27,16 +26,18 @@ import {
   trackItwExit,
   trackOpenItwTos
 } from "../../analytics";
+import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import { WellKnownClaim, parseClaims } from "../../common/utils/itwClaimsUtils";
+import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import {
   RequestObject,
   StoredCredential
 } from "../../common/utils/itwTypesUtils";
+import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import {
   selectCredentialTypeOption,
@@ -46,8 +47,6 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
-import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
@@ -140,7 +139,23 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   };
 
   return (
-    <ForceScrollDownView onThresholdCrossed={trackScrollToBottom}>
+    <ForceScrollDownView
+      onThresholdCrossed={trackScrollToBottom}
+      footerActions={{
+        actions: {
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t("global.buttons.continue"),
+            onPress: handleContinuePress,
+            loading: isIssuing
+          },
+          secondary: {
+            label: I18n.t("global.buttons.cancel"),
+            onPress: dismissDialog.show
+          }
+        }
+      }}
+    >
       <ContentWrapper>
         <VSpacer size={24} />
         <ItwDataExchangeIcons
@@ -191,21 +206,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           rules={generateLinkRuleWithCallback(trackOpenItwTos)}
         />
       </ContentWrapper>
-      <FooterActions
-        fixed={false}
-        actions={{
-          type: "TwoButtons",
-          primary: {
-            label: I18n.t("global.buttons.continue"),
-            onPress: handleContinuePress,
-            loading: isIssuing
-          },
-          secondary: {
-            label: I18n.t("global.buttons.cancel"),
-            onPress: dismissDialog.show
-          }
-        }}
-      />
     </ForceScrollDownView>
   );
 };
