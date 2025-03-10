@@ -2,6 +2,20 @@ import { render } from "@testing-library/react-native";
 import { ItwStoredCredentialsMocks } from "../../../utils/itwMocksUtils";
 import { CardData } from "../CardData";
 
+jest.mock("@shopify/react-native-skia", () => {
+  return {
+    Skia: {
+      Data: {
+        fromBase64: jest.fn()
+      },
+      Image: {
+        MakeImageFromEncoded: jest.fn()
+      }
+    },
+    Canvas: jest.fn()
+  };
+});
+
 describe("CardData", () => {
   it("should match snapshot for MDL front data", () => {
     const component = render(
