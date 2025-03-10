@@ -18,7 +18,14 @@ import {
   useRef,
   useState
 } from "react";
-import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
+import {
+  Alert,
+  FlatList,
+  ListRenderItemInfo,
+  Platform,
+  ScrollView
+} from "react-native";
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import AppVersion from "../../components/AppVersion";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../components/ui/LightModal";
@@ -31,6 +38,12 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
 import { itwLifecycleIsOperationalOrValid } from "../../features/itwallet/lifecycle/store/selectors";
+import {
+  appFeedbackEnabledSelector,
+  appFeedbackUriConfigSelector
+} from "../../store/reducers/backendStatus/remoteConfig";
+import { requestAppReview } from "../../features/appReviews/utils/storeReview";
+import { openWebUrl } from "../../utils/url";
 import DeveloperModeSection from "./DeveloperModeSection";
 import { ProfileMainScreenTopBanner } from "./ProfileMainScreenTopBanner";
 
@@ -55,6 +68,8 @@ const ProfileMainScreenFC = () => {
   const navigation = useIONavigation();
   const { show } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
+  const appFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
+  const surveyUrl = useIOSelector(appFeedbackUriConfigSelector("general"));
   const selectItwLifecycleIsOperationalOrValid = useIOSelector(
     itwLifecycleIsOperationalOrValid
   );
@@ -213,6 +228,8 @@ const ProfileMainScreenFC = () => {
   );
 
   const logoutLabel = I18n.t("profile.logout.menulabel");
+  const reviewLabel = I18n.t("profile.appFeedback.reviewLabel");
+  const feedbackLabel = I18n.t("profile.appFeedback.feedbackLabel");
 
   return (
     <>
@@ -230,6 +247,32 @@ const ProfileMainScreenFC = () => {
       />
       <VSpacer size={8} />
       <ContentWrapper>
+        {appFeedbackEnabled && surveyUrl && (
+          <ListItemAction
+            label={feedbackLabel}
+            icon="message"
+            variant="primary"
+            testID="feedbackButton"
+            onPress={() => {
+              void openAuthenticationSession(surveyUrl, "");
+            }}
+            accessibilityLabel={feedbackLabel}
+          />
+        )}
+        <ListItemAction
+          label={reviewLabel}
+          icon="starEmpty"
+          variant="primary"
+          testID="reviewButton"
+          onPress={Platform.select({
+            ios: () =>
+              openWebUrl(
+                "https://apps.apple.com/app/id1501681835?action=write-review"
+              ),
+            default: requestAppReview
+          })}
+          accessibilityLabel={reviewLabel}
+        />
         <ListItemAction
           label={logoutLabel}
           icon="logout"
