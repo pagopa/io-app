@@ -33,8 +33,6 @@ import { IdPayUnsubscriptionNavigator } from "../features/idpay/unsubscription/n
 import { IdPayUnsubscriptionRoutes } from "../features/idpay/unsubscription/navigation/routes";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
-import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -63,6 +61,8 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
+import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
+import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
