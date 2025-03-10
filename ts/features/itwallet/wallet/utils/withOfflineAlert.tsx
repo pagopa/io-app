@@ -1,8 +1,10 @@
 import {
   AlertEdgeToEdgeWrapper,
   FooterActions,
-  useIOToast
+  useIOToast,
+  IOColors
 } from "@pagopa/io-app-design-system";
+import { StatusBar } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
 import { startApplicationInitialization } from "../../../../store/actions/application";
@@ -74,6 +76,10 @@ export const withOfflineAlert =
           onPress: offlineInfoModal.present
         }}
       >
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor={IOColors["info-100"]}
+        />
         <Screen {...props} />
         {offlineInfoModal.bottomSheet}
       </AlertEdgeToEdgeWrapper>

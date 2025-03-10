@@ -1,10 +1,13 @@
-import { FooterActions, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterActions,
+  ForceScrollDownView,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { ForceScrollDownView } from "../../../../components/ForceScrollDownView";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";

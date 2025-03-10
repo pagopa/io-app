@@ -56,12 +56,10 @@ import OfflineStackNavigator from "./OfflineStackNavigator";
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
 >[0];
-const isMainNavigatorReady = (state: OnStateChangeStateType) =>
-  (state &&
-    state.routes &&
-    state.routes.length > 0 &&
-    state.routes[0].name === ROUTES.MAIN) ||
-  (state && state.routes[0].name === ITW_ROUTES.MAIN);
+export const isMainNavigatorReady = (state: OnStateChangeStateType) => {
+  const routeName = state?.routes?.[0]?.name;
+  return routeName === ROUTES.MAIN || routeName === ITW_ROUTES.MAIN;
+};
 
 export const AppStackNavigator = (): ReactElement => {
   // This hook is used since we are in a child of the Context Provider

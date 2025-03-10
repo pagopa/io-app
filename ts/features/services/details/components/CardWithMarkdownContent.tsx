@@ -11,7 +11,7 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { useIOSelector } from "../../../../store/hooks";
 import { Markdown } from "../../../../components/ui/Markdown/Markdown";
-import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../../common/store/reducers";
+import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 const CSS_STYLE = `
   body {
@@ -56,7 +56,7 @@ const CardWithMarkdownContent = memo(
     const linkTo = useLinkTo();
 
     const isIOMarkdownEnabledOnMessagesAndServices = useIOSelector(
-      isIOMarkdownEnabledOnMessagesAndServicesSelector
+      isIOMarkdownEnabledForMessagesAndServicesSelector
     );
 
     const renderContent = () => {
