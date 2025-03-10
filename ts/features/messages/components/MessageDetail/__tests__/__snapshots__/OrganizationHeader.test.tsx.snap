@@ -372,6 +372,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                             #### organization_name ####
                           </Text>
                           <Text
+                            accessibilityRole="button"
                             allowFontScaling={true}
                             dynamicTypeRamp="footnote"
                             maxFontSizeMultiplier={1.5}
