@@ -960,19 +960,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -990,9 +986,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -1018,6 +1014,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -2379,19 +2382,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -2409,9 +2408,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -2437,6 +2436,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -3799,19 +3805,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -3829,9 +3831,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -3857,6 +3859,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -5219,19 +5228,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -5249,9 +5254,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -5277,6 +5282,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -6931,19 +6943,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -6961,9 +6969,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -6989,6 +6997,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
