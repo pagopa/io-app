@@ -4,9 +4,13 @@ import {
 } from "@pagopa/io-app-design-system";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
-import { startApplicationInitialization } from "../../../../store/actions/application";
-import { useIODispatch } from "../../../../store/hooks";
+import { startApplicationInitialization } from "../../../../store/actions/ap
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { isConnectedSelector } from "../../../connectivity/store/selectors";
+import { startupLoadSuccess } from "../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../store/reducers/startup";
+import { resetOfflineAccessReason } from "../../../ingress/store/actions";
 
 /**
  * HOC that wraps a screen with an Alert which informs the user that the app is offline
@@ -17,9 +21,19 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 export const withOfflineAlert =
   (Screen: React.ComponentType<any>) => (props: any) => {
     const dispatch = useIODispatch();
+    const isConnected = useIOSelector(isConnectedSelector);
 
     const handleAppRestart = () => {
-      dispatch(startApplicationInitialization());
+      if (isConnected) {
+        // Reset the offline access reason.
+        // Since this state is `undefined` when the user is online,
+        // the startup saga will proceed without blocking.
+        dispatch(resetOfflineAccessReason());
+        // Dispatch this action to mount the correct navigator.
+        dispatch(startupLoadSuccess(StartupStatusEnum.INITIAL));
+        // restart startup saga
+        dispatch(startApplicationInitialization());
+      }
     };
 
     const offlineInfoModal = useIOBottomSheetModal({
