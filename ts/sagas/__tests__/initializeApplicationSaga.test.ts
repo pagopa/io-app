@@ -42,7 +42,10 @@ import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteC
 import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
-import { startupTransientErrorInitialState } from "../../store/reducers/startup";
+import {
+  isStartupLoaded,
+  startupTransientErrorInitialState
+} from "../../store/reducers/startup";
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
 import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
 import { trackKeychainFailures } from "../../utils/analytics";
@@ -118,6 +121,8 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -173,6 +178,8 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -222,6 +229,8 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -276,6 +285,8 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -343,6 +354,8 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -397,6 +410,8 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)

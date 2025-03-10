@@ -1487,6 +1487,9 @@
             }
         },
         "confirm": {
+            "a11y": {
+                "announce": "Riepilogo del tuo pagamento"
+            },
             "totalAmount": "Totale da pagare",
             "pay": "Paga",
             "payWith": "Paga con",
@@ -1988,6 +1991,9 @@
             }
         },
         "firstTransactionSummary": {
+            "a11y": {
+                "announce": "Riepilogo dati avviso"
+            },
             "loading": "Recupero delle informazioni in corso",
             "title": "Dati del pagamento",
             "amount": "Importo",
@@ -2384,7 +2390,13 @@
                 "sortBottomSheet": {
                     "default": "Default",
                     "amount": "Per importo",
-                    "name": "Per nome"
+                    "name": "Per nome",
+                    "a11y": {
+                      "default": "Ordina i gestori in ordine predefinito",
+                      "amount": "Ordina i gestori per importo",
+                      "name": "Ordina i gestori per nome",
+                      "announce": "Seleziona il criterio di ordinamento dei gestori"
+                    }
                 }
             },
             "failure": {
@@ -2957,6 +2969,7 @@
         "title": "Ciao {{name}}!",
         "titleProfileName": "Ciao {{profileName}}!",
         "titleValidation": "Autorizza l'operazione",
+        "titleOffline": "Ciao!",
         "logout": "Esci",
         "logoutProfileName": "Non sei {{profileName}}?",
         "logoutDescription": "Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.",
@@ -5054,14 +5067,10 @@
                 }
             },
             "multiPrerequisites": {
-                "header": "Dichiari inoltre di:",
-                "body": "L’autodichiarazione è resa ai sensi del",
-                "link": "Dpr 28 dicembre 2000 n. 445 art 46 e 47"
+                "header": "Dichiari inoltre di:"
             },
             "boolPrerequisites": {
-                "header": "Per aderire, dichiari di:",
-                "body": "L’autodichiarazione è resa ai sensi del",
-                "link": "Dpr 28 dicembre 2000 n. 445 art 46 e 47"
+                "header": "Per aderire, dichiari di:"
             }
         },
         "configuration": {
