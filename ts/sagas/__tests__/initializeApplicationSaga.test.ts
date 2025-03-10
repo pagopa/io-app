@@ -46,10 +46,7 @@ import {
   isStartupLoaded,
   startupTransientErrorInitialState
 } from "../../store/reducers/startup";
-import {
-  isBlockingScreenSelector,
-  offlineAccessReasonSelector
-} from "../../features/ingress/store/selectors";
+import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
 import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
 import { trackKeychainFailures } from "../../utils/analytics";
 import { checkSession } from "../startup/watchCheckSessionSaga";
@@ -125,8 +122,6 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .fork(handleWalletCredentialsRehydration)
       .next()
-      .select(offlineAccessReasonSelector)
-      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
       .select(isStartupLoaded)
@@ -186,8 +181,6 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .fork(handleWalletCredentialsRehydration)
       .next()
-      .select(offlineAccessReasonSelector)
-      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
       .select(isStartupLoaded)
@@ -240,8 +233,6 @@ describe("initializeApplicationSaga", () => {
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
       .fork(handleWalletCredentialsRehydration)
-      .next()
-      .select(offlineAccessReasonSelector)
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
@@ -300,8 +291,6 @@ describe("initializeApplicationSaga", () => {
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
       .fork(handleWalletCredentialsRehydration)
-      .next()
-      .select(offlineAccessReasonSelector)
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
@@ -374,8 +363,6 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .fork(handleWalletCredentialsRehydration)
       .next()
-      .select(offlineAccessReasonSelector)
-      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
       .select(isStartupLoaded)
@@ -433,8 +420,6 @@ describe("initializeApplicationSaga", () => {
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
       .fork(handleWalletCredentialsRehydration)
-      .next()
-      .select(offlineAccessReasonSelector)
       .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
