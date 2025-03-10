@@ -1,5 +1,5 @@
 import { ButtonLink } from "@pagopa/io-app-design-system";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Text, View } from "react-native";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import {
@@ -10,8 +10,7 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { pnMessagingServiceIdSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { useServicePreferenceByChannel } from "../../services/details/hooks/useServicePreference";
-import { loadServicePreference } from "../../services/details/store/actions/preference";
+import { usePnPreferencesFetcher } from "../hooks/usePnPreferencesFetcher";
 import { pnActivationUpsert } from "../store/actions";
 import { isLoadingPnActivationSelector } from "../store/reducers/activation";
 
@@ -35,24 +34,13 @@ export const PNActivationBannerFlowScreen = () => {
 };
 
 const PNFlowScreenPicker = ({ serviceId }: { serviceId: ServiceId }) => {
-  const dispatch = useIODispatch();
   const [flowState, setFlowState] = useState<PnBannerFlowStateKey>(
     pnBannerFlowStateEnum.WAITING_USER_INPUT
   );
-  useEffect(() => {
-    dispatch(loadServicePreference.request(serviceId));
-  }, [dispatch, serviceId]);
 
-  // useServicePreferenceByChannel always returns data based on the last loaded service,
-  // so it's crucial that the request is always called on first component render, to clear dirty data
+  const { isError, isLoading, isEnabled } = usePnPreferencesFetcher(serviceId);
 
-  const {
-    isErrorServicePreferenceByChannel,
-    isLoadingServicePreferenceByChannel,
-    servicePreferenceByChannel
-  } = useServicePreferenceByChannel("inbox");
-
-  if (isLoadingServicePreferenceByChannel) {
+  if (isLoading) {
     return <LoadingScreen loadingState="LOADING-DATA" />;
   }
 
@@ -65,10 +53,10 @@ const PNFlowScreenPicker = ({ serviceId }: { serviceId: ServiceId }) => {
     case pnBannerFlowStateEnum.SUCCESS_ACTIVATION:
       return <SuccessScreen flowState={flowState} />;
     case pnBannerFlowStateEnum.WAITING_USER_INPUT:
-      if (servicePreferenceByChannel === true) {
+      if (isEnabled) {
         setFlowState(pnBannerFlowStateEnum.ALREADY_ACTIVE);
       }
-      if (isErrorServicePreferenceByChannel) {
+      if (isError) {
         setFlowState(pnBannerFlowStateEnum.FAILURE_DETAILS_FETCH);
       }
       return <PnActivationInputScreen setFlowState={setFlowState} />;

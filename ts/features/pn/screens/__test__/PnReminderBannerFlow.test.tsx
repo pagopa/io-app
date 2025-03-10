@@ -11,7 +11,6 @@ import { appReducer } from "../../../../store/reducers";
 import * as SID_SELECTOR from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import * as PREF_BY_CHANNEL from "../../../services/details/hooks/useServicePreference";
 import PN_ROUTES from "../../navigation/routes";
 import { pnActivationUpsert } from "../../store/actions";
 import * as LOADING_PN_ACTIVATION from "../../store/reducers/activation";
@@ -19,6 +18,7 @@ import {
   PNActivationBannerFlowScreen,
   pnBannerFlowStateEnum
 } from "../PnReminderBannerFlow";
+import * as PREFERENCES_FETCHER from "../../hooks/usePnPreferencesFetcher";
 
 const WAITING_USER_INPUT_BASE_MOCKS = () => {
   jest
@@ -28,11 +28,11 @@ const WAITING_USER_INPUT_BASE_MOCKS = () => {
     .spyOn(LOADING_PN_ACTIVATION, "isLoadingPnActivationSelector")
     .mockImplementation(() => false);
   jest
-    .spyOn(PREF_BY_CHANNEL, "useServicePreferenceByChannel")
+    .spyOn(PREFERENCES_FETCHER, "usePnPreferencesFetcher")
     .mockImplementation(() => ({
-      isErrorServicePreferenceByChannel: false,
-      isLoadingServicePreferenceByChannel: false,
-      servicePreferenceByChannel: false
+      isError: false,
+      isLoading: false,
+      isEnabled: false
     }));
 };
 
@@ -87,11 +87,11 @@ describe("error screens", () => {
           error === "missing_sid" ? undefined : ("SOME_SID" as ServiceId)
         );
       jest
-        .spyOn(PREF_BY_CHANNEL, "useServicePreferenceByChannel")
+        .spyOn(PREFERENCES_FETCHER, "usePnPreferencesFetcher")
         .mockImplementation(() => ({
-          isErrorServicePreferenceByChannel: error === "preferences",
-          isLoadingServicePreferenceByChannel: false,
-          servicePreferenceByChannel: false
+          isError: error === "preferences",
+          isLoading: false,
+          isEnabled: false
         }));
       const component = renderComponent();
       expect(component.toJSON()).toMatchSnapshot();
@@ -134,12 +134,11 @@ describe("loading screens + error interop", () => {
             () => loadingState === "activation" || loadingState === "both"
           );
         jest
-          .spyOn(PREF_BY_CHANNEL, "useServicePreferenceByChannel")
+          .spyOn(PREFERENCES_FETCHER, "usePnPreferencesFetcher")
           .mockImplementation(() => ({
-            isErrorServicePreferenceByChannel: isPreferenceError,
-            isLoadingServicePreferenceByChannel:
-              loadingState === "data" || loadingState === "both",
-            servicePreferenceByChannel: false
+            isError: isPreferenceError,
+            isLoading: loadingState === "data" || loadingState === "both",
+            isEnabled: false
           }));
 
         const component = renderComponent();
