@@ -55,6 +55,5 @@ export type DesignSystemParamsList = {
     .route]: undefined;
   [DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.TEXT_FIELDS.route]: undefined;
-  [DESIGN_SYSTEM_ROUTES.LEGACY.LIST_ITEMS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.route]: undefined;
 };
