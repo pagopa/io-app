@@ -1,3 +1,4 @@
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
@@ -430,19 +431,37 @@ export const appFeedbackEnabledSelector = (state: GlobalState) =>
   );
 
 /**
- * The 'disabledForMessagesAndServices' on the 'ioMarkdown' is used to
- * remotely disable the IO Markdown feature for messages and services,
- * bypassing the local feature flag (in the relative selector).
- * @param state The global redux state
- * @returns true if IOMarkdown has to be disabled for messages and services
+ * This selector is used to know if IOMarkdown is enabled on Messages and Services
+ *
+ * @returns true (enabled) if:
+ * - the IOMarkdown configuration is missing
+ * - the min_app_version parameter is missing
+ * - current app version is greater than or equal to the min app version
+ * false (disabled) if:
+ * - CDN data is not available
+ * - current app version is lower than the min app version
+ * - min app version is set to 0
  */
-export const isIOMarkdownDisabledForMessagesAndServices = (
+export const isIOMarkdownEnabledForMessagesAndServicesSelector = (
   state: GlobalState
-): boolean =>
+) =>
   pipe(
     state,
     remoteConfigSelector,
-    O.chainNullableK(config => config.ioMarkdown),
-    O.chainNullableK(ioMarkdown => ioMarkdown.disabledForMessagesAndServices),
-    O.getOrElse(() => false)
+    O.fold(
+      () => false, // CDN data not available, IOMarkdown is disabled
+      remoteConfig =>
+        pipe(
+          remoteConfig.ioMarkdown?.min_app_version != null,
+          B.fold(
+            () => true, // Either IOMarkdown configuration missing or min_app_version missing on IOMarkdown configuration. IOMarkdown is enabled
+            () =>
+              isPropertyWithMinAppVersionEnabled({
+                remoteConfig: O.some(remoteConfig),
+                mainLocalFlag: true,
+                configPropertyName: "ioMarkdown"
+              })
+          )
+        )
+    )
   );

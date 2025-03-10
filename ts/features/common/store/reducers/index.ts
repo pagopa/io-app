@@ -63,9 +63,6 @@ import {
 import connectivityStateReducer, {
   ConnectivityState
 } from "../../../connectivity/store/reducers";
-import { GlobalState } from "../../../../store/reducers/types";
-import { isIOMarkdownDisabledForMessagesAndServices } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { isIOMarkdownEnabledLocallySelector } from "../../../../store/reducers/persistedPreferences";
 import {
   appFeedbackPersistor,
   AppFeedbackState
@@ -156,17 +153,3 @@ export const featuresPersistor = persistReducer<FeaturesState, Action>(
   persistConfig,
   rootReducer
 );
-
-/**
- * This selector checks if IO Markdown has been disabled remotely
- * and if it has been enabled locally.
- * The remote flag is a way to disable IOMarkdown without relying
- * on a new app release.
- * @param state Redux global state
- * @returns true if IOMarkdown is enabled, false otherwise
- */
-export const isIOMarkdownEnabledOnMessagesAndServicesSelector = (
-  state: GlobalState
-) =>
-  !isIOMarkdownDisabledForMessagesAndServices(state) &&
-  isIOMarkdownEnabledLocallySelector(state);

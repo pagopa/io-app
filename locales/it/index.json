@@ -2987,6 +2987,7 @@
         "title": "Ciao {{name}}!",
         "titleProfileName": "Ciao {{profileName}}!",
         "titleValidation": "Autorizza l'operazione",
+        "titleOffline": "Ciao!",
         "logout": "Esci",
         "logoutProfileName": "Non sei {{profileName}}?",
         "logoutDescription": "Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.",
@@ -5084,14 +5085,10 @@
                 }
             },
             "multiPrerequisites": {
-                "header": "Dichiari inoltre di:",
-                "body": "L’autodichiarazione è resa ai sensi del",
-                "link": "Dpr 28 dicembre 2000 n. 445 art 46 e 47"
+                "header": "Dichiari inoltre di:"
             },
             "boolPrerequisites": {
-                "header": "Per aderire, dichiari di:",
-                "body": "L’autodichiarazione è resa ai sensi del",
-                "link": "Dpr 28 dicembre 2000 n. 445 art 46 e 47"
+                "header": "Per aderire, dichiari di:"
             }
         },
         "configuration": {
