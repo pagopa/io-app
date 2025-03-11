@@ -27,6 +27,7 @@ import {
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { CREDENTIALS_MAP, trackCopyListItem } from "../../analytics";
 
 const HIDDEN_CLAIM = "******";
 
@@ -76,21 +77,32 @@ const BoolClaimItem = ({ label, claim }: { label: string; claim: boolean }) => {
 const PlainTextClaimItem = ({
   label,
   claim,
-  isCopyable
+  isCopyable,
+  credentialType
 }: {
   label: string;
   claim: string;
   isCopyable?: boolean;
+  credentialType?: string;
 }) => {
   const safeValue = getSafeText(claim);
+
+  const handleLongPress = () => {
+      clipboardSetStringWithFeedback(safeValue);
+      if (credentialType) {
+        trackCopyListItem({
+          credential: CREDENTIALS_MAP[credentialType],
+          item_copied: label
+        });
+      }
+  };
+
   return (
     <ListItemInfo
       numberOfLines={2}
       label={label}
       value={safeValue}
-      onLongPress={
-        isCopyable ? () => clipboardSetStringWithFeedback(safeValue) : undefined
-      }
+      onLongPress={isCopyable ? handleLongPress : undefined}
       accessibilityLabel={`${label} ${
         claim === HIDDEN_CLAIM
           ? I18n.t(
@@ -308,12 +320,14 @@ export const ItwCredentialClaim = ({
   claim,
   hidden,
   isPreview,
-  credentialStatus
+  credentialStatus,
+  credentialType
 }: {
   claim: ClaimDisplayFormat;
   hidden?: boolean;
   isPreview?: boolean;
   credentialStatus?: ItwCredentialStatus;
+  credentialType?: string;
 }) =>
   pipe(
     claim.value,
@@ -374,6 +388,7 @@ export const ItwCredentialClaim = ({
               label={claim.label}
               claim={decoded}
               isCopyable={!isPreview}
+              credentialType={credentialType}
             />
           ); // must be the last one to be checked due to overlap with IPatternStringTag
         } else {
