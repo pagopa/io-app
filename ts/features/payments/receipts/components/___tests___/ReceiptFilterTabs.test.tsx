@@ -48,6 +48,6 @@ describe("ReceiptFilterTabs", () => {
     const { getByTestId } = renderComponent(selectedCategory);
 
     const selectedTab = getByTestId(`CategoryTabTestID-${selectedCategory}`);
-    expect(selectedTab.props.accessibilityState.selected).toBe(true);
+    expect(selectedTab.props.accessibilityState.checked).toBe(true);
   });
 });
