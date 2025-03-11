@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1-rc.0](https://github.com/pagopa/io-app/compare/3.0.0-rc.8...3.0.1-rc.0) (2025-03-11)
+
+
+### Bug Fixes
+
+* [[IOBP-1361](https://pagopa.atlassian.net/browse/IOBP-1361)] CGN webview referer unused header ([#6791](https://github.com/pagopa/io-app/issues/6791)) ([71873eb](https://github.com/pagopa/io-app/commit/71873eb6ed5ecd6973bde0fce3a28a08af3b11a3))
+
 ## [3.0.0-rc.8](https://github.com/pagopa/io-app/compare/3.0.0-rc.7...3.0.0-rc.8) (2025-03-06)
 
 
