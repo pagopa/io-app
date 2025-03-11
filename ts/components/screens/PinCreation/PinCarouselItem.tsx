@@ -74,7 +74,7 @@ export const PinCarouselItem = memo(
           length={maxLength}
           onValidate={handleOnValidate}
           onValueChange={onValueChange}
-          variant="dark"
+          variant="neutral"
           value={value}
         />
       </View>
