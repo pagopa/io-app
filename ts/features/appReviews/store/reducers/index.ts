@@ -8,6 +8,10 @@ import {
   clearFeedbackDatas,
   TopicKeys
 } from "../actions";
+import {
+  logoutFailure,
+  logoutSuccess
+} from "../../../../store/actions/authentication";
 
 // String formats for the dates represents the log to be persisted to check the last feedback request time
 // both fields are updated directly from reducer on action dispatch and not from the action payload.
@@ -28,6 +32,8 @@ const appFeedbackReducer = (
   action: Action
 ): AppFeedbackState => {
   switch (action.type) {
+    case getType(logoutSuccess):
+    case getType(logoutFailure):
     case getType(clearFeedbackDatas):
       return {
         ...state,
@@ -51,7 +57,7 @@ const appFeedbackReducer = (
   }
 };
 
-const persistConfig: PersistConfig = {
+export const persistConfig: PersistConfig = {
   key: "appFeedback",
   storage: AsyncStorage
 };

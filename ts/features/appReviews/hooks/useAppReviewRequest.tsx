@@ -51,9 +51,9 @@ export const useAppReviewRequest = (topic: TopicKeys = "general") => {
             }
           ]
         );
-        return;
+      } else {
+        requestAppReview();
       }
-      requestAppReview();
     },
     bottomSheet
   };

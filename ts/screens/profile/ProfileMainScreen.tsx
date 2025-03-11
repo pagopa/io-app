@@ -66,7 +66,7 @@ const ProfileMainScreenFC = () => {
   const { hideModal } = useContext(LightModalContext);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const { show } = useIOToast();
+  const { show, error } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const appFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
   const surveyUrl = useIOSelector(appFeedbackUriConfigSelector("general"));
@@ -264,13 +264,18 @@ const ProfileMainScreenFC = () => {
           icon="starEmpty"
           variant="primary"
           testID="reviewButton"
-          onPress={Platform.select({
-            ios: () =>
-              openWebUrl(
-                "https://apps.apple.com/app/id1501681835?action=write-review"
-              ),
-            default: requestAppReview
-          })}
+          onPress={() =>
+            openWebUrl(
+              Platform.select({
+                ios: "https://apps.apple.com/app/id1501681835?action=write-review",
+                // On Android we don't have a direct link to the review page we need to link the app page
+                android:
+                  "https://play.google.com/store/apps/details?id=it.pagopa.io.app",
+                default: "https://io.italia.it/"
+              }),
+              () => error(I18n.t("msgErrorUpdateApp"))
+            )
+          }
           accessibilityLabel={reviewLabel}
         />
         <ListItemAction

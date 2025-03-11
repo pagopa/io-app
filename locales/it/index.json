@@ -2787,7 +2787,7 @@
             "actions": {
                 "call": "Fai una chiamata",
                 "email": "Scrivi un'email"
-        }
+            }
         },
         "markdownLinkUnsupported": "Questo link non è supportato"
     },
