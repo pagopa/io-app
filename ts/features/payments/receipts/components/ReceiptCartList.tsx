@@ -1,14 +1,13 @@
-import { View } from "react-native";
-import Placeholder from "rn-placeholder";
 import {
-  HSpacer,
-  IOStyles,
+  HStack,
+  IOSkeleton,
   ListItemTransaction,
-  VSpacer
+  VStack
 } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
-import { formatAmountText } from "../utils";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
+import { formatAmountText } from "../utils";
 
 type Props = {
   carts?: ReadonlyArray<CartItem>;
@@ -49,16 +48,22 @@ export const ReceiptCartList = ({ carts, loading, onPress }: Props) => {
 
 const SkeletonTransactionDetailsList = () => (
   <View
-    style={[IOStyles.flex, IOStyles.rowSpaceBetween, IOStyles.alignCenter]}
-    testID="skeleton-transaction-details-list"
+    style={{
+      flex: 1,
+      alignItems: "center",
+      flexDirection: "row",
+      justifyContent: "space-between"
+    }}
   >
-    <View style={[IOStyles.flex, { paddingVertical: 12 }]}>
-      <Placeholder.Box height={16} width="90%" radius={4} />
-      <VSpacer size={8} />
-      <Placeholder.Box height={16} width="30%" radius={4} />
+    <View style={{ paddingVertical: 12 }}>
+      <VStack space={8} style={{ flex: 1 }}>
+        <IOSkeleton shape="rectangle" width="90%" height={16} radius={4} />
+        <IOSkeleton shape="rectangle" width="30%" height={16} radius={4} />
+      </VStack>
     </View>
-    <Placeholder.Box height={16} width={48} radius={4} />
-    <HSpacer size={16} />
-    <Placeholder.Box height={16} width={16} radius={4} />
+    <HStack space={16} style={{ alignItems: "center" }}>
+      <IOSkeleton shape="rectangle" width={48} height={16} radius={4} />
+      <IOSkeleton shape="square" size={16} radius={4} />
+    </HStack>
   </View>
 );
