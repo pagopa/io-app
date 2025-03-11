@@ -123,7 +123,7 @@ export const cleanMarkdownFromCTAs = (
 ): string => {
   const isValidMarkdown = safeContainsFronMatter(markdown);
   if (!isValidMarkdown) {
-    return markdown; // TODO
+    return markdown;
   }
   return safeExtractBodyAfterFrontMatter(markdown);
 };
@@ -247,7 +247,7 @@ const safeExtractBodyAfterFrontMatter = (input: string): string => {
     const frontMatter = FM(input);
     return frontMatter.body;
   } catch {
-    return input; // TODO
+    return input;
   }
 };
 
