@@ -23,15 +23,7 @@
       "venerdì",
       "sabato"
     ],
-    "abbr_day_names": [
-      "dom",
-      "lun",
-      "mar",
-      "mer",
-      "gio",
-      "ven",
-      "sab"
-    ],
+    "abbr_day_names": ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
     "month_names": [
       " ",
       "gennaio",
@@ -66,6 +58,7 @@
       "am",
       "pm"
     ],
+    "meridian": ["am", "pm"],
     "time": {
       "minutes": {
         "zero": "0 minuti",
@@ -4616,7 +4609,7 @@
       },
       "offline": {
         "alert": {
-          "title": "Nessuna connessione.",
+          "title": "Nessuna connessione",
           "action": "Cosa posso fare?"
         },
         "modal": {
