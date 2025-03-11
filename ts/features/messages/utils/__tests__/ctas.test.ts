@@ -1688,52 +1688,52 @@ describe("getServiceCTA", () => {
 describe("safeContainsFronMatter", () => {
   it("should return false for empty string", () => {
     const input = "";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for non front matter string", () => {
     const input = "it:\n cta_1:\n  text: The text";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for non opening front matter", () => {
     const input = "it:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for non closing front matter", () => {
     const input = "---\nit:\n cta_1:\n  text: The text";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for opening front matter without newline", () => {
     const input = "---it:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for closing front matter without newline", () => {
     const input = "---\nit:\n cta_1:\n  text: The text---";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for proper front matter that has extra characters (on the same line) after closing", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---Something else";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for proper front matter that has extra space before opening", () => {
     const input = " ---\nit:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for proper front matter that has extra space before closing", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n ---";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for a front matter that has wrong opening", () => {
     const input = "...\nit:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false if the library throws an exception", () => {
@@ -1741,18 +1741,18 @@ describe("safeContainsFronMatter", () => {
       throw Error("An error");
     });
     const input = "---\nit:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(false);
     jest.restoreAllMocks();
   });
   it("should return true for proper front matter", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(true);
   });
   it("should return true for proper front matter with invalid yaml", () => {
     const input = "---\nit: cta_1: text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFronMatter(input);
+    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
     expect(containsFrontMatter).toBe(true);
   });
 });
