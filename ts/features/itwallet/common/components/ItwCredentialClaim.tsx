@@ -88,13 +88,13 @@ const PlainTextClaimItem = ({
   const safeValue = getSafeText(claim);
 
   const handleLongPress = () => {
-      clipboardSetStringWithFeedback(safeValue);
-      if (credentialType) {
-        trackCopyListItem({
-          credential: CREDENTIALS_MAP[credentialType],
-          item_copied: label
-        });
-      }
+    clipboardSetStringWithFeedback(safeValue);
+    if (credentialType) {
+      trackCopyListItem({
+        credential: CREDENTIALS_MAP[credentialType],
+        item_copied: label
+      });
+    }
   };
 
   return (
