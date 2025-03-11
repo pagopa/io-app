@@ -42,7 +42,6 @@ import {
   appFeedbackEnabledSelector,
   appFeedbackUriConfigSelector
 } from "../../store/reducers/backendStatus/remoteConfig";
-import { requestAppReview } from "../../features/appReviews/utils/storeReview";
 import { openWebUrl } from "../../utils/url";
 import DeveloperModeSection from "./DeveloperModeSection";
 import { ProfileMainScreenTopBanner } from "./ProfileMainScreenTopBanner";
