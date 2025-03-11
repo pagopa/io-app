@@ -25,7 +25,7 @@
     "test:tz-us-ny": "TZ='America/New_York' jest --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false -t 'Check fiscal code date NY|SimpleDateClaim should handle valid, invalid, edge cases, and formatting correctly' './ts/utils/__tests__/fiscal-code.test.ts' './ts/features/itwallet/common/utils/__tests__/itwClaimsUtils.test.ts'",
     "test:tz-us-yt": "TZ='America/Whitehorse' jest --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false -t 'Check fiscal code date CA|SimpleDateClaim should handle valid, invalid, edge cases, and formatting correctly' './ts/utils/__tests__/fiscal-code.test.ts' './ts/features/itwallet/common/utils/__tests__/itwClaimsUtils.test.ts'",
     "test:tz-au-syd": "TZ='Australia/Sydney' jest --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false -t 'Check fiscal code date AU|SimpleDateClaim should handle valid, invalid, edge cases, and formatting correctly' './ts/utils/__tests__/fiscal-code.test.ts' './ts/features/itwallet/common/utils/__tests__/itwClaimsUtils.test.ts'",
-    "prettify": "prettier --write \"ts/**/*.(ts|tsx)\"",
+    "prettify": "prettier --write \"ts/**/*.(ts|tsx|json)\"",
     "prettier:check": "prettier --check \"ts/**/*.(ts|tsx)\"",
     "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
     "bundle:android": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev true --entry-file index.js --bundle-output ./bundles/index.android.bundle",
@@ -46,10 +46,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint -c .eslintrc.js --fix"
-    ]
+    "*.{ts,tsx}": ["prettier --write", "eslint -c .eslintrc.js --fix"]
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
