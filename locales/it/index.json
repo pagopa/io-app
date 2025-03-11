@@ -54,10 +54,6 @@
       "nov",
       "dic"
     ],
-    "meridian": [
-      "am",
-      "pm"
-    ],
     "meridian": ["am", "pm"],
     "time": {
       "minutes": {
