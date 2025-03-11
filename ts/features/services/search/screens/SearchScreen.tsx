@@ -131,7 +131,7 @@ export const SearchScreen = () => {
     [navigateToInstitution]
   );
 
-  const renderListFooterComponent = useCallback(() => {
+  const ListFooterComponent = useMemo(() => {
     if (isUpdating) {
       return <InstitutionListSkeleton />;
     }
@@ -139,7 +139,7 @@ export const SearchScreen = () => {
     return <VSpacer size={16} />;
   }, [isUpdating]);
 
-  const renderListEmptyComponent = useCallback(() => {
+  const ListEmptyComponent = useMemo(() => {
     if (query.length < MIN_QUERY_LENGTH) {
       return (
         <EmptyState
@@ -183,20 +183,20 @@ export const SearchScreen = () => {
         />
       </View>
       <FlashList
-        ItemSeparatorComponent={() => <Divider />}
-        ListEmptyComponent={renderListEmptyComponent}
-        ListFooterComponent={renderListFooterComponent}
+        ItemSeparatorComponent={Divider}
+        ListEmptyComponent={ListEmptyComponent}
+        ListFooterComponent={ListFooterComponent}
         contentContainerStyle={IOStyles.horizontalContentPadding}
-        data={data?.institutions || []}
+        data={data?.institutions}
         estimatedItemSize={LIST_ITEM_HEIGHT}
         keyboardDismissMode={Platform.select({
           ios: "interactive",
           default: "on-drag"
         })}
         keyboardShouldPersistTaps="handled"
-        keyExtractor={(item, index) => `institution-${item.id}-${index}`}
+        keyExtractor={item => item.id}
         onEndReached={handleEndReached}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.5}
         renderItem={renderItem}
       />
     </>
