@@ -257,6 +257,9 @@
         "message": "The IO interface is optimized for smartphones, but all the functions compatible with your device are still available."
     },
     "appFeedback": {
+        "toast": {
+            "negativeFeedback": "Puoi lasciare i tuoi suggerimenti in ogni momento, visitando la sezione Impostazioni"
+        },
         "alert": {
             "title": "Do you like IO app?",
             "description": "We'll use your answer to improve our services.",

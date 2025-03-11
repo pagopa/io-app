@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { Body, FooterActions } from "@pagopa/io-app-design-system";
+import { Body, FooterActions, useIOToast } from "@pagopa/io-app-design-system";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   appFeedbackEnabledSelector,
@@ -61,6 +61,7 @@ export const useAppReviewRequest = (topic: TopicKeys = "general") => {
 
 const useAppFeedbackBottomSheet = (topic: TopicKeys = "general") => {
   const surveyUrl = useIOSelector(appFeedbackUriConfigSelector(topic));
+  const { show } = useIOToast();
 
   const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal(
     {
@@ -81,7 +82,10 @@ const useAppFeedbackBottomSheet = (topic: TopicKeys = "general") => {
             },
             secondary: {
               label: I18n.t("appFeedback.bottomSheet.discard"),
-              onPress: () => dismiss()
+              onPress: () => {
+                show(I18n.t("appFeedback.toast.negativeFeedback"));
+                dismiss();
+              }
             }
           }}
         />
