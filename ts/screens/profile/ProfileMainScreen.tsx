@@ -268,9 +268,8 @@ const ProfileMainScreenFC = () => {
               Platform.select({
                 ios: "https://apps.apple.com/app/id1501681835?action=write-review",
                 // On Android we don't have a direct link to the review page we need to link the app page
-                android:
-                  "https://play.google.com/store/apps/details?id=it.pagopa.io.app",
-                default: "https://io.italia.it/"
+                default:
+                  "https://play.google.com/store/apps/details?id=it.pagopa.io.app"
               }),
               () => error(I18n.t("msgErrorUpdateApp"))
             )
