@@ -3002,9 +3002,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gorhom/bottom-sheet@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "@gorhom/bottom-sheet@npm:5.1.1"
+"@gorhom/bottom-sheet@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "@gorhom/bottom-sheet@npm:5.1.2"
   dependencies:
     "@gorhom/portal": 1.0.14
     invariant: ^2.2.4
@@ -3020,7 +3020,7 @@ __metadata:
       optional: true
     "@types/react-native":
       optional: true
-  checksum: 9c5c7aeb1c41ad5e887b73330b53a305255bfde82c104e1c7d50eb692d86932bb54a8c79cd65fc52a46437f21471ce71faeb6dc64af89697580675144135f994
+  checksum: 13265dffdd20c682e8236b623784804d1e04a924f98e75cee91b8e532871b650fad603f4256f77c244b73cacc137679abb55dbb5ab54e55fca24026431cb9f39
   languageName: node
   linkType: hard
 
@@ -13653,7 +13653,7 @@ __metadata:
     "@babel/preset-env": ^7.20.0
     "@babel/preset-typescript": ^7.23.3
     "@babel/runtime": ^7.20.0
-    "@gorhom/bottom-sheet": ^5.1.1
+    "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
     "@pagopa/io-app-design-system": 5.1.0
     "@pagopa/io-pagopa-commons": ^3.1.0
