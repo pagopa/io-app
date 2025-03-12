@@ -1,4 +1,9 @@
-import { ButtonLink, ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonLink,
+  ButtonLinkProps,
+  ButtonSolid,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n.ts";
@@ -19,6 +24,17 @@ const ItwPresentationCredentialCardFlipButton = ({
 }: ItwPresentationCredentialCardFlipButtonProps) => {
   const viewStyle = fullScreen ? styles.fullWidthButton : styles.button;
 
+  const buttonProps: ButtonLinkProps = {
+    label: I18n.t(
+      `features.itWallet.presentation.credentialDetails.card.${
+        isFlipped ? "showFront" : "showBack"
+      }`
+    ),
+    onPress: handleOnPress,
+    icon: "switchCard",
+    iconPosition: "end"
+  };
+
   return (
     <View
       style={viewStyle}
@@ -31,29 +47,11 @@ const ItwPresentationCredentialCardFlipButton = ({
     >
       {fullScreen ? (
         <>
-          <ButtonSolid
-            label={I18n.t(
-              `features.itWallet.presentation.credentialDetails.card.${
-                isFlipped ? "showFront" : "showBack"
-              }`
-            )}
-            icon="switchCard"
-            iconPosition="end"
-            onPress={handleOnPress}
-          />
+          <ButtonSolid {...buttonProps} />
           <VSpacer size={12} />
         </>
       ) : (
-        <ButtonLink
-          label={I18n.t(
-            `features.itWallet.presentation.credentialDetails.card.${
-              isFlipped ? "showFront" : "showBack"
-            }`
-          )}
-          onPress={handleOnPress}
-          icon="switchCard"
-          iconPosition="end"
-        />
+        <ButtonLink {...buttonProps} />
       )}
     </View>
   );
