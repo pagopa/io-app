@@ -51,7 +51,6 @@ import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
-import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
@@ -577,14 +576,6 @@ export const DesignSystemNavigator = () => {
         </Stack.Group>
 
         {/* LEGACY */}
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.TEXT_FIELDS.route}
-          component={DSLegacyTextFields}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.TEXT_FIELDS.title
-          }}
-        />
 
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.route}
