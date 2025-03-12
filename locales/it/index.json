@@ -23,15 +23,7 @@
       "venerdì",
       "sabato"
     ],
-    "abbr_day_names": [
-      "dom",
-      "lun",
-      "mar",
-      "mer",
-      "gio",
-      "ven",
-      "sab"
-    ],
+    "abbr_day_names": ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
     "month_names": [
       " ",
       "gennaio",
@@ -62,10 +54,7 @@
       "nov",
       "dic"
     ],
-    "meridian": [
-      "am",
-      "pm"
-    ],
+    "meridian": ["am", "pm"],
     "time": {
       "minutes": {
         "zero": "0 minuti",

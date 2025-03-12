@@ -1,9 +1,5 @@
 import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
 
-export type Reset = {
-  type: "reset";
-};
-
 export type Start = {
   type: "start";
   payload: ItwRemoteRequestPayload;
@@ -26,7 +22,6 @@ export type Close = {
 };
 
 export type RemoteEvents =
-  | Reset
   | Start
   | GoToWalletActivation
   | GoToIdentificationMode

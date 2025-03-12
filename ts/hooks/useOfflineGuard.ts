@@ -47,8 +47,8 @@ export type OfflineGuardOptions = {
  * @returns A wrapped function that either executes the provided function (when online)
  *          or performs the fallback action based on the specified guard type (when offline)
  */
-export const useOfflineGuard = (
-  fn: (...args: Array<any>) => void | Promise<void>,
+export const useOfflineGuard = <TArgs extends Array<any>, TReturn>(
+  fn: (...args: TArgs) => TReturn,
   options: OfflineGuardOptions = {}
 ) => {
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
@@ -67,6 +67,7 @@ export const useOfflineGuard = (
     } else if (type === "toast") {
       toast.error(I18n.t("global.offline.toast"));
     }
+    return undefined as unknown as TReturn;
   }, [navigation, toast, type]);
 
   return pipe(
