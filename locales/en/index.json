@@ -5159,7 +5159,11 @@
           "body": "Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del",
           "bodyLink": "Dpr 28 dicembre 2000 n. 445 art 46 e 47",
           "nameAssignInput": "Assegna un nome",
-          "bottomLabel": "Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app"
+          "bottomLabel": "Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app",
+          "error": {
+            "iban": "IBAN not valid",
+            "name": "Associates a name with the IBAN"
+          }
         },
         "enrollment": {
           "header": "Scegli quale IBAN associare all’iniziativa",
