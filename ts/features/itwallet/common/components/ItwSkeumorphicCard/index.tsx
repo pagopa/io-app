@@ -29,6 +29,7 @@ import { FlippableCard } from "./FlippableCard";
 export type ItwSkeumorphicCardProps = {
   credential: StoredCredential;
   status: ItwCredentialStatus;
+  valuesHidden: boolean;
   isFlipped?: boolean;
   onPress?: () => void;
 };
@@ -37,7 +38,8 @@ const ItwSkeumorphicCard = ({
   credential,
   status,
   isFlipped = false,
-  onPress
+  onPress,
+  valuesHidden
 }: ItwSkeumorphicCardProps) => {
   const FrontSide = useMemo(
     () => (
@@ -46,10 +48,14 @@ const ItwSkeumorphicCard = ({
           credentialType={credential.credentialType}
           side="front"
         />
-        <CardData credential={credential} side="front" />
+        <CardData
+          credential={credential}
+          side="front"
+          valuesHidden={valuesHidden}
+        />
       </CardSideBase>
     ),
-    [credential, status]
+    [credential, status, valuesHidden]
   );
 
   const BackSide = useMemo(
@@ -59,10 +65,14 @@ const ItwSkeumorphicCard = ({
           credentialType={credential.credentialType}
           side="back"
         />
-        <CardData credential={credential} side="back" />
+        <CardData
+          credential={credential}
+          side="back"
+          valuesHidden={valuesHidden}
+        />
       </CardSideBase>
     ),
-    [credential, status]
+    [credential, status, valuesHidden]
   );
 
   const accessibilityProps = useMemo(
