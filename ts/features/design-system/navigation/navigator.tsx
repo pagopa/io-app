@@ -33,6 +33,8 @@ import { DSFooterActionsInline } from "../core/DSFooterActionsInline";
 import { DSFooterActionsInlineNotFixed } from "../core/DSFooterActionsInlineNotFixed";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
+import { DSForceScrollDownView } from "../core/DSForceScrollDownView";
+import { DSForceScrollDownViewCustomSlot } from "../core/DSForceScrollDownViewCustomSlot";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
@@ -452,6 +454,27 @@ export const DesignSystemNavigator = () => {
           name={DESIGN_SYSTEM_ROUTES.SCREENS.IOLISTVIEW_LARGE_HEADER.route}
           component={DSIOListViewWithLargeHeader}
           options={{ headerShown: true }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_ACTIONS.route}
+          component={DSForceScrollDownView}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_ACTIONS.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_CUSTOM_SLOT.route
+          }
+          component={DSForceScrollDownViewCustomSlot}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_CUSTOM_SLOT
+                .title
+          }}
         />
 
         <Stack.Screen

@@ -78,6 +78,14 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "IOLISTVIEW_LARGE_HEADER",
       title: "IOListView w/ Large header"
     },
+    FORSCESCROLLDOWNVIEW_ACTIONS: {
+      route: "FORSCESCROLLDOWNVIEW_ACTIONS",
+      title: "ForceScrollDownView w/ Actions"
+    },
+    FORSCESCROLLDOWNVIEW_CUSTOM_SLOT: {
+      route: "FORSCESCROLLDOWNVIEW_CUSTOM_SLOT",
+      title: "ForceScrollDownView w/ Custom slot"
+    },
     BONUS_CARD_SCREEN: {
       route: "BONUS_CARD_SCREEN",
       title: "Bonus Card Screen"
