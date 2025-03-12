@@ -22,6 +22,7 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsRemove } from "../../../credentials/store/actions";
 import { trackAuthenticationStart } from "../../../../fims/common/analytics";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId.ts";
+import { useOfflineGuard } from "../../../../../hooks/useOfflineGuard.ts";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -78,10 +79,10 @@ const ItwPresentationDetailsFooter = ({
     );
   };
 
-  const startAndTrackSupportRequest = () => {
+  const startAndTrackSupportRequest = useOfflineGuard(() => {
     trackWalletCredentialSupport(CREDENTIALS_MAP[credential.credentialType]);
     startSupportRequest();
-  };
+  });
 
   const credentialActions = useMemo(
     () => getCredentialActions(credential.credentialType),

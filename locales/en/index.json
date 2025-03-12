@@ -240,6 +240,14 @@
       "invalidSearchBarText": "Enter at least {{minCharacter}} characters",
       "noResultsFound": "There are no results for this search: try something else.",
       "noResultsTitle": "No results."
+    },
+    "offline": {
+      "screen": {
+        "title": "Nessuna connessione",
+        "subtitle": "Collegati a internet per continuare ad usare tutti i servizi di app IO.",
+        "action": "Riprova"
+      },
+      "toast": "Nessuna connessione. Funzionalità non disponibile in assenza di rete."
     }
   },
   "tablet": {
@@ -4603,7 +4611,8 @@
         "modal": {
           "title": "Nessuna connessione",
           "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
-          "action": "Ricarica l'app IO"
+          "action": "Ricarica l'app IO",
+          "failure": "Nessuna connessione. Collegati a internet e riprova."
         }
       }
     }
