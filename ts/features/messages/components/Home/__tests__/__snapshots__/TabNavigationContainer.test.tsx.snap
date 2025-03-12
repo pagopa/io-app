@@ -351,6 +351,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                               },
                               {
                                 "flexGrow": 1,
+                                "gap": 8,
                                 "justifyContent": "flex-start",
                               },
                             ]
@@ -379,9 +380,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     "flexBasis": 100,
                                     "flexGrow": 0,
                                     "flexShrink": 1,
-                                  },
-                                  {
-                                    "marginEnd": 8,
                                   },
                                   false,
                                 ]
@@ -443,7 +441,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "backgroundColor": undefined,
                                         "borderColor": undefined,
                                       },
-                                      false,
                                       false,
                                     ]
                                   }
@@ -554,9 +551,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     "flexGrow": 0,
                                     "flexShrink": 1,
                                   },
-                                  {
-                                    "marginEnd": 0,
-                                  },
                                   false,
                                 ]
                               }
@@ -617,7 +611,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "backgroundColor": undefined,
                                         "borderColor": undefined,
                                       },
-                                      false,
                                       false,
                                     ]
                                   }
@@ -1072,6 +1065,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                               },
                               {
                                 "flexGrow": 1,
+                                "gap": 8,
                                 "justifyContent": "flex-start",
                               },
                             ]
@@ -1100,9 +1094,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     "flexBasis": 100,
                                     "flexGrow": 0,
                                     "flexShrink": 1,
-                                  },
-                                  {
-                                    "marginEnd": 8,
                                   },
                                   false,
                                 ]
@@ -1164,7 +1155,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "backgroundColor": undefined,
                                         "borderColor": undefined,
                                       },
-                                      false,
                                       false,
                                     ]
                                   }
@@ -1288,9 +1278,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     "flexGrow": 0,
                                     "flexShrink": 1,
                                   },
-                                  {
-                                    "marginEnd": 0,
-                                  },
                                   false,
                                 ]
                               }
@@ -1351,7 +1338,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "backgroundColor": undefined,
                                         "borderColor": undefined,
                                       },
-                                      false,
                                       false,
                                     ]
                                   }

@@ -17,7 +17,6 @@ import _ from "lodash";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import {
   Alert,
-  ColorSchemeName,
   Modal,
   Platform,
   StatusBar,
@@ -74,8 +73,7 @@ const IdentificationModal = () => {
   const showRetryText = useRef(false);
   const headerRef = useRef<View>(null);
   const errorStatusRef = useRef<View>(null);
-  const colorScheme: ColorSchemeName = "light";
-  const numberPadVariant = colorScheme ? "dark" : "light";
+
   const { isDeviceScreenSmall } = useDetectSmallScreen();
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
@@ -266,7 +264,7 @@ const IdentificationModal = () => {
     ? I18n.t("identification.titleValidation")
     : name
     ? I18n.t("identification.title", { name })
-    : "";
+    : I18n.t("identification.titleOffline");
 
   const onPinValidated = useCallback(
     (isValidated: boolean) => {
@@ -287,7 +285,7 @@ const IdentificationModal = () => {
     <IdentificationNumberPad
       pin={pin}
       pinValidation={onPinValidated}
-      numberPadVariant={numberPadVariant}
+      numberPadVariant={"primary"}
       biometricsConfig={biometricsConfig}
     />
   ));
