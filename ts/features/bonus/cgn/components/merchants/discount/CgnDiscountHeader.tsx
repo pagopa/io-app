@@ -6,9 +6,12 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { useEffect, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import I18n from "../../../../../../i18n";
+import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
 import { CategoryTag } from "../ModuleCgnDiscount";
 import { isValidDiscount, normalizedDiscountPercentage } from "../utils";
 
@@ -26,6 +29,12 @@ export const CgnDiscountHeader = ({
     : styles.backgroundDefault;
 
   const { isNew, discount, name, productCategories } = discountDetails;
+
+  const ref = useRef<View>(null);
+
+  useEffect(() => {
+    setAccessibilityFocus(ref, 400 as Millisecond);
+  }, [ref]);
 
   return (
     <View
@@ -59,7 +68,9 @@ export const CgnDiscountHeader = ({
             <VSpacer size={12} />
           </>
         )}
-        <H3 color="grey-850">{name}</H3>
+        <H3 accessible ref={ref} color="grey-850">
+          {name}
+        </H3>
         <VSpacer size={12} />
         <HStack space={4} style={{ flexWrap: "wrap" }}>
           {productCategories.map(categoryKey => (
