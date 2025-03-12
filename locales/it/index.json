@@ -722,7 +722,7 @@
         "subtitleExistingUser": "Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.",
         "reminders": {
           "title": "Consenti promemoria",
-          "description": "Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti"
+          "description": "Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze"
         },
         "preview": {
           "title": "Mostra anteprime",
