@@ -156,6 +156,11 @@ type ItwWalletDataShare = {
     | "async_continuation";
 };
 
+type ItwCopyListItem = {
+  credential: MixPanelCredential;
+  item_copied: string;
+};
+
 // #region SCREEN VIEW EVENTS
 export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
@@ -518,6 +523,13 @@ export function trackCredentialCardModal(credential: MixPanelCredential) {
     })
   );
 }
+
+export const trackCopyListItem = (properties: ItwCopyListItem) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_COPY_LIST_ITEM,
+    buildEventProperties("UX", "action", properties)
+  );
+};
 
 // #endregion ACTIONS
 
