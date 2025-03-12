@@ -149,7 +149,11 @@ export const ID_STATUS_MAP: Record<
 
 type ItwWalletDataShare = {
   credential: MixPanelCredential;
-  phase?: "initial_request" | "async_continuation";
+  phase?:
+    | "initial_request"
+    | "request_in_progress"
+    | "old_message_request"
+    | "async_continuation";
 };
 
 // #region SCREEN VIEW EVENTS
