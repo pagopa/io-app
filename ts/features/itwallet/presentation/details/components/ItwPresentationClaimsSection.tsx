@@ -96,6 +96,7 @@ export const ItwPresentationClaimsSection = ({
               isPreview={false}
               hidden={valuesHidden}
               credentialStatus={credentialStatus}
+              credentialType={credential.credentialType}
             />
           </Fragment>
         );
