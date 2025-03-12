@@ -1,22 +1,30 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import React from "react";
 import { createStore } from "redux";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIODispatch } from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
+import { NetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
+import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
 import {
   ServicePreferenceResponse,
   WithServiceID
 } from "../../../services/details/types/ServicePreferenceResponse";
 import PN_ROUTES from "../../navigation/routes";
 import { usePnPreferencesFetcher } from "../usePnPreferencesFetcher";
-import { NetworkError } from "../../../../utils/errors";
 
-jest.mock("../../../../store/hooks");
-jest.mock("../../../services/details/store/actions/preference");
+jest.mock("../../../../store/hooks", () => ({
+  ...jest.requireActual("../../../../store/hooks"),
+  useIODispatch: jest.fn()
+}));
+jest.mock("../../../services/details/store/reducers/", () => ({
+  ...jest.requireActual("../../../services/details/store/reducers/"),
+  servicePreferencePotSelector: jest.fn()
+}));
 
 type PreferencePotState = pot.Pot<
   ServicePreferenceResponse,
@@ -32,7 +40,8 @@ let testingHookData: {
 
 const mockDispatch = jest.fn();
 const mockUseIODispatch = useIODispatch as jest.Mock;
-const mockUseIOSelector = useIOSelector as jest.Mock;
+const mockServicePreferencePotSelector =
+  servicePreferencePotSelector as jest.Mock;
 
 const pnServiceId = "PN_SID" as ServiceId;
 describe("usePnPreferencesFetcher", () => {
@@ -41,104 +50,73 @@ describe("usePnPreferencesFetcher", () => {
     mockUseIODispatch.mockReturnValue(mockDispatch);
   });
 
-  it("should dispatch loadServicePreference, and return a loading state if service data is not already loaded", () => {
-    const servicePreferencePot = pot.none;
+  describe("should return correct values", () => {
+    const expectedReturnTypes = [
+      { isLoading: true, isError: false, isEnabled: true },
+      { isLoading: false, isError: false, isEnabled: true },
+      { isLoading: false, isError: false, isEnabled: false },
+      { isLoading: false, isError: true, isEnabled: true }
+    ];
 
-    mockUseIOSelector.mockReturnValue(servicePreferencePot);
-
-    renderHook();
-
-    expect(mockDispatch).toHaveBeenCalledWith(
-      loadServicePreference.request(pnServiceId)
-    );
-    expect(testingHookData.isLoading).toBe(true);
-    expect(testingHookData.isError).toBe(false);
-    expect(testingHookData.isEnabled).toBe(false);
-  });
-
-  it("should return the correct 'enabled' value, plus a loading state when service id is correct and preference is pot.someLoading", () => {
-    const servicePreferencePot = pot.someLoading({
-      id: pnServiceId,
-      kind: "success",
-      value: { inbox: true }
-    }) as PreferencePotState;
-
-    mockUseIOSelector.mockReturnValue(servicePreferencePot);
-
-    renderHook();
-
-    expect(testingHookData.isLoading).toBe(true);
-    expect(testingHookData.isError).toBe(false);
-    expect(testingHookData.isEnabled).toBe(true);
-  });
-
-  it("should return correct values when service id is correct and preference is pot.some(true)", () => {
-    const servicePreferencePot = pot.some({
-      id: pnServiceId,
-      kind: "success",
-      value: { inbox: true }
-    }) as PreferencePotState;
-
-    mockUseIOSelector.mockReturnValue(servicePreferencePot);
-
-    renderHook();
-
-    expect(testingHookData.isLoading).toBe(false);
-    expect(testingHookData.isError).toBe(false);
-    expect(testingHookData.isEnabled).toBe(true);
-  });
-  it("should return correct values when service id is correct and preference is pot.some(false)", () => {
-    const servicePreferencePot = pot.some({
-      id: pnServiceId,
-      kind: "success",
-      value: { inbox: false }
-    }) as PreferencePotState;
-
-    mockUseIOSelector.mockReturnValue(servicePreferencePot);
-
-    renderHook();
-
-    expect(testingHookData.isLoading).toBe(false);
-    expect(testingHookData.isError).toBe(false);
-    expect(testingHookData.isEnabled).toBe(false);
-  });
-
-  it("should return correct values when service id is correct and preference is error", () => {
-    const servicePreferencePot = pot.someError(
-      {
+    const preferenceCases = [
+      pot.someLoading({
         id: pnServiceId,
         kind: "success",
         value: { inbox: true }
-      },
-      { id: pnServiceId, kind: "error", value: new Error("whatever") }
-    ) as unknown as PreferencePotState;
+      }),
+      pot.some({
+        id: pnServiceId,
+        kind: "success",
+        value: { inbox: true }
+      }),
+      pot.some({
+        id: pnServiceId,
+        kind: "success",
+        value: { inbox: false }
+      }),
+      pot.someError(
+        {
+          id: pnServiceId,
+          kind: "success",
+          value: { inbox: true }
+        },
+        { id: pnServiceId, kind: "error", value: new Error("whatever") }
+      )
+    ] as Array<PreferencePotState>;
+    const titles = [
+      "pot.someLoading",
+      "pot.some(true)",
+      "pot.some(false)",
+      "error"
+    ];
 
-    mockUseIOSelector.mockReturnValue(servicePreferencePot);
+    for (const [index, title] of titles.entries()) {
+      it(` when id is correct and preference is ${title}`, () => {
+        const servicePreferencePot = preferenceCases[+index];
 
-    renderHook();
+        mockServicePreferencePotSelector.mockReturnValue(servicePreferencePot);
 
-    expect(testingHookData.isLoading).toBe(false);
-    expect(testingHookData.isError).toBe(true);
-    expect(testingHookData.isEnabled).toBe(true);
+        renderHook();
+
+        expect(testingHookData).toEqual(expectedReturnTypes[+index]);
+      });
+    }
   });
-  it("should fetch new data and force a loading state when service id is wrong and preference is some", () => {
-    const servicePreferencePot = pot.some({
-      id: "WRONG_SID",
-      kind: "success",
-      value: { inbox: true }
-    }) as PreferencePotState;
 
-    mockUseIOSelector.mockReturnValue(servicePreferencePot);
+  it("should dispatch loadServicePreference, and return a loading state if service data is not already loaded", () => {
+    jest.spyOn(React, "useState").mockImplementation(() => [false, jest.fn()]);
+    const servicePreferencePot = pot.none;
+
+    mockServicePreferencePotSelector.mockReturnValue(servicePreferencePot);
 
     renderHook();
-
-    expect(mockDispatch).toHaveBeenCalledWith(
-      loadServicePreference.request(pnServiceId)
-    );
 
     expect(testingHookData.isLoading).toBe(true);
     expect(testingHookData.isError).toBe(false);
     expect(testingHookData.isEnabled).toBe(false);
+    expect(mockDispatch).toHaveBeenCalledWith(
+      loadServicePreference.request(pnServiceId)
+    );
   });
 });
 
