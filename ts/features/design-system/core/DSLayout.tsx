@@ -1,5 +1,6 @@
 import {
   Body,
+  BodySmall,
   ContentWrapper,
   Divider,
   H2,
@@ -8,11 +9,11 @@ import {
   IOAppMargin,
   IOColors,
   IOSpacer,
-  BodySmall,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
+import Placeholder from "rn-placeholder";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
