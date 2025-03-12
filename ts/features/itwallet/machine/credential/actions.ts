@@ -194,22 +194,33 @@ const trackDataShareEvent = (
       CredentialType.DRIVING_LICENSE
     );
 
-    /* Double check that we are arriving from the engagement message
-     * that leads to ItwIssuanceCredentialAsyncContinuationScreen
-     * and that there is an ongoing request for MDL.
-     * Therefore, clicking on the message/deep link will ensure that the
-     * phase is always correct, even in the case where there is an ongoing
-     * request for MDL or the credential is requested from ItwCredentialOnboardingSection.
+    /** Determine the correct phase based on the following conditions:
+     *
+     * - `initial_request`: No active request, user clicks on the driving license from the credential selection screen.
+     * - `request_in_progress`: An ongoing request is active, but the IPZS message has not yet been received, and the user clicks on the driving license from the credential selection screen again.
+     * - `old_message_request`: No active request, but the user clicks on an old IPZS message.
+     * - `async_continuation`: An ongoing request is active, and the user opens the IPZS message.
+     *
+     * This logic ensures that the phase is accurate regardless of whether
+     * there is an active MDL request or if the credential is requested
+     * from ItwCredentialOnboardingSection.
      */
     const trackingData = pipe(
       O.fromPredicate(() => credentialType === CredentialType.DRIVING_LICENSE)(
         credentialType
       ),
-      O.map(() =>
-        isAsyncContinuation && isMdlRequested
-          ? "async_continuation"
-          : "initial_request"
-      ),
+      O.map(() => {
+        if (isMdlRequested && isAsyncContinuation) {
+          return "async_continuation";
+        }
+        if (isMdlRequested && !isAsyncContinuation) {
+          return "request_in_progress";
+        }
+        if (!isMdlRequested && isAsyncContinuation) {
+          return "old_message_request";
+        }
+        return "initial_request";
+      }),
       O.fold(
         () => ({ credential }),
         phase => ({ credential, phase })
