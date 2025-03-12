@@ -12,7 +12,8 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import {
   CREDENTIALS_MAP,
   trackCredentialDetail,
-  trackWalletCredentialShowFAC_SIMILE
+  trackWalletCredentialShowFAC_SIMILE,
+  trackWalletCredentialShowTrustmark
 } from "../../../analytics";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
@@ -40,6 +41,8 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
+import { identificationRequest } from "../../../../../store/actions/identification.ts";
+import { useOfflineGuard } from "../../../../../hooks/useOfflineGuard.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -97,6 +100,8 @@ const ItwPresentationCredentialDetail = ({
   credential
 }: ItwPresentationCredentialDetailProps) => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
+
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -110,6 +115,36 @@ const ItwPresentationCredentialDetail = ({
       credential_status:
         credential.storedStatusAttestation?.credentialStatus || "not_valid"
     });
+  });
+
+  /**
+   * Show the credential trustmark screen after user identification
+   */
+  const handleTrustmarkPress = useOfflineGuard(() => {
+    trackWalletCredentialShowTrustmark(
+      CREDENTIALS_MAP[credential.credentialType]
+    );
+    dispatch(
+      identificationRequest(
+        false,
+        true,
+        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: () => {
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_TRUSTMARK,
+              params: {
+                credentialType: credential.credentialType
+              }
+            });
+          }
+        }
+      )
+    );
   });
 
   if (status === "unknown") {
@@ -137,7 +172,10 @@ const ItwPresentationCredentialDetail = ({
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
-          <ItwCredentialTrustmark credential={credential} />
+          <ItwCredentialTrustmark
+            credential={credential}
+            onPress={handleTrustmarkPress}
+          />
           <ItwPresentationDetailsFooter credential={credential} />
         </VStack>
       </ContentWrapper>

@@ -1,6 +1,7 @@
 import {
   AlertEdgeToEdgeWrapper,
   FooterActions,
+  useIOToast,
   IOColors
 } from "@pagopa/io-app-design-system";
 import { StatusBar } from "react-native";
@@ -22,6 +23,7 @@ import { startApplicationInitialization } from "../../../../store/actions/applic
  */
 export const withOfflineAlert =
   (Screen: React.ComponentType<any>) => (props: any) => {
+    const toast = useIOToast();
     const dispatch = useIODispatch();
     const isConnected = useIOSelector(isConnectedSelector);
 
@@ -35,6 +37,8 @@ export const withOfflineAlert =
         dispatch(startupLoadSuccess(StartupStatusEnum.INITIAL));
         // restart startup saga
         dispatch(startApplicationInitialization());
+      } else {
+        toast.error(I18n.t("features.itWallet.offline.modal.failure"));
       }
     };
 

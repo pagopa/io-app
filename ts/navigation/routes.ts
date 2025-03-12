@@ -118,6 +118,9 @@ const ROUTES = {
   // Used when the App is in background
   BACKGROUND: "BACKGROUND",
 
+  // No internet connection or missing session
+  OFFLINE_FAILURE: "OFFLINE_FAILURE",
+
   WORKUNIT_GENERIC_FAILURE: "WORKUNIT_GENERIC_FAILURE"
 } as const;
 
