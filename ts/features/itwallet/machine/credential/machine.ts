@@ -74,6 +74,7 @@ export const itwCredentialIssuanceMachine = setup({
     Idle: {
       description:
         "Waits for a credential selection in order to proceed with the issuance",
+      tags: [ItwTags.Loading],
       on: {
         "select-credential": [
           {
@@ -109,6 +110,7 @@ export const itwCredentialIssuanceMachine = setup({
     CheckingWalletInstanceAttestation: {
       description:
         "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not",
+      tags: [ItwTags.Loading],
       always: [
         {
           guard: not("hasValidWalletInstanceAttestation"),
@@ -172,14 +174,21 @@ export const itwCredentialIssuanceMachine = setup({
       }
     },
     DisplayingTrustIssuer: {
-      entry: ["navigateToTrustIssuerScreen", "trackCredentialIssuingDataShare"],
+      entry: ["trackCredentialIssuingDataShare"],
+      always: {
+        // If we are in the async continuation flow means we are already showing the trust issuer screen
+        // but on a different route. We need to avoid a navigation to show a "double" navigation animation.
+        guard: ({ context }) => !context.isAsyncContinuation,
+        actions: "navigateToTrustIssuerScreen"
+      },
       on: {
         "confirm-trust-data": {
           actions: "trackCredentialIssuingDataShareAccepted",
           target: "Issuance"
         },
         close: {
-          actions: ["closeIssuance"]
+          target: "Completed",
+          actions: "closeIssuance"
         }
       }
     },
@@ -253,9 +262,13 @@ export const itwCredentialIssuanceMachine = setup({
           ]
         },
         close: {
-          actions: ["closeIssuance"]
+          target: "Completed",
+          actions: "closeIssuance"
         }
       }
+    },
+    Completed: {
+      type: "final"
     },
     Failure: {
       entry: ["navigateToFailureScreen"],
@@ -271,10 +284,7 @@ export const itwCredentialIssuanceMachine = setup({
       ],
       on: {
         close: {
-          actions: ["closeIssuance"]
-        },
-        reset: {
-          target: "Idle"
+          actions: "closeIssuance"
         },
         retry: {
           target: "#itwCredentialIssuanceMachine.RequestingCredential"
