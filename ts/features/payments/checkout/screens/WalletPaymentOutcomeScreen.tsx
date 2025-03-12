@@ -57,7 +57,7 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
 
 const WalletPaymentOutcomeScreen = () => {
   useAvoidHardwareBackButton();
-  const { requestFeedback, bottomSheet: appReviewBottomSheet } =
+  const { requestFeedback, appReviewBottomSheet } =
     useAppReviewRequest("payments");
   const dispatch = useIODispatch();
   const { params } = useRoute<WalletPaymentOutcomeRouteProps>();

@@ -178,23 +178,6 @@
       "title": "Si è verificato un errore imprevisto",
       "message": "Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!"
     },
-    "appFeedback": {
-      "toast": {
-        "negativeFeedback": "Puoi lasciare i tuoi suggerimenti in ogni momento, visitando la sezione Impostazioni"
-      },
-      "alert": {
-        "title": "Ti piace l'app IO?",
-        "description": "Useremo la tua risposta per migliorare i nostri servizi.",
-        "continue": "Sì, mi piace",
-        "discard": "Non mi piace"
-      },
-      "bottomSheet": {
-        "title": "Ti va di dirci perché?",
-        "description": "Raccontaci cosa è andato storto nella tua esperienza con IO: useremo i tuoi suggerimenti per rendere l'app ancora più efficiente.",
-        "continue": "Dai un suggerimento",
-        "discard": "Non ora"
-      }
-    },
     "markdown": {
       "reference": "[demo]I am a custom demo tag at the beginning of the markdown[/demo]\n\n# Titolo h1: Lorem ipsum dolor sit amet, consectetur adipisici elit\n\nTesto semplice\n\n## Titolo h2: sed eiusmod tempor incidunt ut labore et dolore magna aliqua\n\ntesto semplice\n\n### Titolo h3: Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.\n\ntesto semplice\n\nLorem **ipsum dolor** sit amet, *consectetur* adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Unam incolunt Belgae, aliam Aquitani, tertiam.\n\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Magna pars studiorum, prodita quaerimus. Phasellus laoreet lorem vel dolor tempus vehicula. Fabio vel iudice vincam, sunt in culpa qui officia. Idque Caesaris facere voluntate liceret: sese habere. Tu quoque, Brute, fili mi, nihil timor populi, nihil!  \nNec dubitamus multa iter quae et nos invenerat. Cum sociis natoque penatibus et magnis dis parturient. Donec sed odio operae, eu vulputate felis rhoncus. Tityre, tu patulae recubans sub tegmine fagi dolor. At nos hinc posthac, sitientis piros Afros. Non equidem invideo, miror magis posuere velit aliquet.  \nHi omnes lingua, institutis, legibus inter se differunt. Quae vero auctorem tractata ab fiducia dicuntur. Plura mihi bona sunt, inclinet, amari petere vellent. Sed haec quis possit intrepidus aestimare tellus. Curabitur blandit tempus ardua ridiculus sed magna.\n\n[demo]I am a custom demo tag in the middle of the markdown[/demo]\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Fabio vel iudice vincam, sunt in culpa qui officia.\n\n\n> Quote o indent\n\nLista:\n\n- uno\n- due\n- tre\n\nLista numerata:\n\n1. uno\n2. due\n3. tre\n\n\nLink\n\n[esempio di link](https://ioapp.it/)\n\n\nEsempio link interni\n\n[home preferenze](ioit://PREFERENCES_HOME),\n[elenco servizi](ioit://SERVICES_HOME),\n[profilo](ioit://PROFILE_MAIN),\n[portafoglio](ioit://WALLET_HOME),\n[privacy](ioit://PROFILE_PRIVACY_MAIN),\n[Termini e condizioni d'uso](ioit://PROFILE_TOS),\n[privacy policy](ioit://PROFILE_PRIVACY)\n[lista messaggi](ioit://MESSAGES_LIST)\n\n\nhttps://help.github.com/articles/basic-writing-and-formatting-syntax/\n",
       "decodeError": "Il messaggio non può essere decodificato"
@@ -261,6 +244,23 @@
   },
   "tablet": {
     "message": "L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili."
+  },
+  "appFeedback": {
+    "toast": {
+      "negativeFeedback": "Puoi lasciare i tuoi suggerimenti in ogni momento, visitando la sezione Impostazioni"
+    },
+    "alert": {
+      "title": "Ti piace l'app IO?",
+      "description": "Useremo la tua risposta per migliorare i nostri servizi.",
+      "continue": "Sì, mi piace",
+      "discard": "Non mi piace"
+    },
+    "bottomSheet": {
+      "title": "Ti va di dirci perché?",
+      "description": "Raccontaci cosa è andato storto nella tua esperienza con IO: useremo i tuoi suggerimenti per rendere l'app ancora più efficiente.",
+      "continue": "Dai un suggerimento",
+      "discard": "Non ora"
+    }
   },
   "rooted": {
     "title": "Sembra che la sicurezza del tuo dispositivo sia compromessa!",

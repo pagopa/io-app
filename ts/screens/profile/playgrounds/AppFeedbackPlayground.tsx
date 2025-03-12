@@ -11,15 +11,15 @@ import { useAppReviewRequest } from "../../../features/appReviews/hooks/useAppRe
 export const AppFeedbackPlayground = () => {
   const {
     requestFeedback: requestFeedbackItw,
-    bottomSheet: itwFeedbackBottomSheet
+    appReviewBottomSheet: itwFeedbackBottomSheet
   } = useAppReviewRequest("itw");
   const {
     requestFeedback: requestFeedbackPayment,
-    bottomSheet: paymentsFeedbackBottomSheet
+    appReviewBottomSheet: paymentsFeedbackBottomSheet
   } = useAppReviewRequest("payments");
   const {
     requestFeedback: requestFeedbackGeneral,
-    bottomSheet: generalFeedbackBottomSheet
+    appReviewBottomSheet: generalFeedbackBottomSheet
   } = useAppReviewRequest();
   const dispatch = useIODispatch();
   const appReviewPositiveFeedbackLog = useIOSelector(

@@ -81,7 +81,8 @@ type DevActionButton = {
 
 const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
-  const { requestFeedback, bottomSheet } = useAppReviewRequest("general");
+  const { requestFeedback, appReviewBottomSheet } =
+    useAppReviewRequest("general");
 
   const handleClearCachePress = () => {
     Alert.alert(
@@ -185,7 +186,7 @@ const DeveloperActionsSection = () => {
 
   return (
     <>
-      {bottomSheet}
+      {appReviewBottomSheet}
       <FlatList
         ListHeaderComponent={<ListItemHeader label="Actions" />}
         scrollEnabled={false}
