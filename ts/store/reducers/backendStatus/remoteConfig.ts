@@ -24,6 +24,8 @@ import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVers
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
 import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
+import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
+import { TopicKeys } from "../../../features/appReviews/store/actions";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -413,6 +415,41 @@ export const landingScreenBannerOrderSelector = (state: GlobalState) =>
     O.chainNullableK(config => config.landing_banners),
     O.chainNullableK(banners => banners.priority_order),
     O.getOrElse(() => emptyArray)
+  );
+
+export const appFeedbackConfigSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): AppFeedbackConfig | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.app_feedback),
+      O.toUndefined
+    )
+);
+
+export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
+  createSelector(
+    appFeedbackConfigSelector,
+    (feedbackConfig): string | undefined =>
+      pipe(
+        feedbackConfig,
+        O.fromNullable,
+        O.map(config =>
+          config.feedback_uri[topic]
+            ? config.feedback_uri[topic]
+            : config.feedback_uri.general
+        ),
+        O.toUndefined
+      )
+  );
+
+export const appFeedbackEnabledSelector = (state: GlobalState) =>
+  pipe(state, remoteConfigSelector, remoteConfig =>
+    isPropertyWithMinAppVersionEnabled({
+      remoteConfig,
+      mainLocalFlag: true,
+      configPropertyName: "app_feedback"
+    })
   );
 
 /**
