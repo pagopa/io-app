@@ -33,7 +33,10 @@ import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
-import { watchItwSaga } from "../features/itwallet/common/saga";
+import {
+  watchItwSaga,
+  watchItwOfflineSaga
+} from "../features/itwallet/common/saga";
 import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
@@ -105,7 +108,6 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
-import { handleWalletCredentialsRehydration } from "../features/itwallet/credentials/saga/handleWalletCredentialsRehydration";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -227,8 +229,8 @@ export function* initializeApplicationSaga(
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
 
-  // Rehydrate wallet with ITW credentials
-  yield* fork(handleWalletCredentialsRehydration);
+  // Start watching for ITW sagas that do not require internet connection or a valid session
+  yield* fork(watchItwOfflineSaga);
 
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF

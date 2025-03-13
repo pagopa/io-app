@@ -62,6 +62,8 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_GENERIC_ERROR";
     case WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE:
       return "PAYMENT_NO_METHOD_SAVED_ERROR";
+    case WalletPaymentOutcomeEnum.PAYMENT_METHODS_EXPIRED:
+      return "PAYMENT_METHOD_EXPIRED";
     case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
       return "PAYMENT_UNKNOWN_OUTCOME_ERROR";
     case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
@@ -342,11 +344,57 @@ export const trackPaymentNoSavedMethodContinue = (
   );
 };
 
+export const trackOnboardPaymentMethodAction = (
+  outcome: WalletPaymentOutcomeEnum,
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  switch (outcome) {
+    case WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE:
+      return trackPaymentNoSavedMethodContinue(props);
+    case WalletPaymentOutcomeEnum.PAYMENT_METHODS_EXPIRED:
+      return trackPaymentExpiredMethodContinue(props);
+  }
+};
+
+export const trackOnboardPaymentMethodCloseAction = (
+  outcome: WalletPaymentOutcomeEnum,
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  switch (outcome) {
+    case WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE:
+      return trackPaymentNoSavedMethodExit(props);
+    case WalletPaymentOutcomeEnum.PAYMENT_METHODS_EXPIRED:
+      return trackPaymentExpiredMethodExit(props);
+  }
+};
+
+export const trackPaymentExpiredMethodContinue = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_METHOD_EXPIRED_CONTINUE",
+    buildEventProperties("UX", "action", {
+      ...props
+    })
+  );
+};
+
 export const trackPaymentNoSavedMethodExit = (
   props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_NO_SAVED_METHOD_EXIT",
+    buildEventProperties("UX", "action", {
+      ...props
+    })
+  );
+};
+
+export const trackPaymentExpiredMethodExit = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_METHOD_EXPIRED_DIFFERENT_METHOD",
     buildEventProperties("UX", "action", {
       ...props
     })

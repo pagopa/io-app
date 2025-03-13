@@ -86,6 +86,7 @@ export type AppParamsList = {
   [CGN_ROUTES.EYCA.ACTIVATION
     .MAIN]: NavigatorScreenParams<CgnEYCAActivationParamsList>;
 
+  [ROUTES.OFFLINE_FAILURE]: undefined;
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: undefined;
   [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>;
   [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
