@@ -1,33 +1,32 @@
+import { IOSkeleton, VStack } from "@pagopa/io-app-design-system";
+import { useLinkTo } from "@react-navigation/native";
 import { useCallback } from "react";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { useLinkTo } from "@react-navigation/native";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import I18n from "../../../../i18n";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
 import {
-  preconditionsCategoryTagSelector,
-  preconditionsContentMarkdownSelector,
-  preconditionsContentSelector
-} from "../../store/reducers/messagePrecondition";
-import I18n from "../../../../i18n";
-import {
   isIOMarkdownEnabledForMessagesAndServicesSelector,
   pnMinAppVersionSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
+import { trackDisclaimerLoadError } from "../../analytics";
 import {
   errorPreconditionStatusAction,
   shownPreconditionStatusAction,
   toErrorPayload,
   toShownPayload
 } from "../../store/actions/preconditions";
-import { trackDisclaimerLoadError } from "../../analytics";
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
+import {
+  preconditionsCategoryTagSelector,
+  preconditionsContentMarkdownSelector,
+  preconditionsContentSelector
+} from "../../store/reducers/messagePrecondition";
+import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
 import { PreconditionsFeedback } from "./PreconditionsFeedback";
 
 type PreconditionsContentProps = {
@@ -120,29 +119,11 @@ const PreconditionsContentError = () => (
 const PreconditionsContentSkeleton = () => (
   <View accessible={false}>
     {Array.from({ length: 3 }).map((_, i) => (
-      <View key={`pre_content_ske_${i}`}>
-        <Placeholder.Box
-          width={"100%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
-        <VSpacer size={8} />
-        <Placeholder.Box
-          width={"100%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
-        <VSpacer size={8} />
-        <Placeholder.Box
-          width={"90%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
-        <VSpacer size={8} />
-      </View>
+      <VStack space={8} key={`pre_content_ske_${i}`}>
+        <IOSkeleton shape="rectangle" width={"100%"} height={20} radius={4} />
+        <IOSkeleton shape="rectangle" width={"100%"} height={20} radius={4} />
+        <IOSkeleton shape="rectangle" width={"90%"} height={20} radius={4} />
+      </VStack>
     ))}
   </View>
 );

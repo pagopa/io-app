@@ -1,4 +1,5 @@
 import {
+  IOSkeleton,
   ListItemHeader,
   ListItemNav,
   ListItemNavAlert
@@ -16,7 +17,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { Skeleton } from "../../common/components/Skeleton";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 
 type Props = {
@@ -65,7 +65,9 @@ const InitiativeRefundSettingsComponent = (props: Props) => {
           accessibilityLabel={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}
-          description={<Skeleton width={100} height={21} />}
+          description={
+            <IOSkeleton shape="rectangle" width={100} height={21} radius={4} />
+          }
           onPress={() => null}
         />
       ),
@@ -124,7 +126,9 @@ const InitiativeRefundSettingsComponent = (props: Props) => {
           value={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
           )}
-          description={<Skeleton width={270} height={21} />}
+          description={
+            <IOSkeleton shape="rectangle" width={270} height={21} radius={4} />
+          }
           accessibilityLabel={`${I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
           )}, ${I18n.t("global.remoteStates.loading")}`}

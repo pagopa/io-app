@@ -1,11 +1,10 @@
 import {
-  IOColors,
+  IOSkeleton,
   IOStyles,
   IOVisualCostants,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import { ListItemMessageStandardHeight } from "./ListItemMessage";
 
 export const SkeletonHeight =
@@ -49,51 +48,45 @@ export const ListItemMessageSkeleton = ({
 }: ListItemMessageSkeletonProps) => (
   <View accessibilityLabel={accessibilityLabel} style={styles.container}>
     <View style={styles.serviceLogo}>
-      <Placeholder.Box
-        animate={"fade"}
-        color={IOColors["grey-100"]}
-        height={IOVisualCostants.avatarSizeSmall}
+      <IOSkeleton
+        shape="square"
+        size={IOVisualCostants.avatarSizeSmall}
         radius={IOVisualCostants.avatarRadiusSizeSmall}
-        width={IOVisualCostants.avatarSizeSmall}
       />
     </View>
     <View style={styles.textContainer}>
       <View style={styles.titleContainer}>
         <View style={styles.titleRow}>
-          <Placeholder.Box
-            animate={"fade"}
-            color={IOColors["grey-100"]}
-            radius={IOVisualCostants.avatarRadiusSizeSmall}
+          <IOSkeleton
+            shape="rectangle"
+            width="100%"
             height={16}
-            width={"100%"}
+            radius={IOVisualCostants.avatarRadiusSizeSmall}
           />
         </View>
         <View style={styles.timeContainer}>
-          <Placeholder.Box
-            animate={"fade"}
-            color={IOColors["grey-100"]}
-            radius={IOVisualCostants.avatarRadiusSizeSmall}
+          <IOSkeleton
+            shape="rectangle"
+            width="100%"
             height={16}
-            width={"100%"}
+            radius={IOVisualCostants.avatarRadiusSizeSmall}
           />
         </View>
       </View>
       <View style={styles.textRow1Container}>
-        <Placeholder.Box
-          animate={"fade"}
-          color={IOColors["grey-100"]}
-          radius={IOVisualCostants.avatarRadiusSizeSmall}
+        <IOSkeleton
+          shape="rectangle"
+          width="100%"
           height={8}
-          width={"100%"}
+          radius={IOVisualCostants.avatarRadiusSizeSmall}
         />
       </View>
       <View style={styles.textRow2Container}>
-        <Placeholder.Box
-          animate={"fade"}
-          color={IOColors["grey-100"]}
-          radius={IOVisualCostants.avatarRadiusSizeSmall}
+        <IOSkeleton
+          shape="rectangle"
+          width="100%"
           height={8}
-          width={"100%"}
+          radius={IOVisualCostants.avatarRadiusSizeSmall}
         />
       </View>
     </View>

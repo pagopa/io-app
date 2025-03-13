@@ -1,11 +1,11 @@
 import {
   Divider,
   HSpacer,
+  IOSkeleton,
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
 
 export const WalletPspListSkeleton = () => (
   <>
@@ -26,18 +26,18 @@ export const PspSkeleton = ({ showFeatured }: PspSkeletonProps) => (
     style={[IOStyles.flex, IOStyles.rowSpaceBetween, { marginVertical: 8 }]}
   >
     <View style={IOStyles.flex}>
-      <Placeholder.Box height={18} width="50%" radius={4} />
+      <IOSkeleton shape="rectangle" height={16} width="50%" radius={4} />
       {showFeatured && (
         <>
           <VSpacer size={8} />
-          <Placeholder.Line width="40%" />
+          <IOSkeleton shape="rectangle" height={16} width="40%" radius={4} />
         </>
       )}
     </View>
     <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
-      <Placeholder.Box height={18} width={26} radius={4} />
+      <IOSkeleton shape="rectangle" height={16} width={26} radius={4} />
       <HSpacer size={8} />
-      <Placeholder.Box height={26} width={26} radius={20} />
+      <IOSkeleton shape="rectangle" height={24} width={26} radius={20} />
     </View>
   </View>
 );

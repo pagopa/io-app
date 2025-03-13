@@ -1,6 +1,9 @@
-import { ListItemTransaction, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOSkeleton,
+  ListItemTransaction,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
 import { ReceiptFadeInOutAnimationView } from "./ReceiptFadeInOutAnimationView";
 
 export type ReceiptLoadingListProps = {
@@ -14,7 +17,7 @@ export const ReceiptLoadingList = ({
     {showSectionTitleSkeleton && (
       <View testID="section-title-skeleton">
         <VSpacer size={16} />
-        <Placeholder.Box animate="fade" radius={8} width={62} height={16} />
+        <IOSkeleton shape="rectangle" radius={8} width={62} height={16} />
         <VSpacer size={16} />
       </View>
     )}

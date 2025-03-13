@@ -1,7 +1,5 @@
-import { Fragment } from "react";
-import { View } from "react-native";
-import Placeholder from "rn-placeholder";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { IOSkeleton, VStack } from "@pagopa/io-app-design-system";
+import { DimensionValue, View } from "react-native";
 import I18n from "../../i18n";
 
 type LoadingSkeletonProps = {
@@ -9,7 +7,7 @@ type LoadingSkeletonProps = {
   testID?: string;
 };
 
-const skeletonLineWidths = [
+const skeletonLineWidths: Array<DimensionValue> = [
   "98%",
   "86%",
   "92%",
@@ -35,19 +33,17 @@ export const LoadingSkeleton = ({
       importantForAccessibility="no-hide-descendants"
       accessibilityElementsHidden={true}
     >
-      {[...Array(lines)].map((_, i) => (
-        <Fragment key={`MD_SK_RF_${i}`}>
-          <Placeholder.Box
+      <VStack space={8}>
+        {[...Array(lines)].map((_, i) => (
+          <IOSkeleton
+            key={`MD_SK_PB_${i}`}
+            shape="rectangle"
             width={skeletonLineWidths[i % skeletonLineWidths.length]}
-            animate={"fade"}
-            color={IOColors["grey-100"]}
             height={21}
             radius={4}
-            key={`MD_SK_PB_${i}`}
           />
-          {i + 1 < lines && <VSpacer size={8} key={`MD_SK_VS_${i}`} />}
-        </Fragment>
-      ))}
+        ))}
+      </VStack>
     </View>
   </View>
 );

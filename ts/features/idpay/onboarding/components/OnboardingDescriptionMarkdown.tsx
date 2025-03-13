@@ -1,31 +1,15 @@
+import { IOSkeleton, VSpacer } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
-import { VSpacer } from "@pagopa/io-app-design-system";
 
 const OnboardingDescriptionMarkdownSkeleton = () => (
   <>
     {Array.from({ length: 30 }).map((_, i) => (
       <View key={i}>
-        <Placeholder.Box
-          width={"100%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
+        <IOSkeleton shape="rectangle" width="100%" height={21} radius={4} />
         <VSpacer size={8} />
-        <Placeholder.Box
-          width={"100%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
+        <IOSkeleton shape="rectangle" width="100%" height={21} radius={4} />
         <VSpacer size={8} />
-        <Placeholder.Box
-          width={"90%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
+        <IOSkeleton shape="rectangle" width="90%" height={21} radius={4} />
         <VSpacer size={8} />
       </View>
     ))}

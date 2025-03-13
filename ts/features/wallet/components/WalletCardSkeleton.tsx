@@ -1,36 +1,45 @@
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, IOSkeleton, VStack } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
-import Placeholder, { BoxProps } from "rn-placeholder";
 import { withWalletCardBaseComponent } from "./WalletCardBaseComponent";
 
 const WalletCardSkeleton = withWalletCardBaseComponent(() => (
   <View style={styleSheet.card}>
     <View style={styleSheet.wrapper}>
       <View style={styleSheet.paymentInfo}>
-        <View style={{ width: "60%" }}>
-          <SkeletonPlaceholder height={24} width={"100%"} />
-        </View>
-        <View style={{ width: "20%" }}>
-          <SkeletonPlaceholder height={24} width={"100%"} />
-        </View>
+        <IOSkeleton
+          color={IOColors["grey-200"]}
+          shape="rectangle"
+          width={"60%"}
+          height={24}
+          radius={28}
+        />
+        <IOSkeleton
+          color={IOColors["grey-200"]}
+          shape="rectangle"
+          width={"20%"}
+          height={24}
+          radius={28}
+        />
       </View>
-      <View style={styleSheet.additionalInfo}>
-        <SkeletonPlaceholder height={18} width={"55%"} />
-        <VSpacer size={8} />
-        <SkeletonPlaceholder height={18} width={"45%"} />
-      </View>
+      <VStack space={8}>
+        <IOSkeleton
+          color={IOColors["grey-200"]}
+          shape="rectangle"
+          width={"55%"}
+          height={18}
+          radius={28}
+        />
+        <IOSkeleton
+          color={IOColors["grey-200"]}
+          shape="rectangle"
+          width={"45%"}
+          height={18}
+          radius={28}
+        />
+      </VStack>
     </View>
   </View>
 ));
-
-const SkeletonPlaceholder = (props: Pick<BoxProps, "width" | "height">) => (
-  <Placeholder.Box
-    animate="fade"
-    radius={28}
-    color={IOColors["grey-200"]}
-    {...props}
-  />
-);
 
 const borderColor = "#0000001F";
 
@@ -50,9 +59,6 @@ const styleSheet = StyleSheet.create({
   },
   paymentInfo: {
     flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  additionalInfo: {
     justifyContent: "space-between"
   }
 });

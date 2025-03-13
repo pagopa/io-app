@@ -13839,7 +13839,6 @@ __metadata:
     remark-rehype: ^9.1.0
     reselect: 4.0.0
     rn-nodeify: ^10.0.1
-    rn-placeholder: ^1.3.3
     rn-qr-generator: ^1.4.0
     semver: ^5.7.2
     sha.js: ^2.4.11
@@ -20539,7 +20538,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rn-placeholder@npm:1.3.3, rn-placeholder@npm:^1.3.3":
+"rn-placeholder@npm:1.3.3":
   version: 1.3.3
   resolution: "rn-placeholder@npm:1.3.3"
   dependencies:

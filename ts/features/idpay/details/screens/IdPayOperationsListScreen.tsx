@@ -3,6 +3,7 @@ import {
   ContentWrapper,
   Divider,
   HSpacer,
+  IOSkeleton,
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -12,8 +13,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useRef } from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
-import Placeholder from "rn-placeholder";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -22,7 +23,6 @@ import { useTimelineDetailsBottomSheet } from "../../timeline/components/Timelin
 import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
 import { useInitiativeTimelineFetcher } from "../hooks/useInitiativeTimelineFetcher";
 import { IDPayDetailsParamsList } from "../navigation";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 
 export type IdPayOperationsListScreenParams = { initiativeId: string };
 
@@ -92,9 +92,7 @@ export const IdPayOperationsListScreen = () => {
       )
     ),
     O.fold(
-      () => (
-        <Placeholder.Box animate="fade" height={18} width={70} radius={4} />
-      ),
+      () => <IOSkeleton shape="rectangle" height={18} width={70} radius={4} />,
       dateString => <Body weight="Semibold">{dateString}</Body>
     )
   );

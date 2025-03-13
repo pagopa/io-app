@@ -1,6 +1,9 @@
-import { Divider, IOVisualCostants } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  IOSkeleton,
+  IOVisualCostants
+} from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
 
 type Props = {
   hasIcons?: boolean;
@@ -16,19 +19,17 @@ export function CgnMerchantListSkeleton(props: Props) {
         <View key={index} testID={`CgnMerchantListSkeleton-Item-${index}`}>
           <View
             style={{
+              paddingVertical: 13,
               paddingHorizontal: hasIcons
                 ? 0
                 : IOVisualCostants.appMarginDefault
             }}
           >
-            <Placeholder.Box
-              animate="fade"
+            <IOSkeleton
+              shape="rectangle"
               height={24}
               radius={8}
               width="100%"
-              style={{
-                marginVertical: 13
-              }}
               testID={`CgnMerchantListSkeleton-Placeholder-${index}`}
             />
           </View>

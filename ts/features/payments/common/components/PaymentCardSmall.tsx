@@ -1,5 +1,6 @@
 import {
   IOColors,
+  IOSkeleton,
   IOStyles,
   Icon,
   LabelMini,
@@ -7,7 +8,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import { WithTestID } from "../../../../types/WithTestID";
 import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
@@ -96,20 +96,19 @@ const PaymentCardSmall = ({
 
 const PaymentCardSmallSkeleton = ({ testID }: WithTestID<unknown>) => (
   <View style={styles.card} testID={`${testID}-skeleton`}>
-    <Placeholder.Box
+    <IOSkeleton
       color={IOColors["grey-200"]}
-      animate="fade"
+      shape="square"
+      size={24}
       radius={12}
-      width={24}
-      height={24}
     />
     <VSpacer size={8} />
-    <Placeholder.Box
+    <IOSkeleton
       color={IOColors["grey-200"]}
-      animate="fade"
-      radius={8}
+      shape="rectangle"
       width={"100%"}
       height={16}
+      radius={8}
     />
   </View>
 );

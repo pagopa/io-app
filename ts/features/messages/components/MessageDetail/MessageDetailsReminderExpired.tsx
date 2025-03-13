@@ -1,7 +1,6 @@
-import { Alert, IOAlertRadius } from "@pagopa/io-app-design-system";
-import Placeholder from "rn-placeholder";
-import { localeDateFormat } from "../../../../utils/locale";
+import { Alert, IOAlertRadius, IOSkeleton } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
+import { localeDateFormat } from "../../../../utils/locale";
 
 type MessageDetailsReminderExpiredProps = {
   dueDate: Date;
@@ -13,8 +12,8 @@ export const MessageDetailsReminderExpired = ({
   isLoading
 }: MessageDetailsReminderExpiredProps) =>
   isLoading ? (
-    <Placeholder.Box
-      animate="shine"
+    <IOSkeleton
+      shape="rectangle"
       height={84}
       width={"100%"}
       radius={IOAlertRadius}

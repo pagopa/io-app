@@ -1,16 +1,16 @@
 import {
   Avatar,
+  BodySmall,
   H3,
   IOColors,
+  IOSkeleton,
   IOSpacingScale,
   IOStyles,
   IOVisualCostants,
-  BodySmall,
   useIOTheme,
-  VSpacer
+  VStack
 } from "@pagopa/io-app-design-system";
 import { ImageURISource, StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
 const AVATAR_MARGIN_RIGHT: IOSpacingScale = 16;
@@ -73,38 +73,35 @@ export const ServicesHeaderSkeleton = () => (
     testID="services-header-skeleton"
   >
     <View style={styles.itemAvatar}>
-      <Placeholder.Box
-        width={IOVisualCostants.avatarSizeMedium}
-        height={IOVisualCostants.avatarSizeMedium}
-        animate="fade"
+      <IOSkeleton
+        color={IOColors["grey-200"]}
+        shape="square"
+        size={IOVisualCostants.avatarSizeMedium}
         radius={IOVisualCostants.avatarRadiusSizeMedium}
-        color={IOColors["grey-200"]}
       />
     </View>
-    <View style={IOStyles.flex}>
-      <Placeholder.Box
-        animate="fade"
+    <VStack space={8} style={{ flex: 1 }}>
+      <IOSkeleton
         color={IOColors["grey-200"]}
-        height={16}
+        shape="rectangle"
         width={"100%"}
-        radius={8}
-      />
-      <VSpacer size={8} />
-      <Placeholder.Box
-        animate="fade"
-        color={IOColors["grey-200"]}
         height={16}
-        width={"80%"}
         radius={8}
       />
-      <VSpacer size={8} />
-      <Placeholder.Box
-        animate="fade"
+      <IOSkeleton
         color={IOColors["grey-200"]}
-        height={8}
-        width={"60%"}
+        shape="rectangle"
+        width={"80%"}
+        height={16}
         radius={8}
       />
-    </View>
+      <IOSkeleton
+        color={IOColors["grey-200"]}
+        shape="rectangle"
+        width={"60%"}
+        height={8}
+        radius={8}
+      />
+    </VStack>
   </View>
 );

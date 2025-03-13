@@ -1,3 +1,11 @@
+import {
+  ButtonOutline,
+  ContentWrapper,
+  H6,
+  IOSkeleton,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as E from "fp-ts/lib/Either";
@@ -6,20 +14,11 @@ import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  ButtonOutline,
-  VSpacer,
-  Pictogram,
-  ContentWrapper,
-  H6
-} from "@pagopa/io-app-design-system";
-import Placeholder from "rn-placeholder";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../definitions/idpay/TransactionDetailDTO";
 import { ChannelEnum } from "../../../../../definitions/idpay/TransactionOperationDTO";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -154,16 +153,16 @@ const useTimelineDetailsBottomSheet = (
 };
 
 const TitleSkeleton = () => (
-  <Placeholder.Box animate="fade" width={100} height={21} radius={4} />
+  <IOSkeleton shape="rectangle" width={100} height={20} radius={4} />
 );
 
 const ContentSkeleton = () => (
   <View style={{ paddingTop: 10, paddingBottom: 16 }}>
     {Array.from({ length: 6 }).map((_, i) => (
       <View key={i} style={{ paddingVertical: 8 }}>
-        <View style={IOStyles.rowSpaceBetween}>
-          <Placeholder.Box animate="fade" width={100} height={21} radius={4} />
-          <Placeholder.Box animate="fade" width={150} height={21} radius={4} />
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <IOSkeleton shape="rectangle" width={100} height={21} radius={4} />
+          <IOSkeleton shape="rectangle" width={150} height={21} radius={4} />
         </View>
       </View>
     ))}

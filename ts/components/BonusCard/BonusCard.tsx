@@ -4,6 +4,7 @@ import {
   H2,
   HSpacer,
   IOColors,
+  IOSkeleton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 
@@ -14,7 +15,6 @@ import {
   widthPercentageToDP
 } from "react-native-responsive-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Placeholder from "rn-placeholder";
 import { BonusCardCounter } from "./BonusCardCounter";
 import { BonusCardShape } from "./BonusCardShape";
 import { BonusCardStatus } from "./BonusCardStatus";
@@ -137,29 +137,28 @@ const BonusCardSkeleton = (props: BaseProps) => {
     <View style={styles.content} testID="BonusCardSkeletonTestID">
       {!props.hideLogo && (
         <>
-          <Placeholder.Box
-            height={66}
-            width={66}
+          <IOSkeleton
             color={placeholderColor}
-            animate="fade"
+            shape="square"
+            size={66}
             radius={8}
           />
           <VSpacer size={24} />
         </>
       )}
-      <Placeholder.Box
+      <IOSkeleton
+        color={placeholderColor}
+        shape="rectangle"
         height={28}
         width={198}
-        color={placeholderColor}
-        animate="fade"
         radius={28}
       />
       <VSpacer size={8} />
-      <Placeholder.Box
+      <IOSkeleton
+        color={placeholderColor}
+        shape="rectangle"
         height={28}
         width={108}
-        color={placeholderColor}
-        animate="fade"
         radius={28}
       />
       <VSpacer size={16} />

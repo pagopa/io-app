@@ -1,7 +1,6 @@
-import { IOColors } from "@pagopa/io-app-design-system";
-import { useState, useEffect } from "react";
+import { IOColors, IOSkeleton } from "@pagopa/io-app-design-system";
+import { useEffect, useState } from "react";
 import { Image } from "react-native";
-import Placeholder from "rn-placeholder";
 import { getBankLogosCdnUri } from "../../../../../components/ui/utils/strings";
 
 type BankLogoOrSkeletonProps = {
@@ -60,9 +59,9 @@ export const BankLogoOrSkeleton = ({
       }}
     />
   ) : (
-    <Placeholder.Box
+    <IOSkeleton
       color={IOColors[placeHolderColor]}
-      animate="fade"
+      shape="rectangle"
       radius={8}
       height={height}
       width={width}

@@ -1,6 +1,11 @@
-import Placeholder from "rn-placeholder";
+import {
+  H3,
+  H6,
+  IOSkeleton,
+  IOStyles,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { H3, H6, IOStyles, useIOTheme } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { formatAmountText } from "../utils";
 
@@ -21,7 +26,7 @@ export const ReceiptTotalAmount = ({ totalAmount, loading }: Props) => {
       </H6>
       {loading && (
         <View testID="loader">
-          <Placeholder.Box width={72} height={34} animate="fade" radius={8} />
+          <IOSkeleton shape="rectangle" width={72} height={34} radius={8} />
         </View>
       )}
       {!loading && totalAmount && (
