@@ -838,7 +838,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -2124,7 +2124,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -3410,7 +3410,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -4696,7 +4696,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -5982,7 +5982,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -7268,7 +7268,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -8554,7 +8554,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -9840,7 +9840,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -11126,7 +11126,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -12412,7 +12412,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -13698,7 +13698,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -14984,7 +14984,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -16270,7 +16270,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -17556,7 +17556,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -18842,7 +18842,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -20128,7 +20128,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -21414,7 +21414,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -22700,7 +22700,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
