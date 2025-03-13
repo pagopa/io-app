@@ -1,4 +1,13 @@
-import { normalizedDiscountPercentage, isValidDiscount } from "../index";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { Discount } from "../../../../../../../../definitions/cgn/merchants/Discount";
+import { ProductCategoryEnum } from "../../../../../../../../definitions/cgn/merchants/ProductCategory";
+import I18n from "../../../../../../../i18n";
+import {
+  isValidDiscount,
+  moduleCGNaccessibilityLabel,
+  normalizedDiscountPercentage
+} from "../index";
+import { categories } from "../../../../utils/filters";
 
 describe("normalizedDiscountPercentage", () => {
   it("should return the discount as a string if within range", () => {
@@ -27,5 +36,94 @@ describe("isValidDiscount", () => {
 
   it("should return false if the discount is undefined", () => {
     expect(isValidDiscount()).toBe(false);
+  });
+});
+
+describe("moduleCGNaccessibilityLabel", () => {
+  const mockDiscount: Discount = {
+    name: "name" as NonEmptyString,
+    discount: 50,
+    productCategories: [ProductCategoryEnum.bankingServices],
+    isNew: true,
+    endDate: new Date(),
+    id: "id" as NonEmptyString,
+    startDate: new Date()
+  };
+
+  it("should return the correct accessibility label", () => {
+    const accessibilityLabel = moduleCGNaccessibilityLabel(mockDiscount);
+    expect(accessibilityLabel).toContain(mockDiscount.name);
+    expect(accessibilityLabel).toContain(
+      I18n.t("bonus.cgn.merchantsList.news")
+    );
+    expect(accessibilityLabel).toContain(
+      I18n.t("bonus.cgn.merchantsList.discountOf", {
+        discount: normalizedDiscountPercentage(mockDiscount.discount)
+      })
+    );
+    expect(accessibilityLabel).toContain(
+      I18n.t("bonus.cgn.merchantsList.filter.categories")
+    );
+  });
+
+  it("should return the correct accessibility label with no discount", () => {
+    const accessibilityLabel = moduleCGNaccessibilityLabel({
+      ...mockDiscount,
+      discount: undefined
+    });
+    expect(accessibilityLabel).toContain(mockDiscount.name);
+    expect(accessibilityLabel).toContain(
+      I18n.t("bonus.cgn.merchantsList.news")
+    );
+    expect(accessibilityLabel).not.toContain(
+      I18n.t("bonus.cgn.merchantsList.discountOf", {
+        discount: normalizedDiscountPercentage(mockDiscount.discount)
+      })
+    );
+  });
+
+  it("should return the correct accessibility label with no new label", () => {
+    const accessibilityLabel = moduleCGNaccessibilityLabel({
+      ...mockDiscount,
+      isNew: false
+    });
+    expect(accessibilityLabel).toContain(mockDiscount.name);
+    expect(accessibilityLabel).not.toContain(
+      I18n.t("bonus.cgn.merchantsList.news")
+    );
+  });
+
+  it("should return the correct accessibility label with no discount and no new", () => {
+    const accessibilityLabel = moduleCGNaccessibilityLabel({
+      ...mockDiscount,
+      discount: undefined,
+      isNew: false
+    });
+    expect(accessibilityLabel).toContain(mockDiscount.name);
+    expect(accessibilityLabel).not.toContain(
+      I18n.t("bonus.cgn.merchantsList.news")
+    );
+    expect(accessibilityLabel).not.toContain(
+      I18n.t("bonus.cgn.merchantsList.discountOf", {
+        discount: normalizedDiscountPercentage(mockDiscount.discount)
+      })
+    );
+  });
+
+  it("should return the correct accessibility label with multiple categories", () => {
+    const accessibilityLabel = moduleCGNaccessibilityLabel({
+      ...mockDiscount,
+      productCategories: [
+        ProductCategoryEnum.bankingServices,
+        ProductCategoryEnum.health
+      ]
+    });
+    expect(accessibilityLabel).toContain(mockDiscount.name);
+    expect(accessibilityLabel).toContain(
+      I18n.t(categories[ProductCategoryEnum.bankingServices].nameKey)
+    );
+    expect(accessibilityLabel).toContain(
+      I18n.t(categories[ProductCategoryEnum.health].nameKey)
+    );
   });
 });
