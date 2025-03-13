@@ -796,7 +796,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -2215,7 +2215,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -3635,7 +3635,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -5055,7 +5055,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
@@ -6767,7 +6767,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+                                Upon request of the sender, receive push notifications close to deadlines
                               </Text>
                             </View>
                             <View
