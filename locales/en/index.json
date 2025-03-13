@@ -3542,7 +3542,8 @@
             "byDistance": "By proximity to your location",
             "byName": "Alphabetical order"
           }
-        }
+        },
+        "discountOf": "Discount of {{discount}}%"
       },
       "merchantDetail": {
         "title": {
