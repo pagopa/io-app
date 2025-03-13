@@ -176,6 +176,12 @@ const WalletPaymentOutcomeScreen = () => {
     onPress: handleContactSupport
   };
 
+  const resetWalletPaymentStep = () => {
+    dispatch(
+      walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
+    );
+  };
+
   const getOnboardPaymentMethodCloseAction: () => OperationResultScreenContentProps["action"] =
     () => {
       const trackingData = {
@@ -196,6 +202,7 @@ const WalletPaymentOutcomeScreen = () => {
         ),
         onPress: () => {
           analytics.trackOnboardPaymentMethodCloseAction(outcome, trackingData);
+          resetWalletPaymentStep();
           navigation.navigate(
             PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
             {
@@ -225,11 +232,6 @@ const WalletPaymentOutcomeScreen = () => {
         ),
         onPress: () => {
           analytics.trackOnboardPaymentMethodAction(outcome, trackingData);
-          dispatch(
-            walletPaymentSetCurrentStep(
-              WalletPaymentStepEnum.PICK_PAYMENT_METHOD
-            )
-          );
           navigation.navigate(
             PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
             {

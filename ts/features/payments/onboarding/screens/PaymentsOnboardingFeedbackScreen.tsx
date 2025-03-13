@@ -115,6 +115,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const handleContinueButton = () => {
     navigation.popToTop();
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS && walletId) {
+      dispatch(getPaymentsWalletUserMethods.request());
       if (rptIdToResume) {
         // Resume payment flow
         // This implementation will be removed as soon as the backend will migrate totally to the NPG allowing the contextual onboarding. (https://pagopa.atlassian.net/browse/IOBP-632)
@@ -123,7 +124,6 @@ const PaymentsOnboardingFeedbackScreen = () => {
         });
         return;
       }
-      dispatch(getPaymentsWalletUserMethods.request());
       navigation.reset({
         index: 1,
         routes: [
