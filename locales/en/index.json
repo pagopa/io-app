@@ -2529,6 +2529,12 @@
           "primaryAction": "Aggiungi carta",
           "secondaryAction": "Usa altri metodi"
         },
+        "PAYMENT_METHODS_EXPIRED": {
+          "title": "Your card is expired!",
+          "subtitle": "Remove the card and add a new one.\nIt will be saved in your Wallet, making it easier for you to pay next time.",
+          "primaryAction": "Add card",
+          "secondaryAction": "Use other methods"
+        },
         "PAYMENT_REVERSED": {
           "title": "Il pagamento non è andato a buon fine",
           "subtitle": "L’importo autorizzato è stato rimborsato sul tuo metodo di pagamento. Il trasferimento di denaro potrebbe richiedere del tempo.",
