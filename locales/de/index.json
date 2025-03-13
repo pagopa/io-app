@@ -23,15 +23,7 @@
       "Freitag",
       "Samstag"
     ],
-    "abbr_day_names": [
-      "So.",
-      "Mo.",
-      "Di.",
-      "Mi.",
-      "Do.",
-      "Fr.",
-      "Sa."
-    ],
+    "abbr_day_names": ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
     "month_names": [
       " ",
       "Januar",
@@ -62,10 +54,7 @@
       "Nov.",
       "Dez."
     ],
-    "meridian": [
-      "am",
-      "pm"
-    ]
+    "meridian": ["am", "pm"]
   },
   "global": {
     "why": "Warum?",
@@ -2998,7 +2987,8 @@
             "byDistance": "Nach der Nähe zu deinem Standort",
             "byName": "Alphabetisch geordnet"
           }
-        }
+        },
+        "discountOf": "Rabatt des {{discount}}%"
       },
       "merchantDetail": {
         "title": {

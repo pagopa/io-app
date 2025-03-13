@@ -149,7 +149,16 @@ export const ID_STATUS_MAP: Record<
 
 type ItwWalletDataShare = {
   credential: MixPanelCredential;
-  phase?: "initial_request" | "async_continuation";
+  phase?:
+    | "initial_request"
+    | "request_in_progress"
+    | "old_message_request"
+    | "async_continuation";
+};
+
+type ItwCopyListItem = {
+  credential: MixPanelCredential;
+  item_copied: string;
 };
 
 // #region SCREEN VIEW EVENTS
@@ -514,6 +523,13 @@ export function trackCredentialCardModal(credential: MixPanelCredential) {
     })
   );
 }
+
+export const trackCopyListItem = (properties: ItwCopyListItem) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_COPY_LIST_ITEM,
+    buildEventProperties("UX", "action", properties)
+  );
+};
 
 // #endregion ACTIONS
 
