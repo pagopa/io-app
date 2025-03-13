@@ -33,6 +33,7 @@ import {
 } from "../types/OnboardingOutcomeEnum";
 import { usePaymentFailureSupportModal } from "../../checkout/hooks/usePaymentFailureSupportModal";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -67,6 +68,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const selectedPaymentMethodId = useIOSelector(
     selectPaymentOnboardingSelectedMethod
   );
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const availablePaymentMethods = pot.toUndefined(paymentMethodsPot);
 
   const rptIdToResume = useIOSelector(selectPaymentOnboardingRptIdToResume);
@@ -113,13 +115,15 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const handleContinueButton = () => {
     navigation.popToTop();
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS && walletId) {
+      dispatch(getPaymentsWalletUserMethods.request());
       if (rptIdToResume) {
         // Resume payment flow
-        // This implementation will be removed as soon as the backend will migrate totally to the NPG. (https://pagopa.atlassian.net/browse/IOBP-632)
-        startPaymentFlow(rptIdToResume);
+        // This implementation will be removed as soon as the backend will migrate totally to the NPG allowing the contextual onboarding. (https://pagopa.atlassian.net/browse/IOBP-632)
+        startPaymentFlow(rptIdToResume, {
+          startOrigin: paymentAnalyticsData?.startOrigin
+        });
         return;
       }
-      dispatch(getPaymentsWalletUserMethods.request());
       navigation.reset({
         index: 1,
         routes: [
