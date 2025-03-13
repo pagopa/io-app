@@ -2,6 +2,10 @@
 
 exports[`featuresPersistor should match snapshot 1`] = `
 {
+  "appFeedback": {
+    "negativeFeedbackDate": {},
+    "positiveFeedbackDate": "",
+  },
   "appearanceSettings": {
     "showAppearanceBanner": true,
   },
