@@ -1,7 +1,10 @@
 import { constNull, constUndefined } from "fp-ts/lib/function";
 import PushNotification from "react-native-push-notification";
 import { Platform } from "react-native";
+import { Store } from "redux";
 import configurePushNotifications from "../configurePushNotification";
+import { GlobalState } from "../../../../store/reducers/types";
+import { Action } from "../../../../store/actions/types";
 
 jest.mock("../../../../boot/configureStoreAndPersistor", () => ({
   get store() {
@@ -20,7 +23,8 @@ describe("configurePushNotifications", () => {
       .spyOn(PushNotification, "configure")
       .mockImplementation(constUndefined);
 
-    configurePushNotifications();
+    const mockStore = {} as Store<GlobalState, Action>;
+    configurePushNotifications(mockStore);
 
     expect(createChannelSpy.mock.calls.length).toBe(1);
     expect(createChannelSpy.mock.calls[0][0]).toEqual({
