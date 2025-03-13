@@ -47,6 +47,7 @@ import {
 import { cgnOtpDataSelector } from "../../store/reducers/otp";
 import { getCgnUserAgeRange } from "../../utils/dates";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
+import { buildEventProperties } from "../../../../../utils/analytics";
 
 const gradientSafeAreaHeight: IOSpacingScale = 96;
 
@@ -84,11 +85,15 @@ const CgnDiscountDetailScreen = () => {
 
   const mixpanelCgnEvent = useCallback(
     (eventName: string) =>
-      void mixpanelTrack(eventName, {
-        userAge: cgnUserAgeRange,
-        categories: discountDetails?.productCategories,
-        operator_name: merchantDetails?.name
-      }),
+      void mixpanelTrack(
+        eventName,
+        buildEventProperties("UX", "action", {
+          userAge: cgnUserAgeRange,
+          categories: discountDetails?.productCategories,
+          operator_name: merchantDetails?.name,
+          merchant_business_name: merchantDetails?.fullName
+        })
+      ),
     [cgnUserAgeRange, discountDetails, merchantDetails]
   );
 
