@@ -69,9 +69,8 @@ const mockModal = {
   dismiss: jest.fn(),
   bottomSheet: <View testID="modal-view-test" />
 };
-const mockedUseIOBottomSheetAutoresizableModal =
-  useIOBottomSheetModal as jest.Mock;
-mockedUseIOBottomSheetAutoresizableModal.mockReturnValue(mockModal);
+const mockedUseIOBottomSheetModal = useIOBottomSheetModal as jest.Mock;
+mockedUseIOBottomSheetModal.mockReturnValue(mockModal);
 
 describe("WalletPaymentPickPspScreen", () => {
   const renderComponent = () => {

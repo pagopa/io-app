@@ -18,8 +18,7 @@ jest.mock("../../../utils/hooks/bottomSheet");
 jest.mock("../../../utils/url");
 jest.mock("../../../navigation/params/AppParamsList");
 
-const mockedUseIOBottomSheetAutoresizableModal =
-  useIOBottomSheetModal as jest.Mock;
+const mockedUseIOBottomSheetModal = useIOBottomSheetModal as jest.Mock;
 const mockedOpenWebUrl = openWebUrl as jest.Mock;
 const mockedUseIONavigation = useIONavigation as jest.Mock;
 
@@ -30,7 +29,7 @@ describe("UnlockAccessComponent", () => {
 
   beforeEach(() => {
     mockedUseIONavigation.mockReturnValue(mockNavigation);
-    mockedUseIOBottomSheetAutoresizableModal.mockReturnValue({
+    mockedUseIOBottomSheetModal.mockReturnValue({
       present: jest.fn(),
       bottomSheet: null
     });
@@ -77,7 +76,7 @@ describe("UnlockAccessComponent", () => {
   it("calls present modal when learn more link is pressed", () => {
     const presentMock = jest.fn();
     const bottomSheetMock = <View testID="modal-view-test" />;
-    mockedUseIOBottomSheetAutoresizableModal.mockReturnValueOnce({
+    mockedUseIOBottomSheetModal.mockReturnValueOnce({
       present: presentMock,
       bottomSheet: bottomSheetMock
     });

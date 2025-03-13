@@ -11,7 +11,7 @@ import SecuritySuggestions from "../features/fastLogin/components/SecuritySugges
 
 /**
  * @param useManualBottomsheetOpening if true the caller must use the methods exported by
- * useIOBottomSheetAutoresizableModal whitout automation on bottomsheet opening.
+ * useIOBottomSheetModal whitout automation on bottomsheet opening.
  */
 
 export const useSecuritySuggestionsBottomSheet = (
