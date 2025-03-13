@@ -2987,7 +2987,8 @@
             "byDistance": "Nach der Nähe zu deinem Standort",
             "byName": "Alphabetisch geordnet"
           }
-        }
+        },
+        "discountOf": "Rabatt des {{discount}}%"
       },
       "merchantDetail": {
         "title": {
