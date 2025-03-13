@@ -29,6 +29,7 @@ import { isGestureEnabled } from "../utils/navigation";
 import TrialSystemPlayground from "../screens/profile/TrialSystemPlayground";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import { IOMarkdownPlayground } from "../screens/profile/playgrounds/IOMarkdownPlayground";
+import { AppFeedbackPlayground } from "../screens/profile/playgrounds/AppFeedbackPlayground";
 import AppearancePreferenceScreen from "../screens/profile/AppearancePreferenceScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
@@ -117,6 +118,10 @@ const ProfileStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.IO_MARKDOWN_PLAYGROUND}
       component={IOMarkdownPlayground}
+    />
+    <Stack.Screen
+      name={ROUTES.APP_FEEDBACK_PLAYGROUND}
+      component={AppFeedbackPlayground}
     />
     <Stack.Screen
       options={{
