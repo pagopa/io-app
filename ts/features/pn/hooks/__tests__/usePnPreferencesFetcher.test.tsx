@@ -5,7 +5,6 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { useIODispatch } from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
-import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
@@ -126,10 +125,7 @@ const renderHook = () => {
     testingHookData = data;
     return <></>;
   };
-  const globalState = appReducer(
-    {} as GlobalState,
-    applicationChangeState("active")
-  );
+  const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext(
     Component,
     PN_ROUTES.ACTIVATION_BANNER_FLOW,
