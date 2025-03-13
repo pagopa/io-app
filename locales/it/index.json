@@ -253,6 +253,23 @@
   "tablet": {
     "message": "L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili."
   },
+  "appFeedback": {
+    "toast": {
+      "negativeFeedback": "Puoi lasciare i tuoi suggerimenti in ogni momento, visitando la sezione Impostazioni"
+    },
+    "alert": {
+      "title": "Ti piace l'app IO?",
+      "description": "Useremo la tua risposta per migliorare i nostri servizi.",
+      "continue": "Sì, mi piace",
+      "discard": "Non mi piace"
+    },
+    "bottomSheet": {
+      "title": "Ti va di dirci perché?",
+      "description": "Raccontaci cosa è andato storto nella tua esperienza con IO: useremo i tuoi suggerimenti per rendere l'app ancora più efficiente.",
+      "continue": "Dai un suggerimento",
+      "discard": "Non ora"
+    }
+  },
   "rooted": {
     "title": "Sembra che la sicurezza del tuo dispositivo sia compromessa!",
     "body": "Se premi su ‘Continua’, accetti di proseguire a tuo rischio nella navigazione, altrimenti chiudi l’app.",
@@ -367,6 +384,10 @@
       "spid": "PROFILO SPID"
     },
     "unknown": "SCONOSCIUTO",
+    "appFeedback": {
+      "reviewLabel": "Valuta l'app",
+      "feedbackLabel": "Hai un suggerimento?"
+    },
     "logout": {
       "menulabel": "Esci da IO",
       "alertTitle": "Vuoi davvero uscire?",
@@ -3521,7 +3542,8 @@
             "byDistance": "Per vicinanza alla tua posizione",
             "byName": "Ordine alfabetico"
           }
-        }
+        },
+        "discountOf": "Sconto del {{discount}}%"
       },
       "merchantDetail": {
         "title": {
