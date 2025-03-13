@@ -6,7 +6,6 @@ import {
   trackSettingsDiscoverBannerVisualized
 } from "..";
 import { GlobalState } from "../../../../store/reducers/types";
-import { NotificationsState } from "../../../../features/pushNotifications/store/reducers";
 
 describe("index", () => {
   afterEach(() => {
