@@ -8,6 +8,7 @@ import {
   EmitterSubscription,
   NativeEventSubscription
 } from "react-native";
+import { Store } from "redux";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
@@ -27,8 +28,10 @@ import {
   preferredLanguageSelector
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
+import { Action } from "./store/actions/types";
 
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  typeof mapDispatchToProps & { store: Store<GlobalState, Action> };
 
 /**
  * The main container of the application with:
@@ -44,7 +47,7 @@ class RootContainer extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
     /* Configure the application to receive push notifications */
-    configurePushNotifications();
+    configurePushNotifications(props.store);
   }
 
   private handleApplicationActivity = (activity: AppStateStatus) =>
