@@ -2505,6 +2505,12 @@
           "primaryAction": "Aggiungi carta",
           "secondaryAction": "Usa altri metodi"
         },
+        "PAYMENT_METHODS_EXPIRED": {
+          "title": "La tua carta è scaduta!",
+          "subtitle": "Rimuovi la carta e aggiungine una nuova.\nVerrà salvata nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
+          "primaryAction": "Aggiungi carta",
+          "secondaryAction": "Usa altri metodi"
+        },
         "PAYMENT_REVERSED": {
           "title": "Il pagamento non è andato a buon fine",
           "subtitle": "L’importo autorizzato è stato rimborsato sul tuo metodo di pagamento. Il trasferimento di denaro potrebbe richiedere del tempo.",
