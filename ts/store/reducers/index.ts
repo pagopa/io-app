@@ -35,6 +35,7 @@ import { persistedNotificationsReducer } from "../../features/pushNotifications/
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
 import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
 import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
+import { appFeedbackInitialState } from "../../features/appReviews/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -221,6 +222,10 @@ export function createRootReducer(
               _persist: state.entities._persist
             },
             features: {
+              appFeedback: {
+                ...appFeedbackInitialState,
+                _persist: state.features.appFeedback._persist
+              },
               whatsNew: {
                 ...whatsNewInitialState,
                 _persist: state.features.whatsNew._persist
