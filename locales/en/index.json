@@ -2,6 +2,7 @@
   "accessibility": {
     "doubleTapToActivateHint": "Double tap to activate",
     "buttons": {
+      "navigateBack": "Navigate back",
       "torch": {
         "turnOn": "Turn on the flashlight",
         "turnOff": "Turn off the flashlight"
@@ -3763,7 +3764,55 @@
       "reminderBanner": {
         "title": "Ricevi le tue comunicazioni a valore legale su IO!",
         "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
-        "cta": "Attiva SEND su IO"
+        "cta": "Attiva SEND su IO",
+        "activationFlow":{
+           "FAILURE_DETAILS_FETCH":{
+              "title": "Non riusciamo ad attivare il servizio SEND",
+              "body": "Riprova più tardi"
+           },
+           "FAILURE_ACTIVATION":{
+              "title": "Non riusciamo ad attivare il servizio SEND",
+              "body": "Riprova più tardi"
+           },
+           "WAITING_USER_INPUT":{
+            "title":"Le comunicazioni a valore legale, ora digitali",
+            "paragraph1":{
+              "title": "SEND su IO: come funziona",
+              "body": "Ricevi in app le comunicazioni a valore legale che ti inviano gli enti pubblici: con il servizio SEND puoi gestirle in tempo reale sul tuo dispositivo e pagare facilmente eventuali costi. "
+            },
+            "paragraph2":{
+              "title": "È facile e veloce",
+              "body": "Attiva il servizio in un tap per ricevere le tue prossime notifiche SEND in app."
+            },
+            "paragraph3":{
+              "pressing":"Premendo ",
+              "activate":"Attiva il servizio ",
+              "readAndUnderstood":"dichiari di aver letto e compreso l’",
+              "privacyInfo":"Informativa Privacy ",
+              "andThe":"e i ",
+              "TOS":"Termini e Condizioni d’uso"
+            },
+            "CTA":"Attiva il servizio"
+           },
+           "SUCCESS_ACTIVATION":{
+            "title":"Hai attivato il servizio SEND!",
+          "body":"Da ora in poi riceverai su IO le tue comunicazioni a valore legale!"
+           },
+           "ALREADY_ACTIVE":{
+            "title":"SEND è già attivo!",
+            "body":"Se un ente ti invia una comunicazioni a valore legale, la ricevi direttamente su IO!"
+           },
+           "LOADING-DATA":{ 
+            "title": "Attendi qualche secondo"
+           },
+           "LOADING-ACTIVATION":{
+            "title": "Stiamo attivando SEND"
+           },
+           "MISSING-SID":{
+              "title": "Non riusciamo ad attivare il servizio SEND",
+              "body": "Riprova più tardi"
+           }
+        }
       },
       "service": {
         "activate": "Attiva il servizio",
