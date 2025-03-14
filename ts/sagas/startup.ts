@@ -32,7 +32,10 @@ import {
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
-import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
+import {
+  isBlockingScreenSelector,
+  isDeviceOfflineWithWalletSelector
+} from "../features/ingress/store/selectors";
 import {
   watchItwSaga,
   watchItwOfflineSaga
@@ -108,6 +111,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
+import { watchSessionRefreshInOfflineSaga } from "../features/ingress/saga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -232,6 +236,15 @@ export function* initializeApplicationSaga(
   // Start watching for ITW sagas that do not require internet connection or a valid session
   yield* fork(watchItwOfflineSaga);
 
+  const isDeviceOfflineWithWallet = yield* select(
+    isDeviceOfflineWithWalletSelector
+  );
+  if (isDeviceOfflineWithWallet) {
+    return;
+  }
+
+  yield* fork(watchSessionRefreshInOfflineSaga);
+
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
   // before using them.
@@ -247,6 +260,7 @@ export function* initializeApplicationSaga(
    * **BUT** they must continue navigating within the offline flow.
    * The best way to ensure this is to exit the startup saga at this stage.
    */
+  // TODO: delete
   const startupStatus = yield* select(isStartupLoaded);
   if (startupStatus === StartupStatusEnum.OFFLINE) {
     return;
