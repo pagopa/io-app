@@ -372,6 +372,7 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
+                          testID="pn-banner"
                         >
                           <View
                             style={
