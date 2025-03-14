@@ -2,7 +2,7 @@
 
 IO_BACKEND_VERSION=v16.10.2-RELEASE
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.63
+IO_SERVICES_METADATA_VERSION=1.0.64
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.4.0
 
