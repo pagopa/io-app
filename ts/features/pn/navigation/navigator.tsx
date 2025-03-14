@@ -25,6 +25,9 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.ACTIVATION_BANNER_FLOW}
       component={PNActivationBannerFlowScreen}
+      options={{
+        headerShown: false
+      }}
     />
   </Stack.Navigator>
 );
