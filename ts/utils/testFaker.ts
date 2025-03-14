@@ -8,7 +8,6 @@ import { Action } from "redux";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { SpidLevelEnum } from "../../definitions/backend/SpidLevel";
-import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
 import {
@@ -19,6 +18,7 @@ import {
 import { CreditCard, PatchedWalletV2, Psp, Wallet } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
+import { SpidIdp } from "./idps";
 
 const validCreditCard: CreditCard = {
   id: 1464,
@@ -226,7 +226,9 @@ export const AuthSeq: ReadonlyArray<Action> = [
   idpSelected({
     id: "posteid",
     name: "Poste",
-    logo: "http://placeimg.com/640/480/some",
+    logo: {
+      light: "http://placeimg.com/640/480/some"
+    },
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
   } as SpidIdp),
   loginSuccess({

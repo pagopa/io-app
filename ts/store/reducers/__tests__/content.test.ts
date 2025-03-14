@@ -7,23 +7,23 @@ import {
 import { idpsSelector } from "../content";
 import { SpidIdp } from "../../../../definitions/content/SpidIdp";
 import { idps as mockedIdps } from "../__mock__/idps";
-import { idps } from "../../../utils/idps";
+import { idps, fromGeneratedToLocalSpidIdp } from "../../../utils/idps";
 
 describe("idps selector", () => {
   it("should return the list of Idps available", () => {
-    expect(
-      idpsSelector.resultFunc(remoteReady({ items: mockedIdps }))
-    ).toStrictEqual(mockedIdps);
+    expect(idpsSelector.resultFunc(remoteReady({ items: mockedIdps }))).toEqual(
+      fromGeneratedToLocalSpidIdp(mockedIdps)
+    );
   });
 
   it("should return the fallback Idps if state is undefined", () => {
-    expect(idpsSelector.resultFunc(remoteUndefined)).toStrictEqual(idps);
+    expect(idpsSelector.resultFunc(remoteUndefined)).toEqual(idps);
   });
 
   it("should return the fallback Idps if state has errors", () => {
     expect(
       idpsSelector.resultFunc(remoteError(new Error("Some error")))
-    ).toStrictEqual(idps);
+    ).toEqual(idps);
   });
 
   const someIdps: ReadonlyArray<SpidIdp> = [
@@ -42,12 +42,12 @@ describe("idps selector", () => {
   ];
 
   it("should return the set of IDPS from store", () => {
-    expect(
-      idpsSelector.resultFunc(remoteReady({ items: someIdps }))
-    ).toStrictEqual(someIdps);
+    expect(idpsSelector.resultFunc(remoteReady({ items: someIdps }))).toEqual(
+      fromGeneratedToLocalSpidIdp(someIdps)
+    );
   });
 
   it("should return the fallback IDPS if state is in loading", () => {
-    expect(idpsSelector.resultFunc(remoteLoading)).toStrictEqual(idps);
+    expect(idpsSelector.resultFunc(remoteLoading)).toEqual(idps);
   });
 });
