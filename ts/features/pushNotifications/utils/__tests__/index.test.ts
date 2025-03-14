@@ -10,6 +10,7 @@ import {
   cancellAllLocalNotifications,
   checkNotificationPermissions,
   generateInstallationId,
+  generateTokenRegistrationTime,
   openSystemNotificationSettingsScreen,
   requestNotificationPermissions
 } from "..";
@@ -381,5 +382,15 @@ describe("openSystemNotificationSettingsScreen", () => {
     openSystemNotificationSettingsScreen();
     expect(openSettingsSpy.mock.calls.length).toBe(1);
     expect(openSettingsSpy.mock.calls[0].length).toBe(0);
+  });
+});
+
+describe("generateTokenRegistrationTime", () => {
+  it("should return 'new Date().getTime()'s value", () => {
+    const generationDate = new Date("2025-03-03T14:02:14+01:00");
+    jest.useFakeTimers().setSystemTime(generationDate);
+    const tokenRegistrationTime = generateTokenRegistrationTime();
+    expect(tokenRegistrationTime).toBe(generationDate.getTime());
+    jest.useRealTimers();
   });
 });
