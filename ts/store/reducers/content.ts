@@ -11,8 +11,6 @@ import { Idp } from "../../../definitions/content/Idp";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
-import { SpidIdp as GeneratedSpidIdpType } from "../../../definitions/content/SpidIdp";
-import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import {
   isReady,
   remoteError,
@@ -23,7 +21,11 @@ import {
 } from "../../common/model/RemoteValue";
 import { getRemoteLocale } from "../../features/messages/utils/ctas";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { idps as idpsFallback, SpidIdp } from "../../utils/idps";
+import {
+  fromGeneratedToLocalSpidIdp,
+  idps as idpsFallback,
+  SpidIdp
+} from "../../utils/idps";
 import { getCurrentLocale } from "../../utils/locale";
 import {
   contentMunicipalityLoad,
@@ -42,7 +44,7 @@ import { GlobalState } from "./types";
 export type ContentState = Readonly<{
   municipality: MunicipalityState;
   contextualHelp: pot.Pot<ContextualHelp, Error>;
-  idps: RemoteValue<SpidIdps, Error>;
+  idps: RemoteValue<ReadonlyArray<SpidIdp>, Error>;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -71,13 +73,13 @@ export const contextualHelpDataSelector = (
 
 export const idpsStateSelector = createSelector(
   contentSelector,
-  (content: ContentState): ContentState["idps"] => content.idps
+  (contentInternal: ContentState): ContentState["idps"] => contentInternal.idps
 );
 
 export const idpsSelector = createSelector(
   idpsStateSelector,
-  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp | GeneratedSpidIdpType> =>
-    isReady(idps) ? idps.value.items : idpsFallback
+  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp> =>
+    isReady(idps) ? idps.value : idpsFallback
 );
 
 export const idpsRemoteValueSelector = createSelector(
@@ -239,7 +241,7 @@ export default function content(
     case getType(loadIdps.success):
       return {
         ...state,
-        idps: remoteReady(action.payload)
+        idps: remoteReady(fromGeneratedToLocalSpidIdp(action.payload.items))
       };
 
     case getType(loadIdps.failure):

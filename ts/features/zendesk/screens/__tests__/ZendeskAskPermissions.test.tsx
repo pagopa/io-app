@@ -13,7 +13,6 @@ import {
   idpSelected,
   loginSuccess
 } from "../../../../store/actions/authentication";
-import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { SessionToken } from "../../../../types/SessionToken";
 import { profileLoadSuccess } from "../../../../store/actions/profile";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
@@ -22,13 +21,14 @@ import * as zendeskAction from "../../store/actions";
 import * as url from "../../../../utils/url";
 import { zendeskSelectedCategory } from "../../store/actions";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
+import { SpidIdp } from "../../../../utils/idps";
 
 jest.useFakeTimers();
 
 const mockedIdp: SpidIdp = {
   id: "1",
   name: "mockedIdp",
-  logo: "mockedIdpLogo",
+  logo: { light: { uri: "mockedIdpLogo" } },
   profileUrl: "mockedProfileUrl"
 };
 

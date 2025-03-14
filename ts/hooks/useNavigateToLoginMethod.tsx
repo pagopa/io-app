@@ -11,24 +11,28 @@ import {
   SpidLevel
 } from "../features/cieLogin/utils";
 import { idpSelected } from "../store/actions/authentication";
-import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { isCieLoginUatEnabledSelector } from "../features/cieLogin/store/selectors";
 import {
   ChosenIdentifier,
   Identifier
 } from "../screens/authentication/OptInScreen";
 import { cieIDSetSelectedSecurityLevel } from "../features/cieLogin/store/actions";
+import { SpidIdp } from "../utils/idps";
 
 export const IdpCIE: SpidIdp = {
   id: "cie",
   name: "CIE",
-  logo: "",
+  logo: {
+    light: { uri: "" }
+  },
   profileUrl: ""
 };
 export const IdpCIE_ID: SpidIdp = {
   id: "cieid",
   name: "CIE_ID",
-  logo: "",
+  logo: {
+    light: { uri: "" }
+  },
   profileUrl: ""
 };
 

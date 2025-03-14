@@ -1,6 +1,19 @@
 import { ImageSourcePropType } from "react-native";
 import { SpidIdp as GeneratedSpidIdpType } from "../../definitions/content/SpidIdp";
 
+export const fromGeneratedToLocalSpidIdp = (
+  idps: ReadonlyArray<GeneratedSpidIdpType>
+): ReadonlyArray<SpidIdp> =>
+  idps.map(idp => ({
+    id: idp.id,
+    name: idp.name,
+    logo: {
+      light: { uri: idp.logo },
+      dark: { uri: idp.logoDark }
+    },
+    profileUrl: idp.profileUrl
+  }));
+
 export type SpidIdp = Omit<GeneratedSpidIdpType, "logo"> & {
   logo: {
     light: ImageSourcePropType;
