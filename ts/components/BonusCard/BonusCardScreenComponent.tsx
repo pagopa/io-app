@@ -11,6 +11,8 @@ import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import { isAndroid } from "../../utils/platform";
 import FocusAwareStatusBar from "../ui/FocusAwareStatusBar";
 import { IOScrollView, IOScrollViewActions } from "../ui/IOScrollView";
+import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
+import { useIOSelector } from "../../store/hooks";
 import { BonusCard } from "./BonusCard";
 
 type BaseProps = {
@@ -47,6 +49,8 @@ const BonusCardScreenComponent = ({
   const screenHeight = Dimensions.get("window").height;
   const shouldHideLogo = screenHeight < MIN_HEIGHT_TO_SHOW_FULL_RENDER;
 
+  const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
+
   const { themeType } = useIOThemeContext();
 
   const isDark = themeType === "dark";
@@ -61,7 +65,7 @@ const BonusCardScreenComponent = ({
 
   useHeaderSecondLevel({
     title: title || "",
-    transparent: true,
+    transparent: !screenReaderEnabled,
     supportRequest: true,
     variant: "neutral",
     backgroundColor,
@@ -70,7 +74,8 @@ const BonusCardScreenComponent = ({
     contextualHelp,
     secondAction: headerAction,
     enableDiscreteTransition: true,
-    animatedRef: animatedScrollViewRef
+    animatedRef: animatedScrollViewRef,
+    ignoreAccessibilityCheck: true
   });
 
   return (
