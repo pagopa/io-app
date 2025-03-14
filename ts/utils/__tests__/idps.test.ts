@@ -69,6 +69,7 @@ describe("IDPS utils", () => {
 
       expect(result).toHaveLength(1);
       expect(result[0].id).toBe("test-id-3");
+      expect(result[0].name).toBe("Test IDP 3");
       expect(result[0].logo.light).toEqual({
         uri: "https://example.com/logo3.png"
       });
