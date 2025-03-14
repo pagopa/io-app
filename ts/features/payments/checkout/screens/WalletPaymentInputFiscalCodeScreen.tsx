@@ -8,7 +8,7 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
@@ -53,8 +53,23 @@ const WalletPaymentInputFiscalCodeScreen = () => {
   });
 
   const textInputWrapperRef = useRef<View>(null);
-
   const textInputRef = useRef<TextInputValidationRefProps>(null);
+
+  const [showInput, setShowInput] = useState(Platform.OS === "ios");
+
+  // This effect is used to show the input field after a delay when the screen reader is enabled on Android
+  // This is needed because the screen reader is focusing on the action button and not on the input field
+  useEffect(() => {
+    // This effect is only for Android
+    if (Platform.OS === "ios") {
+      return;
+    }
+    const timer = setTimeout(() => {
+      setShowInput(true);
+    }, 150);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const navigateToTransactionSummary = () => {
     pipe(
@@ -64,10 +79,8 @@ const WalletPaymentInputFiscalCodeScreen = () => {
       }),
       O.chain(flow(RptId.decode, O.fromEither)),
       O.map((rptId: RptId) => {
-        // Removes the manual input screen from the stack
         navigation.popToTop();
         navigation.pop();
-        // Navigate to the payment details screen (payment verification)
         startPaymentFlowWithRptId(rptId, {
           onSuccess: "showTransaction",
           startOrigin: "manual_insertion"
@@ -114,38 +127,40 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         ref={textInputWrapperRef}
         includeContentMargins
       >
-        <TextInputValidation
-          testID="fiscalCodeInput"
-          validationMode="onContinue"
-          ref={textInputRef}
-          placeholder={I18n.t("wallet.payment.manual.fiscalCode.placeholder")}
-          accessibilityLabel={I18n.t(
-            "wallet.payment.manual.fiscalCode.placeholder"
-          )}
-          errorMessage={I18n.t(
-            "wallet.payment.manual.fiscalCode.validationError"
-          )}
-          accessibilityErrorLabel={I18n.t(
-            "wallet.payment.manual.fiscalCode.a11y"
-          )}
-          value={inputState.fiscalCodeText}
-          icon="fiscalCodeIndividual"
-          onChangeText={value =>
-            setInputState({
-              fiscalCodeText: value,
-              fiscalCode: decodeOrganizationFiscalCode(value)
-            })
-          }
-          onValidate={validateOrganizationFiscalCode}
-          counterLimit={11}
-          textInputProps={{
-            keyboardType: "number-pad",
-            inputMode: "numeric",
-            returnKeyType: "done",
-            inputAccessoryViewID: "fiscalCodeInputAccessoryView"
-          }}
-          autoFocus
-        />
+        {showInput && (
+          <TextInputValidation
+            testID="fiscalCodeInput"
+            validationMode="onContinue"
+            ref={textInputRef}
+            placeholder={I18n.t("wallet.payment.manual.fiscalCode.placeholder")}
+            accessibilityLabel={I18n.t(
+              "wallet.payment.manual.fiscalCode.placeholder"
+            )}
+            errorMessage={I18n.t(
+              "wallet.payment.manual.fiscalCode.validationError"
+            )}
+            accessibilityErrorLabel={I18n.t(
+              "wallet.payment.manual.fiscalCode.a11y"
+            )}
+            value={inputState.fiscalCodeText}
+            icon="fiscalCodeIndividual"
+            onChangeText={value =>
+              setInputState({
+                fiscalCodeText: value,
+                fiscalCode: decodeOrganizationFiscalCode(value)
+              })
+            }
+            onValidate={validateOrganizationFiscalCode}
+            counterLimit={11}
+            textInputProps={{
+              keyboardType: "number-pad",
+              inputMode: "numeric",
+              returnKeyType: "done",
+              inputAccessoryViewID: "fiscalCodeInputAccessoryView"
+            }}
+            autoFocus
+          />
+        )}
       </IOScrollViewWithLargeHeader>
       {Platform.OS === "ios" && (
         <InputAccessoryView nativeID="fiscalCodeInputAccessoryView">
