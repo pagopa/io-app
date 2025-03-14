@@ -4517,7 +4517,9 @@
             "front": "Front",
             "back": "Back",
             "showFront": "Show front",
-            "showBack": "Show back"
+            "showBack": "Show back",
+            "hideValues": "Nascondi dati",
+            "showValues": "Mostra dati"
           },
           "personalDataTitle": "Personal data",
           "documentDataTitle": "Document data",
