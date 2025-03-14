@@ -8,7 +8,6 @@ import {
   EmitterSubscription,
   NativeEventSubscription
 } from "react-native";
-import { Store } from "redux";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
@@ -28,10 +27,10 @@ import {
   preferredLanguageSelector
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
-import { Action } from "./store/actions/types";
+import { Store } from "./store/actions/types";
 
 type Props = ReturnType<typeof mapStateToProps> &
-  typeof mapDispatchToProps & { store: Store<GlobalState, Action> };
+  typeof mapDispatchToProps & { store: Store };
 
 /**
  * The main container of the application with:

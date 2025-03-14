@@ -8,7 +8,6 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Platform } from "react-native";
 import PushNotification from "react-native-push-notification";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Store } from "redux";
 import { maximumItemsFromAPI, pageSize } from "../../../config";
 import {
   loadPreviousPageMessages,
@@ -25,7 +24,7 @@ import { isArchivingInProcessingModeSelector } from "../../messages/store/reduce
 import { GlobalState } from "../../../store/reducers/types";
 import { trackNewPushNotificationsTokenGenerated } from "../analytics";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
-import { Action } from "../../../store/actions/types";
+import { Store } from "../../../store/actions/types";
 
 /**
  * Helper type used to validate the notification payload.
@@ -42,7 +41,7 @@ const NotificationPayload = t.partial({
  * Decide how to refresh the messages based on pagination.
  * It only reloads Inbox since Archive is never changed server-side.
  */
-function handleForegroundMessageReload(store: Store<GlobalState, Action>) {
+function handleForegroundMessageReload(store: Store) {
   const state = store.getState();
   // Make sure there are not progressing message loadings and
   // that the system is not processing any message archiving/restoring
@@ -78,7 +77,7 @@ function handleForegroundMessageReload(store: Store<GlobalState, Action>) {
   }
 }
 
-function configurePushNotifications(store: Store<GlobalState, Action>) {
+function configurePushNotifications(store: Store) {
   // Create the default channel used for notifications, the callback return false if the channel already exists
   PushNotification.createChannel(
     {

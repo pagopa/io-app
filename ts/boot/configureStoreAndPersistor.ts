@@ -8,7 +8,6 @@ import {
   createStore,
   Middleware,
   Reducer,
-  Store,
   StoreEnhancer
 } from "redux";
 import {
@@ -29,7 +28,7 @@ import {
   LollipopState
 } from "../features/lollipop/store/reducers/lollipop";
 import rootSaga from "../sagas";
-import { Action } from "../store/actions/types";
+import { Action, Store } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
 import {
   authenticationPersistConfig,
@@ -558,7 +557,7 @@ export const RTron = isDevEnv ? configureReactotron() : undefined;
 const sagaMiddleware = createSagaMiddleware();
 
 function configureStoreAndPersistor(): {
-  store: Store<GlobalState, Action>;
+  store: Store;
   persistor: Persistor;
 } {
   const composeEnhancers =
