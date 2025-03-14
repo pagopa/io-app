@@ -200,7 +200,6 @@ describe("configureStoreAndPersistor", () => {
           installation: {
             isFirstRunAfterInstall: false,
             appVersionHistory: [
-              "2.77.0.3",
               "2.77.1.0",
               "2.78.0.11",
               "2.79.0.9",
@@ -209,7 +208,8 @@ describe("configureStoreAndPersistor", () => {
               "2.81.1.1",
               "2.82.0.7",
               "2.83.0.7",
-              "3.0.0.7"
+              "3.0.0.7",
+              "3.1.0.0"
             ]
           },
           onboarding: {
