@@ -17,13 +17,14 @@ import {
   trackMessageNotificationParsingFailure,
   trackMessageNotificationTap
 } from "../../messages/analytics";
-import { store } from "../../../boot/configureStoreAndPersistor";
 import { newPushNotificationsToken } from "../store/actions/installation";
 import { updateNotificationsPendingMessage } from "../store/actions/pendingMessage";
 import { isLoadingOrUpdating } from "../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
 import { GlobalState } from "../../../store/reducers/types";
 import { trackNewPushNotificationsTokenGenerated } from "../analytics";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { Store } from "../../../store/actions/types";
 
 /**
  * Helper type used to validate the notification payload.
@@ -40,7 +41,7 @@ const NotificationPayload = t.partial({
  * Decide how to refresh the messages based on pagination.
  * It only reloads Inbox since Archive is never changed server-side.
  */
-function handleForegroundMessageReload() {
+function handleForegroundMessageReload(store: Store) {
   const state = store.getState();
   // Make sure there are not progressing message loadings and
   // that the system is not processing any message archiving/restoring
@@ -76,7 +77,7 @@ function handleForegroundMessageReload() {
   }
 }
 
-function configurePushNotifications() {
+function configurePushNotifications(store: Store) {
   // Create the default channel used for notifications, the callback return false if the channel already exists
   PushNotification.createChannel(
     {
@@ -96,6 +97,9 @@ function configurePushNotifications() {
       // Dispatch an action to save the token in the store
       store.dispatch(newPushNotificationsToken(token.token));
       trackNewPushNotificationsTokenGenerated();
+
+      const state = store.getState();
+      void updateMixpanelProfileProperties(state);
     },
 
     // Called when a remote or local notification is opened or received
@@ -145,7 +149,7 @@ function configurePushNotifications() {
                     })
                   ),
                 // The App is in foreground so just refresh the messages list
-                () => handleForegroundMessageReload()
+                () => handleForegroundMessageReload(store)
               )
             )
           )

@@ -76,7 +76,7 @@ const App = (): JSX.Element => (
                   <BottomSheetModalProvider>
                     <LightModalProvider>
                       <StatusMessages>
-                        <RootContainer />
+                        <RootContainer store={store} />
                       </StatusMessages>
                     </LightModalProvider>
                   </BottomSheetModalProvider>

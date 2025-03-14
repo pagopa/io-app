@@ -16,6 +16,31 @@
       "api_key": [
         {
           "current_key": "AIzaSyDxRvOra_wlultFBZc4D8nbtJ2fyNzUCpk"
+        },
+        {
+          "current_key": "AIzaSyCitoxF3ss8x20A98ZDr6Pb8FYxAnq8eqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100508770872:android:fc0e9e90ab3c5a1be77ccd",
+        "android_client_info": {
+          "package_name": "it.pagopa.io.app.canary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxRvOra_wlultFBZc4D8nbtJ2fyNzUCpk"
+        },
+        {
+          "current_key": "AIzaSyCitoxF3ss8x20A98ZDr6Pb8FYxAnq8eqs"
         }
       ],
       "services": {

@@ -64,20 +64,23 @@ export function* profileAndSystemNotificationsPermissions(
     checkAndUpdateNotificationPermissionsIfNeeded
   );
 
+  const startRequestTime = yield* call(performance.now);
+
+  // Ask the user for notification permission and update
+  // the in-memory redux value if needed. Be aware that
+  // on iOS is mandatory to always request for the
+  // permission, otherwise the system will not trigger
+  // the push notification token update
+  const userHasGivenNotificationPermission = yield* call(
+    requestNotificationPermissions
+  );
+
+  const endRequestTime = yield* call(performance.now);
+
+  const requestDuration = endRequestTime - startRequestTime;
+  yield* put(setPushPermissionsRequestDuration(requestDuration));
+
   if (!hasNotificationPermission) {
-    const startRequestTime = yield* call(performance.now);
-
-    // Ask the user for notification permission and update
-    // the in-memory redux value if needed
-    const userHasGivenNotificationPermission = yield* call(
-      requestNotificationPermissions
-    );
-
-    const endRequestTime = yield* call(performance.now);
-
-    const requestDuration = endRequestTime - startRequestTime;
-    yield* put(setPushPermissionsRequestDuration(requestDuration));
-
     const systemPermissionPromptShown = yield* select(
       hasUserSeenSystemNotificationsPromptSelector
     );
@@ -112,7 +115,8 @@ export function* profileAndSystemNotificationsPermissions(
   }
 
   // Update mixpanel super and profile properties
-  // (mainly for the notification permission)
+  // (mainly for the notification permission and
+  // the push notification token presence)
   const state = (yield* select()) as GlobalState;
   yield* call(updateMixpanelSuperProperties, state);
   yield* call(updateMixpanelProfileProperties, state);
