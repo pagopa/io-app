@@ -24,6 +24,7 @@ import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVers
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
 import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
 import { TopicKeys } from "../../../features/appReviews/store/actions";
 
@@ -486,4 +487,14 @@ export const isIOMarkdownEnabledForMessagesAndServicesSelector = (
           )
         )
     )
+  );
+
+export const pnMessagingServiceIdSelector = (
+  state: GlobalState
+): ServiceId | undefined =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config => config.pn.notificationServiceId as ServiceId),
+    O.toUndefined
   );
