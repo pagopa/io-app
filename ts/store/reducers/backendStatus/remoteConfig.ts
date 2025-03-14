@@ -22,6 +22,9 @@ import { Action } from "../../actions/types";
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
+import { TopicKeys } from "../../../features/appReviews/store/actions";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -393,6 +396,41 @@ export const landingScreenBannerOrderSelector = (state: GlobalState) =>
     O.getOrElse(() => emptyArray)
   );
 
+export const appFeedbackConfigSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): AppFeedbackConfig | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.app_feedback),
+      O.toUndefined
+    )
+);
+
+export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
+  createSelector(
+    appFeedbackConfigSelector,
+    (feedbackConfig): string | undefined =>
+      pipe(
+        feedbackConfig,
+        O.fromNullable,
+        O.map(config =>
+          config.feedback_uri[topic]
+            ? config.feedback_uri[topic]
+            : config.feedback_uri.general
+        ),
+        O.toUndefined
+      )
+  );
+
+export const appFeedbackEnabledSelector = (state: GlobalState) =>
+  pipe(state, remoteConfigSelector, remoteConfig =>
+    isPropertyWithMinAppVersionEnabled({
+      remoteConfig,
+      mainLocalFlag: true,
+      configPropertyName: "app_feedback"
+    })
+  );
+
 /**
  * This selector is used to know if IOMarkdown is enabled on Messages and Services
  *
@@ -427,4 +465,14 @@ export const isIOMarkdownEnabledForMessagesAndServicesSelector = (
           )
         )
     )
+  );
+
+export const pnMessagingServiceIdSelector = (
+  state: GlobalState
+): ServiceId | undefined =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config => config.pn.notificationServiceId as ServiceId),
+    O.toUndefined
   );

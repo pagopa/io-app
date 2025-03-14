@@ -253,6 +253,23 @@
   "tablet": {
     "message": "The IO interface is optimized for smartphones, but all the functions compatible with your device are still available."
   },
+  "appFeedback": {
+    "toast": {
+      "negativeFeedback": "Puoi lasciare i tuoi suggerimenti in ogni momento, visitando la sezione Impostazioni"
+    },
+    "alert": {
+      "title": "Do you like IO app?",
+      "description": "We'll use your answer to improve our services.",
+      "continue": "Yes, I like it",
+      "discard": "I don't like it"
+    },
+    "bottomSheet": {
+      "title": "Ti va di dirci perché?",
+      "description": "Raccontaci cosa è andato storto nella tua esperienza con IO: useremo i tuoi suggerimenti per rendere l'app ancora più efficiente.",
+      "continue": "Dai un suggerimento",
+      "discard": "Non ora"
+    }
+  },
   "rooted": {
     "title": "Looks like the security of your device has been compromised!",
     "body": "If you press 'Continue', you agree to continue browsing at your own risk, otherwise close the app.",
@@ -367,6 +384,10 @@
       "spid": "SPID PROFILE"
     },
     "unknown": "UNKNOWN",
+    "appFeedback": {
+      "reviewLabel": "Valuta l'app",
+      "feedbackLabel": "Hai un suggerimento?"
+    },
     "logout": {
       "menulabel": "Logout from IO",
       "alertTitle": "Do you want to logout?",
@@ -730,7 +751,7 @@
         "subtitleExistingUser": "Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.",
         "reminders": {
           "title": "Allow reminders",
-          "description": "Upon request of the sender, receive push notifications close to deadlines or when you have unread messages"
+          "description": "Upon request of the sender, receive push notifications close to deadlines"
         },
         "preview": {
           "title": "Show a preview",
@@ -2508,6 +2529,12 @@
           "primaryAction": "Aggiungi carta",
           "secondaryAction": "Usa altri metodi"
         },
+        "PAYMENT_METHODS_EXPIRED": {
+          "title": "Your card is expired!",
+          "subtitle": "Remove the card and add a new one.\nIt will be saved in your Wallet, making it easier for you to pay next time.",
+          "primaryAction": "Add card",
+          "secondaryAction": "Use other methods"
+        },
         "PAYMENT_REVERSED": {
           "title": "Il pagamento non è andato a buon fine",
           "subtitle": "L’importo autorizzato è stato rimborsato sul tuo metodo di pagamento. Il trasferimento di denaro potrebbe richiedere del tempo.",
@@ -3521,7 +3548,8 @@
             "byDistance": "By proximity to your location",
             "byName": "Alphabetical order"
           }
-        }
+        },
+        "discountOf": "Discount of {{discount}}%"
       },
       "merchantDetail": {
         "title": {

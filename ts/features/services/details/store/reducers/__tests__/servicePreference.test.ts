@@ -1,8 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action, createStore } from "redux";
+import {
+  isErrorServicePreferenceSelector,
+  isLoadingServicePreferenceSelector,
+  servicePreferenceResponseSuccessSelector
+} from "..";
 import { ServiceId } from "../../../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError, getNetworkError } from "../../../../../../utils/errors";
 import {
   ServicePreference,
@@ -13,12 +19,6 @@ import {
   loadServicePreference,
   upsertServicePreference
 } from "../../actions/preference";
-import {
-  isErrorServicePreferenceSelector,
-  isLoadingServicePreferenceSelector,
-  servicePreferenceResponseSuccessSelector
-} from "..";
-import { GlobalState } from "../../../../../../store/reducers/types";
 
 const serviceId = "serviceId" as ServiceId;
 
