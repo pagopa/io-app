@@ -3800,7 +3800,7 @@
           },
           "ALREADY_ACTIVE": {
             "title": "SEND è già attivo!",
-            "body": "Se un ente ti invia una comunicazioni a valore legale, la ricevi direttamente su IO!"
+            "body": "Se un ente ti invia una comunicazione a valore legale, la ricevi direttamente su IO!"
           },
           "LOADING-DATA": {
             "title": "Attendi qualche secondo"

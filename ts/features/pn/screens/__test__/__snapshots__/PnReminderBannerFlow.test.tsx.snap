@@ -564,7 +564,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= ALREADY
                                 ]
                               }
                             >
-                              Se un ente ti invia una comunicazioni a valore legale, la ricevi direttamente su IO!
+                              Se un ente ti invia una comunicazione a valore legale, la ricevi direttamente su IO!
                             </Text>
                             <View
                               style={
