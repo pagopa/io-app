@@ -7,6 +7,7 @@ import { isSessionExpirationBannerRenderableSelector } from "../../login/prefere
 import { PNActivationReminderBanner } from "../../pn/components/PNActivationReminderBanner";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
+import { isPnEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 
 type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
 type ComponentAndLogic = {
@@ -50,6 +51,6 @@ export const landingScreenBannerMap: BannerMapById = {
     component: closeHandler => (
       <PNActivationReminderBanner handleOnClose={closeHandler} />
     ),
-    isRenderableSelector: _state => true
+    isRenderableSelector: isPnEnabledSelector
   }
 } as const;
