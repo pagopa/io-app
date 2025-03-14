@@ -94,7 +94,7 @@ export const IOListViewWithLargeHeader = forwardRef(
       <IOListView<T>
         ListHeaderComponent={
           <>
-            <View ref={ref} accessible onLayout={getTitleHeight}>
+            <View ref={ref} onLayout={getTitleHeight}>
               {title.section && (
                 <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
                   {title.section}

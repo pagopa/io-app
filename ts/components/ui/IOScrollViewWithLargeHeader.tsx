@@ -120,7 +120,6 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       >
         <View
           ref={ref}
-          accessible
           style={IOStyles.horizontalContentPadding}
           onLayout={getTitleHeight}
         >
