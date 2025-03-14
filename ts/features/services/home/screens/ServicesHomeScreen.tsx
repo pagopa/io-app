@@ -248,8 +248,7 @@ export const ServicesHomeScreen = () => {
           styles.scrollContentContainer,
           IOStyles.horizontalContentPadding
         ]}
-        data={data?.institutions || []}
-        keyExtractor={(item, index) => `institution-${item.id}-${index}`}
+        data={data?.institutions}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.1}
         onRefresh={handleRefresh}
