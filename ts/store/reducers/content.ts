@@ -11,6 +11,7 @@ import { Idp } from "../../../definitions/content/Idp";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
+import { SpidIdp as GeneratedSpidIdpType } from "../../../definitions/content/SpidIdp";
 import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import {
   isReady,
@@ -22,11 +23,7 @@ import {
 } from "../../common/model/RemoteValue";
 import { getRemoteLocale } from "../../features/messages/utils/ctas";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import {
-  fromGeneratedToLocalSpidIdp,
-  idps as idpsFallback,
-  SpidIdp
-} from "../../utils/idps";
+import { idps as idpsFallback, SpidIdp } from "../../utils/idps";
 import { getCurrentLocale } from "../../utils/locale";
 import {
   contentMunicipalityLoad,
@@ -72,15 +69,15 @@ export const contextualHelpDataSelector = (
   state: GlobalState
 ): pot.Pot<ContextualHelp, Error> => state.content.contextualHelp;
 
-const idpsStateSelector = createSelector(
+export const idpsStateSelector = createSelector(
   contentSelector,
-  (contentInternal: ContentState): ContentState["idps"] => contentInternal.idps
+  (content: ContentState): ContentState["idps"] => content.idps
 );
 
 export const idpsSelector = createSelector(
   idpsStateSelector,
-  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp> =>
-    isReady(idps) ? fromGeneratedToLocalSpidIdp(idps.value.items) : idpsFallback
+  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp | GeneratedSpidIdpType> =>
+    isReady(idps) ? idps.value.items : idpsFallback
 );
 
 export const idpsRemoteValueSelector = createSelector(

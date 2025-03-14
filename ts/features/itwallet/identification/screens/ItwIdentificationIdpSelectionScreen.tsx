@@ -1,6 +1,7 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useRef } from "react";
+import { useRef, useCallback } from "react";
+import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { isReady } from "../../../../common/model/RemoteValue";
 import IdpsGrid from "../../../../components/IdpsGrid";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -8,25 +9,19 @@ import { randomOrderIdps } from "../../../../screens/authentication/IdpSelection
 import { loadIdps } from "../../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpsRemoteValueSelector } from "../../../../store/reducers/content";
-import {
-  fromGeneratedToLocalSpidIdp,
-  idps as idpsFallback,
-  SpidIdp
-} from "../../../../utils/idps";
+import { idps as idpsFallback } from "../../../../utils/idps";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
   trackItWalletSpidIDPSelected,
   trackItWalletSpidIDPSelection
 } from "../../analytics";
-import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const idps = useIOSelector(idpsRemoteValueSelector);
-  const idpValue = isReady(idps)
-    ? fromGeneratedToLocalSpidIdp(idps.value.items)
-    : idpsFallback;
+  const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
   const randomIdps = useRef<ReadonlyArray<SpidIdp>>(randomOrderIdps(idpValue));
 
   useFocusEffect(

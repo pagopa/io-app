@@ -14,11 +14,8 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import I18n from "../../i18n";
 import { idpSelected } from "../../store/actions/authentication";
 import { idpsRemoteValueSelector } from "../../store/reducers/content";
-import {
-  fromGeneratedToLocalSpidIdp,
-  idps as idpsFallback,
-  SpidIdp
-} from "../../utils/idps";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { idps as idpsFallback } from "../../utils/idps";
 import { loadIdps } from "../../store/actions/content";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import {
@@ -43,11 +40,7 @@ import { trackLoginSpidIdpSelected } from "./analytics/spidAnalytics";
 const TestIdp: SpidIdp = {
   id: "test" as keyof IdpData,
   name: "Test Idp",
-  logo: {
-    light: {
-      uri: "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/spid/idps/spid.png"
-    }
-  },
+  logo: "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/spid/idps/spid.png",
   profileUrl: "",
   isTestIdp: true
 };
@@ -92,9 +85,7 @@ const IdpSelectionScreen = (): ReactElement => {
   );
 
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-  const idpValue = isReady(idps)
-    ? fromGeneratedToLocalSpidIdp(idps.value.items)
-    : idpsFallback;
+  const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
   const randomIdps = useRef<ReadonlyArray<SpidIdp>>(randomOrderIdps(idpValue));
   const firstIdpsRef = useRef<ReadonlyArray<SpidIdp>>(idpValue);
 
@@ -122,13 +113,12 @@ const IdpSelectionScreen = (): ReactElement => {
   // is saved in firstIdpsRef and then compared with the data that is
   // collected after the data is updated (so when it isReady again).
   if (isReady(idps)) {
-    const convertedIdps = fromGeneratedToLocalSpidIdp(idps.value.items);
-    if (!_.isEqual(firstIdpsRef.current, convertedIdps)) {
+    if (!_.isEqual(firstIdpsRef.current, idps.value.items)) {
       // eslint-disable-next-line functional/immutable-data
-      randomIdps.current = randomOrderIdps(convertedIdps);
+      randomIdps.current = randomOrderIdps(idps.value.items);
     }
     // eslint-disable-next-line functional/immutable-data
-    firstIdpsRef.current = convertedIdps;
+    firstIdpsRef.current = idps.value.items;
   }
 
   const isNativeLoginEnabled = () =>
