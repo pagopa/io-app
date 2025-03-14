@@ -26,6 +26,8 @@ import * as analytics from "../analytics";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { TextInputValidationRefProps } from "../types";
+import { useIOSelector } from "../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -54,8 +56,10 @@ const WalletPaymentInputFiscalCodeScreen = () => {
 
   const textInputWrapperRef = useRef<View>(null);
   const textInputRef = useRef<TextInputValidationRefProps>(null);
-
-  const [showInput, setShowInput] = useState(Platform.OS === "ios");
+  const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
+  const [showInput, setShowInput] = useState(
+    Platform.OS === "ios" || !screenReaderEnabled
+  );
 
   // This effect is used to show the input field after a delay when the screen reader is enabled on Android
   // This is needed because the screen reader is focusing on the action button and not on the input field
@@ -64,12 +68,13 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     if (Platform.OS === "ios") {
       return;
     }
+
     const timer = setTimeout(() => {
       setShowInput(true);
     }, 150);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [screenReaderEnabled]);
 
   const navigateToTransactionSummary = () => {
     pipe(
