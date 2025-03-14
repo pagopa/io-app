@@ -5,13 +5,7 @@
 
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-import {
-  AccessibilityInfo,
-  Linking,
-  Modal,
-  StyleSheet,
-  View
-} from "react-native";
+import { AccessibilityInfo, Modal, StyleSheet, View } from "react-native";
 import {
   IOVisualCostants,
   ToastNotification
@@ -25,8 +19,7 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
-import { storeUrl, webStoreURL } from "../../utils/appVersion";
-import { openWebUrl } from "../../utils/url";
+import { openAppStoreUrl } from "../../utils/url";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 import { Dismissable } from "../../components/ui/Dismissable";
 import { trackForcedUpdateScreen, trackUpdateAppButton } from "./analytics";
@@ -61,11 +54,7 @@ const UpdateAppModal: FC = () => {
   const openAppStore = useCallback(async () => {
     trackUpdateAppButton();
 
-    try {
-      await Linking.openURL(storeUrl);
-    } catch (e) {
-      openWebUrl(webStoreURL, () => setIsError(true));
-    }
+    void openAppStoreUrl(() => setIsError(true));
   }, []);
 
   const handleCloseError = useCallback(() => {
