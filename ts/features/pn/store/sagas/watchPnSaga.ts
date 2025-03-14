@@ -58,6 +58,7 @@ function* handlePnActivation(
   } catch (e) {
     yield* call(reportPNServiceStatusOnFailure, !activation_status);
     yield* put(pnActivationUpsert.failure(getError(e)));
+    action.payload.onFailure?.();
   }
 }
 
