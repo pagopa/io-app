@@ -10,9 +10,9 @@ import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
+import { IO_FIMS_LINK_PREFIX } from "../features/fims/singleSignOn/utils";
 import { isTestEnv } from "./environment";
 import {
-  IO_FIMS_LINK_PREFIX,
   IO_INTERNAL_LINK_PREFIX,
   IO_INTERNAL_LINK_PROTOCOL,
   IO_UNIVERSAL_LINK_PREFIX

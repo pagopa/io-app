@@ -14,21 +14,18 @@ import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata
 import { Locales } from "../../../../locales/locales";
 import {
   deriveCustomHandledLink,
-  isIoFIMSLink,
-  isIoInternalLink,
-  removeFIMSPrefixFromUrl
+  isIoInternalLink
 } from "../../../components/ui/Markdown/handlers/link";
 import { trackMessageCTAFrontMatterDecodingError } from "../analytics";
 import { localeFallback } from "../../../i18n";
-import NavigationService from "../../../navigation/NavigationService";
 import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
 import {
   getInternalRoute,
   handleInternalLink
 } from "../../../utils/internalLink";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
-import { FIMS_ROUTES } from "../../fims/common/navigation";
 import { isTestEnv } from "../../../utils/environment";
+import { isFIMSLink } from "../../fims/singleSignOn/utils";
 
 export type CTAActionType =
   | "io_handled_link"
@@ -39,33 +36,19 @@ export type CTAActionType =
 export const handleCtaAction = (
   cta: CTA,
   linkTo: (path: string) => void,
-  preActionCallback?: (actionType: CTAActionType) => void
+  fimsCallback: (label: string, url: string) => void
 ) => {
   if (isIoInternalLink(cta.action)) {
-    preActionCallback?.("io_internal_link");
     const convertedLink = getInternalRoute(cta.action);
     handleInternalLink(linkTo, `${convertedLink}`);
-    return;
-  } else if (isIoFIMSLink(cta.action)) {
-    preActionCallback?.("fims");
-    const url = removeFIMSPrefixFromUrl(cta.action);
-    NavigationService.navigate(FIMS_ROUTES.MAIN, {
-      screen: FIMS_ROUTES.CONSENTS,
-      params: {
-        ctaText: cta.text,
-        ctaUrl: url
-      }
-    });
-    return;
+  } else if (isFIMSLink(cta.action)) {
+    fimsCallback(cta.text, cta.action);
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
     if (E.isRight(maybeHandledAction)) {
-      preActionCallback?.("io_handled_link");
       Linking.openURL(maybeHandledAction.right.url).catch(() => 0);
-      return;
     }
   }
-  preActionCallback?.("none");
 };
 
 const hasMetadataTokenName = (metadata?: ServiceMetadata): boolean =>
@@ -220,7 +203,7 @@ const isCtaActionValid = (
       O.getOrElse(() => true)
     );
   }
-  if (isIoFIMSLink(cta.action)) {
+  if (isFIMSLink(cta.action)) {
     return pipe(
       E.tryCatch(
         () => new URL(cta.action),

@@ -7,12 +7,11 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { logosForService } from "../../common/utils";
+import { getServiceCTA, handleCtaAction } from "../../../messages/utils/ctas";
+import { useFIMSFromServiceId } from "../../../fims/common/hooks";
+import { ServiceDetailsScreenComponent } from "../components/ServiceDetailsScreenComponent";
 import { CTA } from "../../../messages/types/MessageCTA";
-import {
-  CTAActionType,
-  getServiceCTA,
-  handleCtaAction
-} from "../../../messages/utils/ctas";
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import * as analytics from "../../common/analytics";
 import { CtaCategoryType } from "../../common/analytics";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
@@ -35,9 +34,6 @@ import {
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
 } from "../store/reducers";
-import { trackAuthenticationStart } from "../../../fims/common/analytics";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { ServiceDetailsScreenComponent } from "../components/ServiceDetailsScreenComponent";
 
 export type ServiceDetailsScreenRouteParams = {
   serviceId: ServiceId;
@@ -90,6 +86,8 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     () => getServiceCTA(serviceMetadata),
     [serviceMetadata]
   );
+
+  const { startFIMSAuthenticationFlow } = useFIMSFromServiceId(serviceId);
 
   useOnFirstRender(
     () => {
@@ -146,18 +144,9 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
       cta_category: ctaType,
       service_id: serviceId
     });
-    handleCtaAction(cta, linkTo, (type: CTAActionType) => {
-      if (type === "fims") {
-        trackAuthenticationStart(
-          service.service_id,
-          service.service_name,
-          service.organization_name,
-          service.organization_fiscal_code,
-          cta.text,
-          "service_detail"
-        );
-      }
-    });
+    handleCtaAction(cta, linkTo, (label, url) =>
+      startFIMSAuthenticationFlow(label, url)
+    );
   };
 
   return (
