@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.0.1-rc.0",
+  "version": "3.1.0-rc.0",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -46,7 +46,10 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["prettier --write", "eslint -c .eslintrc.js --fix"]
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint -c .eslintrc.js --fix"
+    ]
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
