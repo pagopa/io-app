@@ -10,15 +10,16 @@ import {
   View
 } from "react-native";
 import { LandingCardComponent } from "../../../components/LandingCardComponent";
-import { useInteractiveElementDefaultColorName } from "../../../utils/hooks/theme";
+import {
+  useAppBackgroundPrimaryColorName,
+  useInteractiveElementDefaultColorName
+} from "../../../utils/hooks/theme";
 import { trackCarousel } from "../analytics/carouselAnalytics";
 
 const styles = StyleSheet.create({
   normalDot: {
-    height: 8,
-    width: 8,
-    borderRadius: 4,
-    backgroundColor: IOColors["grey-100"],
+    borderRadius: 20,
+    borderColor: IOColors["grey-650"],
     marginHorizontal: 4
   },
   indicatorContainer: {
@@ -27,8 +28,6 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
-
-const newDsGrey = IOColors["grey-200"];
 
 type CarouselProps = {
   carouselCards: ReadonlyArray<ComponentProps<typeof LandingCardComponent>>;
@@ -42,9 +41,44 @@ const CarouselDots = (props: CarouselDotsProps) => {
   const dotTouchCount = useRef(0);
 
   const blueColor = useInteractiveElementDefaultColorName();
+  const whiteColor = useAppBackgroundPrimaryColorName();
 
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;
+
+  const getDotsAnimationStyle = useCallback(
+    (imageIndex: number) => {
+      const inputRange = [
+        windowWidth * (imageIndex - 1),
+        windowWidth * imageIndex,
+        windowWidth * (imageIndex + 1)
+      ];
+
+      return {
+        width: scrollX.interpolate({
+          inputRange,
+          outputRange: [8, 16, 8],
+          extrapolate: "clamp"
+        }),
+        backgroundColor: scrollX.interpolate({
+          inputRange,
+          outputRange: [whiteColor, blueColor, whiteColor],
+          extrapolate: "clamp"
+        }),
+        height: scrollX.interpolate({
+          inputRange,
+          outputRange: [8, 4, 8],
+          extrapolate: "clamp"
+        }),
+        borderWidth: scrollX.interpolate({
+          inputRange,
+          outputRange: [1, 0, 1],
+          extrapolate: "clamp"
+        })
+      };
+    },
+    [windowWidth, scrollX, whiteColor, blueColor]
+  );
 
   return (
     <View
@@ -61,32 +95,12 @@ const CarouselDots = (props: CarouselDotsProps) => {
         }
       }}
     >
-      {carouselCards.map((_, imageIndex) => {
-        const width = scrollX.interpolate({
-          inputRange: [
-            windowWidth * (imageIndex - 1),
-            windowWidth * imageIndex,
-            windowWidth * (imageIndex + 1)
-          ],
-          outputRange: [8, 16, 8],
-          extrapolate: "clamp"
-        });
-        const backgroundColor = scrollX.interpolate({
-          inputRange: [
-            windowWidth * (imageIndex - 1),
-            windowWidth * imageIndex,
-            windowWidth * (imageIndex + 1)
-          ],
-          outputRange: [newDsGrey, blueColor, newDsGrey],
-          extrapolate: "clamp"
-        });
-        return (
-          <Animated.View
-            key={imageIndex}
-            style={[styles.normalDot, { width, backgroundColor }]}
-          />
-        );
-      })}
+      {carouselCards.map((_, imageIndex) => (
+        <Animated.View
+          key={imageIndex}
+          style={[styles.normalDot, getDotsAnimationStyle(imageIndex)]}
+        />
+      ))}
     </View>
   );
 };

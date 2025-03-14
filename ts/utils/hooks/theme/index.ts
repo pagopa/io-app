@@ -19,3 +19,13 @@ export const useInteractiveElementDefaultColorName = (): string => {
   const color = useInteractiveElementDefaultColor();
   return IOColors[color];
 };
+
+export const useAppBackgroundPrimaryColor = (): IOColors => {
+  const theme = useIOTheme();
+  return theme["appBackground-primary"];
+};
+
+export const useAppBackgroundPrimaryColorName = (): string => {
+  const color = useAppBackgroundPrimaryColor();
+  return IOColors[color];
+};
