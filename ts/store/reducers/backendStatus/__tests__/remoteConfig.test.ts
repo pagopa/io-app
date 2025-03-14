@@ -9,7 +9,8 @@ import {
   isIOMarkdownEnabledForMessagesAndServicesSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
-  landingScreenBannerOrderSelector
+  landingScreenBannerOrderSelector,
+  pnMessagingServiceIdSelector
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
 
@@ -353,4 +354,63 @@ describe("isIOMarkdownEnabledForMessagesAndServicesSelector", () => {
       expect(output).toBe(testData[1]);
     })
   );
+});
+
+describe("pnMessageServiceIdSelector", () => {
+  const someState = {
+    remoteConfig: O.some({
+      pn: {
+        notificationServiceId: "NOTIF_SID"
+      }
+    })
+  } as GlobalState;
+  const emptyObjectState = {
+    remoteConfig: O.some({
+      pn: {}
+    })
+  } as GlobalState;
+  const noneState = {
+    remoteConfig: O.none
+  } as GlobalState;
+  const emptyStringState = {
+    remoteConfig: O.some({
+      pn: { notificationServiceId: "" }
+    })
+  } as GlobalState;
+  const undefinedState = {
+    remoteConfig: O.some({
+      pn: { notificationServiceId: undefined }
+    })
+  } as GlobalState;
+
+  const testCases = [
+    {
+      result: "NOTIF_SID",
+      input: someState
+    },
+    {
+      result: undefined,
+      input: emptyObjectState
+    },
+    {
+      result: "",
+      input: emptyStringState
+    },
+    {
+      result: undefined,
+      input: noneState
+    },
+    {
+      result: undefined,
+      input: undefinedState
+    }
+  ];
+  for (const { result, input } of testCases) {
+    it(`should return the correct result for input : ${JSON.stringify(
+      input
+    )}`, () => {
+      const output = pnMessagingServiceIdSelector(input);
+      expect(output).toBe(result);
+    });
+  }
 });

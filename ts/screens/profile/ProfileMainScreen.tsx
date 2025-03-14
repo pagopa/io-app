@@ -18,7 +18,14 @@ import {
   useRef,
   useState
 } from "react";
-import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
+import {
+  Alert,
+  FlatList,
+  ListRenderItemInfo,
+  Platform,
+  ScrollView
+} from "react-native";
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import AppVersion from "../../components/AppVersion";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../components/ui/LightModal";
@@ -31,6 +38,11 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
 import { itwLifecycleIsOperationalOrValid } from "../../features/itwallet/lifecycle/store/selectors";
+import {
+  appFeedbackEnabledSelector,
+  appFeedbackUriConfigSelector
+} from "../../store/reducers/backendStatus/remoteConfig";
+import { openWebUrl } from "../../utils/url";
 import DeveloperModeSection from "./DeveloperModeSection";
 import { ProfileMainScreenTopBanner } from "./ProfileMainScreenTopBanner";
 
@@ -53,8 +65,10 @@ const ProfileMainScreenFC = () => {
   const { hideModal } = useContext(LightModalContext);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const { show } = useIOToast();
+  const { show, error } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
+  const appFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
+  const surveyUrl = useIOSelector(appFeedbackUriConfigSelector("general"));
   const selectItwLifecycleIsOperationalOrValid = useIOSelector(
     itwLifecycleIsOperationalOrValid
   );
@@ -213,6 +227,8 @@ const ProfileMainScreenFC = () => {
   );
 
   const logoutLabel = I18n.t("profile.logout.menulabel");
+  const reviewLabel = I18n.t("profile.appFeedback.reviewLabel");
+  const feedbackLabel = I18n.t("profile.appFeedback.feedbackLabel");
 
   return (
     <>
@@ -230,6 +246,36 @@ const ProfileMainScreenFC = () => {
       />
       <VSpacer size={8} />
       <ContentWrapper>
+        {appFeedbackEnabled && surveyUrl && (
+          <ListItemAction
+            label={feedbackLabel}
+            icon="message"
+            variant="primary"
+            testID="feedbackButton"
+            onPress={() => {
+              void openAuthenticationSession(surveyUrl, "");
+            }}
+            accessibilityLabel={feedbackLabel}
+          />
+        )}
+        <ListItemAction
+          label={reviewLabel}
+          icon="starEmpty"
+          variant="primary"
+          testID="reviewButton"
+          onPress={() =>
+            openWebUrl(
+              Platform.select({
+                ios: "https://apps.apple.com/app/id1501681835?action=write-review",
+                // On Android we don't have a direct link to the review page we need to link the app page
+                default:
+                  "https://play.google.com/store/apps/details?id=it.pagopa.io.app"
+              }),
+              () => error(I18n.t("msgErrorUpdateApp"))
+            )
+          }
+          accessibilityLabel={reviewLabel}
+        />
         <ListItemAction
           label={logoutLabel}
           icon="logout"
