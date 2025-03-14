@@ -42,7 +42,10 @@ import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteC
 import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
-import { startupTransientErrorInitialState } from "../../store/reducers/startup";
+import {
+  isStartupLoaded,
+  startupTransientErrorInitialState
+} from "../../store/reducers/startup";
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
 import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
 import { trackKeychainFailures } from "../../utils/analytics";
@@ -50,6 +53,7 @@ import { checkSession } from "../startup/watchCheckSessionSaga";
 import { formatRequestedTokenString } from "../../features/zendesk/utils";
 import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
 import { userFromSuccessLoginSelector } from "../../features/login/info/store/selectors";
+import { watchItwOfflineSaga } from "../../features/itwallet/common/saga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 const aSessionInfo = O.some({
@@ -116,8 +120,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -171,8 +179,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -220,8 +232,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -274,8 +290,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -341,8 +361,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)
@@ -395,8 +419,12 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
       .select(remoteConfigSelector)
       .next(O.some({}))
+      .select(isStartupLoaded)
+      .next()
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(trackKeychainFailures)

@@ -18,7 +18,11 @@ import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import I18n from "../../../../../i18n";
 import { getCategorySpecs } from "../../utils/filters";
-import { isValidDiscount, normalizedDiscountPercentage } from "./utils";
+import {
+  isValidDiscount,
+  moduleCGNaccessibilityLabel,
+  normalizedDiscountPercentage
+} from "./utils";
 
 export type ModuleCgnDiscount = {
   onPress: () => void;
@@ -64,14 +68,17 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
 
+  const accessibilityLabel = moduleCGNaccessibilityLabel(discount);
+
   return (
     <Pressable
       onPress={onPress}
-      accessible={true}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
       accessibilityRole="button"
+      accessible
+      accessibilityLabel={accessibilityLabel}
     >
       <Animated.View
         style={[

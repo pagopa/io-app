@@ -33,7 +33,10 @@ import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
-import { watchItwSaga } from "../features/itwallet/common/saga";
+import {
+  watchItwSaga,
+  watchItwOfflineSaga
+} from "../features/itwallet/common/saga";
 import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
@@ -96,6 +99,7 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import {
+  isStartupLoaded,
   StartupStatusEnum,
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
@@ -225,12 +229,27 @@ export function* initializeApplicationSaga(
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
 
+  // Start watching for ITW sagas that do not require internet connection or a valid session
+  yield* fork(watchItwOfflineSaga);
+
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
   // before using them.
   const remoteConfig = yield* select(remoteConfigSelector);
   if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
+  }
+
+  /**
+   * To prevent cases where the user goes back online and the saga continues,
+   * we need to explicitly stop the flow at this point.
+   * If `backendStatusLoadSuccess` is dispatched, it means the user is back online,
+   * **BUT** they must continue navigating within the offline flow.
+   * The best way to ensure this is to exit the startup saga at this stage.
+   */
+  const startupStatus = yield* select(isStartupLoaded);
+  if (startupStatus === StartupStatusEnum.OFFLINE) {
+    return;
   }
 
   // Whether the user is currently logged in.

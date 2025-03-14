@@ -7,6 +7,7 @@ import { selectIsLoading } from "../../machine/eid/selectors";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { useOfflineGuard } from "../../../../hooks/useOfflineGuard";
 
 const RevocationLoadingScreen = () => {
   useItwDisableGestureNavigation();
@@ -31,6 +32,11 @@ export const ItwLifecycleWalletRevocationScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
+  const handleRevokeWalletInstance = useOfflineGuard(
+    () => machineRef.send({ type: "revoke-wallet-instance" }),
+    { type: "toast" }
+  );
+
   if (isLoading) {
     return <RevocationLoadingScreen />;
   }
@@ -49,7 +55,7 @@ export const ItwLifecycleWalletRevocationScreen = () => {
         accessibilityLabel: I18n.t(
           "features.itWallet.walletRevocation.confirmScreen.action"
         ),
-        onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
+        onPress: handleRevokeWalletInstance
       }}
       secondaryAction={{
         label: I18n.t("global.buttons.cancel"),

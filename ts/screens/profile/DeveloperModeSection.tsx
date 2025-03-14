@@ -32,8 +32,7 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled,
-  setIOMarkdownEnabledOnMessagesAndServices
+  preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
@@ -44,7 +43,6 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,
-  isIOMarkdownEnabledLocallySelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -53,7 +51,7 @@ import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { requestAppReview } from "../../utils/storeReview";
+import { useAppReviewRequest } from "../../features/appReviews/hooks/useAppReviewRequest";
 import ExperimentalDesignEnableSwitch from "./components/ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -83,6 +81,8 @@ type DevActionButton = {
 
 const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
+  const { requestFeedback, appReviewBottomSheet } =
+    useAppReviewRequest("general");
 
   const handleClearCachePress = () => {
     Alert.alert(
@@ -163,7 +163,7 @@ const DeveloperActionsSection = () => {
       condition: true,
       color: "primary",
       label: I18n.t("profile.main.storeReview"),
-      onPress: requestAppReview
+      onPress: () => requestFeedback()
     }
   ];
 
@@ -185,19 +185,22 @@ const DeveloperActionsSection = () => {
   );
 
   return (
-    <FlatList
-      ListHeaderComponent={<ListItemHeader label="Actions" />}
-      scrollEnabled={false}
-      keyExtractor={(item: DevActionButton, index: number) =>
-        `${item.label}-${index}`
-      }
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
-      data={filteredDevActionButtons}
-      renderItem={renderDevActionButton}
-      ItemSeparatorComponent={() => <VSpacer size={8} />}
-    />
+    <>
+      {appReviewBottomSheet}
+      <FlatList
+        ListHeaderComponent={<ListItemHeader label="Actions" />}
+        scrollEnabled={false}
+        keyExtractor={(item: DevActionButton, index: number) =>
+          `${item.label}-${index}`
+        }
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={filteredDevActionButtons}
+        renderItem={renderDevActionButton}
+        ItemSeparatorComponent={() => <VSpacer size={8} />}
+      />
+    </>
   );
 };
 
@@ -299,13 +302,8 @@ const DeveloperDataSection = () => {
 };
 
 const DesignSystemSection = () => {
-  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const { themeType, setTheme } = useIOThemeContext();
-
-  const ioMarkdownEnabledOnMessagesAndServices = useIOSelector(
-    isIOMarkdownEnabledLocallySelector
-  );
 
   return (
     <ContentWrapper>
@@ -328,19 +326,6 @@ const DesignSystemSection = () => {
         value={themeType === "dark"}
         onSwitchValueChange={() =>
           setTheme(themeType === "dark" ? "light" : "dark")
-        }
-      />
-      <Divider />
-      <ListItemSwitch
-        label="IOMarkdown (Messaggi/Servizi)"
-        value={ioMarkdownEnabledOnMessagesAndServices}
-        onSwitchValueChange={() =>
-          dispatch(
-            setIOMarkdownEnabledOnMessagesAndServices({
-              enabledOnMessagesAndServices:
-                !ioMarkdownEnabledOnMessagesAndServices
-            })
-          )
         }
       />
     </ContentWrapper>
@@ -401,6 +386,13 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS
+        })
+    },
+    {
+      value: "App Feedback",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.APP_FEEDBACK_PLAYGROUND
         })
     }
   ];

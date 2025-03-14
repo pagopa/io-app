@@ -6,11 +6,18 @@ import {
   absolutePortalLinksSelector,
   barcodesScannerConfigSelector,
   generateDynamicUrlSelector,
+  isIOMarkdownEnabledForMessagesAndServicesSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
-  landingScreenBannerOrderSelector
+  landingScreenBannerOrderSelector,
+  pnMessagingServiceIdSelector
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
+
+afterEach(() => {
+  jest.restoreAllMocks();
+  jest.clearAllMocks();
+});
 
 describe("test selectors", () => {
   // smoke tests: valid / invalid
@@ -245,6 +252,165 @@ describe("landingScreenBannerOrderSelector", () => {
     )}`, () => {
       const output = landingScreenBannerOrderSelector(testCase.selectorInput);
       expect(output).toStrictEqual(testCase.expected);
+    });
+  }
+});
+describe("isIOMarkdownEnabledForMessagesAndServicesSelector", () => {
+  (
+    [
+      [
+        {
+          remoteConfig: O.none
+        } as GlobalState,
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({})
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {}
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {}
+            }
+          })
+        },
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            }
+          })
+        },
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "1.0.0.0",
+                ios: "1.0.0.0"
+              }
+            }
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "2.0.0.0",
+                ios: "2.0.0.0"
+              }
+            }
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            ioMarkdown: {
+              min_app_version: {
+                android: "2.0.0.1",
+                ios: "2.0.0.1"
+              }
+            }
+          })
+        },
+        false
+      ]
+    ] as ReadonlyArray<[GlobalState, boolean]>
+  ).forEach(testData =>
+    it(`should return '${testData[1]}' for '${JSON.stringify(
+      testData[0]
+    )}'`, () => {
+      jest
+        .spyOn(appVersion, "getAppVersion")
+        .mockImplementation(() => "2.0.0.0");
+      const output = isIOMarkdownEnabledForMessagesAndServicesSelector(
+        testData[0]
+      );
+      expect(output).toBe(testData[1]);
+    })
+  );
+});
+
+describe("pnMessageServiceIdSelector", () => {
+  const someState = {
+    remoteConfig: O.some({
+      pn: {
+        notificationServiceId: "NOTIF_SID"
+      }
+    })
+  } as GlobalState;
+  const emptyObjectState = {
+    remoteConfig: O.some({
+      pn: {}
+    })
+  } as GlobalState;
+  const noneState = {
+    remoteConfig: O.none
+  } as GlobalState;
+  const emptyStringState = {
+    remoteConfig: O.some({
+      pn: { notificationServiceId: "" }
+    })
+  } as GlobalState;
+  const undefinedState = {
+    remoteConfig: O.some({
+      pn: { notificationServiceId: undefined }
+    })
+  } as GlobalState;
+
+  const testCases = [
+    {
+      result: "NOTIF_SID",
+      input: someState
+    },
+    {
+      result: undefined,
+      input: emptyObjectState
+    },
+    {
+      result: "",
+      input: emptyStringState
+    },
+    {
+      result: undefined,
+      input: noneState
+    },
+    {
+      result: undefined,
+      input: undefinedState
+    }
+  ];
+  for (const { result, input } of testCases) {
+    it(`should return the correct result for input : ${JSON.stringify(
+      input
+    )}`, () => {
+      const output = pnMessagingServiceIdSelector(input);
+      expect(output).toBe(result);
     });
   }
 });

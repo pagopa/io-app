@@ -45,6 +45,7 @@ import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { useIOSelector } from "../../../store/hooks";
+import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -65,7 +66,7 @@ const InnerNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={ITW_ROUTES.DISCOVERY.INFO}
+      initialRouteName={ITW_ROUTES.OFFLINE.WALLET}
       screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
       screenListeners={{
         beforeRemove: () => {
@@ -259,10 +260,10 @@ const withItwEnabled =
   <P extends Record<string, unknown>>(Screen: ComponentType<P>) =>
   (props: P) => {
     const isItwEnabled = useIOSelector(isItwEnabledSelector);
+    const isConnected = useIOSelector(isConnectedSelector);
 
-    if (!isItwEnabled) {
-      // In case the user lands in this screen and IT Wallet is not enabled,
-      // we should render an error screen.
+    // Show error content only if connected and IT Wallet is not enabled
+    if (isConnected && !isItwEnabled) {
       return <ItwGenericErrorContent />;
     }
     return <Screen {...props} />;

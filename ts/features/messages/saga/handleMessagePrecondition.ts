@@ -22,7 +22,7 @@ import {
   preconditionsCategoryTagSelector,
   preconditionsMessageIdSelector
 } from "../store/reducers/messagePrecondition";
-import { isIOMarkdownEnabledOnMessagesAndServicesSelector } from "../../common/store/reducers";
+import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 
 export function* handleMessagePrecondition(
   getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
@@ -64,7 +64,7 @@ function* messagePreconditionWorker(
       if (result.right.status === 200) {
         const content = result.right.value;
         const isIOMarkdownEnabled = yield* select(
-          isIOMarkdownEnabledOnMessagesAndServicesSelector
+          isIOMarkdownEnabledForMessagesAndServicesSelector
         );
         yield* put(
           loadingContentPreconditionStatusAction(
@@ -106,5 +106,5 @@ export function* getMessageIdAndCategoryTag(): Generator<
 }
 
 export const testMessagePreconditionWorker = isTestEnv
-  ? messagePreconditionWorker
+  ? { messagePreconditionWorker }
   : undefined;

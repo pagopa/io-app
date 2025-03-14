@@ -7,17 +7,20 @@ import { watchItwLifecycleSaga } from "../../lifecycle/saga";
 import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";
 import { checkWalletInstanceStateSaga } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 
-function* checkWalletInstanceAndCredentialsValiditySaga() {
+export function* watchItwSaga(): SagaIterator {
+  yield* fork(warmUpIntegrityServiceSaga);
+  yield* fork(watchItwLifecycleSaga);
+
   // Status attestations of credentials are checked only in case of a valid wallet instance.
   // For this reason, these sagas must be called sequentially.
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAttestation);
 }
 
-export function* watchItwSaga(): SagaIterator {
-  yield* fork(warmUpIntegrityServiceSaga);
-  yield* fork(checkWalletInstanceAndCredentialsValiditySaga);
-  yield* fork(handleWalletCredentialsRehydration);
+/**
+ * Watcher for ITW sagas that do not require internet connection or a valid session
+ */
+export function* watchItwOfflineSaga(): SagaIterator {
   yield* fork(watchItwCredentialsSaga);
-  yield* fork(watchItwLifecycleSaga);
+  yield* fork(handleWalletCredentialsRehydration);
 }

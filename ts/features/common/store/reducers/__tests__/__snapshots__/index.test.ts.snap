@@ -2,6 +2,10 @@
 
 exports[`featuresPersistor should match snapshot 1`] = `
 {
+  "appFeedback": {
+    "negativeFeedbackDate": {},
+    "positiveFeedbackDate": "",
+  },
   "appearanceSettings": {
     "showAppearanceBanner": true,
   },
@@ -245,6 +249,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "history": {
+      "PDFsOpened": Set {},
       "archive": [],
       "receiptsOpened": Set {},
     },
