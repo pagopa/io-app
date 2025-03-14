@@ -815,19 +815,15 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                           </View>
                         </View>
                         <Modal
-                          accessibilityPositionChangeAnnouncement=""
                           accessible={false}
                           backdropComponent={[Function]}
                           enableDismissOnClose={true}
+                          enableDynamicSizing={false}
                           footerComponent={[Function]}
                           handleComponent={[Function]}
-                          handleComponentAccessibility={
-                            {
-                              "accessible": false,
-                            }
-                          }
                           hardwareAccelerated={false}
                           importantForAccessibility="yes"
+                          maxDynamicContentSize={1334}
                           onDismiss={[Function]}
                           snapPoints={
                             [
@@ -845,9 +841,9 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                           visible={true}
                         >
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
-                                "flex": 1,
                                 "paddingHorizontal": 24,
                               }
                             }
@@ -873,6 +869,20 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                               >
                                 Ti ricordiamo che attivare le notifiche push può aiutarti a non perdere comunicazioni importanti e scadenze sui pagamenti.
                               </Text>
+                              <View
+                                style={
+                                  {
+                                    "height": 48,
+                                  }
+                                }
+                              />
+                              <View
+                                style={
+                                  {
+                                    "height": 48,
+                                  }
+                                }
+                              />
                             </View>
                           </RCTScrollView>
                         </Modal>
