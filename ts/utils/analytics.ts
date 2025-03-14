@@ -68,6 +68,8 @@ export const numberToYesNoOnThreshold = (
     )
   );
 
+export const dateToUTCISOString = (date: Date) => date.toISOString();
+
 export const buildEventProperties = (
   eventCategory: "KO" | "TECH" | "UX",
   eventType:

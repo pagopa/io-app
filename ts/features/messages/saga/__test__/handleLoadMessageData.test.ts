@@ -1,10 +1,13 @@
+import { Effect } from "redux-saga/effects";
+import { call, take } from "typed-redux-saga/macro";
 import { testSaga } from "redux-saga-test-plan";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { testable } from "../handleLoadMessageData";
+import { handleLoadMessageData, testable } from "../handleLoadMessageData";
 import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
 import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
 import {
+  cancelGetMessageDataAction,
   getMessageDataAction,
   loadMessageById,
   loadMessageDetails,
@@ -383,6 +386,7 @@ describe("dispatchSuccessAction", () => {
     const organizationName = "orgName";
     const organizationFiscalCode = "orgFisCod";
     const isRead = true;
+    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
     const paginatedMessage = {
       id: messageId,
       serviceId,
@@ -390,7 +394,8 @@ describe("dispatchSuccessAction", () => {
       organizationFiscalCode,
       serviceName,
       isRead,
-      category: { tag: TagEnum.PN }
+      category: { tag: TagEnum.PN },
+      createdAt
     } as UIMessage;
     const messageDetails = {} as UIMessageDetails;
     const thirdPartyMessage = {
@@ -401,6 +406,7 @@ describe("dispatchSuccessAction", () => {
     const expectedOutput = {
       containsAttachments: true,
       containsPayment: undefined,
+      createdAt,
       firstTimeOpening: !isRead,
       hasFIMSCTA: false,
       hasRemoteContent: true,
@@ -432,6 +438,7 @@ describe("dispatchSuccessAction", () => {
     const organizationName = "orgName";
     const organizationFiscalCode = "orgFisCod";
     const isRead = true;
+    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
     const paginatedMessage = {
       id: messageId,
       serviceId,
@@ -439,7 +446,8 @@ describe("dispatchSuccessAction", () => {
       organizationFiscalCode,
       serviceName,
       isRead,
-      category: { tag: "GENERIC" }
+      category: { tag: "GENERIC" },
+      createdAt
     } as UIMessage;
     const messageDetails = {} as UIMessageDetails;
     const thirdPartyMessage = {
@@ -450,6 +458,7 @@ describe("dispatchSuccessAction", () => {
     const expectedOutput = {
       containsAttachments: true,
       containsPayment: false,
+      createdAt,
       firstTimeOpening: !isRead,
       hasFIMSCTA: false,
       hasRemoteContent: true,
@@ -481,6 +490,7 @@ describe("dispatchSuccessAction", () => {
     const organizationName = "orgName";
     const organizationFiscalCode = "orgFisCod";
     const isRead = true;
+    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
     const paginatedMessage = {
       id: messageId,
       serviceId,
@@ -488,7 +498,8 @@ describe("dispatchSuccessAction", () => {
       organizationFiscalCode,
       serviceName,
       isRead,
-      category: { tag: "GENERIC" }
+      category: { tag: "GENERIC" },
+      createdAt
     } as UIMessage;
     const messageDetails = {} as UIMessageDetails;
     const thirdPartyMessage = {
@@ -497,6 +508,7 @@ describe("dispatchSuccessAction", () => {
     const expectedOutput = {
       containsAttachments: false,
       containsPayment: false,
+      createdAt,
       firstTimeOpening: !isRead,
       hasFIMSCTA: false,
       hasRemoteContent: true,
@@ -528,6 +540,7 @@ describe("dispatchSuccessAction", () => {
     const organizationName = "orgName";
     const organizationFiscalCode = "orgFisCod";
     const isRead = true;
+    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
     const paginatedMessage = {
       id: messageId,
       serviceId,
@@ -535,12 +548,14 @@ describe("dispatchSuccessAction", () => {
       organizationFiscalCode,
       serviceName,
       isRead,
-      category: { tag: "GENERIC" }
+      category: { tag: "GENERIC" },
+      createdAt
     } as UIMessage;
     const messageDetails = {} as UIMessageDetails;
     const expectedOutput = {
       containsAttachments: false,
       containsPayment: false,
+      createdAt,
       firstTimeOpening: !isRead,
       hasFIMSCTA: false,
       hasRemoteContent: false,
@@ -572,6 +587,7 @@ describe("dispatchSuccessAction", () => {
     const organizationName = "orgName";
     const organizationFiscalCode = "orgFisCod";
     const isRead = true;
+    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
     const paginatedMessage = {
       id: messageId,
       serviceId,
@@ -579,12 +595,14 @@ describe("dispatchSuccessAction", () => {
       organizationFiscalCode,
       serviceName,
       isRead,
-      category: { tag: "GENERIC" }
+      category: { tag: "GENERIC" },
+      createdAt
     } as UIMessage;
     const messageDetails = { paymentData: {} } as UIMessageDetails;
     const expectedOutput = {
       containsAttachments: false,
       containsPayment: true,
+      createdAt,
       firstTimeOpening: !isRead,
       hasFIMSCTA: false,
       hasRemoteContent: false,
@@ -617,6 +635,7 @@ describe("dispatchSuccessAction", () => {
     const organizationFiscalCode = "orgFisCod";
     const isRead = true;
     const authCode = "authCode";
+    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
     const paginatedMessage = {
       id: messageId,
       serviceId,
@@ -624,7 +643,8 @@ describe("dispatchSuccessAction", () => {
       organizationFiscalCode,
       serviceName,
       isRead,
-      category: { tag: "GENERIC" }
+      category: { tag: "GENERIC" },
+      createdAt
     } as UIMessage;
     const messageDetails = {
       euCovidCertificate: { authCode }
@@ -632,6 +652,7 @@ describe("dispatchSuccessAction", () => {
     const expectedOutput = {
       containsAttachments: false,
       containsPayment: false,
+      createdAt,
       firstTimeOpening: !isRead,
       hasFIMSCTA: false,
       hasRemoteContent: false,
@@ -663,6 +684,7 @@ describe("dispatchSuccessAction", () => {
     const organizationName = "orgName";
     const organizationFiscalCode = "orgFisCod";
     const isRead = true;
+    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
     const paginatedMessage = {
       id: messageId,
       serviceId,
@@ -670,7 +692,8 @@ describe("dispatchSuccessAction", () => {
       organizationFiscalCode,
       serviceName,
       isRead,
-      category: { tag: "GENERIC" }
+      category: { tag: "GENERIC" },
+      createdAt
     } as UIMessage;
     const messageDetails = {
       markdown: fimsCTAFrontMatter
@@ -678,6 +701,7 @@ describe("dispatchSuccessAction", () => {
     const expectedOutput = {
       containsAttachments: false,
       containsPayment: false,
+      createdAt,
       firstTimeOpening: !isRead,
       hasFIMSCTA: true,
       hasRemoteContent: false,
@@ -709,6 +733,7 @@ describe("dispatchSuccessAction", () => {
     const organizationName = "orgName";
     const organizationFiscalCode = "orgFisCod";
     const isRead = true;
+    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
     const paginatedMessage = {
       id: messageId,
       serviceId,
@@ -716,7 +741,8 @@ describe("dispatchSuccessAction", () => {
       organizationFiscalCode,
       serviceName,
       isRead,
-      category: { tag: "GENERIC" }
+      category: { tag: "GENERIC" },
+      createdAt
     } as UIMessage;
     const messageDetails = {} as UIMessageDetails;
     const thirdPartyMessage = {
@@ -730,6 +756,7 @@ describe("dispatchSuccessAction", () => {
     const expectedOutput = {
       containsAttachments: false,
       containsPayment: false,
+      createdAt,
       firstTimeOpening: !isRead,
       hasFIMSCTA: true,
       hasRemoteContent: true,
@@ -1302,5 +1329,56 @@ describe("computeHasFIMSCTA", () => {
     );
 
     expect(hasFIMSCTA).toBe(false);
+  });
+});
+
+describe("handleLoadMessageData", () => {
+  it("should start a race between loadMessageData and cancellation, and handle successful polling", () => {
+    const messageId = "01JP5D5R15CRAG7D1FHE5TEE24" as UIMessageId;
+    const action = getMessageDataAction.request({
+      fromPushNotification: false,
+      messageId
+    });
+    const successPayload = {
+      containsAttachments: false,
+      containsPayment: false,
+      createdAt: new Date(),
+      firstTimeOpening: true,
+      hasFIMSCTA: false,
+      hasRemoteContent: false,
+      isLegacyGreenPass: false,
+      isPNMessage: false,
+      messageId,
+      organizationName: "Test Organization",
+      organizationFiscalCode: "12345678901",
+      serviceId: "service123" as ServiceId,
+      serviceName: "Test Service"
+    };
+    testSaga(handleLoadMessageData, action)
+      .next()
+      .race({
+        polling: call(testable!.loadMessageData, action.payload),
+        cancelAction: take(cancelGetMessageDataAction)
+      } as unknown as { [key: string]: Effect })
+      .next({ polling: successPayload }) // Simulate loadMessageData completing first
+      .isDone();
+  });
+  it("should start a race between loadMessageData and cancellation, and handle cancellation", () => {
+    const messageId = "01JP5D5R15CRAG7D1FHE5TEE24" as UIMessageId;
+    const action = getMessageDataAction.request({
+      fromPushNotification: false,
+      messageId
+    });
+
+    const cancelAction = cancelGetMessageDataAction();
+
+    testSaga(handleLoadMessageData, action)
+      .next()
+      .race({
+        polling: call(testable!.loadMessageData, action.payload),
+        cancelAction: take(cancelGetMessageDataAction)
+      } as unknown as { [key: string]: Effect })
+      .next({ cancelAction }) // Simulate cancel action arriving first
+      .isDone();
   });
 });
