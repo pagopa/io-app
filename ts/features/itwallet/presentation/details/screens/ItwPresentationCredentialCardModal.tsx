@@ -115,6 +115,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
         handleOnPress={() => setFlipped(_ => !_)}
         fullScreen={true}
       />
+      <VSpacer size={12} />
       <ItwPresentationCredentialCardHideValuesButton
         handleOnPress={handleClaimVisibility}
         valuesHidden={valuesHidden}

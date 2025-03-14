@@ -1,8 +1,7 @@
 import {
   ButtonLink,
   ButtonLinkProps,
-  ButtonSolid,
-  VSpacer
+  ButtonSolid
 } from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -46,10 +45,7 @@ const ItwPresentationCredentialCardFlipButton = ({
       accessibilityState={{ checked: isFlipped }}
     >
       {fullScreen ? (
-        <>
-          <ButtonSolid {...buttonProps} />
-          <VSpacer size={12} />
-        </>
+        <ButtonSolid {...buttonProps} />
       ) : (
         <ButtonLink {...buttonProps} />
       )}
