@@ -11,7 +11,8 @@ export const fromGeneratedToLocalSpidIdp = (
       light: { uri: idp.logo },
       dark: { uri: idp.logoDark }
     },
-    profileUrl: idp.profileUrl
+    profileUrl: idp.profileUrl,
+    isTestIdp: idp.isTestIdp
   }));
 
 export type SpidIdp = Omit<GeneratedSpidIdpType, "logo"> & {
