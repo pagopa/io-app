@@ -1,10 +1,13 @@
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
 import { PublicSession } from "../../../definitions/session_manager/PublicSession";
+import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
 import { SessionToken } from "../../types/SessionToken";
+import { format } from "../../utils/dates";
+import { SpidIdp } from "../../utils/idps";
 import {
   clearCurrentSession,
   idpSelected,
@@ -17,9 +20,6 @@ import {
   sessionInvalid
 } from "../actions/authentication";
 import { Action } from "../actions/types";
-import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
-import { format } from "../../utils/dates";
 import { logoutRequest } from "./../actions/authentication";
 import { GlobalState } from "./types";
 
