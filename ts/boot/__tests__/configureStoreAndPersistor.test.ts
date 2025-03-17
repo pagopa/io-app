@@ -200,7 +200,6 @@ describe("configureStoreAndPersistor", () => {
           installation: {
             isFirstRunAfterInstall: false,
             appVersionHistory: [
-              "2.77.1.0",
               "2.78.0.11",
               "2.79.0.9",
               "2.80.0.9",
@@ -209,6 +208,7 @@ describe("configureStoreAndPersistor", () => {
               "2.82.0.7",
               "2.83.0.7",
               "3.0.0.7",
+              "3.0.1.0",
               "3.1.0.0"
             ]
           },
@@ -232,7 +232,7 @@ describe("configureStoreAndPersistor", () => {
           },
           profile: pot.none,
           _persist: {
-            version: 41,
+            version: 42,
             rehydrated: false
           }
         };

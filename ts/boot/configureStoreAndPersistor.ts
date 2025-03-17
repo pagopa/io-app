@@ -530,6 +530,7 @@ const migrations: MigrationManifest = {
         idps: RemoteValue<SpidIdps, Error>;
       };
     };
+
     return {
       // See comment above for 'state's content
       ...state,
@@ -540,7 +541,7 @@ const migrations: MigrationManifest = {
           ? remoteReady(
               fromGeneratedToLocalSpidIdp(typedState.content.idps.value.items)
             )
-          : typedState.content.idps
+          : { ...typedState.content.idps }
       }
     };
   }
