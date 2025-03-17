@@ -13,7 +13,6 @@ import {
   assistanceToolRemoteConfig,
   resetCustomFields
 } from "../../../utils/supportAssistance";
-import { SearchType } from "../../search/SearchButton";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 
 export type ContextualHelpProps = {
@@ -36,7 +35,6 @@ interface OwnProps {
   headerBackgroundColor?: ColorValue;
   hideBaseHeader?: boolean;
   appLogo?: boolean;
-  searchType?: SearchType;
   backButtonTestID?: string;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   hideHelpButton?: boolean;
@@ -70,7 +68,6 @@ const BaseScreenComponent = ({
   headerBackgroundColor,
   headerBody,
   headerTitle,
-  isSearchAvailable,
   onAccessibilityNavigationHeaderFocus,
   primary,
   showChat,
@@ -144,7 +141,6 @@ const BaseScreenComponent = ({
           headerTitle={headerTitle}
           backgroundColor={headerBackgroundColor}
           onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
-          isSearchAvailable={isSearchAvailable}
           body={headerBody}
           appLogo={appLogo}
           customRightIcon={customRightIcon}
