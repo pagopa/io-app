@@ -130,6 +130,9 @@
           "label": "Contextual Help",
           "hint": "Access information about the contents of the current screen"
         }
+      },
+      "list": {
+        "counter": "Element {{index}} of {{total}}"
       }
     },
     "symbols": {

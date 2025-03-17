@@ -130,6 +130,9 @@
           "label": "Aiuto contestuale",
           "hint": "Accedi alle informazioni sul contenuto della schermata corrente"
         }
+      },
+      "list": {
+        "counter": "Elemento {{index}} di {{total}}"
       }
     },
     "symbols": {
