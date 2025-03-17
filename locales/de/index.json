@@ -2963,7 +2963,7 @@
             "title": "Wie sind die Kategorien angeordnet?",
             "content": "Um deine Suche zu erleichtern und deine Erfahrung zu verbessern, haben wir die Kategorien nach der Häufigkeit der Nutzung geordnet. Diese Informationen sind nicht mit deinem Profil verknüpft, sondern beruhen auf den Gesamtdaten aller Nutzer, die die Nationale Jugendkarte nutzen und der Verarbeitung ihrer Daten zugestimmt haben."
           },
-          "a11y": "{{name}} {{count}} Neue Möglichkeiten gefunden"
+          "a11y": "{{name}}, {{count}} Neue Möglichkeiten gefunden"
         },
         "filter": {
           "title": "Anbieter filtern",
