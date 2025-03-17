@@ -2987,7 +2987,8 @@
             "byDistance": "Nach der Nähe zu deinem Standort",
             "byName": "Alphabetisch geordnet"
           }
-        }
+        },
+        "discountOf": "Rabatt des {{discount}}%"
       },
       "merchantDetail": {
         "title": {
@@ -4113,6 +4114,18 @@
         "body": "Damit du auf einen externen Dienst zugreifen kannst, ohne dich jedes Mal zu authentifizieren, gibt die IO-App einige deiner Daten an den Anbieter weiter.",
         "body2": "Deine Daten sind sicher und werden nur zu den Zwecken verarbeitet, die von der Körperschaft angegeben sind.",
         "bodyPrivacy": "Datenschutzrichtlinie"
+      }
+    }
+  },
+  "idpay": {
+    "configuration": {
+      "iban": {
+        "onboarding": {
+          "error": {
+            "iban": "Iban ist nicht gültig",
+            "name": "Assoziiert einen Namen mit der Iban"
+          }
+        }
       }
     }
   }

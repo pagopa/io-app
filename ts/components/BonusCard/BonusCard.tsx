@@ -8,13 +8,20 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 
-import { Fragment, ReactNode, useMemo } from "react";
+import {
+  createRef,
+  Fragment,
+  ReactNode,
+  useLayoutEffect,
+  useMemo
+} from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import {
   heightPercentageToDP,
   widthPercentageToDP
 } from "react-native-responsive-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import { BonusCardCounter } from "./BonusCardCounter";
 import { BonusCardShape } from "./BonusCardShape";
 import { BonusCardStatus } from "./BonusCardStatus";
@@ -41,6 +48,12 @@ type LoadingStateProps =
 export type BonusCard = LoadingStateProps & BaseProps;
 
 const BonusCardContent = (props: BonusCard) => {
+  const bonusNameHeadingRef = createRef<View>();
+
+  useLayoutEffect(() => {
+    setAccessibilityFocus(bonusNameHeadingRef);
+  }, [bonusNameHeadingRef]);
+
   if (props.isLoading) {
     return <BonusCardSkeleton {...props} />;
   }
@@ -67,7 +80,12 @@ const BonusCardContent = (props: BonusCard) => {
           <VSpacer size={16} />
         </>
       )}
-      <H2 color="blueItalia-850" style={{ textAlign: "center" }}>
+      <H2
+        ref={bonusNameHeadingRef}
+        role="heading"
+        color="blueItalia-850"
+        style={{ textAlign: "center" }}
+      >
         {name}
       </H2>
       <VSpacer size={4} />

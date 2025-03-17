@@ -2,6 +2,7 @@
   "accessibility": {
     "doubleTapToActivateHint": "Double tap to activate",
     "buttons": {
+      "navigateBack": "Navigate back",
       "torch": {
         "turnOn": "Turn on the flashlight",
         "turnOff": "Turn off the flashlight"
@@ -240,10 +241,35 @@
       "invalidSearchBarText": "Enter at least {{minCharacter}} characters",
       "noResultsFound": "There are no results for this search: try something else.",
       "noResultsTitle": "No results."
+    },
+    "offline": {
+      "screen": {
+        "title": "Nessuna connessione",
+        "subtitle": "Collegati a internet per continuare ad usare tutti i servizi di app IO.",
+        "action": "Riprova"
+      },
+      "toast": "Nessuna connessione. Funzionalità non disponibile in assenza di rete."
     }
   },
   "tablet": {
     "message": "The IO interface is optimized for smartphones, but all the functions compatible with your device are still available."
+  },
+  "appFeedback": {
+    "toast": {
+      "negativeFeedback": "Puoi lasciare i tuoi suggerimenti in ogni momento, visitando la sezione Impostazioni"
+    },
+    "alert": {
+      "title": "Do you like IO app?",
+      "description": "We'll use your answer to improve our services.",
+      "continue": "Yes, I like it",
+      "discard": "I don't like it"
+    },
+    "bottomSheet": {
+      "title": "Ti va di dirci perché?",
+      "description": "Raccontaci cosa è andato storto nella tua esperienza con IO: useremo i tuoi suggerimenti per rendere l'app ancora più efficiente.",
+      "continue": "Dai un suggerimento",
+      "discard": "Non ora"
+    }
   },
   "rooted": {
     "title": "Looks like the security of your device has been compromised!",
@@ -359,6 +385,10 @@
       "spid": "SPID PROFILE"
     },
     "unknown": "UNKNOWN",
+    "appFeedback": {
+      "reviewLabel": "Valuta l'app",
+      "feedbackLabel": "Hai un suggerimento?"
+    },
     "logout": {
       "menulabel": "Logout from IO",
       "alertTitle": "Do you want to logout?",
@@ -722,7 +752,7 @@
         "subtitleExistingUser": "Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.",
         "reminders": {
           "title": "Allow reminders",
-          "description": "Upon request of the sender, receive push notifications close to deadlines or when you have unread messages"
+          "description": "Upon request of the sender, receive push notifications close to deadlines"
         },
         "preview": {
           "title": "Show a preview",
@@ -2500,6 +2530,12 @@
           "primaryAction": "Aggiungi carta",
           "secondaryAction": "Usa altri metodi"
         },
+        "PAYMENT_METHODS_EXPIRED": {
+          "title": "Your card is expired!",
+          "subtitle": "Remove the card and add a new one.\nIt will be saved in your Wallet, making it easier for you to pay next time.",
+          "primaryAction": "Add card",
+          "secondaryAction": "Use other methods"
+        },
         "PAYMENT_REVERSED": {
           "title": "Il pagamento non è andato a buon fine",
           "subtitle": "L’importo autorizzato è stato rimborsato sul tuo metodo di pagamento. Il trasferimento di denaro potrebbe richiedere del tempo.",
@@ -3513,7 +3549,8 @@
             "byDistance": "By proximity to your location",
             "byName": "Alphabetical order"
           }
-        }
+        },
+        "discountOf": "Discount of {{discount}}%"
       },
       "merchantDetail": {
         "title": {
@@ -3727,7 +3764,55 @@
       "reminderBanner": {
         "title": "Ricevi le tue comunicazioni a valore legale su IO!",
         "body": "Con IO è più semplice, ti basta attivare il servizio SEND.",
-        "cta": "Attiva SEND su IO"
+        "cta": "Attiva SEND su IO",
+        "activationFlow": {
+          "FAILURE_DETAILS_FETCH": {
+            "title": "Non riusciamo ad attivare il servizio SEND",
+            "body": "Riprova più tardi"
+          },
+          "FAILURE_ACTIVATION": {
+            "title": "Non riusciamo ad attivare il servizio SEND",
+            "body": "Riprova più tardi"
+          },
+          "WAITING_USER_INPUT": {
+            "title": "Le comunicazioni a valore legale, ora digitali",
+            "paragraph1": {
+              "title": "SEND su IO: come funziona",
+              "body": "Ricevi in app le comunicazioni a valore legale che ti inviano gli enti pubblici: con il servizio SEND puoi gestirle in tempo reale sul tuo dispositivo e pagare facilmente eventuali costi. "
+            },
+            "paragraph2": {
+              "title": "È facile e veloce",
+              "body": "Attiva il servizio in un tap per ricevere le tue prossime notifiche SEND in app."
+            },
+            "paragraph3": {
+              "pressing": "Premendo ",
+              "activate": "Attiva il servizio ",
+              "readAndUnderstood": "dichiari di aver letto e compreso l’",
+              "privacyInfo": "Informativa Privacy ",
+              "andThe": "e i ",
+              "TOS": "Termini e Condizioni d’uso"
+            },
+            "CTA": "Attiva il servizio"
+          },
+          "SUCCESS_ACTIVATION": {
+            "title": "Hai attivato il servizio SEND!",
+            "body": "Da ora in poi riceverai su IO le tue comunicazioni a valore legale!"
+          },
+          "ALREADY_ACTIVE": {
+            "title": "SEND è già attivo!",
+            "body": "Se un ente ti invia una comunicazione a valore legale, la ricevi direttamente su IO!"
+          },
+          "LOADING-DATA": {
+            "title": "Attendi qualche secondo"
+          },
+          "LOADING-ACTIVATION": {
+            "title": "Stiamo attivando SEND"
+          },
+          "MISSING-SID": {
+            "title": "Non riusciamo ad attivare il servizio SEND",
+            "body": "Riprova più tardi"
+          }
+        }
       },
       "service": {
         "activate": "Attiva il servizio",
@@ -4603,7 +4688,8 @@
         "modal": {
           "title": "Nessuna connessione",
           "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
-          "action": "Ricarica l'app IO"
+          "action": "Ricarica l'app IO",
+          "failure": "Nessuna connessione. Collegati a internet e riprova."
         }
       }
     }
@@ -5159,7 +5245,11 @@
           "body": "Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del",
           "bodyLink": "Dpr 28 dicembre 2000 n. 445 art 46 e 47",
           "nameAssignInput": "Assegna un nome",
-          "bottomLabel": "Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app"
+          "bottomLabel": "Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app",
+          "error": {
+            "iban": "IBAN not valid",
+            "name": "Associates a name with the IBAN"
+          }
         },
         "enrollment": {
           "header": "Scegli quale IBAN associare all’iniziativa",

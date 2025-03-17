@@ -3,10 +3,6 @@ import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
-export type Reset = {
-  type: "reset";
-};
-
 export type Start = {
   type: "start";
 };
@@ -87,7 +83,6 @@ export type StartReissuing = {
 };
 
 export type EidIssuanceEvents =
-  | Reset
   | Start
   | AcceptTos
   | AcceptIpzsPrivacy
