@@ -153,14 +153,6 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   LEGACY: {
-    TEXT_FIELDS: {
-      route: "DESIGN_SYSTEM_LEGACY_TEXT_FIELDS",
-      title: "Text Fields"
-    },
-    LIST_ITEMS: {
-      route: "DESIGN_SYSTEM_LEGACY_LIST_ITEMS",
-      title: "List Items"
-    },
     ADVICE: {
       route: "DESIGN_SYSTEM_LEGACY_ADVICE",
       title: "Advice & Banners"
