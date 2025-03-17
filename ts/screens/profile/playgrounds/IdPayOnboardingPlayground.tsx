@@ -5,12 +5,12 @@ import {
   H4,
   IOColors,
   PressableListItemBase,
+  TextInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Button, ScrollView, View } from "react-native";
-import { LabelledItem } from "../../../components/LabelledItem";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { IdPayOnboardingRoutes } from "../../../features/idpay/onboarding/navigation/routes";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
@@ -46,15 +46,11 @@ const IdPayOnboardingPlayground = () => {
 
   return (
     <ScrollView style={IOStyles.horizontalContentPadding}>
-      <LabelledItem
-        label={"Service ID"}
-        inputProps={{
-          keyboardType: "default",
-          returnKeyType: "done",
-          autoFocus: true,
-          onChangeText: text => setServiceId(text),
-          value: serviceId
-        }}
+      <TextInput
+        accessibilityLabel="ID dell'iniziativa"
+        onChangeText={text => setServiceId(text)}
+        value={serviceId ?? ""}
+        placeholder="Service ID"
       />
       <VSpacer size={16} />
       <Button onPress={handleServiceSubmit} title="Start onboarding" />

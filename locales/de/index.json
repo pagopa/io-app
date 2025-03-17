@@ -4116,5 +4116,17 @@
         "bodyPrivacy": "Datenschutzrichtlinie"
       }
     }
+  },
+  "idpay": {
+    "configuration": {
+      "iban": {
+        "onboarding": {
+          "error": {
+            "iban": "Iban ist nicht gültig",
+            "name": "Assoziiert einen Namen mit der Iban"
+          }
+        }
+      }
+    }
   }
 }
