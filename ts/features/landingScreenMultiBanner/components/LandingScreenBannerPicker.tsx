@@ -1,30 +1,29 @@
-import { useCallback } from "react";
+import { useMemo } from "react";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { landingScreenBannerToRenderSelector } from "../store/selectors";
-import { updateLandingScreenBannerVisibility } from "../store/actions";
-import { landingScreenBannerMap } from "../utils/landingScreenBannerMap";
 import { usePushNotificationsBannerTracking } from "../../pushNotifications/hooks/usePushNotificationsBannerTracking";
+import { updateLandingScreenBannerVisibility } from "../store/actions";
+import { landingScreenBannerToRenderSelector } from "../store/selectors";
+import { landingScreenBannerMap } from "../utils/landingScreenBannerMap";
 
 export const LandingScreenBannerPicker = () => {
   const dispatch = useIODispatch();
   const bannerToRender = useIOSelector(landingScreenBannerToRenderSelector);
+  usePushNotificationsBannerTracking();
 
-  const closeHandler = useCallback(() => {
-    if (bannerToRender) {
+  return useMemo(() => {
+    if (bannerToRender === undefined) {
+      return null;
+    }
+    const entry = landingScreenBannerMap[bannerToRender];
+    const closeHandler = () => {
       dispatch(
         updateLandingScreenBannerVisibility({
           id: bannerToRender,
-          enabled: false
+          enabled: false,
+          shouldBePersisted: entry.shouldClosePersist
         })
       );
-    }
+    };
+    return entry.component(closeHandler);
   }, [bannerToRender, dispatch]);
-
-  usePushNotificationsBannerTracking();
-
-  if (bannerToRender === undefined) {
-    return null;
-  }
-  const entry = landingScreenBannerMap[bannerToRender];
-  return entry?.component(closeHandler);
 };

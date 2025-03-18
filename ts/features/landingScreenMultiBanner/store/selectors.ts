@@ -2,13 +2,14 @@ import { createSelector, createStructuredSelector } from "reselect";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderabilitySelectorsFromBannerMap } from "../utils";
 import {
+  LANDING_SCREEN_BANNERS_ENABLED_MAP,
   LandingScreenBannerId,
   landingScreenBannerMap
 } from "../utils/landingScreenBannerMap";
 import { landingScreenBannerOrderSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 
-export const localBannerVisibilitySelector = (state: GlobalState) =>
-  state.features.landingBanners;
+export const localSessionBannerVisibilitySelector = (state: GlobalState) =>
+  state.features.landingBanners.session;
 
 type StructuredSelectorOutput = {
   [key in LandingScreenBannerId]: boolean;
@@ -25,7 +26,7 @@ const unifiedRenderabilitySelectors = createStructuredSelector<
 export const landingScreenBannerToRenderSelector = createSelector(
   [
     landingScreenBannerOrderSelector,
-    localBannerVisibilitySelector,
+    localSessionBannerVisibilitySelector,
     unifiedRenderabilitySelectors
   ],
   (
@@ -35,6 +36,10 @@ export const landingScreenBannerToRenderSelector = createSelector(
   ): LandingScreenBannerId | undefined => {
     const availableBanners = backendBannerOrder.filter(
       (id): id is LandingScreenBannerId =>
+        // since a banner could be set to "persistent enable",
+        // we need to double check if it has been enabled in the banner_map, as there may be mismatchings
+        LANDING_SCREEN_BANNERS_ENABLED_MAP[id as LandingScreenBannerId] ===
+          true &&
         isLocalEnabledById[id as LandingScreenBannerId] === true &&
         isRenderableById[id as LandingScreenBannerId] === true
     );

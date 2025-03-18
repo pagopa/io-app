@@ -53,8 +53,8 @@ import {
   LoginInfoState
 } from "../../../login/info/store/reducers";
 import {
-  landingScreenBannersReducer,
-  LandingScreenBannerState
+  LandingScreenBannerState,
+  persistedLandingScreenBannersReducer
 } from "../../../landingScreenMultiBanner/store/reducer";
 import {
   spidLoginReducer,
@@ -102,7 +102,7 @@ export type FeaturesState = {
   appearanceSettings: AppearanceSettingsState & PersistPartial;
   mixpanel: MixpanelState;
   ingress: IngressScreenState;
-  landingBanners: LandingScreenBannerState;
+  landingBanners: LandingScreenBannerState & PersistPartial;
   appFeedback: AppFeedbackState & PersistPartial;
   utmLink: UtmLinkState;
   connectivityStatus: ConnectivityState;
@@ -133,7 +133,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   appearanceSettings: appearanceSettingsReducerPersistor,
   mixpanel: mixpanelReducer,
   ingress: ingressScreenReducer,
-  landingBanners: landingScreenBannersReducer,
+  landingBanners: persistedLandingScreenBannersReducer,
   appFeedback: appFeedbackPersistor,
   utmLink: utmLinkReducer,
   connectivityStatus: connectivityStateReducer

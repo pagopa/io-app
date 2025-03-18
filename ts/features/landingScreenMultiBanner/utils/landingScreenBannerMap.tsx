@@ -13,6 +13,7 @@ type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
 type ComponentAndLogic = {
   component: ComponentWithCloseHandler;
   isRenderableSelector: (state: GlobalState) => boolean;
+  shouldClosePersist?: boolean;
 };
 
 export type BannerMapById = {
@@ -51,6 +52,7 @@ export const landingScreenBannerMap: BannerMapById = {
     component: closeHandler => (
       <PNActivationReminderBanner handleOnClose={closeHandler} />
     ),
-    isRenderableSelector: isPnEnabledSelector
+    isRenderableSelector: isPnEnabledSelector,
+    shouldClosePersist: true
   }
 } as const;

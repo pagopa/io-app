@@ -4,6 +4,7 @@ import { LandingScreenBannerId } from "../utils/landingScreenBannerMap";
 type UpdateBannerVisibilityPayloadType = {
   id: LandingScreenBannerId;
   enabled: boolean;
+  shouldBePersisted?: boolean;
 };
 export const updateLandingScreenBannerVisibility = createStandardAction(
   "UPDATE_LANDING_SCREEN_BANNER_STATE"

@@ -1,15 +1,19 @@
 import * as Reselect from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
-import { LandingScreenBannerState } from "../reducer";
 import * as SELECTORS from "../selectors";
+import { LandingScreenBannerId } from "../../utils/landingScreenBannerMap";
 
+type LandingScreenBannerState = { [key in LandingScreenBannerId]: boolean };
 // eslint-disable-next-line functional/immutable-data
 process.env.NODE_ENV = "test";
 
 const mockState = {
   features: {
     landingBanners: {
-      ITW_DISCOVERY: true
+      session: {
+        ITW_DISCOVERY: true
+      },
+      persisted: {}
     }
   }
 } as GlobalState;
@@ -24,6 +28,18 @@ const testLandingMap = {
   }
 };
 jest.mock("../../utils/landingScreenBannerMap", () => ({
+  get LANDING_SCREEN_BANNERS_ENABLED_MAP() {
+    return {
+      item1: true,
+      item2: false,
+      correct_id: true,
+      another_id: true,
+      wrong_id: true,
+      some: true,
+      more: true,
+      ids: true
+    };
+  },
   get landingScreenBannerMap() {
     return testLandingMap;
   }
@@ -250,7 +266,7 @@ describe("landingScreenBannerToRenderSelector", () => {
 
 describe("localBannerVisiblitySelector", () => {
   it("should return the local visibility", () => {
-    const result = SELECTORS.localBannerVisibilitySelector(mockState);
-    expect(result).toEqual(mockState.features.landingBanners);
+    const result = SELECTORS.localSessionBannerVisibilitySelector(mockState);
+    expect(result).toEqual(mockState.features.landingBanners.session);
   });
 });
