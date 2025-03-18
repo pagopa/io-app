@@ -216,6 +216,7 @@ const CiePinScreen = () => {
             <Body
               weight="Semibold"
               asLink
+              accessibilityRole="button"
               onPress={() => {
                 trackLoginCiePinInfo();
                 present();
