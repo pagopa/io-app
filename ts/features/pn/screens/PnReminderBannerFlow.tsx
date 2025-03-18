@@ -14,8 +14,12 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { pnMessagingServiceIdSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import LoadingComponent from "../../fci/components/LoadingComponent";
 import { usePnPreferencesFetcher } from "../hooks/usePnPreferencesFetcher";
-import { pnActivationUpsert } from "../store/actions";
+import {
+  dismissPnActivationReminderBanner,
+  pnActivationUpsert
+} from "../store/actions";
 import { isLoadingPnActivationSelector } from "../store/reducers/activation";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 export const pnBannerFlowStateEnum = {
   FAILURE_DETAILS_FETCH: "FAILURE_DETAILS_FETCH",
@@ -144,6 +148,10 @@ const LoadingScreen = ({ loadingState }: LoadingStateProps) => (
 
 const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
+  useOnFirstRender(() => {
+    dispatch(dismissPnActivationReminderBanner());
+  });
   return (
     <OperationResultScreenContent
       testID={`success-${flowState}`}
