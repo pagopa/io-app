@@ -1,9 +1,13 @@
-import { FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FeatureInfo,
+  TextInputValidation,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useState } from "react";
 import { Iban } from "../../../../../definitions/backend/Iban";
-import { LabelledItem } from "../../../../components/LabelledItem";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -57,31 +61,38 @@ export const IbanOnboardingScreen = () => {
         }
       }}
     >
-      <LabelledItem
-        isValid={O.isSome(iban.value)}
-        label="IBAN"
-        inputMaskProps={{
-          type: "custom",
-          options: {
-            mask: "AA99A9999999999999999999999"
-          },
-          keyboardType: "default",
-          value: iban.text,
-          onChangeText: text =>
-            setIban({ value: pipe(Iban.decode(text), O.fromEither), text })
+      <TextInputValidation
+        inputType="iban"
+        errorMessage={I18n.t("idpay.configuration.iban.onboarding.error.iban")}
+        onValidate={value =>
+          pipe(
+            Iban.decode(value),
+            E.fold(
+              () => false,
+              () => true
+            )
+          )
+        }
+        value={iban.text}
+        onChangeText={text => {
+          setIban({
+            value: pipe(Iban.decode(text), O.fromEither),
+            text
+          });
         }}
+        counterLimit={27}
+        placeholder="IBAN"
       />
       <VSpacer size={16} />
-      <LabelledItem
-        label={I18n.t("idpay.configuration.iban.onboarding.nameAssignInput")}
-        isValid={O.isSome(iban.value)}
-        inputProps={{
-          keyboardType: "default",
-          returnKeyType: "done",
-          value: ibanName,
-          maxLength: 35,
-          onChangeText: val => setIbanName(val)
-        }}
+      <TextInputValidation
+        counterLimit={35}
+        errorMessage={I18n.t("idpay.configuration.iban.onboarding.error.name")}
+        onValidate={val => val.length > 0}
+        value={ibanName}
+        onChangeText={val => setIbanName(val)}
+        placeholder={I18n.t(
+          "idpay.configuration.iban.onboarding.nameAssignInput"
+        )}
       />
       <VSpacer size={16} />
       <FeatureInfo

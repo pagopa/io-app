@@ -1,4 +1,8 @@
-import { ButtonLink } from "@pagopa/io-app-design-system";
+import {
+  ButtonLink,
+  ButtonLinkProps,
+  ButtonSolid
+} from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n.ts";
@@ -6,6 +10,7 @@ import I18n from "../../../../../i18n.ts";
 type ItwPresentationCredentialCardFlipButtonProps = {
   isFlipped: boolean;
   handleOnPress: () => void;
+  fullScreen?: boolean;
 };
 
 /**
@@ -13,33 +18,48 @@ type ItwPresentationCredentialCardFlipButtonProps = {
  */
 const ItwPresentationCredentialCardFlipButton = ({
   isFlipped,
-  handleOnPress
-}: ItwPresentationCredentialCardFlipButtonProps) => (
-  <View
-    style={styles.button}
-    accessible={true}
-    accessibilityLabel={I18n.t(
-      "features.itWallet.presentation.credentialDetails.card.showBack"
-    )}
-    accessibilityRole="switch"
-    accessibilityState={{ checked: isFlipped }}
-  >
-    <ButtonLink
-      label={I18n.t(
-        `features.itWallet.presentation.credentialDetails.card.${
-          isFlipped ? "showFront" : "showBack"
-        }`
+  handleOnPress,
+  fullScreen = false
+}: ItwPresentationCredentialCardFlipButtonProps) => {
+  const viewStyle = fullScreen ? styles.fullWidthButton : styles.button;
+
+  const buttonProps: ButtonLinkProps = {
+    label: I18n.t(
+      `features.itWallet.presentation.credentialDetails.card.${
+        isFlipped ? "showFront" : "showBack"
+      }`
+    ),
+    onPress: handleOnPress,
+    icon: "switchCard",
+    iconPosition: "end"
+  };
+
+  return (
+    <View
+      style={viewStyle}
+      accessible={true}
+      accessibilityLabel={I18n.t(
+        "features.itWallet.presentation.credentialDetails.card.showBack"
       )}
-      onPress={handleOnPress}
-      icon="switchCard"
-      iconPosition="end"
-    />
-  </View>
-);
+      accessibilityRole="switch"
+      accessibilityState={{ checked: isFlipped }}
+    >
+      {fullScreen ? (
+        <ButtonSolid {...buttonProps} />
+      ) : (
+        <ButtonLink {...buttonProps} />
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   button: {
     alignSelf: "center"
+  },
+  fullWidthButton: {
+    alignSelf: "stretch",
+    marginHorizontal: "5%"
   }
 });
 

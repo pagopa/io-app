@@ -1,15 +1,18 @@
-import { ButtonLink } from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useState } from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../components/ui/IOScrollView";
+import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { pnMessagingServiceIdSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import LoadingComponent from "../../fci/components/LoadingComponent";
 import { usePnPreferencesFetcher } from "../hooks/usePnPreferencesFetcher";
 import { pnActivationUpsert } from "../store/actions";
 import { isLoadingPnActivationSelector } from "../store/reducers/activation";
@@ -70,6 +73,7 @@ type FlowScreenProps = {
 const PnActivationInputScreen = ({ setFlowState }: FlowScreenProps) => {
   const dispatch = useIODispatch();
   const isLoadingActivation = useIOSelector(isLoadingPnActivationSelector);
+  const navigation = useIONavigation();
   if (isLoadingActivation) {
     return <LoadingScreen loadingState="LOADING-ACTIVATION" />;
   }
@@ -85,20 +89,97 @@ const PnActivationInputScreen = ({ setFlowState }: FlowScreenProps) => {
   };
 
   return (
-    <CtaScreen
-      scrollViewAction={{
-        primary: {
-          label: "ACTIVATE",
-          onPress: enablePN,
-          testID: "enable-pn-cta"
-        },
-        type: "SingleButton"
-      }}
-    />
+    <>
+      <HeaderSecondLevel
+        title=""
+        type="base"
+        goBack={() => navigation.navigate(...navigateHomeParams)}
+        backAccessibilityLabel={I18n.t("accessibility.buttons.navigateBack")}
+      />
+      <CtaScreen
+        scrollViewAction={{
+          primary: {
+            label: "ACTIVATE",
+            onPress: enablePN,
+            testID: "enable-pn-cta"
+          },
+          type: "SingleButton"
+        }}
+      />
+    </>
   );
 };
 
+// ---------------------------- COMPONENT TYPES ---------------------------
+
+type SuccessFlowStateKeys = Extract<
+  PnBannerFlowStateKey,
+  "SUCCESS_ACTIVATION" | "ALREADY_ACTIVE"
+>;
+type SuccessFlowStateProps = { flowState: SuccessFlowStateKeys };
+
+type ErrorFlowStateKeys =
+  | Extract<
+      PnBannerFlowStateKey,
+      "FAILURE_ACTIVATION" | "FAILURE_DETAILS_FETCH"
+    >
+  | "MISSING-SID";
+type ErrorFlowStateProps = {
+  flowState: ErrorFlowStateKeys;
+};
+type LoadingStateProps = {
+  loadingState: "LOADING-ACTIVATION" | "LOADING-DATA";
+};
+
 // ---------------------------- COMPONENTS ---------------------------
+
+const LoadingScreen = ({ loadingState }: LoadingStateProps) => (
+  <LoadingComponent
+    testID={`loading-${loadingState}`}
+    captionTitle={I18n.t(
+      `features.pn.reminderBanner.activationFlow.${loadingState}.title`
+    )}
+  />
+);
+
+const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
+  const navigation = useIONavigation();
+  return (
+    <OperationResultScreenContent
+      testID={`success-${flowState}`}
+      title={I18n.t(
+        `features.pn.reminderBanner.activationFlow.${flowState}.title`
+      )}
+      subtitle={I18n.t(
+        `features.pn.reminderBanner.activationFlow.${flowState}.body`
+      )}
+      action={{
+        label: I18n.t("global.buttons.close"),
+        onPress: () => navigation.navigate(...navigateHomeParams)
+      }}
+      pictogram="success"
+    />
+  );
+};
+const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
+  const navigation = useIONavigation();
+  return (
+    <OperationResultScreenContent
+      testID={`error-${flowState}`}
+      title={I18n.t(
+        `features.pn.reminderBanner.activationFlow.${flowState}.title`
+      )}
+      subtitle={I18n.t(
+        `features.pn.reminderBanner.activationFlow.${flowState}.body`
+      )}
+      action={{
+        label: I18n.t("global.buttons.close"),
+        onPress: () => navigation.navigate(...navigateHomeParams)
+      }}
+      pictogram="umbrella"
+    />
+  );
+};
 
 const CtaScreen = ({
   scrollViewAction
@@ -111,40 +192,6 @@ const CtaScreen = ({
     </Text>
   </IOScrollView>
 );
-type SuccessFlowStateProps = { flowState: PnBannerFlowStateKey };
-
-type ErrorFlowStateProps = { flowState: PnBannerFlowStateKey | "MISSING-SID" };
-type LoadingStateProps = {
-  loadingState: "LOADING-ACTIVATION" | "LOADING-DATA";
-};
-const LoadingScreen = ({ loadingState }: LoadingStateProps) => (
-  <Text testID={`loading-${loadingState}`}>LOADING: {loadingState}</Text>
-);
-
-const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
-  const navigation = useIONavigation();
-  return (
-    <View>
-      <Text testID={`success-${flowState}`}>{flowState}</Text>
-      <ButtonLink
-        onPress={() => navigation.navigate(...navigateHomeParams)}
-        label="GO BACK HOME"
-      />
-    </View>
-  );
-};
-const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
-  const navigation = useIONavigation();
-  return (
-    <View>
-      <Text testID={`error-${flowState}`}>{flowState}</Text>
-      <ButtonLink
-        onPress={() => navigation.navigate(...navigateHomeParams)}
-        label="GO BACK HOME"
-      />
-    </View>
-  );
-};
 
 const navigateHomeParams = [
   ROUTES.MAIN,
