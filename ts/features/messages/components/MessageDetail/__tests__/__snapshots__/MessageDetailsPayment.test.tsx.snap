@@ -744,7 +744,12 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                       </View>
                       <View>
                         <View
-                          accessible={false}
+                          accessibilityState={
+                            {
+                              "busy": true,
+                            }
+                          }
+                          accessible={true}
                           style={
                             [
                               {

@@ -343,7 +343,12 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                           }
                         />
                         <View
-                          accessible={false}
+                          accessibilityState={
+                            {
+                              "busy": true,
+                            }
+                          }
+                          accessible={true}
                           style={
                             [
                               {
