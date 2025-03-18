@@ -20,6 +20,7 @@ import {
 } from "../store/actions";
 import { isLoadingPnActivationSelector } from "../store/reducers/activation";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { sendBannerMixpanelEvents } from "../analytics/activationReminderBanner";
 
 export const pnBannerFlowStateEnum = {
   FAILURE_DETAILS_FETCH: "FAILURE_DETAILS_FETCH",
@@ -83,6 +84,7 @@ const PnActivationInputScreen = ({ setFlowState }: FlowScreenProps) => {
   }
 
   const enablePN = () => {
+    sendBannerMixpanelEvents.activationStart();
     dispatch(
       pnActivationUpsert.request({
         value: true,
@@ -152,6 +154,14 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
   useOnFirstRender(() => {
     dispatch(dismissPnActivationReminderBanner());
   });
+
+  if (flowState === "ALREADY_ACTIVE") {
+    sendBannerMixpanelEvents.alreadyActive();
+  }
+  if (flowState === "SUCCESS_ACTIVATION") {
+    sendBannerMixpanelEvents.activationSuccess();
+  }
+
   return (
     <OperationResultScreenContent
       testID={`success-${flowState}`}
@@ -170,6 +180,7 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
   );
 };
 const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
+  sendBannerMixpanelEvents.bannerKO(flowState);
   const navigation = useIONavigation();
   return (
     <OperationResultScreenContent
