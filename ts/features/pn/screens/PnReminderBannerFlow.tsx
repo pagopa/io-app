@@ -12,15 +12,15 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { pnMessagingServiceIdSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import LoadingComponent from "../../fci/components/LoadingComponent";
+import { sendBannerMixpanelEvents } from "../analytics/activationReminderBanner";
 import { usePnPreferencesFetcher } from "../hooks/usePnPreferencesFetcher";
 import {
   dismissPnActivationReminderBanner,
   pnActivationUpsert
 } from "../store/actions";
 import { isLoadingPnActivationSelector } from "../store/reducers/activation";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { sendBannerMixpanelEvents } from "../analytics/activationReminderBanner";
 
 export const pnBannerFlowStateEnum = {
   FAILURE_DETAILS_FETCH: "FAILURE_DETAILS_FETCH",
