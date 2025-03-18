@@ -300,6 +300,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "activation": {
       "kind": "PotNone",
     },
+    "bannerDismiss": {
+      "dismissed": false,
+    },
   },
   "profileSettings": {},
   "services": {
