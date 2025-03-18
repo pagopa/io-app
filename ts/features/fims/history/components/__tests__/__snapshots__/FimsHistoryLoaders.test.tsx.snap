@@ -343,27 +343,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                         }
                       >
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={8}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 8,
-                                "width": 84,
-                              }
-                            }
-                            width={84}
-                          />
-                        </View>
+                                "width": "25%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -372,27 +366,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 248,
-                              }
-                            }
-                            width={248}
-                          />
-                        </View>
+                                "width": "70%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -401,27 +389,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 178,
-                              }
-                            }
-                            width={178}
-                          />
-                        </View>
+                                "width": "50%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                       </View>
                       <View
                         style={
@@ -432,27 +414,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                         }
                       >
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={8}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 8,
-                                "width": 84,
-                              }
-                            }
-                            width={84}
-                          />
-                        </View>
+                                "width": "25%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -461,27 +437,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 248,
-                              }
-                            }
-                            width={248}
-                          />
-                        </View>
+                                "width": "70%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -490,27 +460,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 178,
-                              }
-                            }
-                            width={178}
-                          />
-                        </View>
+                                "width": "50%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                       </View>
                       <View
                         style={
@@ -521,27 +485,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                         }
                       >
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={8}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 8,
-                                "width": 84,
-                              }
-                            }
-                            width={84}
-                          />
-                        </View>
+                                "width": "25%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -550,27 +508,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 248,
-                              }
-                            }
-                            width={248}
-                          />
-                        </View>
+                                "width": "70%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -579,27 +531,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 178,
-                              }
-                            }
-                            width={178}
-                          />
-                        </View>
+                                "width": "50%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                       </View>
                     </View>
                   </View>
@@ -957,27 +903,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                         }
                       >
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={8}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 8,
-                                "width": 84,
-                              }
-                            }
-                            width={84}
-                          />
-                        </View>
+                                "width": "25%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -986,27 +926,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 248,
-                              }
-                            }
-                            width={248}
-                          />
-                        </View>
+                                "width": "70%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -1015,27 +949,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 178,
-                              }
-                            }
-                            width={178}
-                          />
-                        </View>
+                                "width": "50%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                       </View>
                       <View
                         style={
@@ -1046,27 +974,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                         }
                       >
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={8}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 8,
-                                "width": 84,
-                              }
-                            }
-                            width={84}
-                          />
-                        </View>
+                                "width": "25%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -1075,27 +997,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 248,
-                              }
-                            }
-                            width={248}
-                          />
-                        </View>
+                                "width": "70%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -1104,27 +1020,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 178,
-                              }
-                            }
-                            width={178}
-                          />
-                        </View>
+                                "width": "50%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                       </View>
                       <View
                         style={
@@ -1135,27 +1045,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                         }
                       >
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={8}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 8,
-                                "width": 84,
-                              }
-                            }
-                            width={84}
-                          />
-                        </View>
+                                "width": "25%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -1164,27 +1068,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 248,
-                              }
-                            }
-                            width={248}
-                          />
-                        </View>
+                                "width": "70%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -1193,27 +1091,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 178,
-                              }
-                            }
-                            width={178}
-                          />
-                        </View>
+                                "width": "50%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                       </View>
                     </View>
                   </View>
@@ -1571,27 +1463,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                         }
                       >
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={8}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 8,
-                                "width": 84,
-                              }
-                            }
-                            width={84}
-                          />
-                        </View>
+                                "width": "25%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -1600,27 +1486,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 248,
-                              }
-                            }
-                            width={248}
-                          />
-                        </View>
+                                "width": "70%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -1629,27 +1509,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 178,
-                              }
-                            }
-                            width={178}
-                          />
-                        </View>
+                                "width": "50%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                       </View>
                       <View
                         style={
@@ -1660,27 +1534,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                         }
                       >
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={8}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 8,
-                                "width": 84,
-                              }
-                            }
-                            width={84}
-                          />
-                        </View>
+                                "width": "25%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -1689,27 +1557,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 248,
-                              }
-                            }
-                            width={248}
-                          />
-                        </View>
+                                "width": "70%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -1718,27 +1580,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 178,
-                              }
-                            }
-                            width={178}
-                          />
-                        </View>
+                                "width": "50%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                       </View>
                       <View
                         style={
@@ -1749,27 +1605,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                         }
                       >
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={8}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 8,
-                                "width": 84,
-                              }
-                            }
-                            width={84}
-                          />
-                        </View>
+                                "width": "25%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -1778,27 +1628,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 248,
-                              }
-                            }
-                            width={248}
-                          />
-                        </View>
+                                "width": "70%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -1807,27 +1651,21 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 178,
-                              }
-                            }
-                            width={178}
-                          />
-                        </View>
+                                "width": "50%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                       </View>
                     </View>
                   </View>
@@ -2185,27 +2023,21 @@ exports[`loadingFimsHistoryItem should match snapshot 1`] = `
                         }
                       >
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={8}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 8,
-                                "width": 84,
-                              }
-                            }
-                            width={84}
-                          />
-                        </View>
+                                "width": "25%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -2214,27 +2046,21 @@ exports[`loadingFimsHistoryItem should match snapshot 1`] = `
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 248,
-                              }
-                            }
-                            width={248}
-                          />
-                        </View>
+                                "width": "70%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                         <View
                           style={
                             {
@@ -2243,27 +2069,21 @@ exports[`loadingFimsHistoryItem should match snapshot 1`] = `
                           }
                         />
                         <View
-                          collapsable={false}
                           style={
-                            {
-                              "opacity": 0.5,
-                            }
-                          }
-                        >
-                          <View
-                            height={16}
-                            radius={8}
-                            style={
+                            [
                               {
-                                "backgroundColor": "#efefef",
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "height": 16,
-                                "width": 178,
-                              }
-                            }
-                            width={178}
-                          />
-                        </View>
+                                "width": "50%",
+                              },
+                              {
+                                "opacity": 0.55,
+                              },
+                            ]
+                          }
+                        />
                       </View>
                     </View>
                   </View>

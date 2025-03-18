@@ -25,142 +25,88 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
   >
     <View
       style={
-        [
-          {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "height": 48,
-            "justifyContent": "space-between",
-          },
-          {
-            "paddingTop": 8,
-          },
-        ]
-      }
-    >
-      <View
-        style={
-          {
-            "width": "60%",
-          }
-        }
-      >
-        <View
-          collapsable={false}
-          style={
-            {
-              "opacity": 0.5,
-            }
-          }
-        >
-          <View
-            color="#D2D6E3"
-            height={24}
-            radius={28}
-            style={
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderRadius": 28,
-                "height": 24,
-                "width": "100%",
-              }
-            }
-            width="100%"
-          />
-        </View>
-      </View>
-      <View
-        style={
-          {
-            "width": "20%",
-          }
-        }
-      >
-        <View
-          collapsable={false}
-          style={
-            {
-              "opacity": 0.5,
-            }
-          }
-        >
-          <View
-            color="#D2D6E3"
-            height={24}
-            radius={28}
-            style={
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderRadius": 28,
-                "height": 24,
-                "width": "100%",
-              }
-            }
-            width="100%"
-          />
-        </View>
-      </View>
-    </View>
-    <View
-      style={
         {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "height": 48,
           "justifyContent": "space-between",
         }
       }
     >
       <View
-        collapsable={false}
         style={
-          {
-            "opacity": 0.5,
-          }
-        }
-      >
-        <View
-          color="#D2D6E3"
-          height={18}
-          radius={28}
-          style={
+          [
             {
               "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
               "borderRadius": 28,
-              "height": 18,
-              "width": "55%",
-            }
-          }
-          width="55%"
-        />
-      </View>
-      <View
-        style={
-          {
-            "height": 8,
-          }
+              "height": 24,
+              "width": "60%",
+            },
+            {
+              "opacity": 0.55,
+            },
+          ]
         }
       />
       <View
-        collapsable={false}
         style={
-          {
-            "opacity": 0.5,
-          }
-        }
-      >
-        <View
-          color="#D2D6E3"
-          height={18}
-          radius={28}
-          style={
+          [
             {
               "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
               "borderRadius": 28,
-              "height": 18,
+              "height": 24,
+              "width": "20%",
+            },
+            {
+              "opacity": 0.55,
+            },
+          ]
+        }
+      />
+    </View>
+    <View
+      style={
+        {
+          "display": "flex",
+          "flexDirection": "column",
+          "gap": 8,
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 28,
+              "height": 16,
+              "width": "55%",
+            },
+            {
+              "opacity": 0.55,
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 28,
+              "height": 16,
               "width": "45%",
-            }
-          }
-          width="45%"
-        />
-      </View>
+            },
+            {
+              "opacity": 0.55,
+            },
+          ]
+        }
+      />
     </View>
   </View>
 </View>

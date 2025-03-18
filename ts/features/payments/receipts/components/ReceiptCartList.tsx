@@ -48,6 +48,7 @@ export const ReceiptCartList = ({ carts, loading, onPress }: Props) => {
 
 const SkeletonTransactionDetailsList = () => (
   <View
+    testID="skeleton-transaction-details-list"
     style={{
       flex: 1,
       alignItems: "center",

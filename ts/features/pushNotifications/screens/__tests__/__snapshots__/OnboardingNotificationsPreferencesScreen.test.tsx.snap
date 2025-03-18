@@ -807,7 +807,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <View
-                              accessibilityRole="text"
                               accessible={false}
                               style={
                                 [
@@ -827,6 +826,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <View
                                 accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityRole="text"
                                 accessible={true}
                                 style={
                                   [
@@ -2226,7 +2226,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <View
-                              accessibilityRole="text"
                               accessible={false}
                               style={
                                 [
@@ -2246,6 +2245,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <View
                                 accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityRole="text"
                                 accessible={true}
                                 style={
                                   [
@@ -3646,7 +3646,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <View
-                              accessibilityRole="text"
                               accessible={false}
                               style={
                                 [
@@ -3666,6 +3665,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <View
                                 accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityRole="text"
                                 accessible={true}
                                 style={
                                   [
@@ -5066,7 +5066,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <View
-                              accessibilityRole="text"
                               accessible={false}
                               style={
                                 [
@@ -5086,6 +5085,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <View
                                 accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityRole="text"
                                 accessible={true}
                                 style={
                                   [
@@ -6778,7 +6778,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             />
                             <View
-                              accessibilityRole="text"
                               accessible={false}
                               style={
                                 [
@@ -6798,6 +6797,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             >
                               <View
                                 accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityRole="text"
                                 accessible={true}
                                 style={
                                   [
