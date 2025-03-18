@@ -276,6 +276,13 @@ export function createRootReducer(
               itWallet: {
                 ...state.features.itWallet
               },
+              pn: {
+                ...state.features.pn,
+                bannerDismiss: {
+                  ...state.features.pn.bannerDismiss,
+                  dismissed: false
+                }
+              },
               _persist: state.features._persist
             },
             identification: {
