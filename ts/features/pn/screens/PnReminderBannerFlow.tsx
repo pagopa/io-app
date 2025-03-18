@@ -154,13 +154,14 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
   useOnFirstRender(() => {
     dispatch(dismissPnActivationReminderBanner());
   });
-
-  if (flowState === "ALREADY_ACTIVE") {
-    sendBannerMixpanelEvents.alreadyActive();
-  }
-  if (flowState === "SUCCESS_ACTIVATION") {
-    sendBannerMixpanelEvents.activationSuccess();
-  }
+  useOnFirstRender(() => {
+    if (flowState === "ALREADY_ACTIVE") {
+      sendBannerMixpanelEvents.alreadyActive();
+    }
+    if (flowState === "SUCCESS_ACTIVATION") {
+      sendBannerMixpanelEvents.activationSuccess();
+    }
+  });
 
   return (
     <OperationResultScreenContent
@@ -180,8 +181,10 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
   );
 };
 const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
-  sendBannerMixpanelEvents.bannerKO(flowState);
   const navigation = useIONavigation();
+  useOnFirstRender(() => {
+    sendBannerMixpanelEvents.bannerKO(flowState);
+  });
   return (
     <OperationResultScreenContent
       testID={`error-${flowState}`}

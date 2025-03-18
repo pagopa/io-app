@@ -1,5 +1,6 @@
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import PN_ROUTES from "../navigation/routes";
 
 const bannerShown = () => {
@@ -7,7 +8,7 @@ const bannerShown = () => {
     "BANNER",
     buildEventProperties("UX", "screen_view", {
       banner_id: "SEND_ACTIVATION_REMINDER",
-      banner_page: "MESSAGES_HOME",
+      banner_page: MESSAGES_ROUTES.MESSAGES_HOME,
       banner_landing: PN_ROUTES.ACTIVATION_BANNER_FLOW
     })
   );
@@ -17,7 +18,7 @@ const bannerTap = () => {
     "TAP_BANNER",
     buildEventProperties("UX", "action", {
       banner_id: "SEND_ACTIVATION_REMINDER",
-      banner_page: "MESSAGES_HOME",
+      banner_page: MESSAGES_ROUTES.MESSAGES_HOME,
       banner_landing: PN_ROUTES.ACTIVATION_BANNER_FLOW
     })
   );
@@ -27,7 +28,7 @@ const bannerClose = () => {
     "CLOSE_BANNER",
     buildEventProperties("UX", "action", {
       banner_id: "SEND_ACTIVATION_REMINDER",
-      banner_page: "MESSAGES_HOME",
+      banner_page: MESSAGES_ROUTES.MESSAGES_HOME,
       banner_landing: PN_ROUTES.ACTIVATION_BANNER_FLOW
     })
   );
