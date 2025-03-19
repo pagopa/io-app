@@ -3780,9 +3780,9 @@
               "title": "SEND su IO: come funziona",
               "body": "Ricevi in app le comunicazioni a valore legale che ti inviano gli enti pubblici: con il servizio SEND puoi gestirle in tempo reale sul tuo dispositivo e pagare facilmente eventuali costi. "
             },
-            "paragraph2":{
+            "paragraph2": {
               "title": "Risparmia sui costi della raccomandata",
-              "body":"Se accedi alle comunicazioni in digitale entro i tempi previsti, non riceverai la raccomandata e non pagherai i relativi costi di stampa e invio."
+              "body": "Se accedi alle comunicazioni in digitale entro i tempi previsti, non riceverai la raccomandata e non pagherai i relativi costi di stampa e invio."
             },
             "paragraph3": {
               "title": "È facile e veloce",
