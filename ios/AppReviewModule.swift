@@ -25,9 +25,6 @@ class AppReviewModule: NSObject {
         SKStoreReviewController.requestReview(in: scene)
         return
       }
-    } else if #available(iOS 10.3, *) {
-      SKStoreReviewController.requestReview()
-      return
     }
   }
 }
