@@ -5590,7 +5590,7 @@
     }
   },
   "pageNotFound": {
-    "title": "Qui non c’è nulla!",
-    "subtitle": "Questa pagina non esiste o non è disponibile nella versione dell’app che stai usando.\nProva ad aggiornare IO."
+    "title": "Nothing here!",
+    "subtitle": "This page does not exist or is not available in the version of the app you are using.\nTry updating IO."
   }
 }
