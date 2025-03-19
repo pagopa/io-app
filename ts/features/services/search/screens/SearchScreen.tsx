@@ -131,7 +131,7 @@ export const SearchScreen = () => {
     [navigateToInstitution]
   );
 
-  const ListFooterComponent = useMemo(() => {
+  const renderListFooterComponent = useCallback(() => {
     if (isUpdating) {
       return <InstitutionListSkeleton />;
     }
@@ -139,7 +139,7 @@ export const SearchScreen = () => {
     return <VSpacer size={16} />;
   }, [isUpdating]);
 
-  const ListEmptyComponent = useMemo(() => {
+  const renderListEmptyComponent = useCallback(() => {
     if (query.length < MIN_QUERY_LENGTH) {
       return (
         <EmptyState
@@ -184,8 +184,8 @@ export const SearchScreen = () => {
       </View>
       <FlashList
         ItemSeparatorComponent={Divider}
-        ListEmptyComponent={ListEmptyComponent}
-        ListFooterComponent={ListFooterComponent}
+        ListEmptyComponent={renderListEmptyComponent}
+        ListFooterComponent={renderListFooterComponent}
         contentContainerStyle={IOStyles.horizontalContentPadding}
         data={data?.institutions}
         estimatedItemSize={LIST_ITEM_HEIGHT}
