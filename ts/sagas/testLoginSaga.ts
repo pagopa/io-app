@@ -14,7 +14,7 @@ import {
   loginFailure,
   loginSuccess,
   testLoginRequest
-} from "../store/actions/authentication";
+} from "../features/authentication/store/actions";
 import { SessionToken } from "../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { convertUnknownToError } from "../utils/errors";

@@ -21,7 +21,7 @@ import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences"
 import { getLollipopLoginHeaders, handleRegenerateKey } from "..";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../cieLogin/utils";
-import { selectedIdentityProviderSelector } from "../../../store/reducers/authentication";
+import { selectedIdentityProviderSelector } from "../../authentication/store/selectors";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,

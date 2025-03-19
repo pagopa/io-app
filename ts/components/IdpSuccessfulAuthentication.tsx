@@ -5,7 +5,7 @@ import I18n from "../i18n";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import { trackIdpAuthenticationSuccessScreen } from "../screens/profile/analytics";
 import { useIOSelector } from "../store/hooks";
-import { loggedInIdpSelector } from "../store/reducers/authentication";
+import { loggedInIdpSelector } from "../features/authentication/store/selectors";
 import { OperationResultScreenContent } from "./screens/OperationResultScreenContent";
 
 export const IdpSuccessfulAuthentication = () => {

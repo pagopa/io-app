@@ -14,18 +14,15 @@ import { getCieIDLoginUri, isAuthenticationUrl, SpidLevel } from "../utils";
 import { useLollipopLoginSource } from "../../lollipop/hooks/useLollipopLoginSource";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import {
-  loginFailure,
-  loginSuccess
-} from "../../../store/actions/authentication";
+import { loginFailure, loginSuccess } from "../../authentication/store/actions";
 import { SessionToken } from "../../../types/SessionToken";
 import ROUTES from "../../../navigation/routes";
-import { loggedInAuthSelector } from "../../../store/reducers/authentication";
+import { loggedInAuthSelector } from "../../authentication/store/selectors";
 import { IdpSuccessfulAuthentication } from "../../../components/IdpSuccessfulAuthentication";
 import { isDevEnv } from "../../../utils/environment";
 import { onLoginUriChanged } from "../../../utils/login";
 import { apiUrlPrefix } from "../../../config";
-import { trackLoginSpidError } from "../../../screens/authentication/analytics/spidAnalytics";
+import { trackLoginSpidError } from "../../../features/authentication/screens/analytics/spidAnalytics";
 import { IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 import {
   HeaderSecondLevelHookProps,

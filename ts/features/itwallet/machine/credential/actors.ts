@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
-import { sessionTokenSelector } from "../../../../store/reducers/authentication";
+import { sessionTokenSelector } from "../../../authentication/store/selectors";
 import { assert } from "../../../../utils/assert";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";

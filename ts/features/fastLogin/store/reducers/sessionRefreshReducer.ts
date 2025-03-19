@@ -13,7 +13,7 @@ import { Action } from "../../../../store/actions/types";
 import {
   logoutFailure,
   logoutSuccess
-} from "../../../../store/actions/authentication";
+} from "../../../authentication/store/actions";
 import { isDevEnv } from "../../../../utils/environment";
 
 export type AutomaticSessionRefreshState = {

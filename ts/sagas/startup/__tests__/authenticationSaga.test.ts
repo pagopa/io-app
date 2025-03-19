@@ -5,7 +5,7 @@ import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../store/actions/analytics";
-import { loginSuccess } from "../../../store/actions/authentication";
+import { loginSuccess } from "../../../features/authentication/store/actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { stopCieManager, watchCieAuthenticationSaga } from "../../cie";
 import { watchTestLoginRequestSaga } from "../../testLoginSaga";

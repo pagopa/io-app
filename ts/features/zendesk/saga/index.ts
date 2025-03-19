@@ -28,8 +28,8 @@ import {
   getOnlyNotAlreadyExistentValues
 } from "../utils";
 import { withRefreshApiCall } from "../../fastLogin/saga/utils";
-import { sessionInformationLoadSuccess } from "../../../store/actions/authentication";
-import { sessionInfoSelector } from "../../../store/reducers/authentication";
+import { sessionInformationLoadSuccess } from "../../authentication/store/actions";
+import { sessionInfoSelector } from "../../authentication/store/selectors";
 import { isDevEnv } from "./../../../utils/environment";
 import { zendeskSupport } from "./orchestration";
 import { handleGetZendeskConfig } from "./networking/handleGetZendeskConfig";

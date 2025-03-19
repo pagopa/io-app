@@ -4,13 +4,13 @@ import { testSaga } from "redux-saga-test-plan";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import mockedProfile from "../../__mocks__/initializedProfile";
 
-import { sessionExpired } from "../../store/actions/authentication";
+import { sessionExpired } from "../../features/authentication/store/actions";
 import { previousInstallationDataDeleteSuccess } from "../../store/actions/installation";
 import { resetProfileState } from "../../store/actions/profile";
 import {
   sessionInfoSelector,
   sessionTokenSelector
-} from "../../store/reducers/authentication";
+} from "../../features/authentication/store/selectors";
 import { profileSelector } from "../../store/reducers/profile";
 import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";

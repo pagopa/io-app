@@ -10,7 +10,7 @@ import { AssertionRef } from "../../../../definitions/backend/AssertionRef";
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { checkLollipopSessionAssertionAndInvalidateIfNeeded } from "../saga";
 import { restartCleanApplication } from "../../../sagas/commons";
-import { sessionInvalid } from "../../../store/actions/authentication";
+import { sessionInvalid } from "../../authentication/store/actions";
 
 type DataFromServerType = {
   publicKeyForAssertionRef: PublicKey;
@@ -41,7 +41,7 @@ const DATA_FROM_SERVER: DataFromServerType = {
   }
 };
 
-jest.mock("../../../store/reducers/authentication", () => ({
+jest.mock("../../authentication/store/reducers", () => ({
   isLoggedInWithTestIdpSelector: () => false
 }));
 

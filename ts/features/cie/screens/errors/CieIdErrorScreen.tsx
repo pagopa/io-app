@@ -15,7 +15,7 @@ import {
   trackCieIdErrorSpidSelected
 } from "../../analytics";
 import { useIODispatch } from "../../../../store/hooks";
-import { idpSelected } from "../../../../store/actions/authentication";
+import { idpSelected } from "../../../authentication/store/actions";
 
 const CIE_PIN_DESC: TranslationKeys =
   "authentication.cie_id.error_screen.cie_pin_supported.description";

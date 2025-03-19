@@ -9,7 +9,7 @@ import {
   NotificationPreferenceConfiguration,
   ServiceConfigurationTrackingType
 } from "../screens/profile/analytics";
-import { idpSelector } from "../store/reducers/authentication";
+import { idpSelector } from "../features/authentication/store/selectors";
 import { tosVersionSelector } from "../store/reducers/profile";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {

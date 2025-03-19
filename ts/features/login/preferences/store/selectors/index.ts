@@ -3,7 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { differenceInDays } from "date-fns";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { sessionInfoSelector } from "../../../../../store/reducers/authentication";
+import { sessionInfoSelector } from "../../../../authentication/store/selectors";
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isFastLoginEnabledSelector } from "../../../../fastLogin/store/selectors";
 

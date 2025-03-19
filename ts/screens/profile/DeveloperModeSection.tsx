@@ -27,7 +27,7 @@ import { toThumbprint } from "../../features/lollipop/utils/crypto";
 import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
-import { sessionExpired } from "../../store/actions/authentication";
+import { sessionExpired } from "../../features/authentication/store/actions";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
@@ -39,7 +39,7 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   sessionTokenSelector,
   walletTokenSelector
-} from "../../store/reducers/authentication";
+} from "../../features/authentication/store/selectors";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,

@@ -37,7 +37,7 @@ import { trackSpidLoginError } from "../../utils/analytics";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
-import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
+import { selectedIdentityProviderSelector } from "../../features/authentication/store/selectors";
 import { OperationResultScreenContent } from "../screens/OperationResultScreenContent";
 
 const styles = StyleSheet.create({

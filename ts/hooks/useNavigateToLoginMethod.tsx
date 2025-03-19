@@ -10,13 +10,13 @@ import {
   cieFlowForDevServerEnabled,
   SpidLevel
 } from "../features/cieLogin/utils";
-import { idpSelected } from "../store/actions/authentication";
+import { idpSelected } from "../features/authentication/store/actions";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { isCieLoginUatEnabledSelector } from "../features/cieLogin/store/selectors";
 import {
   ChosenIdentifier,
   Identifier
-} from "../screens/authentication/OptInScreen";
+} from "../features/authentication/screens/OptInScreen";
 import { cieIDSetSelectedSecurityLevel } from "../features/cieLogin/store/actions";
 
 export const IdpCIE: SpidIdp = {

@@ -6,7 +6,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { isSessionExpirationBannerRenderableSelector } from "../selectors";
 import { isFastLoginEnabledSelector } from "../../../../fastLogin/store/selectors";
-import { AuthenticationState } from "../../../../../store/reducers/authentication";
+import { AuthenticationState } from "../../../../authentication/store/models";
 import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 
 // If you want to know when this selector was implemented, you can refer to the mocked date below!

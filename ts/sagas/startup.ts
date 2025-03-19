@@ -71,7 +71,7 @@ import {
   applicationInitialized,
   startApplicationInitialization
 } from "../store/actions/application";
-import { sessionExpired } from "../store/actions/authentication";
+import { sessionExpired } from "../features/authentication/store/actions";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
@@ -87,7 +87,7 @@ import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   sessionInfoSelector,
   sessionTokenSelector
-} from "../store/reducers/authentication";
+} from "../features/authentication/store/selectors";
 import {
   isIdPayEnabledSelector,
   isPnEnabledSelector,

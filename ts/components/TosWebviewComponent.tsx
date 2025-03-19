@@ -9,7 +9,7 @@ import I18n from "../i18n";
 import {
   trackToSWebViewError,
   trackToSWebViewErrorRetry
-} from "../screens/authentication/analytics";
+} from "../features/authentication/screens/analytics";
 import { FlowType } from "../utils/analytics";
 import { openWebUrl } from "../utils/url";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";

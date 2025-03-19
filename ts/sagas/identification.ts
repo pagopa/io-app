@@ -5,7 +5,7 @@ import { startApplicationInitialization } from "../store/actions/application";
 import {
   checkCurrentSession,
   sessionInvalid
-} from "../store/actions/authentication";
+} from "../features/authentication/store/actions";
 import {
   identificationCancel,
   identificationForceLogout,

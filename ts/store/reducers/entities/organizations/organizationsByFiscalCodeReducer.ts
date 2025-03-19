@@ -4,7 +4,10 @@
 
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
-import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
+import {
+  logoutSuccess,
+  sessionExpired
+} from "../../../../features/authentication/store/actions";
 
 import { updateOrganizations } from "../../../actions/organizations";
 import { Action } from "../../../actions/types";

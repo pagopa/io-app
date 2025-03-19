@@ -57,7 +57,7 @@ import {
   trackEmailEditingError,
   trackSendValidationEmail
 } from "../analytics/emailAnalytics";
-import { trackTosUserExit } from "../authentication/analytics";
+import { trackTosUserExit } from "../../features/authentication/screens/analytics";
 
 export type EmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;

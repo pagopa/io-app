@@ -15,7 +15,7 @@ import {
   idpSelected,
   loginSuccess,
   sessionInformationLoadSuccess
-} from "../store/actions/authentication";
+} from "../features/authentication/store/actions";
 import { CreditCard, PatchedWalletV2, Psp, Wallet } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";

@@ -10,7 +10,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import I18n from "../../../../i18n";
 import { closeSessionExpirationBanner } from "../store/actions";
-import { formattedExpirationDateSelector } from "../../../../store/reducers/authentication";
+import { formattedExpirationDateSelector } from "../../../authentication/store/selectors";
 import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../config";
 import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 import {

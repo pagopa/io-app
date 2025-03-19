@@ -2,7 +2,10 @@
  * A reducer to store the organization names and fiscal codes
  */
 import { getType } from "typesafe-actions";
-import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
+import {
+  logoutSuccess,
+  sessionExpired
+} from "../../../../features/authentication/store/actions";
 import { loadServiceDetail } from "../../../../features/services/details/store/actions/details";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";

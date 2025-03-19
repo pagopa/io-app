@@ -5,7 +5,7 @@ import * as rnCieId from "@pagopa/io-react-native-cieid";
 import useNavigateToLoginMethod from "../useNavigateToLoginMethod";
 import ROUTES from "../../navigation/routes";
 import * as fastLoginSelector from "../../features/fastLogin/store/selectors";
-import { Identifier } from "../../screens/authentication/OptInScreen";
+import { Identifier } from "../../features/authentication/screens/OptInScreen";
 import { withStore } from "../../utils/jest/withStore";
 
 const IS_UAT = false;

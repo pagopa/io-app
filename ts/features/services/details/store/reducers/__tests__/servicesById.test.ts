@@ -13,7 +13,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import {
   logoutSuccess,
   sessionExpired
-} from "../../../../../../store/actions/authentication";
+} from "../../../../../authentication/store/actions";
 import { loadServiceDetail } from "../../actions/details";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";

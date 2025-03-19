@@ -3,7 +3,7 @@ import { PersistConfig, persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action } from "../../../../../store/actions/types";
 import { closeSessionExpirationBanner } from "../actions";
-import { loginSuccess } from "../../../../../store/actions/authentication";
+import { loginSuccess } from "../../../../authentication/store/actions";
 
 export type LoginPreferencesState = {
   showSessionExpirationBanner: boolean;

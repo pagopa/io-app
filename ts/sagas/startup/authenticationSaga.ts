@@ -4,7 +4,7 @@ import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../store/actions/analytics";
-import { loginSuccess } from "../../store/actions/authentication";
+import { loginSuccess } from "../../features/authentication/store/actions";
 import { startupLoadSuccess } from "../../store/actions/startup";
 import { SessionToken } from "../../types/SessionToken";
 import { ReduxSagaEffect } from "../../types/utils";
@@ -16,8 +16,8 @@ import {
   trackCieLoginSuccess,
   trackLoginFlowStarting,
   trackSpidLoginSuccess
-} from "../../screens/authentication/analytics";
-import { idpSelector } from "../../store/reducers/authentication";
+} from "../../features/authentication/screens/analytics";
+import { idpSelector } from "../../features/authentication/store/selectors";
 import { IdpCIE, IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 

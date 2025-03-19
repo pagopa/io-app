@@ -23,7 +23,7 @@ import {
   logoutFailure,
   logoutSuccess,
   sessionExpired
-} from "../actions/authentication";
+} from "../../features/authentication/store/actions";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
@@ -36,12 +36,12 @@ import { profileSettingsReducerInitialState } from "../../features/profileSettin
 import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
 import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
 import { appFeedbackInitialState } from "../../features/appReviews/store/reducers";
-import appStateReducer from "./appState";
-import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as authenticationInitialState
-} from "./authentication";
+} from "../../features/authentication/store/reducers";
+import appStateReducer from "./appState";
+import assistanceToolsReducer from "./assistanceTools";
 import cieReducer from "./cie";
 import contentReducer, {
   initialContentState as contentInitialContentState

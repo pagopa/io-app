@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { loginSuccess } from "../../../../../store/actions/authentication";
+import { loginSuccess } from "../../../../authentication/store/actions";
 
 export type LoginInfoState = {
   userFromSuccessLogin: boolean;

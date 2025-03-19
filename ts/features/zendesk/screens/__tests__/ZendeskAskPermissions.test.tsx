@@ -12,7 +12,7 @@ import * as appVersion from "../../../../utils/appVersion";
 import {
   idpSelected,
   loginSuccess
-} from "../../../../store/actions/authentication";
+} from "../../../authentication/store/actions";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { SessionToken } from "../../../../types/SessionToken";
 import { profileLoadSuccess } from "../../../../store/actions/profile";

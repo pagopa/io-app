@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { disableNativeAuthentication } from "../../../../store/actions/authentication";
+import { disableNativeAuthentication } from "../../../authentication/store/actions";
 import { GlobalState } from "../../../../store/reducers/types";
 
 export type NativeLoginState = {

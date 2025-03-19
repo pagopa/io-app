@@ -11,7 +11,7 @@ import {
   IOStackNavigationRouteProps
 } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { zendeskTokenSelector } from "../../../store/reducers/authentication";
+import { zendeskTokenSelector } from "../../authentication/store/selectors";
 import { isStrictSome } from "../../../utils/pot";
 import {
   getZendeskConfig,

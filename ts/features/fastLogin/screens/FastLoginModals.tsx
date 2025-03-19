@@ -1,6 +1,6 @@
 import I18n from "../../../i18n";
 import { TokenRefreshState } from "../store/reducers/tokenRefreshReducer";
-import { logoutRequest } from "../../../store/actions/authentication";
+import { logoutRequest } from "../../authentication/store/actions";
 import {
   askUserToRefreshSessionToken,
   clearTokenRefreshError

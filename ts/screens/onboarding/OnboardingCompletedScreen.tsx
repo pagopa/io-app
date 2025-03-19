@@ -4,12 +4,12 @@ import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selec
 import I18n from "../../i18n";
 import { completeOnboarding } from "../../store/actions/onboarding";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { idpSelector } from "../../store/reducers/authentication";
+import { idpSelector } from "../../features/authentication/store/selectors";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackThankYouPageScreen } from "../profile/analytics";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
-import { trackLoginEnded } from "../authentication/analytics";
+import { trackLoginEnded } from "../../features/authentication/screens/analytics";
 
 const OnboardingCompletedScreen = () => {
   const dispatch = useIODispatch();

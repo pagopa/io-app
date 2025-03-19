@@ -9,7 +9,7 @@ import { isFastLoginEnabledSelector } from "../../store/selectors";
 import {
   checkCurrentSession,
   sessionExpired
-} from "../../../../store/actions/authentication";
+} from "../../../authentication/store/actions";
 import { Action } from "../../../../store/actions/types";
 import {
   refreshSessionToken,
