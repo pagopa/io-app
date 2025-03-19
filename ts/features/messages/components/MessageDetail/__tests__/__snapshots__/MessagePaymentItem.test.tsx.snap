@@ -398,53 +398,44 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                 }
                               >
                                 <View
+                                  collapsable={false}
                                   style={
-                                    [
-                                      {
-                                        "backgroundColor": "#E8EBF1",
-                                        "borderCurve": "continuous",
-                                        "borderRadius": 8,
-                                        "height": 12,
-                                        "width": 120,
-                                      },
-                                      {
-                                        "opacity": 0.55,
-                                      },
-                                    ]
+                                    {
+                                      "backgroundColor": "#E8EBF1",
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 8,
+                                      "height": 12,
+                                      "opacity": 0.55,
+                                      "width": 120,
+                                    }
                                   }
                                 />
                                 <View
+                                  collapsable={false}
                                   style={
-                                    [
-                                      {
-                                        "backgroundColor": "#E8EBF1",
-                                        "borderCurve": "continuous",
-                                        "borderRadius": 8,
-                                        "height": 16,
-                                        "width": 180,
-                                      },
-                                      {
-                                        "opacity": 0.55,
-                                      },
-                                    ]
+                                    {
+                                      "backgroundColor": "#E8EBF1",
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 8,
+                                      "height": 16,
+                                      "opacity": 0.55,
+                                      "width": 180,
+                                    }
                                   }
                                 />
                               </View>
                             </View>
                             <View
+                              collapsable={false}
                               style={
-                                [
-                                  {
-                                    "backgroundColor": "#E8EBF1",
-                                    "borderCurve": "continuous",
-                                    "borderRadius": 16,
-                                    "height": 24,
-                                    "width": 64,
-                                  },
-                                  {
-                                    "opacity": 0.55,
-                                  },
-                                ]
+                                {
+                                  "backgroundColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 16,
+                                  "height": 24,
+                                  "opacity": 0.55,
+                                  "width": 64,
+                                }
                               }
                             />
                           </View>
