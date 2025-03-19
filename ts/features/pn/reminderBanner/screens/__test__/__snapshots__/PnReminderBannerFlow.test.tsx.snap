@@ -3497,7 +3497,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                           [
                             {
                               "paddingBottom": "24WAITING_USER_INPUT32",
-                              "paddingHorizontal": 24,
+                              "paddingHorizontal": 0,
                             },
                             {},
                           ]
@@ -3512,13 +3512,321 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                             0,
                           ]
                         }
+                        testID="cta-WAITING_USER_INPUT"
                       >
                         <View>
-                          <Text
-                            testID="cta-WAITING_USER_INPUT"
+                          <Image
+                            accessibilityIgnoresInvertColors={true}
+                            resizeMethod="scale"
+                            resizeMode="contain"
+                            source={
+                              {
+                                "testUri": "../../../img/features/pn/activationLandingHero.png",
+                              }
+                            }
+                            style={
+                              {
+                                "height": 562.5,
+                                "width": 750,
+                              }
+                            }
+                          />
+                          <View
+                            style={
+                              {
+                                "height": 24,
+                              }
+                            }
+                          />
+                          <View
+                            style={
+                              {
+                                "paddingHorizontal": 24,
+                              }
+                            }
                           >
-                            Tap the below button to enable PN
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="title1"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "700",
+                                    "lineHeight": 34,
+                                  },
+                                ]
+                              }
+                            >
+                              Le comunicazioni a valore legale, ora digitali
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 24,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "700",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              SEND su IO: come funziona
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 8,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "500",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Ricevi in app le comunicazioni a valore legale che ti inviano gli enti pubblici: con il servizio SEND puoi gestirle in tempo reale sul tuo dispositivo e pagare facilmente eventuali costi. 
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 24,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "700",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Risparmia sui costi della raccomandata
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 8,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "500",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Se accedi alle comunicazioni in digitale entro i tempi previsti, non riceverai la raccomandata e non pagherai i relativi costi di stampa e invio.
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 24,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="headline"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "700",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              È facile e veloce
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 8,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "500",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Attiva il servizio in un tap per ricevere le tue prossime notifiche SEND in app.
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 24,
+                                }
+                              }
+                            />
+                            <View>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "500",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                Premendo 
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "700",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Attiva il servizio 
+                                </Text>
+                                dichiari di aver letto e compreso l’
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "500",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Informativa Privacy 
+                                </Text>
+                                e i 
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onPress={[Function]}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "500",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Termini e Condizioni d’uso
+                                </Text>
+                              </Text>
+                            </View>
+                          </View>
                         </View>
                       </RCTScrollView>
                       <View
@@ -3537,6 +3845,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                             },
                           ]
                         }
+                        testID="cta-WAITING_USER_INPUT-actions"
                       >
                         <View
                           pointerEvents="none"
@@ -3657,7 +3966,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                           }
                         >
                           <View
-                            accessibilityLabel="ACTIVATE"
+                            accessibilityLabel="Attiva il servizio"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -3767,7 +4076,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                     ]
                                   }
                                 >
-                                  ACTIVATE
+                                  Attiva il servizio
                                 </Text>
                               </View>
                             </View>
