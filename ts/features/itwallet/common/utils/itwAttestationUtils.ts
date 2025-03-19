@@ -94,3 +94,14 @@ export const getWalletInstanceStatus = (
     walletProviderBaseUrl: itwWalletProviderBaseUrl,
     appFetch: createItWalletFetch(itwWalletProviderBaseUrl, sessionToken)
   });
+
+/**
+ * Get the current wallet instance status from the Wallet Provider.
+ * This operation will check the wallet instance status based on the current fiscal code of the user.
+ * @param sessionToken The session token to use for the API calls
+ */
+export const getCurrentWalletInstanceStatus = (sessionToken: SessionToken) =>
+  WalletInstance.getCurrentWalletInstanceStatus({
+    walletProviderBaseUrl: itwWalletProviderBaseUrl,
+    appFetch: createItWalletFetch(itwWalletProviderBaseUrl, sessionToken)
+  });

@@ -11,8 +11,9 @@ import {
   trackITWalletBannerVisualized
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { useIODispatch } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { itwCloseDiscoveryBanner } from "../../store/actions/preferences";
+import { itwIsWalletInstanceRemotelyActiveSelector } from "../../store/selectors/preferences.ts";
 
 /**
  * to use in flows where we want to handle the banner's visibility logic externally
@@ -34,7 +35,9 @@ export const ItwDiscoveryBanner = ({
 }: ItwDiscoveryBannerProps) => {
   const bannerRef = createRef<View>();
   const dispatch = useIODispatch();
-
+  const isWalletRemotelyActive = useIOSelector(
+    itwIsWalletInstanceRemotelyActiveSelector
+  );
   const navigation = useIONavigation();
   const route = useRoute();
 
@@ -62,18 +65,30 @@ export const ItwDiscoveryBanner = ({
     dispatch(itwCloseDiscoveryBanner());
   };
 
+  const bannerConfig = {
+    onboarding: {
+      content: I18n.t("features.itWallet.discovery.banner.home.content"),
+      title: I18n.t("features.itWallet.discovery.banner.home.title"),
+      action: I18n.t("features.itWallet.discovery.banner.home.action")
+    },
+    homeActive: {
+      content: I18n.t("features.itWallet.discovery.banner.homeActive.content"),
+      title: I18n.t("features.itWallet.discovery.banner.homeActive.title"),
+      action: I18n.t("features.itWallet.discovery.banner.homeActive.action")
+    }
+  };
+
+  const bannerType = isWalletRemotelyActive ? "homeActive" : "onboarding";
+  const { content, title, action } = bannerConfig[bannerType];
+
   return (
     <View style={!ignoreMargins && styles.margins}>
       <Banner
         testID="itwDiscoveryBannerTestID"
         viewRef={bannerRef}
-        title={
-          withTitle
-            ? I18n.t("features.itWallet.discovery.banner.home.title")
-            : undefined
-        }
-        content={I18n.t("features.itWallet.discovery.banner.home.content")}
-        action={I18n.t("features.itWallet.discovery.banner.home.action")}
+        title={withTitle ? title : undefined}
+        content={content}
+        action={action}
         pictogramName="itWallet"
         color="turquoise"
         onClose={closable ? handleClose : undefined}
