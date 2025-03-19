@@ -698,19 +698,16 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                           }
                         >
                           <View
+                            collapsable={false}
                             style={
-                              [
-                                {
-                                  "backgroundColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "height": 44,
-                                  "width": 44,
-                                },
-                                {
-                                  "opacity": 0.55,
-                                },
-                              ]
+                              {
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
+                                "borderRadius": 8,
+                                "height": 44,
+                                "opacity": 0.55,
+                                "width": 44,
+                              }
                             }
                           />
                         </View>
@@ -737,19 +734,16 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                               }
                             >
                               <View
+                                collapsable={false}
                                 style={
-                                  [
-                                    {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 8,
-                                      "height": 16,
-                                      "width": "100%",
-                                    },
-                                    {
-                                      "opacity": 0.55,
-                                    },
-                                  ]
+                                  {
+                                    "backgroundColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "height": 16,
+                                    "opacity": 0.55,
+                                    "width": "100%",
+                                  }
                                 }
                               />
                             </View>
@@ -762,19 +756,16 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                               }
                             >
                               <View
+                                collapsable={false}
                                 style={
-                                  [
-                                    {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 8,
-                                      "height": 16,
-                                      "width": "100%",
-                                    },
-                                    {
-                                      "opacity": 0.55,
-                                    },
-                                  ]
+                                  {
+                                    "backgroundColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "height": 16,
+                                    "opacity": 0.55,
+                                    "width": "100%",
+                                  }
                                 }
                               />
                             </View>
@@ -787,19 +778,16 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                             }
                           >
                             <View
+                              collapsable={false}
                               style={
-                                [
-                                  {
-                                    "backgroundColor": "#E8EBF1",
-                                    "borderCurve": "continuous",
-                                    "borderRadius": 8,
-                                    "height": 8,
-                                    "width": "100%",
-                                  },
-                                  {
-                                    "opacity": 0.55,
-                                  },
-                                ]
+                                {
+                                  "backgroundColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "height": 8,
+                                  "opacity": 0.55,
+                                  "width": "100%",
+                                }
                               }
                             />
                           </View>
@@ -812,19 +800,16 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                             }
                           >
                             <View
+                              collapsable={false}
                               style={
-                                [
-                                  {
-                                    "backgroundColor": "#E8EBF1",
-                                    "borderCurve": "continuous",
-                                    "borderRadius": 8,
-                                    "height": 8,
-                                    "width": "100%",
-                                  },
-                                  {
-                                    "opacity": 0.55,
-                                  },
-                                ]
+                                {
+                                  "backgroundColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "height": 8,
+                                  "opacity": 0.55,
+                                  "width": "100%",
+                                }
                               }
                             />
                           </View>

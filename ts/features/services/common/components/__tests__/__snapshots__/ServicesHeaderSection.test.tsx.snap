@@ -38,19 +38,16 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
         }
       >
         <View
+          collapsable={false}
           style={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 12,
-                "height": 66,
-                "width": 66,
-              },
-              {
-                "opacity": 0.55,
-              },
-            ]
+            {
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 12,
+              "height": 66,
+              "opacity": 0.55,
+              "width": 66,
+            }
           }
         />
       </View>
@@ -65,51 +62,42 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
         }
       >
         <View
+          collapsable={false}
           style={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 8,
-                "height": 16,
-                "width": "100%",
-              },
-              {
-                "opacity": 0.55,
-              },
-            ]
+            {
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 16,
+              "opacity": 0.55,
+              "width": "100%",
+            }
           }
         />
         <View
+          collapsable={false}
           style={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 8,
-                "height": 16,
-                "width": "80%",
-              },
-              {
-                "opacity": 0.55,
-              },
-            ]
+            {
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 16,
+              "opacity": 0.55,
+              "width": "80%",
+            }
           }
         />
         <View
+          collapsable={false}
           style={
-            [
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderCurve": "continuous",
-                "borderRadius": 8,
-                "height": 8,
-                "width": "60%",
-              },
-              {
-                "opacity": 0.55,
-              },
-            ]
+            {
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 8,
+              "opacity": 0.55,
+              "width": "60%",
+            }
           }
         />
       </View>
