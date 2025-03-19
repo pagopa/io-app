@@ -207,6 +207,14 @@ dependencies {
     // Required by react-native-image-picker because we target a minSdkVersion < 30. In can be removed when we target minSdkVersion >= 30.
     // https://github.com/react-native-image-picker/react-native-image-picker?tab=readme-ov-file#android-1
     implementation("androidx.activity:activity:1.9.+")
+
+    // This dependency is downloaded from the Google's Maven repository for in-app review request.
+    // So, make sure you also include that repository in your project's build.gradle file.
+    implementation 'com.google.android.play:review:2.0.2'
+
+    // For Kotlin users also add the Kotlin extensions library for Play In-App Review:
+    implementation 'com.google.android.play:review-ktx:2.0.2'
+  implementation 'com.google.android.play:review:2.0.1'
 }
 
 // Add the following line to the bottom of the file:
