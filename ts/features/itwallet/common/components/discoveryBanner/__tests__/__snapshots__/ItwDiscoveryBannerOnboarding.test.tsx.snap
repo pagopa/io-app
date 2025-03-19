@@ -744,7 +744,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                             }
                           >
                             <View
-                              accessibilityLabel="Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti! Inizia"
+                              accessibilityLabel="Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti! Inizia"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -776,7 +776,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                   ]
                                 }
                               >
-                                Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!
+                                Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
                               </Text>
                               <View
                                 style={
