@@ -200,7 +200,7 @@ exports[`PageNotFound Should match the snapshot 1`] = `
           ]
         }
       >
-        Qui non c’è nulla!
+        Nothing here!
       </Text>
       <View
         style={
@@ -230,8 +230,8 @@ exports[`PageNotFound Should match the snapshot 1`] = `
           ]
         }
       >
-        Questa pagina non esiste o non è disponibile nella versione dell’app che stai usando.
-Prova ad aggiornare IO.
+        This page does not exist or is not available in the version of the app you are using.
+Try updating IO.
       </Text>
       <View
         style={
