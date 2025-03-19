@@ -4,8 +4,8 @@ import {
   checkCurrentWalletInstanceStateSaga,
   getCurrentStatusWalletInstance
 } from "../checkCurrentWalletInstanceStateSaga.ts";
-import { itwWalletInstanceStatusSelector } from "../../../walletInstance/store/selectors";
 import { itwSetWalletInstanceRemotelyActive } from "../../../common/store/actions/preferences.ts";
+import { itwLifecycleIsOperationalOrValid } from "../../store/selectors";
 
 describe("checkCurrentWalletInstanceStateSaga", () => {
   it("Sets the wallet instance as remotely active when remote is active, not revoked, and local is inactive", () => {
@@ -15,7 +15,7 @@ describe("checkCurrentWalletInstanceStateSaga", () => {
     return expectSaga(checkCurrentWalletInstanceStateSaga)
       .provide([
         [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwWalletInstanceStatusSelector), localStatus]
+        [matchers.select(itwLifecycleIsOperationalOrValid), localStatus]
       ])
       .put(itwSetWalletInstanceRemotelyActive(true))
       .run();
@@ -28,7 +28,7 @@ describe("checkCurrentWalletInstanceStateSaga", () => {
     return expectSaga(checkCurrentWalletInstanceStateSaga)
       .provide([
         [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwWalletInstanceStatusSelector), localStatus]
+        [matchers.select(itwLifecycleIsOperationalOrValid), localStatus]
       ])
       .put(itwSetWalletInstanceRemotelyActive(false))
       .run();
@@ -41,7 +41,7 @@ describe("checkCurrentWalletInstanceStateSaga", () => {
     return expectSaga(checkCurrentWalletInstanceStateSaga)
       .provide([
         [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwWalletInstanceStatusSelector), localStatus]
+        [matchers.select(itwLifecycleIsOperationalOrValid), localStatus]
       ])
       .put(itwSetWalletInstanceRemotelyActive(false))
       .run();
@@ -54,7 +54,7 @@ describe("checkCurrentWalletInstanceStateSaga", () => {
     return expectSaga(checkCurrentWalletInstanceStateSaga)
       .provide([
         [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwWalletInstanceStatusSelector), localStatus]
+        [matchers.select(itwLifecycleIsOperationalOrValid), localStatus]
       ])
       .put(itwSetWalletInstanceRemotelyActive(false))
       .run();

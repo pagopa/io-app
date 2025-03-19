@@ -3,8 +3,8 @@ import { sessionTokenSelector } from "../../../../store/reducers/authentication"
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getCurrentWalletInstanceStatus } from "../../common/utils/itwAttestationUtils.ts";
-import { itwWalletInstanceStatusSelector } from "../../walletInstance/store/selectors";
 import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
+import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
 
 export function* getCurrentStatusWalletInstance() {
   const sessionToken = yield* select(sessionTokenSelector);
@@ -21,12 +21,18 @@ export function* checkCurrentWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
   void
 > {
-  const remoteStatus = yield* call(getCurrentStatusWalletInstance);
-  const localStatus = yield* select(itwWalletInstanceStatusSelector);
-
-  const isRemotelyActive = Boolean(
-    remoteStatus && !remoteStatus.is_revoked && !localStatus
+  const remoteWalletInstanceStatus = yield* call(
+    getCurrentStatusWalletInstance
+  );
+  const isItwOperationalOrValid = yield* select(
+    itwLifecycleIsOperationalOrValid
   );
 
-  yield* put(itwSetWalletInstanceRemotelyActive(isRemotelyActive));
+  const itwCanBeReactivated = Boolean(
+    remoteWalletInstanceStatus &&
+      !remoteWalletInstanceStatus.is_revoked &&
+      !isItwOperationalOrValid
+  );
+
+  yield* put(itwSetWalletInstanceRemotelyActive(itwCanBeReactivated));
 }
