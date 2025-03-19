@@ -4,8 +4,8 @@ import {
   IOColors,
   useIOToast
 } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { useCallback } from "react";
 import { StatusBar } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -20,7 +20,7 @@ import { resetOfflineAccessReason } from "../../../ingress/store/actions";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 
-const MODAL_BOTTOM_PADDING = 150;
+const MODAL_BOTTOM_PADDING = 175;
 
 /**
  * Hook that creates and manages a bottom sheet modal to display detailed information
