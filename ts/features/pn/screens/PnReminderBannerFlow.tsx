@@ -12,9 +12,14 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { pnMessagingServiceIdSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import LoadingComponent from "../../fci/components/LoadingComponent";
+import { sendBannerMixpanelEvents } from "../analytics/activationReminderBanner";
 import { usePnPreferencesFetcher } from "../hooks/usePnPreferencesFetcher";
-import { pnActivationUpsert } from "../store/actions";
+import {
+  dismissPnActivationReminderBanner,
+  pnActivationUpsert
+} from "../store/actions";
 import { isLoadingPnActivationSelector } from "../store/reducers/activation";
 
 export const pnBannerFlowStateEnum = {
@@ -79,6 +84,7 @@ const PnActivationInputScreen = ({ setFlowState }: FlowScreenProps) => {
   }
 
   const enablePN = () => {
+    sendBannerMixpanelEvents.activationStart();
     dispatch(
       pnActivationUpsert.request({
         value: true,
@@ -144,6 +150,19 @@ const LoadingScreen = ({ loadingState }: LoadingStateProps) => (
 
 const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
+  useOnFirstRender(() => {
+    dispatch(dismissPnActivationReminderBanner());
+  });
+  useOnFirstRender(() => {
+    if (flowState === "ALREADY_ACTIVE") {
+      sendBannerMixpanelEvents.alreadyActive();
+    }
+    if (flowState === "SUCCESS_ACTIVATION") {
+      sendBannerMixpanelEvents.activationSuccess();
+    }
+  });
+
   return (
     <OperationResultScreenContent
       testID={`success-${flowState}`}
@@ -163,6 +182,9 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
 };
 const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
   const navigation = useIONavigation();
+  useOnFirstRender(() => {
+    sendBannerMixpanelEvents.bannerKO(flowState);
+  });
   return (
     <OperationResultScreenContent
       testID={`error-${flowState}`}
