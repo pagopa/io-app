@@ -24,6 +24,10 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton.tsx";
 import { CREDENTIALS_MAP, trackCredentialCardModal } from "../../../analytics";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
+import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
+import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences.ts";
+import { ItwPresentationCredentialCardHideValuesButton } from "../components/ItwPresentationCredentialCardHideValuesButton.tsx";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
   credential: StoredCredential;
@@ -43,6 +47,8 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const safeAreaInsets = useSafeAreaInsets();
   const [isFlipped, setFlipped] = useState(false);
   const theme = useIOTheme();
+  const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
+  const dispatch = useIODispatch();
 
   usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
@@ -68,6 +74,10 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
       )
     });
   }, [navigation]);
+
+  const handleClaimVisibility = useCallback(() => {
+    dispatch(itwSetClaimValuesHidden(!valuesHidden));
+  }, [valuesHidden, dispatch]);
 
   return (
     <View
@@ -96,12 +106,19 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
             credential={credential}
             status={status}
             isFlipped={isFlipped}
+            valuesHidden={valuesHidden}
           />
         </FlipGestureDetector>
       </View>
       <ItwPresentationCredentialCardFlipButton
         isFlipped={isFlipped}
         handleOnPress={() => setFlipped(_ => !_)}
+        fullScreen={true}
+      />
+      <VSpacer size={12} />
+      <ItwPresentationCredentialCardHideValuesButton
+        handleOnPress={handleClaimVisibility}
+        valuesHidden={valuesHidden}
       />
       <VSpacer size={16} />
     </View>

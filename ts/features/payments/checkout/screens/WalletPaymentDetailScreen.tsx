@@ -43,7 +43,10 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { formatPaymentNoticeNumber } from "../../common/utils";
+import {
+  formatPaymentNoticeNumber,
+  isPaymentMethodExpired
+} from "../../common/utils";
 import { storeNewPaymentAttemptAction } from "../../history/store/actions";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
@@ -195,7 +198,11 @@ const WalletPaymentDetailContent = ({
     dispatch(
       paymentsGetPaymentUserMethodsAction.request({
         onResponse: wallets => {
-          if (!wallets || wallets?.length > 0) {
+          const hasAllPaymentMethodsExpired =
+            wallets?.filter(wallet => !isPaymentMethodExpired(wallet.details))
+              .length === 0;
+          const isWalletEmpty = wallets && wallets.length === 0;
+          if (!isWalletEmpty && !hasAllPaymentMethodsExpired) {
             dispatch(
               walletPaymentSetCurrentStep(
                 WalletPaymentStepEnum.PICK_PAYMENT_METHOD
@@ -207,7 +214,7 @@ const WalletPaymentDetailContent = ({
                 screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
               }
             );
-          } else if (wallets && wallets.length === 0) {
+          } else {
             const paymentDetails = pot.toUndefined(paymentDetailsPot);
             dispatch(
               paymentsInitOnboardingWithRptIdToResume({
@@ -219,8 +226,9 @@ const WalletPaymentDetailContent = ({
               {
                 screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
                 params: {
-                  outcome:
-                    WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
+                  outcome: isWalletEmpty
+                    ? WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
+                    : WalletPaymentOutcomeEnum.PAYMENT_METHODS_EXPIRED
                 }
               }
             );

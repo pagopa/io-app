@@ -5,6 +5,7 @@ import { isItwPersistedDiscoveryBannerRenderableSelector } from "../../itwallet/
 import { LoginExpirationBanner } from "../../login/preferences/components/LoginExpirationBanner";
 import { isSessionExpirationBannerRenderableSelector } from "../../login/preferences/store/selectors";
 import { PNActivationReminderBanner } from "../../pn/components/PNActivationReminderBanner";
+import { isPnActivationReminderBannerRenderableSelector } from "../../pn/store/reducers/bannerDismiss";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
 
@@ -50,6 +51,6 @@ export const landingScreenBannerMap: BannerMapById = {
     component: closeHandler => (
       <PNActivationReminderBanner handleOnClose={closeHandler} />
     ),
-    isRenderableSelector: _state => true
+    isRenderableSelector: isPnActivationReminderBannerRenderableSelector
   }
 } as const;

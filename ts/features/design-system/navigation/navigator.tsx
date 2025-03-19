@@ -33,24 +33,24 @@ import { DSFooterActionsInline } from "../core/DSFooterActionsInline";
 import { DSFooterActionsInlineNotFixed } from "../core/DSFooterActionsInlineNotFixed";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
+import { DSForceScrollDownView } from "../core/DSForceScrollDownView";
+import { DSForceScrollDownViewCustomSlot } from "../core/DSForceScrollDownViewCustomSlot";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
+import { DSIOListViewWithLargeHeader } from "../core/DSIOListViewWithLargeHeader";
 import { DSIOMarkdown } from "../core/DSIOMarkdown";
 import { DSIOScrollView } from "../core/DSIOScrollView";
 import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredContent";
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
-import { DSIOListViewWithLargeHeader } from "../core/DSIOListViewWithLargeHeader";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
-import { DSLegacyListItems } from "../core/DSLegacyListItems";
-import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
@@ -456,6 +456,27 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_ACTIONS.route}
+          component={DSForceScrollDownView}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_ACTIONS.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_CUSTOM_SLOT.route
+          }
+          component={DSForceScrollDownViewCustomSlot}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_CUSTOM_SLOT
+                .title
+          }}
+        />
+
+        <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route}
           component={DSBonusCardScreen}
         />
@@ -555,22 +576,6 @@ export const DesignSystemNavigator = () => {
         </Stack.Group>
 
         {/* LEGACY */}
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.TEXT_FIELDS.route}
-          component={DSLegacyTextFields}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.TEXT_FIELDS.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.LIST_ITEMS.route}
-          component={DSLegacyListItems}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.LIST_ITEMS.title
-          }}
-        />
 
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.route}
