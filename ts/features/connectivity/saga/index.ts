@@ -21,7 +21,9 @@ export function* connectionStatusSaga(): Generator<
   try {
     const response = yield* call(fetchNetInfoState());
     if (E.isRight(response)) {
-      yield* put(setConnectionStatus(response.right.isConnected === true));
+      yield* put(
+        setConnectionStatus(response.right.isInternetReachable === true)
+      );
       return true;
     }
     return false;
