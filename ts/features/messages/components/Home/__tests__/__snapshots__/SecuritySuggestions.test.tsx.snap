@@ -338,6 +338,11 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                         accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
