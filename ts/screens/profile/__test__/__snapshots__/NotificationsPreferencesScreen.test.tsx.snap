@@ -852,6 +852,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -2135,6 +2140,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -3418,6 +3428,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -4701,6 +4716,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -5984,6 +6004,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -7267,6 +7292,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -8550,6 +8580,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -9833,6 +9868,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -11116,6 +11156,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -12399,6 +12444,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -13682,6 +13732,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -14965,6 +15020,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -16248,6 +16308,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -17531,6 +17596,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -18814,6 +18884,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -20097,6 +20172,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -21380,6 +21460,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -22663,6 +22748,11 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}

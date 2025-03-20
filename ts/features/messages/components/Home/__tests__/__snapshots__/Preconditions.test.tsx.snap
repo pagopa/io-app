@@ -338,6 +338,11 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
                         accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
