@@ -3671,7 +3671,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                 ]
                               }
                             >
-                              Se accedi alle comunicazioni in digitale entro i tempi previsti, non riceverai la raccomandata e non pagherai i relativi costi di stampa e invio.
+                              Se accedi alle comunicazioni in digitale entro i tempi previsti, non riceverai la raccomandata e non pagherai i relativi costi di stampa e invio della raccomandata.
                             </Text>
                             <View
                               style={
