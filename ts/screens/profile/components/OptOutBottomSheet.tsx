@@ -1,5 +1,5 @@
+import { Body, FooterActions } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { Body, ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -18,25 +18,24 @@ export const useConfirmOptOutBottomSheet = (onConfirm: () => void) => {
     title: I18n.t("profile.main.privacy.shareData.alert.title"),
     snapPoint: [350],
     footer: (
-      <View style={IOStyles.horizontalContentPadding}>
-        <ButtonSolid
-          fullWidth
-          label={I18n.t("global.buttons.confirm")}
-          onPress={() => {
-            dismiss();
-            onConfirm();
-          }}
-        />
-        <VSpacer size={8} />
-        <ButtonSolid
-          fullWidth
-          color="contrast"
-          label={I18n.t("global.buttons.cancel")}
-          onPress={() => {
-            dismiss();
-          }}
-        />
-      </View>
+      <FooterActions
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t("global.buttons.confirm"),
+            onPress: () => {
+              dismiss();
+              onConfirm();
+            }
+          },
+          secondary: {
+            label: I18n.t("global.buttons.cancel"),
+            onPress: () => {
+              dismiss();
+            }
+          }
+        }}
+      />
     )
   });
 

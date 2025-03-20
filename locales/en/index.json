@@ -5591,5 +5591,9 @@
         "bodyPrivacy": "Informativa sulla Privacy."
       }
     }
+  },
+  "pageNotFound": {
+    "title": "Nothing here!",
+    "subtitle": "This page does not exist or is not available in the version of the app you are using.\nTry updating IO."
   }
 }
