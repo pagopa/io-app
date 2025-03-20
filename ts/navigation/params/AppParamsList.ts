@@ -88,6 +88,7 @@ export type AppParamsList = {
 
   [ROUTES.OFFLINE_FAILURE]: undefined;
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: undefined;
+  [ROUTES.PAGE_NOT_FOUND]: undefined;
   [ZENDESK_ROUTES.MAIN]: NavigatorScreenParams<ZendeskParamsList>;
   [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
