@@ -44,6 +44,9 @@ export function* connectionStatusWatcherLoop() {
     const response: SagaCallReturnType<typeof connectionStatusSaga> =
       yield* call(connectionStatusSaga);
 
+    // on iOS the first call to netinfo returns null on the isInternetReachable field
+    // we need to wait for the next call to get the correct value
+    // we lower the timer intervall in order to get the correct value
     if (response === null || response === undefined) {
       yield* call(startTimer, 100);
       continue;
