@@ -963,6 +963,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -2382,6 +2387,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -3802,6 +3812,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -5222,6 +5237,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -6934,6 +6954,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
