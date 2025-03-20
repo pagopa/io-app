@@ -10,10 +10,10 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../utils/url";
 import LoadingComponent from "../../../fci/components/LoadingComponent";
-import { tosConfigSelector } from "../../../tos/store/selectors";
 import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 import { dismissPnActivationReminderBanner } from "../../store/actions";
 import {
@@ -161,8 +161,8 @@ const CtaScreen = ({
 };
 
 const Paragraph4 = () => {
-  const tosConfig = useIOSelector(tosConfigSelector);
-  const privacyAndTosUrl = tosConfig.tos_url;
+  const tosConfig = useIOSelector(pnPrivacyUrlsSelector);
+  const { privacy: privacyUrl, tos: tosUrl } = tosConfig;
 
   return (
     <View>
@@ -172,11 +172,11 @@ const Paragraph4 = () => {
           {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.activate`)}
         </Body>
         {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.readAndUnderstood`)}
-        <Body asLink={true} onPress={() => openWebUrl(privacyAndTosUrl)}>
+        <Body asLink={true} onPress={() => openWebUrl(privacyUrl)}>
           {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.privacyInfo`)}
         </Body>
         {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.andThe`)}
-        <Body asLink={true} onPress={() => openWebUrl(privacyAndTosUrl)}>
+        <Body asLink={true} onPress={() => openWebUrl(tosUrl)}>
           {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.TOS`)}
         </Body>
       </Body>

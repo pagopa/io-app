@@ -3797,9 +3797,9 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                     ]
                                   }
                                 >
-                                  Informativa Privacy 
+                                  Informativa Privacy
                                 </Text>
-                                e i 
+                                 e i 
                                 <Text
                                   accessibilityRole="link"
                                   allowFontScaling={true}
