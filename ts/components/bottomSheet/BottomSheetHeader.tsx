@@ -1,9 +1,4 @@
-import {
-  H4,
-  IconButton,
-  IOColors,
-  IOVisualCostants
-} from "@pagopa/io-app-design-system";
+import { H4, IconButton, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import {
   createRef,
@@ -24,8 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     paddingTop: IOVisualCostants.appMarginDefault,
-    paddingBottom: IOVisualCostants.appMarginDefault,
-    backgroundColor: IOColors.white
+    paddingBottom: IOVisualCostants.appMarginDefault
   }
 });
 

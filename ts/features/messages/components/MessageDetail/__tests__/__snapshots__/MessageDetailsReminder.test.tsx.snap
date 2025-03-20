@@ -1554,7 +1554,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                 }
                               >
                                 <Text
-                                  accessibilityRole="text"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.5}
@@ -2063,7 +2062,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}

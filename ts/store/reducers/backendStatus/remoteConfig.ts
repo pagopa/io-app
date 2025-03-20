@@ -498,3 +498,20 @@ export const pnMessagingServiceIdSelector = (
     O.map(config => config.pn.notificationServiceId as ServiceId),
     O.toUndefined
   );
+
+const fallbackSendPrivacyUrls = {
+  tos: "https://cittadini.notifichedigitali.it/termini-di-servizio",
+  privacy: "https://cittadini.notifichedigitali.it/informativa-privacy"
+};
+export const pnPrivacyUrlsSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.map(config => ({
+        privacy: config.pn.privacy_url ?? fallbackSendPrivacyUrls.privacy,
+        tos: config.pn.tos_url ?? fallbackSendPrivacyUrls.tos
+      })),
+      O.getOrElse(() => fallbackSendPrivacyUrls)
+    )
+);
