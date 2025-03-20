@@ -144,7 +144,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         ...fciLinkingOptions,
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...idPayLinkingOptions,
-        [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
+        [ROUTES.PAGE_NOT_FOUND]: "*"
       }
     },
     subscribe: linkingSubscription(dispatch, store)
