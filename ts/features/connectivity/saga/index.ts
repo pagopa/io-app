@@ -15,7 +15,7 @@ const CONNECTIVITY_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
  */
 export function* connectionStatusSaga(): Generator<
   ReduxSagaEffect,
-  boolean,
+  boolean | null,
   SagaCallReturnType<typeof fetchNetInfoState>
 > {
   try {
@@ -24,7 +24,7 @@ export function* connectionStatusSaga(): Generator<
       yield* put(
         setConnectionStatus(response.right.isInternetReachable === true)
       );
-      return true;
+      return response.right.isInternetReachable;
     }
     return false;
   } catch (e) {
@@ -43,6 +43,11 @@ export function* connectionStatusWatcherLoop() {
   while (true) {
     const response: SagaCallReturnType<typeof connectionStatusSaga> =
       yield* call(connectionStatusSaga);
+
+    if (response === null || response === undefined) {
+      yield* call(startTimer, 100);
+      continue;
+    }
 
     // if we have no connection increase rate
     if (response === false) {
