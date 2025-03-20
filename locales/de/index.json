@@ -117,7 +117,8 @@
           "label": "Kontextbezogene Hilfe",
           "hint": "Greif auf Informationen über den Inhalt des aktuellen Bildschirms zu"
         }
-      }
+      },
+      "progressTracker": "{{index}} von {{total}}"
     },
     "symbols": {
       "question": "?",
