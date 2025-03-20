@@ -209,6 +209,11 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 accessibilityPositionChangeAnnouncement=""
                                 accessible={false}
                                 backdropComponent={[Function]}
+                                backgroundStyle={
+                                  {
+                                    "backgroundColor": "#FFFFFF",
+                                  }
+                                }
                                 enableDismissOnClose={true}
                                 footerComponent={[Function]}
                                 handleComponent={[Function]}
@@ -845,6 +850,11 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
