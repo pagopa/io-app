@@ -3784,15 +3784,19 @@
               "body": "Ricevi in app le comunicazioni a valore legale che ti inviano gli enti pubblici: con il servizio SEND puoi gestirle in tempo reale sul tuo dispositivo e pagare facilmente eventuali costi. "
             },
             "paragraph2": {
+              "title": "Risparmia sui costi della raccomandata",
+              "body": "Se accedi alle comunicazioni in digitale entro i tempi previsti, non riceverai la raccomandata e non pagherai i relativi costi di stampa e invio della raccomandata."
+            },
+            "paragraph3": {
               "title": "È facile e veloce",
               "body": "Attiva il servizio in un tap per ricevere le tue prossime notifiche SEND in app."
             },
-            "paragraph3": {
+            "paragraph4": {
               "pressing": "Premendo ",
               "activate": "Attiva il servizio ",
               "readAndUnderstood": "dichiari di aver letto e compreso l’",
-              "privacyInfo": "Informativa Privacy ",
-              "andThe": "e i ",
+              "privacyInfo": "Informativa Privacy",
+              "andThe": " e i ",
               "TOS": "Termini e Condizioni d’uso"
             },
             "CTA": "Attiva il servizio"

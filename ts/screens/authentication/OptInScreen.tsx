@@ -167,6 +167,7 @@ const OptInScreen = () => {
           pictogramName="notification"
           body={I18n.t("authentication.opt_in.notification")}
           action={{
+            accessibilityRole: "button",
             label: I18n.t("authentication.opt_in.security_suggests"),
             onPress: () => {
               trackLoginSessionOptInInfo();
