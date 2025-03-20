@@ -1362,6 +1362,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
@@ -1567,6 +1572,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}

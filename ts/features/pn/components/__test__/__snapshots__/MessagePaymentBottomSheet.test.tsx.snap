@@ -338,6 +338,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
                         accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
@@ -726,6 +731,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                         accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
