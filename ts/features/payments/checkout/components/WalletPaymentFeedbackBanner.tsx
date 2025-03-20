@@ -47,7 +47,7 @@ const WalletPaymentFeebackBanner = () => {
         viewRef={bannerViewRef}
         title={feedbackBannerConfig.title?.[localeFallback]}
         content={feedbackBannerConfig.description[localeFallback]}
-        action={feedbackBannerConfig.action!.label[localeFallback]}
+        action={feedbackBannerConfig.action?.label[localeFallback] ?? ""}
         onPress={handleBannerPress}
       />
     </>
