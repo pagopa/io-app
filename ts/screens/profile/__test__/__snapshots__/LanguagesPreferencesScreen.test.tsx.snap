@@ -237,7 +237,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                           >
                             <View>
                               <View
-                                accessible={true}
                                 onLayout={[Function]}
                                 style={
                                   {
