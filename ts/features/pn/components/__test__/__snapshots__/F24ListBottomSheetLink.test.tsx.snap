@@ -448,6 +448,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundStyle={
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            }
+                          }
                           enableDismissOnClose={true}
                           enableDynamicSizing={true}
                           footerComponent={[Function]}
@@ -3210,6 +3215,11 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundStyle={
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            }
+                          }
                           enableDismissOnClose={true}
                           enableDynamicSizing={true}
                           footerComponent={[Function]}
@@ -3709,6 +3719,11 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundStyle={
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            }
+                          }
                           enableDismissOnClose={true}
                           enableDynamicSizing={true}
                           footerComponent={[Function]}

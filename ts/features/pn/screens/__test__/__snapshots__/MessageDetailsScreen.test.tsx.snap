@@ -1360,6 +1360,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               enableDynamicSizing={false}
                               footerComponent={[Function]}
@@ -1576,6 +1581,11 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               enableDynamicSizing={true}
                               footerComponent={[Function]}

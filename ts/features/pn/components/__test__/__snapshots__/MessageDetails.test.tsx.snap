@@ -871,6 +871,11 @@ exports[`MessageDetails component should match the snapshot with default props 1
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               enableDynamicSizing={false}
                               footerComponent={[Function]}
@@ -1087,6 +1092,11 @@ exports[`MessageDetails component should match the snapshot with default props 1
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               enableDynamicSizing={true}
                               footerComponent={[Function]}

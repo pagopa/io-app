@@ -501,6 +501,11 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -1052,6 +1057,11 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -1658,6 +1668,11 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -2448,6 +2463,11 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -3238,6 +3258,11 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -4220,6 +4245,11 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -5202,6 +5232,11 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -7046,6 +7081,11 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}

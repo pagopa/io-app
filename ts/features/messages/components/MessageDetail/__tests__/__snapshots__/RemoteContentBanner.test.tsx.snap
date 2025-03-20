@@ -701,6 +701,11 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}

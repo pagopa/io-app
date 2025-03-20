@@ -11,7 +11,9 @@ import {
   IOBottomSheetHeaderRadius,
   IOColors,
   IOVisualCostants,
-  VSpacer
+  VSpacer,
+  useIOTheme,
+  useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import {
@@ -92,6 +94,11 @@ export const useIOBottomSheetModal = ({
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
 
+  const theme = useIOTheme();
+  const { themeType } = useIOThemeContext();
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
+  const backdropOpacity = themeType === "light" ? 0.15 : 0.6;
+
   const header = <BottomSheetHeader title={title} onClose={dismissAll} />;
   const bottomSheetContent = (
     <BottomSheetScrollView
@@ -127,12 +134,12 @@ export const useIOBottomSheetModal = ({
     (backdropProps: BottomSheetBackdropProps) => (
       <BottomSheetBackdrop
         {...backdropProps}
-        opacity={0.2}
+        opacity={backdropOpacity}
         appearsOnIndex={0}
         disappearsOnIndex={-1}
       />
     ),
-    []
+    [backdropOpacity]
   );
 
   useEffect(() => {
@@ -154,6 +161,7 @@ export const useIOBottomSheetModal = ({
   const bottomSheet = (
     <BottomSheetModal
       style={styles.bottomSheet}
+      backgroundStyle={{ backgroundColor }}
       footerComponent={(props: BottomSheetFooterProps) =>
         footer ? (
           <BottomSheetFooter

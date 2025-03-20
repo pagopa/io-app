@@ -2222,6 +2222,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundStyle={
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            }
+                          }
                           enableDismissOnClose={true}
                           enableDynamicSizing={true}
                           footerComponent={[Function]}
@@ -4485,6 +4490,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundStyle={
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            }
+                          }
                           enableDismissOnClose={true}
                           enableDynamicSizing={true}
                           footerComponent={[Function]}

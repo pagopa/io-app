@@ -817,6 +817,11 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundStyle={
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            }
+                          }
                           enableDismissOnClose={true}
                           enableDynamicSizing={false}
                           footerComponent={[Function]}

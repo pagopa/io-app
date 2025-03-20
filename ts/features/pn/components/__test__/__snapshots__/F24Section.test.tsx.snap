@@ -530,6 +530,11 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundStyle={
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            }
+                          }
                           enableDismissOnClose={true}
                           enableDynamicSizing={true}
                           footerComponent={[Function]}

@@ -337,6 +337,11 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={false}
                         footerComponent={[Function]}

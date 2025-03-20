@@ -500,6 +500,11 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
@@ -2816,6 +2821,11 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
@@ -5132,6 +5142,11 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
@@ -5694,6 +5709,11 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={false}
                         footerComponent={[Function]}

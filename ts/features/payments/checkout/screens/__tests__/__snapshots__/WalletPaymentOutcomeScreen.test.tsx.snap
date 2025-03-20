@@ -561,6 +561,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -1547,6 +1552,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -1728,6 +1738,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -2547,6 +2562,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -3533,6 +3553,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -3714,6 +3739,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -4514,6 +4544,11 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -5500,6 +5535,11 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -5681,6 +5721,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -6466,6 +6511,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -7452,6 +7502,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -7633,6 +7688,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -8432,6 +8492,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -9418,6 +9483,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -9599,6 +9669,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -10474,6 +10549,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -11460,6 +11540,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -11641,6 +11726,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -12488,6 +12578,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -13474,6 +13569,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -13655,6 +13755,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -14440,6 +14545,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -15426,6 +15536,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -15607,6 +15722,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -16342,6 +16462,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -17328,6 +17453,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -17509,6 +17639,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -18328,6 +18463,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -19314,6 +19454,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -19495,6 +19640,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -20294,6 +20444,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -21280,6 +21435,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -21461,6 +21621,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -22280,6 +22445,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -23266,6 +23436,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -23447,6 +23622,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -24322,6 +24502,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -25308,6 +25493,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -25489,6 +25679,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -26308,6 +26503,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -27294,6 +27494,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -27475,6 +27680,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -28294,6 +28504,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -29280,6 +29495,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -29461,6 +29681,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -30288,6 +30513,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -31274,6 +31504,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -31455,6 +31690,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -32254,6 +32494,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -33240,6 +33485,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -33421,6 +33671,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -34298,6 +34553,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -35284,6 +35544,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -35465,6 +35730,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -36264,6 +36534,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -37250,6 +37525,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -37431,6 +37711,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -38356,6 +38641,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -39342,6 +39632,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -39523,6 +39818,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -40561,6 +40861,11 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -41547,6 +41852,11 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -41728,6 +42038,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -42681,6 +42996,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -43667,6 +43987,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -43848,6 +44173,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -44726,6 +45056,11 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -45712,6 +46047,11 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -45893,6 +46233,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -46832,6 +47177,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -47818,6 +48168,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -47999,6 +48354,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -48784,6 +49144,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -49770,6 +50135,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -49951,6 +50321,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -50778,6 +51153,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -51764,6 +52144,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -51945,6 +52330,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -52744,6 +53134,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -53730,6 +54125,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -53911,6 +54311,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -54730,6 +55135,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -55716,6 +56126,11 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
@@ -55897,6 +56312,11 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={true}
                         footerComponent={[Function]}

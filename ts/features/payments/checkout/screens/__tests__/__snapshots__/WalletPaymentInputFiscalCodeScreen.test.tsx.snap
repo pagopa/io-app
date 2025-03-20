@@ -358,7 +358,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {

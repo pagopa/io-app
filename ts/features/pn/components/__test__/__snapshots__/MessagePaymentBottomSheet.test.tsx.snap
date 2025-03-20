@@ -337,6 +337,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
@@ -729,6 +734,11 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
