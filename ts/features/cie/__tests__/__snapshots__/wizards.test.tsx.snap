@@ -26,7 +26,6 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
-        accessible={true}
         onLayout={[Function]}
         style={
           {
@@ -624,7 +623,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
-        accessible={true}
         onLayout={[Function]}
         style={
           {
@@ -1570,7 +1568,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
-        accessible={true}
         onLayout={[Function]}
         style={
           {
@@ -2502,7 +2499,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
-        accessible={true}
         onLayout={[Function]}
         style={
           {
