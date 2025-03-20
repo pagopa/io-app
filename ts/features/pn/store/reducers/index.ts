@@ -1,24 +1,31 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { combineReducers } from "redux";
+import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
-import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../../store/actions/types";
-import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
-import { toPNMessage } from "../types/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { PNMessage } from "../types/types";
-import { getRptIdStringFromPayment } from "../../utils/rptId";
 import { isUserSelectedPaymentSelector } from "../../../messages/store/reducers/payments";
+import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
+import { getRptIdStringFromPayment } from "../../utils/rptId";
+import { toPNMessage } from "../types/transformers";
+import { PNMessage } from "../types/types";
 import { pnActivationReducer, PnActivationState } from "./activation";
+import {
+  persistedPnBannerDismissReducer,
+  PnBannerDismissState
+} from "./bannerDismiss";
 
 export type PnState = {
   activation: PnActivationState;
+  bannerDismiss: PnBannerDismissState & PersistPartial;
 };
 
 export const pnReducer = combineReducers<PnState, Action>({
-  activation: pnActivationReducer
+  activation: pnActivationReducer,
+  bannerDismiss: persistedPnBannerDismissReducer
 });
 
 export const pnMessageFromIdSelector = createSelector(
