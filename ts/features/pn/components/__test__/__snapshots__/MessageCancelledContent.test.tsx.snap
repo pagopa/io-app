@@ -448,7 +448,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
@@ -934,7 +933,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
@@ -1420,7 +1418,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
@@ -1906,7 +1903,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
@@ -2392,7 +2388,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
@@ -2878,7 +2873,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
@@ -3364,7 +3358,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
@@ -3850,7 +3843,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
@@ -4336,7 +4328,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}

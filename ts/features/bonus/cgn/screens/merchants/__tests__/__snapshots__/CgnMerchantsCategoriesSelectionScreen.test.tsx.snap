@@ -264,7 +264,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                         ListHeaderComponent={
                           <React.Fragment>
                             <View
-                              accessible={true}
                               onLayout={[Function]}
                             >
                               <ForwardRef
@@ -350,7 +349,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                             onLayout={[Function]}
                           >
                             <View
-                              accessible={true}
                               onLayout={[Function]}
                             >
                               <Text
