@@ -817,7 +817,6 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}

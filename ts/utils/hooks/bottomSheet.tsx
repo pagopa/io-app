@@ -8,8 +8,11 @@ import {
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import {
   IOBottomSheetHeaderRadius,
+  IOColors,
   IOSpacingScale,
-  IOVisualCostants
+  IOVisualCostants,
+  useIOTheme,
+  useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 
@@ -151,6 +154,11 @@ export const useIOBottomSheetModal = ({
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
 
+  const theme = useIOTheme();
+  const { themeType } = useIOThemeContext();
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
+  const backdropOpacity = themeType === "light" ? 0.15 : 0.6;
+
   const bottomSheetProps = bottomSheetContent(component, title, dismissAll);
 
   const handleDismiss = () => {
@@ -168,12 +176,12 @@ export const useIOBottomSheetModal = ({
     (backdropProps: BottomSheetBackdropProps) => (
       <BottomSheetBackdrop
         {...backdropProps}
-        opacity={0.2}
+        opacity={backdropOpacity}
         appearsOnIndex={0}
         disappearsOnIndex={-1}
       />
     ),
-    []
+    [backdropOpacity]
   );
 
   useEffect(() => {
@@ -199,6 +207,7 @@ export const useIOBottomSheetModal = ({
   const bottomSheet = (
     <BottomSheetModal
       style={styles.bottomSheet}
+      backgroundStyle={{ backgroundColor }}
       footerComponent={(_: BottomSheetFooterProps) => footerComponent}
       snapPoints={[...snapPoint]}
       ref={bottomSheetModalRef}
@@ -262,10 +271,12 @@ export const useIOBottomSheetAutoresizableModal = (
   const handleContentOnLayout = useCallback(
     (event: LayoutChangeEvent) => {
       const { height } = event.nativeEvent.layout;
-      const snapPoint = insets.bottom + bottomPadding + height;
+      const computedSnapPoint = insets.bottom + bottomPadding + height;
 
       setSnapPoint(
-        fullScreen ? snapPoint : Math.min(screenHeight - insets.top, snapPoint)
+        fullScreen
+          ? computedSnapPoint
+          : Math.min(screenHeight - insets.top, computedSnapPoint)
       );
     },
     [insets, fullScreen, bottomPadding]
