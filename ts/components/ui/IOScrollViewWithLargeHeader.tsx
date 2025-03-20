@@ -131,7 +131,6 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
             color={theme["textHeading-default"]}
             testID={title?.testID}
             ref={ref}
-            accessible
             accessibilityLabel={title.accessibilityLabel ?? title.label}
             accessibilityRole="header"
           >
