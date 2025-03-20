@@ -1,14 +1,14 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../../i18n";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../store/hooks";
-import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
-import PN_ROUTES from "../navigation/routes";
-import { dismissPnActivationReminderBanner } from "../store/actions";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { sendBannerMixpanelEvents } from "../analytics/activationReminderBanner";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../store/hooks";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import PN_ROUTES from "../../navigation/routes";
+import { dismissPnActivationReminderBanner } from "../../store/actions";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 
 type Props = {
   handleOnClose: () => void;
