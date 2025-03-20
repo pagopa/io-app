@@ -217,7 +217,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -1505,7 +1504,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -2793,7 +2791,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -4081,7 +4078,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -5369,7 +5365,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -6657,7 +6652,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -7945,7 +7939,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -9233,7 +9226,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -10521,7 +10513,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -11809,7 +11800,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -13097,7 +13087,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -14385,7 +14374,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -15673,7 +15661,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -16961,7 +16948,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -18249,7 +18235,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -19537,7 +19522,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -20825,7 +20809,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
@@ -22113,7 +22096,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
