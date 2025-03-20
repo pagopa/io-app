@@ -610,7 +610,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             }
           >
             <Text
-              accessibilityRole="text"
               allowFontScaling={true}
               dynamicTypeRamp="body"
               maxFontSizeMultiplier={1.5}
