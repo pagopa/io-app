@@ -8,7 +8,11 @@ import {
 import Placeholder from "rn-placeholder";
 
 const ServiceListItemSkeleton = () => (
-  <View style={IOListItemStyles.listItem} accessible={false}>
+  <View
+    accessible={true}
+    accessibilityState={{ busy: true }}
+    style={IOListItemStyles.listItem}
+  >
     <View style={IOListItemStyles.listItemInner}>
       <View style={IOStyles.flex}>
         <Placeholder.Box animate="fade" radius={8} width={"60%"} height={16} />

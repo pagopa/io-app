@@ -8,6 +8,7 @@ import {
   IOSpacingScale,
   IOStyles,
   IOToast,
+  ListItemHeader,
   SearchInput,
   SearchInputRef,
   VSpacer
@@ -160,11 +161,30 @@ export const SearchScreen = () => {
     }
 
     if (isLoading) {
-      return <InstitutionListSkeleton />;
+      return <InstitutionListSkeleton showSectionTitle={true} />;
     }
 
     return null;
   }, [isLoading, query, data?.institutions]);
+
+  const renderListHeaderComponent = useCallback(() => {
+    if ((data?.count ?? 0) > 0) {
+      return (
+        <ListItemHeader
+          label={I18n.t("services.search.list.header.title")}
+          endElement={{
+            type: "badge",
+            componentProps: {
+              text: `${data?.count}`,
+              variant: "default"
+            }
+          }}
+        />
+      );
+    }
+
+    return null;
+  }, [data?.count]);
 
   return (
     <>
@@ -186,6 +206,7 @@ export const SearchScreen = () => {
         ItemSeparatorComponent={Divider}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
+        ListHeaderComponent={renderListHeaderComponent}
         contentContainerStyle={IOStyles.horizontalContentPadding}
         data={data?.institutions}
         estimatedItemSize={LIST_ITEM_HEIGHT}
