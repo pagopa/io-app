@@ -3,8 +3,7 @@ import {
   Body,
   IOSpacingScale,
   IOStyles,
-  BodySmall,
-  useIOTheme
+  BodySmall
 } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
@@ -46,7 +45,6 @@ export const OrganizationHeader = ({
   organizationName,
   serviceName
 }: OrganizationHeaderProps) => {
-  const theme = useIOTheme();
   const navigation = useIONavigation();
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
@@ -68,9 +66,10 @@ export const OrganizationHeader = ({
           {organizationName}
         </Body>
         <BodySmall
+          asLink
           accessibilityRole="button"
-          color={theme["interactiveElem-default"]}
           onPress={navigateToServiceDetails}
+          textStyle={{ textDecorationLine: "none" }}
           weight="Semibold"
         >
           {serviceName}

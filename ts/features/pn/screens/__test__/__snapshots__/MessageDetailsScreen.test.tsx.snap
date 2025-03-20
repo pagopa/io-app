@@ -542,7 +542,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   onPress={[Function]}
                                   style={
                                     [
-                                      {},
+                                      {
+                                        "textDecorationLine": "none",
+                                      },
                                       {
                                         "color": "#0B3EE3",
                                         "fontFamily": "Titillio",
