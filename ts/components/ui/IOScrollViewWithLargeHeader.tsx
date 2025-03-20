@@ -119,8 +119,6 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         testID={testID}
       >
         <View
-          ref={ref}
-          accessible
           style={IOStyles.horizontalContentPadding}
           onLayout={getTitleHeight}
         >
@@ -132,6 +130,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           <H2
             color={theme["textHeading-default"]}
             testID={title?.testID}
+            ref={ref}
             accessibilityLabel={title.accessibilityLabel ?? title.label}
             accessibilityRole="header"
           >

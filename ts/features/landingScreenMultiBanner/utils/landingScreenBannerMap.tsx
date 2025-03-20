@@ -4,7 +4,7 @@ import { ItwDiscoveryBanner } from "../../itwallet/common/components/discoveryBa
 import { isItwPersistedDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/selectors";
 import { LoginExpirationBanner } from "../../login/preferences/components/LoginExpirationBanner";
 import { isSessionExpirationBannerRenderableSelector } from "../../login/preferences/store/selectors";
-import { PNActivationReminderBanner } from "../../pn/components/PNActivationReminderBanner";
+import { PNActivationReminderBanner } from "../../pn/reminderBanner/components/PNActivationReminderBanner";
 import { isPnActivationReminderBannerRenderableSelector } from "../../pn/store/reducers/bannerDismiss";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
@@ -25,7 +25,7 @@ export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
   PUSH_NOTIFICATIONS_REMINDER: true,
   ITW_DISCOVERY: true,
   LV_EXPIRATION_REMINDER: true,
-  SEND_ACTIVATION_REMINDER: false
+  SEND_ACTIVATION_REMINDER: true
 } as const;
 
 export const landingScreenBannerMap: BannerMapById = {
