@@ -221,6 +221,7 @@ const CiePinScreen = () => {
               ref={modalTriggerRef}
               weight="Semibold"
               asLink
+              accessibilityRole="button"
               onPress={() => {
                 trackLoginCiePinInfo();
                 present();

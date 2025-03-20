@@ -401,6 +401,7 @@ export const LandingScreen = () => {
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
           <View style={IOStyles.selfCenter}>
             <ButtonLink
+              accessibilityRole="link"
               accessibilityLabel={I18n.t("authentication.landing.privacyLink")}
               color="primary"
               label={I18n.t("authentication.landing.privacyLink")}
