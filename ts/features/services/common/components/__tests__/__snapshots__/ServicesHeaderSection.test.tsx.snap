@@ -19,6 +19,11 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
     }
   >
     <View
+      accessibilityState={
+        {
+          "busy": true,
+        }
+      }
       accessible={true}
       style={
         {

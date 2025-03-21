@@ -2923,6 +2923,11 @@
           "title": "Nessun risultato trovato",
           "subtitle": "Inserisci il nome di un ente nazionale o locale esistente."
         }
+      },
+      "list": {
+        "header": {
+          "title": "Risultati"
+        }
       }
     },
     "details": {

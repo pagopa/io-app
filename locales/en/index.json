@@ -2923,6 +2923,11 @@
           "title": "No results found",
           "subtitle": "Enter the name of an existing national or local institution."
         }
+      },
+      "list": {
+        "header": {
+          "title": "Results"
+        }
       }
     },
     "details": {

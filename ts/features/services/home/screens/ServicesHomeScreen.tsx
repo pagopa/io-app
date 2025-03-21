@@ -22,7 +22,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import * as analytics from "../../common/analytics";
-import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
+import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { getLogoForInstitution } from "../../common/utils";
@@ -74,7 +74,7 @@ export const ServicesHomeScreen = () => {
     if (isFirstRender || isLoading) {
       return (
         <>
-          <InstitutionListSkeleton size={5} />
+          <ServiceListSkeleton size={5} />
           <VSpacer size={16} />
         </>
       );
@@ -112,7 +112,7 @@ export const ServicesHomeScreen = () => {
 
   const renderListFooterComponent = useCallback(() => {
     if (isUpdating && !isRefreshing) {
-      return <InstitutionListSkeleton />;
+      return <ServiceListSkeleton />;
     }
 
     if (isLastPage) {
