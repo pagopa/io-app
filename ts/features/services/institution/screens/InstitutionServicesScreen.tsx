@@ -232,8 +232,7 @@ export const InstitutionServicesScreen = ({
         styles.contentContainer,
         IOStyles.horizontalContentPadding
       ]}
-      data={data?.services || []}
-      keyExtractor={(item, index) => `service-${item.id}-${index}`}
+      data={data?.services}
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.1}
       onScroll={scrollHandler}
