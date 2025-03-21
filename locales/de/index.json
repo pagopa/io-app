@@ -2322,7 +2322,7 @@
         },
         "WAITING_CONFIRMATION_EMAIL": {
           "title": "Warte auf eine Bestätigung per E-Mail",
-          "subtitle": "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an {{email}}.",
+          "subtitle": "Die Zahlung wurde noch nicht abgeschlossen: Wenn du innerhalb von 15 Minuten keine positive Bestätigung an {{email}} erhältst, versuche es bitte erneut.",
           "defaultSubtitle": "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an die verbundene E-Mail-Adresse."
         },
         "METHOD_NOT_ENABLED": {

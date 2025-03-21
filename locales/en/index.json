@@ -2493,7 +2493,7 @@
         },
         "WAITING_CONFIRMATION_EMAIL": {
           "title": "Attendi la conferma del pagamento",
-          "subtitle": "Il pagamento non si è ancora concluso: riceverai a breve l’esito all'indirizzo {{email}}. L’operazione può richiedere fino a 15 minuti.",
+          "subtitle": "The payment has not been completed yet. If you do not receive a confirmation within 15 minutes at {{email}}, please try again.",
           "defaultSubtitle": "Il pagamento non si è ancora concluso: riceverai a breve l’esito via email. L’operazione può richiedere fino a 15 minuti."
         },
         "METHOD_NOT_ENABLED": {
