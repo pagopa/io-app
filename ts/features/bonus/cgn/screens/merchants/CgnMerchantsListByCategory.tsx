@@ -141,8 +141,12 @@ const CgnMerchantsListByCategory = () => {
   });
 
   const renderItem = useMemo(
-    () => CgnMerchantListViewRenderItem({ onItemPress }),
-    [onItemPress]
+    () =>
+      CgnMerchantListViewRenderItem({
+        onItemPress,
+        count: merchantsAll.length
+      }),
+    [merchantsAll.length, onItemPress]
   );
 
   const isListLoading =
