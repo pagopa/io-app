@@ -2,6 +2,7 @@ import {
   Divider,
   H2,
   H6,
+  IOSkeleton,
   ListItemHeader,
   ListItemInfo,
   VSpacer
@@ -18,7 +19,6 @@ import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { Skeleton } from "../../common/components/Skeleton";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   formatDateOrDefault,
@@ -168,14 +168,16 @@ const AuthorizationScreenContent = ({
   </>
 );
 
-const SmallSkeleton = () => <Skeleton width={178} height={24} radius={8} />;
+const SmallSkeleton = () => (
+  <IOSkeleton shape="rectangle" width={178} height={24} radius={8} />
+);
 
 const AuthorizationScreenSkeleton = () => (
   <>
     <VSpacer size={16} />
     <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
-      <Skeleton width={82} height={29} />
-      <Skeleton width={130} height={29} />
+      <IOSkeleton shape="rectangle" width={82} height={29} radius={8} />
+      <IOSkeleton shape="rectangle" width={130} height={29} radius={8} />
     </View>
     <VSpacer size={16} />
     <Divider />

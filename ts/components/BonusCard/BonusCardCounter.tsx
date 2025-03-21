@@ -1,4 +1,10 @@
-import { H3, IOColors, LabelMini, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  H3,
+  IOColors,
+  IOSkeleton,
+  LabelMini,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
 import { ColorValue, StyleSheet, View } from "react-native";
 import Animated, {
@@ -6,7 +12,6 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
-import Placeholder from "rn-placeholder";
 
 type CounterType = "Value" | "ValueWithProgress";
 
@@ -114,29 +119,29 @@ const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => {
       style={[styles.container, { alignItems: "center" }]}
       testID="BonusCardCounterSkeletonTestID"
     >
-      <Placeholder.Box
+      <IOSkeleton
+        color={placeholderColor}
+        shape="rectangle"
         height={16}
         width={64}
-        color={placeholderColor}
-        animate="fade"
         radius={16}
       />
       <VSpacer size={8} />
-      <Placeholder.Box
+      <IOSkeleton
+        color={placeholderColor}
+        shape="rectangle"
         height={24}
         width={100}
-        color={placeholderColor}
-        animate="fade"
         radius={24}
       />
       {type === "ValueWithProgress" && (
         <>
           <VSpacer size={8} />
-          <Placeholder.Box
+          <IOSkeleton
+            color={placeholderColor}
+            shape="rectangle"
             height={6}
             width={110}
-            color={placeholderColor}
-            animate="fade"
             radius={8}
           />
         </>
