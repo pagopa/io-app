@@ -1,8 +1,7 @@
-import { Body, H4, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H4, IOSkeleton, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Image, StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 
 type Props = {
@@ -41,11 +40,11 @@ const OnboardingServiceHeader = (props: Props) => {
 const Skeleton = () => (
   <View style={styles.header}>
     <View>
-      <Placeholder.Box animate={"fade"} width={110} height={16} radius={4} />
+      <IOSkeleton shape="rectangle" width={110} height={16} radius={4} />
       <VSpacer size={8} />
-      <Placeholder.Box animate={"fade"} width={150} height={21} radius={4} />
+      <IOSkeleton shape="rectangle" width={150} height={21} radius={4} />
     </View>
-    <Placeholder.Box animate={"fade"} width={48} height={48} radius={48} />
+    <IOSkeleton shape="square" size={48} radius={24} />
   </View>
 );
 
