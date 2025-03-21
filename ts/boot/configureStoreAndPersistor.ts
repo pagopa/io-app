@@ -44,7 +44,7 @@ import {
   NOTIFICATIONS_STORE_VERSION,
   NotificationsState
 } from "../features/pushNotifications/store/reducers";
-import { getInitialState as getInstallationInitialState } from "../features/pushNotifications/store/reducers/installation";
+import { generateInitialState } from "../features/pushNotifications/store/reducers/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
@@ -67,7 +67,7 @@ const migrations: MigrationManifest = {
       ...state,
       notifications: {
         ...((state as any).notifications ? (state as any).notifications : {}),
-        installation: getInstallationInitialState()
+        installation: generateInitialState()
       }
     } as PersistedState),
 
@@ -448,6 +448,10 @@ const migrations: MigrationManifest = {
       ...state,
       notifications: {
         ...typedState.notifications,
+        installation: {
+          ...typedState.notifications.installation,
+          tokenStatus: { status: "unsent" }
+        },
         _persist: {
           version: NOTIFICATIONS_STORE_VERSION,
           rehydrated: true
