@@ -447,7 +447,6 @@ $ yarn run-ios
 The React Native documentation provides a [useful guide](https://reactnative.dev/docs/running-on-device) for running projects on physical devices.
 > [!IMPORTANT]  
 > For building the app on an iOS physical device, a few additional steps are necessary:
-> - Navigate to `Build Phases` in Xcode and expand `Bundle React Native code and images`. Update the `NODE_BINARY` variable with the path to your Node.js environment. You can find the correct path by running `which node` in a terminal from the app's root directory;
 > - If you're not part of the PagoPA S.p.A. organization then you must change the `Bundle Identifier` to something unique. This adjustment can be made in the `Signing (Debug)`
 > section of Xcode;
 > - In order to test the CIE authentication flow, run `yarn cie-ios:prod` before building the app. The process can be reverted by running `yarn cie-ios:dev`.
