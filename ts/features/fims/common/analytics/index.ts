@@ -12,7 +12,7 @@ export const trackAuthenticationStart = (
   organizationName: string | undefined,
   organizationFiscalCode: string | undefined,
   ctaLabel: string,
-  source: "message_detail" | "service_detail" | "credential_detail"
+  source: string
 ) => {
   const eventName = `FIMS_START`;
   const props = buildEventProperties("UX", "action", {
