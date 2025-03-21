@@ -1,7 +1,7 @@
-import { useMemo, memo } from "react";
+import { IOSkeleton } from "@pagopa/io-app-design-system";
+import { memo, useMemo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import QRCode, { QRCodeProps } from "react-native-qrcode-svg";
-import Placeholder from "rn-placeholder";
 
 export type QrCodeImageProps = {
   // Value to decode and present using a QR Code
@@ -56,12 +56,7 @@ const QrCodeImage = ({
       />
     </View>
   ) : (
-    <Placeholder.Box
-      height={realSize}
-      width={realSize}
-      animate="fade"
-      radius={16}
-    />
+    <IOSkeleton shape="square" size={realSize} radius={16} />
   );
 };
 

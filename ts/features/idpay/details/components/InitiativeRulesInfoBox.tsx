@@ -4,12 +4,13 @@ import {
   H6,
   HSpacer,
   IOColors,
+  IOSkeleton,
   Icon,
   VSpacer,
+  VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
@@ -66,14 +67,19 @@ const InitiativeRulesInfoBox = (props: Props) => {
 
 const InitiativeRulesInfoBoxSkeleton = () => (
   <View style={styles.infoBox}>
-    <Placeholder.Box animate="fade" height={24} width={"40%"} radius={4} />
+    <IOSkeleton shape="rectangle" width={"40%"} height={24} radius={4} />
     <VSpacer size={16} />
-    {Array.from({ length: 4 }).map((_, i) => (
-      <View key={i}>
-        <Placeholder.Box animate="fade" height={16} width={"100%"} radius={4} />
-        <VSpacer size={4} />
-      </View>
-    ))}
+    <VStack space={4}>
+      {Array.from({ length: 4 }).map((_, i) => (
+        <IOSkeleton
+          key={i}
+          shape="rectangle"
+          height={16}
+          width={"100%"}
+          radius={4}
+        />
+      ))}
+    </VStack>
   </View>
 );
 

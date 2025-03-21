@@ -1,8 +1,12 @@
-import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  IOSkeleton,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
-import I18n from "../../../../i18n";
 import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
+import I18n from "../../../../i18n";
 import { formatAmountText, isValidPspName } from "../utils";
 
 type Props = {
@@ -17,9 +21,9 @@ const ReceiptFeeAmountSection = (props: Props) => {
     return (
       <View style={IOStyles.flex} testID="loading-placeholder">
         <VSpacer size={4} />
-        <Placeholder.Line width="100%" animate="fade" />
+        <IOSkeleton shape="rectangle" width="100%" height={16} radius={4} />
         <VSpacer size={8} />
-        <Placeholder.Line width="50%" animate="fade" />
+        <IOSkeleton shape="rectangle" width="50%" height={16} radius={4} />
       </View>
     );
   }
