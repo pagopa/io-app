@@ -4,7 +4,7 @@ import {
   createCryptoContextFor,
   Credential
 } from "@pagopa/io-react-native-wallet";
-import uuid from "react-native-uuid";
+import { v4 as uuidv4 } from "uuid";
 import {
   itWalletIssuanceRedirectUri,
   itwEaaProviderBaseUrl
@@ -122,7 +122,7 @@ export const obtainCredential = async ({
 
   // Create credential crypto context
 
-  const credentialKeyTag = uuid.v4().toString();
+  const credentialKeyTag = uuidv4().toString();
   await generate(credentialKeyTag);
   const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
 

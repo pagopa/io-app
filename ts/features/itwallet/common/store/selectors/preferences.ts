@@ -67,3 +67,10 @@ export const itwAuthLevelSelector = (state: GlobalState) =>
  */
 export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.claimValuesHidden ?? false;
+
+/**
+ * Returns whether the user has an already active wallet instance but the actual local wallet is not active.
+ * @param state the application global state
+ */
+export const itwIsWalletInstanceRemotelyActiveSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isWalletInstanceRemotelyActive;

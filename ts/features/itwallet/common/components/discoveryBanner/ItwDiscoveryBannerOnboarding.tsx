@@ -1,6 +1,6 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
-import { useMemo, useCallback, memo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -12,6 +12,7 @@ import {
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
+import { itwIsWalletInstanceRemotelyActiveSelector } from "../../store/selectors/preferences.ts";
 
 /**
  * ITW dicovery banner to be displayed in the wallet card onboarding screen
@@ -22,6 +23,10 @@ const ItwDiscoveryBannerOnboarding = () => {
 
   const isBannerRenderable = useIOSelector(
     isItwDiscoveryBannerRenderableSelector
+  );
+
+  const isWalletRemotelyActive = useIOSelector(
+    itwIsWalletInstanceRemotelyActiveSelector
   );
 
   const trackBannerProperties = useMemo(
@@ -52,13 +57,25 @@ const ItwDiscoveryBannerOnboarding = () => {
     });
   };
 
+  const bannerConfig = {
+    onboarding: {
+      content: I18n.t("features.itWallet.discovery.banner.home.content")
+    },
+    onboardingActive: {
+      content: I18n.t(
+        "features.itWallet.discovery.banner.onboardingActive.content"
+      )
+    }
+  };
+
+  const bannerType = isWalletRemotelyActive ? "onboardingActive" : "onboarding";
+  const { content } = bannerConfig[bannerType];
+
   return (
     <View style={styles.wrapper}>
       <Banner
         testID="itwDiscoveryBannerOnboardingTestID"
-        content={I18n.t(
-          "features.itWallet.discovery.banner.onboarding.content"
-        )}
+        content={content}
         action={I18n.t("features.itWallet.discovery.banner.onboarding.action")}
         pictogramName="itWallet"
         color="neutral"

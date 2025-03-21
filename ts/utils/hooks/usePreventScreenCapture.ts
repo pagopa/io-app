@@ -1,7 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo, useRef } from "react";
 import RNScreenshotPrevent from "react-native-screenshot-prevent";
-import uuid from "react-native-uuid";
+import { v4 as uuidv4 } from "uuid";
 import { isDevEnv } from "../environment";
 
 const activeTags: Set<string> = new Set();
@@ -32,7 +32,7 @@ const allowScreenCapture = (tag: string) => {
  * @param key An optional key to prevent conflicts when using multiple instances of this hook at the same time.
  */
 export function usePreventScreenCapture(key?: string) {
-  const tag = useMemo(() => key || uuid.v4().toString(), [key]);
+  const tag = useMemo(() => key || uuidv4().toString(), [key]);
 
   const timeoutRef = useRef<number>();
 
