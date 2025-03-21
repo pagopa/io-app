@@ -159,7 +159,8 @@ const globalStateFromStatus = (
           containsAttachments: false,
           containsPayment: undefined,
           hasRemoteContent: false,
-          hasFIMSCTA: false
+          hasFIMSCTA: false,
+          createdAt: new Date()
         })
       );
   }

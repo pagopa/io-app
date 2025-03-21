@@ -323,6 +323,7 @@ function* dispatchSuccessAction(
     getMessageDataAction.success({
       containsAttachments: attachmentCount > 0,
       containsPayment,
+      createdAt: paginatedMessage.createdAt,
       firstTimeOpening: !paginatedMessage.isRead,
       hasFIMSCTA,
       hasRemoteContent: !!thirdPartyMessage,
