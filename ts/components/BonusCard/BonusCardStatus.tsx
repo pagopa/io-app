@@ -1,8 +1,7 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, IOSkeleton } from "@pagopa/io-app-design-system";
 
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 
 type LoadingProps = {
   isLoading: true;
@@ -33,11 +32,11 @@ const BonusCardStatusSkeleton = () => {
 
   return (
     <View style={styles.container} testID="BonusCardStatusSkeletonTestID">
-      <Placeholder.Box
+      <IOSkeleton
+        color={placeholderColor}
+        shape="rectangle"
         height={16}
         width={278}
-        color={placeholderColor}
-        animate="fade"
         radius={16}
       />
     </View>

@@ -4,13 +4,13 @@ import {
   BodySmall,
   H4,
   IOColors,
+  IOSkeleton,
   IOSpacingScale,
   IOVisualCostants,
   TestID,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
 import { CardPressableBase } from "../../common/components/CardPressableBase";
@@ -113,38 +113,37 @@ const FeaturedServiceCard = ({
 const FeaturedServiceCardSkeleton = ({ testID }: TestID) => (
   <View style={styles.cardContainer} testID={`${testID}-skeleton`}>
     <View style={styles.cardHeader}>
-      <Placeholder.Box
+      <IOSkeleton
         color={IOColors["grey-200"]}
-        animate="fade"
-        radius={8}
-        width={IOVisualCostants.avatarSizeMedium}
-        height={IOVisualCostants.avatarSizeMedium}
+        shape="square"
+        size={IOVisualCostants.avatarSizeMedium}
+        radius={IOVisualCostants.avatarRadiusSizeMedium}
       />
     </View>
     <View style={styles.cardTitle}>
-      <Placeholder.Box
+      <IOSkeleton
         color={IOColors["grey-200"]}
-        animate="fade"
-        radius={8}
+        shape="rectangle"
         width={"100%"}
         height={16}
+        radius={8}
       />
       <View style={{ marginTop: 10 }}>
-        <Placeholder.Box
+        <IOSkeleton
           color={IOColors["grey-200"]}
-          animate="fade"
-          radius={8}
+          shape="rectangle"
           width={"70%"}
           height={16}
+          radius={8}
         />
       </View>
       <View style={{ marginTop: 10 }}>
-        <Placeholder.Box
+        <IOSkeleton
           color={IOColors["grey-200"]}
-          animate="fade"
-          radius={8}
+          shape="rectangle"
           width={"100%"}
           height={8}
+          radius={8}
         />
       </View>
     </View>
