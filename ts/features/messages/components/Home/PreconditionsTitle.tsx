@@ -1,6 +1,5 @@
+import { H3, IOSkeleton, IOStyles } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
-import { H3, IOStyles } from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   preconditionsTitleContentSelector,
@@ -22,7 +21,7 @@ export const PreconditionsTitle = () => {
 
 const PreconditionsSkeleton = () => (
   <View style={IOStyles.flex} accessible={false}>
-    <Placeholder.Box animate="fade" width={182} height={21} radius={4} />
+    <IOSkeleton shape="rectangle" width={182} height={20} radius={4} />
   </View>
 );
 

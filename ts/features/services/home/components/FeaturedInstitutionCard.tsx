@@ -1,13 +1,13 @@
-import { Dimensions, StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import {
   Avatar,
   H6,
   IOColors,
+  IOSkeleton,
   IOSpacingScale,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { WithTestID } from "../../../../types/WithTestID";
 import { CardPressableBase } from "../../common/components/CardPressableBase";
 import { getLogoForInstitution } from "../../common/utils";
@@ -85,26 +85,25 @@ const FeaturedInstitutionCardSkeleton = ({ testID }: WithTestID<unknown>) => (
   <View style={styles.cardContainer} testID={`${testID}-skeleton`}>
     <View style={styles.cardContent}>
       <View style={styles.cardAvatar}>
-        <Placeholder.Box
+        <IOSkeleton
           color={IOColors["grey-200"]}
-          animate="fade"
-          radius={8}
-          width={44}
-          height={44}
+          shape="square"
+          radius={IOVisualCostants.avatarRadiusSizeSmall}
+          size={IOVisualCostants.avatarSizeSmall}
         />
       </View>
       <View style={styles.cardLabel}>
-        <Placeholder.Box
+        <IOSkeleton
           color={IOColors["grey-200"]}
-          animate="fade"
+          shape="rectangle"
           radius={8}
           width="70%"
           height={16}
         />
         <VSpacer size={8} />
-        <Placeholder.Box
+        <IOSkeleton
           color={IOColors["grey-200"]}
-          animate="fade"
+          shape="rectangle"
           radius={8}
           width="55%"
           height={16}
