@@ -1,5 +1,5 @@
 import * as E from "fp-ts/lib/Either";
-import { call, fork, put, select } from "typed-redux-saga/macro";
+import { call, fork, put, select, delay } from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { configureNetInfo, fetchNetInfoState } from "../utils";
 import { startTimer } from "../../../utils/timer";
@@ -15,16 +15,38 @@ const CONNECTIVITY_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
  */
 export function* connectionStatusSaga(): Generator<
   ReduxSagaEffect,
-  boolean | null,
+  boolean,
   SagaCallReturnType<typeof fetchNetInfoState>
 > {
   try {
     const response = yield* call(fetchNetInfoState());
     if (E.isRight(response)) {
-      yield* put(
-        setConnectionStatus(response.right.isInternetReachable === true)
-      );
-      return response.right.isInternetReachable;
+      if (
+        response.right.isInternetReachable !== null &&
+        response.right.isInternetReachable !== undefined
+      ) {
+        const isAppConnected =
+          response.right.isConnected === true &&
+          response.right.isInternetReachable === true;
+
+        yield* put(setConnectionStatus(isAppConnected));
+        return isAppConnected;
+      }
+
+      yield* delay(200);
+
+      // on iOS the first call to netinfo returns null on the isInternetReachable field
+      // we need to wait for the next call to get the correct value
+      const retryResponse = yield* call(fetchNetInfoState());
+
+      if (E.isRight(retryResponse)) {
+        const retryIsAppConnected =
+          retryResponse.right.isConnected === true &&
+          retryResponse.right.isInternetReachable === true;
+
+        yield* put(setConnectionStatus(retryIsAppConnected));
+        return retryIsAppConnected;
+      }
     }
     return false;
   } catch (e) {
@@ -43,14 +65,6 @@ export function* connectionStatusWatcherLoop() {
   while (true) {
     const response: SagaCallReturnType<typeof connectionStatusSaga> =
       yield* call(connectionStatusSaga);
-
-    // on iOS the first call to netinfo returns null on the isInternetReachable field
-    // we need to wait for the next call to get the correct value
-    // we lower the timer intervall in order to get the correct value
-    if (response === null || response === undefined) {
-      yield* call(startTimer, 100);
-      continue;
-    }
 
     // if we have no connection increase rate
     if (response === false) {
