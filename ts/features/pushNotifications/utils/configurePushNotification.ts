@@ -20,7 +20,6 @@ import {
   trackMessageNotificationParsingFailure,
   trackMessageNotificationTap
 } from "../../messages/analytics";
-import { store } from "../../../boot/configureStoreAndPersistor";
 import { newPushNotificationsToken } from "../store/actions/installation";
 import { updateNotificationsPendingMessage } from "../store/actions/pendingMessage";
 import { isLoadingOrUpdating } from "../../../utils/pot";
@@ -28,8 +27,10 @@ import { isArchivingInProcessingModeSelector } from "../../messages/store/reduce
 import { GlobalState } from "../../../store/reducers/types";
 import { trackNewPushNotificationsTokenGenerated } from "../analytics";
 import { isTestEnv } from "../../../utils/environment";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { Store } from "../../../store/actions/types";
 
-export const configurePushNotifications = () => {
+export const configurePushNotifications = (store: Store) => {
   // Create the default channel used for notifications, the callback return false if the channel already exists
   PushNotification.createChannel(
     {
@@ -43,8 +44,9 @@ export const configurePushNotifications = () => {
     constNull
   );
   PushNotification.configure({
-    onRegister: onPushNotificationTokenAvailable,
-    onNotification: onPushNotificationReceived,
+    onRegister: token => onPushNotificationTokenAvailable(store, token),
+    onNotification: notification =>
+      onPushNotificationReceived(notification, store),
     // Only for iOS, we need to customize push notification prompt.
     // We delay the push notification promt until opt-in screen
     // during onboarding where permission is clearly required
@@ -52,10 +54,13 @@ export const configurePushNotifications = () => {
   });
 };
 
-const onPushNotificationTokenAvailable = (token: {
-  os: string;
-  token: string;
-}) => {
+const onPushNotificationTokenAvailable = (
+  store: Store,
+  token: {
+    os: string;
+    token: string;
+  }
+) => {
   if (token == null || token.token == null) {
     captureMessage(
       `onPushNotificationTokenAvailable received a nullish token (or inner 'token' instance) (${token})`
@@ -65,6 +70,9 @@ const onPushNotificationTokenAvailable = (token: {
   // Dispatch an action to save the token in the store
   store.dispatch(newPushNotificationsToken(token.token));
   trackNewPushNotificationsTokenGenerated();
+
+  const state = store.getState();
+  void updateMixpanelProfileProperties(state);
 };
 
 /**
@@ -79,7 +87,8 @@ const NotificationPayload = t.partial({
 });
 
 const onPushNotificationReceived = (
-  notification: Omit<ReceivedNotification, "userInfo">
+  notification: Omit<ReceivedNotification, "userInfo">,
+  store: Store
 ) =>
   pipe(
     notification.userInteraction,
@@ -126,7 +135,7 @@ const onPushNotificationReceived = (
                 })
               ),
             // The App is in foreground so just refresh the messages list
-            () => handleForegroundMessageReload()
+            () => handleForegroundMessageReload(store)
           )
         )
       )
@@ -139,7 +148,7 @@ const onPushNotificationReceived = (
  * Decide how to refresh the messages based on pagination.
  * It only reloads Inbox since Archive is never changed server-side.
  */
-const handleForegroundMessageReload = () => {
+const handleForegroundMessageReload = (store: Store) => {
   const state = store.getState();
   // Make sure there are not progressing message loadings and
   // that the system is not processing any message archiving/restoring
