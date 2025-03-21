@@ -5,10 +5,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import {
   Divider,
+  IOSkeleton,
   IOSpacingScale,
   IOStyles,
   IOToast,
   ListItemHeader,
+  ListItemNav,
   SearchInput,
   SearchInputRef,
   VSpacer
@@ -22,8 +24,8 @@ import { useIODispatch } from "../../../../store/hooks";
 import { getLogoForInstitution } from "../../common/utils";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { EmptyState } from "../../common/components/EmptyState";
-import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
 import { ListItemSearchInstitution } from "../../common/components/ListItemSearchInstitution";
+import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import * as analytics from "../../common/analytics";
 
 const INPUT_PADDING: IOSpacingScale = 16;
@@ -134,7 +136,7 @@ export const SearchScreen = () => {
 
   const renderListFooterComponent = useCallback(() => {
     if (isUpdating) {
-      return <InstitutionListSkeleton />;
+      return <ServiceListSkeleton />;
     }
 
     return <VSpacer size={16} />;
@@ -161,7 +163,7 @@ export const SearchScreen = () => {
     }
 
     if (isLoading) {
-      return <InstitutionListSkeleton showSectionTitle={true} />;
+      return <ServiceListSkeleton sectionTitleShown />;
     }
 
     return null;
