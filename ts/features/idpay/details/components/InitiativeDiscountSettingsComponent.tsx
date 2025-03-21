@@ -1,4 +1,8 @@
-import { ListItemHeader, ListItemNav } from "@pagopa/io-app-design-system";
+import {
+  IOSkeleton,
+  ListItemHeader,
+  ListItemNav
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/core";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -6,7 +10,6 @@ import { View } from "react-native";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { Skeleton } from "../../common/components/Skeleton";
 import { IdPayConfigurationParamsList } from "../../configuration/navigation/params";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 
@@ -49,7 +52,9 @@ const InitiativeDiscountSettingsComponent = (props: Props) => {
           accessibilityLabel={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}
-          description={<Skeleton width={100} height={21} />}
+          description={
+            <IOSkeleton shape="rectangle" width={100} height={21} radius={4} />
+          }
           onPress={() => null}
         />
       ),

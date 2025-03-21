@@ -3735,9 +3735,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.2.3":
-  version: 5.2.3
-  resolution: "@pagopa/io-app-design-system@npm:5.2.3"
+"@pagopa/io-app-design-system@npm:5.2.5":
+  version: 5.2.5
+  resolution: "@pagopa/io-app-design-system@npm:5.2.5"
   dependencies:
     "@testing-library/jest-native": ^5.4.2
     "@types/react-test-renderer": ^18.0.0
@@ -3760,7 +3760,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 6ea06b2feb38f90cf310457b0180ba8a462c4de6c50a5fb1971ba6f221ebb5f3116ad6d9f7df17901f42f983765fd1e0c69d57a078441fa8d2d678755f6e2432
+  checksum: 2a1c6e38176e16b3a4e057033ed82472e9ebb83ba522e48db74f412054fe44c90a8ad6cb1b0475eaf21e5d8c43c6e644af7f47e01bb2e585e3756a64cb068f49
   languageName: node
   linkType: hard
 
@@ -13638,7 +13638,7 @@ __metadata:
     "@babel/runtime": ^7.20.0
     "@gorhom/bottom-sheet": ^4.1.5
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.2.3
+    "@pagopa/io-app-design-system": 5.2.5
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.0.1
@@ -13820,7 +13820,6 @@ __metadata:
     remark-rehype: ^9.1.0
     reselect: 4.0.0
     rn-nodeify: ^10.0.1
-    rn-placeholder: ^1.3.3
     rn-qr-generator: ^1.4.0
     semver: ^5.7.2
     sha.js: ^2.4.11
@@ -15475,7 +15474,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.3.1, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -18543,16 +18542,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.6.2":
-  version: 15.6.2
-  resolution: "prop-types@npm:15.6.2"
-  dependencies:
-    loose-envify: ^1.3.1
-    object-assign: ^4.1.1
-  checksum: 79e478b2684449295bc8c60af1cfba4f3d414a5d832e9d23f720bce7f07df9dc52105a626134d9a3f84bb5551c9da5ec6d77d10f906b5cef26fe464959b96646
-  languageName: node
-  linkType: hard
-
 "proper-lockfile@npm:^3.0.2":
   version: 3.2.0
   resolution: "proper-lockfile@npm:3.2.0"
@@ -20517,15 +20506,6 @@ __metadata:
   bin:
     rn-nodeify: ./cmd.js
   checksum: 9ffc53277b2098350c90c5086b0613fa5730bb1821d16f4f0205bf58df326a29e974ec19c964c8cbae6c9966269eb5c3ba29048021e16386bfe52c16ec0a2ac6
-  languageName: node
-  linkType: hard
-
-"rn-placeholder@npm:^1.3.3":
-  version: 1.3.3
-  resolution: "rn-placeholder@npm:1.3.3"
-  dependencies:
-    prop-types: 15.6.2
-  checksum: a666d76fa9c27da61d78eda6540603e97d37b1db62ca589ccd1a19569579207d7a1e3daf61c93695be40b2c655a5dd6961fc0dfaab30ed7df6293ee916d4dec9
   languageName: node
   linkType: hard
 
