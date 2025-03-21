@@ -18,7 +18,7 @@ const SPID_LEVEL = "SpidL2";
 const IS_UAT = false;
 const authLoggedIn = {
   kind: "LoggedInWithSessionInfo",
-  idp: { id: "", name: "", logo: "", profileUrl: "" },
+  idp: { id: "", name: "", logo: { light: { uri: "" } }, profileUrl: "" },
   sessionToken: "" as SessionToken,
   sessionInfo: {
     spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL2"]

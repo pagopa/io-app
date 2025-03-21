@@ -12,8 +12,8 @@ import {
 import { PublicSession } from "../../../definitions/session_manager/PublicSession";
 import { PasswordLogin } from "../../../definitions/session_manager/PasswordLogin";
 import { SessionToken } from "../../types/SessionToken";
-import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { IdpData } from "../../../definitions/content/IdpData";
+import { SpidIdp } from "../../utils/idps";
 
 export type LogoutError = {
   error: Error;
