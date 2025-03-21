@@ -219,7 +219,6 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
       )
     );
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   public render() {
     const {
       goBack,
