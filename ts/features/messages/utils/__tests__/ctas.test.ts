@@ -1,4 +1,5 @@
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { Linking } from "react-native";
 import FM from "front-matter";
 import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
@@ -14,6 +15,7 @@ import {
   getMessageCTA,
   getRemoteLocale,
   getServiceCTA,
+  handleCtaAction,
   testable,
   unsafeMessageCTAFromInput
 } from "../ctas";
@@ -71,7 +73,10 @@ const messageWithContent = {
 
 // test "it" as default language
 beforeAll(() => setLocale("it" as Locales));
-afterEach(() => jest.restoreAllMocks());
+afterEach(() => {
+  jest.restoreAllMocks();
+  jest.clearAllMocks();
+});
 
 describe("getRemoteLocale", () => {
   it("should return it if locale is it", () => {
@@ -584,78 +589,40 @@ describe("internalRoutePredicates", () => {
 });
 
 describe("isCtaActionValid", () => {
-  it("should return true for ioit://whatever", () => {
-    const cta: CTA = {
-      action: "ioit://whatever",
-      text: "CTA text"
-    };
-
-    const isValid = testable!.isCtaActionValid(cta);
-
-    expect(isValid).toBe(true);
-  });
-  it("should return false for ioit://services/webview with undefined metadata", () => {
-    const cta: CTA = {
-      action: "ioit://services/webview",
-      text: "CTA text"
-    };
-
-    const isValid = testable!.isCtaActionValid(cta);
-
-    expect(isValid).toBe(false);
-  });
-  it("should return false for ioit://services/webview with metadata with undefined token_name", () => {
-    const cta: CTA = {
-      action: "ioit://services/webview",
-      text: "CTA text"
-    };
-    const metadata = {} as ServiceMetadata;
-
-    const isValid = testable!.isCtaActionValid(cta, metadata);
-
-    expect(isValid).toBe(false);
-  });
-  it("should return true for iosso://https://relyingParty.url", () => {
-    const cta: CTA = {
-      action: "iosso://https://relyingParty.url",
-      text: "CTA text"
-    };
-
-    const isValid = testable!.isCtaActionValid(cta);
-
-    expect(isValid).toBe(true);
-  });
-  ioHandledLinks.forEach(ioHandledLink =>
-    it(`should return true for ${ioHandledLink}`, () => {
+  const inputData: ReadonlyArray<[string, boolean]> = [
+    ["ioit://whatever", true],
+    ["iOiT://whatever", true],
+    ["IOIT://whatever", true],
+    ["ioit://services/webview", false],
+    ["iosso://https://relyingParty.url", true],
+    ["iOsSo://https://relyingParty.url", true],
+    ["IOSSO://https://relyingParty.url", true],
+    ["iohandledlink://http://whateverHere", true],
+    ["iohandledlink://https://whateverHere", true],
+    ["iOhAnDlEdLiNk://https://whateverHere", true],
+    ["IOHANDLEDLINK://https://whateverHere", true],
+    ["iohandledlink://sms://whateverHere", true],
+    ["iohandledlink://tel://whateverHere", true],
+    ["iohandledlink://mailto://whateverHere", true],
+    ["iohandledlink://copy://whateverHere", true],
+    ["iohandledlink://whatever", false],
+    ["https://www.google.com", false],
+    ["https://google.com", false],
+    ["http://www.google.com", false],
+    ["http://google.com", false],
+    ["invalid", false]
+  ];
+  inputData.forEach(tuple => {
+    const [action, validity] = tuple;
+    it(`should return '${validity}' for '${action}'`, () => {
       const cta: CTA = {
-        action: ioHandledLink,
+        action,
         text: "CTA text"
       };
-
       const isValid = testable!.isCtaActionValid(cta);
 
-      expect(isValid).toBe(true);
-    })
-  );
-  it(`should return false for iohandledlink://whatever`, () => {
-    const cta: CTA = {
-      action: "iohandledlink://whatever",
-      text: "CTA text"
-    };
-
-    const isValid = testable!.isCtaActionValid(cta);
-
-    expect(isValid).toBe(false);
-  });
-  it(`should return false for invalid action`, () => {
-    const cta: CTA = {
-      action: "invalid",
-      text: "CTA text"
-    };
-
-    const isValid = testable!.isCtaActionValid(cta);
-
-    expect(isValid).toBe(false);
+      expect(isValid).toBe(validity);
+    });
   });
 });
 
@@ -1685,132 +1652,219 @@ describe("getServiceCTA", () => {
   });
 });
 
-describe("safeContainsFronMatter", () => {
-  it("should return false for empty string", () => {
-    const input = "";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(false);
-  });
-  it("should return false for non front matter string", () => {
-    const input = "it:\n cta_1:\n  text: The text";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(false);
-  });
-  it("should return false for non opening front matter", () => {
-    const input = "it:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(false);
-  });
-  it("should return false for non closing front matter", () => {
-    const input = "---\nit:\n cta_1:\n  text: The text";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(false);
-  });
-  it("should return false for opening front matter without newline", () => {
-    const input = "---it:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(false);
-  });
-  it("should return false for closing front matter without newline", () => {
-    const input = "---\nit:\n cta_1:\n  text: The text---";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(false);
-  });
-  it("should return false for proper front matter that has extra characters (on the same line) after closing", () => {
-    const input = "---\nit:\n cta_1:\n  text: The text\n---Something else";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(false);
-  });
-  it("should return false for proper front matter that has extra space before opening", () => {
-    const input = " ---\nit:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(false);
-  });
-  it("should return false for proper front matter that has extra space before closing", () => {
-    const input = "---\nit:\n cta_1:\n  text: The text\n ---";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(false);
-  });
-  it("should return false for a front matter that has wrong opening", () => {
-    const input = "...\nit:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(false);
-  });
-  it("should return false if the library throws an exception", () => {
-    jest.spyOn(FM, "test").mockImplementation(_input => {
-      throw Error("An error");
-    });
-    const input = "---\nit:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(false);
-    jest.restoreAllMocks();
-  });
-  it("should return true for proper front matter", () => {
-    const input = "---\nit:\n cta_1:\n  text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(true);
-  });
-  it("should return true for proper front matter with invalid yaml", () => {
-    const input = "---\nit: cta_1: text: The text\n---";
-    const containsFrontMatter = testable!.safeContainsFrontMatter(input);
-    expect(containsFrontMatter).toBe(true);
-  });
-});
+describe("handleCtaAction", () => {
+  const mockedLinkTo = jest.fn(); // (path: string) => undefined;
+  const mockedFimsCallback = jest.fn(); // (label: string, url: string) => undefined;
+  [
+    "ioit://messages",
+    "iOiT://messages",
+    "IOIT://messages",
+    "iosso://https://relyingParty.url/login",
+    "iOsSo://https://relyingParty.url/login",
+    "IOSSO://https://relyingParty.url/login",
+    "iohandledlink://mailto:johnsmith@gmail.com",
+    "iOhAnDlEdLiNk://mailto:johnsmith@gmail.com",
+    "IOHANDLEDLINK://mailto:johnsmith@gmail.com",
+    "ioit:/messages",
+    "ioit:messages",
+    "ioitmessages",
+    "iosso:/https://relyingParty.url/login",
+    "iosso:https://relyingParty.url/login",
+    "iossohttps://relyingParty.url/login",
+    "iohandledlink:/mailto:johnsmith@gmail.com",
+    "iohandledlink:mailto:johnsmith@gmail.com",
+    "iohandledlinkmailto:johnsmith@gmail.com",
+    "https://www.google.com",
+    "https://google.com",
+    "http://www.google.com",
+    "http://google.com",
+    "clipboard://prova",
+    "clipboard:prova",
+    "sms://3331234567",
+    "sms:3331234567",
+    "tel://3331234567",
+    "tel:3331234567",
+    "mailto://johnsmith@gmail.com",
+    "mailto:johnsmith@gmail.com",
+    "copy://aValue",
+    "copy:aValue"
+    // eslint-disable-next-line sonarjs/cognitive-complexity
+  ].forEach((anUri, index) => {
+    const linkToCalled = index < 3;
+    const fimsCalled = index > 2 && index < 6;
+    const openUrlCalled = index > 5 && index < 9;
+    it(`should call '${
+      linkToCalled
+        ? "linkTo"
+        : fimsCalled
+        ? "fimsCallback"
+        : openUrlCalled
+        ? "Linking.openUrl"
+        : "nothing"
+    }' when the CTA's action is ${anUri}`, () => {
+      const spiedOnMockedOpenURL = jest
+        .spyOn(Linking, "openURL")
+        .mockImplementation(
+          _anUrl => new Promise(resolve => resolve(undefined))
+        );
+      const cta: CTA = {
+        action: anUri,
+        text: "A text"
+      };
 
-describe("safeExtractBodyAfterFrontMatter", () => {
-  it("should return input string for non opening front matter", () => {
-    const input = "it:\n cta_1:\n  text: The text\n---\nThis is the body";
-    const body = testable!.safeExtractBodyAfterFrontMatter(input);
-    expect(body).toBe(input);
+      handleCtaAction(cta, mockedLinkTo, mockedFimsCallback);
+
+      if (linkToCalled) {
+        expect(mockedLinkTo).toHaveBeenCalledWith(anUri.substring(6));
+      } else {
+        expect(mockedLinkTo).not.toHaveBeenCalled();
+      }
+
+      if (fimsCalled) {
+        expect(mockedFimsCallback).toHaveBeenCalledWith(cta.text, cta.action);
+      } else {
+        expect(mockedFimsCallback).not.toHaveBeenCalled();
+      }
+
+      if (openUrlCalled) {
+        expect(spiedOnMockedOpenURL).toHaveBeenCalledWith(anUri.substring(16));
+      } else {
+        expect(spiedOnMockedOpenURL).not.toHaveBeenCalled();
+      }
+    });
   });
-  it("should return input string for non closing front matter", () => {
-    const input = "---\nit:\n cta_1:\n  text: The text\nThis is the body";
-    const body = testable!.safeExtractBodyAfterFrontMatter(input);
-    expect(body).toBe(input);
+
+  describe("safeContainsFrontMatter", () => {
+    it("should return false for empty string", () => {
+      const input = "";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(false);
+    });
+    it("should return false for non front matter string", () => {
+      const input = "it:\n cta_1:\n  text: The text";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(false);
+    });
+    it("should return false for non opening front matter", () => {
+      const input = "it:\n cta_1:\n  text: The text\n---";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(false);
+    });
+    it("should return false for non closing front matter", () => {
+      const input = "---\nit:\n cta_1:\n  text: The text";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(false);
+    });
+    it("should return false for opening front matter without newline", () => {
+      const input = "---it:\n cta_1:\n  text: The text\n---";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(false);
+    });
+    it("should return false for closing front matter without newline", () => {
+      const input = "---\nit:\n cta_1:\n  text: The text---";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(false);
+    });
+    it("should return false for proper front matter that has extra characters (on the same line) after closing", () => {
+      const input = "---\nit:\n cta_1:\n  text: The text\n---Something else";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(false);
+    });
+    it("should return false for proper front matter that has extra space before opening", () => {
+      const input = " ---\nit:\n cta_1:\n  text: The text\n---";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(false);
+    });
+    it("should return false for proper front matter that has extra space before closing", () => {
+      const input = "---\nit:\n cta_1:\n  text: The text\n ---";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(false);
+    });
+    it("should return false for a front matter that has wrong opening", () => {
+      const input = "...\nit:\n cta_1:\n  text: The text\n---";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(false);
+    });
+    it("should return false if the library throws an exception", () => {
+      jest.spyOn(FM, "test").mockImplementation(_input => {
+        throw Error("An error");
+      });
+      const input = "---\nit:\n cta_1:\n  text: The text\n---";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(false);
+      jest.restoreAllMocks();
+    });
+    it("should return true for proper front matter", () => {
+      const input = "---\nit:\n cta_1:\n  text: The text\n---";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(true);
+    });
+    it("should return true for proper front matter with invalid yaml", () => {
+      const input = "---\nit: cta_1: text: The text\n---";
+      const containsFrontMatter = testable!.safeContainsFrontMatter(input);
+      expect(containsFrontMatter).toBe(true);
+    });
   });
-  it("should return input string for opening front matter without newline", () => {
-    const input = "---it:\n cta_1:\n  text: The text\n---\nThis is the body";
-    const body = testable!.safeExtractBodyAfterFrontMatter(input);
-    expect(body).toBe(input);
-  });
-  it("should return input string for closing front matter without newline", () => {
-    const input = "---\nit:\n cta_1:\n  text: The text---\nThis is the body";
-    const body = testable!.safeExtractBodyAfterFrontMatter(input);
-    expect(body).toBe(input);
-  });
-  it("should return input string for proper front matter that has extra characters (on the same line) after closing", () => {
-    const input = "---\nit:\n cta_1:\n  text: The text\n---This is the body";
-    const body = testable!.safeExtractBodyAfterFrontMatter(input);
-    expect(body).toBe(input);
-  });
-  it("should return input string for proper front matter that has extra space before opening", () => {
-    const input = " ---\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
-    const body = testable!.safeExtractBodyAfterFrontMatter(input);
-    expect(body).toBe(input);
-  });
-  it("should return input string for proper front matter that has extra space before closing", () => {
-    const input = "---\nit:\n cta_1:\n  text: The text\n ---\nThis is the body";
-    const body = testable!.safeExtractBodyAfterFrontMatter(input);
-    expect(body).toBe(input);
-  });
-  it("should return input string for a front matter that has wrong opening", () => {
-    const input = "...\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
-    const body = testable!.safeExtractBodyAfterFrontMatter(input);
-    expect(body).toBe(input);
-  });
-  it("should extract body for valid front matter", () => {
-    const input = "---\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
-    const body = testable!.safeExtractBodyAfterFrontMatter(input);
-    expect(body).toBe("This is the body");
-  });
-  it("should extract body for a string with no front matter", () => {
-    const input = "This is the body";
-    const body = testable!.safeExtractBodyAfterFrontMatter(input);
-    expect(body).toBe("This is the body");
-  });
-  it("should extract empty body from an empty string", () => {
-    const input = "";
-    const body = testable!.safeExtractBodyAfterFrontMatter(input);
-    expect(body).toBe("");
+
+  describe("safeExtractBodyAfterFrontMatter", () => {
+    it("should return input string for non opening front matter", () => {
+      const input = "it:\n cta_1:\n  text: The text\n---\nThis is the body";
+      const body = testable!.safeExtractBodyAfterFrontMatter(input);
+      expect(body).toBe(input);
+    });
+    it("should return input string for non closing front matter", () => {
+      const input = "---\nit:\n cta_1:\n  text: The text\nThis is the body";
+      const body = testable!.safeExtractBodyAfterFrontMatter(input);
+      expect(body).toBe(input);
+    });
+    it("should return input string for opening front matter without newline", () => {
+      const input = "---it:\n cta_1:\n  text: The text\n---\nThis is the body";
+      const body = testable!.safeExtractBodyAfterFrontMatter(input);
+      expect(body).toBe(input);
+    });
+    it("should return input string for closing front matter without newline", () => {
+      const input = "---\nit:\n cta_1:\n  text: The text---\nThis is the body";
+      const body = testable!.safeExtractBodyAfterFrontMatter(input);
+      expect(body).toBe(input);
+    });
+    it("should return input string for proper front matter that has extra characters (on the same line) after closing", () => {
+      const input = "---\nit:\n cta_1:\n  text: The text\n---This is the body";
+      const body = testable!.safeExtractBodyAfterFrontMatter(input);
+      expect(body).toBe(input);
+    });
+    it("should return input string for proper front matter that has extra space before opening", () => {
+      const input =
+        " ---\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
+      const body = testable!.safeExtractBodyAfterFrontMatter(input);
+      expect(body).toBe(input);
+    });
+    it("should return input string for proper front matter that has extra space before closing", () => {
+      const input =
+        "---\nit:\n cta_1:\n  text: The text\n ---\nThis is the body";
+      const body = testable!.safeExtractBodyAfterFrontMatter(input);
+      expect(body).toBe(input);
+    });
+    it("should return input string for a front matter that has wrong opening", () => {
+      const input =
+        "...\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
+      const body = testable!.safeExtractBodyAfterFrontMatter(input);
+      expect(body).toBe(input);
+    });
+    it("should extract body for valid front matter", () => {
+      const input =
+        "---\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
+      const body = testable!.safeExtractBodyAfterFrontMatter(input);
+      expect(body).toBe("This is the body");
+    });
+    it("should extract body for a string with no front matter", () => {
+      const input = "This is the body";
+      const body = testable!.safeExtractBodyAfterFrontMatter(input);
+      expect(body).toBe("This is the body");
+    });
+    it("should extract empty body from an empty string", () => {
+      const input = "";
+      const body = testable!.safeExtractBodyAfterFrontMatter(input);
+      expect(body).toBe("");
+    });
   });
 });
