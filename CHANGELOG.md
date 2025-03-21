@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0-rc.3](https://github.com/pagopa/io-app/compare/3.1.0-rc.2...3.1.0-rc.3) (2025-03-20)
+
+
+### Features
+
+* [[IOPID-2688](https://pagopa.atlassian.net/browse/IOPID-2688)] Offline wallet: retrive error during session refresh  ([#6826](https://github.com/pagopa/io-app/issues/6826)) ([3c101b6](https://github.com/pagopa/io-app/commit/3c101b6caec2127b6d940b538748e3b8387decda))
+
+
+### Bug Fixes
+
+* **a11y:** [[IOPID-2096](https://pagopa.atlassian.net/browse/IOPID-2096),[IOPID-2099](https://pagopa.atlassian.net/browse/IOPID-2099)] Add explicit accessibility roles ([#6828](https://github.com/pagopa/io-app/issues/6828)) ([a73ca66](https://github.com/pagopa/io-app/commit/a73ca66bc901fae4d141e196b152c3258e97002c))
+
 ## [3.1.0-rc.2](https://github.com/pagopa/io-app/compare/3.1.0-rc.1...3.1.0-rc.2) (2025-03-20)
 
 
