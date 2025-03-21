@@ -701,25 +701,15 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                             collapsable={false}
                             style={
                               {
-                                "opacity": 0.5,
+                                "backgroundColor": "#E8EBF1",
+                                "borderCurve": "continuous",
+                                "borderRadius": 8,
+                                "height": 44,
+                                "opacity": 0.55,
+                                "width": 44,
                               }
                             }
-                          >
-                            <View
-                              color="#E8EBF1"
-                              height={44}
-                              radius={8}
-                              style={
-                                {
-                                  "backgroundColor": "#E8EBF1",
-                                  "borderRadius": 8,
-                                  "height": 44,
-                                  "width": 44,
-                                }
-                              }
-                              width={44}
-                            />
-                          </View>
+                          />
                         </View>
                         <View
                           style={
@@ -747,25 +737,15 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                                 collapsable={false}
                                 style={
                                   {
-                                    "opacity": 0.5,
+                                    "backgroundColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "height": 16,
+                                    "opacity": 0.55,
+                                    "width": "100%",
                                   }
                                 }
-                              >
-                                <View
-                                  color="#E8EBF1"
-                                  height={16}
-                                  radius={8}
-                                  style={
-                                    {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderRadius": 8,
-                                      "height": 16,
-                                      "width": "100%",
-                                    }
-                                  }
-                                  width="100%"
-                                />
-                              </View>
+                              />
                             </View>
                             <View
                               style={
@@ -779,25 +759,15 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                                 collapsable={false}
                                 style={
                                   {
-                                    "opacity": 0.5,
+                                    "backgroundColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "height": 16,
+                                    "opacity": 0.55,
+                                    "width": "100%",
                                   }
                                 }
-                              >
-                                <View
-                                  color="#E8EBF1"
-                                  height={16}
-                                  radius={8}
-                                  style={
-                                    {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderRadius": 8,
-                                      "height": 16,
-                                      "width": "100%",
-                                    }
-                                  }
-                                  width="100%"
-                                />
-                              </View>
+                              />
                             </View>
                           </View>
                           <View
@@ -811,25 +781,15 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                               collapsable={false}
                               style={
                                 {
-                                  "opacity": 0.5,
+                                  "backgroundColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "height": 8,
+                                  "opacity": 0.55,
+                                  "width": "100%",
                                 }
                               }
-                            >
-                              <View
-                                color="#E8EBF1"
-                                height={8}
-                                radius={8}
-                                style={
-                                  {
-                                    "backgroundColor": "#E8EBF1",
-                                    "borderRadius": 8,
-                                    "height": 8,
-                                    "width": "100%",
-                                  }
-                                }
-                                width="100%"
-                              />
-                            </View>
+                            />
                           </View>
                           <View
                             style={
@@ -843,25 +803,15 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                               collapsable={false}
                               style={
                                 {
-                                  "opacity": 0.5,
+                                  "backgroundColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "height": 8,
+                                  "opacity": 0.55,
+                                  "width": "100%",
                                 }
                               }
-                            >
-                              <View
-                                color="#E8EBF1"
-                                height={8}
-                                radius={8}
-                                style={
-                                  {
-                                    "backgroundColor": "#E8EBF1",
-                                    "borderRadius": 8,
-                                    "height": 8,
-                                    "width": "100%",
-                                  }
-                                }
-                                width="100%"
-                              />
-                            </View>
+                            />
                           </View>
                         </View>
                       </View>

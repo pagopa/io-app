@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MessageDetailsPayment Should match snapshot for no payment data 1`] = `
+exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = `
 <View
   style={
     {
@@ -333,7 +333,21 @@ exports[`MessageDetailsPayment Should match snapshot for no payment data 1`] = `
                           "flex": 1,
                         }
                       }
-                    />
+                    >
+                      <View
+                        collapsable={false}
+                        style={
+                          {
+                            "backgroundColor": "#E8EBF1",
+                            "borderCurve": "continuous",
+                            "borderRadius": 8,
+                            "height": 84,
+                            "opacity": 0.55,
+                            "width": "100%",
+                          }
+                        }
+                      />
+                    </View>
                   </View>
                 </View>
               </View>
@@ -346,7 +360,7 @@ exports[`MessageDetailsPayment Should match snapshot for no payment data 1`] = `
 </View>
 `;
 
-exports[`MessageDetailsPayment Should match snapshot when there are payment data 1`] = `
+exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`] = `
 <View
   style={
     {
@@ -681,164 +695,134 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                       }
                     >
                       <View
+                        accessibilityRole="alert"
+                        accessible={false}
                         style={
-                          {
-                            "height": 16,
-                          }
+                          [
+                            {
+                              "borderCurve": "continuous",
+                              "borderRadius": 12,
+                              "padding": 16,
+                            },
+                            {
+                              "backgroundColor": "#FFF5DA",
+                            },
+                          ]
                         }
-                      />
-                      <View
-                        style={
-                          {
-                            "marginHorizontal": -24,
-                            "paddingHorizontal": 24,
-                            "paddingVertical": 12,
-                          }
-                        }
+                        testID="due-date-alert"
                       >
                         <View
                           style={
                             {
                               "alignItems": "center",
+                              "display": "flex",
                               "flexDirection": "row",
-                              "justifyContent": "space-between",
+                              "gap": 18,
                             }
                           }
                         >
+                          <RNSVGSvgView
+                            accessibilityElementsHidden={true}
+                            accessibilityLabel=""
+                            accessible={false}
+                            align="xMidYMid"
+                            bbHeight={36}
+                            bbWidth={36}
+                            focusable={false}
+                            height={36}
+                            importantForAccessibility="no-hide-descendants"
+                            meetOrSlice={0}
+                            minX={0}
+                            minY={0}
+                            style={
+                              [
+                                {
+                                  "backgroundColor": "transparent",
+                                  "borderWidth": 0,
+                                },
+                                {
+                                  "color": "#614C15",
+                                },
+                                {
+                                  "flex": 0,
+                                  "height": 36,
+                                  "width": 36,
+                                },
+                              ]
+                            }
+                            tintColor="#614C15"
+                            vbHeight={24}
+                            vbWidth={24}
+                            width={36}
+                          >
+                            <RNSVGGroup
+                              color="#614C15"
+                              fill={
+                                {
+                                  "payload": 4278190080,
+                                  "type": 0,
+                                }
+                              }
+                            >
+                              <RNSVGPath
+                                clipRule={0}
+                                d="m15.523 3.047 7.926 13.813c1.566 2.73-.392 6.14-3.523 6.14H4.074C.942 23-1.015 19.59.55 16.86L8.477 3.047c1.566-2.73 5.48-2.73 7.046 0Zm-3.495 13.458a1.528 1.528 0 1 1 0 3.056 1.528 1.528 0 0 1 0-3.056Zm0-1.944c.568 0 1.029-.46 1.029-1.028V5.528a1.028 1.028 0 0 0-2.057 0v8.005c0 .567.46 1.028 1.029 1.028Z"
+                                fill={
+                                  {
+                                    "type": 2,
+                                  }
+                                }
+                                fillRule={0}
+                                propList={
+                                  [
+                                    "fill",
+                                    "fillRule",
+                                  ]
+                                }
+                              />
+                            </RNSVGGroup>
+                          </RNSVGSvgView>
                           <View
                             style={
-                              {
-                                "flex": 1,
-                              }
+                              [
+                                false,
+                                {
+                                  "flex": 1,
+                                },
+                              ]
                             }
                           >
                             <View
-                              accessibilityLabel="pagoPA notices"
-                              accessibilityRole="header"
-                              accessible={true}
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 12,
+                                }
+                              }
                             >
                               <Text
                                 allowFontScaling={true}
-                                dynamicTypeRamp="headline"
+                                dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
+                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#555C70",
+                                      "color": "#614C15",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "600",
+                                      "fontWeight": "400",
                                       "lineHeight": 24,
                                     },
                                   ]
                                 }
                               >
-                                pagoPA notices
+                                Expired on 21 Mar at 10:33
                               </Text>
                             </View>
-                          </View>
-                        </View>
-                      </View>
-                      <View>
-                        <View
-                          accessibilityState={
-                            {
-                              "busy": true,
-                            }
-                          }
-                          accessible={true}
-                          style={
-                            [
-                              {
-                                "alignItems": "center",
-                                "borderColor": "#E8EBF1",
-                                "borderCurve": "continuous",
-                                "borderRadius": 8,
-                                "borderWidth": 1,
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                                "paddingHorizontal": 16,
-                                "paddingVertical": 16,
-                              },
-                              {
-                                "borderColor": "#E8EBF1",
-                                "opacity": 1,
-                              },
-                            ]
-                          }
-                        >
-                          <View
-                            style={
-                              {
-                                "alignItems": "center",
-                                "display": "flex",
-                                "flexDirection": "row",
-                                "gap": 8,
-                              }
-                            }
-                          >
-                            <View
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "flexGrow": 1,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "display": "flex",
-                                    "flexDirection": "column",
-                                    "gap": 4,
-                                  }
-                                }
-                              >
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 8,
-                                      "height": 12,
-                                      "opacity": 0.55,
-                                      "width": 120,
-                                    }
-                                  }
-                                />
-                                <View
-                                  collapsable={false}
-                                  style={
-                                    {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 8,
-                                      "height": 16,
-                                      "opacity": 0.55,
-                                      "width": 180,
-                                    }
-                                  }
-                                />
-                              </View>
-                            </View>
-                            <View
-                              collapsable={false}
-                              style={
-                                {
-                                  "backgroundColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 16,
-                                  "height": 24,
-                                  "opacity": 0.55,
-                                  "width": 64,
-                                }
-                              }
-                            />
                           </View>
                         </View>
                       </View>
