@@ -3644,6 +3644,9 @@
           "expiration": {
             "cgn": "CGN Expiration",
             "eyca": "EYCA Expiration"
+          },
+          "a11y": {
+            "cardStatus": "Card status: {{status}}"
           }
         }
       },

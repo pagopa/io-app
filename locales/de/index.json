@@ -3082,6 +3082,9 @@
           "expiration": {
             "cgn": "Gültig bis",
             "eyca": "Gültig bis"
+          },
+          "a11y": {
+            "cardStatus": "Charterstatus: {{status}}"
           }
         }
       },
