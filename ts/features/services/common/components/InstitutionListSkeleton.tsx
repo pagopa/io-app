@@ -1,14 +1,13 @@
-import { Fragment } from "react";
-import { View } from "react-native";
 import {
   Divider,
   IOListItemStyles,
   IOListItemVisualParams,
-  IOStyles,
+  IOSkeleton,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import Placeholder from "rn-placeholder";
+import { Fragment } from "react";
+import { View } from "react-native";
 
 const InstitutionListItemSkeleton = () => (
   <View
@@ -18,15 +17,14 @@ const InstitutionListItemSkeleton = () => (
   >
     <View style={IOListItemStyles.listItemInner}>
       <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
-        <Placeholder.Box
-          animate="fade"
-          height={IOVisualCostants.avatarSizeSmall}
-          width={IOVisualCostants.avatarSizeSmall}
-          radius={100}
+        <IOSkeleton
+          shape="square"
+          size={IOVisualCostants.avatarSizeSmall}
+          radius={IOVisualCostants.avatarRadiusSizeSmall}
         />
       </View>
-      <View style={IOStyles.flex}>
-        <Placeholder.Box animate="fade" radius={8} width={"60%"} height={16} />
+      <View style={{ flex: 1 }}>
+        <IOSkeleton shape="rectangle" radius={8} width={"60%"} height={16} />
       </View>
     </View>
   </View>
@@ -45,7 +43,7 @@ export const InstitutionListSkeleton = ({
     {showSectionTitle && (
       <View accessible={true} accessibilityState={{ busy: true }}>
         <VSpacer size={16} />
-        <Placeholder.Box animate="fade" radius={8} width={62} height={16} />
+        <IOSkeleton shape="rectangle" radius={8} width={62} height={16} />
         <VSpacer size={16} />
       </View>
     )}

@@ -46,30 +46,23 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
           collapsable={false}
           style={
             {
-              "opacity": 0.5,
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 12,
+              "height": 66,
+              "opacity": 0.55,
+              "width": 66,
             }
           }
-        >
-          <View
-            color="#D2D6E3"
-            height={66}
-            radius={12}
-            style={
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderRadius": 12,
-                "height": 66,
-                "width": 66,
-              }
-            }
-            width={66}
-          />
-        </View>
+        />
       </View>
       <View
         style={
           {
+            "display": "flex",
             "flex": 1,
+            "flexDirection": "column",
+            "gap": 8,
           }
         }
       >
@@ -77,29 +70,12 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
           collapsable={false}
           style={
             {
-              "opacity": 0.5,
-            }
-          }
-        >
-          <View
-            color="#D2D6E3"
-            height={16}
-            radius={8}
-            style={
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderRadius": 8,
-                "height": 16,
-                "width": "100%",
-              }
-            }
-            width="100%"
-          />
-        </View>
-        <View
-          style={
-            {
-              "height": 8,
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 16,
+              "opacity": 0.55,
+              "width": "100%",
             }
           }
         />
@@ -107,29 +83,12 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
           collapsable={false}
           style={
             {
-              "opacity": 0.5,
-            }
-          }
-        >
-          <View
-            color="#D2D6E3"
-            height={16}
-            radius={8}
-            style={
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderRadius": 8,
-                "height": 16,
-                "width": "80%",
-              }
-            }
-            width="80%"
-          />
-        </View>
-        <View
-          style={
-            {
-              "height": 8,
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 16,
+              "opacity": 0.55,
+              "width": "80%",
             }
           }
         />
@@ -137,25 +96,15 @@ exports[`ServicesHeaderSection component should match snapshot for loading 1`] =
           collapsable={false}
           style={
             {
-              "opacity": 0.5,
+              "backgroundColor": "#D2D6E3",
+              "borderCurve": "continuous",
+              "borderRadius": 8,
+              "height": 8,
+              "opacity": 0.55,
+              "width": "60%",
             }
           }
-        >
-          <View
-            color="#D2D6E3"
-            height={8}
-            radius={8}
-            style={
-              {
-                "backgroundColor": "#D2D6E3",
-                "borderRadius": 8,
-                "height": 8,
-                "width": "60%",
-              }
-            }
-            width="60%"
-          />
-        </View>
+        />
       </View>
     </View>
     <View
