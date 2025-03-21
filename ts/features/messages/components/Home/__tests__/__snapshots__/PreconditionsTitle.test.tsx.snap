@@ -1415,24 +1415,15 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
                           collapsable={false}
                           style={
                             {
-                              "opacity": 0.5,
+                              "backgroundColor": "#E8EBF1",
+                              "borderCurve": "continuous",
+                              "borderRadius": 4,
+                              "height": 20,
+                              "opacity": 0.55,
+                              "width": 182,
                             }
                           }
-                        >
-                          <View
-                            height={21}
-                            radius={4}
-                            style={
-                              {
-                                "backgroundColor": "#efefef",
-                                "borderRadius": 4,
-                                "height": 21,
-                                "width": 182,
-                              }
-                            }
-                            width={182}
-                          />
-                        </View>
+                        />
                       </View>
                     </View>
                   </View>

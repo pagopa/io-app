@@ -358,7 +358,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {

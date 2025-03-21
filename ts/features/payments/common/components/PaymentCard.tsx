@@ -1,15 +1,15 @@
 import {
+  BodySmall,
   H6,
   IOColors,
-  BodySmall,
+  IOSkeleton,
   Tag,
-  VSpacer,
+  VStack,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import { capitalize } from "lodash";
 import { StyleSheet, View } from "react-native";
-import Placeholder, { BoxProps } from "rn-placeholder";
 import BPayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.svg";
 import PayPalLogo from "../../../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
@@ -170,30 +170,40 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 const PaymentCardSkeleton = () => (
   <View style={styles.card}>
     <View style={styles.wrapper}>
-      <View style={[styles.paymentInfo, { paddingTop: 8 }]}>
-        <View style={{ width: "60%" }}>
-          <SkeletonPlaceholder height={24} width={"100%"} />
-        </View>
-        <View style={{ width: "20%" }}>
-          <SkeletonPlaceholder height={24} width={"100%"} />
-        </View>
+      <View style={styles.paymentInfo}>
+        <IOSkeleton
+          color={IOColors["grey-200"]}
+          shape="rectangle"
+          width={"60%"}
+          height={24}
+          radius={28}
+        />
+        <IOSkeleton
+          color={IOColors["grey-200"]}
+          shape="rectangle"
+          width={"20%"}
+          height={24}
+          radius={28}
+        />
       </View>
-      <View style={styles.additionalInfo}>
-        <SkeletonPlaceholder height={18} width={"55%"} />
-        <VSpacer size={8} />
-        <SkeletonPlaceholder height={18} width={"45%"} />
-      </View>
+      <VStack space={8}>
+        <IOSkeleton
+          color={IOColors["grey-200"]}
+          shape="rectangle"
+          width={"55%"}
+          height={16}
+          radius={28}
+        />
+        <IOSkeleton
+          color={IOColors["grey-200"]}
+          shape="rectangle"
+          width={"45%"}
+          height={16}
+          radius={28}
+        />
+      </VStack>
     </View>
   </View>
-);
-
-const SkeletonPlaceholder = (props: Pick<BoxProps, "width" | "height">) => (
-  <Placeholder.Box
-    animate="fade"
-    radius={28}
-    color={IOColors["grey-200"]}
-    {...props}
-  />
 );
 
 const styles = StyleSheet.create({

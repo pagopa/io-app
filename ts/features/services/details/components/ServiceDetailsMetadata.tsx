@@ -108,8 +108,8 @@ export const ServiceDetailsMetadata = ({
     },
     {
       kind: "ListItemAction",
-      icon: "phone",
       condition: !!phone,
+      icon: "phone",
       label: I18n.t("services.details.metadata.phone"),
       onPress: () => handleOpenUrl("phone", `tel:${phone}`),
       testID: "service-details-metadata-phone"
@@ -132,8 +132,11 @@ export const ServiceDetailsMetadata = ({
     },
     {
       kind: "ListItemInfoCopy",
-      label: I18n.t("services.details.metadata.fiscalCode"),
+      accessibilityHint: I18n.t(
+        "services.details.metadata.fiscalCodeAccessibilityHint"
+      ),
       icon: "entityCode",
+      label: I18n.t("services.details.metadata.fiscalCode"),
       onPress: handleItemOnPress(organizationFiscalCode, "COPY"),
       value: organizationFiscalCode,
       testID: "service-details-metadata-org-fiscal-code"
@@ -169,14 +172,7 @@ export const ServiceDetailsMetadata = ({
         case "ListItemInfo":
           return <ListItemInfo {...rest} />;
         case "ListItemInfoCopy":
-          return (
-            <ListItemInfoCopy
-              {...rest}
-              accessibilityHint={I18n.t(
-                "services.details.metadata.fiscalCodeAccessibilityHint"
-              )}
-            />
-          );
+          return <ListItemInfoCopy {...rest} />;
         default:
           return null;
       }

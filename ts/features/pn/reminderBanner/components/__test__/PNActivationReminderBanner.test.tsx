@@ -1,11 +1,11 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import * as USEIO from "../../../../navigation/params/AppParamsList";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import PN_ROUTES from "../../navigation/routes";
+import * as USEIO from "../../../../../navigation/params/AppParamsList";
+import PN_ROUTES from "../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PNActivationReminderBanner } from "../PNActivationReminderBanner";
 
 describe("pnActivationBanner", () => {

@@ -334,34 +334,19 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                         }
                       }
                     >
-                      <View>
-                        <View
-                          height={84}
-                          radius={8}
-                          style={
-                            {
-                              "backgroundColor": "#efefef",
-                              "borderRadius": 8,
-                              "height": 84,
-                              "width": "100%",
-                            }
+                      <View
+                        collapsable={false}
+                        style={
+                          {
+                            "backgroundColor": "#E8EBF1",
+                            "borderCurve": "continuous",
+                            "borderRadius": 8,
+                            "height": 84,
+                            "opacity": 0.55,
+                            "width": "100%",
                           }
-                          width="100%"
-                        />
-                        <View
-                          collapsable={false}
-                          style={
-                            {
-                              "backgroundColor": "#ffffff",
-                              "height": "100%",
-                              "marginLeft": "0%",
-                              "opacity": 0.4,
-                              "position": "absolute",
-                              "width": 30,
-                            }
-                          }
-                        />
-                      </View>
+                        }
+                      />
                     </View>
                   </View>
                 </View>
@@ -817,7 +802,6 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                               }
                             >
                               <Text
-                                accessibilityRole="text"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}

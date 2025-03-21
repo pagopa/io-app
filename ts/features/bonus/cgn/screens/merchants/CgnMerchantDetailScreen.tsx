@@ -3,6 +3,7 @@ import {
   Divider,
   GradientScrollView,
   H1,
+  IOSkeleton,
   IOToast,
   IOVisualCostants,
   ListItemAction,
@@ -11,7 +12,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
-import Placeholder from "rn-placeholder";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -204,22 +204,22 @@ const CgnMerchantDetailScreen = () => {
 
 const CgnMerchantDetailScreenSkeleton = () => (
   <GradientScrollView primaryActionProps={undefined}>
-    <Placeholder.Box
-      animate="fade"
-      radius={styles.merchantImage.borderRadius}
+    <IOSkeleton
+      shape="rectangle"
       width="100%"
       height={210}
+      radius={styles.merchantImage.borderRadius}
     />
     <VSpacer size={24} />
-    <Placeholder.Line animate="fade" textSize={24} />
+    <IOSkeleton shape="rectangle" width="100%" height={24} radius={4} />
     <VSpacer size={16} />
-    <Placeholder.Line animate="fade" textSize={24} width="50%" />
+    <IOSkeleton shape="rectangle" width="50%" height={24} radius={4} />
     <VSpacer size={48} />
-    <Placeholder.Box animate="fade" width={100} height={16} radius={4} />
+    <IOSkeleton shape="rectangle" width="100%" height={16} radius={4} />
     <VSpacer size={24} />
-    <Placeholder.Box animate="fade" width="100%" height={170} radius={8} />
+    <IOSkeleton shape="rectangle" width="100%" height={170} radius={8} />
     <VSpacer size={8} />
-    <Placeholder.Box animate="fade" width="100%" height={170} radius={8} />
+    <IOSkeleton shape="rectangle" width="100%" height={170} radius={8} />
     <VSpacer size={24} />
     <ListItemHeader label="" />
   </GradientScrollView>
