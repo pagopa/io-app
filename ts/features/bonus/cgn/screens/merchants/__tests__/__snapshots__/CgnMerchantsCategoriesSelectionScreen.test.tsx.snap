@@ -425,7 +425,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 >
                                   <View
                                     accessibilityLabel="By category"
-                                    accessibilityRole="button"
+                                    accessibilityRole="tab"
                                     accessibilityState={
                                       {
                                         "busy": undefined,
@@ -582,7 +582,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 >
                                   <View
                                     accessibilityLabel="By partner"
-                                    accessibilityRole="button"
+                                    accessibilityRole="tab"
                                     accessibilityState={
                                       {
                                         "busy": undefined,

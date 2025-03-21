@@ -387,7 +387,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                             >
                               <View
                                 accessibilityLabel="Inbox"
-                                accessibilityRole="button"
+                                accessibilityRole="tab"
                                 accessibilityState={
                                   {
                                     "busy": undefined,
@@ -557,7 +557,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                             >
                               <View
                                 accessibilityLabel="Archived"
-                                accessibilityRole="button"
+                                accessibilityRole="tab"
                                 accessibilityState={
                                   {
                                     "busy": undefined,
@@ -1101,7 +1101,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                             >
                               <View
                                 accessibilityLabel="Inbox"
-                                accessibilityRole="button"
+                                accessibilityRole="tab"
                                 accessibilityState={
                                   {
                                     "busy": undefined,
@@ -1284,7 +1284,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                             >
                               <View
                                 accessibilityLabel="Archived"
-                                accessibilityRole="button"
+                                accessibilityRole="tab"
                                 accessibilityState={
                                   {
                                     "busy": undefined,
