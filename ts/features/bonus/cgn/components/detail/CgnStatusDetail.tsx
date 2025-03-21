@@ -38,9 +38,18 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
               cgnDetail.revocation_date,
               I18n.t("global.dateFormats.shortFormat")
             )}
+            accessibilityLabel={`${I18n.t(
+              "bonus.cgn.detail.status.date.revoked"
+            )}: ${localeDateFormat(
+              cgnDetail.revocation_date,
+              I18n.t("global.dateFormats.shortFormat")
+            )}. ${I18n.t("bonus.cgn.detail.status.a11y.cardStatus", {
+              status: I18n.t("bonus.cgn.detail.status.badge.revoked")
+            })}`}
             endElement={{
               type: "badge",
               componentProps: {
+                accessible: false,
                 text: I18n.t("bonus.cgn.detail.status.badge.revoked"),
                 variant: "error",
                 testID: "status-badge"
@@ -56,9 +65,18 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
               cgnDetail.expiration_date,
               I18n.t("global.dateFormats.shortFormat")
             )}
+            accessibilityLabel={`${I18n.t(
+              "bonus.cgn.detail.status.expiration.cgn"
+            )}: ${localeDateFormat(
+              cgnDetail.expiration_date,
+              I18n.t("global.dateFormats.shortFormat")
+            )}. ${I18n.t("bonus.cgn.detail.status.a11y.cardStatus", {
+              status: I18n.t("bonus.cgn.detail.status.badge.expired")
+            })}`}
             endElement={{
               type: "badge",
               componentProps: {
+                accessible: false,
                 text: I18n.t("bonus.cgn.detail.status.badge.expired"),
                 variant: "error",
                 testID: "status-badge"
@@ -74,9 +92,18 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
               cgnDetail.expiration_date,
               I18n.t("global.dateFormats.shortFormat")
             )}
+            accessibilityLabel={`${I18n.t(
+              "bonus.cgn.detail.status.expiration.cgn"
+            )}: ${localeDateFormat(
+              cgnDetail.expiration_date,
+              I18n.t("global.dateFormats.shortFormat")
+            )}. ${I18n.t("bonus.cgn.detail.status.a11y.cardStatus", {
+              status: I18n.t("bonus.cgn.detail.status.badge.active")
+            })}`}
             endElement={{
               type: "badge",
               componentProps: {
+                accessible: false,
                 text: I18n.t("bonus.cgn.detail.status.badge.active"),
                 variant: "success",
                 testID: "status-badge"
