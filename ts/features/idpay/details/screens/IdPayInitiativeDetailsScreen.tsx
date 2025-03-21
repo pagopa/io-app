@@ -52,9 +52,8 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import NavigationService from "../../../../navigation/NavigationService";
-import { FIMS_ROUTES } from "../../../fims/common/navigation";
-import { removeFIMSPrefixFromUrl } from "../../../../components/ui/Markdown/handlers/link";
+import { useFIMSAuthenticationFlow } from "../../../fims/common/hooks";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -87,18 +86,17 @@ const IdPayInitiativeDetailsScreen = () => {
     });
   };
 
+  const startFIMSAuthenticationFlow = useFIMSAuthenticationFlow();
   const onAddExpense = () => {
     const addExpenseFimsUrl = pot.toUndefined(initiativeDataPot)?.webViewUrl;
     if (!addExpenseFimsUrl) {
       return;
     }
-    NavigationService.navigate(FIMS_ROUTES.MAIN, {
-      screen: FIMS_ROUTES.CONSENTS,
-      params: {
-        ctaText: I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
-        ctaUrl: removeFIMSPrefixFromUrl(addExpenseFimsUrl)
-      }
-    });
+    startFIMSAuthenticationFlow(
+      I18n.t("idpay.initiative.discountDetails.addExpenseButton"),
+      "01JKB969XNTW23RZTV61XAE824" as ServiceId, // TODO change this as soon as the serviceId is available in the initiativeDataPot
+      addExpenseFimsUrl
+    );
   };
 
   const navigateToConfiguration = () => {

@@ -39,8 +39,8 @@ import { RemoteContentDetails } from "../../../../definitions/backend/RemoteCont
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { ctaFromMessageCTA, unsafeMessageCTAFromInput } from "../utils/ctas";
-import { isIoFIMSLink } from "../../../components/ui/Markdown/handlers/link";
 import { extractContentFromMessageSources } from "../utils";
+import { isFIMSLink } from "../../fims/singleSignOn/utils";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>
@@ -398,10 +398,10 @@ const computeHasFIMSCTA = (
   );
   const unsafeMessageCTA = unsafeMessageCTAFromInput(markdownWithCTAs);
   const cta = ctaFromMessageCTA(unsafeMessageCTA);
-  if (cta != null && isIoFIMSLink(cta.cta_1.action)) {
+  if (cta != null && isFIMSLink(cta.cta_1.action)) {
     return true;
   }
-  if (cta?.cta_2 != null && isIoFIMSLink(cta.cta_2.action)) {
+  if (cta?.cta_2 != null && isFIMSLink(cta.cta_2.action)) {
     return true;
   }
   return false;
