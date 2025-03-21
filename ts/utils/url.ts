@@ -146,7 +146,8 @@ export function extractPathFromURL(
       `^${escapeStringRegexp(protocol)}(/)*${host
         .split(".")
         .map(it => (it === "*" ? "[^/]+" : escapeStringRegexp(it)))
-        .join("\\.")}`
+        .join("\\.")}`,
+      "i"
     );
 
     const normalizedURL = url.replace(/\/+/g, "/");
