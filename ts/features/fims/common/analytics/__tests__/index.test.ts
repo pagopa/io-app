@@ -16,6 +16,7 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
 import * as mixpanel from "../../../../../mixpanel";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import * as serviceSelectors from "../../../../services/details/store/reducers";
 import * as fimsAuthenticationSelectors from "../../../singleSignOn/store/selectors";
 
@@ -26,9 +27,6 @@ const organizationNames = [undefined, "organization name"];
 const referenceReason = "The reason";
 const referenceServiceId = "01J9RSWBB4VSHVRJSY33XGA6YH" as ServiceId;
 const serviceNames = [undefined, "service name"];
-const sources: ReadonlyArray<
-  "message_detail" | "service_detail" | "credential_detail"
-> = ["message_detail", "service_detail", "credential_detail"] as const;
 
 describe("trackAuthenticationStart", () => {
   beforeEach(() => {
@@ -38,38 +36,37 @@ describe("trackAuthenticationStart", () => {
   organizationFiscalCodes.forEach(organizationFiscalCode =>
     organizationNames.forEach(organizationName =>
       serviceNames.forEach(serviceName =>
-        sources.forEach(source =>
-          it(`should match event name, and expected parameters for ${
-            organizationFiscalCode ? "defined   " : "undefined "
-          } organization fiscal code, ${
-            organizationName ? "defined   " : "undefined "
-          } organization name, ${
-            serviceName ? "defined   " : "undefined "
-          } service name, ${source} source, `, () => {
-            const mixpanelTrackMock = generateMixpanelTrackMock();
-            void trackAuthenticationStart(
-              referenceServiceId,
-              serviceName,
-              organizationName,
-              organizationFiscalCode,
-              referenceCtaLabel,
-              source
-            );
-            expect(mixpanelTrackMock.mock.calls.length).toBe(1);
-            expect(mixpanelTrackMock.mock.calls[0].length).toBe(2);
-            expect(mixpanelTrackMock.mock.calls[0][0]).toBe("FIMS_START");
-            expect(mixpanelTrackMock.mock.calls[0][1]).toEqual({
-              event_category: "UX",
-              event_type: "action",
-              fims_label: referenceCtaLabel,
-              organization_fiscal_code: organizationFiscalCode,
-              organization_name: organizationName,
-              service_id: referenceServiceId,
-              service_name: serviceName,
-              source
-            });
-          })
-        )
+        it(`should match event name, and expected parameters for ${
+          organizationFiscalCode ? "defined   " : "undefined "
+        } organization fiscal code, ${
+          organizationName ? "defined   " : "undefined "
+        } organization name, ${
+          serviceName ? "defined   " : "undefined "
+        } service name`, () => {
+          const source = MESSAGES_ROUTES.MESSAGE_DETAIL;
+          const mixpanelTrackMock = generateMixpanelTrackMock();
+          void trackAuthenticationStart(
+            referenceServiceId,
+            serviceName,
+            organizationName,
+            organizationFiscalCode,
+            referenceCtaLabel,
+            source
+          );
+          expect(mixpanelTrackMock.mock.calls.length).toBe(1);
+          expect(mixpanelTrackMock.mock.calls[0].length).toBe(2);
+          expect(mixpanelTrackMock.mock.calls[0][0]).toBe("FIMS_START");
+          expect(mixpanelTrackMock.mock.calls[0][1]).toEqual({
+            event_category: "UX",
+            event_type: "action",
+            fims_label: referenceCtaLabel,
+            organization_fiscal_code: organizationFiscalCode,
+            organization_name: organizationName,
+            service_id: referenceServiceId,
+            service_name: serviceName,
+            source
+          });
+        })
       )
     )
   );
