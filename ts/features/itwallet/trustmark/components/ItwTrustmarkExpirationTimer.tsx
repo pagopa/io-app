@@ -1,13 +1,18 @@
-import { Body, HSpacer, Icon, IOStyles } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  HSpacer,
+  Icon,
+  IOSkeleton,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import { useMemo } from "react";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import { ItwTrustmarkMachineContext } from "../machine/provider";
 import { selectExpirationSeconds, selectFailure } from "../machine/selectors";
-import IOMarkdown from "../../../../components/IOMarkdown";
 
 /**
  * Timer that shows the remaining time before the trustmark expires
@@ -27,7 +32,7 @@ const ItwTrustmarkExpirationTimer = () => {
 
     if (expirationSeconds === undefined) {
       return (
-        <Placeholder.Box height={18} width={200} animate="fade" radius={4} />
+        <IOSkeleton shape="rectangle" height={16} width={200} radius={4} />
       );
     }
 
