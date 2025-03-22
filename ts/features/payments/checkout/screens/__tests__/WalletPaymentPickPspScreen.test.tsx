@@ -9,7 +9,7 @@ import I18n from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentsCheckoutRoutes } from "../../navigation/routes";
 import { paymentsCalculatePaymentFeesAction } from "../../store/actions/networking";
@@ -69,9 +69,8 @@ const mockModal = {
   dismiss: jest.fn(),
   bottomSheet: <View testID="modal-view-test" />
 };
-const mockedUseIOBottomSheetAutoresizableModal =
-  useIOBottomSheetAutoresizableModal as jest.Mock;
-mockedUseIOBottomSheetAutoresizableModal.mockReturnValue(mockModal);
+const mockedUseIOBottomSheetModal = useIOBottomSheetModal as jest.Mock;
+mockedUseIOBottomSheetModal.mockReturnValue(mockModal);
 
 describe("WalletPaymentPickPspScreen", () => {
   const renderComponent = () => {

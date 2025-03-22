@@ -17,7 +17,7 @@ import IOMarkdown from "../../components/IOMarkdown";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
-import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import { trackLoginRootedScreen } from "./analytics";
 
 const RootedDeviceModal = () => {
@@ -39,7 +39,7 @@ const RootedDeviceModal = () => {
   const {
     present: presentLearnMoreBottomSheet,
     bottomSheet: learnMoreBottomSheet
-  } = useIOBottomSheetAutoresizableModal({
+  } = useIOBottomSheetModal({
     title: I18n.t("rooted.learnMoreBottomsheet.title"),
     component: <IOMarkdown content={body} />
   });
