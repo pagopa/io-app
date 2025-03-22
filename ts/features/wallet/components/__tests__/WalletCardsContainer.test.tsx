@@ -4,13 +4,13 @@ import _ from "lodash";
 import { ComponentType } from "react";
 import configureMockStore from "redux-mock-store";
 import { Alert, Pressable } from "react-native";
-import { requestReview } from "react-native-store-review";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as itwSelectors from "../../../itwallet/common/store/selectors";
+import AppReview from "../../../appReviews/native/AppReview";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
@@ -38,10 +38,6 @@ jest.mock("react-native-reanimated", () => ({
   Layout: {
     duration: jest.fn()
   }
-}));
-
-jest.mock("react-native-store-review", () => ({
-  requestReview: jest.fn()
 }));
 
 const mockNavigate = jest.fn();
@@ -511,7 +507,7 @@ describe("OtherWalletCardsContainer", () => {
       }
     });
 
-    expect(requestReview).toHaveBeenCalledTimes(1);
+    expect(AppReview.requestReview).toHaveBeenCalledTimes(1);
   });
 });
 

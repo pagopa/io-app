@@ -10,11 +10,6 @@ import { WalletPaymentOutcomeEnum } from "../../types/PaymentOutcomeEnum";
 import { getPaymentsLatestReceiptAction } from "../../../receipts/store/actions";
 import * as useIO from "../../../../../store/hooks";
 
-jest.mock("react-native-store-review", () => ({
-  isAvailable: jest.fn().mockReturnValue(true),
-  requestReview: jest.fn()
-}));
-
 const renderComponent = (outcome: WalletPaymentOutcomeEnum) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
