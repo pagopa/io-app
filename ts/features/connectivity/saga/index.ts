@@ -1,5 +1,5 @@
 import * as E from "fp-ts/lib/Either";
-import { call, fork, put, select } from "typed-redux-saga/macro";
+import { call, fork, put, select, delay } from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { configureNetInfo, fetchNetInfoState } from "../utils";
 import { startTimer } from "../../../utils/timer";
@@ -21,8 +21,32 @@ export function* connectionStatusSaga(): Generator<
   try {
     const response = yield* call(fetchNetInfoState());
     if (E.isRight(response)) {
-      yield* put(setConnectionStatus(response.right.isConnected === true));
-      return true;
+      if (
+        response.right.isInternetReachable !== null &&
+        response.right.isInternetReachable !== undefined
+      ) {
+        const isAppConnected =
+          response.right.isConnected === true &&
+          response.right.isInternetReachable === true;
+
+        yield* put(setConnectionStatus(isAppConnected));
+        return isAppConnected;
+      }
+
+      yield* delay(200);
+
+      // on iOS the first call to netinfo returns null on the isInternetReachable field
+      // we need to wait for the next call to get the correct value
+      const retryResponse = yield* call(fetchNetInfoState());
+
+      if (E.isRight(retryResponse)) {
+        const retryIsAppConnected =
+          retryResponse.right.isConnected === true &&
+          retryResponse.right.isInternetReachable === true;
+
+        yield* put(setConnectionStatus(retryIsAppConnected));
+        return retryIsAppConnected;
+      }
     }
     return false;
   } catch (e) {
