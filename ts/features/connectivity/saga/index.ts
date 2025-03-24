@@ -33,7 +33,7 @@ export function* connectionStatusSaga(): Generator<
         return isAppConnected;
       }
 
-      yield* delay(200);
+      yield* delay(500);
 
       // on iOS the first call to netinfo returns null on the isInternetReachable field
       // we need to wait for the next call to get the correct value
