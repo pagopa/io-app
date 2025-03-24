@@ -1,7 +1,9 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
-import { createRef, useMemo } from "react";
+import { createRef, useEffect, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { pipe } from "fp-ts/function";
+import * as O from "fp-ts/Option";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -27,6 +29,8 @@ export type ItwDiscoveryBannerProps = {
   handleOnClose?: () => void;
 };
 
+type BannerType = "onboarding" | "reactivating";
+
 export const ItwDiscoveryBanner = ({
   withTitle = true,
   ignoreMargins = false,
@@ -40,6 +44,11 @@ export const ItwDiscoveryBanner = ({
   );
   const navigation = useIONavigation();
   const route = useRoute();
+
+  const [bannerState, setBannerState] = useState<{
+    shouldRender: boolean;
+    type: BannerType | null;
+  }>({ shouldRender: false, type: null });
 
   const trackBannerProperties = useMemo(
     () => ({
@@ -65,21 +74,35 @@ export const ItwDiscoveryBanner = ({
     dispatch(itwCloseDiscoveryBanner());
   };
 
+  // This effect is used to determine which banner to show and if it should be shown
+  useEffect(() => {
+    const isDataLoaded = pipe(O.fromNullable(isWalletRemotelyActive), O.isSome);
+    if (isDataLoaded && !bannerState.shouldRender) {
+      const type: BannerType = isWalletRemotelyActive
+        ? "reactivating"
+        : "onboarding";
+      setBannerState({ shouldRender: true, type });
+    }
+  }, [isWalletRemotelyActive, bannerState.shouldRender]);
+
+  if (!bannerState.shouldRender || !bannerState.type) {
+    return null;
+  }
+
   const bannerConfig = {
     onboarding: {
       content: I18n.t("features.itWallet.discovery.banner.home.content"),
       title: I18n.t("features.itWallet.discovery.banner.home.title"),
       action: I18n.t("features.itWallet.discovery.banner.home.action")
     },
-    homeActive: {
+    reactivating: {
       content: I18n.t("features.itWallet.discovery.banner.homeActive.content"),
       title: I18n.t("features.itWallet.discovery.banner.homeActive.title"),
       action: I18n.t("features.itWallet.discovery.banner.homeActive.action")
     }
   };
 
-  const bannerType = isWalletRemotelyActive ? "homeActive" : "onboarding";
-  const { content, title, action } = bannerConfig[bannerType];
+  const { content, title, action } = bannerConfig[bannerState.type];
 
   return (
     <View style={!ignoreMargins && styles.margins}>

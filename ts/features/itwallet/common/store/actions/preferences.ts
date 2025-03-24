@@ -31,7 +31,7 @@ export const itwSetClaimValuesHidden = createStandardAction(
 
 export const itwSetWalletInstanceRemotelyActive = createStandardAction(
   "ITW_SET_WALLET_INSTANCE_REMOTELY_ACTIVE"
-)<boolean>();
+)<boolean | undefined>();
 
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>

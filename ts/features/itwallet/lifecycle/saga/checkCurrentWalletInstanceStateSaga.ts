@@ -21,6 +21,8 @@ export function* checkCurrentWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
   void
 > {
+  yield* put(itwSetWalletInstanceRemotelyActive(undefined));
+
   const remoteWalletInstanceStatus = yield* call(
     getCurrentStatusWalletInstance
   );

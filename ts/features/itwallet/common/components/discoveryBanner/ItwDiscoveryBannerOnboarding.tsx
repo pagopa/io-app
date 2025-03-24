@@ -2,6 +2,8 @@ import { Banner } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import { memo, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import { pipe } from "fp-ts/function";
+import * as O from "fp-ts/Option";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
@@ -15,7 +17,7 @@ import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
 import { itwIsWalletInstanceRemotelyActiveSelector } from "../../store/selectors/preferences.ts";
 
 /**
- * ITW dicovery banner to be displayed in the wallet card onboarding screen
+ * ITW discovery banner to be displayed in the wallet card onboarding screen
  */
 const ItwDiscoveryBannerOnboarding = () => {
   const navigation = useIONavigation();
@@ -46,10 +48,6 @@ const ItwDiscoveryBannerOnboarding = () => {
     }, [trackBannerProperties, isBannerRenderable])
   );
 
-  if (!isBannerRenderable) {
-    return null;
-  }
-
   const handleOnPress = () => {
     trackItWalletBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -57,19 +55,34 @@ const ItwDiscoveryBannerOnboarding = () => {
     });
   };
 
+  const shouldRender = pipe(
+    O.fromNullable(isWalletRemotelyActive),
+    O.fold(
+      () => false,
+      () => isBannerRenderable
+    )
+  );
+
   const bannerConfig = {
     onboarding: {
       content: I18n.t("features.itWallet.discovery.banner.home.content")
     },
-    onboardingActive: {
+    reactivating: {
       content: I18n.t(
         "features.itWallet.discovery.banner.onboardingActive.content"
       )
     }
   };
 
-  const bannerType = isWalletRemotelyActive ? "onboardingActive" : "onboarding";
+  const bannerType = useMemo(
+    () => (isWalletRemotelyActive ? "reactivating" : "onboarding"),
+    [isWalletRemotelyActive]
+  );
   const { content } = bannerConfig[bannerType];
+
+  if (!shouldRender) {
+    return null;
+  }
 
   return (
     <View style={styles.wrapper}>
