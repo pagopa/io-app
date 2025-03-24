@@ -3781,15 +3781,19 @@
               "body": "Ricevi in app le comunicazioni a valore legale che ti inviano gli enti pubblici: con il servizio SEND puoi gestirle in tempo reale sul tuo dispositivo e pagare facilmente eventuali costi. "
             },
             "paragraph2": {
+              "title": "Risparmia sui costi della raccomandata",
+              "body": "Se accedi alle comunicazioni in digitale entro i tempi previsti, non riceverai la raccomandata e non pagherai i relativi costi di stampa e invio della raccomandata."
+            },
+            "paragraph3": {
               "title": "È facile e veloce",
               "body": "Attiva il servizio in un tap per ricevere le tue prossime notifiche SEND in app."
             },
-            "paragraph3": {
+            "paragraph4": {
               "pressing": "Premendo ",
               "activate": "Attiva il servizio ",
               "readAndUnderstood": "dichiari di aver letto e compreso l’",
-              "privacyInfo": "Informativa Privacy ",
-              "andThe": "e i ",
+              "privacyInfo": "Informativa Privacy",
+              "andThe": " e i ",
               "TOS": "Termini e Condizioni d’uso"
             },
             "CTA": "Attiva il servizio"
@@ -4692,16 +4696,38 @@
         }
       },
       "offline": {
-        "alert": {
-          "title": "Nessuna connessione",
-          "action": "Cosa posso fare?"
+        "DEVICE_OFFLINE": {
+          "alert": {
+            "content": "Nessuna connessione.",
+            "action": "Cosa posso fare?"
+          },
+          "modal": {
+            "title": "Nessuna connessione",
+            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO."
+          }
         },
-        "modal": {
-          "title": "Nessuna connessione",
-          "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
-          "action": "Ricarica l'app IO",
-          "failure": "Nessuna connessione. Collegati a internet e riprova."
-        }
+        "SESSION_EXPIRED": {
+          "alert": {
+            "content": "Accedi di nuovo.",
+            "action": "Perché?"
+          },
+          "modal": {
+            "title": "Il tuo accesso all’app è scaduto",
+            "content": "###### Cosa posso fare?\n\nQuando la tua sessione di accesso all’app scade, alcuni servizi dell’app potrebbero essere limitati per motivi di sicurezza.\n\nAccedi di nuovo con SPID o CIE per continuare ad usare tutti i servizi di IO."
+          }
+        },
+        "SESSION_REFRESH": {
+          "alert": {
+            "content": "Alcuni servizi dell’app sono limitati in questo momento.",
+            "action": "Cosa posso fare?"
+          },
+          "modal": {
+            "title": "Servizi dell’app limitati",
+            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO."
+          }
+        },
+        "action": "Ricarica l'app IO",
+        "failure": "Nessuna connessione. Collegati a internet e riprova."
       }
     }
   },
@@ -5597,5 +5623,9 @@
         "bodyPrivacy": "Informativa sulla Privacy."
       }
     }
+  },
+  "pageNotFound": {
+    "title": "Nothing here!",
+    "subtitle": "This page does not exist or is not available in the version of the app you are using.\nTry updating IO."
   }
 }

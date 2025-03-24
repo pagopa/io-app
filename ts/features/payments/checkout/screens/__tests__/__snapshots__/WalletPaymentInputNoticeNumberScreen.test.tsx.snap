@@ -358,7 +358,6 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                       >
                         <View>
                           <View
-                            accessible={true}
                             onLayout={[Function]}
                             style={
                               {
