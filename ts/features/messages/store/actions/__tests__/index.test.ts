@@ -51,9 +51,11 @@ describe("getMessageDataAction.success", () =>
                   const organizationFiscalCode = "12345678901";
                   const serviceId = "01JKAGWVQRFE1P8QAHZS743M90" as ServiceId;
                   const serviceName = "The service name";
+                  const createdAt = new Date(2025, 0, 1, 10, 30, 26);
                   const requestAction = getMessageDataAction.success({
                     containsAttachments,
                     containsPayment,
+                    createdAt,
                     firstTimeOpening,
                     hasFIMSCTA,
                     hasRemoteContent,
@@ -69,6 +71,7 @@ describe("getMessageDataAction.success", () =>
                   expect(requestAction.payload).toEqual({
                     containsAttachments,
                     containsPayment,
+                    createdAt,
                     firstTimeOpening,
                     hasFIMSCTA,
                     hasRemoteContent,
