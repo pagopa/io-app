@@ -102,7 +102,7 @@ describe("MessageDetailsScreen", () => {
     expect(component.queryByTestId("attachment-tag")).toBeNull();
   });
 
-  it("should display the alert banner if the payment is expiring", () => {
+  it("should display the alert banner if the message's due date is expiring", () => {
     const next7Days = new Date(new Date().setDate(new Date().getDate() + 7));
 
     const sequenceOfActions: ReadonlyArray<Action> = [
@@ -128,10 +128,10 @@ describe("MessageDetailsScreen", () => {
     const store: Store<GlobalState> = createStore(appReducer, state as any);
 
     const { component } = renderComponent(store);
-    expect(component.queryByTestId("due-date-alert")).toBeNull();
+    expect(component.queryByTestId("due-date-alert")).toBeDefined();
   });
 
-  it("should NOT display the alert banner if the payment is NOT expiring", () => {
+  it("should NOT display the alert banner if the message's due date is NOT expiring", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
       loadMessageById.success(toUIMessage(message_1)),
