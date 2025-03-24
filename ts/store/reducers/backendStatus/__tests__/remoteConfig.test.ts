@@ -5,6 +5,7 @@ import { GlobalState } from "../../types";
 import {
   absolutePortalLinksSelector,
   barcodesScannerConfigSelector,
+  fimsServiceConfiguration,
   generateDynamicUrlSelector,
   isIOMarkdownEnabledForMessagesAndServicesSelector,
   isPnAppVersionSupportedSelector,
@@ -13,13 +14,14 @@ import {
   pnMessagingServiceIdSelector
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
-afterEach(() => {
-  jest.restoreAllMocks();
-  jest.clearAllMocks();
-});
+describe("remoteConfig", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.clearAllMocks();
+  });
 
-describe("test selectors", () => {
   // smoke tests: valid / invalid
   const noneStore = {
     remoteConfig: O.none
@@ -143,117 +145,181 @@ describe("test selectors", () => {
       expect(output).toBe("https://ioapp.it/path");
     });
   });
-});
 
-describe("isPnAppVersionSupportedSelector", () => {
-  it("should return false, when 'backendStatus' is O.none", () => {
-    const state = {
+  describe("isPnAppVersionSupportedSelector", () => {
+    it("should return false, when 'backendStatus' is O.none", () => {
+      const state = {
+        remoteConfig: O.none
+      } as GlobalState;
+      const isSupported = isPnAppVersionSupportedSelector(state);
+      expect(isSupported).toBe(false);
+    });
+    it("should return false, when min_app_version is greater than `getAppVersion`", () => {
+      const state = {
+        remoteConfig: O.some({
+          pn: {
+            min_app_version: {
+              android: "2.0.0.0",
+              ios: "2.0.0.0"
+            }
+          }
+        })
+      } as GlobalState;
+      jest
+        .spyOn(appVersion, "getAppVersion")
+        .mockImplementation(() => "1.0.0.0");
+      const isSupported = isPnAppVersionSupportedSelector(state);
+      expect(isSupported).toBe(false);
+    });
+    it("should return true, when min_app_version is equal to `getAppVersion`", () => {
+      const state = {
+        remoteConfig: O.some({
+          pn: {
+            min_app_version: {
+              android: "2.0.0.0",
+              ios: "2.0.0.0"
+            }
+          }
+        })
+      } as GlobalState;
+      jest
+        .spyOn(appVersion, "getAppVersion")
+        .mockImplementation(() => "2.0.0.0");
+      const isSupported = isPnAppVersionSupportedSelector(state);
+      expect(isSupported).toBe(true);
+    });
+    it("should return true, when min_app_version is less than `getAppVersion`", () => {
+      const state = {
+        remoteConfig: O.some({
+          pn: {
+            min_app_version: {
+              android: "2.0.0.0",
+              ios: "2.0.0.0"
+            }
+          }
+        })
+      } as GlobalState;
+      jest
+        .spyOn(appVersion, "getAppVersion")
+        .mockImplementation(() => "3.0.0.0");
+      const isSupported = isPnAppVersionSupportedSelector(state);
+      expect(isSupported).toBe(true);
+    });
+  });
+  describe("landingScreenBannerOrderSelector", () => {
+    const getMock = (priority_order: Array<string> | undefined) =>
+      ({
+        remoteConfig: O.some({
+          landing_banners: {
+            priority_order
+          }
+        })
+      } as GlobalState);
+
+    const some_priorityOrder = ["id1", "id2", "id3"];
+    const customNoneStore = {
       remoteConfig: O.none
     } as GlobalState;
-    const isSupported = isPnAppVersionSupportedSelector(state);
-    expect(isSupported).toBe(false);
-  });
-  it("should return false, when min_app_version is greater than `getAppVersion`", () => {
-    const state = {
-      remoteConfig: O.some({
-        pn: {
-          min_app_version: {
-            android: "2.0.0.0",
-            ios: "2.0.0.0"
-          }
-        }
-      })
+    const undefinedLandingBannersStore = {
+      remoteConfig: O.some({})
     } as GlobalState;
-    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "1.0.0.0");
-    const isSupported = isPnAppVersionSupportedSelector(state);
-    expect(isSupported).toBe(false);
-  });
-  it("should return true, when min_app_version is equal to `getAppVersion`", () => {
-    const state = {
-      remoteConfig: O.some({
-        pn: {
-          min_app_version: {
-            android: "2.0.0.0",
-            ios: "2.0.0.0"
-          }
-        }
-      })
-    } as GlobalState;
-    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "2.0.0.0");
-    const isSupported = isPnAppVersionSupportedSelector(state);
-    expect(isSupported).toBe(true);
-  });
-  it("should return true, when min_app_version is less than `getAppVersion`", () => {
-    const state = {
-      remoteConfig: O.some({
-        pn: {
-          min_app_version: {
-            android: "2.0.0.0",
-            ios: "2.0.0.0"
-          }
-        }
-      })
-    } as GlobalState;
-    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "3.0.0.0");
-    const isSupported = isPnAppVersionSupportedSelector(state);
-    expect(isSupported).toBe(true);
-  });
-});
-describe("landingScreenBannerOrderSelector", () => {
-  const getMock = (priority_order: Array<string> | undefined) =>
-    ({
-      remoteConfig: O.some({
-        landing_banners: {
-          priority_order
-        }
-      })
-    } as GlobalState);
+    const testCases = [
+      {
+        selectorInput: getMock(some_priorityOrder),
+        expected: some_priorityOrder
+      },
+      {
+        selectorInput: getMock(undefined),
+        expected: []
+      },
+      {
+        selectorInput: getMock([]),
+        expected: []
+      },
+      {
+        selectorInput: customNoneStore,
+        expected: []
+      },
+      {
+        selectorInput: undefinedLandingBannersStore,
+        expected: []
+      }
+    ];
 
-  const some_priorityOrder = ["id1", "id2", "id3"];
-  const customNoneStore = {
-    remoteConfig: O.none
-  } as GlobalState;
-  const undefinedLandingBannersStore = {
-    remoteConfig: O.some({})
-  } as GlobalState;
-  const testCases = [
-    {
-      selectorInput: getMock(some_priorityOrder),
-      expected: some_priorityOrder
-    },
-    {
-      selectorInput: getMock(undefined),
-      expected: []
-    },
-    {
-      selectorInput: getMock([]),
-      expected: []
-    },
-    {
-      selectorInput: customNoneStore,
-      expected: []
-    },
-    {
-      selectorInput: undefinedLandingBannersStore,
-      expected: []
-    }
-  ];
-
-  for (const testCase of testCases) {
-    it(`should return [${testCase.expected}] for ${JSON.stringify(
-      pipe(
-        testCase.selectorInput.remoteConfig,
-        O.fold(
-          // eslint-disable-next-line no-underscore-dangle
-          () => testCase.selectorInput.remoteConfig._tag,
-          identity
+    for (const testCase of testCases) {
+      it(`should return [${testCase.expected}] for ${JSON.stringify(
+        pipe(
+          testCase.selectorInput.remoteConfig,
+          O.fold(
+            // eslint-disable-next-line no-underscore-dangle
+            () => testCase.selectorInput.remoteConfig._tag,
+            identity
+          )
         )
-      )
-    )}`, () => {
-      const output = landingScreenBannerOrderSelector(testCase.selectorInput);
-      expect(output).toStrictEqual(testCase.expected);
+      )}`, () => {
+        const output = landingScreenBannerOrderSelector(testCase.selectorInput);
+        expect(output).toStrictEqual(testCase.expected);
+      });
+    }
+  });
+
+  describe("fimsServiceConfiguration", () => {
+    it("should retrieve configuration for matching id", () => {
+      const configurationId = "aConfId";
+      const organizationFiscalCode = "12345678901";
+      const organizationName = "Organization name";
+      const serviceId = "01JMHVSD7JGCNJF36TX0JM0JF3" as ServiceId;
+      const serviceName = "Service name";
+      const state = {
+        remoteConfig: O.some({
+          fims: {
+            services: [
+              {
+                configuration_id: configurationId,
+                service_id: serviceId,
+                organization_fiscal_code: organizationFiscalCode,
+                organization_name: "Organization name",
+                service_name: "Service name"
+              }
+            ]
+          }
+        })
+      } as GlobalState;
+      const serviceConfiguration = fimsServiceConfiguration(
+        state,
+        configurationId
+      );
+      expect(serviceConfiguration).toEqual({
+        configuration_id: configurationId,
+        service_id: serviceId,
+        organization_fiscal_code: organizationFiscalCode,
+        organization_name: organizationName,
+        service_name: serviceName
+      });
     });
-  }
+    it("should return 'undefined' for unmatching id", () => {
+      const state = {
+        remoteConfig: O.some({
+          fims: {
+            services: [
+              {
+                configuration_id: "aConfId",
+                service_id: "01JMHVSD7JGCNJF36TX0JM0JF3",
+                organization_fiscal_code: "12345678901",
+                organization_name: "Organization name",
+                service_name: "Service name"
+              }
+            ]
+          }
+        })
+      } as GlobalState;
+      const serviceConfiguration = fimsServiceConfiguration(
+        state,
+        "unmatchingConfId"
+      );
+      expect(serviceConfiguration).toBeUndefined();
+    });
+  });
 });
 describe("isIOMarkdownEnabledForMessagesAndServicesSelector", () => {
   (
