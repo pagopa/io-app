@@ -1,29 +1,29 @@
-import { pipe } from "fp-ts/lib/function";
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import * as O from "fp-ts/lib/Option";
-import { MutableRefObject } from "react";
-import { StyleSheet, View } from "react-native";
 import {
   ButtonLink,
+  IOSkeleton,
   ListItemHeader,
   ModulePaymentNotice,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { CommonActions, useNavigation } from "@react-navigation/native";
-import Placeholder from "rn-placeholder";
-import I18n from "../../../i18n";
-import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
+import { MutableRefObject } from "react";
+import { StyleSheet, View } from "react-native";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { UIMessageId } from "../../messages/types";
+import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
-import { paymentsButtonStateSelector } from "../store/reducers/payments";
+import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
+import { UIMessageId } from "../../messages/types";
+import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { trackPNShowAllPayments } from "../analytics";
 import PN_ROUTES from "../navigation/routes";
-import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
-import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
-import { getRptIdStringFromPayment } from "../utils/rptId";
+import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { canShowMorePaymentsLink } from "../utils";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { getRptIdStringFromPayment } from "../utils/rptId";
 
 const styles = StyleSheet.create({
   morePaymentsSkeletonContainer: {
@@ -189,11 +189,11 @@ export const MessagePayments = ({
               <VSpacer size={32} />
               {paymentsButtonStatus === "visibleLoading" && (
                 <View style={styles.morePaymentsSkeletonContainer}>
-                  <Placeholder.Box
-                    animate="fade"
-                    radius={8}
+                  <IOSkeleton
+                    shape="rectangle"
                     width={172}
                     height={16}
+                    radius={8}
                   />
                 </View>
               )}
