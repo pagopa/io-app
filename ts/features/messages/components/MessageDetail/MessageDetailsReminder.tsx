@@ -1,9 +1,8 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import { UIMessageId } from "../../types";
-import { useIOSelector } from "../../../../store/hooks";
-import { paymentExpirationBannerStateSelector } from "../../store/reducers/payments";
+import { localeDateFormat } from "../../../../utils/locale";
+import I18n from "../../../../i18n";
 import { MessageDetailsReminderExpiring } from "./MessageDetailsReminderExpiring";
-import { MessageDetailsReminderExpired } from "./MessageDetailsReminderExpired";
 
 export type MessageDetailsReminderProps = {
   dueDate?: Date;
@@ -16,14 +15,11 @@ export const MessageDetailsReminder = ({
   messageId,
   title
 }: MessageDetailsReminderProps) => {
-  const reminderVisibility = useIOSelector(state =>
-    paymentExpirationBannerStateSelector(state, messageId)
-  );
-  if (reminderVisibility === "hidden" || !dueDate) {
+  if (dueDate == null) {
     return null;
   }
 
-  const isExpiring = reminderVisibility === "visibleExpiring";
+  const isExpiring = dueDate > new Date();
   return (
     <>
       {isExpiring ? (
@@ -33,12 +29,22 @@ export const MessageDetailsReminder = ({
           title={title}
         />
       ) : (
-        <MessageDetailsReminderExpired
-          dueDate={dueDate}
-          isLoading={reminderVisibility === "loading"}
+        <Alert
+          testID="due-date-alert"
+          variant="warning"
+          content={I18n.t("features.messages.badge.dueDate", {
+            date: localeDateFormat(
+              dueDate,
+              I18n.t("global.dateFormats.dayMonthWithoutTime")
+            ),
+            time: localeDateFormat(
+              dueDate,
+              I18n.t("global.dateFormats.timeFormat")
+            )
+          })}
         />
       )}
-      <VSpacer size={8} />
+      <VSpacer size={16} />
     </>
   );
 };
