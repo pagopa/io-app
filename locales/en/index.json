@@ -130,7 +130,8 @@
           "label": "Contextual Help",
           "hint": "Access information about the contents of the current screen"
         }
-      }
+      },
+      "progressTracker": "{{index}} of {{total}}"
     },
     "symbols": {
       "question": "?",
