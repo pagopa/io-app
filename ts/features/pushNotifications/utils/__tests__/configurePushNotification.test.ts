@@ -1,3 +1,5 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { constNull, constUndefined } from "fp-ts/lib/function";
 import PushNotification from "react-native-push-notification";
 import { Platform } from "react-native";
@@ -5,17 +7,43 @@ import {
   configurePushNotifications,
   testable
 } from "../configurePushNotification";
+import { Store } from "../../../../store/actions/types";
 import { newPushNotificationsToken } from "../../store/actions/installation";
 import * as ANALYTICS from "../../analytics";
 
-const mockedDispatch = jest.fn();
-jest.mock("../../../../boot/configureStoreAndPersistor", () => ({
-  get store() {
-    return {
-      dispatch: mockedDispatch
-    };
-  }
+jest.mock("react-native-i18n", () => ({
+  t: (key: string) => key
 }));
+
+const mockedDispatch = jest.fn();
+const mockStore = {
+  getState: () => ({
+    entities: {
+      messages: {
+        allPaginated: {
+          archive: {
+            data: pot.none,
+            lastRequest: O.none,
+            lastUpdateTime: new Date(0)
+          },
+          inbox: {
+            data: pot.none,
+            lastRequest: O.none,
+            lastUpdateTime: new Date(0)
+          },
+          shownCategory: "INBOX"
+        },
+        archiving: {
+          fromArchiveToInbox: new Set(),
+          fromInboxToArchive: new Set(),
+          processingResult: undefined,
+          status: "disabled"
+        }
+      }
+    }
+  }),
+  dispatch: mockedDispatch
+} as unknown as Store;
 
 const mockCaptureMessage = jest.fn();
 jest.mock("@sentry/react-native", () => ({
@@ -39,7 +67,7 @@ describe("configurePushNotifications", () => {
         .spyOn(PushNotification, "configure")
         .mockImplementation(constUndefined);
 
-      configurePushNotifications();
+      configurePushNotifications(mockStore);
 
       expect(createChannelSpy.mock.calls.length).toBe(1);
       expect(createChannelSpy.mock.calls[0][0]).toEqual({
@@ -68,7 +96,7 @@ describe("configurePushNotifications", () => {
         it(`should do nothing and track an anomaly with Sentry if the token is nullish (${JSON.stringify(
           input
         )})`, () => {
-          testable!.onPushNotificationTokenAvailable(input as any);
+          testable!.onPushNotificationTokenAvailable(mockStore, input as any);
           expect(mockCaptureMessage.mock.calls.length).toBe(1);
           expect(mockCaptureMessage.mock.calls[0].length).toBe(2);
           expect(mockCaptureMessage.mock.calls[0][0]).toEqual(
@@ -87,7 +115,7 @@ describe("configurePushNotifications", () => {
         .spyOn(ANALYTICS, "trackNewPushNotificationsTokenGenerated")
         .mockImplementation(constUndefined);
 
-      testable!.onPushNotificationTokenAvailable(mockToken as any);
+      testable!.onPushNotificationTokenAvailable(mockStore, mockToken as any);
 
       expect(mockCaptureMessage.mock.calls.length).toBe(0);
       expect(mockedDispatch.mock.calls.length).toBe(1);
