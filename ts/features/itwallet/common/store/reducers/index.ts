@@ -17,9 +17,6 @@ import itwCredentialsReducer, {
 import issuanceReducer, {
   ItwIssuanceState
 } from "../../../issuance/store/reducers";
-import lifecycleReducer, {
-  ItwLifecycleState
-} from "../../../lifecycle/store/reducers";
 import wiaReducer, {
   ItwWalletInstanceState
 } from "../../../walletInstance/store/reducers";
@@ -27,7 +24,6 @@ import preferencesReducer, { ItwPreferencesState } from "./preferences";
 
 export type ItWalletState = {
   issuance: ItwIssuanceState & PersistPartial;
-  lifecycle: ItwLifecycleState;
   credentials: ItwCredentialsState & PersistPartial;
   walletInstance: ItwWalletInstanceState & PersistPartial;
   preferences: ItwPreferencesState;
@@ -37,13 +33,12 @@ export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
 
 const itwReducer = combineReducers({
   issuance: issuanceReducer,
-  lifecycle: lifecycleReducer,
   credentials: itwCredentialsReducer,
   walletInstance: wiaReducer,
   preferences: preferencesReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 2;
+const CURRENT_REDUX_ITW_STORE_VERSION = 3;
 
 const migrations: MigrationManifest = {
   // Added preferences store
@@ -56,9 +51,9 @@ const migrations: MigrationManifest = {
 
   // Added authLevel to preferences store and set it to "L2" if eid is present
   "2": (state: PersistedState): PersistedState => {
-    const { lifecycle, preferences } = state as PersistedItWalletState;
-    // If the lifecycle is valid that means we have an eid, set the authLevel to "L2"
-    if (lifecycle === ItwLifecycleState.ITW_LIFECYCLE_VALID) {
+    const { credentials, preferences } = state as PersistedItWalletState;
+    // If we have an eid, set the authLevel to "L2"
+    if (credentials.eid) {
       return {
         ...state,
         preferences: {
@@ -69,13 +64,18 @@ const migrations: MigrationManifest = {
     }
 
     return state;
+  },
+  // Removed lifecycle reducer
+  "3": (state: PersistedState): PersistedState => {
+    const prevState = state as PersistedItWalletState;
+    return _.omit(prevState, "lifecycle");
   }
 };
 
 const itwPersistConfig: PersistConfig = {
   key: "itWallet",
   storage: AsyncStorage,
-  whitelist: ["lifecycle", "preferences"] satisfies Array<keyof ItWalletState>,
+  whitelist: ["preferences"] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };
