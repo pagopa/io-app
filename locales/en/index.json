@@ -133,7 +133,8 @@
       },
       "list": {
         "counter": "Element {{index}} of {{total}}"
-      }
+      },
+      "progressTracker": "{{index}} of {{total}}"
     },
     "symbols": {
       "question": "?",
@@ -2029,7 +2030,7 @@
       "updatedAmount": "Updated amount",
       "amountInfo": {
         "title": "Is the amount different from the one on the pagoPA notice?",
-        "message": "If the amount changes, it means that the Payee has automatically updated it. In this way, you can be sure that you are always paying the amount that is due. If it is higher, you may have to pay interest, penalties or notification costs.\n\nPlease contact the Payee for further details, as pagoPA does not know the reasons for the update.",
+        "message": "When the amount changes, it means it has been updated automatically. \n\nIf it is higher, there may be interest, penalties, or notification costs.\n\nIf the pagoPA notice concerns a legally significant communication, the increase in the amount to be paid may depend on various factors, such as:\n- receiving the communication via registered mail (as printing and delivery costs may be charged to the recipient);\n- the number of delivery attempts.\nFor further details, contact the Payee.",
         "cta": "Ok, va bene"
       },
       "contextualHelpTitle": "Transaction's summary",
@@ -2496,7 +2497,7 @@
         },
         "WAITING_CONFIRMATION_EMAIL": {
           "title": "Attendi la conferma del pagamento",
-          "subtitle": "Il pagamento non si è ancora concluso: riceverai a breve l’esito all'indirizzo {{email}}. L’operazione può richiedere fino a 15 minuti.",
+          "subtitle": "The payment has not been completed yet. If you do not receive a confirmation within 15 minutes at {{email}}, please try again.",
           "defaultSubtitle": "Il pagamento non si è ancora concluso: riceverai a breve l’esito via email. L’operazione può richiedere fino a 15 minuti."
         },
         "METHOD_NOT_ENABLED": {
