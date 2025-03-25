@@ -93,7 +93,10 @@ const ReceiptDetailsScreen = () => {
     analytics.trackPaymentsDownloadReceiptError({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentAnalyticsData?.receiptUser
+      user: paymentAnalyticsData?.receiptUser,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
+      payment_status: "paid"
     });
     toast.error(I18n.t("features.payments.transactions.receipt.error"));
   };
