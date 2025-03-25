@@ -1874,7 +1874,7 @@
       "idTransaction": "Identifikationscode der Transaktion",
       "amountInfo": {
         "title": "Ist der Betrag anders als auf der pagoPA-Benachrichtigung?",
-        "message": "Wenn sich der Betrag ändert, bedeutet das, dass die Gläubigerinstitution ihn automatisch aktualisiert hat. So kannst du sicher sein, immer den fälligen Betrag zu bezahlen. Falls er höher ist, könnten Zinsen, Strafen oder Benachrichtigungskosten anfallen.\n\nFür weitere Details wende dich bitte an die Gläubigerinstitution, da pagoPA die Gründe für die Aktualisierung nicht kennt.",
+        "message": "Wenn sich der Betrag ändert, bedeutet das, dass er automatisch aktualisiert wurde.\n\nFalls er höher ist, können Zinsen, Strafen oder Benachrichtigungskosten anfallen.\n\nHandelt es sich bei der pagoPA-Mitteilung um eine rechtlich relevante Kommunikation, kann die Erhöhung des zu zahlenden Betrags verschiedene Gründe haben, zum Beispiel:\n- wenn du die Mitteilung per Einschreiben erhalten hast (die Druck- und Versandkosten können zu deinen Lasten gehen);\n- die Anzahl der Zustellversuche.\nFür weitere Details wende dich bitte an die  Gläubigerinstitution.\n\nFür weitere Details wende dich bitte an die Gläubigerinstitution, da pagoPA die Gründe für die Aktualisierung nicht kennt.",
         "cta": "OK, habe verstanden"
       },
       "contextualHelpTitle": "Zusammenfassung der Transaktion",
