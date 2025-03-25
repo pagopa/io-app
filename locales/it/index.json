@@ -130,7 +130,8 @@
           "label": "Aiuto contestuale",
           "hint": "Accedi alle informazioni sul contenuto della schermata corrente"
         }
-      }
+      },
+      "progressTracker": "{{index}} di {{total}}"
     },
     "symbols": {
       "question": "?",
