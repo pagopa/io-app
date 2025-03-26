@@ -3494,7 +3494,8 @@
         "merchantsAll": "Tutti i partner",
         "tabs": {
           "perInitiative": "Per categoria",
-          "perMerchant": "Per partner"
+          "perMerchant": "Per partner",
+          "a11y": "Filtra {{label}}, {{index}} di {{total}}"
         },
         "cta": {
           "filter": "Filtra"
