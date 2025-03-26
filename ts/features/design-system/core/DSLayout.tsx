@@ -1,5 +1,6 @@
 import {
   Body,
+  BodySmall,
   ContentWrapper,
   Divider,
   H2,
@@ -8,7 +9,6 @@ import {
   IOAppMargin,
   IOColors,
   IOSpacer,
-  BodySmall,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";

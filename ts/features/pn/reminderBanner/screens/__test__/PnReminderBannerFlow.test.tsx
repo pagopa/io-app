@@ -4,21 +4,22 @@ import { applyMiddleware, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { put, takeLatest } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { applicationChangeState } from "../../../../store/actions/application";
-import * as USEIO from "../../../../store/hooks";
-import { appReducer } from "../../../../store/reducers";
-import * as SID_SELECTOR from "../../../../store/reducers/backendStatus/remoteConfig";
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import PN_ROUTES from "../../navigation/routes";
-import { pnActivationUpsert } from "../../store/actions";
-import * as LOADING_PN_ACTIVATION from "../../store/reducers/activation";
+import * as USEIO from "../../../../../store/hooks";
+import * as SID_SELECTOR from "../../../../../store/reducers/backendStatus/remoteConfig";
+import * as LOADING_PN_ACTIVATION from "../../../store/reducers/activation";
+import * as PREFERENCES_FETCHER from "../../../hooks/usePnPreferencesFetcher";
+
 import {
   PNActivationBannerFlowScreen,
   pnBannerFlowStateEnum
 } from "../PnReminderBannerFlow";
-import * as PREFERENCES_FETCHER from "../../hooks/usePnPreferencesFetcher";
+import { pnActivationUpsert } from "../../../store/actions";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { GlobalState } from "../../../../../store/reducers/types";
+import PN_ROUTES from "../../../navigation/routes";
 
 const WAITING_USER_INPUT_BASE_MOCKS = () => {
   jest

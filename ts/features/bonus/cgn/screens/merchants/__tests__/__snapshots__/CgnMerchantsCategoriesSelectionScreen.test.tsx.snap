@@ -209,6 +209,11 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 accessibilityPositionChangeAnnouncement=""
                                 accessible={false}
                                 backdropComponent={[Function]}
+                                backgroundStyle={
+                                  {
+                                    "backgroundColor": "#FFFFFF",
+                                  }
+                                }
                                 enableDismissOnClose={true}
                                 footerComponent={[Function]}
                                 handleComponent={[Function]}
@@ -259,7 +264,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                         ListHeaderComponent={
                           <React.Fragment>
                             <View
-                              accessible={true}
                               onLayout={[Function]}
                             >
                               <ForwardRef
@@ -345,7 +349,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                             onLayout={[Function]}
                           >
                             <View
-                              accessible={true}
                               onLayout={[Function]}
                             >
                               <Text
@@ -422,7 +425,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 >
                                   <View
                                     accessibilityLabel="By category"
-                                    accessibilityRole="button"
+                                    accessibilityRole="tab"
                                     accessibilityState={
                                       {
                                         "busy": undefined,
@@ -579,7 +582,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 >
                                   <View
                                     accessibilityLabel="By partner"
-                                    accessibilityRole="button"
+                                    accessibilityRole="tab"
                                     accessibilityState={
                                       {
                                         "busy": undefined,
@@ -847,6 +850,11 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                               accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundStyle={
+                                {
+                                  "backgroundColor": "#FFFFFF",
+                                }
+                              }
                               enableDismissOnClose={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}

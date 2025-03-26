@@ -150,7 +150,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "ITW_DISCOVERY": true,
     "LV_EXPIRATION_REMINDER": true,
     "PUSH_NOTIFICATIONS_REMINDER": true,
-    "SEND_ACTIVATION_REMINDER": false,
+    "SEND_ACTIVATION_REMINDER": true,
   },
   "loginFeatures": {
     "cieLogin": {

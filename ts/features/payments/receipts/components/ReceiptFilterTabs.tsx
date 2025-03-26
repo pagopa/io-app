@@ -31,16 +31,19 @@ const ReceiptFilterTabs = ({ selectedCategory, onCategorySelected }: Props) => {
         onItemPress={handleFilterSelected}
         selectedIndex={selectedIndexOfCategory}
       >
-        {receiptsCategoryFilters.map(category => (
+        {receiptsCategoryFilters.map((category, index) => (
           <TabItem
             testID={`CategoryTabTestID-${category}`}
             key={category}
             label={I18n.t(
               `features.payments.transactions.filters.tabs.${category}`
             )}
-            accessibilityLabel={I18n.t(
+            accessibilityLabel={`${I18n.t(
               `features.payments.transactions.filters.tabs.${category}`
-            )}
+            )}, ${I18n.t("global.accessibility.progressTracker", {
+              index: index + 1,
+              total: receiptsCategoryFilters.length
+            })}`}
           />
         ))}
       </TabNavigation>

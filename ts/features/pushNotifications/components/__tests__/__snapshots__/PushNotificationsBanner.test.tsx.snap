@@ -818,6 +818,11 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                           accessibilityPositionChangeAnnouncement=""
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundStyle={
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            }
+                          }
                           enableDismissOnClose={true}
                           footerComponent={[Function]}
                           handleComponent={[Function]}

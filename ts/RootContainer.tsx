@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
-import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
+import { configurePushNotifications } from "./features/pushNotifications/utils/configurePushNotification";
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
@@ -27,8 +27,10 @@ import {
   preferredLanguageSelector
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
+import { Store } from "./store/actions/types";
 
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  typeof mapDispatchToProps & { store: Store };
 
 /**
  * The main container of the application with:
@@ -44,7 +46,7 @@ class RootContainer extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
     /* Configure the application to receive push notifications */
-    configurePushNotifications();
+    configurePushNotifications(props.store);
   }
 
   private handleApplicationActivity = (activity: AppStateStatus) =>

@@ -2,6 +2,7 @@ import {
   Body,
   BodySmall,
   Divider,
+  IOSkeleton,
   ListItemAction,
   ListItemHeader,
   ListItemInfo,
@@ -16,7 +17,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ReactNode } from "react";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum
@@ -34,9 +34,9 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { format } from "../../../../utils/dates";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
+import { useIdPaySupportModal } from "../../common/hooks/useIdPaySupportModal";
 import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
 import { IdPayUnsubscriptionRoutes } from "../../unsubscription/navigation/routes";
-import { useIdPaySupportModal } from "../../common/hooks/useIdPaySupportModal";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
   InitiativeRulesInfoBox,
@@ -368,7 +368,7 @@ const BeneficiaryDetailsContentSkeleton = () => (
     {Array.from({ length: 3 }).map((_, i) => (
       <View key={i}>
         <VSpacer size={32} />
-        <Placeholder.Box animate="fade" height={24} width={"40%"} radius={4} />
+        <IOSkeleton shape="rectangle" width={"40%"} height={24} radius={4} />
         <VSpacer size={8} />
         {Array.from({ length: 2 }).map((_, j) => (
           <View key={j}>
