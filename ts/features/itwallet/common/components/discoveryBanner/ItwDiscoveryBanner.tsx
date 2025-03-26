@@ -2,8 +2,8 @@ import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import { createRef, useEffect, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { pipe } from "fp-ts/function";
 import * as O from "fp-ts/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -75,13 +75,11 @@ export const ItwDiscoveryBanner = ({
 
   // This effect is used to determine which banner to show and if it should be shown
   useEffect(() => {
-    const isDataLoaded = pipe(O.fromNullable(isWalletRemotelyActive), O.isSome);
-    if (isDataLoaded) {
-      const type: BannerType = isWalletRemotelyActive
-        ? "reactivating"
-        : "onboarding";
-      setBannerType(type);
-    }
+    pipe(
+      O.fromNullable(isWalletRemotelyActive),
+      O.map(isActive => (isActive ? "reactivating" : "onboarding")),
+      O.map(setBannerType)
+    );
   }, [isWalletRemotelyActive]);
 
   if (!bannerType) {
