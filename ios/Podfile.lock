@@ -1500,7 +1500,7 @@ PODS:
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
-  - react-native-skia (1.12.0):
+  - react-native-skia (1.11.18):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2566,7 +2566,7 @@ SPEC CHECKSUMS:
   react-native-render-html: 05a7d4490ffc85c88094601207f3e48a90533476
   react-native-safe-area-context: 17a482f540310e2209f884fd49472d9e1c0e73d6
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
-  react-native-skia: 8fb7cff03914b6777494b216eaa4d1b3aba7fc2a
+  react-native-skia: 834c7cbcdd986806860ce075571123b6c2c82633
   react-native-slider: 5299110eb902bc5169b1dd94192aa28e1bf15ad8
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
   react-native-webview: 1d14b6d22fe11c300bac255eafe1ef5202c8c525
