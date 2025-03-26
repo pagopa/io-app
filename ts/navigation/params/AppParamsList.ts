@@ -23,6 +23,8 @@ import { IdPayBarcodeRoutes } from "../../features/idpay/barcode/navigation/rout
 import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
 
+import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params.ts";
+import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes.ts";
 import { IdPayConfigurationParamsList } from "../../features/idpay/configuration/navigation/params";
 import { IdPayConfigurationRoutes } from "../../features/idpay/configuration/navigation/routes";
 import {
@@ -37,6 +39,8 @@ import { IdPayUnsubscriptionParamsList } from "../../features/idpay/unsubscripti
 import { IdPayUnsubscriptionRoutes } from "../../features/idpay/unsubscription/navigation/routes";
 import { ItwParamsList } from "../../features/itwallet/navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
+import { ItwRemoteParamsList } from "../../features/itwallet/presentation/remote/navigation/ItwRemoteParamsList.ts";
+import { ITW_REMOTE_ROUTES } from "../../features/itwallet/presentation/remote/navigation/routes.ts";
 import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import { PaymentsBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
@@ -54,8 +58,6 @@ import { ServicesParamsList } from "../../features/services/common/navigation/pa
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
-import { ItwRemoteParamsList } from "../../features/itwallet/presentation/remote/navigation/ItwRemoteParamsList.ts";
-import { ITW_REMOTE_ROUTES } from "../../features/itwallet/presentation/remote/navigation/routes.ts";
 import ROUTES from "../routes";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
@@ -85,6 +87,8 @@ export type AppParamsList = {
   [CGN_ROUTES.DETAILS.MAIN]: NavigatorScreenParams<CgnDetailsParamsList>;
   [CGN_ROUTES.EYCA.ACTIVATION
     .MAIN]: NavigatorScreenParams<CgnEYCAActivationParamsList>;
+
+  [CDC_ROUTES.CDC_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
 
   [ROUTES.OFFLINE_FAILURE]: undefined;
   [ROUTES.WORKUNIT_GENERIC_FAILURE]: undefined;
