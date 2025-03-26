@@ -1,5 +1,5 @@
 /**
- * this type models 2 cta that could be nested inside the markdown content of a message
+ * this type models 2 cta that could be nested inside the markdown content of a message and on a service
  * see https://www.pivotaltracker.com/story/show/173171577
  */
 import * as t from "io-ts";

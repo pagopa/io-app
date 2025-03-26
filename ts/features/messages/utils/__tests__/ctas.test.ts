@@ -8,7 +8,7 @@ import { MessageContent } from "../../../../../definitions/backend/MessageConten
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
 import { Locales } from "../../../../../locales/locales";
 import { setLocale } from "../../../../i18n";
-import { CTA, CTAS, LocalizedCTAs } from "../../types/MessageCTA";
+import { CTA, CTAS, LocalizedCTAs } from "../../../../types/LocalizedCTAs";
 import {
   ctasFromLocalizedCTAs,
   getMessageCTAs,

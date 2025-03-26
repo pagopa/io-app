@@ -10,7 +10,7 @@ import { logosForService } from "../../common/utils";
 import { getServiceCTAs, handleCtaAction } from "../../../messages/utils/ctas";
 import { useFIMSFromServiceId } from "../../../fims/common/hooks";
 import { ServiceDetailsScreenComponent } from "../components/ServiceDetailsScreenComponent";
-import { CTA } from "../../../messages/types/MessageCTA";
+import { CTA } from "../../../../types/LocalizedCTAs";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import * as analytics from "../../common/analytics";
 import { CtaCategoryType } from "../../common/analytics";

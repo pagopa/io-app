@@ -19,7 +19,7 @@ import {
   CTAS,
   LocalizedCTAs,
   LocalizedCTALocales
-} from "../types/MessageCTA";
+} from "../../../types/LocalizedCTAs";
 import {
   getInternalRoute,
   handleInternalLink
