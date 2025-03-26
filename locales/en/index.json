@@ -131,6 +131,9 @@
           "hint": "Access information about the contents of the current screen"
         }
       },
+      "list": {
+        "counter": "Element {{index}} of {{total}}"
+      },
       "progressTracker": "{{index}} of {{total}}"
     },
     "symbols": {
@@ -3497,7 +3500,7 @@
           "filter": "Filter"
         },
         "categoriesList": {
-          "a11y": "{{name}} {{count}} new opportunities found",
+          "a11y": "{{name}}, {{count}} new opportunities found",
           "title": "Select a category and discover the benefits",
           "bottomSheet": {
             "cta": "How are categories ordered by?",

@@ -131,6 +131,9 @@
           "hint": "Accedi alle informazioni sul contenuto della schermata corrente"
         }
       },
+      "list": {
+        "counter": "Elemento {{index}} di {{total}}"
+      },
       "progressTracker": "{{index}} di {{total}}"
     },
     "symbols": {
@@ -3497,7 +3500,7 @@
           "filter": "Filtra"
         },
         "categoriesList": {
-          "a11y": "{{name}} {{count}} nuove opportunità trovate",
+          "a11y": "{{name}}, {{count}} nuove opportunità trovate",
           "title": "Seleziona una categoria e scopri agevolazioni e opportunità",
           "bottomSheet": {
             "cta": "Come vengono ordinate le categorie?",
