@@ -131,6 +131,9 @@
           "hint": "Accedi alle informazioni sul contenuto della schermata corrente"
         }
       },
+      "list": {
+        "counter": "Elemento {{index}} di {{total}}"
+      },
       "progressTracker": "{{index}} di {{total}}"
     },
     "symbols": {
@@ -2648,7 +2651,8 @@
       "reminderRemoveFailure": "Errore durante l'eliminazione del promemoria, riprova per piacere",
       "preferenceCalendarSelect": "Seleziona un calendario predefinito",
       "calendarPermDenied": {
-        "title": "Consenti l'accesso",
+        "title": "Per aggiungere il promemoria, devi consentire a IO di accedere al tuo calendario",
+        "preferencesTitle": "Consenti l'accesso",
         "description": "Non abbiamo accesso al tuo calendario. Abilita i permessi per continuare.",
         "ok": "Consenti l'accesso",
         "cancel": "Annulla"
@@ -3497,7 +3501,7 @@
           "filter": "Filtra"
         },
         "categoriesList": {
-          "a11y": "{{name}} {{count}} nuove opportunità trovate",
+          "a11y": "{{name}}, {{count}} nuove opportunità trovate",
           "title": "Seleziona una categoria e scopri agevolazioni e opportunità",
           "bottomSheet": {
             "cta": "Come vengono ordinate le categorie?",

@@ -121,7 +121,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           )
         }
       }}
-      renderItem={({ item }) => renderItem(item as any)}
+      renderItem={({ item, index }) => renderItem(item as any, index)}
       data={[...data]}
       refreshControlProps={refreshControlProps}
       ListHeaderComponent={ListHeaderComponent}
