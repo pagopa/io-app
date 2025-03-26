@@ -3394,7 +3394,6 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                     },
                                   ]
                                 }
-                                tintColor="#0E0F13"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={NaN}
