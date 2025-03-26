@@ -1,5 +1,4 @@
 import { ReactElement, useCallback, useEffect, useRef } from "react";
-
 import { View } from "react-native";
 import { StackActions } from "@react-navigation/native";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
@@ -89,7 +88,8 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
         data.hasRemoteContent,
         data.containsAttachments,
         fromPushNotification,
-        data.hasFIMSCTA
+        data.hasFIMSCTA,
+        data.createdAt
       );
 
       if (data.isLegacyGreenPass) {

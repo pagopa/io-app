@@ -5,15 +5,25 @@ import {
   askUserToRefreshSessionToken,
   clearTokenRefreshError
 } from "../store/actions/tokenRefreshActions";
-import { useIODispatch } from "../../../store/hooks";
-import AskUserInteractionScreen from "./AskUserInteractionScreen";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { itwLifecycleIsOperationalOrValid } from "../../itwallet/lifecycle/store/selectors";
+import { isItwOfflineAccessEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { setOfflineAccessReason } from "../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../ingress/store/reducer";
 import RefreshTokenLoadingScreen from "./RefreshTokenLoadingScreen";
+import AskUserInteractionScreen from "./AskUserInteractionScreen";
 
 const FastLoginModals = (
   tokenRefreshing: TokenRefreshState,
   isFastLoginUserInteractionNeeded: boolean
 ) => {
   const dispatch = useIODispatch();
+  const selectItwLifecycleIsOperationalOrValid = useIOSelector(
+    itwLifecycleIsOperationalOrValid
+  );
+  const isOfflineAccessEnabled = useIOSelector(
+    isItwOfflineAccessEnabledSelector
+  );
 
   if (tokenRefreshing.kind === "no-pin-error") {
     return (
@@ -40,6 +50,10 @@ const FastLoginModals = (
   }
 
   if (tokenRefreshing.kind === "transient-error") {
+    if (selectItwLifecycleIsOperationalOrValid && isOfflineAccessEnabled) {
+      dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.SESSION_REFRESH));
+      return undefined;
+    }
     return (
       <AskUserInteractionScreen
         pictogramName="umbrella"

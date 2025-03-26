@@ -1,9 +1,11 @@
 import * as Mixpanel from "../../../../mixpanel";
 import {
+  getNotificationTokenType,
   trackSettingsDiscoverBannerClosure,
   trackSettingsDiscoverBannerTap,
   trackSettingsDiscoverBannerVisualized
 } from "..";
+import { GlobalState } from "../../../../store/reducers/types";
 
 describe("index", () => {
   afterEach(() => {
@@ -55,6 +57,27 @@ describe("index", () => {
       banner_id: "settingsDiscoveryBanner",
       banner_page: "MESSAGES_HOME",
       banner_landing: "SETTINGS_MAIN"
+    });
+  });
+});
+
+describe("getNotificationTokenType", () => {
+  [
+    [undefined, "no"],
+    ["", "no"],
+    [" ", "no"],
+    ["whatever", "yes"]
+  ].forEach(tokenValue => {
+    it(`should return '${tokenValue[1]}' for input '${tokenValue[0]}'`, () => {
+      const state = {
+        notifications: {
+          installation: {
+            token: tokenValue[0]
+          }
+        }
+      } as GlobalState;
+      const output = getNotificationTokenType(state);
+      expect(output).toBe(tokenValue[1]);
     });
   });
 });

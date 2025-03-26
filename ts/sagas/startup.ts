@@ -99,7 +99,6 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import {
-  isStartupLoaded,
   StartupStatusEnum,
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
@@ -108,6 +107,10 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
+import {
+  isDeviceOfflineWithWalletSaga,
+  watchSessionRefreshInOfflineSaga
+} from "../features/ingress/saga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -232,24 +235,41 @@ export function* initializeApplicationSaga(
   // Start watching for ITW sagas that do not require internet connection or a valid session
   yield* fork(watchItwOfflineSaga);
 
+  /**
+   * Prevents the saga from executing if the user opened the app while offline.
+   *
+   * - Calls `isDeviceOfflineWithWalletSaga` to determine if the device is offline,
+   *   the user has a valid IT Wallet instance, and offline access is enabled.
+   * - If this condition is met, it means the app started in offline mode,
+   *   so the function exits early (`return`), preventing unnecessary execution of subsequent logic.
+   * - This ensures that only relevant flows are triggered based on the app’s startup condition.
+   */
+  const isDeviceOfflineWithWallet = yield* call(isDeviceOfflineWithWalletSaga);
+  if (isDeviceOfflineWithWallet) {
+    return;
+  }
+
+  /**
+   * Starts listening for session refresh failures while in offline mode.
+   *
+   * - `watchSessionRefreshInOfflineSaga` monitors when the offline access reason
+   *   is updated due to a session refresh failure.
+   * - If the session refresh process fails while offline, this saga will handle
+   *   transitioning the app to offline mode accordingly.
+   * - Forking (`yield* fork(...)`) allows this watcher to run in parallel
+   *   without blocking the rest of the execution.
+   *
+   * This ensures that if the device is online but session refresh fails,
+   * the app correctly transitions to offline mode when necessary.
+   */
+  yield* fork(watchSessionRefreshInOfflineSaga);
+
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
   // before using them.
   const remoteConfig = yield* select(remoteConfigSelector);
   if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
-  }
-
-  /**
-   * To prevent cases where the user goes back online and the saga continues,
-   * we need to explicitly stop the flow at this point.
-   * If `backendStatusLoadSuccess` is dispatched, it means the user is back online,
-   * **BUT** they must continue navigating within the offline flow.
-   * The best way to ensure this is to exit the startup saga at this stage.
-   */
-  const startupStatus = yield* select(isStartupLoaded);
-  if (startupStatus === StartupStatusEnum.OFFLINE) {
-    return;
   }
 
   // Whether the user is currently logged in.
