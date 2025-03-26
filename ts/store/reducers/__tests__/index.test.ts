@@ -1,7 +1,10 @@
 import { appReducer, createRootReducer } from "..";
 import { PersistedNotificationsState } from "../../../features/pushNotifications/store/reducers";
 import { applicationChangeState } from "../../actions/application";
-import { logoutFailure, logoutSuccess } from "../../actions/authentication";
+import {
+  logoutFailure,
+  logoutSuccess
+} from "../../../features/authentication/store/actions";
 import { GlobalState } from "../types";
 
 describe("index", () => {

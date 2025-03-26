@@ -3,7 +3,7 @@ import {
   logoutRequest,
   sessionExpired,
   sessionInvalid
-} from "../../../../../store/actions/authentication";
+} from "../../../../authentication/store/actions";
 import { clearCache } from "../../../../../store/actions/profile";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as utils from "../../../utils";
