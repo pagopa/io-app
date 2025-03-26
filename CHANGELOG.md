@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0-rc.1](https://github.com/pagopa/io-app/compare/3.2.0-rc.0...3.2.0-rc.1) (2025-03-25)
+
+
+### Features
+
+* [[IOCOM-2235](https://pagopa.atlassian.net/browse/IOCOM-2235),[IOCOM-2240](https://pagopa.atlassian.net/browse/IOCOM-2240)] Push token absence tracking and fix for missing token on iOS ([#6815](https://github.com/pagopa/io-app/issues/6815)) ([5b26240](https://github.com/pagopa/io-app/commit/5b262407aff58f5001ccf4811125f53916314503))
+
 ## [3.2.0-rc.0](https://github.com/pagopa/io-app/compare/3.1.0-rc.3...3.2.0-rc.0) (2025-03-25)
 
 
