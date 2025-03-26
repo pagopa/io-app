@@ -18,14 +18,14 @@ const CTASO = t.partial({
 });
 
 export const CTAS = t.intersection([CTASR, CTASO], "CTAS");
+export type CTAS = t.TypeOf<typeof CTAS>;
 
 const props = {
   it: CTAS,
   en: CTAS
 };
-const MessageCTA = t.partial(props);
-export const MessageCTALocales = t.keyof(props);
-export type MessageCTALocales = t.TypeOf<typeof MessageCTALocales>;
-export type CTAS = t.TypeOf<typeof CTAS>;
+const LocalizedCTAs = t.partial(props);
+export type LocalizedCTAs = t.TypeOf<typeof LocalizedCTAs>;
 
-export type MessageCTA = t.TypeOf<typeof MessageCTA>;
+export const LocalizedCTALocales = t.keyof(props);
+export type LocalizedCTALocales = t.TypeOf<typeof LocalizedCTALocales>;
