@@ -130,7 +130,8 @@
           "label": "Aiuto contestuale",
           "hint": "Accedi alle informazioni sul contenuto della schermata corrente"
         }
-      }
+      },
+      "progressTracker": "{{index}} di {{total}}"
     },
     "symbols": {
       "question": "?",
@@ -2034,7 +2035,7 @@
       "idTransaction": "Codice identificativo della transazione",
       "amountInfo": {
         "title": "L’importo è diverso da quello riportato sull’avviso pagoPA?",
-        "message": "Quando l'importo cambia, significa che l'ente creditore l'ha aggiornato automaticamente. In questo modo, hai sempre la certezza di pagare l’importo dovuto. Se è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nPer ulteriori dettagli contatta l'ente creditore, poiché pagoPA non conosce i motivi dell'aggiornamento.",
+        "message": "Quando l'importo cambia, significa che è stato aggiornato automaticamente.\n\nSe è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nSe l’avviso pagoPA riguarda una comunicazione a valore legale, l’aumento dell’importo da pagare può dipendere da diversi fattori, per esempio:\n- se hai ricevuto la comunicazione tramite  raccomandata (i cui costi di stampa e invio possono essere a carico del destinatario); \n- il numero di tentativi di recapito. \nPer ulteriori dettagli contatta l'ente creditore.",
         "cta": "Ok, va bene"
       },
       "contextualHelpTitle": "Riepilogo della transazione",
@@ -2493,7 +2494,7 @@
         },
         "WAITING_CONFIRMATION_EMAIL": {
           "title": "Attendi la conferma del pagamento",
-          "subtitle": "Il pagamento non si è ancora concluso: riceverai a breve l’esito all'indirizzo {{email}}. L’operazione può richiedere fino a 15 minuti.",
+          "subtitle": "Il pagamento non si è ancora concluso: se non ricevi l'esito positivo entro 15 minuti all'indirizzo {{email}} riprova di nuovo.",
           "defaultSubtitle": "Il pagamento non si è ancora concluso: riceverai a breve l’esito via email. L’operazione può richiedere fino a 15 minuti."
         },
         "METHOD_NOT_ENABLED": {
@@ -2647,7 +2648,8 @@
       "reminderRemoveFailure": "Errore durante l'eliminazione del promemoria, riprova per piacere",
       "preferenceCalendarSelect": "Seleziona un calendario predefinito",
       "calendarPermDenied": {
-        "title": "Consenti l'accesso",
+        "title": "Per aggiungere il promemoria, devi consentire a IO di accedere al tuo calendario",
+        "preferencesTitle": "Consenti l'accesso",
         "description": "Non abbiamo accesso al tuo calendario. Abilita i permessi per continuare.",
         "ok": "Consenti l'accesso",
         "cancel": "Annulla"

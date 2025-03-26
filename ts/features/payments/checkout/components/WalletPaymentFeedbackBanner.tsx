@@ -47,6 +47,8 @@ const WalletPaymentFeebackBanner = () => {
         viewRef={bannerViewRef}
         title={feedbackBannerConfig.title?.[localeFallback]}
         content={feedbackBannerConfig.description[localeFallback]}
+        // Starting from version 5.1.3 of the Design System, the `action` property,
+        // if explicitly configured, cannot have the value `undefined`.
         action={feedbackBannerConfig.action?.label[localeFallback] ?? ""}
         onPress={handleBannerPress}
       />

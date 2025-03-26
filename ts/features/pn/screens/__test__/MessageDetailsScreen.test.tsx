@@ -20,7 +20,7 @@ import { loadServiceDetail } from "../../../services/details/store/actions/detai
 import { service_1 } from "../../../messages/__mocks__/messages";
 import { UIMessageId } from "../../../messages/types";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { thirdPartyMessage } from "../../__mocks__/message";
+import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 
 describe("MessageDetailsScreen", () => {
   it("should match the snapshot when there is an error", () => {

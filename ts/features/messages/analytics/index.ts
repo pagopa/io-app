@@ -7,7 +7,11 @@ import { MessageCategory } from "../../../../definitions/backend/MessageCategory
 import { mixpanelTrack } from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { UIMessageId } from "../types";
-import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
+import {
+  booleanToYesNo,
+  buildEventProperties,
+  dateToUTCISOString
+} from "../../../utils/analytics";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 import { MessageListCategory } from "../types/messageListCategory";
 import { Action } from "../../../store/actions/types";
@@ -56,7 +60,8 @@ export const trackOpenMessage = (
   hasRemoteContent: boolean,
   containsAttachments: boolean,
   fromPushNotification: boolean,
-  hasFIMSCTA: boolean
+  hasFIMSCTA: boolean,
+  createdAt: Date
 ) => {
   const eventName = "OPEN_MESSAGE";
   const props = buildEventProperties("UX", "screen_view", {
@@ -70,7 +75,8 @@ export const trackOpenMessage = (
     contains_attachment: booleanToYesNo(containsAttachments),
     first_time_opening: booleanToYesNo(firstTimeOpening),
     fromPushNotification: booleanToYesNo(fromPushNotification),
-    has_fims_callback: booleanToYesNo(hasFIMSCTA)
+    has_fims_callback: booleanToYesNo(hasFIMSCTA),
+    date_sent: dateToUTCISOString(createdAt)
   });
   void mixpanelTrack(eventName, props);
 };

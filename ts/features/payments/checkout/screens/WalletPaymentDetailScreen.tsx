@@ -1,5 +1,4 @@
 import {
-  Body,
   Divider,
   H3,
   IOSpacingScale,
@@ -25,6 +24,7 @@ import { AccessibilityInfo, SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -242,9 +242,9 @@ const WalletPaymentDetailContent = ({
     title: I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
     component: (
       <SafeAreaView>
-        <Body>
-          {I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
-        </Body>
+        <IOMarkdown
+          content={I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
+        />
         <VSpacer size={24} />
       </SafeAreaView>
     )
