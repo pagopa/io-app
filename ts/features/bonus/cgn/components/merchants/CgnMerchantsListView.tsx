@@ -7,11 +7,13 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 
+type Props = {
+  onItemPress: (id: Merchant["id"]) => void;
+  count: number;
+};
+
 export const CgnMerchantListViewRenderItem =
-  (props: {
-    onItemPress: (id: Merchant["id"]) => void;
-    count: number;
-  }): ListRenderItem<OfflineMerchant | OnlineMerchant> =>
+  (props: Props): ListRenderItem<OfflineMerchant | OnlineMerchant> =>
   ({ item, index }) => {
     const accessibilityLabel =
       (item?.numberOfNewDiscounts
