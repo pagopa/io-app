@@ -63,6 +63,7 @@ import {
 import { isGestureEnabled } from "../utils/navigation";
 import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
 import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
+import { PageNotFound } from "../features/pageNotFound/screens/index.tsx";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -212,6 +213,11 @@ const AuthenticatedStackNavigator = () => {
         name={ROUTES.WORKUNIT_GENERIC_FAILURE}
         options={hideHeaderOptions}
         component={WorkunitGenericFailure}
+      />
+      <Stack.Screen
+        name={ROUTES.PAGE_NOT_FOUND}
+        options={hideHeaderOptions}
+        component={PageNotFound}
       />
 
       <Stack.Group

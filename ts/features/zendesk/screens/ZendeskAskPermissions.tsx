@@ -396,6 +396,7 @@ const ZendeskAskPermissions = () => {
     >
       <ContentWrapper>
         <ButtonLink
+          accessibilityRole="link"
           label={I18n.t("support.askPermissions.privacyLink")}
           onPress={() => {
             openWebUrl(zendeskPrivacyUrl, () =>
