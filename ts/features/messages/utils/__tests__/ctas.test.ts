@@ -71,8 +71,17 @@ const messageWithContent = {
   content: { ...messageWithContentWithoutDueDate.content, due_date: new Date() }
 };
 
+const mockAnalytics = jest.fn();
+
 // test "it" as default language
 beforeAll(() => setLocale("it" as Locales));
+beforeEach(() => {
+  jest
+    .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
+    .mockImplementation((_reason, _serviceId) =>
+      mockAnalytics(_reason, _serviceId)
+    );
+});
 afterEach(() => {
   jest.restoreAllMocks();
   jest.clearAllMocks();
@@ -109,6 +118,7 @@ describe("getMessageCTAs", () => {
     text2: string,
     action2: string
   ) => {
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(maybeCTAS).toBeTruthy();
     if (maybeCTAS != null) {
       expect(maybeCTAS.cta_1).toBeDefined();
@@ -271,16 +281,12 @@ en:
     text: "CTA2 Text"
     action: "ioit://services"
 ---`;
-    const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
-      .mockReturnValue(undefined);
-
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTAs,
       serviceId
     );
 
-    expect(spyOnAnalytics.mock.calls.length).toBe(0);
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(verifiedCTAOrUndefined).toEqual({
       cta_1: {
         text: "Testo CTA1",
@@ -303,16 +309,13 @@ en:
     text: "CTA1 Text"
     action: "ioit://messages"
 ---`;
-    const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
-      .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTA1,
       serviceId
     );
 
-    expect(spyOnAnalytics.mock.calls.length).toBe(0);
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(verifiedCTAOrUndefined).toEqual({
       cta_1: {
         text: "Testo CTA1",
@@ -331,21 +334,18 @@ en:
     text: "CTA2 Text"
     action: "ioit://services"
 ---`;
-    const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
-      .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTAs,
       serviceId
     );
 
-    expect(spyOnAnalytics.mock.calls.length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0].length).toBe(2);
-    expect(spyOnAnalytics.mock.calls[0][0]).toBe(
+    expect(mockAnalytics.mock.calls.length).toBe(1);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
       "A failure occoured while decoding from Localized CTAS to specific CTAs"
     );
-    expect(spyOnAnalytics.mock.calls[0][1]).toBe(serviceId);
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(verifiedCTAOrUndefined).toBeUndefined();
   });
   it("should return CTAS from input string with invalid CTA1 action but valid CTA2 action", () => {
@@ -365,21 +365,18 @@ en:
     text: "CTA2 Text"
     action: "ioit://services"
 ---`;
-    const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
-      .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTAs,
       serviceId
     );
 
-    expect(spyOnAnalytics.mock.calls.length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0].length).toBe(2);
-    expect(spyOnAnalytics.mock.calls[0][0]).toBe(
+    expect(mockAnalytics.mock.calls.length).toBe(1);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
       "The first CTA does not contain a supported action"
     );
-    expect(spyOnAnalytics.mock.calls[0][1]).toBe(serviceId);
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
 
     expect(verifiedCTAOrUndefined).toEqual({
       cta_1: {
@@ -409,50 +406,39 @@ en:
     text: "CTA2 Text"
     action: "thisIsNotValid"
 ---`;
-    const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
-      .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTAs,
       serviceId
     );
 
-    expect(spyOnAnalytics.mock.calls.length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0].length).toBe(2);
-    expect(spyOnAnalytics.mock.calls[0][0]).toBe(
+    expect(mockAnalytics.mock.calls.length).toBe(1);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
       "The second CTA does not contain a supported action"
     );
-    expect(spyOnAnalytics.mock.calls[0][1]).toBe(serviceId);
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(verifiedCTAOrUndefined).toEqual({
       cta_1: { action: "ioit://messages", text: "Testo CTA1" },
       cta_2: { action: "thisIsNotValid", text: "Testo CTA2" }
     });
   });
   it("should return undefined from invalid input string", () => {
-    const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
-      .mockReturnValue(undefined);
-
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       "invalidInputString",
       serviceId
     );
 
-    expect(spyOnAnalytics.mock.calls.length).toBe(0);
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(verifiedCTAOrUndefined).toBeUndefined();
   });
   it("should return undefined from undefined input string", () => {
-    const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
-      .mockReturnValue(undefined);
-
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       undefined,
       serviceId
     );
 
-    expect(spyOnAnalytics.mock.calls.length).toBe(0);
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(verifiedCTAOrUndefined).toBeUndefined();
   });
   ioHandledLinks.forEach(action => {
@@ -467,16 +453,13 @@ en:
     text: "CTA1 Text"
     action: "${action}"
 ---`;
-      const spyOnAnalytics = jest
-        .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
-        .mockReturnValue(undefined);
 
       const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
         validCTA1,
         serviceId
       );
 
-      expect(spyOnAnalytics.mock.calls.length).toBe(0);
+      expect(mockAnalytics.mock.calls.length).toBe(0);
       expect(verifiedCTAOrUndefined).toEqual({
         cta_1: {
           text: "Testo CTA1",
@@ -496,21 +479,18 @@ cta_1:
   text: "CTA1 Text"
   action: "iohandledlink://notSupported://whatever"
 ---`;
-    const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
-      .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTA1,
       serviceId
     );
 
-    expect(spyOnAnalytics.mock.calls.length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0].length).toBe(2);
-    expect(spyOnAnalytics.mock.calls[0][0]).toBe(
+    expect(mockAnalytics.mock.calls.length).toBe(1);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
       "A failure occourred while parsing or extracting front matter"
     );
-    expect(spyOnAnalytics.mock.calls[0][1]).toBe(serviceId);
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(verifiedCTAOrUndefined).toBeUndefined();
   });
 });
