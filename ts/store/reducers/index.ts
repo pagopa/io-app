@@ -276,6 +276,13 @@ export function createRootReducer(
               itWallet: {
                 ...state.features.itWallet
               },
+              pn: {
+                ...state.features.pn,
+                bannerDismiss: {
+                  ...state.features.pn.bannerDismiss,
+                  dismissed: false
+                }
+              },
               _persist: state.features._persist
             },
             identification: {
@@ -285,6 +292,13 @@ export function createRootReducer(
             // notifications must be kept
             notifications: {
               ...state.notifications,
+              installation: {
+                ...state.notifications.installation,
+                // Make sure to register the token again upon login, since
+                // such process deletes the token from the notification hub
+                registeredToken: undefined,
+                tokenStatus: { status: "unsent" }
+              },
               _persist: state.notifications._persist
             },
             // isMixpanelEnabled must be kept

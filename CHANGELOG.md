@@ -2,6 +2,94 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0-rc.1](https://github.com/pagopa/io-app/compare/3.2.0-rc.0...3.2.0-rc.1) (2025-03-25)
+
+
+### Features
+
+* [[IOCOM-2235](https://pagopa.atlassian.net/browse/IOCOM-2235),[IOCOM-2240](https://pagopa.atlassian.net/browse/IOCOM-2240)] Push token absence tracking and fix for missing token on iOS ([#6815](https://github.com/pagopa/io-app/issues/6815)) ([5b26240](https://github.com/pagopa/io-app/commit/5b262407aff58f5001ccf4811125f53916314503))
+
+## [3.2.0-rc.0](https://github.com/pagopa/io-app/compare/3.1.0-rc.3...3.2.0-rc.0) (2025-03-25)
+
+
+### Features
+
+* [[IOCOM-2100](https://pagopa.atlassian.net/browse/IOCOM-2100)] Common FIMS start API ([#6740](https://github.com/pagopa/io-app/issues/6740)) ([24b4838](https://github.com/pagopa/io-app/commit/24b4838542a5e0b8ebec412c86eb0f8278ee9ce3))
+* [[IOCOM-2174](https://pagopa.atlassian.net/browse/IOCOM-2174)] Delayed push token registration attempt ([#6774](https://github.com/pagopa/io-app/issues/6774)) ([6fb3723](https://github.com/pagopa/io-app/commit/6fb372389294034f91096f1ffd5fb1a8b54d7324))
+* [[IOCOM-2211](https://pagopa.atlassian.net/browse/IOCOM-2211)] Add `date_sent` parameter on `OPEN_MESSAGE` event ([#6811](https://github.com/pagopa/io-app/issues/6811)) ([3b1d7d3](https://github.com/pagopa/io-app/commit/3b1d7d33077552960adeb2fbf82d37cca97b8113))
+
+
+### Bug Fixes
+
+* [[IOCOM-2160](https://pagopa.atlassian.net/browse/IOCOM-2160)] Service button accessibility role in message details ([#6758](https://github.com/pagopa/io-app/issues/6758)) ([6151a92](https://github.com/pagopa/io-app/commit/6151a92b8a86480c120fd6bf764c5d221f5a85e6))
+* [[IOPAE-1727](https://pagopa.atlassian.net/browse/IOPAE-1727)] Fixed accessibility issue in services search ([#6800](https://github.com/pagopa/io-app/issues/6800)) ([b234033](https://github.com/pagopa/io-app/commit/b2340336d00d309ee284a34d62e7ce72e91ae6b7))
+
+
+### Chores
+
+* [[IOAPPX-494](https://pagopa.atlassian.net/browse/IOAPPX-494)] Update node binary script detection on iOS ([#6840](https://github.com/pagopa/io-app/issues/6840)) ([0f1a911](https://github.com/pagopa/io-app/commit/0f1a9118d89480f25c866e5b1898209e1d3ef299))
+* [[IOBP-1242](https://pagopa.atlassian.net/browse/IOBP-1242)] Announce `Tab` role and position for screen readers ([#6837](https://github.com/pagopa/io-app/issues/6837)) ([7ad3e0e](https://github.com/pagopa/io-app/commit/7ad3e0e1f081bfbb9994882b54c4fb2b31112372))
+* [[IOBP-1445](https://pagopa.atlassian.net/browse/IOBP-1445)] Update locales for `WAITING_CONFIRMATION_EMAIL` outcome  ([#6832](https://github.com/pagopa/io-app/issues/6832)) ([7318a43](https://github.com/pagopa/io-app/commit/7318a4343fc6358dc059ddc183a08084300f4734))
+* [[IOBP-1487](https://pagopa.atlassian.net/browse/IOBP-1487)] Enhance Mixpanel analytics for payment events ([#6843](https://github.com/pagopa/io-app/issues/6843)) ([0634b2d](https://github.com/pagopa/io-app/commit/0634b2d9656c71a55629c5b724f84d172ec1616a))
+* [[IOCOM-2087](https://pagopa.atlassian.net/browse/IOCOM-2087)] Show reminder (on message details) ignoring payment status ([#6761](https://github.com/pagopa/io-app/issues/6761)) ([ff6c450](https://github.com/pagopa/io-app/commit/ff6c450c60793d07b3bdd9d64e8b4fa01de64210))
+* [[IOCOM-2187](https://pagopa.atlassian.net/browse/IOCOM-2187)] Remove unused code for payments on messages ([#6765](https://github.com/pagopa/io-app/issues/6765)) ([4168148](https://github.com/pagopa/io-app/commit/4168148f13699ba31c49deb7b0263e2c1ff94978))
+* [[IOPLT-991](https://pagopa.atlassian.net/browse/IOPLT-991)] Remove `rn-placeholder` dependency ([#6805](https://github.com/pagopa/io-app/issues/6805)) ([8f84e72](https://github.com/pagopa/io-app/commit/8f84e72b422fbb189b96bee39b09f5f4305b7050))
+
+## [3.1.0-rc.3](https://github.com/pagopa/io-app/compare/3.1.0-rc.2...3.1.0-rc.3) (2025-03-20)
+
+
+### Features
+
+* [[IOPID-2688](https://pagopa.atlassian.net/browse/IOPID-2688)] Offline wallet: retrive error during session refresh  ([#6826](https://github.com/pagopa/io-app/issues/6826)) ([3c101b6](https://github.com/pagopa/io-app/commit/3c101b6caec2127b6d940b538748e3b8387decda))
+
+
+### Bug Fixes
+
+* **a11y:** [[IOPID-2096](https://pagopa.atlassian.net/browse/IOPID-2096),[IOPID-2099](https://pagopa.atlassian.net/browse/IOPID-2099)] Add explicit accessibility roles ([#6828](https://github.com/pagopa/io-app/issues/6828)) ([a73ca66](https://github.com/pagopa/io-app/commit/a73ca66bc901fae4d141e196b152c3258e97002c))
+
+## [3.1.0-rc.2](https://github.com/pagopa/io-app/compare/3.1.0-rc.1...3.1.0-rc.2) (2025-03-20)
+
+
+### Features
+
+* [[IOCOM-2185](https://pagopa.atlassian.net/browse/IOCOM-2185)] SEND reminder banner landing UI and banner activation ([#6834](https://github.com/pagopa/io-app/issues/6834)) ([4a189a6](https://github.com/pagopa/io-app/commit/4a189a60f854394498bbe8f2657a60cf354629ba))
+
+
+### Bug Fixes
+
+* [[IOPLT-1023](https://pagopa.atlassian.net/browse/IOPLT-1023)] Fixes accessibility issues on cross components and support screens ([#6823](https://github.com/pagopa/io-app/issues/6823)) ([0692c79](https://github.com/pagopa/io-app/commit/0692c790aa3d486e0cc9864a80a9426a69398cf2))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2099](https://pagopa.atlassian.net/browse/SIW-2099)] Allow offline wallet access with session refresh failure ([#6814](https://github.com/pagopa/io-app/issues/6814)) ([eb6eef3](https://github.com/pagopa/io-app/commit/eb6eef31748fb92124a8e4ecd670f3520841f8a7))
+* [[IOPLT-964](https://pagopa.atlassian.net/browse/IOPLT-964)] Add support for dark mode to the bottom sheet ([#6830](https://github.com/pagopa/io-app/issues/6830)) ([34e9100](https://github.com/pagopa/io-app/commit/34e9100a323174c18a12450d225303425fb925f5))
+
+## [3.1.0-rc.1](https://github.com/pagopa/io-app/compare/3.1.0-rc.0...3.1.0-rc.1) (2025-03-19)
+
+
+### Features
+
+* [[IOCOM-2183](https://pagopa.atlassian.net/browse/IOCOM-2183)] SEND banner mixpanel events ([#6829](https://github.com/pagopa/io-app/issues/6829)) ([d42370f](https://github.com/pagopa/io-app/commit/d42370f810f08ea1b2d76d95c4950005451f8bd6))
+* [[IOCOM-2184](https://pagopa.atlassian.net/browse/IOCOM-2184)] addition of loading and result UI for SEND banner flow ([#6821](https://github.com/pagopa/io-app/issues/6821)) ([fc62819](https://github.com/pagopa/io-app/commit/fc6281994d49f521f815c1193b8352b2c0589e38))
+* [[IOPID-595](https://pagopa.atlassian.net/browse/IOPID-595)] Add new 404 page ([#6819](https://github.com/pagopa/io-app/issues/6819)) ([e079133](https://github.com/pagopa/io-app/commit/e0791337cb7a677f6c510ed147a8665230760755))
+
+
+### Bug Fixes
+
+* [IOBP-1379,IOBP-IOBP-1380] Disable CGN header transparency when screen reader is enabled ([#6817](https://github.com/pagopa/io-app/issues/6817)) ([1f055cc](https://github.com/pagopa/io-app/commit/1f055cceaedcafec0e9180a10a93942916643c51))
+* [[IOPID-2100](https://pagopa.atlassian.net/browse/IOPID-2100)] Adjust wrong accessibility focus on modal closure in iOS devices ([#6812](https://github.com/pagopa/io-app/issues/6812)) ([6daacbb](https://github.com/pagopa/io-app/commit/6daacbb5d5566535fd59b78312792b422ac74775))
+* [[IOPID-2102](https://pagopa.atlassian.net/browse/IOPID-2102)] Change Carousel dots style ([#6813](https://github.com/pagopa/io-app/issues/6813)) ([4826817](https://github.com/pagopa/io-app/commit/48268170dfc4dabd23257d843a72bc331b5b96b4))
+
+
+### Chores
+
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] Bump @babel/runtime from 7.26.0 to 7.26.10 ([#6822](https://github.com/pagopa/io-app/issues/6822)) ([b5efa2b](https://github.com/pagopa/io-app/commit/b5efa2b8307a13046e6b32f7b4604967d33290f9))
+* [[IOBP-1414](https://pagopa.atlassian.net/browse/IOBP-1414)] Adjust a11y discount validity dates label ([#6825](https://github.com/pagopa/io-app/issues/6825)) ([15cf2e8](https://github.com/pagopa/io-app/commit/15cf2e85a37d1995e8b70966aada83730756c181))
+* **IT Wallet:** [[SIW-2108](https://pagopa.atlassian.net/browse/SIW-2108)] Added hide values action in full screen view of skeuomorphic card  ([#6810](https://github.com/pagopa/io-app/issues/6810)) ([738f390](https://github.com/pagopa/io-app/commit/738f39030c3fc2e5a14b25301dc7214a6b074497))
+* [[IOBP-1211](https://pagopa.atlassian.net/browse/IOBP-1211),[IOBP-1207](https://pagopa.atlassian.net/browse/IOBP-1207)] Payment checkout screen `TextInputValidation` focus ([#6818](https://github.com/pagopa/io-app/issues/6818)) ([c583009](https://github.com/pagopa/io-app/commit/c583009c31e8db66fb916c3f09ccc8f34cc2038f))
+* [[IOPLT-998](https://pagopa.atlassian.net/browse/IOPLT-998)] Remove legacy components from the codebase ([#6777](https://github.com/pagopa/io-app/issues/6777)) ([511dd9f](https://github.com/pagopa/io-app/commit/511dd9f4973044bac228c7bcb00b940eaba5b297))
+
 ## [3.1.0-rc.0](https://github.com/pagopa/io-app/compare/3.0.0-rc.8...3.1.0-rc.0) (2025-03-14)
 
 

@@ -195,9 +195,19 @@ export function getNotificationPreferenceConfiguration(
 }
 
 export type NotificationPermissionType = "enabled" | "disabled";
+export type NotificationTokenType = "yes" | "no";
 
-export const getNotificationPermissionType = (hasPermission: boolean) =>
-  hasPermission ? "enabled" : "disabled";
+export const getNotificationPermissionType = (
+  hasPermission: boolean
+): NotificationPermissionType => (hasPermission ? "enabled" : "disabled");
+
+export const getNotificationTokenType = (
+  state: GlobalState
+): NotificationTokenType =>
+  state.notifications.installation.token != null &&
+  state.notifications.installation.token.trim().length > 0
+    ? "yes"
+    : "no";
 
 export async function trackNotificationPreferenceConfiguration(
   isReminderEnabled: boolean,

@@ -99,6 +99,7 @@ const CiePinScreen = () => {
     >();
   const [pin, setPin] = useState("");
   const bannerRef = useRef<View>(null);
+  const modalTriggerRef = useRef<View>(null);
   const pinPadViewRef = useRef<View>(null);
   const [authUrlGenerated, setAuthUrlGenerated] = useState<string | undefined>(
     undefined
@@ -116,7 +117,10 @@ const CiePinScreen = () => {
         <VSpacer size={24} />
       </View>
     ),
-    title: I18n.t("bottomSheets.ciePin.title")
+    title: I18n.t("bottomSheets.ciePin.title"),
+    onDismiss: () => {
+      setAccessibilityFocus(modalTriggerRef);
+    }
   });
 
   const handleAuthenticationOverlayOnClose = useCallback(() => {
@@ -214,8 +218,10 @@ const CiePinScreen = () => {
             <H2>{I18n.t("authentication.cie.pin.pinCardTitle")}</H2>
             <VSpacer size={8} />
             <Body
+              ref={modalTriggerRef}
               weight="Semibold"
               asLink
+              accessibilityRole="button"
               onPress={() => {
                 trackLoginCiePinInfo();
                 present();

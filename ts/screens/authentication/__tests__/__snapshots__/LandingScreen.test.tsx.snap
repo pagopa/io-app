@@ -1376,8 +1376,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             style={
                               {
                                 "backgroundColor": "rgba(11, 62, 227, 1)",
-                                "borderRadius": 4,
-                                "height": 8,
+                                "borderColor": "#636B82",
+                                "borderRadius": 20,
+                                "borderWidth": 0,
+                                "height": 4,
                                 "marginHorizontal": 4,
                                 "width": 16,
                               }
@@ -1387,8 +1389,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             collapsable={false}
                             style={
                               {
-                                "backgroundColor": "rgba(210, 214, 227, 1)",
-                                "borderRadius": 4,
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "#636B82",
+                                "borderRadius": 20,
+                                "borderWidth": 1,
                                 "height": 8,
                                 "marginHorizontal": 4,
                                 "width": 8,
@@ -1399,8 +1403,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             collapsable={false}
                             style={
                               {
-                                "backgroundColor": "rgba(210, 214, 227, 1)",
-                                "borderRadius": 4,
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "#636B82",
+                                "borderRadius": 20,
+                                "borderWidth": 1,
                                 "height": 8,
                                 "marginHorizontal": 4,
                                 "width": 8,
@@ -1411,8 +1417,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             collapsable={false}
                             style={
                               {
-                                "backgroundColor": "rgba(210, 214, 227, 1)",
-                                "borderRadius": 4,
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "#636B82",
+                                "borderRadius": 20,
+                                "borderWidth": 1,
                                 "height": 8,
                                 "marginHorizontal": 4,
                                 "width": 8,
@@ -1423,8 +1431,10 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             collapsable={false}
                             style={
                               {
-                                "backgroundColor": "rgba(210, 214, 227, 1)",
-                                "borderRadius": 4,
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "#636B82",
+                                "borderRadius": 20,
+                                "borderWidth": 1,
                                 "height": 8,
                                 "marginHorizontal": 4,
                                 "width": 8,
@@ -1827,7 +1837,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                           >
                             <View
                               accessibilityLabel="Privacy"
-                              accessibilityRole="button"
+                              accessibilityRole="link"
                               accessibilityState={
                                 {
                                   "busy": undefined,

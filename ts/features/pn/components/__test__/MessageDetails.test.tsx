@@ -9,7 +9,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { serviceId_1 } from "../../../messages/__mocks__/messages";
 import { UIMessageId } from "../../../messages/types";
-import { thirdPartyMessage } from "../../__mocks__/message";
+import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import { toPNMessage } from "../../store/types/transformers";
 import { PNMessage } from "../../store/types/types";
 import { MessageDetails } from "../MessageDetails";

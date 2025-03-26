@@ -501,6 +501,11 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
@@ -2807,6 +2812,11 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
@@ -5113,6 +5123,11 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                         accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
@@ -5664,6 +5679,11 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                         accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
                         enableDismissOnClose={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}

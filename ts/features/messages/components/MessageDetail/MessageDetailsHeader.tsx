@@ -1,15 +1,12 @@
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
 import { Divider, H3, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
 import { logosForService } from "../../../services/common/utils";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
+import { serviceByIdSelector } from "../../../services/details/store/reducers";
 import { gapBetweenItemsInAGrid } from "../../utils";
 import { UIMessageId } from "../../types";
 import { OrganizationHeader } from "./OrganizationHeader";
@@ -53,11 +50,7 @@ export const MessageDetailsHeader = ({
   serviceId,
   ...rest
 }: MessageDetailsHeaderProps) => {
-  const service = pipe(
-    useIOSelector(state => serviceByIdPotSelector(state, serviceId)),
-    pot.toOption,
-    O.toUndefined
-  );
+  const service = useIOSelector(state => serviceByIdSelector(state, serviceId));
 
   return (
     <>

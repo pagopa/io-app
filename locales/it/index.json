@@ -130,7 +130,8 @@
           "label": "Aiuto contestuale",
           "hint": "Accedi alle informazioni sul contenuto della schermata corrente"
         }
-      }
+      },
+      "progressTracker": "{{index}} di {{total}}"
     },
     "symbols": {
       "question": "?",
@@ -2034,7 +2035,7 @@
       "idTransaction": "Codice identificativo della transazione",
       "amountInfo": {
         "title": "L’importo è diverso da quello riportato sull’avviso pagoPA?",
-        "message": "Quando l'importo cambia, significa che l'ente creditore l'ha aggiornato automaticamente. In questo modo, hai sempre la certezza di pagare l’importo dovuto. Se è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nPer ulteriori dettagli contatta l'ente creditore, poiché pagoPA non conosce i motivi dell'aggiornamento.",
+        "message": "Quando l'importo cambia, significa che è stato aggiornato automaticamente.\n\nSe è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nSe l’avviso pagoPA riguarda una comunicazione a valore legale, l’aumento dell’importo da pagare può dipendere da diversi fattori, per esempio:\n- se hai ricevuto la comunicazione tramite  raccomandata (i cui costi di stampa e invio possono essere a carico del destinatario); \n- il numero di tentativi di recapito. \nPer ulteriori dettagli contatta l'ente creditore.",
         "cta": "Ok, va bene"
       },
       "contextualHelpTitle": "Riepilogo della transazione",
@@ -2230,32 +2231,8 @@
       "text": "Qualsiasi operazione di trasferimento di denaro (in contanti o in moneta elettronica) ha un costo, che serve a garantirti che quel pagamento sia sicuro e arrivi a buon fine. \nOgni gestore (o PSP, Prestatore di Servizi di Pagamento), propone un costo di transazione, a seconda delle proprie politiche commerciali e condizioni contrattuali.\nCon pagoPA, questi costi sono trasparenti e il cittadino può scegliere liberamente l’opzione più comoda e conveniente. Verifica l'importo applicato dal PSP che hai scelto, prima di procedere al pagamento."
     },
     "errors": {
-      "TECHNICAL": "C’è un problema tecnico con questo avviso",
-      "DATA": "I dati dell’avviso non sono corretti",
-      "EC": "L’Ente Creditore sta avendo problemi nella risposta",
-      "ONGOING": "Il pagamento è già in corso, riprova tra qualche minuto",
-      "ONGOING_SUBTITLE": "Se è passato troppo tempo, segnalacelo!",
-      "REVOKED": "L’Ente Creditore ha revocato questo avviso",
-      "EXPIRED": "L’avviso è scaduto e non è più possibile pagarlo",
       "GENERIC_ERROR": "Si è verificato un errore imprevisto",
-      "GENERIC_ERROR_SUBTITLE": "Riprova o contattaci per ricevere assistenza.",
-      "DUPLICATED": "Questo avviso è stato già pagato!",
-      "NOT_FOUND": "Non riusciamo a trovare l'avviso",
-      "NOT_FOUND_SUBTITLE": "L’avviso potrebbe essere stato già pagato.\nPer ricevere assistenza, contatta l’Ente Creditore che lo ha emesso.",
-      "INVALID_AMOUNT": "L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.",
-      "PAYMENT_EXPIRED": "Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.",
-      "PAYMENT_UNAVAILABLE": "Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.",
-      "PAYMENT_UNKNOWN": "Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.",
-      "DOMAIN_UNKNOWN": "Questo avviso è stato emesso da un ente non accreditato su pagoPA, il pagamento non può essere effettuato.",
-      "MISSING_PAYMENT_ID": "L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!",
-      "PAYMENT_ONGOING_NOCANCEL": "Un pagamento per questo avviso è già in corso, riprova tra 30 minuti.",
-      "PAYMENT_ONGOING_NOCANCEL_TIMEOUT": "Se hai già atteso 30 minuti e il pagamento risulta ancora bloccato utilizza il pulsante qui sotto per inviarci una segnalazione.",
-      "PAYMENT_ONGOING_CANCELLED": "È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.",
-      "PAYMENT_ONGOING_CANCELLED_TIMEOUT": "L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.",
-      "contactECsubtitle": "Contatta l’Ente per maggiori informazioni.",
-      "assistanceLabel": "Per ricevere assistenza usa il codice:",
-      "sendReport": "Invia segnalazione",
-      "loadingData": "Errore durante il caricamento, riprova."
+      "GENERIC_ERROR_SUBTITLE": "Riprova o contattaci per ricevere assistenza."
     },
     "walletCardTransaction": {
       "contextualHelpTitle": "Transazioni effettuate con questo metodo",
@@ -2517,7 +2494,7 @@
         },
         "WAITING_CONFIRMATION_EMAIL": {
           "title": "Attendi la conferma del pagamento",
-          "subtitle": "Il pagamento non si è ancora concluso: riceverai a breve l’esito all'indirizzo {{email}}. L’operazione può richiedere fino a 15 minuti.",
+          "subtitle": "Il pagamento non si è ancora concluso: se non ricevi l'esito positivo entro 15 minuti all'indirizzo {{email}} riprova di nuovo.",
           "defaultSubtitle": "Il pagamento non si è ancora concluso: riceverai a breve l’esito via email. L’operazione può richiedere fino a 15 minuti."
         },
         "METHOD_NOT_ENABLED": {
@@ -3781,15 +3758,19 @@
               "body": "Ricevi in app le comunicazioni a valore legale che ti inviano gli enti pubblici: con il servizio SEND puoi gestirle in tempo reale sul tuo dispositivo e pagare facilmente eventuali costi. "
             },
             "paragraph2": {
+              "title": "Risparmia sui costi della raccomandata",
+              "body": "Se accedi alle comunicazioni in digitale entro i tempi previsti, non riceverai la raccomandata e non pagherai i relativi costi di stampa e invio della raccomandata."
+            },
+            "paragraph3": {
               "title": "È facile e veloce",
               "body": "Attiva il servizio in un tap per ricevere le tue prossime notifiche SEND in app."
             },
-            "paragraph3": {
+            "paragraph4": {
               "pressing": "Premendo ",
               "activate": "Attiva il servizio ",
               "readAndUnderstood": "dichiari di aver letto e compreso l’",
-              "privacyInfo": "Informativa Privacy ",
-              "andThe": "e i ",
+              "privacyInfo": "Informativa Privacy",
+              "andThe": " e i ",
               "TOS": "Termini e Condizioni d’uso"
             },
             "CTA": "Attiva il servizio"
@@ -4517,7 +4498,9 @@
             "front": "Fronte",
             "back": "Retro",
             "showFront": "Mostra fronte",
-            "showBack": "Mostra retro"
+            "showBack": "Mostra retro",
+            "hideValues": "Nascondi dati",
+            "showValues": "Mostra dati"
           },
           "personalDataTitle": "Dati personali",
           "documentDataTitle": "Dati del documento",
@@ -4681,16 +4664,38 @@
         }
       },
       "offline": {
-        "alert": {
-          "title": "Nessuna connessione",
-          "action": "Cosa posso fare?"
+        "DEVICE_OFFLINE": {
+          "alert": {
+            "content": "Nessuna connessione.",
+            "action": "Cosa posso fare?"
+          },
+          "modal": {
+            "title": "Nessuna connessione",
+            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO."
+          }
         },
-        "modal": {
-          "title": "Nessuna connessione",
-          "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
-          "action": "Ricarica l'app IO",
-          "failure": "Nessuna connessione. Collegati a internet e riprova."
-        }
+        "SESSION_EXPIRED": {
+          "alert": {
+            "content": "Accedi di nuovo.",
+            "action": "Perché?"
+          },
+          "modal": {
+            "title": "Il tuo accesso all’app è scaduto",
+            "content": "###### Cosa posso fare?\n\nQuando la tua sessione di accesso all’app scade, alcuni servizi dell’app potrebbero essere limitati per motivi di sicurezza.\n\nAccedi di nuovo con SPID o CIE per continuare ad usare tutti i servizi di IO."
+          }
+        },
+        "SESSION_REFRESH": {
+          "alert": {
+            "content": "Alcuni servizi dell’app sono limitati in questo momento.",
+            "action": "Cosa posso fare?"
+          },
+          "modal": {
+            "title": "Servizi dell’app limitati",
+            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO."
+          }
+        },
+        "action": "Ricarica l'app IO",
+        "failure": "Nessuna connessione. Collegati a internet e riprova."
       }
     }
   },
@@ -5245,7 +5250,11 @@
           "body": "Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del",
           "bodyLink": "Dpr 28 dicembre 2000 n. 445 art 46 e 47",
           "nameAssignInput": "Assegna un nome",
-          "bottomLabel": "Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app"
+          "bottomLabel": "Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app",
+          "error": {
+            "iban": "IBAN non valido",
+            "name": "Associa un nome all'IBAN"
+          }
         },
         "enrollment": {
           "header": "Scegli quale IBAN associare all’iniziativa",
@@ -5582,5 +5591,9 @@
         "bodyPrivacy": "Informativa sulla Privacy."
       }
     }
+  },
+  "pageNotFound": {
+    "title": "Qui non c’è nulla!",
+    "subtitle": "Questa pagina non esiste o non è disponibile nella versione dell’app che stai usando.\nProva ad aggiornare IO."
   }
 }

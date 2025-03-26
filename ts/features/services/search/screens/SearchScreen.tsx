@@ -183,20 +183,20 @@ export const SearchScreen = () => {
         />
       </View>
       <FlashList
-        ItemSeparatorComponent={() => <Divider />}
+        ItemSeparatorComponent={Divider}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
         contentContainerStyle={IOStyles.horizontalContentPadding}
-        data={data?.institutions || []}
+        data={data?.institutions}
         estimatedItemSize={LIST_ITEM_HEIGHT}
         keyboardDismissMode={Platform.select({
           ios: "interactive",
           default: "on-drag"
         })}
         keyboardShouldPersistTaps="handled"
-        keyExtractor={(item, index) => `institution-${item.id}-${index}`}
+        keyExtractor={item => item.id}
         onEndReached={handleEndReached}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.5}
         renderItem={renderItem}
       />
     </>

@@ -41,7 +41,6 @@ import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { maybeNotNullyString } from "../../utils/strings";
 import GoBackButton from "../GoBackButton";
-import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 
 type HelpButtonProps = {
@@ -96,11 +95,6 @@ interface OwnProps {
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
   body?: ReactNode;
-  isSearchAvailable?: {
-    enabled: true;
-    searchType?: SearchType;
-    onSearchTap?: () => void;
-  };
   showChat?: boolean;
   customRightIcon?: {
     iconName: IOIcons;
@@ -225,7 +219,6 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
       )
     );
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   public render() {
     const {
       goBack,
@@ -233,8 +226,6 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
       headerTitle,
       backgroundColor,
       body,
-      isSearchEnabled,
-      isSearchAvailable,
       dark,
       primary,
       accessibilityLabel,
@@ -255,47 +246,34 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
             : IOColors.white
         }
       >
-        {!isSearchEnabled && this.renderLeft()}
+        {this.renderLeft()}
 
         {/* if screen reader is active and the accessibility label is defined, render the accessibility label
           as placeholder where force focus
         */}
-        {!isSearchEnabled && (
-          <View style={goBack || customGoBack ? styles.body : styles.noLeft}>
-            {this.state.isScreenReaderActive &&
-            O.isSome(maybeAccessibilityLabel) ? (
-              this.renderBodyLabel(
-                maybeAccessibilityLabel.value,
-                this.firstElementRef
-              )
-            ) : (
-              <View ref={this.firstElementRef} accessible={true}>
-                {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
-              </View>
-            )}
-          </View>
-        )}
 
-        {!isSearchEnabled && this.renderRight()}
-        {isSearchAvailable?.enabled && (
-          <SearchButton
-            searchType={isSearchAvailable.searchType}
-            onSearchTap={isSearchAvailable.onSearchTap}
-          />
-        )}
+        <View style={goBack || customGoBack ? styles.body : styles.noLeft}>
+          {this.state.isScreenReaderActive &&
+          O.isSome(maybeAccessibilityLabel) ? (
+            this.renderBodyLabel(
+              maybeAccessibilityLabel.value,
+              this.firstElementRef
+            )
+          ) : (
+            <View ref={this.firstElementRef} accessible={true}>
+              {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
+            </View>
+          )}
+        </View>
+
+        {this.renderRight()}
       </AppHeader>
     );
   }
 
   private renderRight = () => {
-    const {
-      isSearchEnabled,
-      onShowHelp,
-      isSearchAvailable,
-      showChat,
-      customRightIcon,
-      dark
-    } = this.props;
+    const { isSearchEnabled, onShowHelp, showChat, customRightIcon, dark } =
+      this.props;
 
     return (
       <View
@@ -322,7 +300,7 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
         )}
 
         {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
-        {!customRightIcon && !isSearchAvailable && !onShowHelp && !showChat && (
+        {!customRightIcon && !onShowHelp && !showChat && (
           <HSpacer size={ICON_BUTTON_MARGIN} />
         )}
 

@@ -46,6 +46,19 @@ export const CgnDiscountContent = ({
           discountDetails.endDate,
           I18n.t("global.dateFormats.shortFormat")
         )}`}
+        accessibilityLabel={`${I18n.t(
+          "bonus.cgn.merchantDetail.discount.validity"
+        )} 
+          ${I18n.t("bonus.validity_interval", {
+            from: localeDateFormat(
+              discountDetails.startDate,
+              I18n.t("global.dateFormats.shortFormat")
+            ),
+            to: localeDateFormat(
+              discountDetails.endDate,
+              I18n.t("global.dateFormats.shortFormat")
+            )
+          })}`}
       />
     )}
   </ContentWrapper>

@@ -117,7 +117,8 @@
           "label": "Kontextbezogene Hilfe",
           "hint": "Greif auf Informationen über den Inhalt des aktuellen Bildschirms zu"
         }
-      }
+      },
+      "progressTracker": "{{index}} von {{total}}"
     },
     "symbols": {
       "question": "?",
@@ -1874,7 +1875,7 @@
       "idTransaction": "Identifikationscode der Transaktion",
       "amountInfo": {
         "title": "Ist der Betrag anders als auf der pagoPA-Benachrichtigung?",
-        "message": "Wenn sich der Betrag ändert, bedeutet das, dass die Gläubigerinstitution ihn automatisch aktualisiert hat. So kannst du sicher sein, immer den fälligen Betrag zu bezahlen. Falls er höher ist, könnten Zinsen, Strafen oder Benachrichtigungskosten anfallen.\n\nFür weitere Details wende dich bitte an die Gläubigerinstitution, da pagoPA die Gründe für die Aktualisierung nicht kennt.",
+        "message": "Wenn sich der Betrag ändert, bedeutet das, dass er automatisch aktualisiert wurde.\n\nFalls er höher ist, können Zinsen, Strafen oder Benachrichtigungskosten anfallen.\n\nHandelt es sich bei der pagoPA-Mitteilung um eine rechtlich relevante Kommunikation, kann die Erhöhung des zu zahlenden Betrags verschiedene Gründe haben, zum Beispiel:\n- wenn du die Mitteilung per Einschreiben erhalten hast (die Druck- und Versandkosten können zu deinen Lasten gehen);\n- die Anzahl der Zustellversuche.\nFür weitere Details wende dich bitte an die  Gläubigerinstitution.\n\nFür weitere Details wende dich bitte an die Gläubigerinstitution, da pagoPA die Gründe für die Aktualisierung nicht kennt.",
         "cta": "OK, habe verstanden"
       },
       "contextualHelpTitle": "Zusammenfassung der Transaktion",
@@ -2069,32 +2070,8 @@
       "title": "Warum Transaktionsgebühren?"
     },
     "errors": {
-      "TECHNICAL": "Es gibt ein technisches Problem mit dieser Zahlungsmitteilung",
-      "DATA": "Die Angaben in der Zahlungsmitteilung sind falsch",
-      "EC": "Die Körperschaft hat Probleme bei der Beantwortung",
-      "ONGOING": "Die Zahlung ist bereits im Gange, bitte versuche es in ein paar Minuten erneut.",
-      "ONGOING_SUBTITLE": "Wenn es zu lange her ist, lasse es uns wissen!",
-      "REVOKED": "Die Körperschaft hat diese Zahlungsmitteilung widerrufen",
-      "EXPIRED": "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr gezahlt werden",
       "GENERIC_ERROR": "Ein unerwarteter Fehler ist aufgetreten",
-      "GENERIC_ERROR_SUBTITLE": "Bitte versuche es erneut oder kontaktiere uns.",
-      "DUPLICATED": "Diese Aufforderung wurde bereits bezahlt!",
-      "NOT_FOUND": "Wir können die Zahlungsmitteilung nicht finden",
-      "NOT_FOUND_SUBTITLE": "Möglicherweise wurde die Zahlungsmitteilung bereits bezahlt. Wende dich bitte an die Körperschaft, die sie ausgestellt hat.",
-      "INVALID_AMOUNT": "Der in der Zahlungsmitteilung angegebene Betrag ist falsch. Wenn du die Daten manuell eingegeben hast, überprüfe bitte, ob sie korrekt sind und versuche es erneut.",
-      "PAYMENT_EXPIRED": "Die Zahlung für diese Zahlungsmitteilung ist nicht mehr möglich, da sie abgelaufen ist.",
-      "PAYMENT_UNAVAILABLE": "Die Zahlung für diese Zahlungsmitteilung ist zur Zeit nicht möglich. Bitte versuche es später noch einmal.",
-      "PAYMENT_UNKNOWN": "Diese Zahlungsmitteilung wird von der ausstellenden Körperschaft nicht anerkannt, die Zahlung kann nicht durchgeführt werden.",
-      "DOMAIN_UNKNOWN": "Dieser Zahlungsmitteilung wurde von einer nicht bei pagoPA akkreditierten Körperschaft ausgestellt, die Zahlung kann nicht durchgeführt werden.",
-      "MISSING_PAYMENT_ID": "Die Körperschaft, die diese Zahlungsmitteilung ausgestellt hat, hat zur Zeit Probleme mit der Zahlungsabwicklung. Versuche es erneut!",
-      "PAYMENT_ONGOING_NOCANCEL": "Eine Zahlung für diese Zahlungsmitteilung ist bereits im Gange, bitte versuche es in 30 Minuten erneut.",
-      "PAYMENT_ONGOING_NOCANCEL_TIMEOUT": "Wenn du bereits 30 Minuten gewartet hast und die Zahlung immer noch blockiert ist, verwende bitte die Schaltfläche unten, um uns eine Nachricht zu senden.",
-      "PAYMENT_ONGOING_CANCELLED": "Dein vorheriger Zahlungsversuch wird abgebrochen, du kannst es in {{remainingMinutes}} Minuten erneut versuchen.",
-      "PAYMENT_ONGOING_CANCELLED_TIMEOUT": "Der Abbruch dieser Zahlung wurde vor mehr als 15 Minuten beantragt, ist aber immer noch blockiert. Bitte benutze die Schaltfläche unten, um uns eine Nachricht zu senden.",
-      "contactECsubtitle": "Wende dich für weitere Informationen an die Körperschaft.",
-      "assistanceLabel": "Verwende für die Unterstützung den Code:",
-      "sendReport": "Schreib uns",
-      "loadingData": "Fehler beim Laden, bitte versuche es erneut."
+      "GENERIC_ERROR_SUBTITLE": "Bitte versuche es erneut oder kontaktiere uns."
     },
     "walletCardTransaction": {
       "contextualHelpTitle": "Mit dieser Zahlungsmethode durchgeführte Transaktionen"
@@ -2346,7 +2323,7 @@
         },
         "WAITING_CONFIRMATION_EMAIL": {
           "title": "Warte auf eine Bestätigung per E-Mail",
-          "subtitle": "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an {{email}}.",
+          "subtitle": "Die Zahlung wurde noch nicht abgeschlossen: Wenn du innerhalb von 15 Minuten keine positive Bestätigung an {{email}} erhältst, versuche es bitte erneut.",
           "defaultSubtitle": "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an die verbundene E-Mail-Adresse."
         },
         "METHOD_NOT_ENABLED": {
@@ -4114,6 +4091,18 @@
         "body": "Damit du auf einen externen Dienst zugreifen kannst, ohne dich jedes Mal zu authentifizieren, gibt die IO-App einige deiner Daten an den Anbieter weiter.",
         "body2": "Deine Daten sind sicher und werden nur zu den Zwecken verarbeitet, die von der Körperschaft angegeben sind.",
         "bodyPrivacy": "Datenschutzrichtlinie"
+      }
+    }
+  },
+  "idpay": {
+    "configuration": {
+      "iban": {
+        "onboarding": {
+          "error": {
+            "iban": "Iban ist nicht gültig",
+            "name": "Assoziiert einen Namen mit der Iban"
+          }
+        }
       }
     }
   }
