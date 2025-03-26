@@ -2651,7 +2651,8 @@
       "reminderRemoveFailure": "Error removing reminder, please retry",
       "preferenceCalendarSelect": "Select a default calendar",
       "calendarPermDenied": {
-        "title": "Enable access",
+        "title": "To add the reminder, you need to allow IO to access your calendar",
+        "preferencesTitle": "Enable access",
         "description": "We do not have access to your calendar. Please enable access to continue.",
         "ok": "Enable access",
         "cancel": "Cancel"
