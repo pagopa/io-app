@@ -140,7 +140,7 @@ const getCTAsIfValid = (
     return undefined;
   }
 
-  if (areCTAsActionsValid(ctas, serviceMetadata)) {
+  if (areCTAsActionsValid(ctas, serviceId, serviceMetadata)) {
     return ctas;
   }
 
@@ -199,13 +199,28 @@ export const ctasFromLocalizedCTAs = (
  */
 const areCTAsActionsValid = (
   ctas: CTAS,
+  serviceId: ServiceId,
   serviceMetadata?: ServiceMetadata
 ): boolean => {
   const isCTA1Valid = isCtaActionValid(ctas.cta_1, serviceMetadata);
-  if (isCTA1Valid) {
-    return true;
+  if (!isCTA1Valid) {
+    trackCTAFrontMatterDecodingError(
+      "The first CTA does not contain a supported action",
+      serviceId
+    );
   }
-  return ctas.cta_2 != null && isCtaActionValid(ctas.cta_2, serviceMetadata);
+
+  if (ctas.cta_2 == null) {
+    return isCTA1Valid;
+  }
+  const isCTA2Valid = isCtaActionValid(ctas.cta_2, serviceMetadata);
+  if (!isCTA2Valid) {
+    trackCTAFrontMatterDecodingError(
+      "The second CTA does not contain a supported action",
+      serviceId
+    );
+  }
+  return isCTA1Valid || isCTA2Valid;
 };
 
 /**

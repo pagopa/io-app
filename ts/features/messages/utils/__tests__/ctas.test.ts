@@ -272,7 +272,7 @@ en:
     action: "ioit://services"
 ---`;
     const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackMessageCTAFrontMatterDecodingError")
+      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
       .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
@@ -304,7 +304,7 @@ en:
     action: "ioit://messages"
 ---`;
     const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackMessageCTAFrontMatterDecodingError")
+      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
       .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
@@ -332,7 +332,7 @@ en:
     action: "ioit://services"
 ---`;
     const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackMessageCTAFrontMatterDecodingError")
+      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
       .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
@@ -341,8 +341,11 @@ en:
     );
 
     expect(spyOnAnalytics.mock.calls.length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0].length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0][0]).toBe(serviceId);
+    expect(spyOnAnalytics.mock.calls[0].length).toBe(2);
+    expect(spyOnAnalytics.mock.calls[0][0]).toBe(
+      "A failure occoured while decoding from Localized CTAS to specific CTAs"
+    );
+    expect(spyOnAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(verifiedCTAOrUndefined).toBeUndefined();
   });
   it("should return CTAS from input string with invalid CTA1 action but valid CTA2 action", () => {
@@ -363,7 +366,7 @@ en:
     action: "ioit://services"
 ---`;
     const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackMessageCTAFrontMatterDecodingError")
+      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
       .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
@@ -371,7 +374,13 @@ en:
       serviceId
     );
 
-    expect(spyOnAnalytics.mock.calls.length).toBe(0);
+    expect(spyOnAnalytics.mock.calls.length).toBe(1);
+    expect(spyOnAnalytics.mock.calls[0].length).toBe(2);
+    expect(spyOnAnalytics.mock.calls[0][0]).toBe(
+      "The first CTA does not contain a supported action"
+    );
+    expect(spyOnAnalytics.mock.calls[0][1]).toBe(serviceId);
+
     expect(verifiedCTAOrUndefined).toEqual({
       cta_1: {
         action: "thisIsNotValid",
@@ -385,23 +394,23 @@ en:
   });
   it("should return undefined from input string with valid CTA1 action and invalid CTA2 action", () => {
     const validCTAs = `---
-    it:
-      cta_1:
-        text: "Testo CTA1"
-        action: "ioit://messages"
-      cta_2:
-        text: "Testo CTA2"
-        action: "thisIsNotValid"
-    en:
-      cta_1:
-        text: "CTA1 Text"
-        action: "ioit://messages"
-      cta_2:
-        text: "CTA2 Text"
-        action: "thisIsNotValid"
-    ---`;
+it:
+  cta_1:
+    text: "Testo CTA1"
+    action: "ioit://messages"
+  cta_2:
+    text: "Testo CTA2"
+    action: "thisIsNotValid"
+en:
+  cta_1:
+    text: "CTA1 Text"
+    action: "ioit://messages"
+  cta_2:
+    text: "CTA2 Text"
+    action: "thisIsNotValid"
+---`;
     const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackMessageCTAFrontMatterDecodingError")
+      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
       .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
@@ -410,13 +419,19 @@ en:
     );
 
     expect(spyOnAnalytics.mock.calls.length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0].length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0][0]).toBe(serviceId);
-    expect(verifiedCTAOrUndefined).toBeUndefined();
+    expect(spyOnAnalytics.mock.calls[0].length).toBe(2);
+    expect(spyOnAnalytics.mock.calls[0][0]).toBe(
+      "The second CTA does not contain a supported action"
+    );
+    expect(spyOnAnalytics.mock.calls[0][1]).toBe(serviceId);
+    expect(verifiedCTAOrUndefined).toEqual({
+      cta_1: { action: "ioit://messages", text: "Testo CTA1" },
+      cta_2: { action: "thisIsNotValid", text: "Testo CTA2" }
+    });
   });
   it("should return undefined from invalid input string", () => {
     const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackMessageCTAFrontMatterDecodingError")
+      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
       .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
@@ -424,14 +439,12 @@ en:
       serviceId
     );
 
-    expect(spyOnAnalytics.mock.calls.length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0].length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0][0]).toBe(serviceId);
+    expect(spyOnAnalytics.mock.calls.length).toBe(0);
     expect(verifiedCTAOrUndefined).toBeUndefined();
   });
   it("should return undefined from undefined input string", () => {
     const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackMessageCTAFrontMatterDecodingError")
+      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
       .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
@@ -439,9 +452,7 @@ en:
       serviceId
     );
 
-    expect(spyOnAnalytics.mock.calls.length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0].length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0][0]).toBe(serviceId);
+    expect(spyOnAnalytics.mock.calls.length).toBe(0);
     expect(verifiedCTAOrUndefined).toBeUndefined();
   });
   ioHandledLinks.forEach(action => {
@@ -457,7 +468,7 @@ en:
     action: "${action}"
 ---`;
       const spyOnAnalytics = jest
-        .spyOn(ANALYTICS, "trackMessageCTAFrontMatterDecodingError")
+        .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
         .mockReturnValue(undefined);
 
       const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
@@ -485,9 +496,8 @@ cta_1:
   text: "CTA1 Text"
   action: "iohandledlink://notSupported://whatever"
 ---`;
-    const serviceId = "01JKB81F4HE9WQWJFD7JET9ZFN" as ServiceId;
     const spyOnAnalytics = jest
-      .spyOn(ANALYTICS, "trackMessageCTAFrontMatterDecodingError")
+      .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
       .mockReturnValue(undefined);
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
@@ -496,13 +506,17 @@ cta_1:
     );
 
     expect(spyOnAnalytics.mock.calls.length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0].length).toBe(1);
-    expect(spyOnAnalytics.mock.calls[0][0]).toBe(serviceId);
+    expect(spyOnAnalytics.mock.calls[0].length).toBe(2);
+    expect(spyOnAnalytics.mock.calls[0][0]).toBe(
+      "A failure occourred while parsing or extracting front matter"
+    );
+    expect(spyOnAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(verifiedCTAOrUndefined).toBeUndefined();
   });
 });
 
 describe("areCTAsActionsValid", () => {
+  const serviceId = "01JQ9DQ32A9KE9EF340GQ3Z500" as ServiceId;
   it("should return true if cta1 action is valid, with undefined cta2", () => {
     const ctas: CTAS = {
       cta_1: {
@@ -511,7 +525,11 @@ describe("areCTAsActionsValid", () => {
       }
     };
 
-    const hasValidActions = testable!.areCTAsActionsValid(ctas, undefined);
+    const hasValidActions = testable!.areCTAsActionsValid(
+      ctas,
+      serviceId,
+      undefined
+    );
 
     expect(hasValidActions).toBe(true);
   });
@@ -527,7 +545,11 @@ describe("areCTAsActionsValid", () => {
       }
     };
 
-    const hasValidActions = testable!.areCTAsActionsValid(ctas, undefined);
+    const hasValidActions = testable!.areCTAsActionsValid(
+      ctas,
+      serviceId,
+      undefined
+    );
 
     expect(hasValidActions).toBe(true);
   });
@@ -543,7 +565,11 @@ describe("areCTAsActionsValid", () => {
       }
     };
 
-    const hasValidActions = testable!.areCTAsActionsValid(ctas, undefined);
+    const hasValidActions = testable!.areCTAsActionsValid(
+      ctas,
+      serviceId,
+      undefined
+    );
 
     expect(hasValidActions).toBe(true);
   });
@@ -559,7 +585,11 @@ describe("areCTAsActionsValid", () => {
       }
     };
 
-    const hasValidActions = testable!.areCTAsActionsValid(ctas, undefined);
+    const hasValidActions = testable!.areCTAsActionsValid(
+      ctas,
+      serviceId,
+      undefined
+    );
 
     expect(hasValidActions).toBe(false);
   });
