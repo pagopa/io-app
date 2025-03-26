@@ -131,6 +131,9 @@
           "hint": "Access information about the contents of the current screen"
         }
       },
+      "list": {
+        "counter": "Element {{index}} of {{total}}"
+      },
       "progressTracker": "{{index}} of {{total}}"
     },
     "symbols": {
@@ -3491,13 +3494,14 @@
         "merchantsAll": "All partners",
         "tabs": {
           "perInitiative": "By category",
-          "perMerchant": "By partner"
+          "perMerchant": "By partner",
+          "a11y": "Filter {{label}}, {{index}} of {{total}}"
         },
         "cta": {
           "filter": "Filter"
         },
         "categoriesList": {
-          "a11y": "{{name}} {{count}} new opportunities found",
+          "a11y": "{{name}}, {{count}} new opportunities found",
           "title": "Select a category and discover the benefits",
           "bottomSheet": {
             "cta": "How are categories ordered by?",
