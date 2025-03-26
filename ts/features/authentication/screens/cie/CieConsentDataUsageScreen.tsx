@@ -19,8 +19,8 @@ import {
 import { SessionToken } from "../../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../../utils/login";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { trackLoginCieDataSharingError } from "../analytics/cieAnalytics";
-import { originSchemasWhiteList } from "../originSchemasWhiteList";
+import { trackLoginCieDataSharingError } from "../../analytics/cieAnalytics";
+import { originSchemasWhiteList } from "../../utils/originSchemasWhiteList";
 import ROUTES from "../../../../navigation/routes";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useOnboardingAbortAlert } from "../../../../utils/hooks/useOnboardingAbortAlert";

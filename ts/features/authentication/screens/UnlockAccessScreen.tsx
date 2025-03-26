@@ -2,7 +2,7 @@ import { Route, useRoute } from "@react-navigation/native";
 import ROUTES from "../../../navigation/routes";
 import UnlockAccessComponent, {
   UnlockAccessProps
-} from "./UnlockAccessComponent";
+} from "../components/UnlockAccessComponent";
 
 const UnlockAccessScreen = () => {
   const route =

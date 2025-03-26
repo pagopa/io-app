@@ -2,11 +2,11 @@ import { useMemo } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
-} from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
+} from "../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../i18n";
 import UnlockAccessComponent, {
   UnlockAccessProps
-} from "../UnlockAccessComponent";
+} from "../components/UnlockAccessComponent";
 
 export enum AUTH_ERRORS {
   ERROR_19 = "19",

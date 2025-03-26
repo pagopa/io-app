@@ -54,8 +54,8 @@ import { getUrlBasepath } from "../../../utils/url";
 import { standardLoginRequestInfoSelector } from "../../spidLogin/store/selectors";
 import { setStandardLoginRequestState } from "../../spidLogin/store/actions";
 import { ErrorType as SpidLoginErrorType } from "../../spidLogin/types";
-import { originSchemasWhiteList } from "./originSchemasWhiteList";
-import { usePosteIDApp2AppEducational } from "./hooks/usePosteIDApp2AppEducational";
+import { originSchemasWhiteList } from "../utils/originSchemasWhiteList";
+import { usePosteIDApp2AppEducational } from "../hooks/usePosteIDApp2AppEducational";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {

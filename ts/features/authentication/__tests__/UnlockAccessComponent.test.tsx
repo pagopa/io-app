@@ -2,21 +2,21 @@ import { render, fireEvent } from "@testing-library/react-native";
 import { View } from "react-native";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { openWebUrl } from "../../../../utils/url";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import I18n from "../../../../i18n";
-import ROUTES from "../../../../navigation/routes";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { openWebUrl } from "../../../utils/url";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import I18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import { appReducer } from "../../../store/reducers";
+import { applicationChangeState } from "../../../store/actions/application";
 import UnlockAccessComponent, {
   UnlockAccessProps
-} from "../UnlockAccessComponent";
+} from "../components/UnlockAccessComponent";
 
-jest.mock("../../../../utils/hooks/bottomSheet");
-jest.mock("../../../../utils/url");
-jest.mock("../../../../navigation/params/AppParamsList");
+jest.mock("../../../utils/hooks/bottomSheet");
+jest.mock("../../../utils/url");
+jest.mock("../../../navigation/params/AppParamsList");
 
 const mockedUseIOBottomSheetAutoresizableModal =
   useIOBottomSheetAutoresizableModal as jest.Mock;

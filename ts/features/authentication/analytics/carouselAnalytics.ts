@@ -1,6 +1,6 @@
-import { LandingCardComponent } from "../../../../components/LandingCardComponent";
-import { mixpanelTrack } from "../../../../mixpanel";
-import { buildEventProperties } from "../../../../utils/analytics";
+import { LandingCardComponent } from "../../../components/LandingCardComponent";
+import { mixpanelTrack } from "../../../mixpanel";
+import { buildEventProperties } from "../../../utils/analytics";
 
 function trackCarouselMessageScreen() {
   void mixpanelTrack(

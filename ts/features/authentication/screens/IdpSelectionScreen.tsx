@@ -34,8 +34,8 @@ import IdpsGrid from "../../../components/IdpsGrid";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { isReady } from "../../../common/model/RemoteValue";
-import { trackSpidLoginIdpSelection } from "./analytics";
-import { trackLoginSpidIdpSelected } from "./analytics/spidAnalytics";
+import { trackSpidLoginIdpSelection } from "../analytics";
+import { trackLoginSpidIdpSelected } from "../analytics/spidAnalytics";
 
 const TestIdp: SpidIdp = {
   id: "test" as keyof IdpData,

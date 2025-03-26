@@ -68,7 +68,7 @@ import {
   trackLoginCieCardReaderScreen,
   trackLoginCieCardReadingError,
   trackLoginCieCardReadingSuccess
-} from "../analytics/cieAnalytics";
+} from "../../analytics/cieAnalytics";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;

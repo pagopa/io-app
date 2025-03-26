@@ -1,5 +1,5 @@
-import { mixpanelTrack } from "../../../../mixpanel";
-import { buildEventProperties } from "../../../../utils/analytics";
+import { mixpanelTrack } from "../../../mixpanel";
+import { buildEventProperties } from "../../../utils/analytics";
 
 export function trackLoginCiePinScreen() {
   void mixpanelTrack(

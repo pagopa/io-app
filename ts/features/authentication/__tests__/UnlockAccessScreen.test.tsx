@@ -1,12 +1,12 @@
 import configureMockStore from "redux-mock-store";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import ROUTES from "../../../../navigation/routes";
-import { GlobalState } from "../../../../store/reducers/types";
-import UnlockAccessScreen from "../UnlockAccessScreen";
-import I18n from "../../../../i18n";
-import { UnlockAccessProps } from "../UnlockAccessComponent";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import { appReducer } from "../../../store/reducers";
+import { applicationChangeState } from "../../../store/actions/application";
+import ROUTES from "../../../navigation/routes";
+import { GlobalState } from "../../../store/reducers/types";
+import UnlockAccessScreen from "../screens/UnlockAccessScreen";
+import I18n from "../../../i18n";
+import { UnlockAccessProps } from "../components/UnlockAccessComponent";
 
 describe("UnlockAccessScreen", () => {
   it("render UnlockAccessComponent with authLevel L2", () => {

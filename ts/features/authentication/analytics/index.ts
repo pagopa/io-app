@@ -1,10 +1,10 @@
-import { mixpanelTrack } from "../../../../mixpanel";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
-import { GlobalState } from "../../../../store/reducers/types";
-import { FlowType, buildEventProperties } from "../../../../utils/analytics";
-import { IdpCIE, IdpCIE_ID } from "../../../../hooks/useNavigateToLoginMethod";
-import { LoginSessionDuration } from "../../../../features/fastLogin/analytics/optinAnalytics";
-import { SpidLevel } from "../../../cieLogin/utils";
+import { mixpanelTrack } from "../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { GlobalState } from "../../../store/reducers/types";
+import { FlowType, buildEventProperties } from "../../../utils/analytics";
+import { IdpCIE, IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
+import { LoginSessionDuration } from "../../../features/fastLogin/analytics/optinAnalytics";
+import { SpidLevel } from "../../cieLogin/utils";
 
 const SECURITY_LEVEL_MAP: Record<SpidLevel, "L2" | "L3"> = {
   SpidL2: "L2",

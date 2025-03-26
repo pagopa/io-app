@@ -22,7 +22,7 @@ import { IdpSuccessfulAuthentication } from "../../../components/IdpSuccessfulAu
 import { isDevEnv } from "../../../utils/environment";
 import { onLoginUriChanged } from "../../../utils/login";
 import { apiUrlPrefix } from "../../../config";
-import { trackLoginSpidError } from "../../../features/authentication/screens/analytics/spidAnalytics";
+import { trackLoginSpidError } from "../../authentication/analytics/spidAnalytics";
 import { IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 import {
   HeaderSecondLevelHookProps,

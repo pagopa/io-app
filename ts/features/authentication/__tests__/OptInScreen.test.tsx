@@ -1,11 +1,11 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import ROUTES from "../../../../navigation/routes";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import I18n from "../../../../i18n";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import OptInScreen from "../OptInScreen";
+import ROUTES from "../../../navigation/routes";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
+import I18n from "../../../i18n";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import OptInScreen from "../screens/OptInScreen";
 
 describe("OptInScreen", () => {
   it("the components into the page should be render correctly", () => {

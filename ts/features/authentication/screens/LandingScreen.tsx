@@ -58,7 +58,7 @@ import { SpidLevel } from "../../../features/cieLogin/utils";
 import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../config";
 import { trackHelpCenterCtaTapped } from "../../../utils/analytics";
 import { isTablet } from "../../../utils/device";
-import { LandingSessionExpiredComponent } from "./components/LandingSessionExpiredComponent";
+import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
 import {
   loginCieWizardSelected,
   trackCieBottomSheetScreenView,
@@ -67,8 +67,8 @@ import {
   trackCiePinLoginSelected,
   trackMethodInfo,
   trackSpidLoginSelected
-} from "./analytics";
-import { Carousel } from "./carousel/Carousel";
+} from "../analytics";
+import { Carousel } from "../components/Carousel";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",

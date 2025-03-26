@@ -4,7 +4,7 @@ import { sessionInvalid } from "../../features/authentication/store/actions";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import { ReduxSagaEffect } from "../../types/utils";
 import { deletePin } from "../../utils/keychain";
-import { trackLoginUserExit } from "../../features/authentication/screens/analytics";
+import { trackLoginUserExit } from "../../features/authentication/analytics";
 
 export function* watchAbortOnboardingSaga(): Iterator<ReduxSagaEffect> {
   yield* take(abortOnboarding);

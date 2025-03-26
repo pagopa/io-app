@@ -2,11 +2,11 @@ import { View } from "react-native";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import I18n from "../../../../i18n";
-import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
-import { StandardLoginRequestInfo } from "../../../spidLogin/types";
+import IOMarkdown from "../../../components/IOMarkdown";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import I18n from "../../../i18n";
+import { SpidIdp } from "../../../../definitions/content/SpidIdp";
+import { StandardLoginRequestInfo } from "../../spidLogin/types";
 
 type Props = {
   selectedIdp?: SpidIdp;

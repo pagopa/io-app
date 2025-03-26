@@ -1,10 +1,10 @@
 import { createStore } from "redux";
-import I18n from "../../../../../i18n";
-import ROUTES from "../../../../../navigation/routes";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import CieWrongCiePinScreen from "../../cie/CieWrongCiePinScreen";
+import I18n from "../../../../i18n";
+import ROUTES from "../../../../navigation/routes";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import CieWrongCiePinScreen from "../../screens/cie/CieWrongCiePinScreen";
 
 const closeLabel = I18n.t("global.buttons.close");
 const retryLabel = I18n.t("global.buttons.retry");

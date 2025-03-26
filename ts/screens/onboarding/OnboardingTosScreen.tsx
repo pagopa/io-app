@@ -29,7 +29,7 @@ import {
 } from "../../store/reducers/profile";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { trackTosUserExit } from "../../features/authentication/screens/analytics";
+import { trackTosUserExit } from "../../features/authentication/analytics";
 import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {

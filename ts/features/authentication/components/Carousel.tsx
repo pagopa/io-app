@@ -9,11 +9,11 @@ import {
   useWindowDimensions,
   View
 } from "react-native";
-import { LandingCardComponent } from "../../../../components/LandingCardComponent";
+import { LandingCardComponent } from "../../../components/LandingCardComponent";
 import {
   useAppBackgroundPrimaryColorName,
   useInteractiveElementDefaultColorName
-} from "../../../../utils/hooks/theme";
+} from "../../../utils/hooks/theme";
 import { trackCarousel } from "../analytics/carouselAnalytics";
 
 const styles = StyleSheet.create({

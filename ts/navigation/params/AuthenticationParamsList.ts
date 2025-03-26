@@ -6,7 +6,7 @@ import { CieCardReaderScreenNavigationParams } from "../../features/authenticati
 import { CieConsentDataUsageScreenNavigationParams } from "../../features/authentication/screens/cie/CieConsentDataUsageScreen";
 import { CieWrongCiePinScreenNavigationParams } from "../../features/authentication/screens/cie/CieWrongCiePinScreen";
 import { ChosenIdentifier } from "../../features/authentication/screens/OptInScreen";
-import { UnlockAccessProps } from "../../features/authentication/screens/UnlockAccessComponent";
+import { UnlockAccessProps } from "../../features/authentication/components/UnlockAccessComponent";
 import ROUTES from "../routes";
 
 export type AuthenticationParamsList = {

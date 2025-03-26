@@ -9,7 +9,7 @@ import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackThankYouPageScreen } from "../profile/analytics";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
-import { trackLoginEnded } from "../../features/authentication/screens/analytics";
+import { trackLoginEnded } from "../../features/authentication/analytics";
 
 const OnboardingCompletedScreen = () => {
   const dispatch = useIODispatch();

@@ -1,10 +1,10 @@
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { LandingScreen } from "../LandingScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import ROUTES from "../../../../navigation/routes";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
+import { LandingScreen } from "../screens/LandingScreen";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import ROUTES from "../../../navigation/routes";
 
 const mockNavigateToCiePinInsertion = jest.fn();
 const mockNavigateToIdpSelection = jest.fn();
@@ -21,7 +21,7 @@ jest.mock("@react-navigation/native", () => {
     })
   };
 });
-jest.mock("../../../../hooks/useNavigateToLoginMethod", () => ({
+jest.mock("../../../hooks/useNavigateToLoginMethod", () => ({
   __esModule: true,
   default: () => ({
     navigateToCiePinInsertion: mockNavigateToCiePinInsertion,
@@ -32,7 +32,7 @@ jest.mock("../../../../hooks/useNavigateToLoginMethod", () => ({
 }));
 
 jest.mock("@gorhom/bottom-sheet", () =>
-  jest.requireActual("../../../../__mocks__/@gorhom/bottom-sheet.ts")
+  jest.requireActual("../../../__mocks__/@gorhom/bottom-sheet.ts")
 );
 jest.mock("../analytics");
 

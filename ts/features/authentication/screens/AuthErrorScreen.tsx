@@ -14,8 +14,8 @@ import {
   resetSpidLoginState,
   setStandardLoginInLoadingState
 } from "../../spidLogin/store/actions";
-import { UnlockAccessProps } from "./UnlockAccessComponent";
-import AuthErrorComponent from "./components/AuthErrorComponent";
+import { UnlockAccessProps } from "../components/UnlockAccessComponent";
+import AuthErrorComponent from "../components/AuthErrorComponent";
 
 type CommonAuthErrorScreenProps = {
   errorCodeOrMessage?: string;

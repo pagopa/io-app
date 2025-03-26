@@ -7,7 +7,7 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import { selectAuthUrlOption } from "../../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import I18n from "../../../../../i18n";
-import { originSchemasWhiteList } from "../../../../../features/authentication/screens/originSchemasWhiteList";
+import { originSchemasWhiteList } from "../../../../authentication/utils/originSchemasWhiteList";
 import { itWalletIssuanceRedirectUri } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";

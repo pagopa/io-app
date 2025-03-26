@@ -16,7 +16,7 @@ import {
   trackCieLoginSuccess,
   trackLoginFlowStarting,
   trackSpidLoginSuccess
-} from "../../features/authentication/screens/analytics";
+} from "../../features/authentication/analytics";
 import { idpSelector } from "../../features/authentication/store/selectors";
 import { IdpCIE, IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";

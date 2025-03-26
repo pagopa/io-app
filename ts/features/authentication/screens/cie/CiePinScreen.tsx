@@ -59,7 +59,7 @@ import { openWebUrl } from "../../../../utils/url";
 import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
-} from "../analytics/cieAnalytics";
+} from "../../analytics/cieAnalytics";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 const CIE_PIN_LENGTH = 8;

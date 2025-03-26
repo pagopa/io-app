@@ -1,7 +1,7 @@
-import { mixpanelTrack } from "../../../../mixpanel";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
-import { GlobalState } from "../../../../store/reducers/types";
-import { buildEventProperties } from "../../../../utils/analytics";
+import { mixpanelTrack } from "../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { GlobalState } from "../../../store/reducers/types";
+import { buildEventProperties } from "../../../utils/analytics";
 import { AUTH_ERRORS } from "../components/AuthErrorComponent";
 
 type EventProperties = {
