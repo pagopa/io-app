@@ -45,10 +45,9 @@ export const ItwDiscoveryBanner = ({
   const navigation = useIONavigation();
   const route = useRoute();
 
-  const [bannerState, setBannerState] = useState<{
-    shouldRender: boolean;
-    type: BannerType | null;
-  }>({ shouldRender: false, type: null });
+  const [bannerType, setBannerType] = useState<BannerType | undefined>(
+    undefined
+  );
 
   const trackBannerProperties = useMemo(
     () => ({
@@ -77,15 +76,15 @@ export const ItwDiscoveryBanner = ({
   // This effect is used to determine which banner to show and if it should be shown
   useEffect(() => {
     const isDataLoaded = pipe(O.fromNullable(isWalletRemotelyActive), O.isSome);
-    if (isDataLoaded && !bannerState.shouldRender) {
+    if (isDataLoaded) {
       const type: BannerType = isWalletRemotelyActive
         ? "reactivating"
         : "onboarding";
-      setBannerState({ shouldRender: true, type });
+      setBannerType(type);
     }
-  }, [isWalletRemotelyActive, bannerState.shouldRender]);
+  }, [isWalletRemotelyActive]);
 
-  if (!bannerState.shouldRender || !bannerState.type) {
+  if (!bannerType) {
     return null;
   }
 
@@ -102,7 +101,7 @@ export const ItwDiscoveryBanner = ({
     }
   };
 
-  const { content, title, action } = bannerConfig[bannerState.type];
+  const { content, title, action } = bannerConfig[bannerType];
 
   return (
     <View style={!ignoreMargins && styles.margins}>

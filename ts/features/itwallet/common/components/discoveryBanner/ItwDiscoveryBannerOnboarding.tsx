@@ -74,10 +74,7 @@ const ItwDiscoveryBannerOnboarding = () => {
     }
   };
 
-  const bannerType = useMemo(
-    () => (isWalletRemotelyActive ? "reactivating" : "onboarding"),
-    [isWalletRemotelyActive]
-  );
+  const bannerType = isWalletRemotelyActive ? "reactivating" : "onboarding";
   const { content } = bannerConfig[bannerType];
 
   if (!shouldRender) {
