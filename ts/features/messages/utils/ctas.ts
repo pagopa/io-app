@@ -264,7 +264,6 @@ const containsFrontMatterHeader = (
   try {
     return FM.test(input);
   } catch {
-    // TODO check this one, is it raised every time?
     trackCTAFrontMatterDecodingError(
       "A failure occoured while testing for front matter",
       serviceId

@@ -173,7 +173,7 @@ describe("getMessageCTAs", () => {
     setLocale("it" as Locales); // restore default
   });
 
-  it("should not have valid CTA (action is malformed)", () => {
+  it("should not have valid CTA (action's protocol is malformed)", () => {
     const CTA_1 = `---
 it:
     cta_1:
@@ -183,12 +183,19 @@ it:
 some noise`;
 
     const maybeCTA = getMessageCTAs(CTA_1, serviceId);
-    expect(maybeCTA).toBeFalsy();
+    expect(mockAnalytics.mock.calls.length).toBe(1);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
+      "The first CTA does not contain a supported action"
+    );
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
+    expect(maybeCTA).toBeUndefined();
   });
 
-  it("should not have a valid CTA, unrelated content", () => {
+  it("should not have a CTA, when the input does not contain a front matter at all", () => {
     const maybeCTA = getMessageCTAs("nothing of nothing", serviceId);
-    expect(maybeCTA).toBeFalsy();
+    expect(mockAnalytics.mock.calls.length).toBe(0);
+    expect(maybeCTA).toBe(undefined);
   });
 
   it("should not have a valid CTA, invalid content format", () => {
@@ -200,7 +207,13 @@ it:
 --- 
 some noise`;
     const maybeCTA = getMessageCTAs(NO_CTA, serviceId);
-    expect(maybeCTA).toBeFalsy();
+    expect(mockAnalytics.mock.calls.length).toBe(1);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
+      "A failure occoured while decoding from Localized CTAS to specific CTAs"
+    );
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
+    expect(maybeCTA).toBeUndefined();
   });
 });
 
@@ -212,6 +225,7 @@ describe("removeCTAsFromMarkdown", () => {
       markdown as MessageBodyMarkdown,
       serviceId
     );
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(cleaned).toEqual(markdown);
   });
 
@@ -224,29 +238,39 @@ it:
 --- 
 some noise`;
     const cleaned = removeCTAsFromMarkdown(withCTA, serviceId);
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(cleaned).toEqual("some noise");
   });
 
   it("should be cleaned (extended version)", async () => {
     const cleaned = removeCTAsFromMarkdown(CTA_2, serviceId);
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(cleaned).toEqual(messageBody);
   });
 
   it("should return empty string for empty string input", () => {
     const input = "";
     const markdown = removeCTAsFromMarkdown(input, serviceId);
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(markdown).toBe("");
   });
   it("should return the markdown for a proper formatted message (with front matter and body)", () => {
     const input =
       "---\nit:\n cta_1:\n  text: Il testo\n  action: ioit://messages\nen:\n cta_1:\n  text: The text\n  action: ioit//messages\n---\nThis is the message body";
     const markdown = removeCTAsFromMarkdown(input, serviceId);
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(markdown).toBe("This is the message body");
   });
   it("should return input string for invalid front matter", () => {
     const input =
       "---\nit:\n cta_1:\n  text: Il testo  action: ioit://messages\nen:\n cta_1:\n  text: The text\n  action: ioit//messages\n---\nThis is the message body";
     const markdown = removeCTAsFromMarkdown(input, serviceId);
+    expect(mockAnalytics.mock.calls.length).toBe(1);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
+      "A failure occourred while parsing or extracting body from input with front matter"
+    );
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(markdown).toBe(input);
   });
 });
@@ -511,6 +535,7 @@ describe("areCTAsActionsValid", () => {
       undefined
     );
 
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(hasValidActions).toBe(true);
   });
   it("should return true if cta1 action is valid, with invalid cta2", () => {
@@ -531,6 +556,12 @@ describe("areCTAsActionsValid", () => {
       undefined
     );
 
+    expect(mockAnalytics.mock.calls.length).toBe(1);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
+      "The second CTA does not contain a supported action"
+    );
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(hasValidActions).toBe(true);
   });
   it("should return true if cta1 action is invalid but cta2 is valid", () => {
@@ -551,6 +582,12 @@ describe("areCTAsActionsValid", () => {
       undefined
     );
 
+    expect(mockAnalytics.mock.calls.length).toBe(1);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
+      "The first CTA does not contain a supported action"
+    );
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(hasValidActions).toBe(true);
   });
   it("should return false if both ctas are invalid", () => {
@@ -571,6 +608,17 @@ describe("areCTAsActionsValid", () => {
       undefined
     );
 
+    expect(mockAnalytics.mock.calls.length).toBe(2);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
+      "The first CTA does not contain a supported action"
+    );
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
+    expect(mockAnalytics.mock.calls[1].length).toBe(2);
+    expect(mockAnalytics.mock.calls[1][0]).toBe(
+      "The second CTA does not contain a supported action"
+    );
+    expect(mockAnalytics.mock.calls[1][1]).toBe(serviceId);
     expect(hasValidActions).toBe(false);
   });
 });
@@ -660,6 +708,7 @@ describe("localizedCTAsFromFrontMatter", () => {
       undefined,
       serviceId
     );
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(messageCTAOrUndefined).toBeUndefined();
   });
   it("should return undefined if input is not a frontmatter", () => {
@@ -668,6 +717,7 @@ describe("localizedCTAsFromFrontMatter", () => {
       input,
       serviceId
     );
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(messageCTAOrUndefined).toBeUndefined();
   });
   it("should return undefined if input is not properly formatted", () => {
@@ -676,6 +726,7 @@ describe("localizedCTAsFromFrontMatter", () => {
       input,
       serviceId
     );
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(messageCTAOrUndefined).toBeUndefined();
   });
   it("should return undefined if input has invalid sequences (unclosed string)", () => {
@@ -684,6 +735,12 @@ describe("localizedCTAsFromFrontMatter", () => {
       input,
       serviceId
     );
+    expect(mockAnalytics.mock.calls.length).toBe(1);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
+      "A failure occourred while parsing or extracting front matter"
+    );
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(messageCTAOrUndefined).toBeUndefined();
   });
   it("should return a LocalizedCTAs instance if input is properly formatted", () => {
@@ -692,6 +749,7 @@ describe("localizedCTAsFromFrontMatter", () => {
       input,
       serviceId
     );
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(messageCTAOrUndefined).toEqual({
       it: {
         cta_1: {
@@ -707,6 +765,7 @@ describe("ctasFromLocalizedCTAs", () => {
   const serviceId = "01JQ94ST1YFC2F395KYZ2XJG8Z" as ServiceId;
   it("should return undefined if input is undefined", () => {
     const ctas = ctasFromLocalizedCTAs(undefined, serviceId);
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(ctas).toBeUndefined();
   });
   [
@@ -1650,6 +1709,12 @@ describe("ctasFromLocalizedCTAs", () => {
     )})`, () => {
       const messageCTA = invalidMessageCTA as LocalizedCTAs;
       const ctas = ctasFromLocalizedCTAs(messageCTA, serviceId);
+      expect(mockAnalytics.mock.calls.length).toBe(1);
+      expect(mockAnalytics.mock.calls[0].length).toBe(2);
+      expect(mockAnalytics.mock.calls[0][0]).toBe(
+        "A failure occoured while decoding from Localized CTAS to specific CTAs"
+      );
+      expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
       expect(ctas).toBeUndefined();
     });
   });
@@ -1663,6 +1728,7 @@ describe("ctasFromLocalizedCTAs", () => {
       }
     };
     const ctas = ctasFromLocalizedCTAs(messageCTA, serviceId);
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(ctas).toEqual({
       cta_1: {
         text: "The text",
@@ -1676,18 +1742,26 @@ describe("getServiceCTAs", () => {
   const serviceId = "01JQ94V8E5KHN1QNPETAJNAK62" as ServiceId;
   it("should return undefined if input is undefined", () => {
     const serviceCTA = getServiceCTAs(serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(serviceCTA).toBeUndefined();
   });
   it("should return undefined if input service has no cta", () => {
     const serviceMetadata = {} as ServiceMetadata;
+
     const serviceCTA = getServiceCTAs(serviceId, serviceMetadata);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(serviceCTA).toBeUndefined();
   });
   it("should return the CTA if input service has a properly formatted cta", () => {
     const serviceMetadata = {
       cta: `---\nit:\n cta_1:\n  action: "ioit://messages"\n  text: "CTA's text"\n---`
     } as ServiceMetadata;
+
     const serviceCTA = getServiceCTAs(serviceId, serviceMetadata);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(serviceCTA).toEqual({
       cta_1: {
         action: "ioit://messages",
@@ -1784,82 +1858,112 @@ describe("containsFrontMatterHeader", () => {
   const serviceId = "01JQ94XH4M0PQ2QGDTNYJ1ASS7" as ServiceId;
   it("should return false for empty string", () => {
     const input = "";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for non front matter string", () => {
     const input = "it:\n cta_1:\n  text: The text";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for non opening front matter", () => {
     const input = "it:\n cta_1:\n  text: The text\n---";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for non closing front matter", () => {
     const input = "---\nit:\n cta_1:\n  text: The text";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for opening front matter without newline", () => {
     const input = "---it:\n cta_1:\n  text: The text\n---";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for closing front matter without newline", () => {
     const input = "---\nit:\n cta_1:\n  text: The text---";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for proper front matter that has extra characters (on the same line) after closing", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---Something else";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for proper front matter that has extra space before opening", () => {
     const input = " ---\nit:\n cta_1:\n  text: The text\n---";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for proper front matter that has extra space before closing", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n ---";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false for a front matter that has wrong opening", () => {
     const input = "...\nit:\n cta_1:\n  text: The text\n---";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(false);
   });
   it("should return false if the library throws an exception", () => {
@@ -1867,27 +1971,41 @@ describe("containsFrontMatterHeader", () => {
       throw Error("An error");
     });
     const input = "---\nit:\n cta_1:\n  text: The text\n---";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(1);
+    expect(mockAnalytics.mock.calls[0].length).toBe(2);
+    expect(mockAnalytics.mock.calls[0][0]).toBe(
+      "A failure occoured while testing for front matter"
+    );
+    expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(containsFrontMatter).toBe(false);
     jest.restoreAllMocks();
   });
   it("should return true for proper front matter", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(true);
   });
   it("should return true for proper front matter with invalid yaml", () => {
     const input = "---\nit: cta_1: text: The text\n---";
+
     const containsFrontMatter = testable!.containsFrontMatterHeader(
       input,
       serviceId
     );
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(containsFrontMatter).toBe(true);
   });
 });
@@ -1896,57 +2014,106 @@ describe("extractBodyAfterFrontMatter", () => {
   const serviceId = "01JQ94YTF42SGK4WWMP7M4F6SX" as ServiceId;
   it("should return input string for non opening front matter", () => {
     const input = "it:\n cta_1:\n  text: The text\n---\nThis is the body";
+
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(body).toBe(input);
   });
   it("should return input string for non closing front matter", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\nThis is the body";
+
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(body).toBe(input);
   });
   it("should return input string for opening front matter without newline", () => {
     const input = "---it:\n cta_1:\n  text: The text\n---\nThis is the body";
+
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(body).toBe(input);
   });
   it("should return input string for closing front matter without newline", () => {
     const input = "---\nit:\n cta_1:\n  text: The text---\nThis is the body";
+
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(body).toBe(input);
   });
   it("should return input string for proper front matter that has extra characters (on the same line) after closing", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---This is the body";
+
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(body).toBe(input);
   });
   it("should return input string for proper front matter that has extra space before opening", () => {
     const input = " ---\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
+
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(body).toBe(input);
   });
   it("should return input string for proper front matter that has extra space before closing", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n ---\nThis is the body";
+
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(body).toBe(input);
   });
   it("should return input string for a front matter that has wrong opening", () => {
     const input = "...\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
+
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(body).toBe(input);
   });
   it("should extract body for valid front matter", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
+
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(body).toBe("This is the body");
+  });
+  it("should extract empty body for valid front matter with no body", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text\n---\n";
+
+    const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
+    expect(body).toBe("");
+  });
+  it("should extract empty body for valid front matter with no body and no newline", () => {
+    const input = "---\nit:\n cta_1:\n  text: The text\n---";
+
+    const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
+    expect(body).toBe("");
   });
   it("should extract body for a string with no front matter", () => {
     const input = "This is the body";
+
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(body).toBe("This is the body");
   });
   it("should extract empty body from an empty string", () => {
     const input = "";
+
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
+
+    expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(body).toBe("");
   });
 });
