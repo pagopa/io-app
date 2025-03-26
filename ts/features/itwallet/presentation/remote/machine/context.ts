@@ -1,4 +1,4 @@
-import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils";
 import { RemoteFailure } from "./failure.ts";
 
 export type Context = {

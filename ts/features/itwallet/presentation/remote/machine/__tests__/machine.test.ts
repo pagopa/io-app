@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { StateFrom, createActor } from "xstate";
 import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
-import { ItwRemoteRequestPayload } from "../../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../../utils/itwRemoteTypeUtils.ts";
 
 const T_CLIENT_ID = "clientId";
 const T_REQUEST_URI = "https://example.com";
@@ -54,8 +54,8 @@ describe("itwRemoteMachine", () => {
     actor.send({
       type: "start",
       payload: {
-        client_id: T_CLIENT_ID,
-        request_uri: T_REQUEST_URI,
+        clientId: T_CLIENT_ID,
+        requestUri: T_REQUEST_URI,
         state: T_STATE
       } as ItwRemoteRequestPayload
     });
@@ -72,8 +72,8 @@ describe("itwRemoteMachine", () => {
       value: "Failure",
       context: {
         payload: {
-          client_id: T_CLIENT_ID,
-          request_uri: T_REQUEST_URI,
+          clientId: T_CLIENT_ID,
+          requestUri: T_REQUEST_URI,
           state: T_STATE
         } as ItwRemoteRequestPayload
       }
@@ -96,8 +96,8 @@ describe("itwRemoteMachine", () => {
       value: "Failure",
       context: {
         payload: {
-          client_id: T_CLIENT_ID,
-          request_uri: T_REQUEST_URI,
+          clientId: T_CLIENT_ID,
+          requestUri: T_REQUEST_URI,
           state: T_STATE
         } as ItwRemoteRequestPayload
       }
@@ -120,8 +120,8 @@ describe("itwRemoteMachine", () => {
       value: "Failure",
       context: {
         payload: {
-          client_id: T_CLIENT_ID,
-          request_uri: T_REQUEST_URI,
+          clientId: T_CLIENT_ID,
+          requestUri: T_REQUEST_URI,
           state: T_STATE
         } as ItwRemoteRequestPayload
       }
@@ -146,8 +146,8 @@ describe("itwRemoteMachine", () => {
     actor.send({
       type: "start",
       payload: {
-        client_id: T_CLIENT_ID,
-        request_uri: T_REQUEST_URI,
+        clientId: T_CLIENT_ID,
+        requestUri: T_REQUEST_URI,
         state: T_STATE
       } as ItwRemoteRequestPayload
     });
@@ -166,8 +166,8 @@ describe("itwRemoteMachine", () => {
     actor.send({
       type: "start",
       payload: {
-        client_id: T_CLIENT_ID,
-        request_uri: T_REQUEST_URI,
+        clientId: T_CLIENT_ID,
+        requestUri: T_REQUEST_URI,
         state: T_STATE
       } as ItwRemoteRequestPayload
     });

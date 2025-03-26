@@ -5,7 +5,7 @@ import { GlobalState } from "../../../../../../store/reducers/types.ts";
 import { ItwRemoteRequestValidationScreen } from "../ItwRemoteRequestValidationScreen.tsx";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application.ts";
-import { ItwRemoteRequestPayload } from "../../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../../utils/itwRemoteTypeUtils.ts";
 import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList.ts";
 import { ItwRemoteParamsList } from "../../navigation/ItwRemoteParamsList.ts";
@@ -19,8 +19,8 @@ describe("ItwRemoteRequestValidationScreen", () => {
 
   it("should render the loading screen if payload is valid", () => {
     const validPayload = {
-      client_id: "abc123xy",
-      request_uri: "https://example.com/callback",
+      clientId: "abc123xy",
+      requestUri: "https://example.com/callback",
       state: "hyqizm592"
     } as ItwRemoteRequestPayload;
 
@@ -31,8 +31,8 @@ describe("ItwRemoteRequestValidationScreen", () => {
 
   it("should render failure screen if missing required fields", () => {
     const partialPayload = {
-      client_id: "abc123xy",
-      request_uri: "https://example.com/callback"
+      clientId: "abc123xy",
+      requestUri: "https://example.com/callback"
     } as ItwRemoteRequestPayload;
 
     const { getByTestId } = renderComponent(partialPayload);
@@ -42,8 +42,8 @@ describe("ItwRemoteRequestValidationScreen", () => {
 
   it("should render failure screen if required fields are empty", () => {
     const partialPayload = {
-      client_id: "",
-      request_uri: "https://example.com/callback",
+      clientId: "",
+      requestUri: "https://example.com/callback",
       state: "hyqizm592"
     } as ItwRemoteRequestPayload;
 

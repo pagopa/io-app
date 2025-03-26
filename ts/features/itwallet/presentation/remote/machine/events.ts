@@ -1,4 +1,4 @@
-import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
 
 export type Start = {
   type: "start";
