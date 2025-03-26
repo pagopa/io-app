@@ -7,11 +7,11 @@ import {
 } from "../../../store/actions/analytics";
 import { loginSuccess } from "../../../features/authentication/store/actions";
 import { SessionToken } from "../../../types/SessionToken";
-import { stopCieManager, watchCieAuthenticationSaga } from "../../cie";
-import { watchTestLoginRequestSaga } from "../../testLoginSaga";
-import { authenticationSaga } from "../authenticationSaga";
+import { authenticationSaga } from "../saga/authenticationSaga";
 import { startupLoadSuccess } from "../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../store/reducers/startup";
+import { watchTestLoginRequestSaga } from "../../../sagas/testLoginSaga";
+import { stopCieManager, watchCieAuthenticationSaga } from "../../../sagas/cie";
 
 const aSessionToken = "a_session_token" as SessionToken;
 

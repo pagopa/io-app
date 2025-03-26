@@ -111,6 +111,7 @@ import {
   isDeviceOfflineWithWalletSaga,
   watchSessionRefreshInOfflineSaga
 } from "../features/ingress/saga";
+import { authenticationSaga } from "../features/authentication/saga/authenticationSaga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -128,7 +129,6 @@ import {
 } from "./profile";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
-import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";

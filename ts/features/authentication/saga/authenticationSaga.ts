@@ -3,23 +3,23 @@ import { call, cancel, fork, put, select, take } from "typed-redux-saga/macro";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
-} from "../../store/actions/analytics";
-import { loginSuccess } from "../../features/authentication/store/actions";
-import { startupLoadSuccess } from "../../store/actions/startup";
-import { SessionToken } from "../../types/SessionToken";
-import { ReduxSagaEffect } from "../../types/utils";
-import { StartupStatusEnum } from "../../store/reducers/startup";
-import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
-import { watchTestLoginRequestSaga } from "../testLoginSaga";
+} from "../../../store/actions/analytics";
+import { loginSuccess } from "../store/actions";
+import { startupLoadSuccess } from "../../../store/actions/startup";
+import { SessionToken } from "../../../types/SessionToken";
+import { ReduxSagaEffect } from "../../../types/utils";
+import { StartupStatusEnum } from "../../../store/reducers/startup";
+import { stopCieManager, watchCieAuthenticationSaga } from "../../../sagas/cie";
+import { watchTestLoginRequestSaga } from "../../../sagas/testLoginSaga";
 import {
   trackCieIDLoginSuccess,
   trackCieLoginSuccess,
   trackLoginFlowStarting,
   trackSpidLoginSuccess
-} from "../../features/authentication/analytics";
-import { idpSelector } from "../../features/authentication/store/selectors";
-import { IdpCIE, IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+} from "../analytics";
+import { idpSelector } from "../store/selectors";
+import { IdpCIE, IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
+import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 
 /**
  * A saga that makes the user go through the authentication process until
