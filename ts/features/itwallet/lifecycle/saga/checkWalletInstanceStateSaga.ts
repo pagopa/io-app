@@ -9,6 +9,7 @@ import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils"
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga";
 
@@ -49,6 +50,13 @@ export function* checkWalletInstanceStateSaga(): Generator<
       itwLifecycleIsOperationalOrValid
     );
     const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
+    const eid = yield* select(itwCredentialsEidSelector);
+
+    // Check for wallet instance inconsistency (EID present but no integrity key tag)
+    if (O.isSome(eid) && O.isNone(integrityKeyTag)) {
+      yield* call(handleWalletInstanceResetSaga);
+      return;
+    }
 
     // Only operational or valid wallet instances can be revoked.
     if (isItwOperationalOrValid && O.isSome(integrityKeyTag)) {

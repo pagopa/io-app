@@ -149,4 +149,23 @@ describe("checkWalletInstanceStateSaga", () => {
       .call.fn(handleWalletInstanceResetSaga)
       .run();
   });
+
+  it("Resets the wallet instance when EID is present but integrity key tag is missing", () => {
+    const store: DeepPartial<GlobalState> = {
+      features: {
+        itWallet: {
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
+          issuance: { integrityKeyTag: O.none },
+          credentials: { eid: O.some({} as StoredCredential), credentials: [] }
+        }
+      }
+    };
+
+    return expectSaga(checkWalletInstanceStateSaga)
+      .withState(store)
+      .provide([[matchers.call.fn(checkIntegrityServiceReadySaga), true]])
+      .call.fn(handleWalletInstanceResetSaga)
+      .not.call.fn(getStatusOrResetWalletInstance)
+      .run();
+  });
 });
