@@ -285,14 +285,14 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                   tabAlignment="start"
                                 >
                                   <ForwardRef
-                                    accessibilityLabel="By category"
+                                    accessibilityLabel="Filter By category, 1 of 2"
                                     icon="initiatives"
                                     label="By category"
                                     onPress={[Function]}
                                     testID="cgn-merchants-tab-CGN_CATEGORIES"
                                   />
                                   <ForwardRef
-                                    accessibilityLabel="By partner"
+                                    accessibilityLabel="Filter By partner, 2 of 2"
                                     icon="merchant"
                                     label="By partner"
                                     onPress={[Function]}
@@ -424,7 +424,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                   }
                                 >
                                   <View
-                                    accessibilityLabel="By category"
+                                    accessibilityLabel="Filter By category, 1 of 2"
                                     accessibilityRole="tab"
                                     accessibilityState={
                                       {
@@ -581,7 +581,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                   }
                                 >
                                   <View
-                                    accessibilityLabel="By partner"
+                                    accessibilityLabel="Filter By partner, 2 of 2"
                                     accessibilityRole="tab"
                                     accessibilityState={
                                       {
