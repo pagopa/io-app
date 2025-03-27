@@ -1,9 +1,7 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
-import { createRef, useEffect, useMemo, useState } from "react";
+import { createRef, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import * as O from "fp-ts/Option";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -13,9 +11,9 @@ import {
   trackITWalletBannerVisualized
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch } from "../../../../../store/hooks";
 import { itwCloseDiscoveryBanner } from "../../store/actions/preferences";
-import { itwIsWalletInstanceRemotelyActiveSelector } from "../../store/selectors/preferences.ts";
+import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
 
 /**
  * to use in flows where we want to handle the banner's visibility logic externally
@@ -29,8 +27,6 @@ export type ItwDiscoveryBannerProps = {
   handleOnClose?: () => void;
 };
 
-type BannerType = "onboarding" | "reactivating";
-
 export const ItwDiscoveryBanner = ({
   withTitle = true,
   ignoreMargins = false,
@@ -39,15 +35,9 @@ export const ItwDiscoveryBanner = ({
 }: ItwDiscoveryBannerProps) => {
   const bannerRef = createRef<View>();
   const dispatch = useIODispatch();
-  const isWalletRemotelyActive = useIOSelector(
-    itwIsWalletInstanceRemotelyActiveSelector
-  );
   const navigation = useIONavigation();
   const route = useRoute();
-
-  const [bannerType, setBannerType] = useState<BannerType | undefined>(
-    undefined
-  );
+  const bannerType = useItwDiscoveryBannerType();
 
   const trackBannerProperties = useMemo(
     () => ({
@@ -72,15 +62,6 @@ export const ItwDiscoveryBanner = ({
     handleOnClose?.();
     dispatch(itwCloseDiscoveryBanner());
   };
-
-  // This effect is used to determine which banner to show and if it should be shown
-  useEffect(() => {
-    pipe(
-      O.fromNullable(isWalletRemotelyActive),
-      O.map(isActive => (isActive ? "reactivating" : "onboarding")),
-      O.map(setBannerType)
-    );
-  }, [isWalletRemotelyActive]);
 
   if (!bannerType) {
     return null;
