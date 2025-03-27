@@ -7,18 +7,14 @@ jest.mock("../../../../mixpanel", () => ({
   mixpanelTrack: jest.fn()
 }));
 
-jest.mock("../../../../utils/analytics", () => ({
-  buildEventProperties: jest.fn().mockImplementation(testBuildEventProperties)
-}));
-
 const testBuildEventProperties = (
-  channel: string,
   category: string,
+  type: string,
   properties?: Record<string, unknown>
 ) => ({
-  channel,
-  category,
-  properties
+  event_category: category,
+  event_type: type,
+  ...properties
 });
 
 describe("activationReminderBanner", () => {
