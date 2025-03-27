@@ -7,6 +7,9 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PNActivationReminderBanner } from "../PNActivationReminderBanner";
+import * as MIXPANEL from "../../../analytics/activationReminderBanner";
+import * as STORE_HOOKS from "../../../../../store/hooks";
+import { dismissPnActivationReminderBanner } from "../../../store/actions";
 
 describe("pnActivationBanner", () => {
   it("should match snapshot", () => {
@@ -32,12 +35,45 @@ describe("pnActivationBanner", () => {
       }
     );
   });
+
+  it("should call a tracking function on first render", () => {
+    const mixpanelSpy = jest.spyOn(
+      MIXPANEL.sendBannerMixpanelEvents,
+      "bannerShown"
+    );
+    renderComponent();
+    expect(mixpanelSpy).toHaveBeenCalledWith();
+    expect(mixpanelSpy).toHaveBeenCalledTimes(1);
+  });
+  it('should track, call a dismiss action and "handleOnClose" on x tap', () => {
+    const mixpanelSpy = jest.spyOn(
+      MIXPANEL.sendBannerMixpanelEvents,
+      "bannerClose"
+    );
+    const mockHandleOnClose = jest.fn();
+    const dispatchSpy = jest.fn();
+    jest
+      .spyOn(STORE_HOOKS, "useIODispatch")
+      .mockImplementation(() => dispatchSpy);
+
+    const component = renderComponent(mockHandleOnClose);
+    const banner = component.getByTestId("pn-banner");
+    fireEvent(banner, "onClose");
+
+    [mockHandleOnClose, dispatchSpy, mixpanelSpy].forEach(spy => {
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      dismissPnActivationReminderBanner()
+    );
+  });
 });
-const renderComponent = () => {
+const renderComponent = (closeHandler: () => void = () => null) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
   return renderScreenWithNavigationStoreContext(
-    () => <PNActivationReminderBanner handleOnClose={() => null} />,
+    () => <PNActivationReminderBanner handleOnClose={closeHandler} />,
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     store

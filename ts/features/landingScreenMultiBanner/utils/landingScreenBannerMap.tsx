@@ -5,7 +5,7 @@ import { isItwPersistedDiscoveryBannerRenderableSelector } from "../../itwallet/
 import { LoginExpirationBanner } from "../../authentication/loginPreferences/components/LoginExpirationBanner";
 import { isSessionExpirationBannerRenderableSelector } from "../../authentication/loginPreferences/store/selectors";
 import { PNActivationReminderBanner } from "../../pn/reminderBanner/components/PNActivationReminderBanner";
-import { isPnActivationReminderBannerRenderableSelector } from "../../pn/store/reducers/bannerDismiss";
+import { isPnActivationReminderBannerRenderableSelector } from "../../pn/reminderBanner/reducer/bannerDismiss";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
 
