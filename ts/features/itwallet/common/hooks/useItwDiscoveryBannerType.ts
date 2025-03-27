@@ -6,6 +6,10 @@ import { itwIsWalletInstanceRemotelyActiveSelector } from "../store/selectors/pr
 
 type BannerType = "onboarding" | "reactivating";
 
+/**
+ * Hook to determine the type of the ITW discovery banner to display based on the wallet's state
+ * @returns the type of the banner to display
+ */
 export const useItwDiscoveryBannerType = () => {
   const [bannerType, setBannerType] = useState<BannerType | undefined>(
     undefined
