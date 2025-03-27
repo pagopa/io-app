@@ -30,6 +30,7 @@ import {
 } from "../../store/reducers/merchants";
 import { mixAndSortMerchants } from "../../utils/merchants";
 import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
+import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 
 export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 
@@ -66,17 +67,16 @@ export const CgnMerchantsListScreen = () => {
     [navigator]
   );
 
-  const renderItem = (item: MerchantsAll) => {
-    const accessibilityLabel = item?.numberOfNewDiscounts
-      ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
-          name: item.name,
-          count: item.numberOfNewDiscounts,
-          defaultValue: item.name
-        })
-      : item.newDiscounts
-      ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
-      : item.name;
-
+  const renderItem = (item: MerchantsAll, index: number) => {
+    const accessibilityLabel =
+      (item?.numberOfNewDiscounts
+        ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
+            name: item.name,
+            count: item.numberOfNewDiscounts
+          })
+        : item.newDiscounts
+        ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
+        : item.name) + getListItemAccessibilityLabelCount(data.length, index);
     return (
       <ListItemNav
         key={item.id}
