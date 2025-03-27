@@ -5,9 +5,18 @@ import { checkCredentialsStatusAttestation } from "../../credentials/saga/checkC
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
 import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";
-import { checkWalletInstanceStateSaga } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
+import {
+  checkWalletInstanceInconsistencySaga,
+  checkWalletInstanceStateSaga
+} from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 
 export function* watchItwSaga(): SagaIterator {
+  const isWalletInstanceConsistent = yield* call(checkWalletInstanceInconsistencySaga);
+
+  // If the wallet instance is inconsistent, we cannot proceed further.
+  if (!isWalletInstanceConsistent) {
+    return;
+  }
   yield* fork(warmUpIntegrityServiceSaga);
   yield* fork(watchItwLifecycleSaga);
 

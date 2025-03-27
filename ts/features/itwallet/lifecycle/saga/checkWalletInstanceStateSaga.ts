@@ -50,17 +50,30 @@ export function* checkWalletInstanceStateSaga(): Generator<
       itwLifecycleIsOperationalOrValid
     );
     const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
-    const eid = yield* select(itwCredentialsEidSelector);
-
-    // Check for wallet instance inconsistency (EID present but no integrity key tag)
-    if (O.isSome(eid) && O.isNone(integrityKeyTag)) {
-      yield* call(handleWalletInstanceResetSaga);
-      return;
-    }
 
     // Only operational or valid wallet instances can be revoked.
     if (isItwOperationalOrValid && O.isSome(integrityKeyTag)) {
       yield* call(getStatusOrResetWalletInstance, integrityKeyTag.value);
     }
   }
+}
+
+/**
+ * Saga responsible for checking wallet instance inconsistency.
+ * If an eID is present but the integrity key tag is missing,
+ * the wallet instance is reset.
+ */
+export function* checkWalletInstanceInconsistencySaga(): Generator<
+  ReduxSagaEffect,
+  boolean
+> {
+  const eid = yield* select(itwCredentialsEidSelector);
+  const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
+
+  if (O.isSome(eid) && O.isNone(integrityKeyTag)) {
+    yield* call(handleWalletInstanceResetSaga);
+    return false;
+  }
+
+  return true;
 }

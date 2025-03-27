@@ -11,6 +11,7 @@ import { itwIsWalletInstanceAttestationValidSelector } from "../../../walletInst
 import { ItwLifecycleState } from "../../store/reducers";
 import { checkIntegrityServiceReadySaga } from "../checkIntegrityServiceReadySaga";
 import {
+  checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga,
   getStatusOrResetWalletInstance
 } from "../checkWalletInstanceStateSaga";
@@ -161,11 +162,11 @@ describe("checkWalletInstanceStateSaga", () => {
       }
     };
 
-    return expectSaga(checkWalletInstanceStateSaga)
+    return expectSaga(checkWalletInstanceInconsistencySaga)
       .withState(store)
-      .provide([[matchers.call.fn(checkIntegrityServiceReadySaga), true]])
       .call.fn(handleWalletInstanceResetSaga)
-      .not.call.fn(getStatusOrResetWalletInstance)
+      .not.call.fn(checkIntegrityServiceReadySaga)
+      .not.call.fn(checkWalletInstanceStateSaga)
       .run();
   });
 });
