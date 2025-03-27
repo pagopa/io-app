@@ -11,7 +11,9 @@ import {
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 
 export function* watchItwSaga(): SagaIterator {
-  const isWalletInstanceConsistent = yield* call(checkWalletInstanceInconsistencySaga);
+  const isWalletInstanceConsistent = yield* call(
+    checkWalletInstanceInconsistencySaga
+  );
 
   // If the wallet instance is inconsistent, we cannot proceed further.
   if (!isWalletInstanceConsistent) {
