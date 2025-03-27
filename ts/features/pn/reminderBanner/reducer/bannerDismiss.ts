@@ -5,6 +5,10 @@ import { Action } from "../../../../store/actions/types";
 import { dismissPnActivationReminderBanner } from "../../store/actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  logoutFailure,
+  logoutSuccess
+} from "../../../../store/actions/authentication";
 
 export type PnBannerDismissState = {
   dismissed: boolean;
@@ -22,6 +26,10 @@ const pnBannerDismissReducer = (
       return {
         dismissed: true
       };
+    // this forces the persistence to update, avoiding misbehaviours because of a dirty cache
+    case getType(logoutSuccess):
+    case getType(logoutFailure):
+      return INITIAL_STATE;
   }
   return state;
 };
