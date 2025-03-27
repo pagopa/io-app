@@ -61,26 +61,34 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       ? categoriesScreen
       : merchantsScreen;
 
+  const tabRoutesKeys = Object.keys(CgnMerchantsHomeTabRoutes);
+
   const ListHeaderComponent = (
     <>
       <TabNavigation
         includeContentMargins={false}
         tabAlignment="start"
-        selectedIndex={Object.keys(CgnMerchantsHomeTabRoutes).indexOf(
-          selectedTab
-        )}
+        selectedIndex={tabRoutesKeys.indexOf(selectedTab)}
       >
-        {Object.keys(CgnMerchantsHomeTabRoutes).map(routeKey => {
+        {tabRoutesKeys.map((routeKey, index) => {
           const route = routeKey as keyof CgnMerchantsHomeTabParamsList;
           const onPress = () => setSelectedTab(route);
 
           const label = tabOptions[route].title;
+          const accessibilityLabel = I18n.t(
+            "bonus.cgn.merchantsList.tabs.a11y",
+            {
+              label,
+              index: index + 1,
+              total: tabRoutesKeys.length
+            }
+          );
           return (
             <TabItem
               testID={`cgn-merchants-tab-${route}`}
               icon={tabOptions[route].icon}
               label={label}
-              accessibilityLabel={label}
+              accessibilityLabel={accessibilityLabel}
               key={route}
               onPress={onPress}
             />
@@ -113,7 +121,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           )
         }
       }}
-      renderItem={({ item }) => renderItem(item as any)}
+      renderItem={({ item, index }) => renderItem(item as any, index)}
       data={[...data]}
       refreshControlProps={refreshControlProps}
       ListHeaderComponent={ListHeaderComponent}
