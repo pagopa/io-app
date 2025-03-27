@@ -1,15 +1,15 @@
 import { generate } from "@pagopa/io-react-native-crypto";
 import {
+  AuthorizationDetail,
   createCryptoContextFor,
-  Credential,
-  AuthorizationDetail
+  Credential
 } from "@pagopa/io-react-native-wallet";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
-import uuid from "react-native-uuid";
+import { v4 as uuidv4 } from "uuid";
 import {
-  itwPidProviderBaseUrl,
   itWalletIssuanceRedirectUri,
-  itwIdpHintTest
+  itwIdpHintTest,
+  itwPidProviderBaseUrl
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
@@ -162,7 +162,7 @@ const getPid = async ({
   dPoPContext,
   credentialDefinition
 }: PidIssuanceParams): Promise<StoredCredential> => {
-  const credentialKeyTag = uuid.v4().toString();
+  const credentialKeyTag = uuidv4().toString();
   await generate(credentialKeyTag);
   const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
 
