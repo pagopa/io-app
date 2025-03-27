@@ -10,7 +10,7 @@ import { SessionToken } from "../../../../types/SessionToken";
 import { authenticationSaga } from "../saga/authenticationSaga";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
-import { watchTestLoginRequestSaga } from "../../../../sagas/testLoginSaga";
+import { watchTestLoginRequestSaga } from "../saga/testLoginSaga";
 import {
   stopCieManager,
   watchCieAuthenticationSaga

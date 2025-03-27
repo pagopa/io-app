@@ -6,22 +6,18 @@ import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { AccessToken } from "../../definitions/session_manager/AccessToken";
-import { PasswordLogin } from "../../definitions/session_manager/PasswordLogin";
-import { BackendPublicClient } from "../api/backendPublic";
-import { apiUrlPrefix } from "../config";
-import {
-  loginFailure,
-  loginSuccess,
-  testLoginRequest
-} from "../features/authentication/common/store/actions";
-import { SessionToken } from "../types/SessionToken";
-import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
-import { convertUnknownToError } from "../utils/errors";
-import { IdpData } from "../../definitions/content/IdpData";
-import { isFastLoginEnabledSelector } from "../features/authentication/fastLogin/store/selectors";
-import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
-import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../features/lollipop/utils/login";
+import { AccessToken } from "../../../../../definitions/session_manager/AccessToken";
+import { PasswordLogin } from "../../../../../definitions/session_manager/PasswordLogin";
+import { BackendPublicClient } from "../../../../api/backendPublic";
+import { apiUrlPrefix } from "../../../../config";
+import { loginFailure, loginSuccess, testLoginRequest } from "../store/actions";
+import { SessionToken } from "../../../../types/SessionToken";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
+import { convertUnknownToError } from "../../../../utils/errors";
+import { IdpData } from "../../../../../definitions/content/IdpData";
+import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
+import { lollipopPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../../../lollipop/utils/login";
 
 // Started by redux action
 function* handleTestLogin({

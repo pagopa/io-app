@@ -13,7 +13,6 @@ import {
   stopCieManager,
   watchCieAuthenticationSaga
 } from "../../login/cie/sagas/cie";
-import { watchTestLoginRequestSaga } from "../../../../sagas/testLoginSaga";
 import {
   trackCieIDLoginSuccess,
   trackCieLoginSuccess,
@@ -23,6 +22,7 @@ import {
 import { idpSelector } from "../store/selectors";
 import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
+import { watchTestLoginRequestSaga } from "./testLoginSaga";
 
 /**
  * A saga that makes the user go through the authentication process until
