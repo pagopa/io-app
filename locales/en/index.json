@@ -4274,8 +4274,17 @@
             "content": "Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!",
             "action": "Inizia"
           },
+          "homeActive": {
+            "title": "Riattiva Documenti su IO",
+            "content": "Per ragioni di sicurezza, quando cambi dispositivo, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
+            "action": "Inizia"
+          },
           "onboarding": {
             "content": "Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!",
+            "action": "Inizia"
+          },
+          "onboardingActive": {
+            "content": "Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio.",
             "action": "Inizia"
           }
         },
