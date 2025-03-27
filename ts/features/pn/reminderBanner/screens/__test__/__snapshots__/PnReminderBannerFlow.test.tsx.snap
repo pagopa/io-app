@@ -619,6 +619,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= ALREADY
                                       "flexShrink": 1,
                                     }
                                   }
+                                  testID="success-cta"
                                 >
                                   <View
                                     style={
@@ -1379,6 +1380,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                       "flexShrink": 1,
                                     }
                                   }
+                                  testID="error-cta"
                                 >
                                   <View
                                     style={
@@ -2139,6 +2141,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                       "flexShrink": 1,
                                     }
                                   }
+                                  testID="error-cta"
                                 >
                                   <View
                                     style={
@@ -2851,6 +2854,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= SUCCESS
                                       "flexShrink": 1,
                                     }
                                   }
+                                  testID="success-cta"
                                 >
                                   <View
                                     style={
@@ -3796,6 +3800,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                       },
                                     ]
                                   }
+                                  testID="privacy-url"
                                 >
                                   Informativa Privacy
                                 </Text>
@@ -3821,6 +3826,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                       },
                                     ]
                                   }
+                                  testID="tos-url"
                                 >
                                   Termini e Condizioni d’uso
                                 </Text>
@@ -4763,6 +4769,7 @@ exports[`error screens should display an error screen in case of missing_sid err
                                       "flexShrink": 1,
                                     }
                                   }
+                                  testID="error-cta"
                                 >
                                   <View
                                     style={
@@ -5523,6 +5530,7 @@ exports[`error screens should display an error screen in case of preferences err
                                       "flexShrink": 1,
                                     }
                                   }
+                                  testID="error-cta"
                                 >
                                   <View
                                     style={
@@ -6283,6 +6291,7 @@ exports[`loading screens + error interop should render the correct loading scree
                                       "flexShrink": 1,
                                     }
                                   }
+                                  testID="error-cta"
                                 >
                                   <View
                                     style={

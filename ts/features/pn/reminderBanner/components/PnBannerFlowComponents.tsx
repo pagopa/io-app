@@ -78,6 +78,7 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
         `features.pn.reminderBanner.activationFlow.${flowState}.body`
       )}
       action={{
+        testID: "success-cta",
         label: I18n.t("global.buttons.close"),
         onPress: () => navigation.navigate(...navigateHomeParams)
       }}
@@ -101,6 +102,7 @@ const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
         `features.pn.reminderBanner.activationFlow.${flowState}.body`
       )}
       action={{
+        testID: "error-cta",
         label: I18n.t("global.buttons.close"),
         onPress: () => navigation.navigate(...navigateHomeParams)
       }}
@@ -172,11 +174,15 @@ const Paragraph4 = () => {
           {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.activate`)}
         </Body>
         {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.readAndUnderstood`)}
-        <Body asLink={true} onPress={() => openWebUrl(privacyUrl)}>
+        <Body
+          testID="privacy-url"
+          asLink={true}
+          onPress={() => openWebUrl(privacyUrl)}
+        >
           {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.privacyInfo`)}
         </Body>
         {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.andThe`)}
-        <Body asLink={true} onPress={() => openWebUrl(tosUrl)}>
+        <Body testID="tos-url" asLink={true} onPress={() => openWebUrl(tosUrl)}>
           {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.TOS`)}
         </Body>
       </Body>
