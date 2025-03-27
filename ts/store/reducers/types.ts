@@ -6,7 +6,7 @@ import { PersistedFeaturesState } from "../../features/common/store/reducers";
 import { PersistedLollipopState } from "../../features/lollipop/store";
 import { TrialSystemState } from "../../features/trialSystem/store/reducers";
 import { PersistedNotificationsState } from "../../features/pushNotifications/store/reducers";
-import { PersistedAuthenticationState } from "../../features/authentication/store/reducers";
+import { PersistedAuthenticationState } from "../../features/authentication/common/store/reducers";
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { CieState } from "./cie";

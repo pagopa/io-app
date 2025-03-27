@@ -10,7 +10,7 @@ import {
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
-import { originSchemasWhiteList } from "../../../../authentication/utils/originSchemasWhiteList";
+import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
 import { getIntentFallbackUrl } from "../../../../../utils/login";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import {

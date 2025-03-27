@@ -1,12 +1,12 @@
 import { CieIdNotInstalledProps } from "../../features/cie/components/CieIdNotInstalled";
 import { CieIdLoginProps } from "../../features/cieLogin/components/CieIdLoginWebView";
 import { UrlNotCompliant } from "../../features/cieLogin/components/screens/CieIdAuthUrlError";
-import { AuthErrorScreenProps } from "../../features/authentication/screens/AuthErrorScreen";
-import { CieCardReaderScreenNavigationParams } from "../../features/authentication/screens/cie/CieCardReaderScreen";
-import { CieConsentDataUsageScreenNavigationParams } from "../../features/authentication/screens/cie/CieConsentDataUsageScreen";
-import { CieWrongCiePinScreenNavigationParams } from "../../features/authentication/screens/cie/CieWrongCiePinScreen";
-import { ChosenIdentifier } from "../../features/authentication/screens/OptInScreen";
-import { UnlockAccessProps } from "../../features/authentication/components/UnlockAccessComponent";
+import { AuthErrorScreenProps } from "../../features/authentication/login/authError/screens/AuthErrorScreen";
+import { CieCardReaderScreenNavigationParams } from "../../features/authentication/login/cie/screens/CieCardReaderScreen";
+import { CieConsentDataUsageScreenNavigationParams } from "../../features/authentication/login/cie/screens/CieConsentDataUsageScreen";
+import { CieWrongCiePinScreenNavigationParams } from "../../features/authentication/login/cie/screens/CieWrongCiePinScreen";
+import { ChosenIdentifier } from "../../features/authentication/login/optIn/screens/OptInScreen";
+import { UnlockAccessProps } from "../../features/authentication/login/unlockAccess/components/UnlockAccessComponent";
 import ROUTES from "../routes";
 
 export type AuthenticationParamsList = {

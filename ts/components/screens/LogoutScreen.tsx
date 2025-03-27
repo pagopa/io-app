@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { useEffect } from "react";
 import { Dispatch } from "../../store/actions/types";
-import { logoutRequest } from "../../features/authentication/store/actions";
+import { logoutRequest } from "../../features/authentication/common/store/actions";
 import I18n from "../../i18n";
 import LoadingScreenContent from "./LoadingScreenContent";
 

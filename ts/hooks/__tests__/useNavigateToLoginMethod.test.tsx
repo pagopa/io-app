@@ -4,8 +4,8 @@ import { ButtonSolid } from "@pagopa/io-app-design-system";
 import * as rnCieId from "@pagopa/io-react-native-cieid";
 import useNavigateToLoginMethod from "../useNavigateToLoginMethod";
 import ROUTES from "../../navigation/routes";
-import * as fastLoginSelector from "../../features/fastLogin/store/selectors";
-import { Identifier } from "../../features/authentication/screens/OptInScreen";
+import * as fastLoginSelector from "../../features/authentication/fastLogin/store/selectors";
+import { Identifier } from "../../features/authentication/login/optIn/screens/OptInScreen";
 import { withStore } from "../../utils/jest/withStore";
 
 const IS_UAT = false;

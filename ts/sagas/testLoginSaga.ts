@@ -14,12 +14,12 @@ import {
   loginFailure,
   loginSuccess,
   testLoginRequest
-} from "../features/authentication/store/actions";
+} from "../features/authentication/common/store/actions";
 import { SessionToken } from "../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { convertUnknownToError } from "../utils/errors";
 import { IdpData } from "../../definitions/content/IdpData";
-import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
+import { isFastLoginEnabledSelector } from "../features/authentication/fastLogin/store/selectors";
 import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../features/lollipop/utils/login";
 

@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { ActionArgs, assign } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { checkCurrentSession } from "../../../authentication/store/actions";
+import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";

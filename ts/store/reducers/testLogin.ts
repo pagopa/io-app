@@ -5,7 +5,7 @@ import {
   loginSuccess,
   testLoginCleanUp,
   testLoginRequest
-} from "../../features/authentication/store/actions";
+} from "../../features/authentication/common/store/actions";
 import { GlobalState } from "./types";
 
 export type TestLoginInitialState = {

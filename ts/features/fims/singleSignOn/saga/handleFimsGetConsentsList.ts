@@ -11,7 +11,7 @@ import * as E from "fp-ts/lib/Either";
 import { identity, pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { fimsTokenSelector } from "../../../authentication/store/selectors";
+import { fimsTokenSelector } from "../../../authentication/common/store/selectors";
 import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   fimsGetConsentsListAction,

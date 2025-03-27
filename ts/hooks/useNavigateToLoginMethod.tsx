@@ -4,19 +4,19 @@ import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import ROUTES from "../navigation/routes";
 import { useIODispatch, useIOSelector } from "../store/hooks";
-import { fastLoginOptInFFEnabled } from "../features/fastLogin/store/selectors";
+import { fastLoginOptInFFEnabled } from "../features/authentication/fastLogin/store/selectors";
 import { isCieSupportedSelector } from "../store/reducers/cie";
 import {
   cieFlowForDevServerEnabled,
   SpidLevel
 } from "../features/cieLogin/utils";
-import { idpSelected } from "../features/authentication/store/actions";
+import { idpSelected } from "../features/authentication/common/store/actions";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { isCieLoginUatEnabledSelector } from "../features/cieLogin/store/selectors";
 import {
   ChosenIdentifier,
   Identifier
-} from "../features/authentication/screens/OptInScreen";
+} from "../features/authentication/login/optIn/screens/OptInScreen";
 import { cieIDSetSelectedSecurityLevel } from "../features/cieLogin/store/actions";
 
 export const IdpCIE: SpidIdp = {

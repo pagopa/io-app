@@ -5,7 +5,7 @@ import { startApplicationInitialization } from "../store/actions/application";
 import {
   checkCurrentSession,
   sessionInvalid
-} from "../features/authentication/store/actions";
+} from "../features/authentication/common/store/actions";
 import {
   identificationCancel,
   identificationForceLogout,
@@ -25,7 +25,7 @@ import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
-import { isFastLoginEnabledSelector } from "./../features/fastLogin/store/selectors/index";
+import { isFastLoginEnabledSelector } from "./../features/authentication/fastLogin/store/selectors/index";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>

@@ -8,7 +8,7 @@ import {
   fingerprintAcknowledged
 } from "../actions/onboarding";
 import { Action } from "../actions/types";
-import { sessionExpired } from "../../features/authentication/store/actions";
+import { sessionExpired } from "../../features/authentication/common/store/actions";
 import { GlobalState } from "./types";
 
 export type OnboardingState = Readonly<{

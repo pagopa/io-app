@@ -19,7 +19,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   bpdTokenSelector,
   walletTokenSelector
-} from "../../../authentication/store/selectors";
+} from "../../../authentication/common/store/selectors";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector

@@ -8,7 +8,7 @@ import {
 } from "typed-redux-saga/macro";
 import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../../store/actions/profile";
-import { logoutSuccess } from "../../authentication/store/actions";
+import { logoutSuccess } from "../../authentication/common/store/actions";
 import {
   downloadAttachment,
   getMessageDataAction,

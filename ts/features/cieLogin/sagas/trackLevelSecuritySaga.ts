@@ -3,7 +3,7 @@ import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import { sequenceT } from "fp-ts/lib/Apply";
 import { cieIDSelectedSecurityLevelSelector } from "../store/selectors";
-import { idpSelector } from "../../authentication/store/selectors";
+import { idpSelector } from "../../authentication/common/store/selectors";
 import { IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 import { trackCieIdSecurityLevelMismatch } from "../analytics";
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";

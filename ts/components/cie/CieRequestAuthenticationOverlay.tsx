@@ -34,10 +34,10 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
 import { trackSpidLoginError } from "../../utils/analytics";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
-import { selectedIdentityProviderSelector } from "../../features/authentication/store/selectors";
+import { selectedIdentityProviderSelector } from "../../features/authentication/common/store/selectors";
 import { OperationResultScreenContent } from "../screens/OperationResultScreenContent";
 
 const styles = StyleSheet.create({

@@ -4,7 +4,7 @@ import ROUTES from "../../navigation/routes";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
-import { CieCardReaderScreenNavigationParams } from "../../features/authentication/screens/cie/CieCardReaderScreen";
+import { CieCardReaderScreenNavigationParams } from "../../features/authentication/login/cie/screens/CieCardReaderScreen";
 
 /**
  * @deprecated

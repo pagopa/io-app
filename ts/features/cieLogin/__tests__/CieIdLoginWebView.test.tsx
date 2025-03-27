@@ -4,10 +4,13 @@ import { Linking } from "react-native";
 import CieIdLoginWebView from "../components/CieIdLoginWebView";
 import ROUTES from "../../../navigation/routes";
 import * as loginHooks from "../../lollipop/hooks/useLollipopLoginSource";
-import * as authSelectors from "../../authentication/store/selectors";
+import * as authSelectors from "../../authentication/common/store/selectors";
 import { SessionToken } from "../../../types/SessionToken";
 import { SpidLevelEnum } from "../../../../definitions/session_manager/SpidLevel";
-import { loginFailure, loginSuccess } from "../../authentication/store/actions";
+import {
+  loginFailure,
+  loginSuccess
+} from "../../authentication/common/store/actions";
 import { withStore } from "../../../utils/jest/withStore";
 
 const API_PREFIX_URL = "http://example.com";

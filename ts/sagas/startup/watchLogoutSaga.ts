@@ -10,7 +10,7 @@ import {
   logoutFailure,
   logoutRequest,
   logoutSuccess
-} from "../../features/authentication/store/actions";
+} from "../../features/authentication/common/store/actions";
 import { startupLoadSuccess } from "../../store/actions/startup";
 import { SagaCallReturnType } from "../../types/utils";
 import { convertUnknownToError } from "../../utils/errors";

@@ -10,13 +10,13 @@ import { BackendClient } from "../../api/backend";
 import {
   checkCurrentSession,
   sessionInformationLoadSuccess
-} from "../../features/authentication/store/actions";
+} from "../../features/authentication/common/store/actions";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import { convertUnknownToError } from "../../utils/errors";
-import { handleSessionExpiredSaga } from "../../features/fastLogin/saga/utils";
+import { handleSessionExpiredSaga } from "../../features/authentication/fastLogin/saga/utils";
 import { getOnlyNotAlreadyExistentValues } from "../../features/zendesk/utils";
-import { sessionInfoSelector } from "../../features/authentication/store/selectors";
+import { sessionInfoSelector } from "../../features/authentication/common/store/selectors";
 
 export function* checkSession(
   getSessionValidity: ReturnType<typeof BackendClient>["getSession"],

@@ -3,7 +3,7 @@ import {
   logoutFailure,
   logoutRequest,
   logoutSuccess
-} from "../../../features/authentication/store/actions";
+} from "../../../features/authentication/common/store/actions";
 import { watchLogoutSaga, logoutSaga } from "../watchLogoutSaga";
 
 const logout = jest.fn();

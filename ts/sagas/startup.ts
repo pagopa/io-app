@@ -23,12 +23,12 @@ import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { shouldTrackLevelSecurityMismatchSaga } from "../features/cieLogin/sagas/trackLevelSecuritySaga";
-import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
-import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
+import { setSecurityAdviceReadyToShow } from "../features/authentication/fastLogin/store/actions/securityAdviceActions";
+import { refreshSessionToken } from "../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   isFastLoginEnabledSelector,
   tokenRefreshSelector
-} from "../features/fastLogin/store/selectors";
+} from "../features/authentication/fastLogin/store/selectors";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
@@ -37,7 +37,7 @@ import {
   watchItwSaga,
   watchItwOfflineSaga
 } from "../features/itwallet/common/saga";
-import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
+import { userFromSuccessLoginSelector } from "../features/authentication/loginInfo/store/selectors";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
@@ -71,7 +71,7 @@ import {
   applicationInitialized,
   startApplicationInitialization
 } from "../store/actions/application";
-import { sessionExpired } from "../features/authentication/store/actions";
+import { sessionExpired } from "../features/authentication/common/store/actions";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
@@ -87,7 +87,7 @@ import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   sessionInfoSelector,
   sessionTokenSelector
-} from "../features/authentication/store/selectors";
+} from "../features/authentication/common/store/selectors";
 import {
   isIdPayEnabledSelector,
   isPnEnabledSelector,
@@ -111,7 +111,7 @@ import {
   isDeviceOfflineWithWalletSaga,
   watchSessionRefreshInOfflineSaga
 } from "../features/ingress/saga";
-import { authenticationSaga } from "../features/authentication/saga/authenticationSaga";
+import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {

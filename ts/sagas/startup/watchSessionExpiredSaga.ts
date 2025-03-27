@@ -1,6 +1,6 @@
 import { takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
-import { sessionExpired } from "../../features/authentication/store/actions";
+import { sessionExpired } from "../../features/authentication/common/store/actions";
 import { ReduxSagaEffect } from "../../types/utils";
 import { restartCleanApplication } from "../commons";
 

@@ -20,16 +20,16 @@ import { identificationRequest } from "../../../store/actions/identification";
 import { zendeskGetSessionPollingRunningSelector } from "../store/reducers";
 import { startTimer } from "../../../utils/timer";
 import { checkSession } from "../../../sagas/startup/watchCheckSessionSaga";
-import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
+import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import { BackendClient } from "../../../api/backend";
 import { SagaCallReturnType } from "../../../types/utils";
 import {
   formatRequestedTokenString,
   getOnlyNotAlreadyExistentValues
 } from "../utils";
-import { withRefreshApiCall } from "../../fastLogin/saga/utils";
-import { sessionInformationLoadSuccess } from "../../authentication/store/actions";
-import { sessionInfoSelector } from "../../authentication/store/selectors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { sessionInformationLoadSuccess } from "../../authentication/common/store/actions";
+import { sessionInfoSelector } from "../../authentication/common/store/selectors";
 import { isDevEnv } from "./../../../utils/environment";
 import { zendeskSupport } from "./orchestration";
 import { handleGetZendeskConfig } from "./networking/handleGetZendeskConfig";

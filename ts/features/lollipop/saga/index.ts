@@ -26,7 +26,7 @@ import {
   toCryptoError
 } from "../utils/crypto";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
-import { sessionInvalid } from "../../authentication/store/actions";
+import { sessionInvalid } from "../../authentication/common/store/actions";
 import { restartCleanApplication } from "../../../sagas/commons";
 
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
