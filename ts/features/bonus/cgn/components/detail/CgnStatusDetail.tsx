@@ -11,6 +11,7 @@ import { CardPending } from "../../../../../../definitions/cgn/CardPending";
 import { CardRevoked } from "../../../../../../definitions/cgn/CardRevoked";
 import I18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
+import { getAccessibleExpirationDate } from "../../utils/dates";
 
 type Props = {
   cgnDetail: Card;
@@ -38,14 +39,10 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
               cgnDetail.revocation_date,
               I18n.t("global.dateFormats.shortFormat")
             )}
-            accessibilityLabel={`${I18n.t(
-              "bonus.cgn.detail.status.date.revoked"
-            )}: ${localeDateFormat(
+            accessibilityLabel={`${getAccessibleExpirationDate(
               cgnDetail.revocation_date,
-              I18n.t("global.dateFormats.shortFormat")
-            )}. ${I18n.t("bonus.cgn.detail.status.a11y.cardStatus", {
-              status: I18n.t("bonus.cgn.detail.status.badge.revoked")
-            })}`}
+              "revoked"
+            )}`}
             endElement={{
               type: "badge",
               componentProps: {
@@ -65,14 +62,10 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
               cgnDetail.expiration_date,
               I18n.t("global.dateFormats.shortFormat")
             )}
-            accessibilityLabel={`${I18n.t(
-              "bonus.cgn.detail.status.expiration.cgn"
-            )}: ${localeDateFormat(
+            accessibilityLabel={`${getAccessibleExpirationDate(
               cgnDetail.expiration_date,
-              I18n.t("global.dateFormats.shortFormat")
-            )}. ${I18n.t("bonus.cgn.detail.status.a11y.cardStatus", {
-              status: I18n.t("bonus.cgn.detail.status.badge.expired")
-            })}`}
+              "expired"
+            )}`}
             endElement={{
               type: "badge",
               componentProps: {
@@ -92,14 +85,10 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
               cgnDetail.expiration_date,
               I18n.t("global.dateFormats.shortFormat")
             )}
-            accessibilityLabel={`${I18n.t(
-              "bonus.cgn.detail.status.expiration.cgn"
-            )}: ${localeDateFormat(
+            accessibilityLabel={`${getAccessibleExpirationDate(
               cgnDetail.expiration_date,
-              I18n.t("global.dateFormats.shortFormat")
-            )}. ${I18n.t("bonus.cgn.detail.status.a11y.cardStatus", {
-              status: I18n.t("bonus.cgn.detail.status.badge.active")
-            })}`}
+              "active"
+            )}`}
             endElement={{
               type: "badge",
               componentProps: {
