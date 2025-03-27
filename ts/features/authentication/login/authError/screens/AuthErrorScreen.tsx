@@ -6,7 +6,7 @@ import {
 import { useCallback } from "react";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
-import { CieIdLoginProps } from "../../../../cieLogin/components/CieIdLoginWebView";
+import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../../../../navigation/params/AuthenticationParamsList";
 import { useIODispatch } from "../../../../../store/hooks";
 import {

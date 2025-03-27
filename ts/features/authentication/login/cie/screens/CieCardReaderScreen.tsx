@@ -41,8 +41,8 @@ import { connect } from "react-redux";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../../../components/cie/CieCardReadingAnimation";
-import { isCieLoginUatEnabledSelector } from "../../../../cieLogin/store/selectors";
-import { getCieUatEndpoint } from "../../../../cieLogin/utils/endpoints";
+import { isCieLoginUatEnabledSelector } from "../store/selectors";
+import { getCieUatEndpoint } from "../utils/endpoints";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../../../navigation/params/AuthenticationParamsList";
@@ -51,7 +51,7 @@ import {
   CieAuthenticationErrorPayload,
   CieAuthenticationErrorReason,
   cieAuthenticationError
-} from "../../../../../store/actions/cie";
+} from "../store/actions";
 import { ReduxProps } from "../../../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";

@@ -9,7 +9,7 @@ import {
 import {
   CieLoginState,
   cieLoginPersistor
-} from "../../../cieLogin/store/reducers";
+} from "../../../authentication/login/cie/store/reducers/cieLogin";
 import {
   FastLoginState,
   fastLoginReducer

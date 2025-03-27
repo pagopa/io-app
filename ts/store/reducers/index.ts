@@ -33,16 +33,16 @@ import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
-import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
+import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
 import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
 import { appFeedbackInitialState } from "../../features/appReviews/store/reducers";
 import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as authenticationInitialState
 } from "../../features/authentication/common/store/reducers";
+import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
-import cieReducer from "./cie";
 import contentReducer, {
   initialContentState as contentInitialContentState
 } from "./content";

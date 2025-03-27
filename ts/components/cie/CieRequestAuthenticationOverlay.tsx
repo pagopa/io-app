@@ -35,8 +35,8 @@ import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
 import { trackSpidLoginError } from "../../utils/analytics";
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
-import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
-import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
+import { isCieLoginUatEnabledSelector } from "../../features/authentication/login/cie/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../features/authentication/login/cie/utils";
 import { selectedIdentityProviderSelector } from "../../features/authentication/common/store/selectors";
 import { OperationResultScreenContent } from "../screens/OperationResultScreenContent";
 

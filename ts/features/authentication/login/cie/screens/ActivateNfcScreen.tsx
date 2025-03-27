@@ -9,7 +9,7 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { AuthenticationParamsList } from "../../../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { useIOSelector } from "../../../../../store/hooks";
-import { isNfcEnabledSelector } from "../../../../../store/reducers/cie";
+import { isNfcEnabledSelector } from "../store/selectors";
 import * as cieUtils from "../../../../../utils/cie";
 import { CieCardReaderScreenNavigationParams } from "./CieCardReaderScreen";
 

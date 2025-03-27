@@ -12,7 +12,7 @@ import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import {
   stopCieManager,
   watchCieAuthenticationSaga
-} from "../../../../sagas/cie";
+} from "../../login/cie/sagas/cie";
 import { watchTestLoginRequestSaga } from "../../../../sagas/testLoginSaga";
 import {
   trackCieIDLoginSuccess,
@@ -21,7 +21,7 @@ import {
   trackSpidLoginSuccess
 } from "../analytics";
 import { idpSelector } from "../store/selectors";
-import { IdpCIE, IdpCIE_ID } from "../../../../hooks/useNavigateToLoginMethod";
+import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 
 /**

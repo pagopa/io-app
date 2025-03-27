@@ -37,8 +37,11 @@ import {
 } from "../../../../../components/ui/LightModal";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { pinPukHelpUrl } from "../../../../../config";
-import { isCieLoginUatEnabledSelector } from "../../../../cieLogin/store/selectors";
-import { cieFlowForDevServerEnabled } from "../../../../cieLogin/utils";
+import {
+  isCieLoginUatEnabledSelector,
+  isNfcEnabledSelector
+} from "../store/selectors";
+import { cieFlowForDevServerEnabled } from "../utils";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
@@ -46,9 +49,8 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { AuthenticationParamsList } from "../../../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { loginSuccess } from "../../../common/store/actions";
-import { nfcIsEnabled } from "../../../../../store/actions/cie";
+import { nfcIsEnabled } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { isNfcEnabledSelector } from "../../../../../store/reducers/cie";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";

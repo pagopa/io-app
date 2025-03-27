@@ -34,7 +34,7 @@ import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/B
 import {
   isCieIDTourGuideEnabledSelector,
   isCieLoginUatEnabledSelector
-} from "../../../../cieLogin/store/selectors";
+} from "../../cie/store/selectors";
 import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -56,9 +56,9 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { tosConfigSelector } from "../../../../tos/store/selectors";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import useNavigateToLoginMethod from "../../../../../hooks/useNavigateToLoginMethod";
-import { cieIDDisableTourGuide } from "../../../../cieLogin/store/actions";
-import { SpidLevel } from "../../../../cieLogin/utils";
+import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
+import { cieIDDisableTourGuide } from "../../cie/store/actions";
+import { SpidLevel } from "../../cie/utils";
 import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 import { isTablet } from "../../../../../utils/device";

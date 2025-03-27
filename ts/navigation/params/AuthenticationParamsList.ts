@@ -1,6 +1,6 @@
-import { CieIdNotInstalledProps } from "../../features/cie/components/CieIdNotInstalled";
-import { CieIdLoginProps } from "../../features/cieLogin/components/CieIdLoginWebView";
-import { UrlNotCompliant } from "../../features/cieLogin/components/screens/CieIdAuthUrlError";
+import { CieIdNotInstalledProps } from "../../features/authentication/login/cie/components/CieIdNotInstalled";
+import { CieIdLoginProps } from "../../features/authentication/login/cie/components/CieIdLoginWebView";
+import { UrlNotCompliant } from "../../features/authentication/login/cie/screens/CieIdAuthUrlError";
 import { AuthErrorScreenProps } from "../../features/authentication/login/authError/screens/AuthErrorScreen";
 import { CieCardReaderScreenNavigationParams } from "../../features/authentication/login/cie/screens/CieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../../features/authentication/login/cie/screens/CieConsentDataUsageScreen";

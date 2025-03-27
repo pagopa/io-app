@@ -22,7 +22,7 @@ import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserData
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
-import { shouldTrackLevelSecurityMismatchSaga } from "../features/cieLogin/sagas/trackLevelSecuritySaga";
+import { shouldTrackLevelSecurityMismatchSaga } from "../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
 import { setSecurityAdviceReadyToShow } from "../features/authentication/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import {

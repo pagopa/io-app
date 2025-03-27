@@ -10,7 +10,10 @@ import {
 import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
 import { AppearanceSettingsActions } from "../../features/appearanceSettings/store/actions";
 import { BonusActions } from "../../features/bonus/common/store/actions";
-import { CieLoginConfigActions } from "../../features/cieLogin/store/actions";
+import {
+  CieLoginConfigActions,
+  CieAuthenticationActions
+} from "../../features/authentication/login/cie/store/actions";
 import { FastLoginActions } from "../../features/authentication/fastLogin/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
 import { FimsActions } from "../../features/fims/common/store/actions";
@@ -44,7 +47,6 @@ import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { BackendStatusActions } from "./backendStatus";
 import { CalendarEventsActions } from "./calendarEvents";
-import { CieAuthenticationActions } from "./cie";
 import { ContentActions } from "./content";
 import { CrossSessionsActions } from "./crossSessions";
 import { DebugActions } from "./debug";

@@ -14,7 +14,7 @@ import { watchTestLoginRequestSaga } from "../../../../sagas/testLoginSaga";
 import {
   stopCieManager,
   watchCieAuthenticationSaga
-} from "../../../../sagas/cie";
+} from "../../login/cie/sagas/cie";
 
 const aSessionToken = "a_session_token" as SessionToken;
 

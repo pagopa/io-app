@@ -21,7 +21,7 @@ jest.mock("@react-navigation/native", () => {
     })
   };
 });
-jest.mock("../../../../../hooks/useNavigateToLoginMethod", () => ({
+jest.mock("../../hooks/useNavigateToLoginMethod", () => ({
   __esModule: true,
   default: () => ({
     navigateToCiePinInsertion: mockNavigateToCiePinInsertion,

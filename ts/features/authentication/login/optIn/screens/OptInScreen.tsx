@@ -32,7 +32,7 @@ import {
 import { useSecuritySuggestionsBottomSheet } from "../../../../../hooks/useSecuritySuggestionBottomSheet";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { CieIdLoginProps } from "../../../../cieLogin/components/CieIdLoginWebView";
+import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../../../../navigation/params/AuthenticationParamsList";
 
 export enum Identifier {
