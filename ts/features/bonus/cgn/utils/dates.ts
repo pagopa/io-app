@@ -23,7 +23,9 @@ export const getCgnUserAgeRange = (
   return "unrecognized";
 };
 
-const getStatusLabel = (status: "expired" | "active" | "revoked") => {
+type CGNBadgeStatus = "expired" | "active" | "revoked";
+
+const getStatusLabel = (status: CGNBadgeStatus) => {
   switch (status) {
     case "expired":
       return I18n.t("bonus.cgn.detail.status.date.expired");
@@ -36,7 +38,7 @@ const getStatusLabel = (status: "expired" | "active" | "revoked") => {
 
 export const getAccessibleExpirationDate = (
   expirationDate: Date,
-  status: "expired" | "active" | "revoked"
+  status: CGNBadgeStatus
 ) =>
   `${getStatusLabel(status)}: ${localeDateFormat(
     expirationDate,
