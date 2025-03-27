@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { dismissPnActivationReminderBanner } from "../actions";
+import { dismissPnActivationReminderBanner } from "../../store/actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
