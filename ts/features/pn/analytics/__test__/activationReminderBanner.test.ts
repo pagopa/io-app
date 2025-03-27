@@ -1,5 +1,4 @@
 import { mixpanelTrack } from "../../../../mixpanel";
-import { buildEventProperties } from "../../../../utils/analytics";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
 import { sendBannerMixpanelEvents } from "../activationReminderBanner";
@@ -9,14 +8,18 @@ jest.mock("../../../../mixpanel", () => ({
 }));
 
 jest.mock("../../../../utils/analytics", () => ({
-  buildEventProperties: jest
-    .fn()
-    .mockImplementation((channel, category, properties) => ({
-      channel,
-      category,
-      properties
-    }))
+  buildEventProperties: jest.fn().mockImplementation(testBuildEventProperties)
 }));
+
+const testBuildEventProperties = (
+  channel: string,
+  category: string,
+  properties?: Record<string, unknown>
+) => ({
+  channel,
+  category,
+  properties
+});
 
 describe("activationReminderBanner", () => {
   beforeEach(() => {
@@ -28,7 +31,7 @@ describe("activationReminderBanner", () => {
 
     expect(mixpanelTrack).toHaveBeenCalledWith(
       "BANNER",
-      buildEventProperties("UX", "screen_view", {
+      testBuildEventProperties("UX", "screen_view", {
         banner_id: "SEND_ACTIVATION_REMINDER",
         banner_page: MESSAGES_ROUTES.MESSAGES_HOME,
         banner_landing: PN_ROUTES.ACTIVATION_BANNER_FLOW
@@ -41,7 +44,7 @@ describe("activationReminderBanner", () => {
 
     expect(mixpanelTrack).toHaveBeenCalledWith(
       "TAP_BANNER",
-      buildEventProperties("UX", "action", {
+      testBuildEventProperties("UX", "action", {
         banner_id: "SEND_ACTIVATION_REMINDER",
         banner_page: MESSAGES_ROUTES.MESSAGES_HOME,
         banner_landing: PN_ROUTES.ACTIVATION_BANNER_FLOW
@@ -54,7 +57,7 @@ describe("activationReminderBanner", () => {
 
     expect(mixpanelTrack).toHaveBeenCalledWith(
       "CLOSE_BANNER",
-      buildEventProperties("UX", "action", {
+      testBuildEventProperties("UX", "action", {
         banner_id: "SEND_ACTIVATION_REMINDER",
         banner_page: MESSAGES_ROUTES.MESSAGES_HOME,
         banner_landing: PN_ROUTES.ACTIVATION_BANNER_FLOW
@@ -68,7 +71,7 @@ describe("activationReminderBanner", () => {
 
     expect(mixpanelTrack).toHaveBeenCalledWith(
       "SEND_ACTIVATION_FAILURE",
-      buildEventProperties("KO", "error", {
+      testBuildEventProperties("KO", "error", {
         reason: testReason
       })
     );
@@ -79,7 +82,7 @@ describe("activationReminderBanner", () => {
 
     expect(mixpanelTrack).toHaveBeenCalledWith(
       "SEND_ALREADY_ACTIVE",
-      buildEventProperties("UX", "screen_view")
+      testBuildEventProperties("UX", "screen_view")
     );
   });
 
@@ -88,7 +91,7 @@ describe("activationReminderBanner", () => {
 
     expect(mixpanelTrack).toHaveBeenCalledWith(
       "SEND_BANNER_ACTIVATION_UX_SUCCESS",
-      buildEventProperties("UX", "screen_view")
+      testBuildEventProperties("UX", "screen_view")
     );
   });
 
@@ -97,7 +100,7 @@ describe("activationReminderBanner", () => {
 
     expect(mixpanelTrack).toHaveBeenCalledWith(
       "SEND_BANNER_ACTIVATION_START",
-      buildEventProperties("UX", "action")
+      testBuildEventProperties("UX", "action")
     );
   });
 });

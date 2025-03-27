@@ -46,7 +46,7 @@ const mockPrivacyUrl = "https://example.com/privacy";
 const mockTosUrl = "https://example.com/tos";
 
 describe("PnBannerFlowComponents", () => {
-  beforeEach(() => {
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
@@ -67,9 +67,6 @@ describe("PnBannerFlowComponents", () => {
   });
 
   describe("SuccessScreen", () => {
-    afterEach(() => {
-      jest.clearAllMocks();
-    });
     it("should match snapshot, dispatch dismissPnActivationReminderBanner on first render and dispatch the correct analytics for its state", () => {
       const mockDispatch = jest.fn();
       jest.spyOn(USEIO, "useIODispatch").mockReturnValue(mockDispatch);
