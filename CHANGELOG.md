@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0-rc.2](https://github.com/pagopa/io-app/compare/3.2.0-rc.1...3.2.0-rc.2) (2025-03-26)
+
+
+### Features
+
+* [[IOCOM-2282](https://pagopa.atlassian.net/browse/IOCOM-2282)] New copy for denied calendar permission popup ([#6845](https://github.com/pagopa/io-app/issues/6845)) ([8f75461](https://github.com/pagopa/io-app/commit/8f75461549a12e4229ebe7e7dd6436e7d451b21f))
+
+
+### Chores
+
+* [[IOBP-1303](https://pagopa.atlassian.net/browse/IOBP-1303),[IOBP-1411](https://pagopa.atlassian.net/browse/IOBP-1411),[IOBP-1412](https://pagopa.atlassian.net/browse/IOBP-1412)] Enhance CGN lists with ordinal and total element announcements for accessibility ([#6824](https://github.com/pagopa/io-app/issues/6824)) ([79b6514](https://github.com/pagopa/io-app/commit/79b651458e66ee8840d9033c0be0c9f422c62495))
+* [[IOBP-1305](https://pagopa.atlassian.net/browse/IOBP-1305)] Adjust a11y tab filters into CGN category list screen ([#6849](https://github.com/pagopa/io-app/issues/6849)) ([315fa3c](https://github.com/pagopa/io-app/commit/315fa3cbc62dfd92050cf5bc686ec39940f90571))
+
+## [3.2.0-rc.1](https://github.com/pagopa/io-app/compare/3.2.0-rc.0...3.2.0-rc.1) (2025-03-25)
+
+
+### Features
+
+* [[IOCOM-2235](https://pagopa.atlassian.net/browse/IOCOM-2235),[IOCOM-2240](https://pagopa.atlassian.net/browse/IOCOM-2240)] Push token absence tracking and fix for missing token on iOS ([#6815](https://github.com/pagopa/io-app/issues/6815)) ([5b26240](https://github.com/pagopa/io-app/commit/5b262407aff58f5001ccf4811125f53916314503))
+
 ## [3.2.0-rc.0](https://github.com/pagopa/io-app/compare/3.1.0-rc.3...3.2.0-rc.0) (2025-03-25)
 
 
