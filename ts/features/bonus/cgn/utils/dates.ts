@@ -30,7 +30,7 @@ const getStatusLabel = (status: CGNBadgeStatus) => {
     case "expired":
       return I18n.t("bonus.cgn.detail.status.date.expired");
     case "active":
-      return I18n.t("bonus.cgn.detail.status.date.activated");
+      return I18n.t("bonus.cgn.detail.status.expiration.cgn");
     case "revoked":
       return I18n.t("bonus.cgn.detail.status.date.revoked");
   }
