@@ -10,7 +10,7 @@ import { ACTIVE_VERSION } from "../../versions";
 import {
   logoutFailure,
   logoutSuccess
-} from "../../../authentication/common/store/actions";
+} from "../../../identification/common/store/actions";
 
 export type WhatsNewState = {
   lastVisualizedVersion?: number;

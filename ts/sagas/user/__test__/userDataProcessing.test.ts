@@ -14,7 +14,7 @@ import {
   loadUserDataProcessingSaga,
   upsertUserDataProcessingSaga
 } from "../userDataProcessing";
-import { withRefreshApiCall } from "../../../features/authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../features/identification/fastLogin/saga/utils";
 
 describe("loadUserDataProcessingSaga", () => {
   const getUserDataProcessingRequest = jest.fn();

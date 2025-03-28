@@ -8,7 +8,7 @@ import {
   RefreshThirdPartyApiCallOptions,
   ThirdPartyTokenError,
   withThirdPartyRefreshApiCall
-} from "../../../authentication/fastLogin/saga/utils";
+} from "../../../identification/fastLogin/saga/utils";
 import { PagoPaClient } from "../../common/api/client";
 import {
   paymentsGetPagoPaPlatformSessionTokenAction,

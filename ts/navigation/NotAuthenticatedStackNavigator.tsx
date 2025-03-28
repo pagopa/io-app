@@ -1,8 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
-import AuthenticationNavigator from "../features/authentication/common/navigation/AuthenticationNavigator";
-import { AUTHENTICATION_ROUTES } from "../features/authentication/common/navigation/routes";
+import AuthenticationNavigator from "../features/identification/common/navigation/AuthenticationNavigator";
+import { AUTHENTICATION_ROUTES } from "../features/identification/common/navigation/routes";
 import { AppParamsList } from "./params/AppParamsList";
 
 const Stack = createStackNavigator<AppParamsList>();

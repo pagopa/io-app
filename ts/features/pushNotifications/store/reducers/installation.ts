@@ -5,7 +5,7 @@ import {
   logoutRequest,
   sessionExpired,
   sessionInvalid
-} from "../../../authentication/common/store/actions";
+} from "../../../identification/common/store/actions";
 import { clearCache } from "../../../../store/actions/profile";
 import {
   generateInstallationId,

@@ -3,8 +3,8 @@
  */
 import { all, call } from "typed-redux-saga/macro";
 import versionInfoSaga from "../common/versionInfo/saga/versionInfo";
-import { watchTokenRefreshSaga } from "../features/authentication/fastLogin/saga/tokenRefreshSaga";
-import { watchPendingActionsSaga } from "../features/authentication/fastLogin/saga/pendingActionsSaga";
+import { watchTokenRefreshSaga } from "../features/identification/fastLogin/saga/tokenRefreshSaga";
+import { watchPendingActionsSaga } from "../features/identification/fastLogin/saga/pendingActionsSaga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { zendeskEnabled } from "../config";
 import { watchUtmLinkSaga } from "../features/utmLink/saga";

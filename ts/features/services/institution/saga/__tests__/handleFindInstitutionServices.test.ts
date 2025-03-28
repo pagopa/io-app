@@ -2,7 +2,7 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
 import { ServicesClient } from "../../../common/api/__mocks__/client";
 import {
   PaginatedServicesGetPayload,

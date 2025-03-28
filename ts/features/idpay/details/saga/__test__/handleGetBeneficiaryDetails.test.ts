@@ -3,7 +3,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
 import { idPayBeneficiaryDetailsGet } from "../../store/actions";
 import { handleGetBeneficiaryDetails } from "../handleGetBeneficiaryDetails";
 

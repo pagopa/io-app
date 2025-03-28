@@ -9,7 +9,7 @@ import {
 import { toUIMessage } from "../store/reducers/transformers";
 import { SagaCallReturnType } from "../../../types/utils";
 import { convertUnknownToError, getError } from "../../../utils/errors";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../identification/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
 import { trackLoadNextPageMessagesFailure } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";

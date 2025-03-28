@@ -9,7 +9,7 @@ import {
   retrievingDataPreconditionStatusAction,
   toLoadingContentPayload
 } from "../../store/actions/preconditions";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
 import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 describe("handleMessagePrecondition", () => {

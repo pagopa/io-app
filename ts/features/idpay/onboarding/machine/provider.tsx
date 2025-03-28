@@ -11,7 +11,7 @@ import {
 } from "../../../../config";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { bpdTokenSelector } from "../../../authentication/common/store/selectors";
+import { bpdTokenSelector } from "../../../identification/common/store/selectors";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector

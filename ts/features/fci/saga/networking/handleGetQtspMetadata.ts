@@ -8,7 +8,7 @@ import { getNetworkError } from "../../../../utils/errors";
 import { SessionToken } from "../../../../types/SessionToken";
 import { FciClient } from "../../api/backendFci";
 import { fciIssuerEnvironmentSelector } from "../../store/reducers/fciSignatureRequest";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 
 /*

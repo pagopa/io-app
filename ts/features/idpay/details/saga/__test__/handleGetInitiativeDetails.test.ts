@@ -6,7 +6,7 @@ import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
 import { idpayInitiativeGet } from "../../store/actions";
 import { handleGetInitiativeDetails } from "../handleGetInitiativeDetails";
 

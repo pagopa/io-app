@@ -5,7 +5,7 @@ import { isActionOf } from "typesafe-actions";
 import {
   sessionExpired,
   sessionInvalid
-} from "../../features/authentication/common/store/actions";
+} from "../../features/identification/common/store/actions";
 
 import { startupLoadSuccess, startupTransientError } from "../actions/startup";
 import { Action } from "../actions/types";

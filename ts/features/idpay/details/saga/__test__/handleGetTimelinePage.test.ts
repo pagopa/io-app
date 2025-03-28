@@ -7,7 +7,7 @@ import {
   OperationTypeEnum,
   StatusEnum
 } from "../../../../../../definitions/idpay/TransactionOperationDTO";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
 import { idpayTimelinePageGet } from "../../store/actions";
 import { handleGetTimelinePage } from "../handleGetTimelinePage";
 

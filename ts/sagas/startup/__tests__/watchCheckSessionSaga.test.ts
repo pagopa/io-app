@@ -6,14 +6,14 @@ import {
   checkCurrentSession,
   sessionExpired,
   sessionInformationLoadSuccess
-} from "../../../features/authentication/common/store/actions";
+} from "../../../features/identification/common/store/actions";
 import {
   testableCheckSession,
   checkSessionResult
 } from "../watchCheckSessionSaga";
-import { handleSessionExpiredSaga } from "../../../features/authentication/fastLogin/saga/utils";
-import { isFastLoginEnabledSelector } from "../../../features/authentication/fastLogin/store/selectors";
-import { sessionInfoSelector } from "../../../features/authentication/common/store/selectors";
+import { handleSessionExpiredSaga } from "../../../features/identification/fastLogin/saga/utils";
+import { isFastLoginEnabledSelector } from "../../../features/identification/fastLogin/store/selectors";
+import { sessionInfoSelector } from "../../../features/identification/common/store/selectors";
 
 describe("checkSession", () => {
   const getSessionValidity = jest.fn();

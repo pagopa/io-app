@@ -17,7 +17,7 @@ import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserData
 import { BackendClient } from "../api/backend";
 import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
-import { withRefreshApiCall } from "../features/authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../features/identification/fastLogin/saga/utils";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import { trackProfileLoadSuccess } from "../screens/profile/analytics";

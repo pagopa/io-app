@@ -13,8 +13,8 @@ import { BonusActions } from "../../features/bonus/common/store/actions";
 import {
   CieLoginConfigActions,
   CieAuthenticationActions
-} from "../../features/authentication/login/cie/store/actions";
-import { FastLoginActions } from "../../features/authentication/fastLogin/store/actions";
+} from "../../features/identification/login/cie/store/actions";
+import { FastLoginActions } from "../../features/identification/fastLogin/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
 import { FimsActions } from "../../features/fims/common/store/actions";
 import { IdPayActions } from "../../features/idpay/common/store/actions";
@@ -32,7 +32,7 @@ import { PendingMessageActions } from "../../features/pushNotifications/store/ac
 import { ProfileNotificationPermissionsActions } from "../../features/pushNotifications/store/actions/profileNotificationPermissions";
 import { UserBehaviourActions } from "../../features/pushNotifications/store/actions/userBehaviour";
 import { ServicesActions } from "../../features/services/common/store/actions";
-import { SpidConfigActions } from "../../features/authentication/login/idp/store/actions";
+import { SpidConfigActions } from "../../features/identification/login/idp/store/actions";
 import { AppFeedbackActions } from "../../features/appReviews/store/actions";
 import { UtmLinkActions } from "../../features/utmLink/store/actions";
 import { TrialSystemActions } from "../../features/trialSystem/store/actions";
@@ -41,8 +41,8 @@ import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
 import { ConnectivityActions } from "../../features/connectivity/store/actions";
-import { LoginPreferencesActions } from "../../features/authentication/loginPreferences/store/actions";
-import { AuthenticationActions } from "../../features/authentication/common/store/actions";
+import { LoginPreferencesActions } from "../../features/identification/loginPreferences/store/actions";
+import { AuthenticationActions } from "../../features/identification/common/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { BackendStatusActions } from "./backendStatus";

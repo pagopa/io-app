@@ -6,7 +6,7 @@ import { loadMessageDetails } from "../store/actions";
 import { SagaCallReturnType } from "../../../types/utils";
 import { getError } from "../../../utils/errors";
 import { toUIMessageDetails } from "../store/reducers/transformers";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../identification/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
 import { trackLoadMessageDetailsFailure } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";

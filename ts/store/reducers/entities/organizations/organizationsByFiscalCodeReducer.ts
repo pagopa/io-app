@@ -7,7 +7,7 @@ import { getType } from "typesafe-actions";
 import {
   logoutSuccess,
   sessionExpired
-} from "../../../../features/authentication/common/store/actions";
+} from "../../../../features/identification/common/store/actions";
 
 import { updateOrganizations } from "../../../actions/organizations";
 import { Action } from "../../../actions/types";

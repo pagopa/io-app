@@ -7,7 +7,7 @@ import { Metadata } from "../../../../../../definitions/fci/Metadata";
 import { handleGetMetadata } from "../handleGetMetadata";
 import { fciMetadataRequest } from "../../../store/actions";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
 
 const successResponse = {
   status: 200,

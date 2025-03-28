@@ -11,7 +11,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { apiUrlPrefix } from "../../../config";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../store/hooks";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { sessionTokenSelector } from "../../identification/common/store/selectors";
 import { createLollipopClient, signMessage } from "../api/backend";
 import {
   lollipopKeyTagSelector,

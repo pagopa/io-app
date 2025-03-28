@@ -17,7 +17,7 @@ import { LollipopMethodEnum } from "../../../../../definitions/fci/LollipopMetho
 import { LollipopOriginalURL } from "../../../../../definitions/fci/LollipopOriginalURL";
 import { LollipopSignatureInput } from "../../../../../definitions/fci/LollipopSignatureInput";
 import { LollipopSignature } from "../../../../../definitions/fci/LollipopSignature";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 
 /*

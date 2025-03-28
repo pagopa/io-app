@@ -7,7 +7,7 @@ import {
   itwLifecycleIdentityCheckCompleted,
   itwLifecycleWalletReset
 } from "../store/actions";
-import { logoutRequest } from "../../../authentication/common/store/actions";
+import { logoutRequest } from "../../../identification/common/store/actions";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { trackItwIdNotMatch, trackWalletNewIdReset } from "../../analytics";

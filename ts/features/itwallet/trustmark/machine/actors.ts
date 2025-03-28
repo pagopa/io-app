@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
 import { useIOStore } from "../../../../store/hooks";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { sessionTokenSelector } from "../../../identification/common/store/selectors";
 import { assert } from "../../../../utils/assert";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";

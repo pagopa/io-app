@@ -4,7 +4,7 @@ import { getType } from "typesafe-actions";
 import { Institution } from "../../../../../../definitions/services/Institution";
 import { Institutions } from "../../../../../../definitions/services/Institutions";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
 import { ServicesClient } from "../../../common/api/__mocks__/client";
 import { featuredInstitutionsGet } from "../../store/actions";
 import { handleGetFeaturedInstitutions } from "../handleGetFeaturedInstitutions";

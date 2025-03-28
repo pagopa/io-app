@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
-import { logoutRequest } from "../../features/authentication/common/store/actions";
+import { logoutRequest } from "../../features/identification/common/store/actions";
 import { useIODispatch } from "../../store/hooks";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 

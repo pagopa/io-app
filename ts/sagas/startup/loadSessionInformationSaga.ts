@@ -7,7 +7,7 @@ import { PublicSession } from "../../../definitions/session_manager/PublicSessio
 import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
-} from "../../features/authentication/common/store/actions";
+} from "../../features/identification/common/store/actions";
 
 import { BackendClient } from "../../api/backend";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";

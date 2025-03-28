@@ -9,11 +9,11 @@ import {
 import {
   CieLoginState,
   cieLoginPersistor
-} from "../../../authentication/login/cie/store/reducers/cieLogin";
+} from "../../../identification/login/cie/store/reducers/cieLogin";
 import {
   FastLoginState,
   fastLoginReducer
-} from "../../../authentication/fastLogin/store/reducers";
+} from "../../../identification/fastLogin/store/reducers";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
 import fimsReducer, { FimsState } from "../../../fims/common/store/reducer";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
@@ -23,7 +23,7 @@ import itWalletReducer, {
 import {
   NativeLoginState,
   nativeLoginReducer
-} from "../../../authentication/nativeLogin/store/reducers";
+} from "../../../identification/nativeLogin/store/reducers";
 import walletReducer, { WalletState } from "../../../wallet/store/reducers";
 import paymentsReducer, {
   PaymentsState
@@ -51,7 +51,7 @@ import {
 import {
   loginInfoReducer,
   LoginInfoState
-} from "../../../authentication/loginInfo/store/reducers";
+} from "../../../identification/loginInfo/store/reducers";
 import {
   landingScreenBannersReducer,
   LandingScreenBannerState
@@ -59,7 +59,7 @@ import {
 import {
   spidLoginReducer,
   SpidLoginState
-} from "../../../authentication/login/idp/store/reducers";
+} from "../../../identification/login/idp/store/reducers";
 import connectivityStateReducer, {
   ConnectivityState
 } from "../../../connectivity/store/reducers";
@@ -75,7 +75,7 @@ import {
 import {
   loginPreferencesPersistor,
   LoginPreferencesState
-} from "../../../authentication/loginPreferences/store/reducers";
+} from "../../../identification/loginPreferences/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;

@@ -9,7 +9,7 @@ import {
 import { readablePrivacyReport } from "../../../../../../utils/reporters"; // handle the request for CGN unsubscription
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnUnsubscribe } from "../../../store/actions/unsubscribe";
-import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../../identification/fastLogin/saga/utils";
 import { walletRemoveCardsByType } from "../../../../../wallet/store/actions/cards";
 
 // handle the request for CGN unsubscription

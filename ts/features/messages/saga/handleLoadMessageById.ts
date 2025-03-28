@@ -5,7 +5,7 @@ import { BackendClient } from "../../../api/backend";
 import { loadMessageById } from "../store/actions";
 import { toUIMessage } from "../store/reducers/transformers";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../identification/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { errorToReason, unknownToReason } from "../utils";
 import { trackLoadMessageByIdFailure } from "../analytics";

@@ -11,7 +11,7 @@ import {
 } from "../../../../../../utils/errors";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import { cgnCategories } from "../../../store/actions/categories";
-import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../../identification/fastLogin/saga/utils";
 
 const checkIsCategoriesWithCount = (
   cl:

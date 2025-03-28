@@ -4,8 +4,8 @@ import ROUTES from "../../navigation/routes";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
-import { CieCardReaderScreenNavigationParams } from "../../features/authentication/login/cie/screens/CieCardReaderScreen";
-import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
+import { CieCardReaderScreenNavigationParams } from "../../features/identification/login/cie/screens/CieCardReaderScreen";
+import { AUTHENTICATION_ROUTES } from "../../features/identification/common/navigation/routes";
 
 /**
  * @deprecated

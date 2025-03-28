@@ -4,7 +4,7 @@ import { applicationChangeState } from "../../actions/application";
 import {
   logoutFailure,
   logoutSuccess
-} from "../../../features/authentication/common/store/actions";
+} from "../../../features/identification/common/store/actions";
 import { GlobalState } from "../types";
 
 describe("index", () => {

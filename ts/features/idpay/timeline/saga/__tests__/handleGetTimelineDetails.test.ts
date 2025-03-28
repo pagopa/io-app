@@ -5,7 +5,7 @@ import { PreferredLanguageEnum } from "../../../../../../definitions/backend/Pre
 import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 import { StatusEnum } from "../../../../../../definitions/idpay/TransactionDetailDTO";
 import { OperationTypeEnum as TransactionOperationType } from "../../../../../../definitions/idpay/TransactionOperationDTO";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
 import { idpayTimelineDetailsGet } from "../../store/actions";
 import { handleGetTimelineDetails } from "../handleGetTimelineDetails";
 

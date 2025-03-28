@@ -4,7 +4,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { FlowType, buildEventProperties } from "../../../../utils/analytics";
 import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
 import { LoginSessionDuration } from "../../fastLogin/analytics/optinAnalytics";
-import { SpidLevel } from "../../../authentication/login/cie/utils";
+import { SpidLevel } from "../../../identification/login/cie/utils";
 
 const SECURITY_LEVEL_MAP: Record<SpidLevel, "L2" | "L3"> = {
   SpidL2: "L2",

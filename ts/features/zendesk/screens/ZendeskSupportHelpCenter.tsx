@@ -77,7 +77,7 @@ import {
 } from "../store/reducers";
 import { handleContactSupport } from "../utils";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
-import { isLoggedIn } from "../../authentication/common/store/utils/guards";
+import { isLoggedIn } from "../../identification/common/store/utils/guards";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,

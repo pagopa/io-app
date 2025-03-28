@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { sessionTokenSelector } from "../../../identification/common/store/selectors";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getNetworkError } from "../../../../utils/errors";

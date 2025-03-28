@@ -10,7 +10,7 @@ import { BackendClient } from "../../../../api/backend";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
 import { trackPNPushSettings } from "../../../pn/analytics";
 import { upsertServicePreference } from "../store/actions/preference";
 import {
