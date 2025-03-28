@@ -554,7 +554,6 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                     },
                                   ]
                                 }
-                                tintColor="#BBC2D6"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={36}

@@ -554,7 +554,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                     },
                                   ]
                                 }
-                                tintColor="#BBC2D6"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={36}

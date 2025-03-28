@@ -400,7 +400,6 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                                   },
                                 ]
                               }
-                              tintColor="#BBC2D6"
                               vbHeight={24}
                               vbWidth={24}
                               width={16}
@@ -520,7 +519,6 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                               },
                             ]
                           }
-                          tintColor="#D13333"
                           vbHeight={24}
                           vbWidth={24}
                           width={24}
@@ -951,7 +949,6 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                                 },
                               ]
                             }
-                            tintColor="#555C70"
                             vbHeight={24}
                             vbWidth={24}
                             width={16}

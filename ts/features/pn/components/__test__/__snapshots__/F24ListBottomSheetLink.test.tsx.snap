@@ -677,7 +677,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -904,7 +903,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -1131,7 +1129,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -1358,7 +1355,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -1585,7 +1581,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -1812,7 +1807,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -2039,7 +2033,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -2266,7 +2259,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -2493,7 +2485,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -2720,7 +2711,6 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -3959,7 +3949,6 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
