@@ -3626,6 +3626,9 @@
           "expiration": {
             "cgn": "Scade il",
             "eyca": "Scade il"
+          },
+          "a11y": {
+            "cardStatus": "Stato della carta: {{status}}"
           }
         }
       },

@@ -10,6 +10,7 @@ import { EycaCardRevoked } from "../../../../../../../definitions/cgn/EycaCardRe
 import I18n from "../../../../../../i18n";
 import { localeDateFormat } from "../../../../../../utils/locale";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
+import { getAccessibleExpirationDate } from "../../../utils/dates";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -34,9 +35,14 @@ const EycaStatusDetailsComponent = (props: Props) => (
         props.eycaCard.expiration_date,
         I18n.t("global.dateFormats.shortFormat")
       )}
+      accessibilityLabel={getAccessibleExpirationDate(
+        props.eycaCard.expiration_date,
+        "active"
+      )}
       endElement={{
         type: "badge",
         componentProps: {
+          accessible: false,
           text: I18n.t("bonus.cgn.detail.status.badge.active"),
           variant: "success",
           testID: "eyca-status-badge"
