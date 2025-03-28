@@ -4,7 +4,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsStickyFooter } from "../MessageDetailsStickyFooter";
 import { PaymentData, UIMessageId } from "../../../types";
-import { CTA, CTAS } from "../../../types/MessageCTA";
+import { CTA, CTAS } from "../../../../../types/LocalizedCTAs";
 import * as detailsById from "../../../store/reducers/detailsById";
 import * as payments from "../../../store/reducers/payments";
 import { PaymentAmount } from "../../../../../../definitions/backend/PaymentAmount";

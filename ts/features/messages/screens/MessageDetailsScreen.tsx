@@ -35,7 +35,7 @@ import I18n from "../../../i18n";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
 import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
-import { cleanMarkdownFromCTAs, getMessageCTA } from "../utils/ctas";
+import { getMessageCTAs, removeCTAsFromMarkdown } from "../utils/ctas";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
 import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
@@ -116,14 +116,14 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   const messageMarkdown =
     useIOSelector(state => messageMarkdownSelector(state, messageId)) ?? "";
   const markdownWithNoCTA = useMemo(
-    () => cleanMarkdownFromCTAs(messageMarkdown),
-    [messageMarkdown]
+    () => removeCTAsFromMarkdown(messageMarkdown, serviceId),
+    [messageMarkdown, serviceId]
   );
   const serviceMetadata = useIOSelector(state =>
     serviceMetadataByIdSelector(state, serviceId)
   );
   const maybeCTAs = useMemo(
-    () => getMessageCTA(messageMarkdown, serviceMetadata, serviceId),
+    () => getMessageCTAs(messageMarkdown, serviceId, serviceMetadata),
     [messageMarkdown, serviceId, serviceMetadata]
   );
 

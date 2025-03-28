@@ -5,7 +5,7 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import I18n from "../../../i18n";
 import { PNMessage } from "../store/types/types";
 import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
-import { CTAS } from "../../messages/types/MessageCTA";
+import { CTAS } from "../../../types/LocalizedCTAs";
 import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
 import { GlobalState } from "../../../store/reducers/types";
 import { NotificationRecipient } from "../../../../definitions/pn/NotificationRecipient";

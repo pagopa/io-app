@@ -81,11 +81,12 @@ export const trackOpenMessage = (
   void mixpanelTrack(eventName, props);
 };
 
-export const trackMessageCTAFrontMatterDecodingError = (
-  serviceId?: ServiceId
+export const trackCTAFrontMatterDecodingError = (
+  reason: string,
+  serviceId: ServiceId
 ) => {
   const eventName = "CTA_FRONT_MATTER_DECODING_ERROR";
-  const props = buildEventProperties("KO", undefined, { serviceId });
+  const props = buildEventProperties("KO", undefined, { reason, serviceId });
   void mixpanelTrack(eventName, props);
 };
 

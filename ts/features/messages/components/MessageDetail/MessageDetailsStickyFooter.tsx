@@ -19,7 +19,7 @@ import {
 } from "../../store/reducers/payments";
 import { trackPNOptInMessageAccepted } from "../../../pn/analytics";
 import { handleCtaAction } from "../../utils/ctas";
-import { CTA, CTAS } from "../../types/MessageCTA";
+import { CTA, CTAS } from "../../../../types/LocalizedCTAs";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useFIMSFromServiceId } from "../../../fims/common/hooks";
 import { MessageDetailsPaymentButton } from "./MessageDetailsPaymentButton";

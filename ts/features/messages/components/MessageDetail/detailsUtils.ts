@@ -2,7 +2,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { GlobalState } from "../../../../store/reducers/types";
 import { serviceByIdSelector } from "../../../services/details/store/reducers";
 import { trackCTAPressed, trackPaymentStart } from "../../analytics";
-import { CTA } from "../../types/MessageCTA";
+import { CTA } from "../../../../types/LocalizedCTAs";
 
 export const computeAndTrackCTAPressAnalytics = (
   isFirstCTA: boolean,

@@ -1,4 +1,4 @@
-import { trackOpenMessage } from "..";
+import { trackCTAFrontMatterDecodingError, trackOpenMessage } from "..";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import * as MIXPANEL from "../../../../mixpanel";
 
@@ -69,5 +69,30 @@ describe("index", () => {
         )
       )
     );
+  });
+
+  describe("trackCTAFrontMatterDecodingError", () => {
+    it("should call 'mixpanelTrack' with proper parameters", () => {
+      const reason = "A reason";
+      const serviceId = "01JK8TKP8QCNJ689M4D94VA6VG" as ServiceId;
+      const spyOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation((_event, _properties) => undefined);
+
+      trackCTAFrontMatterDecodingError(reason, serviceId);
+
+      expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spyOnMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe(
+        "CTA_FRONT_MATTER_DECODING_ERROR"
+      );
+      expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "KO",
+        event_type: undefined,
+        flow: undefined,
+        reason,
+        serviceId
+      });
+    });
   });
 });

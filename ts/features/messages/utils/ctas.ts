@@ -1,7 +1,3 @@
-/**
- * Generic utilities for messages
- */
-
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { Predicate } from "fp-ts/lib/Predicate";
@@ -16,9 +12,14 @@ import {
   deriveCustomHandledLink,
   isIoInternalLink
 } from "../../../components/ui/Markdown/handlers/link";
-import { trackMessageCTAFrontMatterDecodingError } from "../analytics";
+import { trackCTAFrontMatterDecodingError } from "../analytics";
 import { localeFallback } from "../../../i18n";
-import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
+import {
+  CTA,
+  CTAS,
+  LocalizedCTAs,
+  LocalizedCTALocales
+} from "../../../types/LocalizedCTAs";
 import {
   getInternalRoute,
   handleInternalLink
@@ -68,10 +69,10 @@ const internalRoutePredicates: Map<
  * return the locale supported by the app. If the remote locale is not supported
  * a fallback will be returned
  */
-export const getRemoteLocale = (): Extract<Locales, MessageCTALocales> =>
+export const getRemoteLocale = (): Extract<Locales, LocalizedCTALocales> =>
   pipe(
     getLocalePrimaryWithFallback(),
-    MessageCTALocales.decode,
+    LocalizedCTALocales.decode,
     E.getOrElseW(() => localeFallback.locale)
   );
 
@@ -82,88 +83,112 @@ export const getRemoteLocale = (): Extract<Locales, MessageCTALocales> =>
  * @param serviceMetadata
  * @param serviceId
  */
-export const getMessageCTA = (
+export const getMessageCTAs = (
   markdown: MessageBodyMarkdown | string,
-  serviceMetadata?: ServiceMetadata,
-  serviceId?: ServiceId
-): CTAS | undefined => getCTAIfValid(markdown, serviceMetadata, serviceId);
+  serviceId: ServiceId,
+  serviceMetadata?: ServiceMetadata
+): CTAS | undefined => getCTAsIfValid(markdown, serviceId, serviceMetadata);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
  * if some CTAs are been found, the localized version will be returned
  * @param serviceMetadata
  */
-export const getServiceCTA = (
+export const getServiceCTAs = (
+  serviceId: ServiceId,
   serviceMetadata?: ServiceMetadata
-): CTAS | undefined => getCTAIfValid(serviceMetadata?.cta, serviceMetadata);
+): CTAS | undefined => {
+  const serviceCta = serviceMetadata?.cta;
+  return serviceCta != null
+    ? getCTAsIfValid(serviceCta, serviceId, serviceMetadata)
+    : undefined;
+};
 
 /**
  * remove the cta front-matter if it is nested inside the markdown
  * @param markdown
  */
-export const cleanMarkdownFromCTAs = (
-  markdown: MessageBodyMarkdown | string
+export const removeCTAsFromMarkdown = (
+  markdownText: MessageBodyMarkdown | string,
+  serviceId: ServiceId
 ): string => {
-  const isValidMarkdown = safeContainsFrontMatter(markdown);
-  if (!isValidMarkdown) {
-    return markdown;
+  const isValidFrontMatterHeader = containsFrontMatterHeader(
+    markdownText,
+    serviceId
+  );
+  if (!isValidFrontMatterHeader) {
+    return markdownText;
   }
-  return safeExtractBodyAfterFrontMatter(markdown);
+  return extractBodyAfterFrontMatter(markdownText, serviceId);
 };
 
-const getCTAIfValid = (
-  text: string | undefined,
-  serviceMetadata?: ServiceMetadata,
-  serviceId?: ServiceId
+const getCTAsIfValid = (
+  frontMatterText: string | undefined,
+  serviceId: ServiceId,
+  serviceMetadata?: ServiceMetadata
 ): CTAS | undefined => {
-  const unsafeMessageCTA = unsafeMessageCTAFromInput(text);
-  if (unsafeMessageCTA == null) {
-    trackMessageCTAFrontMatterDecodingError(serviceId);
+  const localizedCTAs = localizedCTAsFromFrontMatter(
+    frontMatterText,
+    serviceId
+  );
+  if (localizedCTAs == null) {
     return undefined;
   }
 
-  const safeCTAS = ctaFromMessageCTA(unsafeMessageCTA);
-  if (safeCTAS == null) {
-    trackMessageCTAFrontMatterDecodingError(serviceId);
+  const ctas = ctasFromLocalizedCTAs(localizedCTAs, serviceId);
+  if (ctas == null) {
     return undefined;
   }
 
-  if (hasCtaValidActions(safeCTAS, serviceMetadata)) {
-    return safeCTAS;
+  if (areCTAsActionsValid(ctas, serviceId, serviceMetadata)) {
+    return ctas;
   }
 
   return undefined;
 };
 
-export const unsafeMessageCTAFromInput = (
-  input: string | undefined
-): MessageCTA | undefined => {
-  if (input == null) {
+export const localizedCTAsFromFrontMatter = (
+  frontMatterText: string | undefined,
+  serviceId: ServiceId
+): LocalizedCTAs | undefined => {
+  if (frontMatterText == null) {
     return undefined;
   }
-  const isValidFrontMatter = safeContainsFrontMatter(input);
-  if (!isValidFrontMatter) {
+  const isValidFrontMatterHeader = containsFrontMatterHeader(
+    frontMatterText,
+    serviceId
+  );
+  if (!isValidFrontMatterHeader) {
     return undefined;
   }
   try {
-    const frontMatter = FM<MessageCTA>(input);
+    const frontMatter = FM<LocalizedCTAs>(frontMatterText);
     return frontMatter.attributes;
   } catch {
+    trackCTAFrontMatterDecodingError(
+      "A failure occourred while parsing or extracting front matter",
+      serviceId
+    );
     return undefined;
   }
 };
 
-export const ctaFromMessageCTA = (
-  messageCTA: MessageCTA | undefined
+export const ctasFromLocalizedCTAs = (
+  localizedCTAs: LocalizedCTAs | undefined,
+  serviceId: ServiceId
 ): CTAS | undefined => {
-  if (messageCTA == null) {
+  if (localizedCTAs == null) {
     return undefined;
   }
-  const unsafeCTAs = messageCTA[getRemoteLocale()];
-  const decodedCTAS = CTAS.decode(unsafeCTAs);
-  if (E.isRight(decodedCTAS)) {
-    return decodedCTAS.right;
+  const typeUncheckedCTAs = localizedCTAs[getRemoteLocale()];
+  const decodedCTAsResult = CTAS.decode(typeUncheckedCTAs);
+  if (E.isRight(decodedCTAsResult)) {
+    return decodedCTAsResult.right;
   }
+  trackCTAFrontMatterDecodingError(
+    "A failure occoured while decoding from Localized CTAS to specific CTAs",
+    serviceId
+  );
   return undefined;
 };
 
@@ -172,15 +197,30 @@ export const ctaFromMessageCTA = (
  * @param ctas
  * @param serviceMetadata
  */
-const hasCtaValidActions = (
+const areCTAsActionsValid = (
   ctas: CTAS,
+  serviceId: ServiceId,
   serviceMetadata?: ServiceMetadata
 ): boolean => {
   const isCTA1Valid = isCtaActionValid(ctas.cta_1, serviceMetadata);
-  if (isCTA1Valid) {
-    return true;
+  if (!isCTA1Valid) {
+    trackCTAFrontMatterDecodingError(
+      "The first CTA does not contain a supported action",
+      serviceId
+    );
   }
-  return ctas.cta_2 != null && isCtaActionValid(ctas.cta_2, serviceMetadata);
+
+  if (ctas.cta_2 == null) {
+    return isCTA1Valid;
+  }
+  const isCTA2Valid = isCtaActionValid(ctas.cta_2, serviceMetadata);
+  if (!isCTA2Valid) {
+    trackCTAFrontMatterDecodingError(
+      "The second CTA does not contain a supported action",
+      serviceId
+    );
+  }
+  return isCTA1Valid || isCTA2Valid;
 };
 
 /**
@@ -217,31 +257,46 @@ const isCtaActionValid = (
   return E.isRight(maybeCustomHandledAction);
 };
 
-const safeContainsFrontMatter = (input: string): boolean => {
+const containsFrontMatterHeader = (
+  input: string,
+  serviceId: ServiceId
+): boolean => {
   try {
     return FM.test(input);
   } catch {
+    trackCTAFrontMatterDecodingError(
+      "A failure occoured while testing for front matter",
+      serviceId
+    );
     return false;
   }
 };
 
-const safeExtractBodyAfterFrontMatter = (input: string): string => {
+const extractBodyAfterFrontMatter = (
+  text: string,
+  serviceId: ServiceId
+): string => {
   try {
-    const frontMatter = FM(input);
+    const frontMatter = FM(text);
     return frontMatter.body;
-  } catch {
-    return input;
+  } catch (e) {
+    trackCTAFrontMatterDecodingError(
+      "A failure occourred while parsing or extracting body from input with front matter",
+      serviceId
+    );
+    return text;
   }
 };
 
 export const testable = isTestEnv
   ? {
-      getCTAIfValid,
-      hasCtaValidActions,
+      areCTAsActionsValid,
+      containsFrontMatterHeader,
+      ctasFromLocalizedCTAs,
+      extractBodyAfterFrontMatter,
+      getCTAsIfValid,
       hasMetadataTokenName,
       internalRoutePredicates,
-      isCtaActionValid,
-      safeContainsFrontMatter,
-      safeExtractBodyAfterFrontMatter
+      isCtaActionValid
     }
   : undefined;

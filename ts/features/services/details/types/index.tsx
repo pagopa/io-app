@@ -1,4 +1,4 @@
-import { CTA, CTAS } from "../../../messages/types/MessageCTA";
+import { CTA, CTAS } from "../../../../types/LocalizedCTAs";
 import { CtaCategoryType } from "../../common/analytics";
 import { ServiceKind } from "../components/ServiceDetailsScreenComponent";
 

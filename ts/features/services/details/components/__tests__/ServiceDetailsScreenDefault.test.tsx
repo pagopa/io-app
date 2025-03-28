@@ -14,7 +14,7 @@ import {
   ServiceDetailsScreenDefault,
   ServiceDetailsScreenDefaultProps
 } from "../ServiceDetailsScreenDefault";
-import { CTA } from "../../../../messages/types/MessageCTA";
+import { CTA } from "../../../../../types/LocalizedCTAs";
 
 const serviceId = "serviceDefault" as ServiceId;
 

@@ -1211,6 +1211,7 @@ describe("commonFailureHandling", () => {
 });
 
 describe("computeHasFIMSCTA", () => {
+  const serviceId = "01JQ93ZCD00T8P131AT2ES102D" as ServiceId;
   const fimsCTA2FrontMatter = `---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "https://relyingParty.url"\n cta_2:\n  text: "Visualizza i requisiti"\n  action: "iosso://https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "https://relyingParty.url"\n cta_2:\n  text: "View requirements"\n  action: "iosso://https://relyingParty.url"\n---`;
   const unrelatedCTAFrontMatter =
     '---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "https://relyingParty.url"\n cta_1:\n  text: "Visualizza i requisiti"\n  action: "https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "https://relyingParty.url"\n cta_1:\n  text: "View requirements"\n  action: "https://relyingParty.url"\n---';
@@ -1219,7 +1220,11 @@ describe("computeHasFIMSCTA", () => {
       markdown: `${fimsCTAFrontMatter}\nThis is the message body`
     } as UIMessageDetails;
 
-    const hasFIMSCTA = testable!.computeHasFIMSCTA(messageDetails, undefined);
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(
+      messageDetails,
+      serviceId,
+      undefined
+    );
 
     expect(hasFIMSCTA).toBe(true);
   });
@@ -1228,7 +1233,11 @@ describe("computeHasFIMSCTA", () => {
       markdown: `${fimsCTA2FrontMatter}\nThis is the message body`
     } as UIMessageDetails;
 
-    const hasFIMSCTA = testable!.computeHasFIMSCTA(messageDetails, undefined);
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(
+      messageDetails,
+      serviceId,
+      undefined
+    );
 
     expect(hasFIMSCTA).toBe(true);
   });
@@ -1237,7 +1246,11 @@ describe("computeHasFIMSCTA", () => {
       markdown: `This is the message body`
     } as UIMessageDetails;
 
-    const hasFIMSCTA = testable!.computeHasFIMSCTA(messageDetails, undefined);
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(
+      messageDetails,
+      serviceId,
+      undefined
+    );
 
     expect(hasFIMSCTA).toBe(false);
   });
@@ -1246,7 +1259,11 @@ describe("computeHasFIMSCTA", () => {
       markdown: `${unrelatedCTAFrontMatter}\nThis is the message body`
     } as UIMessageDetails;
 
-    const hasFIMSCTA = testable!.computeHasFIMSCTA(messageDetails, undefined);
+    const hasFIMSCTA = testable!.computeHasFIMSCTA(
+      messageDetails,
+      serviceId,
+      undefined
+    );
 
     expect(hasFIMSCTA).toBe(false);
   });
@@ -1265,6 +1282,7 @@ describe("computeHasFIMSCTA", () => {
 
     const hasFIMSCTA = testable!.computeHasFIMSCTA(
       messageDetails,
+      serviceId,
       remoteMessage
     );
 
@@ -1285,6 +1303,7 @@ describe("computeHasFIMSCTA", () => {
 
     const hasFIMSCTA = testable!.computeHasFIMSCTA(
       messageDetails,
+      serviceId,
       remoteMessage
     );
 
@@ -1305,6 +1324,7 @@ describe("computeHasFIMSCTA", () => {
 
     const hasFIMSCTA = testable!.computeHasFIMSCTA(
       messageDetails,
+      serviceId,
       remoteMessage
     );
 
@@ -1325,6 +1345,7 @@ describe("computeHasFIMSCTA", () => {
 
     const hasFIMSCTA = testable!.computeHasFIMSCTA(
       messageDetails,
+      serviceId,
       remoteMessage
     );
 
