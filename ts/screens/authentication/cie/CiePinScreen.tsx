@@ -51,7 +51,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { SessionToken } from "../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { getIdpLoginUri } from "../../../utils/login";
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
@@ -106,7 +106,7 @@ const CiePinScreen = () => {
   );
   const isEnabled = useIOSelector(isNfcEnabledSelector);
   const isNfcEnabled = pot.getOrElse(isEnabled, false);
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
+  const { present, bottomSheet } = useIOBottomSheetModal({
     component: (
       <View>
         <IOMarkdown content={I18n.t("bottomSheets.ciePin.content")} />

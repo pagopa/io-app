@@ -20,7 +20,7 @@ import { ItwFailure } from "../../utils/ItwFailureTypes.ts";
 
 jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
   // Mock the bottom sheet to immediately render the component
-  useIOBottomSheetAutoresizableModal: (params: { component: JSX.Element }) => ({
+  useIOBottomSheetModal: (params: { component: JSX.Element }) => ({
     bottomSheet: params.component
   })
 }));
