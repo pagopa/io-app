@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0-rc.3](https://github.com/pagopa/io-app/compare/3.2.0-rc.2...3.2.0-rc.3) (2025-03-27)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2048](https://pagopa.atlassian.net/browse/SIW-2048)] Add new device re-enable itw banner ([#6833](https://github.com/pagopa/io-app/issues/6833)) ([6c22c3f](https://github.com/pagopa/io-app/commit/6c22c3fc8ba3731edba3f924ca63ff73edd2ca24))
+
 ## [3.2.0-rc.2](https://github.com/pagopa/io-app/compare/3.2.0-rc.1...3.2.0-rc.2) (2025-03-26)
 
 
