@@ -23,12 +23,12 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
+import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { ServicesParamsList } from "../../common/navigation/params";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { getLogoForInstitution } from "../../common/utils";
 import { InstitutionServicesFailure } from "../components/InstitutionServicesFailure";
-import { ServiceListSkeleton } from "../components/ServiceListSkeleton";
 import { useServicesFetcher } from "../hooks/useServicesFetcher";
 import { paginatedServicesGet } from "../store/actions";
 import * as analytics from "../../common/analytics";
@@ -158,7 +158,7 @@ export const InstitutionServicesScreen = ({
     if (isFirstRender || isLoading) {
       return (
         <>
-          <ServiceListSkeleton size={5} />
+          <ServiceListSkeleton avatarShown={false} size={5} />
           <VSpacer size={16} />
         </>
       );
@@ -199,7 +199,7 @@ export const InstitutionServicesScreen = ({
     if (isUpdating && !isRefreshing) {
       return (
         <>
-          <ServiceListSkeleton />
+          <ServiceListSkeleton avatarShown={false} />
           <VSpacer size={16} />
         </>
       );

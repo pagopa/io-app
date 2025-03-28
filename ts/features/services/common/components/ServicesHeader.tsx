@@ -68,8 +68,9 @@ export const ServicesHeader = ({
 
 export const ServicesHeaderSkeleton = () => (
   <View
-    style={styles.container}
     accessible={true}
+    accessibilityState={{ busy: true }}
+    style={styles.container}
     testID="services-header-skeleton"
   >
     <View style={styles.itemAvatar}>

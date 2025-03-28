@@ -5,6 +5,7 @@ import {
   IOStyles,
   Pictogram,
   VSpacer,
+  VStack,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
@@ -28,11 +29,10 @@ export const EmptyState = ({
   testID
 }: EmptyStateProps) => (
   <View testID={testID}>
-    <View style={IOStyles.alignCenter}>
+    <VStack style={IOStyles.alignCenter} space={24}>
       <Pictogram name={pictogram} size={120} />
-      <VSpacer size={24} />
-    </View>
-    <H6 style={styles.text}>{title}</H6>
+      <H6 style={styles.text}>{title}</H6>
+    </VStack>
     {subtitle && (
       <>
         <VSpacer size={8} />
