@@ -13,11 +13,7 @@ import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
 } from "../../issuance/store/actions";
-import {
-  itwLifecycleStateUpdated,
-  itwLifecycleWalletReset
-} from "../../lifecycle/store/actions";
-import { ItwLifecycleState } from "../../lifecycle/store/reducers";
+import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import {
@@ -152,18 +148,6 @@ export const createEidIssuanceActionsImplementation = (
 
   closeIssuance: () => {
     navigation.popToTop();
-  },
-
-  setWalletInstanceToOperational: () => {
-    store.dispatch(
-      itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL)
-    );
-  },
-
-  setWalletInstanceToValid: () => {
-    store.dispatch(
-      itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID)
-    );
   },
 
   storeIntegrityKeyTag: ({

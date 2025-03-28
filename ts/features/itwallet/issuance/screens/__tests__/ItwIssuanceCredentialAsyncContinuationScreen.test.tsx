@@ -1,17 +1,30 @@
 import * as O from "fp-ts/lib/Option";
-import { DeepPartial } from "redux";
-import { merge } from "lodash";
 import configureMockStore from "redux-mock-store";
+import { createSelector } from "reselect";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import * as itwCredentialSelectors from "../../../credentials/store/selectors";
+import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../../navigation/routes";
 import {
   ItwIssuanceCredentialAsyncContinuationNavigationParams,
   ItwIssuanceCredentialAsyncContinuationScreen
 } from "../ItwIssuanceCredentialAsyncContinuationScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+
+const mockStoredCredential: StoredCredential = {
+  credentialType: "MDL",
+  jwt: { expiration: "2100-01-01T00:00:00Z" },
+  parsedCredential: {
+    expiry_date: { value: "2100-01-01", name: "expiry_date" }
+  },
+  keyTag: "1",
+  credential: "credential",
+  format: "jwt",
+  issuerConf: {} as StoredCredential["issuerConf"]
+};
 
 describe("ItwIssuanceCredentialAsyncContinuationScreen", () => {
   it("it should render the generic error message when route params are invalid", () => {
@@ -23,82 +36,40 @@ describe("ItwIssuanceCredentialAsyncContinuationScreen", () => {
   });
 
   it("it should render the activate wallet screen", () => {
-    const component = renderComponent(
-      { credentialType: "MDL" },
-      { isWalletActive: false }
-    );
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(false);
+
+    const component = renderComponent({ credentialType: "MDL" });
     expect(component).toMatchSnapshot();
   });
 
   it("it should render the document already present screen", () => {
-    const component = renderComponent(
-      { credentialType: "MDL" },
-      { isWalletActive: true, hasMDL: true }
-    );
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(true);
+
+    jest
+      .spyOn(itwCredentialSelectors, "itwCredentialByTypeSelector")
+      .mockImplementation(() =>
+        createSelector(
+          () => ({}),
+          () => O.some(mockStoredCredential)
+        )
+      );
+
+    const component = renderComponent({ credentialType: "MDL" });
     expect(component).toMatchSnapshot();
   });
 });
 
 const renderComponent = (
-  routeParams?: ItwIssuanceCredentialAsyncContinuationNavigationParams,
-  options?: Partial<{ isWalletActive: boolean; hasMDL: boolean }>
+  routeParams?: ItwIssuanceCredentialAsyncContinuationNavigationParams
 ) => {
-  const { isWalletActive = true, hasMDL = false } = options ?? {};
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
-  const store = mockStore(
-    merge(undefined, globalState, {
-      debug: {
-        isDebugModeEnabled: false
-      },
-      backendStatus: {
-        status: O.some({
-          config: {
-            itw: {
-              enabled: true,
-              min_app_version: {
-                android: "0.0.0.0",
-                ios: "0.0.0.0"
-              }
-            },
-            cgn: { enabled: false },
-            newPaymentSection: {
-              enabled: false,
-              min_app_version: {
-                android: "0.0.0.0",
-                ios: "0.0.0.0"
-              }
-            }
-          }
-        })
-      },
-      features: {
-        itWallet: {
-          ...(isWalletActive && {
-            lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
-            issuance: {
-              integrityKeyTag: O.some("integrity-key")
-            },
-            credentials: {
-              eid: O.some({}),
-              credentials: hasMDL
-                ? [
-                    O.some({
-                      credentialType: "MDL",
-                      jwt: { expiration: "2100-01-01T00:00:00Z" },
-                      parsedCredential: {
-                        expiry_date: { value: "2100-01-01" }
-                      }
-                    })
-                  ]
-                : []
-            }
-          })
-        }
-      }
-    } as DeepPartial<GlobalState>)
-  );
+  const store = mockStore(globalState);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     ItwIssuanceCredentialAsyncContinuationScreen,

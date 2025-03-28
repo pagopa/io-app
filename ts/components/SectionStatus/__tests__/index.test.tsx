@@ -14,7 +14,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 import { openWebUrl } from "../../../utils/url";
 import SectionStatusComponent from "../index";
 import { PersistedFeaturesState } from "../../../features/common/store/reducers";
-import { ItwLifecycleState } from "../../../features/itwallet/lifecycle/store/reducers";
 import { ItWalletState } from "../../../features/itwallet/common/store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 
@@ -60,7 +59,8 @@ const mockSectionStatusState = (
     } as Config),
     features: {
       itWallet: {
-        lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
+        credentials: { eid: O.some({}) },
+        issuance: { integrityKeyTag: O.some("key-tag") }
       } as ItWalletState
     } as PersistedFeaturesState
   } as unknown as GlobalState);
@@ -179,7 +179,8 @@ describe("Section Status Component should return null", () => {
         sectionStatus: O.none,
         features: {
           itWallet: {
-            lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
+            credentials: { eid: O.some({}) },
+            issuance: { integrityKeyTag: O.some("key-tag") }
           } as ItWalletState
         } as PersistedFeaturesState
       })
