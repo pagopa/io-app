@@ -5,8 +5,8 @@ import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import I18n from "../../../i18n";
-import { SpidIdp } from "../../../../definitions/content/SpidIdp";
 import { StandardLoginRequestInfo } from "../../../features/spidLogin/types";
+import { SpidIdp } from "../../../utils/idps";
 
 type Props = {
   selectedIdp?: SpidIdp;
