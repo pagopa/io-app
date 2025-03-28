@@ -3,11 +3,11 @@ import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOS
 import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import I18n from "../../../../../../i18n";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../../navigation/routes";
 import {
   trackSpidWizardScreen,
   trackWizardSpidSelected
 } from "../../analytics";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 const SpidWizard = () => {
   const { navigate } = useIONavigation();
@@ -43,8 +43,8 @@ const SpidWizard = () => {
             "authentication.wizards.spid_wizard.actions.secondary.label"
           ),
           onPress: () =>
-            navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.AUTHENTICATION_ID_ACTIVATION_WIZARD
+            navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.ID_ACTIVATION_WIZARD
             })
         }
       }}

@@ -46,8 +46,7 @@ import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../../../navigation/params/AuthenticationParamsList";
-import ROUTES from "../../../../../navigation/routes";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { loginSuccess } from "../../../common/store/actions";
 import { nfcIsEnabled } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -63,6 +62,7 @@ import {
   trackLoginCiePinScreen
 } from "../../../common/analytics/cieAnalytics";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -96,7 +96,7 @@ const CiePinScreen = () => {
     useNavigation<
       IOStackNavigationProp<
         AuthenticationParamsList,
-        typeof ROUTES.CIE_PIN_SCREEN
+        typeof AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
       >
     >();
   const [pin, setPin] = useState("");
@@ -135,17 +135,17 @@ const CiePinScreen = () => {
     if (authUrlGenerated !== undefined) {
       if (cieFlowForDevServerEnabled) {
         const loginUri = getIdpLoginUri(CieEntityIds.PROD, 3);
-        navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
+        navigation.navigate(AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE, {
           cieConsentUri: loginUri
         });
       } else {
         if (isNfcEnabled) {
-          navigation.navigate(ROUTES.CIE_CARD_READER_SCREEN, {
+          navigation.navigate(AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN, {
             ciePin: pin,
             authorizationUri: authUrlGenerated
           });
         } else {
-          navigation.navigate(ROUTES.CIE_ACTIVATE_NFC_SCREEN, {
+          navigation.navigate(AUTHENTICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN, {
             ciePin: pin,
             authorizationUri: authUrlGenerated
           });

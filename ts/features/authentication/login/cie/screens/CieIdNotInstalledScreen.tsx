@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import CieIdNotInstalled from "../components/CieIdNotInstalled";
-import { AuthenticationParamsList } from "../../../../../navigation/params/AuthenticationParamsList";
-import ROUTES from "../../../../../navigation/routes";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { trackCieIdNotInstalledScreen } from "../analytics";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const CieIdNotInstalledScreen = () => {
   const { params } =
     useRoute<
-      RouteProp<AuthenticationParamsList, typeof ROUTES.CIE_NOT_INSTALLED>
+      RouteProp<
+        AuthenticationParamsList,
+        typeof AUTHENTICATION_ROUTES.CIE_NOT_INSTALLED
+      >
     >();
 
   useEffect(() => {

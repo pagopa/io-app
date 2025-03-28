@@ -6,13 +6,13 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/b
 import { openWebUrl } from "../../../../../utils/url";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import I18n from "../../../../../i18n";
-import ROUTES from "../../../../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../components/UnlockAccessComponent";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 jest.mock("../../../../../utils/hooks/bottomSheet");
 jest.mock("../../../../../utils/url");
@@ -67,9 +67,9 @@ describe("UnlockAccessComponent", () => {
     fireEvent.press(button);
 
     expect(mockNavigation.navigate).toHaveBeenCalledWith(
-      ROUTES.AUTHENTICATION,
+      AUTHENTICATION_ROUTES.MAIN,
       {
-        screen: ROUTES.AUTHENTICATION_LANDING
+        screen: AUTHENTICATION_ROUTES.LANDING
       }
     );
   });

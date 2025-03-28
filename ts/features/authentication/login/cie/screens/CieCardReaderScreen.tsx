@@ -45,8 +45,7 @@ import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieUatEndpoint } from "../utils/endpoints";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../../../navigation/params/AuthenticationParamsList";
-import ROUTES from "../../../../../navigation/routes";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import {
   CieAuthenticationErrorPayload,
   CieAuthenticationErrorReason,
@@ -69,6 +68,7 @@ import {
   trackLoginCieCardReadingError,
   trackLoginCieCardReadingSuccess
 } from "../../../common/analytics/cieAnalytics";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -311,8 +311,8 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.CIE_WRONG_CARD_SCREEN
+            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.CIE_WRONG_CARD_SCREEN
             })
         });
         break;
@@ -321,8 +321,8 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.CIE_UNEXPECTED_ERROR
+            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.CIE_UNEXPECTED_ERROR
             })
         });
         break;
@@ -330,8 +330,9 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN
+            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen:
+                AUTHENTICATION_ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN
             })
         });
         break;
@@ -347,8 +348,8 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.CIE_WRONG_PIN_SCREEN,
+            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.CIE_WRONG_PIN_SCREEN,
               params: {
                 remainingCount:
                   event.event === "ON_CARD_PIN_LOCKED" ? 0 : event.attemptsLeft
@@ -363,8 +364,8 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.CIE_EXPIRED_SCREEN
+            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN
             })
         });
         break;
@@ -439,8 +440,8 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       setTimeout(
         async () => {
           trackLoginCieCardReadingSuccess();
-          this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-            screen: ROUTES.CIE_CONSENT_DATA_USAGE,
+          this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+            screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
             params: {
               cieConsentUri
             }
@@ -529,7 +530,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
   private handleCancel = () =>
     this.props.navigation.reset({
       index: 0,
-      routes: [{ name: ROUTES.AUTHENTICATION }]
+      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
     });
 
   private getFooter = () =>

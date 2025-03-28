@@ -1,12 +1,17 @@
 import { Route, useRoute } from "@react-navigation/native";
-import ROUTES from "../../../../../navigation/routes";
 import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../components/UnlockAccessComponent";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const UnlockAccessScreen = () => {
   const route =
-    useRoute<Route<typeof ROUTES.UNLOCK_ACCESS_SCREEN, UnlockAccessProps>>();
+    useRoute<
+      Route<
+        typeof AUTHENTICATION_ROUTES.UNLOCK_ACCESS_SCREEN,
+        UnlockAccessProps
+      >
+    >();
   const { authLevel } = route.params;
 
   return <UnlockAccessComponent authLevel={authLevel} />;

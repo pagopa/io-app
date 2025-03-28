@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fastLoginOptInFFEnabled } from "../../fastLogin/store/selectors";
 import {
@@ -17,6 +16,7 @@ import {
   Identifier
 } from "../../login/optIn/screens/OptInScreen";
 import { cieIDSetSelectedSecurityLevel } from "../cie/store/actions";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 
 export const IdpCIE: SpidIdp = {
   id: "cie",
@@ -48,8 +48,8 @@ const useNavigateToLoginMethod = () => {
       optInScreenParams: ChosenIdentifier
     ) => {
       if (isFastLoginOptInFFEnabled) {
-        navigate(ROUTES.AUTHENTICATION, {
-          screen: ROUTES.AUTHENTICATION_OPT_IN,
+        navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.OPT_IN,
           params: optInScreenParams
         });
       } else {
@@ -62,8 +62,8 @@ const useNavigateToLoginMethod = () => {
   const navigateToIdpSelection = useCallback(() => {
     withIsFastLoginOptInCheck(
       () => {
-        navigate(ROUTES.AUTHENTICATION, {
-          screen: ROUTES.AUTHENTICATION_IDP_SELECTION
+        navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.IDP_SELECTION
         });
       },
       { identifier: Identifier.SPID }
@@ -75,8 +75,8 @@ const useNavigateToLoginMethod = () => {
 
     withIsFastLoginOptInCheck(
       () => {
-        navigate(ROUTES.AUTHENTICATION, {
-          screen: ROUTES.CIE_PIN_SCREEN
+        navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
         });
       },
       { identifier: Identifier.CIE }
@@ -96,16 +96,16 @@ const useNavigateToLoginMethod = () => {
 
         withIsFastLoginOptInCheck(
           () => {
-            navigate(ROUTES.AUTHENTICATION, {
-              screen: ROUTES.AUTHENTICATION_CIE_ID_LOGIN,
+            navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
               params
             });
           },
           { identifier: Identifier.CIE_ID, params }
         );
       } else {
-        navigate(ROUTES.AUTHENTICATION, {
-          screen: ROUTES.CIE_NOT_INSTALLED,
+        navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.CIE_NOT_INSTALLED,
           params: {
             isUat: isCieUatEnabled
           }

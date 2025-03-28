@@ -1,8 +1,8 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import i18n from "../../../../../i18n";
-import ROUTES from "../../../../../navigation/routes";
 import * as analytics from "../analytics";
 import CieIdAuthUrlError from "../screens/CieIdAuthUrlError";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 const mockNavigate = jest.fn();
 const mockUrl = "https://unauthorized-url.com";
 
@@ -48,8 +48,8 @@ describe("CieIdAuthUrlError", () => {
     const closeButton = getByText(i18n.t("global.buttons.close"));
     fireEvent.press(closeButton);
 
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_LANDING
+    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LANDING
     });
   });
 });

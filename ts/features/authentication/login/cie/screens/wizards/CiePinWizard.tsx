@@ -10,7 +10,6 @@ import { View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../../../i18n";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../../navigation/routes";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import IOMarkdown from "../../../../../../components/IOMarkdown";
 import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
@@ -23,6 +22,7 @@ import {
   trackWizardCiePinSelected
 } from "../../analytics";
 import { useIOStore } from "../../../../../../store/hooks";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 export const CIE_PIN_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/";
@@ -93,8 +93,8 @@ const CiePinWizard = () => {
         "authentication.wizards.cie_pin_wizard.actions.secondary.label"
       ),
       onPress: () => {
-        navigate(ROUTES.AUTHENTICATION, {
-          screen: ROUTES.AUTHENTICATION_SPID_WIZARD
+        navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.SPID_WIZARD
         });
       }
     }

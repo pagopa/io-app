@@ -1,14 +1,14 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { AuthenticationParamsList } from "../../../../../navigation/params/AuthenticationParamsList";
-import ROUTES from "../../../../../navigation/routes";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import CieIdLoginWebView from "../../../login/cie/components/CieIdLoginWebView";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const CieIdLoginScreen = () => {
   const route =
     useRoute<
       RouteProp<
         AuthenticationParamsList,
-        typeof ROUTES.AUTHENTICATION_CIE_ID_LOGIN
+        typeof AUTHENTICATION_ROUTES.CIE_ID_LOGIN
       >
     >();
 

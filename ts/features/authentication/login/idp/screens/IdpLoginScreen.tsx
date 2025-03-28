@@ -23,7 +23,6 @@ import {
 import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
 import {
   idpLoginUrlChanged,
   loginFailure,
@@ -56,6 +55,7 @@ import { setStandardLoginRequestState } from "../store/actions";
 import { ErrorType as SpidLoginErrorType } from "../store/types";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { usePosteIDApp2AppEducational } from "../hooks/usePosteIDApp2AppEducational";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -268,8 +268,8 @@ const IdpLoginScreen = () => {
   const navigateToAuthErrorScreen = useCallback(() => {
     // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
     // ensuring the re-execution of the `useLollipopLoginSource` hook.
-    replace(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTH_ERROR_SCREEN,
+    replace(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       params: {
         errorCodeOrMessage,
         authMethod: "SPID",

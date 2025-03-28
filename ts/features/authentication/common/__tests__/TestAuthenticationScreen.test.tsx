@@ -7,7 +7,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { getTimeoutError } from "../../../../utils/errors";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import ROUTES from "../../../../navigation/routes";
 import { TestLoginState } from "../../../../store/reducers/testLogin";
 import { getAppVersion } from "../../../../utils/appVersion";
 import {
@@ -18,6 +17,7 @@ import {
 } from "../store/actions";
 import { PasswordLogin } from "../../../../../definitions/session_manager/PasswordLogin";
 import { SessionToken } from "../../../../types/SessionToken";
+import { AUTHENTICATION_ROUTES } from "../navigation/routes";
 
 const timeoutError = getTimeoutError();
 
@@ -184,7 +184,7 @@ const render = (state: TestLoginState) => {
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       TestAuthenticationScreen,
-      ROUTES.AUTHENTICATION_IDP_TEST,
+      AUTHENTICATION_ROUTES.IDP_TEST,
       {},
       store
     ),

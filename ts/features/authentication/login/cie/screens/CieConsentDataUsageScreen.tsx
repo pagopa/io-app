@@ -18,10 +18,10 @@ import { onLoginUriChanged } from "../../../../../utils/login";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { trackLoginCieDataSharingError } from "../../../common/analytics/cieAnalytics";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
-import ROUTES from "../../../../../navigation/routes";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useOnboardingAbortAlert } from "../../../../../utils/hooks/useOnboardingAbortAlert";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -38,7 +38,7 @@ const CieConsentDataUsageScreen = () => {
   const route =
     useRoute<
       Route<
-        typeof ROUTES.CIE_CONSENT_DATA_USAGE,
+        typeof AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
         CieConsentDataUsageScreenNavigationParams
       >
     >();
@@ -62,8 +62,8 @@ const CieConsentDataUsageScreen = () => {
   );
 
   const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_LANDING
+    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LANDING
     });
   }, [navigation]);
 
@@ -134,8 +134,8 @@ const CieConsentDataUsageScreen = () => {
 
   useEffect(() => {
     if (hasError) {
-      navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTH_ERROR_SCREEN,
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
         params: {
           errorCodeOrMessage,
           authMethod: "CIE",

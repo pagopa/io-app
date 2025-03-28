@@ -16,7 +16,6 @@ import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverl
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { SessionToken } from "../../../../../types/SessionToken";
-import ROUTES from "../../../../../navigation/routes";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { isDevEnv } from "../../../../../utils/environment";
@@ -35,6 +34,7 @@ import {
   IO_LOGIN_CIE_URL_SCHEME
 } from "../../../../../utils/cie";
 import { useOnboardingAbortAlert } from "../../../../../utils/hooks/useOnboardingAbortAlert";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -84,15 +84,15 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const [isLoadingWebView, setIsLoadingWebView] = useState(false);
 
   const navigateToCieIdAuthenticationError = useCallback(() => {
-    navigation.replace(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_CIE_ID_ERROR
+    navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
     });
   }, [navigation]);
 
   const navigateToCieIdAuthUrlError = useCallback(
     (url: string) => {
-      navigation.replace(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTHENTICATION_CIE_ID_INCORRECT_URL,
+      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
         params: { url }
       });
     },
@@ -100,8 +100,8 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   );
 
   const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_LANDING
+    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LANDING
     });
   }, [navigation]);
 
@@ -149,8 +149,8 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
       // because on `navigation.replace` this screen will be unmounted and a further navigation to this screen
       // will mount it again and the `useLollipopLoginSource` hook will be re-executed.
-      navigation.replace(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTH_ERROR_SCREEN,
+      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
         params: {
           errorCodeOrMessage: code || message,
           authMethod: "CIE_ID",

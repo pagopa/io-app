@@ -35,7 +35,6 @@ import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButto
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
 import {
   disableNativeAuthentication,
   loginFailure,
@@ -64,6 +63,7 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -380,8 +380,8 @@ export const AuthSessionPage = () => {
   });
 
   if (requestInfo.requestState === "ERROR") {
-    navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTH_ERROR_SCREEN,
+    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       params: {
         errorCodeOrMessage: requestInfo.errorCodeOrMessage,
         authMethod: "SPID",

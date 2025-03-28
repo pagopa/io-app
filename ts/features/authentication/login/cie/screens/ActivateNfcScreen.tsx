@@ -6,11 +6,11 @@ import { Alert } from "react-native";
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../../../navigation/params/AuthenticationParamsList";
-import ROUTES from "../../../../../navigation/routes";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { isNfcEnabledSelector } from "../store/selectors";
 import * as cieUtils from "../../../../../utils/cie";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { CieCardReaderScreenNavigationParams } from "./CieCardReaderScreen";
 
 const ActivateNfcScreen = () => {
@@ -20,13 +20,13 @@ const ActivateNfcScreen = () => {
     useNavigation<
       IOStackNavigationProp<
         AuthenticationParamsList,
-        typeof ROUTES.CIE_ACTIVATE_NFC_SCREEN
+        typeof AUTHENTICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN
       >
     >();
   const route =
     useRoute<
       Route<
-        typeof ROUTES.CIE_ACTIVATE_NFC_SCREEN,
+        typeof AUTHENTICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN,
         CieCardReaderScreenNavigationParams
       >
     >();
@@ -39,7 +39,7 @@ const ActivateNfcScreen = () => {
 
   const onContinue = useCallback(async () => {
     if (isNfcEnabled) {
-      navigation.replace(ROUTES.CIE_CARD_READER_SCREEN, {
+      navigation.replace(AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN, {
         ciePin,
         authorizationUri
       });

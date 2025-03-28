@@ -7,9 +7,9 @@ import { openNFCSettings } from "../../../../../utils/cie";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
 import { useIOSelector } from "../../../../../store/hooks";
 import ActivateNfcScreen from "../screens/ActivateNfcScreen";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 // Mock the openNFCSettings function
 jest.mock("../../../../../utils/cie", () => ({
@@ -115,10 +115,13 @@ describe("ActivateNfcScreen", () => {
 
       fireEvent.press(secondaryActionButton);
 
-      expect(mockReplace).toHaveBeenCalledWith(ROUTES.CIE_CARD_READER_SCREEN, {
-        ciePin: "123456",
-        authorizationUri: "https://example.com"
-      });
+      expect(mockReplace).toHaveBeenCalledWith(
+        AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN,
+        {
+          ciePin: "123456",
+          authorizationUri: "https://example.com"
+        }
+      );
     });
 
     test("shows alert when NFC is disabled and secondary action button is pressed", () => {
@@ -157,7 +160,7 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext(
     ActivateNfcScreen,
-    ROUTES.CIE_ACTIVATE_NFC_SCREEN,
+    AUTHENTICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN,
     {},
     store
   );

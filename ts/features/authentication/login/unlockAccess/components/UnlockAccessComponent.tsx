@@ -9,11 +9,11 @@ import { Text, View } from "react-native";
 import I18n from "../../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
-import ROUTES from "../../../../../navigation/routes";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { CustomWizardScreen } from "../../../../../components/screens/CustomWizardScreen";
 import { useIOSelector } from "../../../../../store/hooks";
 import { absolutePortalLinksSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 // A future development will allow different actions to
 // be performed if the authentication level is L3.
@@ -88,8 +88,8 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
 
   const onPressActionButton = () => {
     if (authLevel === "L2") {
-      navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTHENTICATION_LANDING
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.LANDING
       });
     }
     // for the future developement: add here

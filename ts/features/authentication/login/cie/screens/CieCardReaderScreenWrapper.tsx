@@ -7,7 +7,7 @@
  */
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../../../navigation/params/AuthenticationParamsList";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { useInteractiveElementDefaultColorName } from "../../../../../utils/hooks/theme";
 import CieCardReaderScreen from "./CieCardReaderScreen";
 
