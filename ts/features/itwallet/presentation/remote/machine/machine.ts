@@ -1,7 +1,14 @@
-import { assign, not, setup } from "xstate";
+import { assign, fromPromise, not, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { mapEventToFailure, RemoteFailureType } from "./failure";
 import { RemoteEvents } from "./events";
+import { ItwPresentationTags } from "./tags";
+import {
+  EvaluateRelyingPartyTrustInput,
+  EvaluateRelyingPartyTrustOutput,
+  GetPresentationDetailsInput,
+  GetPresentationDetailsOutput
+} from "./actors";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -20,7 +27,16 @@ export const itwRemoteMachine = setup({
     navigateToIdentificationModeScreen: notImplemented,
     close: notImplemented
   },
-  actors: {},
+  actors: {
+    evaluateRelyingPartyTrust: fromPromise<
+      EvaluateRelyingPartyTrustOutput,
+      EvaluateRelyingPartyTrustInput
+    >(notImplemented),
+    getPresentationDetails: fromPromise<
+      GetPresentationDetailsOutput,
+      GetPresentationDetailsInput
+    >(notImplemented)
+  },
   guards: {
     isWalletActive: notImplemented,
     areRequiredCredentialsAvailable: notImplemented,
@@ -68,20 +84,61 @@ export const itwRemoteMachine = setup({
           target: "Failure"
         },
         {
-          target: "ClaimsDisclosure"
+          target: "EvaluatingRelyingPartyTrust"
         }
       ]
     },
-    ClaimsDisclosure: {
+    EvaluatingRelyingPartyTrust: {
       entry: "navigateToClaimsDisclosureScreen",
+      tags: [ItwPresentationTags.Loading],
+      description: "Determine whether the Relying Party is a trusted entity",
+      invoke: {
+        src: "evaluateRelyingPartyTrust",
+        input: ({ context }) => ({ clientId: context.payload?.clientId }),
+        onDone: {
+          target: "GettingPresentationDetails",
+          actions: assign(({ event }) => event.output)
+        },
+        onError: {
+          actions: "setFailure",
+          target: "Failure"
+        }
+      }
+    },
+    GettingPresentationDetails: {
+      tags: [ItwPresentationTags.Loading],
+      description:
+        "Get the details of the presentation requested by the Relying Party (i.e. credentials)",
+      invoke: {
+        src: "getPresentationDetails",
+        input: ({ context }) => ({
+          qrCodePayload: context.payload,
+          rpSubject: context.rpSubject,
+          rpConf: context.rpConf
+        }),
+        onDone: {
+          actions: assign(({ event }) => event.output),
+          target: "ClaimsDisclosure"
+        },
+        onError: {
+          actions: "setFailure",
+          target: "Failure"
+        }
+      }
+    },
+    ClaimsDisclosure: {
       description:
         "Display the list of claims to disclose for the verifiable presentation",
       on: {
+        "holder-consent": {
+          target: "SendingAuthorizationResponse"
+        },
         close: {
           actions: "close"
         }
       }
     },
+    SendingAuthorizationResponse: {},
     Failure: {
       entry: "navigateToFailureScreen",
       description: "This state is reached when an error occurs",

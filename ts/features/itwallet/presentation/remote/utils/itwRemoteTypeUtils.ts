@@ -26,3 +26,17 @@ export const validateItwPresentationQrCodeParams = (params: {
 
 export type ItwRemoteRequestPayload =
   ReturnType<Credential.Presentation.StartFlow>;
+
+/**
+ * Alias for the Relying Party's Entity Configuration type
+ */
+export type RelyingPartyConfiguration = Awaited<
+  ReturnType<Credential.Presentation.EvaluateRelyingPartyTrust>
+>["rpConf"];
+
+/**
+ * Type representing the parsed DCQL query with the presentation details
+ */
+export type PresentationDetails = Awaited<
+  ReturnType<Credential.Presentation.EvaluateDcqlQuery>
+>;

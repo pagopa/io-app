@@ -1,5 +1,6 @@
 import {
   Alert,
+  Body,
   ButtonLink,
   ClaimsSelector,
   ContentWrapper,
@@ -22,6 +23,12 @@ import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchange
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { DisclosureClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { ItwRemotePresentationClaimsMock } from "../../../common/utils/itwMocksUtils.ts";
+import { ItwRemoteMachineContext } from "../machine/provider.tsx";
+import {
+  selectIsLoading,
+  selectPresentationDetails
+} from "../machine/selectors.ts";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 
 type ClaimItem = ComponentProps<typeof ClaimsSelector>["items"][number];
 
@@ -37,10 +44,29 @@ const mapMockClaims = (claims: Array<DisclosureClaim>, missing = false) =>
     })
   );
 
+const mapDisclosuresToClaims = (
+  disclosures: Array<[string, string, unknown]>
+) =>
+  disclosures.map(([, name, value]) => ({
+    id: name,
+    title: value as string,
+    description: name
+  }));
+
 const ItwRemoteClaimsDisclosureScreen = () => {
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
+
+  const isLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
+
+  if (isLoading) {
+    return (
+      <LoadingScreenContent contentTitle="Stiamo facendo alcune verifiche di sicurezza">
+        <Body>Attendi qualche secondo...</Body>
+      </LoadingScreenContent>
+    );
+  }
 
   return <ContentView />;
 };
@@ -52,6 +78,10 @@ const ContentView = () => {
   useHeaderSecondLevel({ title: "" });
 
   const theme = useIOTheme();
+  const presentationDetails = ItwRemoteMachineContext.useSelector(
+    selectPresentationDetails
+  );
+  const machineRef = ItwRemoteMachineContext.useActorRef();
 
   const [selectedOptionalClaims, setSelectedOptionalClaims] = useState<
     Array<string>
@@ -98,7 +128,7 @@ const ContentView = () => {
           />
         </View>
       </View>
-      <ClaimsSelector
+      {/* <ClaimsSelector
         title="Patente di guida"
         items={mapMockClaims(ItwRemotePresentationClaimsMock.optional)}
         selectedItemIds={selectedOptionalClaims}
@@ -110,7 +140,7 @@ const ContentView = () => {
         items={mapMockClaims(ItwRemotePresentationClaimsMock.optional, true)}
         selectionEnabled={false}
         defaultExpanded
-      />
+      /> */}
       <Alert
         variant="info"
         content={I18n.t(
@@ -133,7 +163,7 @@ const ContentView = () => {
           type: "TwoButtons",
           primary: {
             label: I18n.t("global.buttons.continue"),
-            onPress: () => null // TODO
+            onPress: () => machineRef.send({ type: "holder-consent" })
           },
           secondary: {
             label: I18n.t("global.buttons.cancel"),
@@ -170,11 +200,14 @@ const ContentView = () => {
               iconName="security"
               iconColor={theme["icon-default"]}
             />
-            <ClaimsSelector
-              title="Identità digitale"
-              selectionEnabled={false}
-              items={mapMockClaims(ItwRemotePresentationClaimsMock.required)}
-            />
+            {presentationDetails?.map(c => (
+              <ClaimsSelector
+                key={c.id}
+                title={c.id}
+                defaultExpanded
+                items={mapDisclosuresToClaims(c.requiredDisclosures)}
+              />
+            ))}
           </View>
 
           {renderOptionalClaims()}

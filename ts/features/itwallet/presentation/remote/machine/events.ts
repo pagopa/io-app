@@ -21,9 +21,14 @@ export type Close = {
   type: "close";
 };
 
+export type Consent = {
+  type: "holder-consent";
+};
+
 export type RemoteEvents =
   | Start
   | GoToWalletActivation
   | GoToIdentificationMode
+  | Consent
   | Back
   | Close;

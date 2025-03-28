@@ -18,7 +18,7 @@ export const createRemoteActionsImplementation = (
   },
 
   navigateToClaimsDisclosureScreen: () => {
-    navigation.replace(ITW_REMOTE_ROUTES.MAIN, {
+    navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
       screen: ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE
     });
   },
