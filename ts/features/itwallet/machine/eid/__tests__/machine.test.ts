@@ -57,6 +57,7 @@ describe("itwEidIssuanceMachine", () => {
   const isSessionExpired = jest.fn();
   const isOperationAborted = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
+  const hasIntegrityKeyTag = jest.fn();
   const resetWalletInstance = jest.fn();
   const trackWalletInstanceCreation = jest.fn();
   const trackWalletInstanceRevocation = jest.fn();
@@ -115,7 +116,8 @@ describe("itwEidIssuanceMachine", () => {
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
       isOperationAborted,
-      hasValidWalletInstanceAttestation
+      hasValidWalletInstanceAttestation,
+      hasIntegrityKeyTag
     }
   });
 
@@ -578,6 +580,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should skip Wallet Instance creation", async () => {
+    hasIntegrityKeyTag.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -626,6 +629,7 @@ describe("itwEidIssuanceMachine", () => {
 
   it("Should skip Wallet Instance Attestation obtainment", async () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    hasIntegrityKeyTag.mockImplementation(() => true);
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
@@ -1214,5 +1218,31 @@ describe("itwEidIssuanceMachine", () => {
     // Check that the machine transitions to Failure state
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+  });
+
+  it("Should go to Wallet Instance Creation if there is no integrity key tag but a valid WIA exists", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: "TosAcceptance",
+      context: {
+        integrityKeyTag: undefined,
+        walletInstanceAttestation: T_WIA
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+
+    hasIntegrityKeyTag.mockImplementation(() => false);
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
   });
 });

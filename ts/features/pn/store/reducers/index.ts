@@ -9,14 +9,14 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isUserSelectedPaymentSelector } from "../../../messages/store/reducers/payments";
 import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
+import {
+  persistedPnBannerDismissReducer,
+  PnBannerDismissState
+} from "../../reminderBanner/reducer/bannerDismiss";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
 import { toPNMessage } from "../types/transformers";
 import { PNMessage } from "../types/types";
 import { pnActivationReducer, PnActivationState } from "./activation";
-import {
-  persistedPnBannerDismissReducer,
-  PnBannerDismissState
-} from "./bannerDismiss";
 
 export type PnState = {
   activation: PnActivationState;

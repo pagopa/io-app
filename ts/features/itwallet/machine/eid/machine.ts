@@ -146,21 +146,21 @@ export const itwEidIssuanceMachine = setup({
       on: {
         "accept-tos": [
           {
-            // If the wallet instance attestation is valid, we can proceed to the IPZS privacy acceptance
-            guard: "hasValidWalletInstanceAttestation",
-            target: "IpzsPrivacyAcceptance"
+            // When no integrity hardware key exists,
+            // we need to create a new integrity key tag and a new wallet instance
+            guard: not("hasIntegrityKeyTag"),
+            target: "WalletInstanceCreation"
           },
           {
-            // If do not have a valid wallet instance attestation but integrity key tag is present, we can
-            // assume the wallet instance was already created and we can proceed to the wallet instance
-            // attestation obtainment
-            guard: "hasIntegrityKeyTag",
+            // When an integrity key tag exists but the wallet instance attestation is invalid,
+            // we proceed to obtain a valid wallet instance attestation
+            guard: not("hasValidWalletInstanceAttestation"),
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            // If do not have a valid wallet instance attestation and integrity key tag, we need to create a
-            // new wallet instance first
-            target: "WalletInstanceCreation"
+            // If both integrity key tag and wallet instance attestation are valid,
+            // we can proceed to the IPZS privacy acceptance
+            target: "IpzsPrivacyAcceptance"
           }
         ]
       }
