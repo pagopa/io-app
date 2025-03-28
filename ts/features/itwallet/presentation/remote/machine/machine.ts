@@ -138,7 +138,10 @@ export const itwRemoteMachine = setup({
         }
       }
     },
-    SendingAuthorizationResponse: {},
+    SendingAuthorizationResponse: {
+      description:
+        "Create the Verifiable Presentation and send it to the Relying Party"
+    },
     Failure: {
       entry: "navigateToFailureScreen",
       description: "This state is reached when an error occurs",

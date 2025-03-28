@@ -1,6 +1,5 @@
 import {
   Alert,
-  Body,
   ButtonLink,
   ClaimsSelector,
   ContentWrapper,
@@ -28,7 +27,9 @@ import {
   selectIsLoading,
   selectPresentationDetails
 } from "../machine/selectors.ts";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
+import { useIODispatch } from "../../../../../store/hooks.ts";
+import { identificationRequest } from "../../../../../store/actions/identification.ts";
+import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
 
 type ClaimItem = ComponentProps<typeof ClaimsSelector>["items"][number];
 
@@ -62,9 +63,7 @@ const ItwRemoteClaimsDisclosureScreen = () => {
 
   if (isLoading) {
     return (
-      <LoadingScreenContent contentTitle="Stiamo facendo alcune verifiche di sicurezza">
-        <Body>Attendi qualche secondo...</Body>
-      </LoadingScreenContent>
+      <ItwRemoteLoadingScreen title="Stiamo facendo alcune verifiche di sicurezza" />
     );
   }
 
@@ -75,6 +74,8 @@ const ItwRemoteClaimsDisclosureScreen = () => {
  * The actual content of the screen, with the claims to disclose for the verifiable presentation.
  */
 const ContentView = () => {
+  const dispatch = useIODispatch();
+
   useHeaderSecondLevel({ title: "" });
 
   const theme = useIOTheme();
@@ -106,6 +107,22 @@ const ContentView = () => {
         : ItwRemotePresentationClaimsMock.optional.map(c => c.claim.id)
     );
   };
+
+  const confirmVerifiablePresentation = () =>
+    dispatch(
+      identificationRequest(
+        false,
+        true,
+        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: () => machineRef.send({ type: "holder-consent" })
+        }
+      )
+    );
 
   const renderOptionalClaims = () => (
     <VStack space={16}>
@@ -163,7 +180,7 @@ const ContentView = () => {
           type: "TwoButtons",
           primary: {
             label: I18n.t("global.buttons.continue"),
-            onPress: () => machineRef.send({ type: "holder-consent" })
+            onPress: confirmVerifiablePresentation
           },
           secondary: {
             label: I18n.t("global.buttons.cancel"),
@@ -205,6 +222,7 @@ const ContentView = () => {
                 key={c.id}
                 title={c.id}
                 defaultExpanded
+                selectionEnabled={false}
                 items={mapDisclosuresToClaims(c.requiredDisclosures)}
               />
             ))}
