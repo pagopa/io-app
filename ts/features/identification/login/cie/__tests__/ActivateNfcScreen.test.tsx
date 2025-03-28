@@ -9,7 +9,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { useIOSelector } from "../../../../../store/hooks";
 import ActivateNfcScreen from "../screens/ActivateNfcScreen";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 // Mock the openNFCSettings function
 jest.mock("../../../../../utils/cie", () => ({
@@ -116,7 +116,7 @@ describe("ActivateNfcScreen", () => {
       fireEvent.press(secondaryActionButton);
 
       expect(mockReplace).toHaveBeenCalledWith(
-        AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN,
+        IDENTIFICATION_ROUTES.CIE_CARD_READER_SCREEN,
         {
           ciePin: "123456",
           authorizationUri: "https://example.com"
@@ -160,7 +160,7 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext(
     ActivateNfcScreen,
-    AUTHENTICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN,
+    IDENTIFICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN,
     {},
     store
   );

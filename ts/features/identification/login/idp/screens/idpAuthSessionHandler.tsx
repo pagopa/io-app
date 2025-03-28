@@ -63,7 +63,7 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -380,8 +380,8 @@ export const AuthSessionPage = () => {
   });
 
   if (requestInfo.requestState === "ERROR") {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+    navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.AUTH_ERROR_SCREEN,
       params: {
         errorCodeOrMessage: requestInfo.errorCodeOrMessage,
         authMethod: "SPID",

@@ -34,7 +34,7 @@ import {
   IO_LOGIN_CIE_URL_SCHEME
 } from "../../../../../utils/cie";
 import { useOnboardingAbortAlert } from "../../../../../utils/hooks/useOnboardingAbortAlert";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -84,15 +84,15 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const [isLoadingWebView, setIsLoadingWebView] = useState(false);
 
   const navigateToCieIdAuthenticationError = useCallback(() => {
-    navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+    navigation.replace(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.CIE_ID_ERROR
     });
   }, [navigation]);
 
   const navigateToCieIdAuthUrlError = useCallback(
     (url: string) => {
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
+      navigation.replace(IDENTIFICATION_ROUTES.MAIN, {
+        screen: IDENTIFICATION_ROUTES.CIE_ID_INCORRECT_URL,
         params: { url }
       });
     },
@@ -100,8 +100,8 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   );
 
   const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
+    navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.LANDING
     });
   }, [navigation]);
 
@@ -149,8 +149,8 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
       // because on `navigation.replace` this screen will be unmounted and a further navigation to this screen
       // will mount it again and the `useLollipopLoginSource` hook will be re-executed.
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      navigation.replace(IDENTIFICATION_ROUTES.MAIN, {
+        screen: IDENTIFICATION_ROUTES.AUTH_ERROR_SCREEN,
         params: {
           errorCodeOrMessage: code || message,
           authMethod: "CIE_ID",

@@ -6,7 +6,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import UnlockAccessScreen from "../../../login/unlockAccess/screens/UnlockAccessScreen";
 import I18n from "../../../../../i18n";
 import { UnlockAccessProps } from "../components/UnlockAccessComponent";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 describe("UnlockAccessScreen", () => {
   it("render UnlockAccessComponent with authLevel L2", () => {
@@ -44,7 +44,7 @@ const renderComponent = (props: UnlockAccessProps) => {
   return {
     screen: renderScreenWithNavigationStoreContext<GlobalState>(
       UnlockAccessScreen,
-      AUTHENTICATION_ROUTES.UNLOCK_ACCESS_SCREEN,
+      IDENTIFICATION_ROUTES.UNLOCK_ACCESS_SCREEN,
       {
         ...props
       },

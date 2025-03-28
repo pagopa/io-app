@@ -72,7 +72,7 @@ import {
   trackSpidLoginSelected
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
@@ -150,8 +150,8 @@ export const LandingScreen = () => {
           onPress={() => {
             void loginCieWizardSelected();
 
-            navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
+            navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
+              screen: IDENTIFICATION_ROUTES.CIE_ID_WIZARD
             });
           }}
           testID="bottom-sheet-login-wizards"
@@ -259,8 +259,8 @@ export const LandingScreen = () => {
 
   const navigateToCieUatSelectionScreen = useCallback(() => {
     if (isCieSupported) {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_LOGIN_CONFIG_SCREEN
+      navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
+        screen: IDENTIFICATION_ROUTES.CIE_LOGIN_CONFIG_SCREEN
       });
     }
   }, [isCieSupported, navigation]);
@@ -436,8 +436,8 @@ export const LandingScreen = () => {
       !isContinueWithRootOrJailbreak
     ) {
       void mixpanelTrack("SHOW_ROOTED_OR_JAILBROKEN_MODAL");
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.ROOTED_DEVICE
+      navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
+        screen: IDENTIFICATION_ROUTES.ROOTED_DEVICE
       });
     }
   }, [isContinueWithRootOrJailbreak, isRootedOrJailbroken, navigation]);

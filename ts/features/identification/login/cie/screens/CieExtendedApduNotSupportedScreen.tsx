@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 const CieExtendedApduNotSupportedScreen = () => {
   const navigation = useIONavigation();
@@ -13,7 +13,7 @@ const CieExtendedApduNotSupportedScreen = () => {
   const navigateToAuthenticationScreen = useCallback(() => {
     navigation.reset({
       index: 0,
-      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
+      routes: [{ name: IDENTIFICATION_ROUTES.MAIN }]
     });
   }, [navigation]);
 

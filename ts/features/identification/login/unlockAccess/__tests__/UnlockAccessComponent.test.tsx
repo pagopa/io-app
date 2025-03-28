@@ -12,7 +12,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../components/UnlockAccessComponent";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 jest.mock("../../../../../utils/hooks/bottomSheet");
 jest.mock("../../../../../utils/url");
@@ -67,9 +67,9 @@ describe("UnlockAccessComponent", () => {
     fireEvent.press(button);
 
     expect(mockNavigation.navigate).toHaveBeenCalledWith(
-      AUTHENTICATION_ROUTES.MAIN,
+      IDENTIFICATION_ROUTES.MAIN,
       {
-        screen: AUTHENTICATION_ROUTES.LANDING
+        screen: IDENTIFICATION_ROUTES.LANDING
       }
     );
   });

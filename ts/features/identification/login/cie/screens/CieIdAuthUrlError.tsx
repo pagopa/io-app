@@ -5,13 +5,13 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { trackCieIdNoWhitelistUrl } from "../analytics";
 import i18n from "../../../../../i18n";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 export type UrlNotCompliant = { url: string };
 const CieIdAuthUrlError = () => {
   const route =
     useRoute<
-      Route<typeof AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL, UrlNotCompliant>
+      Route<typeof IDENTIFICATION_ROUTES.CIE_ID_INCORRECT_URL, UrlNotCompliant>
     >();
   const { url } = route.params;
   const navigation = useIONavigation();
@@ -21,8 +21,8 @@ const CieIdAuthUrlError = () => {
   });
 
   const handleClose = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
+    navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.LANDING
     });
   }, [navigation]);
 

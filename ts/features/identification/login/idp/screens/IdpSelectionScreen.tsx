@@ -23,7 +23,7 @@ import {
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
+import { IdentificationParamsList } from "../../../common/navigation/params/IdentificationParamsList";
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import { nativeLoginSelector } from "../../../nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../../nativeLogin/store/selectors";
@@ -39,7 +39,7 @@ import {
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { trackSpidLoginIdpSelection } from "../../../common/analytics";
 import { trackLoginSpidIdpSelected } from "../../../common/analytics/spidAnalytics";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 const TestIdp: SpidIdp = {
   id: "test" as keyof IdpData,
@@ -73,7 +73,7 @@ const IdpSelectionScreen = (): ReactElement => {
   const navigation =
     useNavigation<
       IOStackNavigationProp<
-        AuthenticationParamsList,
+        IdentificationParamsList,
         "AUTHENTICATION_IDP_SELECTION"
       >
     >();
@@ -135,12 +135,12 @@ const IdpSelectionScreen = (): ReactElement => {
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
     void trackLoginSpidIdpSelected(idp.id, store.getState());
     if (isNativeLoginEnabled()) {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_SESSION
+      navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
+        screen: IDENTIFICATION_ROUTES.AUTH_SESSION
       });
     } else {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.IDP_LOGIN
+      navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
+        screen: IDENTIFICATION_ROUTES.IDP_LOGIN
       });
     }
   };
@@ -164,8 +164,8 @@ const IdpSelectionScreen = (): ReactElement => {
     if (counter === TAPS_TO_OPEN_TESTIDP) {
       setCounter(0);
       setSelectedIdp(TestIdp);
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.IDP_TEST
+      navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
+        screen: IDENTIFICATION_ROUTES.IDP_TEST
       });
     }
   }, [counter, setSelectedIdp, navigation]);

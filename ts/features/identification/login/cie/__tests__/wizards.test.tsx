@@ -8,7 +8,7 @@ import IDActivationWizard, {
   REQUEST_CIE_URL
 } from "../screens/wizards/IDActivationWizard";
 import * as urlUtils from "../../../../../utils/url";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 const anyFunction = expect.any(Function);
 const mockNavigateToCieIdLoginScreen = jest.fn();
@@ -82,8 +82,8 @@ describe(CieIdWizard, () => {
     fireEvent.press(navigateToCiePinWizard);
 
     expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_PIN_WIZARD
+    expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.CIE_PIN_WIZARD
     });
   });
   it("Should open the CieID link", () => {
@@ -124,8 +124,8 @@ describe(CiePinWizard, () => {
     fireEvent.press(navigateToSpidWizard);
 
     expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.SPID_WIZARD
+    expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.SPID_WIZARD
     });
   });
   it("Should open the bottom sheet then open the Cie + Pin link", () => {
@@ -169,8 +169,8 @@ describe(SpidWizard, () => {
     fireEvent.press(navigateToIdActivationWizard);
 
     expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.ID_ACTIVATION_WIZARD
+    expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.ID_ACTIVATION_WIZARD
     });
   });
 });

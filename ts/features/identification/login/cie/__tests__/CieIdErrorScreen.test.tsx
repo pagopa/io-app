@@ -1,7 +1,7 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import CieIdErrorScreen from "../screens/CieIdErrorScreen";
 import * as useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 const mockReplace = jest.fn();
 const mockNavigate = jest.fn();
@@ -38,8 +38,8 @@ describe("CieIdErrorScreen where device supports NFC", () => {
 
     fireEvent.press(primaryAction);
 
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
+    expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.CIE_PIN_SCREEN
     });
     expect(mockReplace).not.toHaveBeenCalled();
   });
@@ -62,8 +62,8 @@ describe("CieIdErrorScreen where device doesn't support NFC", () => {
 
     fireEvent.press(primaryAction);
 
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.IDP_SELECTION
+    expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.IDP_SELECTION
     });
     expect(mockReplace).not.toHaveBeenCalled();
   });

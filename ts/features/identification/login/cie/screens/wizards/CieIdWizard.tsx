@@ -17,7 +17,7 @@ import {
 } from "../../analytics";
 import { SpidLevel } from "../../utils";
 import { useIOStore } from "../../../../../../store/hooks";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../../common/navigation/routes";
 
 export const CIE_ID_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/cie-id/";
@@ -52,8 +52,8 @@ const CieIdWizard = () => {
         "authentication.wizards.cie_id_wizard.actions.secondary.label"
       ),
       onPress: () =>
-        navigate(AUTHENTICATION_ROUTES.MAIN, {
-          screen: AUTHENTICATION_ROUTES.CIE_PIN_WIZARD
+        navigate(IDENTIFICATION_ROUTES.MAIN, {
+          screen: IDENTIFICATION_ROUTES.CIE_PIN_WIZARD
         })
     }
   });

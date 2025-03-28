@@ -8,7 +8,7 @@ import { SessionToken } from "../../../../../types/SessionToken";
 import { SpidLevelEnum } from "../../../../../../definitions/session_manager/SpidLevel";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { withStore } from "../../../../../utils/jest/withStore";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 const API_PREFIX_URL = "http://example.com";
 const SPID_LEVEL = "SpidL2";
@@ -86,8 +86,8 @@ describe(CieIdLoginWebView, () => {
     fireEvent.press(cancelButton);
 
     expect(mockReplace).toHaveBeenCalledTimes(1);
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+    expect(mockReplace).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.CIE_ID_ERROR
     });
   });
   it("Should display the IdpSuccessfulAuthentication screen", () => {
@@ -113,8 +113,8 @@ describe(CieIdLoginWebView, () => {
 
     fireEvent(webView, "error", { nativeEvent: {} });
     expect(mockReplace).toHaveBeenCalledTimes(1);
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+    expect(mockReplace).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.CIE_ID_ERROR
     });
   });
   it("Should trigger onHttpError and execute navigation to error screen", () => {
@@ -131,8 +131,8 @@ describe(CieIdLoginWebView, () => {
 
     fireEvent(webView, "error", { nativeEvent: { statusCode: 401, url: [] } });
     expect(mockReplace).toHaveBeenCalledTimes(1);
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+    expect(mockReplace).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.CIE_ID_ERROR
     });
   });
   it("Should trigger onHttpError without navigating to the error screen", () => {
@@ -149,8 +149,8 @@ describe(CieIdLoginWebView, () => {
 
     fireEvent(webView, "error", { nativeEvent: { statusCode: 403, url: [] } });
     expect(mockReplace).toHaveBeenCalledTimes(0);
-    expect(mockReplace).not.toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+    expect(mockReplace).not.toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.CIE_ID_ERROR
     });
   });
   it("Should trigger onHttpError and navigate to the error screen", () => {
@@ -169,8 +169,8 @@ describe(CieIdLoginWebView, () => {
       nativeEvent: { statusCode: 403, url: [API_PREFIX_URL] }
     });
     expect(mockReplace).toHaveBeenCalledTimes(1);
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+    expect(mockReplace).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.CIE_ID_ERROR
     });
   });
   it("Should trigger an authentication error", () => {
@@ -193,8 +193,8 @@ describe(CieIdLoginWebView, () => {
     expect(mockDispatch).toHaveBeenCalledWith(
       loginFailure({ idp: "cieid", error: expect.any(Error) })
     );
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+    expect(mockReplace).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.AUTH_ERROR_SCREEN,
       params: {
         errorCodeOrMessage: "generic",
         authMethod: "CIE_ID",
@@ -244,8 +244,8 @@ describe(CieIdLoginWebView, () => {
     expect(mockDispatch).toHaveBeenCalledWith(
       loginFailure({ idp: "cieid", error: expect.any(Error) })
     );
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+    expect(mockReplace).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
+      screen: IDENTIFICATION_ROUTES.AUTH_ERROR_SCREEN,
       params: {
         errorCode: undefined,
         authMethod: "CIE_ID",

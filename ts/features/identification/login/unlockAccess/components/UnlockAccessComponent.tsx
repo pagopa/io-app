@@ -13,7 +13,7 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { CustomWizardScreen } from "../../../../../components/screens/CustomWizardScreen";
 import { useIOSelector } from "../../../../../store/hooks";
 import { absolutePortalLinksSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
 
 // A future development will allow different actions to
 // be performed if the authentication level is L3.
@@ -88,8 +88,8 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
 
   const onPressActionButton = () => {
     if (authLevel === "L2") {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.LANDING
+      navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
+        screen: IDENTIFICATION_ROUTES.LANDING
       });
     }
     // for the future developement: add here

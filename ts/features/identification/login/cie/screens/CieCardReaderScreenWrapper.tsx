@@ -7,17 +7,17 @@
  */
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
+import { IdentificationParamsList } from "../../../common/navigation/params/IdentificationParamsList";
 import { useInteractiveElementDefaultColorName } from "../../../../../utils/hooks/theme";
 import CieCardReaderScreen from "./CieCardReaderScreen";
 
 export const CieCardReaderScreenWrapper = () => {
   const navigation =
     useNavigation<
-      IOStackNavigationProp<AuthenticationParamsList, "CIE_CARD_READER_SCREEN">
+      IOStackNavigationProp<IdentificationParamsList, "CIE_CARD_READER_SCREEN">
     >();
   const route =
-    useRoute<RouteProp<AuthenticationParamsList, "CIE_CARD_READER_SCREEN">>();
+    useRoute<RouteProp<IdentificationParamsList, "CIE_CARD_READER_SCREEN">>();
 
   const blueColorName = useInteractiveElementDefaultColorName();
 

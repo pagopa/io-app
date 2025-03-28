@@ -17,7 +17,7 @@ import {
 } from "../store/actions";
 import { PasswordLogin } from "../../../../../definitions/session_manager/PasswordLogin";
 import { SessionToken } from "../../../../types/SessionToken";
-import { AUTHENTICATION_ROUTES } from "../navigation/routes";
+import { IDENTIFICATION_ROUTES } from "../navigation/routes";
 
 const timeoutError = getTimeoutError();
 
@@ -184,7 +184,7 @@ const render = (state: TestLoginState) => {
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       TestAuthenticationScreen,
-      AUTHENTICATION_ROUTES.IDP_TEST,
+      IDENTIFICATION_ROUTES.IDP_TEST,
       {},
       store
     ),
