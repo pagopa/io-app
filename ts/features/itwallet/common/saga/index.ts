@@ -5,12 +5,24 @@ import { checkCredentialsStatusAttestation } from "../../credentials/saga/checkC
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
 import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";
-import { checkWalletInstanceStateSaga } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
+import {
+  checkWalletInstanceInconsistencySaga,
+  checkWalletInstanceStateSaga
+} from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
 
 export function* watchItwSaga(): SagaIterator {
   yield* fork(warmUpIntegrityServiceSaga);
   yield* fork(watchItwLifecycleSaga);
+
+  const isWalletInstanceConsistent = yield* call(
+    checkWalletInstanceInconsistencySaga
+  );
+
+  // If the wallet instance is inconsistent, we cannot proceed further.
+  if (!isWalletInstanceConsistent) {
+    return;
+  }
 
   // Status attestations of credentials are checked only in case of a valid wallet instance.
   // For this reason, these sagas must be called sequentially.
