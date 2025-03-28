@@ -9,7 +9,7 @@ import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
-import {checkCurrentWalletInstanceStateSaga} from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
+import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
 
 export function* watchItwSaga(): SagaIterator {
   const isWalletInstanceConsistent = yield* call(
