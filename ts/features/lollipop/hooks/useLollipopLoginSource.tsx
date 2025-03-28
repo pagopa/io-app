@@ -19,9 +19,9 @@ import {
 import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { getLollipopLoginHeaders, handleRegenerateKey } from "..";
-import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
-import { cieFlowForDevServerEnabled } from "../../cieLogin/utils";
-import { selectedIdentityProviderSelector } from "../../../store/reducers/authentication";
+import { isFastLoginEnabledSelector } from "../../identification/fastLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../identification/login/cie/utils";
+import { selectedIdentityProviderSelector } from "../../identification/common/store/selectors";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,

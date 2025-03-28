@@ -57,7 +57,8 @@ import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import { ItwRemoteParamsList } from "../../features/itwallet/presentation/remote/navigation/ItwRemoteParamsList.ts";
 import { ITW_REMOTE_ROUTES } from "../../features/itwallet/presentation/remote/navigation/routes.ts";
 import ROUTES from "../routes";
-import { AuthenticationParamsList } from "./AuthenticationParamsList";
+import { IdentificationParamsList } from "../../features/identification/common/navigation/params/IdentificationParamsList.ts";
+import { IDENTIFICATION_ROUTES } from "../../features/identification/common/navigation/routes.ts";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { OnboardingParamsList } from "./OnboardingParamsList";
@@ -67,7 +68,7 @@ export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
   [ROUTES.UNSUPPORTED_DEVICE]: undefined;
   [ROUTES.BACKGROUND]: undefined;
-  [ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
+  [IDENTIFICATION_ROUTES.MAIN]: NavigatorScreenParams<IdentificationParamsList>;
   [ROUTES.CHECK_EMAIL]: NavigatorScreenParams<CheckEmailParamsList>;
   [ROUTES.ONBOARDING]: NavigatorScreenParams<OnboardingParamsList>;
   [ROUTES.MAIN]: NavigatorScreenParams<MainTabParamsList>;

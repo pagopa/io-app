@@ -9,8 +9,8 @@ import { ReduxSagaEffect } from "../../types/utils";
 
 import { getPin } from "../../utils/keychain";
 import NavigationService from "../../navigation/NavigationService";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
-import { isValidPinNumber } from "../../features/fastLogin/utils/pinPolicy";
+import { isFastLoginEnabledSelector } from "../../features/identification/fastLogin/store/selectors";
+import { isValidPinNumber } from "../../features/identification/fastLogin/utils/pinPolicy";
 import ROUTES from "../../navigation/routes";
 
 export function* checkConfiguredPinSaga(): Generator<
