@@ -2,9 +2,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { dismissPnActivationReminderBanner } from "../actions";
+import { dismissPnActivationReminderBanner } from "../../store/actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  logoutFailure,
+  logoutSuccess
+} from "../../../../store/actions/authentication";
 
 export type PnBannerDismissState = {
   dismissed: boolean;
@@ -22,6 +26,11 @@ const pnBannerDismissReducer = (
       return {
         dismissed: true
       };
+    // Logout changes are handled here in order to make
+    // sure that they are immediately persisted
+    case getType(logoutSuccess):
+    case getType(logoutFailure):
+      return INITIAL_STATE;
   }
   return state;
 };

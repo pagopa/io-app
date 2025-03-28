@@ -11,7 +11,8 @@ import {
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
   landingScreenBannerOrderSelector,
-  pnMessagingServiceIdSelector
+  pnMessagingServiceIdSelector,
+  pnPrivacyUrlsSelector
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -477,6 +478,109 @@ describe("pnMessageServiceIdSelector", () => {
     )}`, () => {
       const output = pnMessagingServiceIdSelector(input);
       expect(output).toBe(result);
+    });
+  }
+});
+
+describe("pnPrivacyUrlsSelector", () => {
+  const someTos = "someTos";
+  const somePrivacy = "somePrivacy";
+  const fallbackSendPrivacyUrls = {
+    tos: "https://cittadini.notifichedigitali.it/termini-di-servizio",
+    privacy: "https://cittadini.notifichedigitali.it/informativa-privacy"
+  };
+
+  const someState = {
+    remoteConfig: O.some({
+      pn: {
+        privacy_url: somePrivacy,
+        tos_url: someTos
+      }
+    })
+  } as GlobalState;
+
+  const emptyObjectState = {
+    remoteConfig: O.some({
+      pn: {}
+    })
+  } as GlobalState;
+
+  const noneState = {
+    remoteConfig: O.none
+  } as GlobalState;
+
+  const emptyStringState = {
+    remoteConfig: O.some({
+      pn: {
+        privacy_url: "",
+        tos_url: ""
+      }
+    })
+  } as GlobalState;
+
+  const missingTosState = {
+    remoteConfig: O.some({
+      pn: {
+        privacy_url: somePrivacy
+      }
+    })
+  } as GlobalState;
+  const missingPrivacyState = {
+    remoteConfig: O.some({
+      pn: {
+        tos_url: someTos
+      }
+    })
+  } as GlobalState;
+
+  const testCases = [
+    {
+      result: { privacy: somePrivacy, tos: someTos },
+      input: someState
+    },
+    {
+      result: {
+        privacy: fallbackSendPrivacyUrls.privacy,
+        tos: fallbackSendPrivacyUrls.tos
+      },
+      input: emptyObjectState
+    },
+    {
+      result: {
+        privacy: "",
+        tos: ""
+      },
+      input: emptyStringState
+    },
+    {
+      result: {
+        privacy: fallbackSendPrivacyUrls.privacy,
+        tos: fallbackSendPrivacyUrls.tos
+      },
+      input: noneState
+    },
+    {
+      result: {
+        privacy: somePrivacy,
+        tos: fallbackSendPrivacyUrls.tos
+      },
+      input: missingTosState
+    },
+    {
+      result: {
+        privacy: fallbackSendPrivacyUrls.privacy,
+        tos: someTos
+      },
+      input: missingPrivacyState
+    }
+  ];
+
+  for (const { result, input } of testCases) {
+    it(`should return the correct result for input remoteConfig : ${JSON.stringify(
+      input.remoteConfig
+    )}`, () => {
+      const output = pnPrivacyUrlsSelector(input);
+      expect(output).toEqual(result);
     });
   }
 });

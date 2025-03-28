@@ -26,6 +26,7 @@ import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
+import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 
 export const CgnMerchantCategoriesListScreen = () => {
   const theme = useIOTheme();
@@ -76,7 +77,10 @@ export const CgnMerchantCategoriesListScreen = () => {
     }
   }, [potCategories]);
 
-  const renderItem = (category: ProductCategoryWithNewDiscountsCount) => {
+  const renderItem = (
+    category: ProductCategoryWithNewDiscountsCount,
+    index: number
+  ) => {
     const specs = getCategorySpecs(category.productCategory);
     const countAvailable = category.newDiscounts > 0;
 
@@ -85,13 +89,15 @@ export const CgnMerchantCategoriesListScreen = () => {
       O.fold(
         () => null,
         s => {
-          const accessibilityLabel = countAvailable
-            ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
-                name: I18n.t(s.nameKey),
-                count: category.newDiscounts,
-                defaultValue: I18n.t(s.nameKey)
-              })
-            : I18n.t(s.nameKey);
+          const accessibilityLabel =
+            (countAvailable
+              ? `${I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
+                  name: I18n.t(s.nameKey),
+                  count: category.newDiscounts
+                })}`
+              : `${I18n.t(s.nameKey)}`) +
+            getListItemAccessibilityLabelCount(categoriesToArray.length, index);
+
           return (
             <ListItemNav
               key={category.productCategory}
