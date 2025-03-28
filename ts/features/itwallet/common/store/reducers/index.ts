@@ -51,19 +51,13 @@ const migrations: MigrationManifest = {
 
   // Added authLevel to preferences store and set it to "L2" if eid is present
   "2": (state: PersistedState): PersistedState => {
-    const { credentials, preferences } = state as PersistedItWalletState;
-    // If we have an eid, set the authLevel to "L2"
-    if (credentials.eid) {
-      return {
-        ...state,
-        preferences: {
-          ...preferences,
-          authLevel: "L2"
-        }
-      } as PersistedItWalletState;
-    }
-
-    return state;
+    const lifecycle = _.get(state, "lifecycle");
+    return _.set(
+      state,
+      "preferences.authLevel",
+      // If the lifecycle is valid that means we have an eid, set the authLevel to "L2"
+      lifecycle === "ITW_LIFECYCLE_VALID" ? "L2" : undefined
+    );
   },
   // Removed lifecycle reducer
   "3": (state: PersistedState): PersistedState => {
