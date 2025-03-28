@@ -26,7 +26,8 @@ const pnBannerDismissReducer = (
       return {
         dismissed: true
       };
-    // this forces the persistence to update, avoiding misbehaviours because of a dirty cache
+    // Logout changes are handled here in order to make
+    // sure that they are immediately persisted
     case getType(logoutSuccess):
     case getType(logoutFailure):
       return INITIAL_STATE;

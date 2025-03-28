@@ -277,6 +277,10 @@ export function createRootReducer(
                 ...state.features.itWallet
               },
               pn: {
+                // Logout changes are already handled in PN's reducer.
+                // This way, we make sure that if the user leaves the application
+                // before the persistance is updated, we do not find ourselves
+                // with a dirty state.
                 ...state.features.pn
               },
               _persist: state.features._persist
