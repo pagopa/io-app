@@ -40,7 +40,7 @@ const itwReducer = combineReducers({
 
 const CURRENT_REDUX_ITW_STORE_VERSION = 3;
 
-const migrations: MigrationManifest = {
+export const migrations: MigrationManifest = {
   // Added preferences store
   "0": (state: PersistedState): PersistedState =>
     _.set(state, "preferences", {}),

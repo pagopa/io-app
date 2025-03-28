@@ -150,7 +150,6 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
           issuance: { integrityKeyTag: O.none },
           credentials: { eid: O.some({} as StoredCredential), credentials: [] }
         }
