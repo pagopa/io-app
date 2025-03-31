@@ -10,7 +10,7 @@ import { availableBonusTypesSelectorFromId } from "../../../common/store/selecto
 import { ID_CDC_TYPE } from "../../../common/utils";
 
 const CdcBonusRequestInformationTos = () => {
-  // TODO: Implement useNavigation for FIMS
+  // TODO: Implement useNavigation for FIMS (IOBP-1535)
   // const navigation =
   //   useNavigation<
   //     IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_INFORMATION_TOS">
