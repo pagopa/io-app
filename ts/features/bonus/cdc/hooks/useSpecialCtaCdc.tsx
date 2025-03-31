@@ -1,12 +1,12 @@
 import { useCallback, useMemo } from "react";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isCdcEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useServicePreferenceByChannel } from "../../../services/details/hooks/useServicePreference";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import { CDC_ROUTES } from "../navigation/routes";
-
 /**
  * Hook to handle the CDC activation/deactivation
  */
@@ -55,7 +55,7 @@ export const useSpecialCtaCdc = ():
 
     if (!isServiceActive) {
       return {
-        label: "Richiedi Carta della Cultura",
+        label: I18n.t("bonus.cdc.request"),
         loading,
         onPress: subscribeHandler,
         testID: "service-activate-bonus-button"

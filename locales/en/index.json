@@ -3696,7 +3696,8 @@
     "cdc": {
       "serviceEntryPoint": {
         "notAvailable": "The service is not available at this time. Try later."
-      }
+      },
+      "request": "Request Carta della Cultura"
     }
   },
   "features": {
