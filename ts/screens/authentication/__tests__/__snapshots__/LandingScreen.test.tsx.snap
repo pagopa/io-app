@@ -2423,14 +2423,11 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       accessibilityRole="button"
                                       accessible={true}
                                       style={
-                                        [
-                                          {
-                                            "flex": 1,
-                                          },
-                                          {
-                                            "alignSelf": "center",
-                                          },
-                                        ]
+                                        {
+                                          "alignSelf": "center",
+                                          "flex": 1,
+                                          "gap": 4,
+                                        }
                                       }
                                     >
                                       <Text
@@ -2453,13 +2450,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       >
                                         Not sure what to choose?
                                       </Text>
-                                      <View
-                                        style={
-                                          {
-                                            "height": 4,
-                                          }
-                                        }
-                                      />
                                       <View
                                         accessibilityElementsHidden={true}
                                         accessibilityLabel="We give you a hand"
@@ -2499,7 +2489,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         <View
                                           style={
                                             {
-                                              "height": 4,
+                                              "height": 8,
                                             }
                                           }
                                         />

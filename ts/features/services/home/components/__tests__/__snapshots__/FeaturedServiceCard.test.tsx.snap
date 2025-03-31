@@ -458,9 +458,14 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                     accessibilityIgnoresInvertColors={true}
                                     onError={[Function]}
                                     source={
-                                      {
-                                        "uri": "https://assets.cdn.io.pagopa.it/logos/services/1.png",
-                                      }
+                                      [
+                                        {
+                                          "uri": "https://assets.cdn.io.pagopa.it/logos/services/1.png",
+                                        },
+                                        {
+                                          "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/.png",
+                                        },
+                                      ]
                                     }
                                     style={
                                       {
@@ -981,9 +986,14 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                     accessibilityIgnoresInvertColors={true}
                                     onError={[Function]}
                                     source={
-                                      {
-                                        "uri": "https://assets.cdn.io.pagopa.it/logos/services/1.png",
-                                      }
+                                      [
+                                        {
+                                          "uri": "https://assets.cdn.io.pagopa.it/logos/services/1.png",
+                                        },
+                                        {
+                                          "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/.png",
+                                        },
+                                      ]
                                     }
                                     style={
                                       {
