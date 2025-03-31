@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0-rc.4](https://github.com/pagopa/io-app/compare/3.2.0-rc.3...3.2.0-rc.4) (2025-03-31)
+
+
+### Bug Fixes
+
+* [[IOCOM-2279](https://pagopa.atlassian.net/browse/IOCOM-2279)] logout misbehaviour for SEND banner dismissal ([#6854](https://github.com/pagopa/io-app/issues/6854)) ([85fbdba](https://github.com/pagopa/io-app/commit/85fbdbaa3c93aa0b9a19de8fa15b55046b08928b))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2081](https://pagopa.atlassian.net/browse/SIW-2081)] Handle inconsistent wallet instance states, eID present and integrity key missing ([#6852](https://github.com/pagopa/io-app/issues/6852)) ([9f1b9e7](https://github.com/pagopa/io-app/commit/9f1b9e78eec61b6b60303db161e7fb098525dbd1))
+
 ## [3.2.0-rc.3](https://github.com/pagopa/io-app/compare/3.2.0-rc.2...3.2.0-rc.3) (2025-03-27)
 
 
