@@ -6,7 +6,7 @@ import {
   shouldUseBottomSheetForPayments
 } from "..";
 import { GlobalState } from "../../../../store/reducers/types";
-import { CTAS } from "../../../messages/types/MessageCTA";
+import { CTAS } from "../../../../types/LocalizedCTAs";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 
