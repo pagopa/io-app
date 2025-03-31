@@ -1,20 +1,10 @@
 import {
-  Alert,
-  ButtonLink,
-  CheckboxLabel,
-  ClaimsSelector,
   ContentWrapper,
   FeatureInfo,
   ForceScrollDownView,
   H2,
-  ListItemCheckbox,
-  ListItemHeader,
-  useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
-import { ComponentProps, useState } from "react";
-import { View } from "react-native";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import I18n from "../../../../../i18n";
@@ -22,25 +12,15 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import { ClaimDisplayFormat } from "../../../common/utils/itwClaimsUtils.ts";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import {
   selectIsLoading,
-  selectPresentationDetails,
-  selectRelyingPartyData,
-  selectUserSelectedOptionalCredentials
+  selectRelyingPartyData
 } from "../machine/selectors.ts";
 import { useIODispatch } from "../../../../../store/hooks.ts";
 import { identificationRequest } from "../../../../../store/actions/identification.ts";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
-import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
-
-const mapClaims = (claims: Array<ClaimDisplayFormat>) =>
-  claims.map(c => ({
-    id: c.id,
-    title: c.value as string,
-    description: c.label
-  }));
+import { ItwRemotePresentationDetails } from "../components/ItwRemotePresentationDetails.tsx";
 
 const ItwRemoteClaimsDisclosureScreen = () => {
   usePreventScreenCapture();
@@ -65,15 +45,8 @@ const ContentView = () => {
   useHeaderSecondLevel({ title: "" });
 
   const dispatch = useIODispatch();
-  const theme = useIOTheme();
 
   const machineRef = ItwRemoteMachineContext.useActorRef();
-  const presentationDetails = ItwRemoteMachineContext.useSelector(
-    selectPresentationDetails
-  );
-  const selectedOptionalCredentials = ItwRemoteMachineContext.useSelector(
-    selectUserSelectedOptionalCredentials
-  );
   const rpData = ItwRemoteMachineContext.useSelector(selectRelyingPartyData);
 
   const confirmVerifiablePresentation = () =>
@@ -157,28 +130,7 @@ const ContentView = () => {
               )}
             />
           </VStack>
-
-          <View>
-            <ListItemHeader
-              label={I18n.t(
-                "features.itWallet.presentation.selectiveDisclosure.requiredClaims"
-              )}
-              iconName="security"
-              iconColor={theme["icon-default"]}
-            />
-            <VStack space={24}>
-              {presentationDetails?.map(c => (
-                <ClaimsSelector
-                  key={c.id}
-                  title={getCredentialNameFromType(c.vct)}
-                  items={mapClaims(c.claimsToDisplay)}
-                  defaultExpanded
-                  selectionEnabled={false}
-                />
-              ))}
-            </VStack>
-          </View>
-
+          <ItwRemotePresentationDetails />
           <FeatureInfo
             iconName="fornitori"
             body={I18n.t(
