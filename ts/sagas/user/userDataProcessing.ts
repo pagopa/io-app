@@ -12,7 +12,7 @@ import {
 } from "../../store/actions/userDataProcessing";
 import { SagaCallReturnType } from "../../types/utils";
 import { convertUnknownToError, getError } from "../../utils/errors";
-import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../features/authentication/fastLogin/saga/utils";
 
 /**
  * The following logic:

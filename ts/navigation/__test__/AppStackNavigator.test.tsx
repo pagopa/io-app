@@ -10,6 +10,7 @@ import { AppStackNavigator, isMainNavigatorReady } from "../AppStackNavigator";
 import { StartupStatusEnum } from "../../store/reducers/startup";
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import ROUTES from "../routes";
+import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
 
 // Mock Redux Hooks
 jest.mock("../../store/hooks", () => ({
@@ -78,7 +79,7 @@ describe("isMainNavigatorReady", () => {
   });
 
   it("should return false when the route is different", () => {
-    const state = createNavState(ROUTES.AUTHENTICATION);
+    const state = createNavState(AUTHENTICATION_ROUTES.MAIN);
     expect(isMainNavigatorReady(state)).toBe(false);
   });
 
