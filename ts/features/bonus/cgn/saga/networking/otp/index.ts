@@ -6,7 +6,7 @@ import { getNetworkError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnGenerateOtp as cgnGenerateOtpAction } from "../../../store/actions/otp";
-import { withRefreshApiCall } from "../../../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 import { setMerchantDiscountCode } from "../../../store/actions/merchants";
 
 // handle the request for CGN Otp code generation

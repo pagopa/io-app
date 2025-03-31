@@ -4,13 +4,13 @@ import { testSaga } from "redux-saga-test-plan";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import mockedProfile from "../../__mocks__/initializedProfile";
 
-import { sessionExpired } from "../../features/identification/common/store/actions";
+import { sessionExpired } from "../../features/authentication/common/store/actions";
 import { previousInstallationDataDeleteSuccess } from "../../store/actions/installation";
 import { resetProfileState } from "../../store/actions/profile";
 import {
   sessionInfoSelector,
   sessionTokenSelector
-} from "../../features/identification/common/store/selectors";
+} from "../../features/authentication/common/store/selectors";
 import { profileSelector } from "../../store/reducers/profile";
 import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
@@ -36,8 +36,8 @@ import {
   getKeyInfo
 } from "../../features/lollipop/saga";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
-import { isFastLoginEnabledSelector } from "../../features/identification/fastLogin/store/selectors";
-import { refreshSessionToken } from "../../features/identification/fastLogin/store/actions/tokenRefreshActions";
+import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
+import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
@@ -49,7 +49,7 @@ import { trackKeychainFailures } from "../../utils/analytics";
 import { checkSession } from "../startup/watchCheckSessionSaga";
 import { formatRequestedTokenString } from "../../features/zendesk/utils";
 import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
-import { userFromSuccessLoginSelector } from "../../features/identification/loginInfo/store/selectors";
+import { userFromSuccessLoginSelector } from "../../features/authentication/loginInfo/store/selectors";
 import { watchItwOfflineSaga } from "../../features/itwallet/common/saga";
 import {
   isDeviceOfflineWithWalletSaga,

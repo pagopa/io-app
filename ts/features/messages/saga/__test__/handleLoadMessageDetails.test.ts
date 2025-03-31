@@ -9,7 +9,7 @@ import {
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
 } from "../../__mocks__/message";
-import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
 import { BackendClient } from "../../../../api/__mocks__/backend";
 

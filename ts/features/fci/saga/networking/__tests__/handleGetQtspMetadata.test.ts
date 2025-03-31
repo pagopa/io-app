@@ -8,7 +8,7 @@ import { handleGetQtspMetadata } from "../handleGetQtspMetadata";
 import { QtspClausesMetadataDetailView } from "../../../../../../definitions/fci/QtspClausesMetadataDetailView";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { fciIssuerEnvironmentSelector } from "../../../store/reducers/fciSignatureRequest";
-import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
 const successResponse = {
   status: 200,

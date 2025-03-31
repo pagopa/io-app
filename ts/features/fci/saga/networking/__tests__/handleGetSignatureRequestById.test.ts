@@ -14,7 +14,7 @@ import {
 } from "../../../store/actions";
 import { SignatureRequestDetailView } from "../../../../../../definitions/fci/SignatureRequestDetailView";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
 
 const mockId = "mockId";

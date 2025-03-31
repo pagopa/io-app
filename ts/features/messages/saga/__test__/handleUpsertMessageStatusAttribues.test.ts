@@ -7,7 +7,7 @@ import {
 } from "../../store/actions";
 import { UIMessageId } from "../../types";
 import { successReloadMessagesPayload } from "../../__mocks__/messages";
-import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleUpsertMessageStatusAttributes } from "../handleUpsertMessageStatusAttributes";
 import { BackendClient } from "../../../../api/__mocks__/backend";
 

@@ -12,7 +12,7 @@ import {
   logoutSuccess,
   sessionExpired,
   sessionInvalid
-} from "../../../features/identification/common/store/actions";
+} from "../../../features/authentication/common/store/actions";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
 import { clearCache } from "../../actions/profile";
 import { preferencesExperimentalDesignEnabled } from "../../actions/persistedPreferences";

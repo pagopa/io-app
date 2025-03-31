@@ -9,7 +9,7 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { IDPayClient } from "../../common/api/client";
 import { idPayInitiativesFromInstrumentGet } from "../store/actions";
-import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 
 export function* handleGetIDPayInitiativesFromInstrument(
   getInitiativesWithInstrument: IDPayClient["getInitiativesWithInstrument"],

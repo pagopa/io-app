@@ -6,7 +6,7 @@ import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idPayGetCodeStatus } from "../store/actions";
 

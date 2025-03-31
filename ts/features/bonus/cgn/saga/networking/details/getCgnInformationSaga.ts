@@ -5,7 +5,7 @@ import { ActionType } from "typesafe-actions";
 import { StatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
-import { withRefreshApiCall } from "../../../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 import { walletAddCards } from "../../../../../wallet/store/actions/cards";
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnDetails } from "../../../store/actions/details";

@@ -3,7 +3,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { getGenericError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { withThirdPartyRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
+import { withThirdPartyRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { idPayGenerateCode } from "../../store/actions";
 import { handleIdPayGenerateCode } from "../handleIdPayGenerateCode";
 

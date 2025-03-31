@@ -10,7 +10,7 @@ import { RequestResponseTypes } from "@pagopa/ts-commons/lib/requests";
 import {
   logoutRequest,
   sessionExpired
-} from "../../../identification/common/store/actions";
+} from "../../../authentication/common/store/actions";
 import { SessionToken } from "../../../../types/SessionToken";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import {

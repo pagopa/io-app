@@ -5,7 +5,7 @@ import { fromPromise } from "xstate";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { CodeEnum as TransactionErrorCodeEnum } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { useIODispatch } from "../../../../store/hooks";
-import { refreshSessionToken } from "../../../identification/fastLogin/store/actions/tokenRefreshActions";
+import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import { IDPayClient } from "../../common/api/client";
 import { PaymentFailure, PaymentFailureEnum } from "../types/PaymentFailure";
 

@@ -17,7 +17,7 @@ import {
 import { GlobalState } from "../store/reducers/types";
 
 import { mixpanel } from "../mixpanel";
-import { LoginSessionDuration } from "../features/identification/fastLogin/analytics/optinAnalytics";
+import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   ItwCed,

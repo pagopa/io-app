@@ -23,24 +23,24 @@ import {
   logoutFailure,
   logoutSuccess,
   sessionExpired
-} from "../../features/identification/common/store/actions";
+} from "../../features/authentication/common/store/actions";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
-import { fastLoginOptInInitialState } from "../../features/identification/fastLogin/store/reducers/optInReducer";
+import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
-import { cieLoginInitialState } from "../../features/identification/login/cie/store/reducers/cieLogin";
+import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
 import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
 import { appFeedbackInitialState } from "../../features/appReviews/store/reducers";
 import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as authenticationInitialState
-} from "../../features/identification/common/store/reducers";
-import { cieReducer } from "../../features/identification/login/cie/store/reducers";
+} from "../../features/authentication/common/store/reducers";
+import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import contentReducer, {

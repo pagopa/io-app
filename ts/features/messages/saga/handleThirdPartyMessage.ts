@@ -16,7 +16,7 @@ import {
   trackRemoteContentLoadSuccess,
   trackThirdPartyMessageAttachmentCount
 } from "../analytics";
-import { withRefreshApiCall } from "../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { unknownToReason } from "../utils";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";

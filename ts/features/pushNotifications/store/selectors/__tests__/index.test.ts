@@ -3,12 +3,12 @@ import {
   isPushNotificationsBannerRenderableSelector
 } from "..";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { userFromSuccessLoginSelector } from "../../../../identification/loginInfo/store/selectors";
+import { userFromSuccessLoginSelector } from "../../../../authentication/loginInfo/store/selectors";
 import { areNotificationPermissionsEnabled } from "../../reducers/environment";
 import * as DISMISSAL_SELECTORS from "../notificationsBannerDismissed";
 
 type JestMock = ReturnType<typeof jest.fn>;
-jest.mock("../../../../identification/loginInfo/store/selectors", () => ({
+jest.mock("../../../../authentication/loginInfo/store/selectors", () => ({
   userFromSuccessLoginSelector: jest.fn()
 }));
 

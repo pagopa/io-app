@@ -10,7 +10,7 @@ import { AppStackNavigator, isMainNavigatorReady } from "../AppStackNavigator";
 import { StartupStatusEnum } from "../../store/reducers/startup";
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import ROUTES from "../routes";
-import { AUTHENTICATION_ROUTES } from "../../features/identification/common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
 
 // Mock Redux Hooks
 jest.mock("../../store/hooks", () => ({

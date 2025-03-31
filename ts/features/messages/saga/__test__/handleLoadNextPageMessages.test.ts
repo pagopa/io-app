@@ -8,7 +8,7 @@ import {
   defaultRequestPayload,
   successLoadNextPageMessagesPayload
 } from "../../__mocks__/messages";
-import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadNextPageMessages } from "../handleLoadNextPageMessages";
 import { BackendClient } from "../../../../api/__mocks__/backend";
 

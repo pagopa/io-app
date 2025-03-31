@@ -6,7 +6,7 @@ import { Action } from "../../../../../store/actions/types";
 import {
   logoutFailure,
   logoutSuccess
-} from "../../../../identification/common/store/actions";
+} from "../../../../authentication/common/store/actions";
 
 export type FastLoginOptInState = {
   enabled: boolean | undefined;

@@ -6,7 +6,7 @@ import {
   OnboardingStatusDTO,
   StatusEnum as OnboardingStatusEnum
 } from "../../../../../../definitions/idpay/OnboardingStatusDTO";
-import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { idPayOnboardingStatusGet } from "../../store/actions";
 import { handleGetOnboardingStatus } from "../handleGetOnboardingStatus";
 

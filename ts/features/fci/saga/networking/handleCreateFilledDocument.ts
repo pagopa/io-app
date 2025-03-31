@@ -21,7 +21,7 @@ import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledD
 import { fciPollFilledDocumentReadySelector } from "../../store/reducers/fciPollFilledDocument";
 import { FciClient } from "../../api/backendFci";
 import { SessionToken } from "../../../../types/SessionToken";
-import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 
 // Polling frequency timeout

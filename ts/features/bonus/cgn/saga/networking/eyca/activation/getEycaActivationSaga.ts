@@ -15,7 +15,7 @@ import {
 } from "../../../../../../../utils/errors";
 import { StatusEnum } from "../../../../../../../../definitions/cgn/EycaActivationDetail";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
-import { withRefreshApiCall } from "../../../../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../../../authentication/fastLogin/saga/utils";
 
 // wait time between requests
 const cgnResultPolling = 1000 as Millisecond;

@@ -21,13 +21,13 @@ import I18n from "../../i18n";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";
-import { isFastLoginEnabledSelector } from "../../features/identification/fastLogin/store/selectors";
+import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
 import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
-import { sessionExpired } from "../../features/identification/common/store/actions";
+import { sessionExpired } from "../../features/authentication/common/store/actions";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
@@ -39,7 +39,7 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   sessionTokenSelector,
   walletTokenSelector
-} from "../../features/identification/common/store/selectors";
+} from "../../features/authentication/common/store/selectors";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,

@@ -1,5 +1,5 @@
 import { GlobalState } from "../../../../store/reducers/types";
-import { userFromSuccessLoginSelector } from "../../../identification/loginInfo/store/selectors";
+import { userFromSuccessLoginSelector } from "../../../authentication/loginInfo/store/selectors";
 import { areNotificationPermissionsEnabled } from "../reducers/environment";
 import {
   pushNotificationsBannerForceDismissionDateSelector,

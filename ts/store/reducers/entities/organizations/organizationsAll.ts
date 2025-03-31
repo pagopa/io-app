@@ -5,7 +5,7 @@ import { getType } from "typesafe-actions";
 import {
   logoutSuccess,
   sessionExpired
-} from "../../../../features/identification/common/store/actions";
+} from "../../../../features/authentication/common/store/actions";
 import { loadServiceDetail } from "../../../../features/services/details/store/actions/details";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";

@@ -8,7 +8,7 @@ import { ServiceName } from "../../../../../../definitions/backend/ServiceName";
 import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
 import { loadServiceDetail } from "../../store/actions/details";
 import { handleServiceDetails } from "../handleServiceDetails";
-import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { BackendClient } from "../../../../../api/__mocks__/backend";
 
 const mockedServiceId = "A01" as ServiceId;

@@ -7,7 +7,7 @@ import { SessionToken } from "../../../../../types/SessionToken";
 import { handleGetSignatureRequests } from "../handleGetSignatureRequests";
 import { mockedRandomSignatureRequestList } from "../../../types/__mocks__/SignaturesList.mock";
 import { SignatureRequestList } from "../../../../../../definitions/fci/SignatureRequestList";
-import { withRefreshApiCall } from "../../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
 const successResponse = {
   status: 200,

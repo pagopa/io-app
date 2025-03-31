@@ -9,7 +9,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import {
   RefreshThirdPartyApiCallOptions,
   withThirdPartyRefreshApiCall
-} from "../../../identification/fastLogin/saga/utils";
+} from "../../../authentication/fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idPayGenerateCode } from "../store/actions";
 

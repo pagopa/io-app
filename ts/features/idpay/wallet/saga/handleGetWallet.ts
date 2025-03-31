@@ -5,7 +5,7 @@ import { PreferredLanguageEnum } from "../../../../../definitions/backend/Prefer
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idPayWalletGet } from "../store/actions";
 import { walletAddCards } from "../../../wallet/store/actions/cards";

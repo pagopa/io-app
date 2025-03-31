@@ -15,7 +15,7 @@ import { ReduxSagaEffect } from "../types/utils";
 import {
   sessionExpired,
   sessionInvalid
-} from "../features/identification/common/store/actions";
+} from "../features/authentication/common/store/actions";
 import { GlobalState } from "../store/reducers/types";
 import { updateMixpanelProfileProperties } from "../mixpanelConfig/profileProperties";
 import { setIsMixpanelInitialized } from "../features/mixpanel/store/actions";

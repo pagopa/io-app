@@ -8,7 +8,7 @@ import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus/re
 import {
   logoutFailure,
   logoutSuccess
-} from "../../../../features/identification/common/store/actions";
+} from "../../../../features/authentication/common/store/actions";
 
 export type PnBannerDismissState = {
   dismissed: boolean;

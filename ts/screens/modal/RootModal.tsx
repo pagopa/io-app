@@ -7,12 +7,12 @@ import {
 import {
   trackLoginSessionTimeoutPostPin,
   trackLoginSessionTimeoutPrePin
-} from "../../features/identification/fastLogin/analytics";
-import FastLoginModals from "../../features/identification/fastLogin/screens/FastLoginModals";
+} from "../../features/authentication/fastLogin/analytics";
+import FastLoginModals from "../../features/authentication/fastLogin/screens/FastLoginModals";
 import {
   isFastLoginUserInteractionNeededForSessionExpiredSelector,
   tokenRefreshSelector
-} from "../../features/identification/fastLogin/store/selectors";
+} from "../../features/authentication/fastLogin/store/selectors";
 import UnsupportedDeviceScreen from "../../features/lollipop/screens/UnsupportedDeviceScreen";
 import { isDeviceSupportedSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { GetProfileEndpointTransientError } from "../../features/startup/screens/errors/GetProfileEndpointTransientError";

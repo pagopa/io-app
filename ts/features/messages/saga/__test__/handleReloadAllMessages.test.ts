@@ -9,7 +9,7 @@ import {
   defaultRequestPayload,
   successReloadMessagesPayload
 } from "../../__mocks__/messages";
-import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleReloadAllMessages } from "../handleReloadAllMessages";
 import { BackendClient } from "../../../../api/__mocks__/backend";
 

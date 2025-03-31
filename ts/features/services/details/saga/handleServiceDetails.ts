@@ -5,7 +5,7 @@ import { PathTraversalSafePathParam } from "../../../../../definitions/backend/P
 import { BackendClient } from "../../../../api/backend";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
-import { withRefreshApiCall } from "../../../identification/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { loadServiceDetail } from "../store/actions/details";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 
