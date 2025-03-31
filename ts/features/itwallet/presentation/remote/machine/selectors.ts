@@ -13,3 +13,6 @@ export const selectFailureOption = (snapshot: MachineSnapshot) =>
 
 export const selectPresentationDetails = (snapshot: MachineSnapshot) =>
   snapshot.context.presentationDetails;
+
+export const selectRelyingPartyName = (snapshot: MachineSnapshot) =>
+  snapshot.context.rpConf?.federation_entity.organization_name;

@@ -7,7 +7,9 @@ import {
   EvaluateRelyingPartyTrustInput,
   EvaluateRelyingPartyTrustOutput,
   GetPresentationDetailsInput,
-  GetPresentationDetailsOutput
+  GetPresentationDetailsOutput,
+  SendAuthorizationResponseInput,
+  SendAuthorizationResponseOutput
 } from "./actors";
 
 const notImplemented = () => {
@@ -25,6 +27,7 @@ export const itwRemoteMachine = setup({
     navigateToDiscoveryScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
+    navigateToAuthResponseScreen: notImplemented,
     close: notImplemented
   },
   actors: {
@@ -35,6 +38,10 @@ export const itwRemoteMachine = setup({
     getPresentationDetails: fromPromise<
       GetPresentationDetailsOutput,
       GetPresentationDetailsInput
+    >(notImplemented),
+    sendAuthorizationResponse: fromPromise<
+      SendAuthorizationResponseOutput,
+      SendAuthorizationResponseInput
     >(notImplemented)
   },
   guards: {
@@ -139,8 +146,28 @@ export const itwRemoteMachine = setup({
       }
     },
     SendingAuthorizationResponse: {
+      tags: [ItwPresentationTags.Loading],
+      entry: "navigateToAuthResponseScreen",
       description:
-        "Create the Verifiable Presentation and send it to the Relying Party"
+        "Create the Verifiable Presentation and send it to the Relying Party",
+      invoke: {
+        src: "sendAuthorizationResponse",
+        input: ({ context }) => ({
+          rpConf: context.rpConf,
+          requestObject: context.requestObject,
+          presentationDetails: context.presentationDetails
+        }),
+        onDone: {
+          target: "Completed"
+        },
+        onError: {
+          actions: "setFailure",
+          target: "Failure"
+        }
+      }
+    },
+    Completed: {
+      type: "final"
     },
     Failure: {
       entry: "navigateToFailureScreen",

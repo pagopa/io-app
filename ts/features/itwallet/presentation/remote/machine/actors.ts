@@ -28,6 +28,15 @@ export type GetPresentationDetailsOutput = {
   presentationDetails: EnrichedPresentationDetails;
 };
 
+export type SendAuthorizationResponseInput = Partial<{
+  requestObject: RequestObject;
+  presentationDetails: EnrichedPresentationDetails;
+  rpConf: RelyingPartyConfiguration;
+}>;
+export type SendAuthorizationResponseOutput = {
+  redirectUri: string;
+};
+
 export const createRemoteActorsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => {
@@ -103,8 +112,46 @@ export const createRemoteActorsImplementation = (
     return { requestObject, presentationDetails };
   });
 
+  const sendAuthorizationResponse = fromPromise<
+    SendAuthorizationResponseOutput,
+    SendAuthorizationResponseInput
+  >(async ({ input }) => {
+    const { rpConf, presentationDetails, requestObject } = input;
+
+    assert(
+      rpConf && presentationDetails && requestObject,
+      "Missing required sendAuthorizationResponse actor params"
+    );
+
+    const credentialsToPresent = presentationDetails.map(
+      ({ requiredDisclosures, ...rest }) => ({
+        ...rest,
+        requestedClaims: requiredDisclosures.map(([, claimName]) => claimName)
+      })
+    );
+
+    const remotePresentations =
+      await Credential.Presentation.prepareRemotePresentations(
+        credentialsToPresent,
+        requestObject.nonce,
+        requestObject.client_id
+      );
+
+    const authResponse =
+      await Credential.Presentation.sendAuthorizationResponse(
+        requestObject,
+        remotePresentations,
+        rpConf
+      );
+
+    return {
+      redirectUri: authResponse.redirect_uri!
+    };
+  });
+
   return {
     evaluateRelyingPartyTrust,
-    getPresentationDetails
+    getPresentationDetails,
+    sendAuthorizationResponse
   };
 };

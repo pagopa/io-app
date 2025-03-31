@@ -23,6 +23,12 @@ export const createRemoteActionsImplementation = (
     });
   },
 
+  navigateToAuthResponseScreen: () => {
+    navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
+      screen: ITW_REMOTE_ROUTES.AUTH_RESPONSE
+    });
+  },
+
   navigateToIdentificationModeScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
