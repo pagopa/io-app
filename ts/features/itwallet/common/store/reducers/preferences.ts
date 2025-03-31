@@ -8,6 +8,7 @@ import {
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
   itwSetReviewPending,
+  itwSetWalletInstanceRemotelyActive,
   itwUnflagCredentialAsRequested
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
@@ -28,6 +29,9 @@ export type ItwPreferencesState = {
   authLevel?: ItwAuthLevel;
   // Indicates whether the claim values should be hidden in credential details
   claimValuesHidden?: boolean;
+  // Indicates whether the user has an already active wallet instance
+  // but the actual local wallet is not active
+  isWalletInstanceRemotelyActive?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -94,6 +98,13 @@ const reducer = (
       return {
         ...state,
         claimValuesHidden: action.payload
+      };
+    }
+
+    case getType(itwSetWalletInstanceRemotelyActive): {
+      return {
+        ...state,
+        isWalletInstanceRemotelyActive: action.payload
       };
     }
 
