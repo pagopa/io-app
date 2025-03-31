@@ -3,11 +3,13 @@ import { fromPromise } from "xstate";
 import * as O from "fp-ts/lib/Option";
 import {
   ItwRemoteRequestPayload,
-  PresentationDetails,
-  RelyingPartyConfiguration
+  EnrichedPresentationDetails,
+  RelyingPartyConfiguration,
+  RequestObject
 } from "../utils/itwRemoteTypeUtils";
 import { useIOStore } from "../../../../../store/hooks";
 import { itwCredentialsSelector } from "../../../credentials/store/selectors";
+import { enrichPresentationDetails } from "../utils/itwRemotePresentationUtils";
 import { assert } from "../../../../../utils/assert";
 
 export type EvaluateRelyingPartyTrustInput = Partial<{ clientId: string }>;
@@ -22,8 +24,8 @@ export type GetPresentationDetailsInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
 }>;
 export type GetPresentationDetailsOutput = {
-  requestObject: Credential.Presentation.RequestObject;
-  presentationDetails: PresentationDetails;
+  requestObject: RequestObject;
+  presentationDetails: EnrichedPresentationDetails;
 };
 
 export const createRemoteActorsImplementation = (
@@ -86,7 +88,19 @@ export const createRemoteActorsImplementation = (
       requestObject.dcql_query as any // TODO: fix type
     );
 
-    return { requestObject, presentationDetails: result };
+    const credentialsByType = Object.fromEntries(
+      credentials
+        .concat(eid)
+        .filter(O.isSome)
+        .map(c => [c.value.credentialType, c.value])
+    );
+
+    const presentationDetails = enrichPresentationDetails(
+      result,
+      credentialsByType
+    );
+
+    return { requestObject, presentationDetails };
   });
 
   return {

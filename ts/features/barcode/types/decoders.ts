@@ -11,10 +11,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { decodePosteDataMatrix } from "../../../utils/payment";
-import {
-  ItwRemoteRequestPayload,
-  validateItwPresentationQrCodeParams
-} from "../../itwallet/presentation/remote/utils/itwRemoteTypeUtils";
+import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/utils/itwRemoteTypeUtils";
+import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -120,7 +118,7 @@ const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
     // TODO: restore after testing
     // O.fromNullable(data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)),
     // O.map(match => new URLSearchParams(match[1])),
-    O.fromNullable(data.match(/^(opnid4vp|haip):\/\/\?(.*)$/)),
+    O.fromNullable(data.match(/^(openid4vp|haip):\/\/\?(.*)$/)),
     O.map(match => new URLSearchParams(match[2])),
     O.chainEitherK(params =>
       validateItwPresentationQrCodeParams({

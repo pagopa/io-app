@@ -20,7 +20,10 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import { DisclosureClaim } from "../../../common/utils/itwClaimsUtils.ts";
+import {
+  ClaimDisplayFormat,
+  DisclosureClaim
+} from "../../../common/utils/itwClaimsUtils.ts";
 import { ItwRemotePresentationClaimsMock } from "../../../common/utils/itwMocksUtils.ts";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import {
@@ -30,6 +33,7 @@ import {
 import { useIODispatch } from "../../../../../store/hooks.ts";
 import { identificationRequest } from "../../../../../store/actions/identification.ts";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
+import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 
 type ClaimItem = ComponentProps<typeof ClaimsSelector>["items"][number];
 
@@ -45,13 +49,11 @@ const mapMockClaims = (claims: Array<DisclosureClaim>, missing = false) =>
     })
   );
 
-const mapDisclosuresToClaims = (
-  disclosures: Array<[string, string, unknown]>
-) =>
-  disclosures.map(([, name, value]) => ({
-    id: name,
-    title: value as string,
-    description: name
+const mapClaims = (claims: Array<ClaimDisplayFormat>) =>
+  claims.map(c => ({
+    id: c.id,
+    title: c.value as string,
+    description: c.label
   }));
 
 const ItwRemoteClaimsDisclosureScreen = () => {
@@ -217,15 +219,17 @@ const ContentView = () => {
               iconName="security"
               iconColor={theme["icon-default"]}
             />
-            {presentationDetails?.map(c => (
-              <ClaimsSelector
-                key={c.id}
-                title={c.id}
-                defaultExpanded
-                selectionEnabled={false}
-                items={mapDisclosuresToClaims(c.requiredDisclosures)}
-              />
-            ))}
+            <VStack space={24}>
+              {presentationDetails?.map(c => (
+                <ClaimsSelector
+                  key={c.id}
+                  title={getCredentialNameFromType(c.vct)}
+                  defaultExpanded
+                  selectionEnabled={false}
+                  items={mapClaims(c.claimsToDisplay)}
+                />
+              ))}
+            </VStack>
           </View>
 
           {renderOptionalClaims()}

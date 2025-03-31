@@ -4,10 +4,8 @@ import * as E from "fp-ts/lib/Either";
 import I18n from "../../../../../i18n.ts";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import {
-  ItwRemoteRequestPayload,
-  validateItwPresentationQrCodeParams
-} from "../utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
+import { validateItwPresentationQrCodeParams } from "../utils/itwRemotePresentationUtils.ts";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
 import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";

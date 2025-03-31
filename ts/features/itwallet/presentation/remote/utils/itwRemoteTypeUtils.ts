@@ -1,29 +1,9 @@
-import * as E from "fp-ts/lib/Either";
 import { Credential } from "@pagopa/io-react-native-wallet";
+import { ClaimDisplayFormat } from "../../../common/utils/itwClaimsUtils";
 
 /**
- * Validate the QR code parameters by starting the presentation flow.
- *
- * @param params The raw parameters extracted from the QR code.
- * @returns An Either type with the validated parameters or the error.
+ * Type for the parameters requested to start the presentation flow
  */
-export const validateItwPresentationQrCodeParams = (params: {
-  [K in keyof ItwRemoteRequestPayload]?: ItwRemoteRequestPayload[K] | null;
-}) =>
-  E.tryCatch(
-    () =>
-      Credential.Presentation.startFlowFromQR({
-        clientId: params.clientId ?? undefined,
-        requestUri: params.requestUri ?? undefined,
-        requestUriMethod: params.requestUriMethod ?? undefined,
-        state: params.state ?? undefined
-      }),
-    e =>
-      e instanceof Error
-        ? e
-        : new Error("Unexpected error in QR code validation")
-  );
-
 export type ItwRemoteRequestPayload =
   ReturnType<Credential.Presentation.StartFlow>;
 
@@ -40,3 +20,17 @@ export type RelyingPartyConfiguration = Awaited<
 export type PresentationDetails = Awaited<
   ReturnType<Credential.Presentation.EvaluateDcqlQuery>
 >;
+
+/**
+ * Type representing the presentation details with localized claims
+ */
+export type EnrichedPresentationDetails = Array<
+  PresentationDetails[number] & { claimsToDisplay: Array<ClaimDisplayFormat> }
+>;
+
+/**
+ * Alias for the Request Object type
+ */
+export type RequestObject = Awaited<
+  ReturnType<Credential.Presentation.VerifyRequestObject>
+>["requestObject"];

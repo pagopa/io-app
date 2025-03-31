@@ -1,8 +1,8 @@
-import { Credential } from "@pagopa/io-react-native-wallet";
 import {
+  EnrichedPresentationDetails,
   ItwRemoteRequestPayload,
-  PresentationDetails,
-  RelyingPartyConfiguration
+  RelyingPartyConfiguration,
+  RequestObject
 } from "../utils/itwRemoteTypeUtils";
 import { RemoteFailure } from "./failure";
 
@@ -20,12 +20,12 @@ export type Context = {
   /**
    * The Request Object fetched from the Relying Party with the presentation details
    */
-  requestObject: Credential.Presentation.RequestObject | undefined;
+  requestObject: RequestObject | undefined;
   /**
    * Details of the presentation requested by the Relying Party
    * It includes the requested claims and credentials
    */
-  presentationDetails: PresentationDetails | undefined;
+  presentationDetails: EnrichedPresentationDetails | undefined;
 };
 
 export const InitialContext: Context = {
