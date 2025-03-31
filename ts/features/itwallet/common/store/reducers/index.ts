@@ -57,10 +57,7 @@ export const migrations: MigrationManifest = {
     return _.set(state, "preferences.authLevel", authLevel);
   },
   // Removed lifecycle reducer
-  "3": (state: PersistedState): PersistedState => {
-    const prevState = state as PersistedItWalletState;
-    return _.omit(prevState, "lifecycle");
-  }
+  "3": (state: PersistedState): PersistedState => _.omit(state, "lifecycle")
 };
 
 const itwPersistConfig: PersistConfig = {
