@@ -6240,7 +6240,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   <View
                                     accessibilityRole="progressbar"
                                     accessible={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "height": 24,
@@ -6577,7 +6576,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   <View
                                     accessibilityRole="progressbar"
                                     accessible={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "height": 24,
@@ -7117,7 +7115,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               <View
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 24,

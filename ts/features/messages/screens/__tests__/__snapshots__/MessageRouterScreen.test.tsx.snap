@@ -241,7 +241,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,
@@ -1085,7 +1084,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,
@@ -2990,7 +2988,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,
@@ -3834,7 +3831,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,
