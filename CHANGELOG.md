@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0-rc.5](https://github.com/pagopa/io-app/compare/3.2.0-rc.4...3.2.0-rc.5) (2025-03-31)
+
+
+### Bug Fixes
+
+* [[IOBP-1528](https://pagopa.atlassian.net/browse/IOBP-1528)] Receipt organization fiscal code mixpanel tracking ([#6855](https://github.com/pagopa/io-app/issues/6855)) ([5810d2d](https://github.com/pagopa/io-app/commit/5810d2d097c8eb16bf4617eecc65618a9c1233ad))
+* [[IOCOM-2284](https://pagopa.atlassian.net/browse/IOCOM-2284)] Proper tracking of the CTA decoding failure analytics  ([#6850](https://github.com/pagopa/io-app/issues/6850)) ([244e7c4](https://github.com/pagopa/io-app/commit/244e7c4a17af893e7525a9b26afdc79515959b76))
+
 ## [3.2.0-rc.4](https://github.com/pagopa/io-app/compare/3.2.0-rc.3...3.2.0-rc.4) (2025-03-31)
 
 
