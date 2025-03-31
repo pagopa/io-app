@@ -10,7 +10,7 @@ import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { WithTestID } from "../../../../../types/WithTestID";
-import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 export type CieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
@@ -21,22 +21,22 @@ const CieWrongCiePinScreen = () => {
   const route =
     useRoute<
       Route<
-        typeof IDENTIFICATION_ROUTES.CIE_WRONG_PIN_SCREEN,
+        typeof AUTHENTICATION_ROUTES.CIE_WRONG_PIN_SCREEN,
         CieWrongCiePinScreenNavigationParams
       >
     >();
   const { remainingCount } = route.params;
 
   const navigateToCiePinScreen = useCallback(() => {
-    navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
-      screen: IDENTIFICATION_ROUTES.CIE_PIN_SCREEN
+    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
     });
   }, [navigation]);
 
   const navigateToAuthenticationScreen = useCallback(() => {
     navigation.reset({
       index: 0,
-      routes: [{ name: IDENTIFICATION_ROUTES.MAIN }]
+      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
     });
   }, [navigation]);
 

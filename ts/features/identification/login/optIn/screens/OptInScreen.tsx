@@ -32,8 +32,8 @@ import { useSecuritySuggestionsBottomSheet } from "../../../../../hooks/useSecur
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
-import { IdentificationParamsList } from "../../../common/navigation/params/IdentificationParamsList";
-import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 export enum Identifier {
   SPID = "SPID",
@@ -57,9 +57,9 @@ export type ChosenIdentifier =
 export const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 820;
 
 const authScreensMap = {
-  CIE: IDENTIFICATION_ROUTES.CIE_PIN_SCREEN,
-  SPID: IDENTIFICATION_ROUTES.IDP_SELECTION,
-  CIE_ID: IDENTIFICATION_ROUTES.CIE_ID_LOGIN
+  CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
+  SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
+  CIE_ID: AUTHENTICATION_ROUTES.CIE_ID_LOGIN
 };
 
 const OptInScreen = () => {
@@ -87,7 +87,7 @@ const OptInScreen = () => {
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
   const getNavigationParams =
-    (): NavigatorScreenParams<IdentificationParamsList> => {
+    (): NavigatorScreenParams<AuthenticationParamsList> => {
       if (params.identifier === "CIE_ID") {
         return {
           screen: authScreensMap[params.identifier],
@@ -104,7 +104,7 @@ const OptInScreen = () => {
     } else {
       void trackLoginSessionOptIn30(store.getState());
     }
-    navigation.navigate(IDENTIFICATION_ROUTES.MAIN, getNavigationParams());
+    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, getNavigationParams());
     dispatch(setFastLoginOptIn({ enabled: isLV }));
   };
 

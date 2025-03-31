@@ -15,7 +15,7 @@ import {
 } from "../analytics";
 import { useIODispatch } from "../../../../../store/hooks";
 import { idpSelected } from "../../../common/store/actions";
-import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const CIE_PIN_DESC: TranslationKeys =
   "authentication.cie_id.error_screen.cie_pin_supported.description";
@@ -49,8 +49,8 @@ const CieIdErrorScreen = () => {
     "authentication.cie_id.error_screen.secondary_action_label"
   );
   const navigateToLandingScreen = () => {
-    replace(IDENTIFICATION_ROUTES.MAIN, {
-      screen: IDENTIFICATION_ROUTES.LANDING
+    replace(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LANDING
     });
   };
 
@@ -69,15 +69,15 @@ const CieIdErrorScreen = () => {
             // Since this screen will only be accessible after the user has already
             // made their choice on the Opt-In screen, we can navigate directly to it
             dispatch(idpSelected(IdpCIE));
-            navigate(IDENTIFICATION_ROUTES.MAIN, {
-              screen: IDENTIFICATION_ROUTES.CIE_PIN_SCREEN
+            navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
             });
           } else {
             void trackCieIdErrorSpidSelected();
             // Since this screen will only be accessible after the user has already
             // made their choice on the Opt-In screen, we can navigate directly to it
-            navigate(IDENTIFICATION_ROUTES.MAIN, {
-              screen: IDENTIFICATION_ROUTES.IDP_SELECTION
+            navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.IDP_SELECTION
             });
           }
         }

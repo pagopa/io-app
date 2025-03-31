@@ -5,7 +5,7 @@ import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screen
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 import { CieCardReaderScreenNavigationParams } from "../../features/identification/login/cie/screens/CieCardReaderScreen";
-import { IDENTIFICATION_ROUTES } from "../../features/identification/common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../features/identification/common/navigation/routes";
 
 /**
  * @deprecated
@@ -14,7 +14,7 @@ export const resetToAuthenticationRoute = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.reset({
       index: 0,
-      routes: [{ name: IDENTIFICATION_ROUTES.MAIN }]
+      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
     })
   );
 
@@ -44,8 +44,8 @@ export const navigateBack = () =>
  */
 export const navigateToIdpSelectionScreenAction = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(IDENTIFICATION_ROUTES.MAIN, {
-      screen: IDENTIFICATION_ROUTES.IDP_SELECTION
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.IDP_SELECTION
     })
   );
 
@@ -205,8 +205,8 @@ export const navigateToPrivacyShareData = () =>
  */
 export const navigateToCieInvalidScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(IDENTIFICATION_ROUTES.MAIN, {
-      screen: IDENTIFICATION_ROUTES.CIE_EXPIRED_SCREEN
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN
     })
   );
 
@@ -215,8 +215,8 @@ export const navigateToCieInvalidScreen = () =>
  */
 export const navigateToCiePinScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(IDENTIFICATION_ROUTES.MAIN, {
-      screen: IDENTIFICATION_ROUTES.CIE_PIN_SCREEN
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
     })
   );
 
@@ -227,8 +227,8 @@ export const navigateToCieCardReaderScreen = (
   params?: CieCardReaderScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(IDENTIFICATION_ROUTES.MAIN, {
-      screen: IDENTIFICATION_ROUTES.CIE_CARD_READER_SCREEN,
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN,
       params
     })
   );
@@ -249,8 +249,8 @@ export const navigateToWorkunitGenericFailureScreen = () =>
  */
 export const navigateToSPIDTestIDP = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(IDENTIFICATION_ROUTES.MAIN, {
-      screen: IDENTIFICATION_ROUTES.IDP_TEST
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.IDP_TEST
     })
   );
 
@@ -259,7 +259,7 @@ export const navigateToSPIDTestIDP = () =>
  */
 export const navigateToSPIDLogin = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(IDENTIFICATION_ROUTES.MAIN, {
-      screen: IDENTIFICATION_ROUTES.IDP_LOGIN
+    CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.IDP_LOGIN
     })
   );

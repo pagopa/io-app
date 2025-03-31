@@ -5,21 +5,21 @@ import { useCallback } from "react";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const CieWrongCardScreen = () => {
   const navigation = useIONavigation();
 
   const navigateToCiePinScreen = useCallback(() => {
-    navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
-      screen: IDENTIFICATION_ROUTES.CIE_PIN_SCREEN
+    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
     });
   }, [navigation]);
 
   const navigateToAuthenticationScreen = useCallback(() => {
     navigation.reset({
       index: 0,
-      routes: [{ name: IDENTIFICATION_ROUTES.MAIN }]
+      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
     });
   }, [navigation]);
 

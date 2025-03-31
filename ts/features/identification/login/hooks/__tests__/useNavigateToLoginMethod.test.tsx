@@ -6,7 +6,7 @@ import useNavigateToLoginMethod from "../useNavigateToLoginMethod";
 import * as fastLoginSelector from "../../../fastLogin/store/selectors";
 import { Identifier } from "../../optIn/screens/OptInScreen";
 import { withStore } from "../../../../../utils/jest/withStore";
-import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const IS_UAT = false;
 const SPID_L2 = "SpidL2";
@@ -35,8 +35,8 @@ describe(useNavigateToLoginMethod, () => {
       const navigateToCiePin = getByTestId("navigate-to-cie-pin");
       fireEvent.press(navigateToCiePin);
 
-      expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
-        screen: IDENTIFICATION_ROUTES.CIE_PIN_SCREEN
+      expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
       });
     });
     it("Should navigate to idp selection", () => {
@@ -45,8 +45,8 @@ describe(useNavigateToLoginMethod, () => {
       const navigateToIdpSelection = getByTestId("navigate-to-idp-selection");
       fireEvent.press(navigateToIdpSelection);
 
-      expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
-        screen: IDENTIFICATION_ROUTES.IDP_SELECTION
+      expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.IDP_SELECTION
       });
     });
     it("Should navigate to the CieID screen", () => {
@@ -56,8 +56,8 @@ describe(useNavigateToLoginMethod, () => {
       const navigateToCieIdScreen = getByTestId("navigate-to-cie-id");
       fireEvent.press(navigateToCieIdScreen);
 
-      expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
-        screen: IDENTIFICATION_ROUTES.CIE_ID_LOGIN,
+      expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
         params: {
           spidLevel: SPID_L2,
           isUat: IS_UAT
@@ -83,8 +83,8 @@ describe(useNavigateToLoginMethod, () => {
       const navigateToCiePin = getByTestId("navigate-to-cie-pin");
       fireEvent.press(navigateToCiePin);
 
-      expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
-        screen: IDENTIFICATION_ROUTES.OPT_IN,
+      expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.OPT_IN,
         params: {
           identifier: Identifier.CIE
         }
@@ -96,8 +96,8 @@ describe(useNavigateToLoginMethod, () => {
       const navigateToIdpSelection = getByTestId("navigate-to-idp-selection");
       fireEvent.press(navigateToIdpSelection);
 
-      expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
-        screen: IDENTIFICATION_ROUTES.OPT_IN,
+      expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.OPT_IN,
         params: {
           identifier: Identifier.SPID
         }
@@ -110,8 +110,8 @@ describe(useNavigateToLoginMethod, () => {
       const navigateToCieIdScreen = getByTestId("navigate-to-cie-id");
       fireEvent.press(navigateToCieIdScreen);
 
-      expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
-        screen: IDENTIFICATION_ROUTES.OPT_IN,
+      expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.OPT_IN,
         params: {
           identifier: Identifier.CIE_ID,
           params: {
@@ -162,8 +162,8 @@ function navigateToCieIdNotInstalled() {
   const navigateToCieIdScreen = getByTestId("navigate-to-cie-id");
   fireEvent.press(navigateToCieIdScreen);
 
-  expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
-    screen: IDENTIFICATION_ROUTES.CIE_NOT_INSTALLED,
+  expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+    screen: AUTHENTICATION_ROUTES.CIE_NOT_INSTALLED,
     params: {
       isUat: IS_UAT
     }

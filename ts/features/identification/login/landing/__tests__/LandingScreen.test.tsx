@@ -4,7 +4,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { LandingScreen } from "../screens/LandingScreen";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const mockNavigateToCiePinInsertion = jest.fn();
 const mockNavigateToIdpSelection = jest.fn();
@@ -121,8 +121,8 @@ describe(LandingScreen, () => {
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
     expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
-    expect(mockNavigate).toHaveBeenCalledWith(IDENTIFICATION_ROUTES.MAIN, {
-      screen: IDENTIFICATION_ROUTES.CIE_ID_WIZARD
+    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
     });
   });
   it("Should navigate to the idp selection", navigateToIdpSelection);
@@ -134,7 +134,7 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext(
     LandingScreen,
-    IDENTIFICATION_ROUTES.LANDING,
+    AUTHENTICATION_ROUTES.LANDING,
     {},
     store
   );

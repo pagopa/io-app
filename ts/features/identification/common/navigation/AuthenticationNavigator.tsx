@@ -32,18 +32,18 @@ import CieIdLoginScreen from "../../login/cie/screens/CieIdLoginScreen";
 import CieIdNotInstalledScreen from "../../login/cie/screens/CieIdNotInstalledScreen";
 import CieIdAuthUrlError from "../../login/cie/screens/CieIdAuthUrlError";
 import CloseButton from "../../../../navigation/components/CloseButton";
-import { IDENTIFICATION_ROUTES } from "./routes";
-import { IdentificationParamsList } from "./params/IdentificationParamsList";
+import { AUTHENTICATION_ROUTES } from "./routes";
+import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 
-const Stack = createStackNavigator<IdentificationParamsList>();
+const Stack = createStackNavigator<AuthenticationParamsList>();
 
-export const IdentificationStackNavigator = () => (
+const AuthenticationStackNavigator = () => (
   <Stack.Navigator
-    initialRouteName={IDENTIFICATION_ROUTES.LANDING}
+    initialRouteName={AUTHENTICATION_ROUTES.LANDING}
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
-      name={IDENTIFICATION_ROUTES.LANDING}
+      name={AUTHENTICATION_ROUTES.LANDING}
       component={LandingScreen}
       options={{ headerShown: true }}
     />
@@ -56,79 +56,79 @@ export const IdentificationStackNavigator = () => (
       }}
     >
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.ROOTED_DEVICE}
+        name={AUTHENTICATION_ROUTES.ROOTED_DEVICE}
         component={RootedDeviceModal}
       />
     </Stack.Group>
     <Stack.Group screenOptions={{ headerShown: true }}>
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.CIE_ID_WIZARD}
+        name={AUTHENTICATION_ROUTES.CIE_ID_WIZARD}
         component={CieIdWizard}
       />
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.CIE_PIN_WIZARD}
+        name={AUTHENTICATION_ROUTES.CIE_PIN_WIZARD}
         component={CiePinWizard}
       />
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.SPID_WIZARD}
+        name={AUTHENTICATION_ROUTES.SPID_WIZARD}
         component={SpidWizard}
       />
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.ID_ACTIVATION_WIZARD}
+        name={AUTHENTICATION_ROUTES.ID_ACTIVATION_WIZARD}
         component={IDActivationWizard}
       />
     </Stack.Group>
     <Stack.Screen
-      name={IDENTIFICATION_ROUTES.OPT_IN}
+      name={AUTHENTICATION_ROUTES.OPT_IN}
       component={OptInScreen}
       options={{ headerShown: true }}
     />
 
     <Stack.Screen
       options={{ headerShown: true }}
-      name={IDENTIFICATION_ROUTES.IDP_SELECTION}
+      name={AUTHENTICATION_ROUTES.IDP_SELECTION}
       component={IdpSelectionScreen}
     />
 
     <Stack.Screen
-      name={IDENTIFICATION_ROUTES.IDP_LOGIN}
+      name={AUTHENTICATION_ROUTES.IDP_LOGIN}
       component={IdpLoginScreen}
     />
 
     <Stack.Screen
-      name={IDENTIFICATION_ROUTES.AUTH_SESSION}
+      name={AUTHENTICATION_ROUTES.AUTH_SESSION}
       component={AuthSessionPage}
     />
 
     <Stack.Screen
-      name={IDENTIFICATION_ROUTES.IDP_TEST}
+      name={AUTHENTICATION_ROUTES.IDP_TEST}
       component={TestAuthenticationScreen}
     />
 
     <Stack.Screen
-      name={IDENTIFICATION_ROUTES.CIE_PIN_SCREEN}
+      name={AUTHENTICATION_ROUTES.CIE_PIN_SCREEN}
       component={CiePinScreen}
       options={{ headerShown: true }}
     />
 
     <Stack.Screen
-      name={IDENTIFICATION_ROUTES.CIE_ID_LOGIN}
+      name={AUTHENTICATION_ROUTES.CIE_ID_LOGIN}
       component={CieIdLoginScreen}
       options={{ headerShown: false }}
     />
 
     <Stack.Screen
-      name={IDENTIFICATION_ROUTES.CIE_LOGIN_CONFIG_SCREEN}
+      name={AUTHENTICATION_ROUTES.CIE_LOGIN_CONFIG_SCREEN}
       component={CieLoginConfigScreen}
     />
 
     <Stack.Screen
-      name={IDENTIFICATION_ROUTES.CIE_CARD_READER_SCREEN}
+      name={AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN}
       component={CieCardReaderScreenWrapper}
     />
 
     <Stack.Screen
-      name={IDENTIFICATION_ROUTES.CIE_CONSENT_DATA_USAGE}
+      name={AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE}
       component={CieConsentDataUsageScreen}
       options={{ headerShown: true }}
     />
@@ -144,44 +144,44 @@ export const IdentificationStackNavigator = () => (
       }}
     >
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.CIE_WRONG_PIN_SCREEN}
+        name={AUTHENTICATION_ROUTES.CIE_WRONG_PIN_SCREEN}
         component={CieWrongCiePinScreen}
       />
 
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.CIE_UNEXPECTED_ERROR}
+        name={AUTHENTICATION_ROUTES.CIE_UNEXPECTED_ERROR}
         component={CieUnexpectedErrorScreen}
       />
 
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN}
+        name={AUTHENTICATION_ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN}
         component={CieExtendedApduNotSupportedScreen}
       />
 
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.CIE_WRONG_CARD_SCREEN}
+        name={AUTHENTICATION_ROUTES.CIE_WRONG_CARD_SCREEN}
         component={CieWrongCardScreen}
       />
 
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.AUTH_ERROR_SCREEN}
+        name={AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN}
         component={AuthErrorScreen}
       />
 
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.CIE_EXPIRED_SCREEN}
+        name={AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN}
         component={CieExpiredOrInvalidScreen}
       />
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.CIE_ID_ERROR}
+        name={AUTHENTICATION_ROUTES.CIE_ID_ERROR}
         component={CieIdErrorScreen}
       />
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.CIE_ID_INCORRECT_URL}
+        name={AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL}
         component={CieIdAuthUrlError}
       />
       <Stack.Screen
-        name={IDENTIFICATION_ROUTES.CIE_NOT_INSTALLED}
+        name={AUTHENTICATION_ROUTES.CIE_NOT_INSTALLED}
         component={CieIdNotInstalledScreen}
       />
     </Stack.Group>
@@ -203,9 +203,11 @@ export const IdentificationStackNavigator = () => (
     >
       <Stack.Screen
         options={{ headerShown: true }}
-        name={IDENTIFICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN}
+        name={AUTHENTICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN}
         component={ActivateNfcScreen}
       />
     </Stack.Group>
   </Stack.Navigator>
 );
+
+export default AuthenticationStackNavigator;

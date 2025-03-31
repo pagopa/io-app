@@ -22,7 +22,7 @@ import {
   trackWizardCiePinSelected
 } from "../../analytics";
 import { useIOStore } from "../../../../../../store/hooks";
-import { IDENTIFICATION_ROUTES } from "../../../../common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 export const CIE_PIN_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/";
@@ -93,8 +93,8 @@ const CiePinWizard = () => {
         "authentication.wizards.cie_pin_wizard.actions.secondary.label"
       ),
       onPress: () => {
-        navigate(IDENTIFICATION_ROUTES.MAIN, {
-          screen: IDENTIFICATION_ROUTES.SPID_WIZARD
+        navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.SPID_WIZARD
         });
       }
     }

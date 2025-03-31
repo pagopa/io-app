@@ -6,7 +6,7 @@ import {
 import { useCallback } from "react";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
-import { IdentificationParamsList } from "../../../common/navigation/params/IdentificationParamsList";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { useIODispatch } from "../../../../../store/hooks";
 import {
   incrementNativeLoginNativeAttempts,
@@ -15,7 +15,7 @@ import {
 } from "../../idp/store/actions";
 import { UnlockAccessProps } from "../../unlockAccess/components/UnlockAccessComponent";
 import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
-import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 type CommonAuthErrorScreenProps = {
   errorCodeOrMessage?: string;
@@ -39,9 +39,9 @@ export type AuthErrorScreenProps = CommonAuthErrorScreenProps &
   (SpidProps | CieProps | CieIdProps);
 
 const authScreenByAuthMethod = {
-  CIE: IDENTIFICATION_ROUTES.CIE_PIN_SCREEN,
-  SPID: IDENTIFICATION_ROUTES.IDP_SELECTION,
-  CIE_ID: IDENTIFICATION_ROUTES.CIE_ID_LOGIN
+  CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
+  SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
+  CIE_ID: AUTHENTICATION_ROUTES.CIE_ID_LOGIN
 };
 
 const AuthErrorScreen = () => {
@@ -49,7 +49,7 @@ const AuthErrorScreen = () => {
   const route =
     useRoute<
       Route<
-        typeof IDENTIFICATION_ROUTES.AUTH_ERROR_SCREEN,
+        typeof AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
         AuthErrorScreenProps
       >
     >();
@@ -58,7 +58,7 @@ const AuthErrorScreen = () => {
   const navigation = useIONavigation();
 
   const getNavigationParams =
-    useCallback((): NavigatorScreenParams<IdentificationParamsList> => {
+    useCallback((): NavigatorScreenParams<AuthenticationParamsList> => {
       if (authMethod === "CIE_ID") {
         return {
           screen: authScreenByAuthMethod[authMethod],
@@ -79,13 +79,13 @@ const AuthErrorScreen = () => {
           : setStandardLoginInLoadingState()
       );
     }
-    navigation.navigate(IDENTIFICATION_ROUTES.MAIN, getNavigationParams());
+    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, getNavigationParams());
   }, [authMethod, navigation, route.params, getNavigationParams, dispatch]);
 
   const onCancel = useCallback(() => {
     dispatch(resetSpidLoginState());
-    navigation.navigate(IDENTIFICATION_ROUTES.MAIN, {
-      screen: IDENTIFICATION_ROUTES.LANDING
+    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LANDING
     });
   }, [navigation, dispatch]);
 

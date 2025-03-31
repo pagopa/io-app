@@ -7,7 +7,7 @@ import {
   trackSpidWizardScreen,
   trackWizardSpidSelected
 } from "../../analytics";
-import { IDENTIFICATION_ROUTES } from "../../../../common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 const SpidWizard = () => {
   const { navigate } = useIONavigation();
@@ -43,8 +43,8 @@ const SpidWizard = () => {
             "authentication.wizards.spid_wizard.actions.secondary.label"
           ),
           onPress: () =>
-            navigate(IDENTIFICATION_ROUTES.MAIN, {
-              screen: IDENTIFICATION_ROUTES.ID_ACTIVATION_WIZARD
+            navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.ID_ACTIVATION_WIZARD
             })
         }
       }}

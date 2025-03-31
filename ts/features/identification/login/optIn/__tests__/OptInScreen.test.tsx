@@ -5,7 +5,7 @@ import { appReducer } from "../../../../../store/reducers";
 import I18n from "../../../../../i18n";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import OptInScreen from "../screens/OptInScreen";
-import { IDENTIFICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 describe("OptInScreen", () => {
   it("the components into the page should be render correctly", () => {
@@ -37,7 +37,7 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext(
     OptInScreen,
-    IDENTIFICATION_ROUTES.OPT_IN,
+    AUTHENTICATION_ROUTES.OPT_IN,
     {},
     store
   );
