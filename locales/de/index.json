@@ -3361,7 +3361,7 @@
         "filters": {
           "tabs": {
             "all": "Alle",
-            "payer": "In-App-Zahlung",
+            "payer": "Bezahlt von mir",
             "debtor": "Auf mich lautend"
           }
         },
