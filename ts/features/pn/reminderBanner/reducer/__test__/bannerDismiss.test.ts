@@ -1,5 +1,10 @@
+import { createStore } from "redux";
 import { PersistPartial } from "redux-persist";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import {
+  logoutFailure,
+  logoutSuccess
+} from "../../../../../store/actions/authentication";
 import { isPnEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";
@@ -43,6 +48,19 @@ describe("persistedPnBannerDismissReducer", () => {
     // @ts-expect-error: action type is not supported
     const state = persistedPnBannerDismissReducer(initialState, action);
     expect(state).toEqual(initialState);
+  });
+  ["success", "failure"].forEach(type => {
+    it(`should reset state on logout ${type}`, () => {
+      const store = createStore(persistedPnBannerDismissReducer);
+      store.dispatch(dismissPnActivationReminderBanner());
+      expect(store.getState()).toEqual({ dismissed: true });
+      store.dispatch(
+        type === "success"
+          ? logoutSuccess()
+          : logoutFailure({ error: new Error() })
+      );
+      expect(store.getState()).toEqual({ dismissed: false });
+    });
   });
 });
 
