@@ -1,13 +1,11 @@
-import { constVoid } from "fp-ts/lib/function";
 import { useCallback, useMemo } from "react";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isCdcEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useServicePreferenceByChannel } from "../../../services/details/hooks/useServicePreference";
-import { CDC_ROUTES } from "../../cdc/navigation/routes";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
+import { CDC_ROUTES } from "../navigation/routes";
 
 /**
  * Hook to handle the CDC activation/deactivation
@@ -17,8 +15,6 @@ const useCdcActivation = () => {
 
   const dispatch = useIODispatch();
 
-  const unsubscribeHandler = () => constVoid;
-
   const subscribeHandler = useCallback(() => {
     dispatch(loadAvailableBonuses.request());
     navigation.navigate(CDC_ROUTES.CDC_MAIN, {
@@ -27,7 +23,6 @@ const useCdcActivation = () => {
   }, [dispatch, navigation]);
 
   return {
-    unsubscribeHandler,
     subscribeHandler
   };
 };
@@ -41,7 +36,7 @@ export const useSpecialCtaCdc = ():
   | undefined => {
   const isCdcEnabled = useIOSelector(isCdcEnabledSelector);
 
-  const { subscribeHandler, unsubscribeHandler } = useCdcActivation();
+  const { subscribeHandler } = useCdcActivation();
 
   const { isLoadingServicePreferenceByChannel, servicePreferenceByChannel } =
     useServicePreferenceByChannel("inbox");
@@ -66,20 +61,11 @@ export const useSpecialCtaCdc = ():
         testID: "service-activate-bonus-button"
       };
     }
-
-    return {
-      color: "danger",
-      label: I18n.t("bonus.cgn.cta.deactivateBonus"),
-      loading,
-      onPress: unsubscribeHandler,
-      testID: "service-cdc-deactivate-bonus-button"
-    };
   }, [
     isCdcEnabled,
     loading,
     isServiceActive,
     servicePreferenceByChannel,
-    subscribeHandler,
-    unsubscribeHandler
+    subscribeHandler
   ]);
 };
