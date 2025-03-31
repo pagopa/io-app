@@ -40,7 +40,7 @@ const ReceiptPreviewScreen = () => {
     analytics.trackPaymentsDownloadReceiptSuccess({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       organization_fiscal_code:
-        paymentAnalyticsData?.verifiedData?.paFiscalCode,
+        paymentAnalyticsData?.receiptOrganizationFiscalCode,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpeningPDF,
       user: paymentAnalyticsData?.receiptUser
     });
@@ -61,7 +61,8 @@ const ReceiptPreviewScreen = () => {
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
       user: paymentAnalyticsData?.receiptUser,
-      organization_fiscal_code: paymentAnalyticsData?.verifiedData?.paFiscalCode
+      organization_fiscal_code:
+        paymentAnalyticsData?.receiptOrganizationFiscalCode
     });
     // The file name is normalized to remove the .pdf extension on Android devices since it's added by default to the Share module
     const normalizedFilename =

@@ -231,6 +231,8 @@ const reducer = (
         ...state,
         analyticsData: {
           ...state.analyticsData,
+          receiptOrganizationFiscalCode:
+            action.payload.carts?.[0]?.payee?.taxCode,
           receiptOrganizationName: action.payload.carts?.[0]?.payee?.name,
           receiptPayerFiscalCode: action.payload.infoNotice?.payer?.taxCode
         }
