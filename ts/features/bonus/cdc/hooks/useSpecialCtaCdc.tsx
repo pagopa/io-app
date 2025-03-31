@@ -61,6 +61,8 @@ export const useSpecialCtaCdc = ():
         testID: "service-activate-bonus-button"
       };
     }
+
+    return undefined;
   }, [
     isCdcEnabled,
     loading,
