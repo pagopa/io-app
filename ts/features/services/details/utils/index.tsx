@@ -1,5 +1,5 @@
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
-import { CTA, CTAS } from "../../../messages/types/MessageCTA";
+import { CTA, CTAS } from "../../../../types/LocalizedCTAs";
 import { CtaCategoryType } from "../../common/analytics";
 
 /**
