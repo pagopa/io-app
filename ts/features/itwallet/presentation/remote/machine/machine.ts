@@ -137,6 +137,19 @@ export const itwRemoteMachine = setup({
       description:
         "Display the list of claims to disclose for the verifiable presentation",
       on: {
+        "toggle-credential": {
+          actions: assign(({ event: { credentialId }, context }) => {
+            const optionalCredentials = new Set(
+              context.selectedOptionalCredentials
+            );
+            if (optionalCredentials.has(credentialId)) {
+              optionalCredentials.delete(credentialId);
+            } else {
+              optionalCredentials.add(credentialId);
+            }
+            return { selectedOptionalCredentials: optionalCredentials };
+          })
+        },
         "holder-consent": {
           target: "SendingAuthorizationResponse"
         },

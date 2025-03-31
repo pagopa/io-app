@@ -21,6 +21,11 @@ export type Close = {
   type: "close";
 };
 
+export type ToggleCredential = {
+  type: "toggle-credential";
+  credentialId: string;
+};
+
 export type Consent = {
   type: "holder-consent";
 };
@@ -30,5 +35,6 @@ export type RemoteEvents =
   | GoToWalletActivation
   | GoToIdentificationMode
   | Consent
+  | ToggleCredential
   | Back
   | Close;

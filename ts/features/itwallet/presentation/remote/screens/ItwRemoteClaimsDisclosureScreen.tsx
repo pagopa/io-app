@@ -1,11 +1,13 @@
 import {
   Alert,
   ButtonLink,
+  CheckboxLabel,
   ClaimsSelector,
   ContentWrapper,
   FeatureInfo,
   ForceScrollDownView,
   H2,
+  ListItemCheckbox,
   ListItemHeader,
   useIOTheme,
   VStack
@@ -20,34 +22,18 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import {
-  ClaimDisplayFormat,
-  DisclosureClaim
-} from "../../../common/utils/itwClaimsUtils.ts";
-import { ItwRemotePresentationClaimsMock } from "../../../common/utils/itwMocksUtils.ts";
+import { ClaimDisplayFormat } from "../../../common/utils/itwClaimsUtils.ts";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import {
   selectIsLoading,
-  selectPresentationDetails
+  selectPresentationDetails,
+  selectRelyingPartyData,
+  selectUserSelectedOptionalCredentials
 } from "../machine/selectors.ts";
 import { useIODispatch } from "../../../../../store/hooks.ts";
 import { identificationRequest } from "../../../../../store/actions/identification.ts";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
-
-type ClaimItem = ComponentProps<typeof ClaimsSelector>["items"][number];
-
-const RP_MOCK_NAME = "Comune di Milano";
-const RP_MOCK_PRIVACY_URL = "https://rp.privacy.url";
-
-const mapMockClaims = (claims: Array<DisclosureClaim>, missing = false) =>
-  claims.map(
-    ({ claim }): ClaimItem => ({
-      id: claim.id,
-      title: missing ? "-" : (claim.value as string),
-      description: claim.label
-    })
-  );
 
 const mapClaims = (claims: Array<ClaimDisplayFormat>) =>
   claims.map(c => ({
@@ -76,39 +62,19 @@ const ItwRemoteClaimsDisclosureScreen = () => {
  * The actual content of the screen, with the claims to disclose for the verifiable presentation.
  */
 const ContentView = () => {
-  const dispatch = useIODispatch();
-
   useHeaderSecondLevel({ title: "" });
 
+  const dispatch = useIODispatch();
   const theme = useIOTheme();
+
+  const machineRef = ItwRemoteMachineContext.useActorRef();
   const presentationDetails = ItwRemoteMachineContext.useSelector(
     selectPresentationDetails
   );
-  const machineRef = ItwRemoteMachineContext.useActorRef();
-
-  const [selectedOptionalClaims, setSelectedOptionalClaims] = useState<
-    Array<string>
-  >([]);
-  const allOptionalClaimsSelected =
-    selectedOptionalClaims.length ===
-    ItwRemotePresentationClaimsMock.optional.length;
-
-  const toggleOptionalClaims = (claim: ClaimItem) => {
-    setSelectedOptionalClaims(prevState =>
-      prevState.includes(claim.id)
-        ? prevState.filter(id => id !== claim.id)
-        : [...prevState, claim.id]
-    );
-  };
-
-  const toggleAllOptionalClaims = () => {
-    ReactNativeHapticFeedback.trigger("impactLight");
-    setSelectedOptionalClaims(
-      allOptionalClaimsSelected
-        ? []
-        : ItwRemotePresentationClaimsMock.optional.map(c => c.claim.id)
-    );
-  };
+  const selectedOptionalCredentials = ItwRemoteMachineContext.useSelector(
+    selectUserSelectedOptionalCredentials
+  );
+  const rpData = ItwRemoteMachineContext.useSelector(selectRelyingPartyData);
 
   const confirmVerifiablePresentation = () =>
     dispatch(
@@ -126,7 +92,7 @@ const ContentView = () => {
       )
     );
 
-  const renderOptionalClaims = () => (
+  /* const renderOptionalClaims = () => (
     <VStack space={16}>
       <View>
         <ListItemHeader
@@ -139,41 +105,22 @@ const ContentView = () => {
         <View style={{ alignSelf: "flex-end" }}>
           <ButtonLink
             label={I18n.t(
-              `global.buttons.${
-                allOptionalClaimsSelected ? "deselectAll" : "selectAll"
+              `global.buttons.${allOptionalClaimsSelected ? "deselectAll" : "selectAll"
               }`
             )}
             onPress={toggleAllOptionalClaims}
           />
         </View>
       </View>
-      {/* <ClaimsSelector
-        title="Patente di guida"
-        items={mapMockClaims(ItwRemotePresentationClaimsMock.optional)}
-        selectedItemIds={selectedOptionalClaims}
-        onItemSelected={toggleOptionalClaims}
-        defaultExpanded
-      />
-      <ClaimsSelector
-        title="Credenziale mancante"
-        items={mapMockClaims(ItwRemotePresentationClaimsMock.optional, true)}
-        selectionEnabled={false}
-        defaultExpanded
-      /> */}
+
       <Alert
         variant="info"
         content={I18n.t(
           "features.itWallet.presentation.selectiveDisclosure.optionalClaimsAlert"
         )}
       />
-      <Alert
-        variant="warning"
-        content={I18n.t(
-          "features.itWallet.presentation.selectiveDisclosure.missingClaimsAlert"
-        )}
-      />
     </VStack>
-  );
+  ); */
 
   return (
     <ForceScrollDownView
@@ -206,7 +153,7 @@ const ContentView = () => {
             <IOMarkdown
               content={I18n.t(
                 "features.itWallet.presentation.selectiveDisclosure.subtitle",
-                { relyingParty: RP_MOCK_NAME }
+                { relyingParty: rpData?.organization_name }
               )}
             />
           </VStack>
@@ -224,15 +171,13 @@ const ContentView = () => {
                 <ClaimsSelector
                   key={c.id}
                   title={getCredentialNameFromType(c.vct)}
+                  items={mapClaims(c.claimsToDisplay)}
                   defaultExpanded
                   selectionEnabled={false}
-                  items={mapClaims(c.claimsToDisplay)}
                 />
               ))}
             </VStack>
           </View>
-
-          {renderOptionalClaims()}
 
           <FeatureInfo
             iconName="fornitori"
@@ -249,7 +194,7 @@ const ContentView = () => {
           <IOMarkdown
             content={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.tos",
-              { privacyUrl: RP_MOCK_PRIVACY_URL }
+              { privacyUrl: rpData?.policy_uri }
             )}
           />
         </VStack>

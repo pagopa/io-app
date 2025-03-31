@@ -15,7 +15,13 @@ export type Context = {
    * The failure of the remote presentation machine
    */
   failure?: RemoteFailure;
+  /**
+   * Relying party Entity Configuration subject
+   */
   rpSubject: string | undefined;
+  /**
+   * Relying party Entity Configuration metadata
+   */
   rpConf: RelyingPartyConfiguration | undefined;
   /**
    * The Request Object fetched from the Relying Party with the presentation details
@@ -26,6 +32,10 @@ export type Context = {
    * It includes the requested claims and credentials
    */
   presentationDetails: EnrichedPresentationDetails | undefined;
+  /**
+   * Optional credentials selected by the user, identified by their presentation ID
+   */
+  selectedOptionalCredentials: Set<string> | undefined;
 };
 
 export const InitialContext: Context = {
@@ -34,5 +44,6 @@ export const InitialContext: Context = {
   rpSubject: undefined,
   rpConf: undefined,
   requestObject: undefined,
-  presentationDetails: undefined
+  presentationDetails: undefined,
+  selectedOptionalCredentials: undefined
 };
