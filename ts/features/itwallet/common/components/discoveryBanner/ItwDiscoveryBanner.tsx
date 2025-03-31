@@ -13,6 +13,7 @@ import {
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { useIODispatch } from "../../../../../store/hooks";
 import { itwCloseDiscoveryBanner } from "../../store/actions/preferences";
+import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
 
 /**
  * to use in flows where we want to handle the banner's visibility logic externally
@@ -34,9 +35,9 @@ export const ItwDiscoveryBanner = ({
 }: ItwDiscoveryBannerProps) => {
   const bannerRef = createRef<View>();
   const dispatch = useIODispatch();
-
   const navigation = useIONavigation();
   const route = useRoute();
+  const bannerType = useItwDiscoveryBannerType();
 
   const trackBannerProperties = useMemo(
     () => ({
@@ -62,18 +63,33 @@ export const ItwDiscoveryBanner = ({
     dispatch(itwCloseDiscoveryBanner());
   };
 
+  if (!bannerType) {
+    return null;
+  }
+
+  const bannerConfig = {
+    onboarding: {
+      content: I18n.t("features.itWallet.discovery.banner.home.content"),
+      title: I18n.t("features.itWallet.discovery.banner.home.title"),
+      action: I18n.t("features.itWallet.discovery.banner.home.action")
+    },
+    reactivating: {
+      content: I18n.t("features.itWallet.discovery.banner.homeActive.content"),
+      title: I18n.t("features.itWallet.discovery.banner.homeActive.title"),
+      action: I18n.t("features.itWallet.discovery.banner.homeActive.action")
+    }
+  };
+
+  const { content, title, action } = bannerConfig[bannerType];
+
   return (
     <View style={!ignoreMargins && styles.margins}>
       <Banner
         testID="itwDiscoveryBannerTestID"
         viewRef={bannerRef}
-        title={
-          withTitle
-            ? I18n.t("features.itWallet.discovery.banner.home.title")
-            : undefined
-        }
-        content={I18n.t("features.itWallet.discovery.banner.home.content")}
-        action={I18n.t("features.itWallet.discovery.banner.home.action")}
+        title={withTitle ? title : undefined}
+        content={content}
+        action={action}
         pictogramName="itWallet"
         color="turquoise"
         onClose={closable ? handleClose : undefined}
