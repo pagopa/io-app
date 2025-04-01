@@ -25,8 +25,8 @@ import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess,
   sessionInvalid
-} from "../actions/authentication";
-import { cieAuthenticationError } from "../actions/cie";
+} from "../../features/authentication/common/store/actions";
+import { cieAuthenticationError } from "../../features/authentication/login/cie/store/actions";
 import { contentMunicipalityLoad } from "../actions/content";
 import {
   identificationCancel,

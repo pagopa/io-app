@@ -26,12 +26,12 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import { areTwoMinElapsedFromLastActivity } from "../../features/fastLogin/store/actions/sessionRefreshActions";
-import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
+import { areTwoMinElapsedFromLastActivity } from "../../features/authentication/fastLogin/store/actions/sessionRefreshActions";
+import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   hasTwoMinutesElapsedSinceLastActivitySelector,
   isFastLoginEnabledSelector
-} from "../../features/fastLogin/store/selectors";
+} from "../../features/authentication/fastLogin/store/selectors";
 import { useDetectSmallScreen } from "../../hooks/useDetectSmallScreen";
 import I18n from "../../i18n";
 import {
