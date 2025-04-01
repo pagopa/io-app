@@ -3,11 +3,11 @@ import {
   isFastLoginFFEnabledSelector,
   isSecurityAdviceAcknowledgedEnabled,
   isSecurityAdviceReadyToShow
-} from "../features/fastLogin/store/selectors";
+} from "../features/authentication/fastLogin/store/selectors";
 import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
 import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
-import SecuritySuggestions from "../features/fastLogin/components/SecuritySuggestions";
+import SecuritySuggestions from "../features/authentication/fastLogin/components/SecuritySuggestions";
 
 /**
  * @param useManualBottomsheetOpening if true the caller must use the methods exported by
