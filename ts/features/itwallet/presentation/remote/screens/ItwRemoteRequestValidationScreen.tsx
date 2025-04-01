@@ -48,7 +48,7 @@ const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
   return (
     <ItwRemoteLoadingScreen
       title={I18n.t(
-        "features.itWallet.presentation.remote.loadingScreen.title"
+        "features.itWallet.presentation.remote.loadingScreen.request"
       )}
     />
   );
