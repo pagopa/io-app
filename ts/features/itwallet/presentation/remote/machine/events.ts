@@ -23,7 +23,7 @@ export type Close = {
 
 export type ToggleCredential = {
   type: "toggle-credential";
-  credentialId: string;
+  credentialIds: Array<string>;
 };
 
 export type Consent = {

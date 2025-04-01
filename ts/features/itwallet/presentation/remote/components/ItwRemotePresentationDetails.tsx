@@ -1,8 +1,9 @@
 import { memo, useMemo } from "react";
 import { View } from "react-native";
 import {
-  Body,
+  BodySmall,
   ClaimsSelector,
+  ListItemCheckbox,
   ListItemHeader,
   VStack,
   useIOTheme
@@ -41,6 +42,15 @@ const ItwRemotePresentationDetails = () => {
     [presentationDetails]
   );
 
+  const sendCredentialsToMachine = (
+    credentials: EnrichedPresentationDetails
+  ) => {
+    machineRef.send({
+      type: "toggle-credential",
+      credentialIds: credentials.map(c => c.id)
+    });
+  };
+
   const renderCredentialsBlock = (credentials: EnrichedPresentationDetails) => (
     <VStack space={24}>
       {credentials.map(c => (
@@ -66,12 +76,13 @@ const ItwRemotePresentationDetails = () => {
             iconName="security"
             iconColor={theme["icon-decorative"]}
           />
+
           {purpose && (
-            <Body>
+            <BodySmall>
               {I18n.t("features.itWallet.presentation.remote.purpose", {
                 purpose
               })}
-            </Body>
+            </BodySmall>
           )}
           {renderCredentialsBlock(credentials)}
         </View>
@@ -79,20 +90,20 @@ const ItwRemotePresentationDetails = () => {
 
       {optional.map(({ purpose, credentials }) => (
         <View key={`optional:${purpose}`}>
-          <ListItemHeader
-            label={I18n.t(
+          <ListItemCheckbox
+            value={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.optionalClaims"
             )}
-            iconName="security"
-            iconColor={theme["icon-decorative"]}
+            icon="security"
+            onValueChange={() => sendCredentialsToMachine(credentials)}
+            description={
+              purpose
+                ? I18n.t("features.itWallet.presentation.remote.purpose", {
+                    purpose
+                  })
+                : undefined
+            }
           />
-          {purpose && (
-            <Body>
-              {I18n.t("features.itWallet.presentation.remote.purpose", {
-                purpose
-              })}
-            </Body>
-          )}
           {renderCredentialsBlock(credentials)}
         </View>
       ))}

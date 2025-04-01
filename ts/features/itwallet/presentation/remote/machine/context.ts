@@ -35,7 +35,7 @@ export type Context = {
   /**
    * Optional credentials selected by the user, identified by their presentation ID
    */
-  selectedOptionalCredentials: Set<string> | undefined;
+  selectedOptionalCredentials: Set<string>;
 };
 
 export const InitialContext: Context = {
@@ -45,5 +45,5 @@ export const InitialContext: Context = {
   rpConf: undefined,
   requestObject: undefined,
   presentationDetails: undefined,
-  selectedOptionalCredentials: undefined
+  selectedOptionalCredentials: new Set()
 };

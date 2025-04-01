@@ -138,14 +138,16 @@ export const itwRemoteMachine = setup({
         "Display the list of claims to disclose for the verifiable presentation",
       on: {
         "toggle-credential": {
-          actions: assign(({ event: { credentialId }, context }) => {
+          actions: assign(({ event: { credentialIds }, context }) => {
             const optionalCredentials = new Set(
               context.selectedOptionalCredentials
             );
-            if (optionalCredentials.has(credentialId)) {
-              optionalCredentials.delete(credentialId);
-            } else {
-              optionalCredentials.add(credentialId);
+            for (const id of credentialIds) {
+              if (optionalCredentials.has(id)) {
+                optionalCredentials.delete(id);
+              } else {
+                optionalCredentials.add(id);
+              }
             }
             return { selectedOptionalCredentials: optionalCredentials };
           })
@@ -168,7 +170,8 @@ export const itwRemoteMachine = setup({
         input: ({ context }) => ({
           rpConf: context.rpConf,
           requestObject: context.requestObject,
-          presentationDetails: context.presentationDetails
+          presentationDetails: context.presentationDetails,
+          optionalCredentials: context.selectedOptionalCredentials
         }),
         onDone: {
           target: "Success"

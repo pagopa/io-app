@@ -28,11 +28,12 @@ export type GetPresentationDetailsOutput = {
   presentationDetails: EnrichedPresentationDetails;
 };
 
-export type SendAuthorizationResponseInput = Partial<{
-  requestObject: RequestObject;
-  presentationDetails: EnrichedPresentationDetails;
-  rpConf: RelyingPartyConfiguration;
-}>;
+export type SendAuthorizationResponseInput = {
+  optionalCredentials: Set<string>;
+  requestObject?: RequestObject;
+  presentationDetails?: EnrichedPresentationDetails;
+  rpConf?: RelyingPartyConfiguration;
+};
 export type SendAuthorizationResponseOutput = {
   redirectUri: string;
 };
@@ -116,19 +117,25 @@ export const createRemoteActorsImplementation = (
     SendAuthorizationResponseOutput,
     SendAuthorizationResponseInput
   >(async ({ input }) => {
-    const { rpConf, presentationDetails, requestObject } = input;
+    const { rpConf, presentationDetails, requestObject, optionalCredentials } =
+      input;
 
     assert(
       rpConf && presentationDetails && requestObject,
       "Missing required sendAuthorizationResponse actor params"
     );
 
-    const credentialsToPresent = presentationDetails.map(
-      ({ requiredDisclosures, ...rest }) => ({
+    // Get required credentials and optional credentials that have been selected by the user
+    const credentialsToPresent = presentationDetails
+      .filter(
+        c =>
+          c.purposes.some(({ required }) => required) ||
+          optionalCredentials.has(c.id)
+      )
+      .map(({ requiredDisclosures, ...rest }) => ({
         ...rest,
         requestedClaims: requiredDisclosures.map(([, claimName]) => claimName)
-      })
-    );
+      }));
 
     const remotePresentations =
       await Credential.Presentation.prepareRemotePresentations(
