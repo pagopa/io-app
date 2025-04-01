@@ -4,7 +4,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import {
   logoutFailure,
   logoutSuccess
-} from "../../../../../store/actions/authentication";
+} from "../../../../../features/authentication/common/store/actions";
 import { isPnEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";

@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { mixpanel } from "../mixpanel";
 import { GlobalState } from "../store/reducers/types";
-import { LoginSessionDuration } from "../features/fastLogin/analytics/optinAnalytics";
+import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { BiometricsType, getBiometricsType } from "../utils/biometrics";
 import {
   getNotificationPermissionType,
@@ -11,7 +11,7 @@ import {
   NotificationTokenType,
   ServiceConfigurationTrackingType
 } from "../screens/profile/analytics";
-import { idpSelector } from "../store/reducers/authentication";
+import { idpSelector } from "../features/authentication/common/store/selectors";
 import { tosVersionSelector } from "../store/reducers/profile";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {

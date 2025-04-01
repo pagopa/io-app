@@ -5,7 +5,7 @@ import * as matchers from "redux-saga-test-plan/matchers";
 import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
-} from "../../../store/actions/authentication";
+} from "../../../features/authentication/common/store/actions";
 
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 

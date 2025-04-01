@@ -21,7 +21,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { pinPukHelpUrl } from "../../../../../config";
-import { isCieLoginUatEnabledSelector } from "../../../../../features/cieLogin/store/selectors";
+import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/cie/store/selectors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
