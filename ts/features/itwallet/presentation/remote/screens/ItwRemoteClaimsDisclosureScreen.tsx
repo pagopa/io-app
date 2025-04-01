@@ -46,12 +46,13 @@ const ItwRemoteClaimsDisclosureScreen = () => {
  * The actual content of the screen, with the claims to disclose for the verifiable presentation.
  */
 const ContentView = () => {
-  useHeaderSecondLevel({ title: "" });
-
-  const dispatch = useIODispatch();
-
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const rpData = ItwRemoteMachineContext.useSelector(selectRelyingPartyData);
+  const dispatch = useIODispatch();
+
+  const closePresentation = () => machineRef.send({ type: "close" });
+
+  useHeaderSecondLevel({ title: "", goBack: closePresentation });
 
   const confirmVerifiablePresentation = () =>
     dispatch(
@@ -80,7 +81,7 @@ const ContentView = () => {
           },
           secondary: {
             label: I18n.t("global.buttons.cancel"),
-            onPress: () => null // TODO
+            onPress: closePresentation
           }
         }
       }}
