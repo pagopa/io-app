@@ -16,7 +16,7 @@ import {
   zendeskSupportFailure,
   zendeskSupportStart
 } from "../../store/actions";
-import { isLoggedIn } from "../../../../store/reducers/authentication";
+import { isLoggedIn } from "../../../authentication/common/store/utils/guards";
 
 function* zendeskSupportWorkUnit(
   zendeskStart: ActionType<typeof zendeskSupportStart>

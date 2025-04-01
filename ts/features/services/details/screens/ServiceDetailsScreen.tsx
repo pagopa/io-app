@@ -7,10 +7,10 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { logosForService } from "../../common/utils";
-import { getServiceCTA, handleCtaAction } from "../../../messages/utils/ctas";
+import { getServiceCTAs, handleCtaAction } from "../../../messages/utils/ctas";
 import { useFIMSFromServiceId } from "../../../fims/common/hooks";
 import { ServiceDetailsScreenComponent } from "../components/ServiceDetailsScreenComponent";
-import { CTA } from "../../../messages/types/MessageCTA";
+import { CTA } from "../../../../types/LocalizedCTAs";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import * as analytics from "../../common/analytics";
 import { CtaCategoryType } from "../../common/analytics";
@@ -83,8 +83,8 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   );
 
   const serviceCtas = useMemo(
-    () => getServiceCTA(serviceMetadata),
-    [serviceMetadata]
+    () => getServiceCTAs(serviceId, serviceMetadata),
+    [serviceId, serviceMetadata]
   );
 
   const { startFIMSAuthenticationFlow } = useFIMSFromServiceId(serviceId);

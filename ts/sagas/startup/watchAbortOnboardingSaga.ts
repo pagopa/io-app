@@ -1,10 +1,10 @@
 import { call, put, take } from "typed-redux-saga/macro";
 import { startApplicationInitialization } from "../../store/actions/application";
-import { sessionInvalid } from "../../store/actions/authentication";
+import { sessionInvalid } from "../../features/authentication/common/store/actions";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import { ReduxSagaEffect } from "../../types/utils";
 import { deletePin } from "../../utils/keychain";
-import { trackLoginUserExit } from "../../screens/authentication/analytics";
+import { trackLoginUserExit } from "../../features/authentication/common/analytics";
 
 export function* watchAbortOnboardingSaga(): Iterator<ReduxSagaEffect> {
   yield* take(abortOnboarding);
