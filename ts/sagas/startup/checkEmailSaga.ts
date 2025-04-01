@@ -8,8 +8,8 @@ import {
   isProfileEmailValidated,
   isProfileEmailAlreadyTaken,
   profileSelector
-} from "../../store/reducers/profile";
-import { setEmailCheckAtStartupFailure } from "../../store/actions/profile";
+} from "../../features/settings/store/selectors";
+import { setEmailCheckAtStartupFailure } from "../../features/settings/store/actions";
 import { emailAcknowledged } from "../../store/actions/onboarding";
 
 export function* checkEmailSaga() {

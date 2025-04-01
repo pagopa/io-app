@@ -1,5 +1,5 @@
-import { EmailAlreadyUsedScreenParamList } from "../../screens/profile/mailCheck/EmailAlreadyTakenScreen";
-import { EmailNotVerifiedScreenParamList } from "../../screens/profile/mailCheck/ValidateEmailScreen";
+import { EmailAlreadyUsedScreenParamList } from "../../features/settings/views/mailCheck/EmailAlreadyTakenScreen";
+import { EmailNotVerifiedScreenParamList } from "../../features/settings/views/mailCheck/ValidateEmailScreen";
 import ROUTES from "../routes";
 
 export type CheckEmailParamsList = {

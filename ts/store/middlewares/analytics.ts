@@ -43,7 +43,7 @@ import {
   profileLoadRequest,
   profileUpsert,
   removeAccountMotivation
-} from "../actions/profile";
+} from "../../features/settings/store/actions";
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
 import { searchMessagesEnabled } from "../actions/search";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";

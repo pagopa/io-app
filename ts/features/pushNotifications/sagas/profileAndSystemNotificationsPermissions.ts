@@ -6,8 +6,8 @@ import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profile
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { profileUpsert } from "../../../store/actions/profile";
-import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
+import { profileUpsert } from "../../settings/store/actions";
+import { isProfileFirstOnBoarding } from "../../settings/store/selectors";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   trackNotificationsOptInPreviewStatus,
@@ -15,7 +15,7 @@ import {
   trackPushNotificationSystemPopupShown
 } from "../analytics";
 import { setPushPermissionsRequestDuration } from "../store/actions/environment";
-import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
+import { notificationsInfoScreenConsent } from "../store/actions/ProfileNotificationPermissions";
 import { requestNotificationPermissions } from "../utils";
 import { hasUserSeenSystemNotificationsPromptSelector } from "../store/selectors";
 import {

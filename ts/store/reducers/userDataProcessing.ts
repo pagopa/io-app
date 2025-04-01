@@ -3,7 +3,7 @@ import { getType } from "typesafe-actions";
 import { UserDataProcessing } from "../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { computedProp } from "../../types/utils";
-import { clearCache } from "../actions/profile";
+import { clearCache } from "../../features/settings/store/actions";
 import { Action } from "../actions/types";
 import {
   deleteUserDataProcessing,

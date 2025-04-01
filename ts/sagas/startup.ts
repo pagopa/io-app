@@ -78,7 +78,10 @@ import { previousInstallationDataDeleteSuccess } from "../store/actions/installa
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import { clearOnboarding } from "../store/actions/onboarding";
-import { clearCache, resetProfileState } from "../store/actions/profile";
+import {
+  clearCache,
+  resetProfileState
+} from "../features/settings/store/actions";
 import {
   startupLoadSuccess,
   startupTransientError
@@ -97,7 +100,7 @@ import { IdentificationResult } from "../store/reducers/identification";
 import {
   isProfileFirstOnBoarding,
   profileSelector
-} from "../store/reducers/profile";
+} from "../features/settings/store/selectors";
 import {
   StartupStatusEnum,
   startupTransientErrorInitialState
@@ -112,6 +115,12 @@ import {
   watchSessionRefreshInOfflineSaga
 } from "../features/ingress/saga";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
+import {
+  loadProfile,
+  watchProfile,
+  watchProfileRefreshRequestsSaga,
+  watchProfileUpsertRequestsSaga
+} from "../features/settings/sagas/profile";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -121,12 +130,6 @@ import {
   watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "./mixpanel";
 import { setLanguageFromProfileIfExists } from "./preferences";
-import {
-  loadProfile,
-  watchProfile,
-  watchProfileRefreshRequestsSaga,
-  watchProfileUpsertRequestsSaga
-} from "./profile";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";

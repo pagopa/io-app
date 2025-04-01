@@ -16,13 +16,13 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   pushNotificationPreviewEnabledSelector,
   pushNotificationRemindersEnabledSelector
-} from "../../../store/reducers/profile";
+} from "../../settings/store/selectors";
 import {
   trackNotificationsOptInOpenSettings,
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInSkipSystemPermissions
 } from "../analytics";
-import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
+import { notificationsInfoScreenConsent } from "../store/actions/ProfileNotificationPermissions";
 import {
   checkNotificationPermissions,
   openSystemNotificationSettingsScreen

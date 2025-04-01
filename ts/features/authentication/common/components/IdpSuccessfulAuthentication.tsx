@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
-import { profileNameSelector } from "../../../../store/reducers/profile";
+import { profileNameSelector } from "../../../settings/store/selectors";
 import I18n from "../../../../i18n";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { trackIdpAuthenticationSuccessScreen } from "../../../../screens/profile/analytics";
+import { trackIdpAuthenticationSuccessScreen } from "../../../settings/views/analytics";
 import { useIOSelector } from "../../../../store/hooks";
 import { loggedInIdpSelector } from "../store/selectors";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";

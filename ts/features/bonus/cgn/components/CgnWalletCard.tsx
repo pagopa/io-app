@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { profileSelector } from "../../../../store/reducers/profile";
+import { profileSelector } from "../../../settings/store/selectors";
 import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
 import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
 import CGN_ROUTES from "../navigation/routes";

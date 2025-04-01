@@ -41,6 +41,7 @@ import authenticationReducer, {
   INITIAL_STATE as authenticationInitialState
 } from "../../features/authentication/common/store/reducers";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
+import profileReducer from "../../features/settings/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import contentReducer, {
@@ -65,7 +66,6 @@ import persistedPreferencesReducer, {
   initialPreferencesState
 } from "./persistedPreferences";
 import preferencesReducer from "./preferences";
-import profileReducer from "./profile";
 import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";

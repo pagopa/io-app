@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
-import { profileLoadSuccess } from "../../store/actions/profile";
+import { profileLoadSuccess } from "../../features/settings/store/actions";
 import { profileEmailValidationChanged } from "../../store/actions/profileEmailValidationChange";
 import {
   isProfileEmailValidatedChanged,

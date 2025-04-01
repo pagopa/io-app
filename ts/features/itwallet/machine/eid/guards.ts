@@ -1,7 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useIOStore } from "../../../../store/hooks";
-import { profileFiscalCodeSelector } from "../../../../store/reducers/profile";
+import { profileFiscalCodeSelector } from "../../../settings/store/selectors";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";

@@ -6,7 +6,7 @@ import {
   emailValidationPollingStart,
   profileLoadRequest,
   profileLoadSuccess
-} from "../actions/profile";
+} from "../../features/settings/store/actions";
 import { emailValidationSelector } from "../reducers/emailValidation";
 
 const GET_PROFILE_POLLING_INTERVAL = 5000 as Millisecond;

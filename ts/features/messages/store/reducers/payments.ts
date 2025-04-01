@@ -22,7 +22,7 @@ import {
 } from "../actions";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
-import { isProfileEmailValidatedSelector } from "../../../../store/reducers/profile";
+import { isProfileEmailValidatedSelector } from "../../../settings/store/selectors";
 import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
 import {
   duplicateSetAndAdd,

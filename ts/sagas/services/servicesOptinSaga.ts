@@ -5,7 +5,7 @@ import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import {
   isServicesPreferenceModeSet,
   profileServicePreferencesModeSelector
-} from "../../store/reducers/profile";
+} from "../../features/settings/store/selectors";
 import NavigationService from "../../navigation/NavigationService";
 
 /**

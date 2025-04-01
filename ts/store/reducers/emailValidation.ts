@@ -13,7 +13,7 @@ import {
   emailValidationPollingStop,
   setEmailCheckAtStartupFailure,
   startEmailValidation
-} from "../actions/profile";
+} from "../../features/settings/store/actions";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 

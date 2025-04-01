@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
 import { loadMessageDetails, reloadAllMessages } from "../actions";
-import { clearCache } from "../../../../store/actions/profile";
+import { clearCache } from "../../../settings/store/actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessageDetails } from "../../types";

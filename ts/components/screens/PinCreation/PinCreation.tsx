@@ -22,9 +22,9 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import {
   trackPinError,
   trackPinScreen
-} from "../../../screens/profile/analytics";
+} from "../../../features/settings/views/analytics";
 import { useIOSelector } from "../../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
+import { isProfileFirstOnBoardingSelector } from "../../../features/settings/store/selectors";
 import { PinString } from "../../../types/PinString";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { getFlowType } from "../../../utils/analytics";

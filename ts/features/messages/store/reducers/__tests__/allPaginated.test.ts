@@ -34,7 +34,7 @@ import reducer, {
 } from "../allPaginated";
 import { pageSize } from "../../../../../config";
 import { UIMessage } from "../../../types";
-import { clearCache } from "../../../../../store/actions/profile";
+import { clearCache } from "../../../../settings/store/actions";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { MessageListCategory } from "../../../types/messageListCategory";

@@ -5,18 +5,18 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
+import { isProfileFirstOnBoardingSelector } from "../../features/settings/store/selectors";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { trackMixpanelScreen } from "../profile/analytics";
+import { trackMixpanelScreen } from "../../features/settings/views/analytics";
 import {
   TrackingInfo,
   trackMixPanelTrackingInfo,
   trackMixpanelDeclined,
   trackMixpanelSetEnabled
-} from "../profile/analytics/mixpanel/mixpanelAnalytics";
-import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
-import { ShareDataComponent } from "../profile/components/ShareDataComponent";
+} from "../../features/settings/views/analytics/mixpanel/mixpanelAnalytics";
+import { useConfirmOptOutBottomSheet } from "../../features/settings/views/components/OptOutBottomSheet";
+import { ShareDataComponent } from "../../features/settings/views/components/ShareDataComponent";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
 import { IOScrollViewActions } from "../../components/ui/IOScrollView";
