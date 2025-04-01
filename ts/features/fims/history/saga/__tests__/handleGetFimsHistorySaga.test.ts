@@ -6,7 +6,7 @@ import { expectSaga, testSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga-test-plan/matchers";
 import { select } from "typed-redux-saga/macro";
 import * as PERSISTED_SELECTORS from "../../../../../store/reducers/persistedPreferences";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import * as TRACK_FAILURE from "../../../common/analytics";
 import { preferredLanguageToString } from "../../../common/utils";
 import { FimsHistoryClient } from "../../api/client";
