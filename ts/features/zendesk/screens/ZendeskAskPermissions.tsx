@@ -24,9 +24,8 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
-  isLoggedIn,
   zendeskTokenSelector
-} from "../../../store/reducers/authentication";
+} from "../../authentication/common/store/selectors";
 import { appVersionHistorySelector } from "../../../store/reducers/installation";
 import {
   profileEmailSelector,
@@ -72,6 +71,7 @@ import {
   zendeskSelectedSubcategorySelector,
   ZendeskTokenStatusEnum
 } from "../store/reducers";
+import { isLoggedIn } from "../../authentication/common/store/utils/guards";
 
 /**
  * Transform an array of string into a Zendesk

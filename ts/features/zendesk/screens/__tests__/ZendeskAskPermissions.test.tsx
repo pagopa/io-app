@@ -1,27 +1,27 @@
-import { createStore, Store } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import { ReactTestInstance } from "react-test-renderer";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import ZendeskAskPermissions from "../ZendeskAskPermissions";
+import { createStore, Store } from "redux";
+import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
+import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
+import * as mixpanel from "../../../../mixpanel";
 import ROUTES from "../../../../navigation/routes";
-import * as device from "../../../../utils/device";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { profileLoadSuccess } from "../../../../store/actions/profile";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { SessionToken } from "../../../../types/SessionToken";
 import * as appVersion from "../../../../utils/appVersion";
+import * as device from "../../../../utils/device";
+import { SpidIdp } from "../../../../utils/idps";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import * as url from "../../../../utils/url";
 import {
   idpSelected,
   loginSuccess
-} from "../../../../store/actions/authentication";
-import { SessionToken } from "../../../../types/SessionToken";
-import { profileLoadSuccess } from "../../../../store/actions/profile";
-import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
-import * as mixpanel from "../../../../mixpanel";
+} from "../../../authentication/common/store/actions";
 import * as zendeskAction from "../../store/actions";
-import * as url from "../../../../utils/url";
 import { zendeskSelectedCategory } from "../../store/actions";
-import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
-import { SpidIdp } from "../../../../utils/idps";
+import ZendeskAskPermissions from "../ZendeskAskPermissions";
 
 jest.useFakeTimers();
 
