@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { type DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
-import { sessionTokenSelector } from "../../../../../store/reducers/authentication";
+import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getWalletInstanceStatus } from "../../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";

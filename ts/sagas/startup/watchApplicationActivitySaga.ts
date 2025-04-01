@@ -11,8 +11,8 @@ import {
   isStartupLoaded
 } from "../../store/reducers/startup";
 import { handlePendingMessageStateIfAllowed } from "../../features/pushNotifications/sagas/common";
-import { areTwoMinElapsedFromLastActivity } from "../../features/fastLogin/store/actions/sessionRefreshActions";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { areTwoMinElapsedFromLastActivity } from "../../features/authentication/fastLogin/store/actions/sessionRefreshActions";
+import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:
