@@ -3361,7 +3361,7 @@
         "filters": {
           "tabs": {
             "all": "Alle",
-            "payer": "In-App-Zahlung",
+            "payer": "Ich habe dafür bezahlt",
             "debtor": "Auf mich lautend"
           }
         },
@@ -3371,7 +3371,7 @@
             "subtitle": "Wenn du eine Quittung für eine pagoPA-Zahlungsmitteilung suchst, die du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
           },
           "emptyPayer": {
-            "title": "Hier findest du Quittungen für Zahlungen, die mit der App getätigt wurden."
+            "title": "Hier siehst du Belege für deine Zahlungen"
           }
         }
       },

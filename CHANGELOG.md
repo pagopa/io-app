@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0-rc.5](https://github.com/pagopa/io-app/compare/3.2.0-rc.4...3.2.0-rc.5) (2025-03-31)
+
+
+### Bug Fixes
+
+* [[IOBP-1528](https://pagopa.atlassian.net/browse/IOBP-1528)] Receipt organization fiscal code mixpanel tracking ([#6855](https://github.com/pagopa/io-app/issues/6855)) ([5810d2d](https://github.com/pagopa/io-app/commit/5810d2d097c8eb16bf4617eecc65618a9c1233ad))
+* [[IOCOM-2284](https://pagopa.atlassian.net/browse/IOCOM-2284)] Proper tracking of the CTA decoding failure analytics  ([#6850](https://github.com/pagopa/io-app/issues/6850)) ([244e7c4](https://github.com/pagopa/io-app/commit/244e7c4a17af893e7525a9b26afdc79515959b76))
+
+## [3.2.0-rc.4](https://github.com/pagopa/io-app/compare/3.2.0-rc.3...3.2.0-rc.4) (2025-03-31)
+
+
+### Bug Fixes
+
+* [[IOCOM-2279](https://pagopa.atlassian.net/browse/IOCOM-2279)] logout misbehaviour for SEND banner dismissal ([#6854](https://github.com/pagopa/io-app/issues/6854)) ([85fbdba](https://github.com/pagopa/io-app/commit/85fbdbaa3c93aa0b9a19de8fa15b55046b08928b))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2081](https://pagopa.atlassian.net/browse/SIW-2081)] Handle inconsistent wallet instance states, eID present and integrity key missing ([#6852](https://github.com/pagopa/io-app/issues/6852)) ([9f1b9e7](https://github.com/pagopa/io-app/commit/9f1b9e78eec61b6b60303db161e7fb098525dbd1))
+
 ## [3.2.0-rc.3](https://github.com/pagopa/io-app/compare/3.2.0-rc.2...3.2.0-rc.3) (2025-03-27)
 
 

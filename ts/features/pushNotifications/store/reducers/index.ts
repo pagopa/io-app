@@ -11,7 +11,7 @@ import {
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isDevEnv, isTestEnv } from "../../../../utils/environment";
-import { userFromSuccessLoginSelector } from "../../../login/info/store/selectors";
+import { userFromSuccessLoginSelector } from "../../../authentication/loginInfo/store/selectors";
 import { hasUserSeenSystemNotificationsPromptSelector } from "../selectors";
 import { generateTokenRegistrationTime } from "../../utils";
 import { environmentReducer, EnvironmentState } from "./environment";
