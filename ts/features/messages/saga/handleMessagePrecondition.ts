@@ -5,7 +5,7 @@ import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
 import { convertUnknownToError } from "../../../utils/errors";
 import { isTestEnv } from "../../../utils/environment";
-import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { trackDisclaimerLoadError } from "../analytics";
 import {
