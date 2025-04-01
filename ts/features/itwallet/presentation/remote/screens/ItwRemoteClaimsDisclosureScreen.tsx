@@ -31,7 +31,11 @@ const ItwRemoteClaimsDisclosureScreen = () => {
 
   if (isLoading) {
     return (
-      <ItwRemoteLoadingScreen title="Stiamo facendo alcune verifiche di sicurezza" />
+      <ItwRemoteLoadingScreen
+        title={I18n.t(
+          "features.itWallet.presentation.remote.loadingScreen.request"
+        )}
+      />
     );
   }
 

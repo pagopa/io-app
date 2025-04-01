@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { View } from "react-native";
 import {
   Body,
@@ -36,11 +36,10 @@ const ItwRemotePresentationDetails = () => {
     selectUserSelectedOptionalCredentials
   );
 
-  if (!presentationDetails) {
-    return null;
-  }
-
-  const { required, optional } = groupCredentialsByPurpose(presentationDetails);
+  const { required, optional } = useMemo(
+    () => groupCredentialsByPurpose(presentationDetails ?? []),
+    [presentationDetails]
+  );
 
   const renderCredentialsBlock = (credentials: EnrichedPresentationDetails) => (
     <VStack space={24}>
@@ -67,7 +66,13 @@ const ItwRemotePresentationDetails = () => {
             iconName="security"
             iconColor={theme["icon-decorative"]}
           />
-          {purpose && <Body>{purpose}</Body>}
+          {purpose && (
+            <Body>
+              {I18n.t("features.itWallet.presentation.remote.purpose", {
+                purpose
+              })}
+            </Body>
+          )}
           {renderCredentialsBlock(credentials)}
         </View>
       ))}
@@ -81,7 +86,13 @@ const ItwRemotePresentationDetails = () => {
             iconName="security"
             iconColor={theme["icon-decorative"]}
           />
-          {purpose && <Body>{purpose}</Body>}
+          {purpose && (
+            <Body>
+              {I18n.t("features.itWallet.presentation.remote.purpose", {
+                purpose
+              })}
+            </Body>
+          )}
           {renderCredentialsBlock(credentials)}
         </View>
       ))}

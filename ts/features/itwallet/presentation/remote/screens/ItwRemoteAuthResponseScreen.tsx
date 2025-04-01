@@ -1,4 +1,5 @@
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../../../i18n";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import { selectIsLoading, selectRelyingPartyData } from "../machine/selectors";
@@ -11,7 +12,10 @@ export const ItwRemoteAuthResponseScreen = () => {
   if (isLoading) {
     return (
       <ItwRemoteLoadingScreen
-        title={`Stiamo comunicando i tuoi dati a ${rpData?.organization_name}`}
+        title={I18n.t(
+          "features.itWallet.presentation.remote.loadingScreen.response",
+          { relyingParty: rpData?.organization_name }
+        )}
       />
     );
   }
@@ -19,10 +23,12 @@ export const ItwRemoteAuthResponseScreen = () => {
   return (
     <OperationResultScreenContent
       pictogram="success"
-      title="Fatto!"
-      subtitle="Continua sul sito dell'ente"
+      title={I18n.t("features.itWallet.presentation.remote.success.title")}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.remote.success.subtitle"
+      )}
       action={{
-        label: "Chiudi",
+        label: I18n.t("global.buttons.close"),
         onPress: () => machineRef.send({ type: "close" })
       }}
     />

@@ -4593,8 +4593,9 @@
         },
         "remote": {
           "loadingScreen": {
-            "title": "Stiamo facendo alcune verifiche di sicurezza...",
-            "subtitle": "Attendi qualche secondo"
+            "request": "Stiamo facendo alcune verifiche di sicurezza",
+            "response": "Stiamo comunicando i tuoi dati a {{relyingParty}}",
+            "subtitle": "Attendi qualche secondo..."
           },
           "walletInactiveScreen": {
             "title": "Attiva Documenti su IO per continuare",
@@ -4619,6 +4620,11 @@
             "subtitle": "È un passaggio di verifica necessario per continuare ad usare Documenti su IO per autenticarti.",
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
+          },
+          "purpose": "Finalità: {{purpose}}",
+          "success": {
+            "title": "Fatto!",
+            "subtitle": "Continua sul sito dell'ente"
           }
         }
       },
