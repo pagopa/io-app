@@ -9,6 +9,7 @@ import { PersistedNotificationsState } from "../../features/pushNotifications/st
 import { PersistedAuthenticationState } from "../../features/authentication/common/store/reducers";
 import { CieState } from "../../features/authentication/login/cie/store/reducers/cie";
 import { ProfileState } from "../../features/settings/store/reducers";
+import { UserDataProcessingState } from "../../features/settings/store/reducers/userDataProcessing";
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { ContentState } from "./content";
@@ -23,7 +24,6 @@ import { OnboardingState } from "./onboarding";
 import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { SearchState } from "./search";
-import { UserDataProcessingState } from "./userDataProcessing";
 import { StartupState } from "./startup";
 import { RemoteConfigState } from "./backendStatus/remoteConfig";
 import { StatusMessagesState } from "./backendStatus/statusMessages";

@@ -3,16 +3,16 @@ import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
-import { BackendClient } from "../../api/backend";
+import { UserDataProcessingChoiceEnum } from "../../../../definitions/backend/UserDataProcessingChoice";
+import { BackendClient } from "../../../api/backend";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing,
   upsertUserDataProcessing
-} from "../../store/actions/userDataProcessing";
-import { SagaCallReturnType } from "../../types/utils";
-import { convertUnknownToError, getError } from "../../utils/errors";
-import { withRefreshApiCall } from "../../features/authentication/fastLogin/saga/utils";
+} from "../store/actions/userDataProcessing";
+import { SagaCallReturnType } from "../../../types/utils";
+import { convertUnknownToError, getError } from "../../../utils/errors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 
 /**
  * The following logic:

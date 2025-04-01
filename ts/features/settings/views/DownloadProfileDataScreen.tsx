@@ -15,9 +15,9 @@ import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollView
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { upsertUserDataProcessing } from "../../../store/actions/userDataProcessing";
+import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { userDataProcessingSelector } from "../../../store/reducers/userDataProcessing";
+import { userDataProcessingSelector } from "../store/selectors/userDataProcessing";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 
 /**

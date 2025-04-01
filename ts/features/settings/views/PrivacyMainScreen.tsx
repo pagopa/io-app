@@ -25,9 +25,9 @@ import ROUTES from "../../../navigation/routes";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing
-} from "../../../store/actions/userDataProcessing";
+} from "../store/actions/userDataProcessing";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { userDataProcessingSelector } from "../../../store/reducers/userDataProcessing";
+import { userDataProcessingSelector } from "../store/selectors/userDataProcessing";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 

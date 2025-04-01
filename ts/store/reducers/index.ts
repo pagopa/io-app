@@ -42,6 +42,7 @@ import authenticationReducer, {
 } from "../../features/authentication/common/store/reducers";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import profileReducer from "../../features/settings/store/reducers";
+import userDataProcessingReducer from "../../features/settings/store/reducers/userDataProcessing";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import contentReducer, {
@@ -69,7 +70,6 @@ import preferencesReducer from "./preferences";
 import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
-import userDataProcessingReducer from "./userDataProcessing";
 import remoteConfigReducer from "./backendStatus/remoteConfig";
 import statusMessagesReducer from "./backendStatus/statusMessages";
 import sectionStatusReducer from "./backendStatus/sectionStatus";

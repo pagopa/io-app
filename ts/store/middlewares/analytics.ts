@@ -50,7 +50,7 @@ import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   deleteUserDataProcessing,
   upsertUserDataProcessing
-} from "../actions/userDataProcessing";
+} from "../../features/settings/store/actions/userDataProcessing";
 import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";

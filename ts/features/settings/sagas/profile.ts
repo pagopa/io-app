@@ -35,7 +35,7 @@ import {
   removeAccountMotivation,
   startEmailValidation
 } from "../store/actions";
-import { upsertUserDataProcessing } from "../../../store/actions/userDataProcessing";
+import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
 import { isCGNEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isDifferentFiscalCodeSelector } from "../../../store/reducers/crossSessions";
 import { profileSelector } from "../store/selectors";

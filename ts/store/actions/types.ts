@@ -44,6 +44,7 @@ import { ConnectivityActions } from "../../features/connectivity/store/actions";
 import { LoginPreferencesActions } from "../../features/authentication/loginPreferences/store/actions";
 import { AuthenticationActions } from "../../features/authentication/common/store/actions";
 import { ProfileActions } from "../../features/settings/store/actions";
+import { UserDataProcessingActions } from "../../features/settings/store/actions/userDataProcessing";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { BackendStatusActions } from "./backendStatus";
@@ -62,7 +63,6 @@ import { PreferencesActions } from "./preferences";
 import { ProfileEmailValidationAction } from "./profileEmailValidationChange";
 import { SearchActions } from "./search";
 import { StartupActions } from "./startup";
-import { UserDataProcessingActions } from "./userDataProcessing";
 
 export type Action =
   | AnalyticsActions

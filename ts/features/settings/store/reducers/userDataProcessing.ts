@@ -1,10 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { UserDataProcessing } from "../../../definitions/backend/UserDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
-import { computedProp } from "../../types/utils";
-import { clearCache } from "../../features/settings/store/actions";
-import { Action } from "../actions/types";
+import { UserDataProcessing } from "../../../../../definitions/backend/UserDataProcessing";
+import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
+import { computedProp } from "../../../../types/utils";
+import { clearCache } from "../actions";
+import { Action } from "../../../../store/actions/types";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing,
@@ -12,7 +12,6 @@ import {
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
 } from "../actions/userDataProcessing";
-import { GlobalState } from "./types";
 
 export type UserDataProcessingState = {
   [key in keyof typeof UserDataProcessingChoiceEnum]: pot.Pot<
@@ -100,18 +99,3 @@ const userDataProcessingReducer = (
 };
 
 export default userDataProcessingReducer;
-
-// Selectors
-export const userDataProcessingSelector = (state: GlobalState) =>
-  state.userDataProcessing;
-
-export const isUserDataProcessingDeleteLoadingSelector = (
-  state: GlobalState
-) => {
-  const deleteChoice = state.userDataProcessing.DELETE;
-
-  return pot.isLoading(deleteChoice) || pot.isUpdating(deleteChoice);
-};
-
-export const isUserDataProcessingDeleteErrorSelector = (state: GlobalState) =>
-  pot.isError(state.userDataProcessing.DELETE);

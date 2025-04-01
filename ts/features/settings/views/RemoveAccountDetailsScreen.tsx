@@ -33,13 +33,13 @@ import {
 import {
   isUserDataProcessingDeleteErrorSelector,
   isUserDataProcessingDeleteLoadingSelector
-} from "../../../store/reducers/userDataProcessing";
+} from "../store/selectors/userDataProcessing";
 import { withKeyboard } from "../../../utils/keyboard";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { resetDeleteUserDataProcessing } from "../../../store/actions/userDataProcessing";
+import { resetDeleteUserDataProcessing } from "../store/actions/userDataProcessing";
 
 type FooterButtonProps = {
   isLoading: boolean;
