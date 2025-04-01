@@ -65,36 +65,6 @@ const ContentView = () => {
       )
     );
 
-  /* const renderOptionalClaims = () => (
-    <VStack space={16}>
-      <View>
-        <ListItemHeader
-          label={I18n.t(
-            "features.itWallet.presentation.selectiveDisclosure.optionalClaims"
-          )}
-          iconName="security"
-          iconColor={theme["icon-default"]}
-        />
-        <View style={{ alignSelf: "flex-end" }}>
-          <ButtonLink
-            label={I18n.t(
-              `global.buttons.${allOptionalClaimsSelected ? "deselectAll" : "selectAll"
-              }`
-            )}
-            onPress={toggleAllOptionalClaims}
-          />
-        </View>
-      </View>
-
-      <Alert
-        variant="info"
-        content={I18n.t(
-          "features.itWallet.presentation.selectiveDisclosure.optionalClaimsAlert"
-        )}
-      />
-    </VStack>
-  ); */
-
   return (
     <ForceScrollDownView
       footerActions={{

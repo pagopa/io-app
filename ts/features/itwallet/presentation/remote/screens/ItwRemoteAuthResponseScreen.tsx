@@ -4,6 +4,7 @@ import { ItwRemoteMachineContext } from "../machine/provider";
 import { selectIsLoading, selectRelyingPartyData } from "../machine/selectors";
 
 export const ItwRemoteAuthResponseScreen = () => {
+  const machineRef = ItwRemoteMachineContext.useActorRef();
   const isLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
   const rpData = ItwRemoteMachineContext.useSelector(selectRelyingPartyData);
 
@@ -22,7 +23,7 @@ export const ItwRemoteAuthResponseScreen = () => {
       subtitle="Continua sul sito dell'ente"
       action={{
         label: "Chiudi",
-        onPress: () => null
+        onPress: () => machineRef.send({ type: "close" })
       }}
     />
   );

@@ -28,7 +28,7 @@ export const itwRemoteMachine = setup({
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToAuthResponseScreen: notImplemented,
-    close: notImplemented
+    closePresentation: notImplemented
   },
   actors: {
     evaluateRelyingPartyTrust: fromPromise<
@@ -154,7 +154,7 @@ export const itwRemoteMachine = setup({
           target: "SendingAuthorizationResponse"
         },
         close: {
-          actions: "close"
+          actions: "closePresentation"
         }
       }
     },
@@ -171,7 +171,7 @@ export const itwRemoteMachine = setup({
           presentationDetails: context.presentationDetails
         }),
         onDone: {
-          target: "Completed"
+          target: "Success"
         },
         onError: {
           actions: "setFailure",
@@ -179,8 +179,14 @@ export const itwRemoteMachine = setup({
         }
       }
     },
-    Completed: {
-      type: "final"
+    Success: {
+      description:
+        "The Verifiable Presentation has been successfully sent to the Relying Party",
+      on: {
+        close: {
+          actions: "closePresentation"
+        }
+      }
     },
     Failure: {
       entry: "navigateToFailureScreen",
@@ -193,7 +199,7 @@ export const itwRemoteMachine = setup({
           actions: "navigateToIdentificationModeScreen"
         },
         close: {
-          actions: "close"
+          actions: "closePresentation"
         }
       }
     }

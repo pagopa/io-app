@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { memo } from "react";
 import { View } from "react-native";
 import {
@@ -17,6 +16,7 @@ import {
 } from "../machine/selectors";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
+import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
 
 const mapClaims = (claims: Array<ClaimDisplayFormat>) =>
   claims.map(c => ({
@@ -24,36 +24,6 @@ const mapClaims = (claims: Array<ClaimDisplayFormat>) =>
     title: c.value as string,
     description: c.label
   }));
-
-const groupByPurpose = (items: EnrichedPresentationDetails) => {
-  const required = {} as Record<
-    string,
-    Array<EnrichedPresentationDetails[number]>
-  >;
-  const optional = {} as Record<
-    string,
-    Array<EnrichedPresentationDetails[number]>
-  >;
-
-  for (const item of items) {
-    for (const purpose of item.purposes) {
-      const target = purpose.required ? required : optional;
-      target[purpose.description ?? ""] ??= [];
-      target[purpose.description ?? ""].push(item);
-    }
-  }
-
-  return {
-    required: Object.entries(required).map(([purpose, credentials]) => ({
-      purpose,
-      credentials
-    })),
-    optional: Object.entries(optional).map(([purpose, credentials]) => ({
-      purpose,
-      credentials
-    }))
-  };
-};
 
 const ItwRemotePresentationDetails = () => {
   const theme = useIOTheme();
@@ -70,7 +40,7 @@ const ItwRemotePresentationDetails = () => {
     return null;
   }
 
-  const { required, optional } = groupByPurpose(presentationDetails);
+  const { required, optional } = groupCredentialsByPurpose(presentationDetails);
 
   const renderCredentialsBlock = (credentials: EnrichedPresentationDetails) => (
     <VStack space={24}>
