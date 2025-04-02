@@ -8,7 +8,6 @@ import * as USEIO from "../../../../../store/hooks";
 import * as SID_SELECTOR from "../../../../../store/reducers/backendStatus/remoteConfig";
 import * as LOADING_PN_ACTIVATION from "../../../store/reducers/activation";
 import * as PREFERENCES_FETCHER from "../../../hooks/usePnPreferencesFetcher";
-
 import {
   PNActivationBannerFlowScreen,
   pnBannerFlowStateEnum
@@ -20,6 +19,19 @@ import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../store/reducers/types";
 import PN_ROUTES from "../../../navigation/routes";
+import { sendBannerMixpanelEvents } from "../../../analytics/activationReminderBanner";
+
+jest.mock("../../../analytics/activationReminderBanner", () => {
+  const actual = jest.requireActual(
+    "../../../analytics/activationReminderBanner"
+  );
+  return {
+    sendBannerMixpanelEvents: {
+      ...actual.sendBannerMixpanelEvents,
+      activationStart: jest.fn()
+    }
+  };
+});
 
 const WAITING_USER_INPUT_BASE_MOCKS = () => {
   jest
@@ -175,7 +187,7 @@ describe("activation input screen", () => {
     jest.restoreAllMocks();
   });
   for (const result of ["success", "error"] as const) {
-    it(`should dispatch an upsert request on cta click, and correctly deliver a ${result} result. should then show the correct result screen`, () => {
+    it(`should dispatch an upsert request and a tracking action on cta click, and correctly deliver a ${result} result. should then show the correct result screen`, () => {
       const mockSetState = jest.fn();
 
       const useStateMock = jest
@@ -196,6 +208,7 @@ describe("activation input screen", () => {
       expect(cta).toBeDefined();
       fireEvent.press(cta);
       expect(mockSetState).toHaveBeenCalledWith(expectedState);
+      expect(sendBannerMixpanelEvents.activationStart).toHaveBeenCalled();
 
       // ---- new screen rendered ----
 

@@ -117,7 +117,8 @@
           "label": "Kontextbezogene Hilfe",
           "hint": "Greif auf Informationen über den Inhalt des aktuellen Bildschirms zu"
         }
-      }
+      },
+      "progressTracker": "{{index}} von {{total}}"
     },
     "symbols": {
       "question": "?",
@@ -1874,7 +1875,7 @@
       "idTransaction": "Identifikationscode der Transaktion",
       "amountInfo": {
         "title": "Ist der Betrag anders als auf der pagoPA-Benachrichtigung?",
-        "message": "Wenn sich der Betrag ändert, bedeutet das, dass die Gläubigerinstitution ihn automatisch aktualisiert hat. So kannst du sicher sein, immer den fälligen Betrag zu bezahlen. Falls er höher ist, könnten Zinsen, Strafen oder Benachrichtigungskosten anfallen.\n\nFür weitere Details wende dich bitte an die Gläubigerinstitution, da pagoPA die Gründe für die Aktualisierung nicht kennt.",
+        "message": "Wenn sich der Betrag ändert, bedeutet das, dass er automatisch aktualisiert wurde.\n\nFalls er höher ist, können Zinsen, Strafen oder Benachrichtigungskosten anfallen.\n\nHandelt es sich bei der pagoPA-Mitteilung um eine rechtlich relevante Kommunikation, kann die Erhöhung des zu zahlenden Betrags verschiedene Gründe haben, zum Beispiel:\n- wenn du die Mitteilung per Einschreiben erhalten hast (die Druck- und Versandkosten können zu deinen Lasten gehen);\n- die Anzahl der Zustellversuche.\nFür weitere Details wende dich bitte an die  Gläubigerinstitution.\n\nFür weitere Details wende dich bitte an die Gläubigerinstitution, da pagoPA die Gründe für die Aktualisierung nicht kennt.",
         "cta": "OK, habe verstanden"
       },
       "contextualHelpTitle": "Zusammenfassung der Transaktion",
@@ -2322,7 +2323,7 @@
         },
         "WAITING_CONFIRMATION_EMAIL": {
           "title": "Warte auf eine Bestätigung per E-Mail",
-          "subtitle": "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an {{email}}.",
+          "subtitle": "Die Zahlung wurde noch nicht abgeschlossen: Wenn du innerhalb von 15 Minuten keine positive Bestätigung an {{email}} erhältst, versuche es bitte erneut.",
           "defaultSubtitle": "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an die verbundene E-Mail-Adresse."
         },
         "METHOD_NOT_ENABLED": {
@@ -2939,7 +2940,7 @@
             "title": "Wie sind die Kategorien angeordnet?",
             "content": "Um deine Suche zu erleichtern und deine Erfahrung zu verbessern, haben wir die Kategorien nach der Häufigkeit der Nutzung geordnet. Diese Informationen sind nicht mit deinem Profil verknüpft, sondern beruhen auf den Gesamtdaten aller Nutzer, die die Nationale Jugendkarte nutzen und der Verarbeitung ihrer Daten zugestimmt haben."
           },
-          "a11y": "{{name}} {{count}} Neue Möglichkeiten gefunden"
+          "a11y": "{{name}}, {{count}} Neue Möglichkeiten gefunden"
         },
         "filter": {
           "title": "Anbieter filtern",
@@ -3058,6 +3059,9 @@
           "expiration": {
             "cgn": "Gültig bis",
             "eyca": "Gültig bis"
+          },
+          "a11y": {
+            "cardStatus": "Charterstatus: {{status}}"
           }
         }
       },
@@ -3360,7 +3364,7 @@
         "filters": {
           "tabs": {
             "all": "Alle",
-            "payer": "In-App-Zahlung",
+            "payer": "Ich habe dafür bezahlt",
             "debtor": "Auf mich lautend"
           }
         },
@@ -3370,7 +3374,7 @@
             "subtitle": "Wenn du eine Quittung für eine pagoPA-Zahlungsmitteilung suchst, die du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
           },
           "emptyPayer": {
-            "title": "Hier findest du Quittungen für Zahlungen, die mit der App getätigt wurden."
+            "title": "Hier siehst du Belege für deine Zahlungen"
           }
         }
       },

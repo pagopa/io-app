@@ -23,26 +23,26 @@ import {
   logoutFailure,
   logoutSuccess,
   sessionExpired
-} from "../actions/authentication";
+} from "../../features/authentication/common/store/actions";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
-import { fastLoginOptInInitialState } from "../../features/fastLogin/store/reducers/optInReducer";
+import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
-import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
+import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
 import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
 import { appFeedbackInitialState } from "../../features/appReviews/store/reducers";
-import appStateReducer from "./appState";
-import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as authenticationInitialState
-} from "./authentication";
-import cieReducer from "./cie";
+} from "../../features/authentication/common/store/reducers";
+import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
+import appStateReducer from "./appState";
+import assistanceToolsReducer from "./assistanceTools";
 import contentReducer, {
   initialContentState as contentInitialContentState
 } from "./content";
@@ -277,11 +277,11 @@ export function createRootReducer(
                 ...state.features.itWallet
               },
               pn: {
-                ...state.features.pn,
-                bannerDismiss: {
-                  ...state.features.pn.bannerDismiss,
-                  dismissed: false
-                }
+                // Logout changes are already handled in PN's reducer.
+                // This way, we make sure that if the user leaves the application
+                // before the persistance is updated, we do not find ourselves
+                // with a dirty state.
+                ...state.features.pn
               },
               _persist: state.features._persist
             },

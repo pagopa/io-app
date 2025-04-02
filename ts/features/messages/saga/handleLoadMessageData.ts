@@ -38,9 +38,13 @@ import {
 import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { ctaFromMessageCTA, unsafeMessageCTAFromInput } from "../utils/ctas";
+
 import { extractContentFromMessageSources } from "../utils";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
+import {
+  ctasFromLocalizedCTAs,
+  localizedCTAsFromFrontMatter
+} from "../utils/ctas";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>
@@ -317,12 +321,18 @@ function* dispatchSuccessAction(
 
   const isPnEnabled = yield* select(isPnEnabledSelector);
 
-  const hasFIMSCTA = computeHasFIMSCTA(messageDetails, thirdPartyMessage);
+  const serviceId = paginatedMessage.serviceId;
+  const hasFIMSCTA = computeHasFIMSCTA(
+    messageDetails,
+    serviceId,
+    thirdPartyMessage
+  );
 
   yield* put(
     getMessageDataAction.success({
       containsAttachments: attachmentCount > 0,
       containsPayment,
+      createdAt: paginatedMessage.createdAt,
       firstTimeOpening: !paginatedMessage.isRead,
       hasFIMSCTA,
       hasRemoteContent: !!thirdPartyMessage,
@@ -387,6 +397,7 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
 
 const computeHasFIMSCTA = (
   messageDetails: UIMessageDetails,
+  serviceId: ServiceId,
   thirdPartyMessage: ThirdPartyMessageWithContent | undefined
 ) => {
   const markdownWithCTAs = extractContentFromMessageSources(
@@ -395,12 +406,15 @@ const computeHasFIMSCTA = (
     messageDetails,
     thirdPartyMessage
   );
-  const unsafeMessageCTA = unsafeMessageCTAFromInput(markdownWithCTAs);
-  const cta = ctaFromMessageCTA(unsafeMessageCTA);
-  if (cta != null && isFIMSLink(cta.cta_1.action)) {
+  const localizedCTAs = localizedCTAsFromFrontMatter(
+    markdownWithCTAs,
+    serviceId
+  );
+  const ctas = ctasFromLocalizedCTAs(localizedCTAs, serviceId);
+  if (ctas != null && isFIMSLink(ctas.cta_1.action)) {
     return true;
   }
-  if (cta?.cta_2 != null && isFIMSLink(cta.cta_2.action)) {
+  if (ctas?.cta_2 != null && isFIMSLink(ctas.cta_2.action)) {
     return true;
   }
   return false;

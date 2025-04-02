@@ -39,7 +39,9 @@ export function* handleDisableReceipt(
     analytics.trackHideReceiptSuccess({
       organization_name: paymentsAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentsAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentsAnalyticsData?.receiptUser
+      user: paymentsAnalyticsData?.receiptUser,
+      organization_fiscal_code:
+        paymentsAnalyticsData?.verifiedData?.paFiscalCode
     });
   };
 

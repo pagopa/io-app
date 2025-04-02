@@ -1,17 +1,31 @@
-import { ListRenderItem, View } from "react-native";
 import { Badge, H6, HSpacer, ListItemNav } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { ListRenderItem, View } from "react-native";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
+import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
+
+type Props = {
+  onItemPress: (id: Merchant["id"]) => void;
+  count: number;
+};
 
 export const CgnMerchantListViewRenderItem =
-  (props: {
-    onItemPress: (id: Merchant["id"]) => void;
-  }): ListRenderItem<OfflineMerchant | OnlineMerchant> =>
-  ({ item }) =>
-    (
+  (props: Props): ListRenderItem<OfflineMerchant | OnlineMerchant> =>
+  ({ item, index }) => {
+    const accessibilityLabel =
+      (item?.numberOfNewDiscounts
+        ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
+            name: item.name,
+            count: item.numberOfNewDiscounts
+          })
+        : item.newDiscounts
+        ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
+        : item.name) + getListItemAccessibilityLabelCount(props.count, index);
+
+    return (
       <View style={IOStyles.horizontalContentPadding}>
         <ListItemNav
           onPress={() => props.onItemPress(item.id)}
@@ -22,6 +36,7 @@ export const CgnMerchantListViewRenderItem =
               {item.newDiscounts && (
                 <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
                   <Badge
+                    accessible={false}
                     variant="cgn"
                     text={
                       item.numberOfNewDiscounts
@@ -33,7 +48,8 @@ export const CgnMerchantListViewRenderItem =
               )}
             </View>
           }
-          accessibilityLabel={item.name}
+          accessibilityLabel={accessibilityLabel}
         />
       </View>
     );
+  };
