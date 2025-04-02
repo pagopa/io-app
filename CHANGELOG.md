@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0-rc.6](https://github.com/pagopa/io-app/compare/3.2.0-rc.5...3.2.0-rc.6) (2025-04-01)
+
+
+### Chores
+
+* [[IOBP-1530](https://pagopa.atlassian.net/browse/IOBP-1530)] Update locales for Receipt screen tab and outcome text ([#6857](https://github.com/pagopa/io-app/issues/6857)) ([c31000a](https://github.com/pagopa/io-app/commit/c31000a860c536f0a775d5d11388c8ceb6e9314e))
+
 ## [3.2.0-rc.5](https://github.com/pagopa/io-app/compare/3.2.0-rc.4...3.2.0-rc.5) (2025-03-31)
 
 
