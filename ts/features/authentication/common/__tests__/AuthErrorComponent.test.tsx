@@ -1,6 +1,12 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import { createStore } from "redux";
 import I18n from "../../../../i18n";
-import AuthErrorComponent from "../components/AuthErrorComponent";
+import AuthErrorComponent, {
+  AuthErrorComponentProps
+} from "../components/AuthErrorComponent";
+import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 
 describe("AuthErrorComponent", () => {
   const testCases = [
@@ -118,4 +124,53 @@ describe("AuthErrorComponent", () => {
       });
     }
   );
+
+  test('renders UnlockAccessComponent when errorCodeOrMessage is "1002"', () => {
+    const { getByText } = renderComponent({
+      authLevel: "L2",
+      errorCodeOrMessage: "1002",
+      onRetry: jest.fn(),
+      onCancel: jest.fn()
+    });
+    expect(getByText(I18n.t("authentication.unlock.subtitlel2"))).toBeTruthy();
+  });
+
+  test("renders GENERIC_ERROR when errorCodeOrMessage is unknown", () => {
+    const { getByText } = renderComponent({
+      authLevel: "L2",
+      errorCodeOrMessage: "unknown_error",
+      onRetry: jest.fn(),
+      onCancel: jest.fn()
+    });
+
+    expect(
+      getByText(I18n.t("authentication.auth_errors.generic.title"))
+    ).toBeTruthy();
+    expect(
+      getByText(I18n.t("authentication.auth_errors.generic.subtitle"))
+    ).toBeTruthy();
+  });
+
+  test("renders GENERIC_ERROR when no errorCodeOrMessage is provided", () => {
+    const { getByText } = renderComponent({
+      authLevel: "L2",
+      onRetry: jest.fn(),
+      onCancel: jest.fn()
+    });
+
+    expect(
+      getByText(I18n.t("authentication.auth_errors.generic.title"))
+    ).toBeTruthy();
+  });
 });
+
+const renderComponent = (props: AuthErrorComponentProps) => {
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, initialState as any);
+  return renderScreenWithNavigationStoreContext(
+    () => <AuthErrorComponent {...props} />,
+    "DUMMY",
+    {},
+    store
+  );
+};
