@@ -1,12 +1,12 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { createStore } from "redux";
-import I18n from "../../../../i18n";
+import I18n from "../../../../../i18n";
 import AuthErrorComponent, {
   AuthErrorComponentProps
-} from "../components/AuthErrorComponent";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+} from "../AuthErrorComponent";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
 
 describe("AuthErrorComponent", () => {
   const testCases = [

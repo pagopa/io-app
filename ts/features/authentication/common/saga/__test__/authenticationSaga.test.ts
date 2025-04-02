@@ -2,29 +2,31 @@ import { createMockTask } from "@redux-saga/testing-utils";
 import { Task } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
 import * as O from "fp-ts/Option";
+import { authenticationSaga } from "../authenticationSaga";
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
-} from "../../../../store/actions/analytics";
-import { loginSuccess } from "../store/actions";
-import { SessionToken } from "../../../../types/SessionToken";
-import { authenticationSaga } from "../saga/authenticationSaga";
-import { startupLoadSuccess } from "../../../../store/actions/startup";
-import { StartupStatusEnum } from "../../../../store/reducers/startup";
-import { watchTestLoginRequestSaga } from "../saga/testLoginSaga";
+} from "../../../../../store/actions/analytics";
+import { watchTestLoginRequestSaga } from "../testLoginSaga";
 import {
   stopCieManager,
   watchCieAuthenticationSaga
-} from "../../login/cie/sagas/cie";
-import * as selectors from "../../fastLogin/store/selectors";
-
-import * as storeSelectors from "../store/selectors";
+} from "../../../login/cie/sagas/cie";
+import { loginSuccess } from "../../store/actions";
+import { SessionToken } from "../../../../../types/SessionToken";
+import * as storeSelectors from "../../store/selectors";
+import * as selectors from "../../../fastLogin/store/selectors";
 import {
   trackCieIDLoginSuccess,
   trackCieLoginSuccess,
   trackSpidLoginSuccess
-} from "../analytics";
-import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
+} from "../../analytics";
+import {
+  IdpCIE,
+  IdpCIE_ID
+} from "../../../login/hooks/useNavigateToLoginMethod";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -32,7 +34,7 @@ jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
 }));
 
-jest.mock("../analytics", () => ({
+jest.mock("../../analytics", () => ({
   trackCieLoginSuccess: jest.fn(),
   trackCieIDLoginSuccess: jest.fn(),
   trackSpidLoginSuccess: jest.fn(),

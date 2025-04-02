@@ -2,11 +2,11 @@ import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { NavigationContainer, InitialState } from "@react-navigation/native";
 import configureMockStore from "redux-mock-store";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { GlobalState } from "../../../../store/reducers/types";
-import AuthenticationNavigator from "../navigation/AuthenticationNavigator";
-import { AUTHENTICATION_ROUTES } from "../navigation/routes";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import AuthenticationNavigator from "../AuthenticationNavigator";
+import { AUTHENTICATION_ROUTES } from "../routes";
 
 const createMockStore = () => {
   const defaultState = appReducer(undefined, applicationChangeState("active"));

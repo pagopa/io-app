@@ -2,14 +2,14 @@ import { ComponentProps } from "react";
 import { createStore } from "redux";
 import { ScrollView } from "react-native";
 import { fireEvent } from "@testing-library/react-native";
-import { Carousel, CarouselProps } from "../components/Carousel";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { trackCarousel } from "../analytics/carouselAnalytics";
-import { LandingCardComponent } from "../../../../components/LandingCardComponent";
+import { Carousel, CarouselProps } from "../Carousel";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { trackCarousel } from "../../analytics/carouselAnalytics";
+import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 
-jest.mock("../analytics/carouselAnalytics", () => ({
+jest.mock("../../analytics/carouselAnalytics", () => ({
   trackCarousel: jest.fn()
 }));
 
@@ -87,7 +87,7 @@ const renderComponent = (props: CarouselProps) => {
 
   return renderScreenWithNavigationStoreContext(
     () => <Carousel {...props} />,
-    "DUMMY", // puoi mettere un nome qualsiasi qui
+    "DUMMY",
     {},
     store
   );

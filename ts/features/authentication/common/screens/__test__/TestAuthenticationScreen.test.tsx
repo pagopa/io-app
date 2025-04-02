@@ -1,23 +1,23 @@
 import { Text } from "react-native";
 import { createStore } from "redux";
 import { RenderAPI } from "@testing-library/react-native";
-import TestAuthenticationScreen from "../screens/TestAuthenticationScreen";
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { getTimeoutError } from "../../../../utils/errors";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { TestLoginState } from "../../../../store/reducers/testLogin";
-import { getAppVersion } from "../../../../utils/appVersion";
+import TestAuthenticationScreen from "../TestAuthenticationScreen";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { getTimeoutError } from "../../../../../utils/errors";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { TestLoginState } from "../../../../../store/reducers/testLogin";
+import { getAppVersion } from "../../../../../utils/appVersion";
 import {
   loginFailure,
   loginSuccess,
   testLoginCleanUp,
   testLoginRequest
-} from "../store/actions";
-import { PasswordLogin } from "../../../../../definitions/session_manager/PasswordLogin";
-import { SessionToken } from "../../../../types/SessionToken";
-import { AUTHENTICATION_ROUTES } from "../navigation/routes";
+} from "../../store/actions";
+import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
+import { SessionToken } from "../../../../../types/SessionToken";
+import { AUTHENTICATION_ROUTES } from "../../navigation/routes";
 
 const timeoutError = getTimeoutError();
 
