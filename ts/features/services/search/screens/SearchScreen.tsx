@@ -8,6 +8,7 @@ import {
   IOSpacingScale,
   IOStyles,
   IOToast,
+  ListItemHeader,
   SearchInput,
   SearchInputRef,
   VSpacer
@@ -21,8 +22,8 @@ import { useIODispatch } from "../../../../store/hooks";
 import { getLogoForInstitution } from "../../common/utils";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { EmptyState } from "../../common/components/EmptyState";
-import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
 import { ListItemSearchInstitution } from "../../common/components/ListItemSearchInstitution";
+import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import * as analytics from "../../common/analytics";
 
 const INPUT_PADDING: IOSpacingScale = 16;
@@ -133,7 +134,7 @@ export const SearchScreen = () => {
 
   const renderListFooterComponent = useCallback(() => {
     if (isUpdating) {
-      return <InstitutionListSkeleton />;
+      return <ServiceListSkeleton />;
     }
 
     return <VSpacer size={16} />;
@@ -160,11 +161,30 @@ export const SearchScreen = () => {
     }
 
     if (isLoading) {
-      return <InstitutionListSkeleton />;
+      return <ServiceListSkeleton sectionTitleShown />;
     }
 
     return null;
   }, [isLoading, query, data?.institutions]);
+
+  const renderListHeaderComponent = useCallback(() => {
+    if ((data?.count ?? 0) > 0) {
+      return (
+        <ListItemHeader
+          label={I18n.t("services.search.list.header.title")}
+          endElement={{
+            type: "badge",
+            componentProps: {
+              text: `${data?.count}`,
+              variant: "default"
+            }
+          }}
+        />
+      );
+    }
+
+    return null;
+  }, [data?.count]);
 
   return (
     <>
@@ -186,6 +206,7 @@ export const SearchScreen = () => {
         ItemSeparatorComponent={Divider}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
+        ListHeaderComponent={renderListHeaderComponent}
         contentContainerStyle={IOStyles.horizontalContentPadding}
         data={data?.institutions}
         estimatedItemSize={LIST_ITEM_HEIGHT}
