@@ -1,6 +1,6 @@
 import { put } from "typed-redux-saga/macro";
 import { startApplicationInitialization } from "../../store/actions/application";
-import { clearCache } from "../../features/settings/store/actions";
+import { clearCache } from "../../features/settings/common/store/actions";
 import { resetAssistanceData } from "../../utils/supportAssistance";
 
 export function* restartCleanApplication() {

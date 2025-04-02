@@ -5,21 +5,21 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../features/settings/store/selectors";
+import { isProfileFirstOnBoardingSelector } from "../../features/settings/common/store/selectors";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { trackMixpanelScreen } from "../../features/settings/views/analytics";
+import { trackMixpanelScreen } from "../../features/settings/common/analytics";
 import {
   TrackingInfo,
   trackMixPanelTrackingInfo,
   trackMixpanelDeclined,
   trackMixpanelSetEnabled
-} from "../../features/settings/views/analytics/mixpanel/mixpanelAnalytics";
-import { useConfirmOptOutBottomSheet } from "../../features/settings/views/components/OptOutBottomSheet";
-import { ShareDataComponent } from "../../features/settings/views/components/ShareDataComponent";
+} from "../../features/settings/common/analytics/mixpanel/mixpanelAnalytics";
+import { useConfirmOptOutBottomSheet } from "../../features/settings/privacy/shared/hooks/useConfirmOptOutBottomSheet";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
 import { IOScrollViewActions } from "../../components/ui/IOScrollView";
+import { ShareDataComponent } from "../../features/settings/privacy/shared/components/ShareDataComponent";
 
 const OnboardingShareDataScreen = (): ReactElement => {
   const dispatch = useIODispatch();

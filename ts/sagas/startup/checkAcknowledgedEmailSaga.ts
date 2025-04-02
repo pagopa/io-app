@@ -8,7 +8,7 @@ import {
   hasProfileEmail,
   isProfileEmailValidated,
   isProfileFirstOnBoarding
-} from "../../features/settings/store/selectors";
+} from "../../features/settings/common/store/selectors";
 import { ReduxSagaEffect } from "../../types/utils";
 
 /**

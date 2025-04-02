@@ -12,7 +12,7 @@ import {
   paymentsFromPNMessagePot
 } from "../../utils";
 import { UIMessageId } from "../../../messages/types";
-import { profileFiscalCodeSelector } from "../../../settings/store/selectors";
+import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { pnMessageFromIdSelector } from "../reducers";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import {

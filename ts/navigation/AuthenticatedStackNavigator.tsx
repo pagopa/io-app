@@ -64,7 +64,7 @@ import { isGestureEnabled } from "../utils/navigation";
 import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
 import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
 import { PageNotFound } from "../features/pageNotFound/screens/index.tsx";
-import CheckEmailNavigator from "./CheckEmailNavigator";
+import CheckEmailNavigator from "../features/mailCheck/navigation/CheckEmailNavigator.tsx";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";

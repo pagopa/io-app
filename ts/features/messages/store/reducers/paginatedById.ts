@@ -9,7 +9,7 @@ import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
 } from "../actions";
-import { clearCache } from "../../../settings/store/actions";
+import { clearCache } from "../../../settings/common/store/actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../types";

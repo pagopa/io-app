@@ -10,7 +10,7 @@ import {
 } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
-import { profileLoadSuccess } from "../../features/settings/store/actions";
+import { profileLoadSuccess } from "../../features/settings/common/store/actions";
 import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { ReduxSagaEffect } from "../../types/utils";
 

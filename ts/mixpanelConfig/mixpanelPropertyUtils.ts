@@ -11,11 +11,11 @@ import {
   NotificationPreferenceConfiguration,
   ServiceConfigurationTrackingType,
   getNotificationPreferenceConfiguration
-} from "../features/settings/views/analytics";
+} from "../features/settings/common/analytics";
 import {
   profileNotificationSettingsSelector,
   profileServicePreferencesModeSelector
-} from "../features/settings/store/selectors";
+} from "../features/settings/common/store/selectors";
 import { GlobalState } from "../store/reducers/types";
 import { isMixpanelEnabled } from "./../store/reducers/persistedPreferences";
 

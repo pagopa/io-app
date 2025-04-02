@@ -10,7 +10,7 @@ import {
   isItwOfflineAccessEnabledSelector,
   isMixpanelEnabled as isMixpanelEnabledSelector
 } from "../../../store/reducers/persistedPreferences";
-import { trackIngressScreen } from "../../settings/views/analytics";
+import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";

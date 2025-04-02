@@ -6,7 +6,7 @@ import {
 import { select } from "redux-saga/effects";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
 import { tosAccepted } from "../../../store/actions/onboarding";
-import { isProfileFirstOnBoarding } from "../../../features/settings/store/selectors";
+import { isProfileFirstOnBoarding } from "../../../features/settings/common/store/selectors";
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";

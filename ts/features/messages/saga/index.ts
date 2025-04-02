@@ -7,7 +7,7 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { SessionToken } from "../../../types/SessionToken";
-import { clearCache } from "../../settings/store/actions";
+import { clearCache } from "../../settings/common/store/actions";
 import { logoutSuccess } from "../../authentication/common/store/actions";
 import {
   downloadAttachment,

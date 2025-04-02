@@ -43,14 +43,14 @@ import {
   profileLoadRequest,
   profileUpsert,
   removeAccountMotivation
-} from "../../features/settings/store/actions";
+} from "../../features/settings/common/store/actions";
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
 import { searchMessagesEnabled } from "../actions/search";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   deleteUserDataProcessing,
   upsertUserDataProcessing
-} from "../../features/settings/store/actions/userDataProcessing";
+} from "../../features/settings/common/store/actions/userDataProcessing";
 import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";

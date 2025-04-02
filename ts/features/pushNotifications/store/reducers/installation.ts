@@ -6,7 +6,7 @@ import {
   sessionExpired,
   sessionInvalid
 } from "../../../authentication/common/store/actions";
-import { clearCache } from "../../../settings/store/actions";
+import { clearCache } from "../../../settings/common/store/actions";
 import {
   generateInstallationId,
   generateTokenRegistrationTime

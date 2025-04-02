@@ -48,7 +48,7 @@ import {
   maxAttempts,
   progressSelector
 } from "../../store/reducers/identification";
-import { profileNameSelector } from "../../features/settings/store/selectors";
+import { profileNameSelector } from "../../features/settings/common/store/selectors";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { biometricAuthenticationRequest } from "../../utils/biometrics";
 import { useAppBackgroundAccentColorName } from "../../utils/hooks/theme";

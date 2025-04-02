@@ -31,7 +31,7 @@ import {
   profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSurnameSelector
-} from "../../settings/store/selectors";
+} from "../../settings/common/store/selectors";
 import { getAppVersion } from "../../../utils/appVersion";
 import {
   getFreeDiskStorage,

@@ -14,7 +14,7 @@ import {
   sessionInvalid
 } from "../../../features/authentication/common/store/actions";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
-import { clearCache } from "../../../features/settings/store/actions";
+import { clearCache } from "../../../features/settings/common/store/actions";
 import { preferencesExperimentalDesignEnabled } from "../../actions/persistedPreferences";
 
 describe("persistedPreferences", () => {

@@ -26,7 +26,7 @@ import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { profileSelector } from "../../../../settings/store/selectors";
+import { profileSelector } from "../../../../settings/common/store/selectors";
 import { openWebUrl } from "../../../../../utils/url";
 import { CgnDiscountContent } from "../../components/merchants/discount/CgnDiscountContent";
 import { CgnDiscountHeader } from "../../components/merchants/discount/CgnDiscountHeader";

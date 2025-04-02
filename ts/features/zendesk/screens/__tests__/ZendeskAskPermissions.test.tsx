@@ -15,7 +15,7 @@ import {
 } from "../../../authentication/common/store/actions";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { SessionToken } from "../../../../types/SessionToken";
-import { profileLoadSuccess } from "../../../settings/store/actions";
+import { profileLoadSuccess } from "../../../settings/common/store/actions";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import * as mixpanel from "../../../../mixpanel";
 import * as zendeskAction from "../../store/actions";

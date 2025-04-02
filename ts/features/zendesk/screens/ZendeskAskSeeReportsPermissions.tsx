@@ -26,7 +26,7 @@ import {
   profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSurnameSelector
-} from "../../settings/store/selectors";
+} from "../../settings/common/store/selectors";
 import { openWebUrl } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
 import { type ZendeskAssistanceType } from "../store/actions";

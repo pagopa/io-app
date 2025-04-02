@@ -11,9 +11,9 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../utils/supportAssistance";
-import { isProfileFirstOnBoardingSelector } from "../features/settings/store/selectors";
+import { isProfileFirstOnBoardingSelector } from "../features/settings/common/store/selectors";
 import { getFlowType } from "../utils/analytics";
-import { trackCreatePinSuccess } from "../features/settings/views/analytics";
+import { trackCreatePinSuccess } from "../features/settings/common/analytics";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import ROUTES from "../navigation/routes";
 

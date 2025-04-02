@@ -26,14 +26,14 @@ import {
   isProfileFirstOnBoarding,
   isProfileFirstOnBoardingSelector,
   profileSelector
-} from "../../features/settings/store/selectors";
+} from "../../features/settings/common/store/selectors";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackTosUserExit } from "../../features/authentication/common/analytics";
 import {
   trackTosAccepted,
   trackTosScreen
-} from "../../features/settings/views/analytics";
+} from "../../features/settings/common/analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",

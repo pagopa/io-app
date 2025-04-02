@@ -24,7 +24,7 @@ import {
   profileFiscalCodeSelector,
   profileNameSelector,
   profileSelector
-} from "../../../settings/store/selectors";
+} from "../../../settings/common/store/selectors";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { capitalize } from "../../../../utils/strings";

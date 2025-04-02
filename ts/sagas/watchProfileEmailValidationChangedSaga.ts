@@ -2,7 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { profileLoadSuccess } from "../features/settings/store/actions";
+import { profileLoadSuccess } from "../features/settings/common/store/actions";
 import { profileEmailValidationChanged } from "../store/actions/profileEmailValidationChange";
 import { ReduxSagaEffect } from "../types/utils";
 import { isTestEnv } from "../utils/environment";

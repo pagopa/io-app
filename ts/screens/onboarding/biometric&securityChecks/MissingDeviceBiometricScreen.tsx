@@ -5,7 +5,7 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../../features/settings/store/selectors";
+import { isProfileFirstOnBoardingSelector } from "../../../features/settings/common/store/selectors";
 import { getFlowType } from "../../../utils/analytics";
 import { FAQsCategoriesType } from "../../../utils/faq";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";

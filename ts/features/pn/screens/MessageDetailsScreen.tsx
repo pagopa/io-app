@@ -13,7 +13,7 @@ import { OperationResultScreenContent } from "../../../components/screens/Operat
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
-import { profileFiscalCodeSelector } from "../../settings/store/selectors";
+import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
 import {

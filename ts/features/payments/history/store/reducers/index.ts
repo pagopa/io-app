@@ -8,7 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
-import { clearCache } from "../../../../settings/store/actions";
+import { clearCache } from "../../../../settings/common/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { getLookUpId } from "../../../../../utils/pmLookUpId";
 import {

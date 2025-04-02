@@ -7,11 +7,11 @@ import { startApplicationInitialization } from "../../store/actions/application"
 import {
   profileFirstLogin,
   profileUpsert
-} from "../../features/settings/store/actions";
+} from "../../features/settings/common/store/actions";
 import {
   hasProfileEmail,
   isProfileFirstOnBoarding
-} from "../../features/settings/store/selectors";
+} from "../../features/settings/common/store/selectors";
 import { ReduxSagaEffect } from "../../types/utils";
 
 function* enableProfileInboxWebhook() {

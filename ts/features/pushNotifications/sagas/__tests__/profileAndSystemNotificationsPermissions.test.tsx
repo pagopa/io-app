@@ -7,7 +7,7 @@ import { notificationsInfoScreenConsent } from "../../store/actions/profileNotif
 import { profileAndSystemNotificationsPermissions } from "../profileAndSystemNotificationsPermissions";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
-import { profileUpsert } from "../../../settings/store/actions";
+import { profileUpsert } from "../../../settings/common/store/actions";
 import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
 import {

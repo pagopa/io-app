@@ -1,5 +1,5 @@
-import { EmailInsertScreenNavigationParams } from "../../features/settings/views/EmailInsertScreen";
-import { SendEmailValidationScreenProp } from "../../features/settings/views/EmailValidationSendEmailScreen";
+import { EmailInsertScreenNavigationParams } from "../../features/settings/userData/shared/views/EmailInsertScreen";
+import { SendEmailValidationScreenProp } from "../../features/settings/userData/shared/views/EmailValidationSendEmailScreen";
 import ROUTES from "../routes";
 
 export type ProfileParamsList = {

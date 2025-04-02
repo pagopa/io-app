@@ -34,7 +34,7 @@ import {
   cgnMerchantVersionSelector,
   isCGNEnabledSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { profileSelector } from "../../../settings/store/selectors";
+import { profileSelector } from "../../../settings/common/store/selectors";
 import { GlobalState } from "../../../../store/reducers/types";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";

@@ -81,12 +81,12 @@ import { clearOnboarding } from "../store/actions/onboarding";
 import {
   clearCache,
   resetProfileState
-} from "../features/settings/store/actions";
+} from "../features/settings/common/store/actions";
 import {
   startupLoadSuccess,
   startupTransientError
 } from "../store/actions/startup";
-import { loadUserDataProcessing } from "../features/settings/store/actions/userDataProcessing";
+import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
 import {
   sessionInfoSelector,
   sessionTokenSelector
@@ -100,7 +100,7 @@ import { IdentificationResult } from "../store/reducers/identification";
 import {
   isProfileFirstOnBoarding,
   profileSelector
-} from "../features/settings/store/selectors";
+} from "../features/settings/common/store/selectors";
 import {
   StartupStatusEnum,
   startupTransientErrorInitialState
@@ -120,8 +120,8 @@ import {
   watchProfile,
   watchProfileRefreshRequestsSaga,
   watchProfileUpsertRequestsSaga
-} from "../features/settings/sagas/profile";
-import { watchUserDataProcessingSaga } from "../features/settings/sagas/userDataProcessing";
+} from "../features/settings/common/sagas/profile";
+import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {

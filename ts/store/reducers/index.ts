@@ -41,8 +41,8 @@ import authenticationReducer, {
   INITIAL_STATE as authenticationInitialState
 } from "../../features/authentication/common/store/reducers";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
-import profileReducer from "../../features/settings/store/reducers";
-import userDataProcessingReducer from "../../features/settings/store/reducers/userDataProcessing";
+import profileReducer from "../../features/settings/common/store/reducers";
+import userDataProcessingReducer from "../../features/settings/common/store/reducers/userDataProcessing";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import contentReducer, {

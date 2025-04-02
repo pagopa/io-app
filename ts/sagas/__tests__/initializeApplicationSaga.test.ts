@@ -6,12 +6,12 @@ import mockedProfile from "../../__mocks__/initializedProfile";
 
 import { sessionExpired } from "../../features/authentication/common/store/actions";
 import { previousInstallationDataDeleteSuccess } from "../../store/actions/installation";
-import { resetProfileState } from "../../features/settings/store/actions";
+import { resetProfileState } from "../../features/settings/common/store/actions";
 import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../../features/authentication/common/store/selectors";
-import { profileSelector } from "../../features/settings/store/selectors";
+import { profileSelector } from "../../features/settings/common/store/selectors";
 import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
 import {
@@ -22,7 +22,7 @@ import {
   loadProfile,
   watchProfile,
   watchProfileUpsertRequestsSaga
-} from "../../features/settings/sagas/profile";
+} from "../../features/settings/common/sagas/profile";
 import {
   initializeApplicationSaga,
   testWaitForNavigatorServiceInitialization

@@ -11,8 +11,8 @@ import FingerprintScreen from "../screens/onboarding/biometric&securityChecks/Fi
 import MissingDeviceBiometricScreen from "../screens/onboarding/biometric&securityChecks/MissingDeviceBiometricScreen";
 import MissingDevicePinScreen from "../screens/onboarding/biometric&securityChecks/MissingDevicePinScreen";
 import { isGestureEnabled } from "../utils/navigation";
-import EmailValidationSendEmailScreen from "../features/settings/views/EmailValidationSendEmailScreen";
-import EmailInsertScreen from "../features/settings/views/EmailInsertScreen";
+import EmailValidationSendEmailScreen from "../features/settings/userData/shared/views/EmailValidationSendEmailScreen";
+import EmailInsertScreen from "../features/settings/userData/shared/views/EmailInsertScreen";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 import ROUTES from "./routes";
 
