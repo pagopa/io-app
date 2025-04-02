@@ -8,11 +8,8 @@ import {
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import {
   IOBottomSheetHeaderRadius,
-  IOColors,
   IOSpacingScale,
-  IOVisualCostants,
-  useIOTheme,
-  useIOThemeContext
+  IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 
@@ -41,6 +38,7 @@ import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButto
 import { TestID } from "../../types/WithTestID";
 import { isScreenReaderEnabled } from "../accessibility";
 import { isIos } from "../platform";
+import { useModalStyle } from "./useModalStyle";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -154,10 +152,10 @@ export const useIOBottomSheetModal = ({
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
 
-  const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
-  const backdropOpacity = themeType === "light" ? 0.15 : 0.6;
+  const {
+    backdrop: { opacity: backdropOpacity },
+    modal: { backgroundColor }
+  } = useModalStyle();
 
   const bottomSheetProps = bottomSheetContent(component, title, dismissAll);
 

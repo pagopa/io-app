@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { ColorValue, StyleSheet, View } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { ReactNode } from "react";
 
@@ -12,9 +12,17 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: IOColors.white,
     zIndex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  backdrop: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 0
   },
   back: {
     zIndex: 0
@@ -22,7 +30,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
   children?: ReactNode;
   foreground?: ReactNode;
   opacity?: number;
@@ -35,24 +43,21 @@ type Props = Readonly<{
  */
 export const Overlay = ({
   backgroundColor = IOColors.white,
+  opacity = 1,
   children,
-  foreground,
-  opacity = 1
+  foreground
 }: Props) => (
   <View style={styles.container} testID={"overlayComponent"}>
-    {foreground && (
-      <View
-        style={[
-          styles.overlay,
-          {
-            opacity,
-            backgroundColor
-          }
-        ]}
-      >
-        {foreground}
-      </View>
-    )}
+    <View
+      style={[
+        styles.backdrop,
+        {
+          opacity,
+          backgroundColor
+        }
+      ]}
+    />
+    {foreground && <View style={styles.overlay}>{foreground}</View>}
     <View style={[styles.container, styles.back]}>{children}</View>
   </View>
 );
