@@ -1,0 +1,142 @@
+import { testSaga } from "redux-saga-test-plan";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
+import { SessionToken } from "../../../../../types/SessionToken";
+import { lollipopPublicKeySelector } from "../../../../lollipop/store/reducers/lollipop";
+import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
+import {
+  testLoginRequest,
+  loginSuccess,
+  loginFailure
+} from "../../store/actions";
+import { handleTestLogin } from "../testLoginSaga";
+
+const fakePayload: PasswordLogin = {
+  username: "ABCDEF12G34H567I" as any,
+  password: "secret" as NonEmptyString
+};
+
+const fakePublicKey = {
+  kty: "RSA",
+  alg: "RS256",
+  n: "someModulus",
+  e: "someExponent"
+} satisfies PublicKey;
+
+const fakeToken = "test-token" as SessionToken;
+
+const action = testLoginRequest(fakePayload);
+
+// Mock token response
+const rightResponse = {
+  status: 200,
+  value: {
+    token: fakeToken
+  }
+};
+
+describe("handleTestLogin saga", () => {
+  it("should dispatch loginSuccess on valid response", () => {
+    testSaga(handleTestLogin, action)
+      .next()
+      .select(isFastLoginEnabledSelector)
+      .next(false)
+      .select(lollipopPublicKeySelector)
+      .next(O.none)
+      .next(E.right(rightResponse))
+      .put(
+        loginSuccess({
+          token: fakeToken,
+          idp: "test"
+        })
+      )
+      .next()
+      .isDone();
+  });
+
+  it("should dispatch loginFailure on status !== 200", () => {
+    const responseWithError = {
+      status: 500,
+      value: {}
+    };
+    testSaga(handleTestLogin, action)
+      .next()
+      .select(isFastLoginEnabledSelector)
+      .next(false)
+      .select(lollipopPublicKeySelector)
+      .next(O.none)
+      .next(E.right(responseWithError))
+      .put(
+        loginFailure({
+          error: new Error("response status 500"),
+          idp: "test"
+        })
+      )
+      .next()
+      .isDone();
+  });
+
+  it("should dispatch loginFailure on validation error (E.left)", () => {
+    const validationError = E.left([
+      {
+        value: "errorValue",
+        context: []
+      }
+    ]);
+    testSaga(handleTestLogin, action)
+      .next()
+      .select(isFastLoginEnabledSelector)
+      .next(false)
+      .select(lollipopPublicKeySelector)
+      .next(O.none)
+      .next(validationError)
+      .put(
+        loginFailure({
+          error: new Error("unknown error"), // viene dal fallback del readableReport.match
+          idp: "test"
+        })
+      )
+      .next()
+      .isDone();
+  });
+
+  it("should dispatch loginFailure on thrown error", () => {
+    const error = new Error("oops");
+    testSaga(handleTestLogin, action)
+      .next()
+      .select(isFastLoginEnabledSelector)
+      .next(false)
+      .select(lollipopPublicKeySelector)
+      .next(O.none)
+      .throw(error)
+      .put(
+        loginFailure({
+          error,
+          idp: "test"
+        })
+      )
+      .next()
+      .isDone();
+  });
+
+  it("should dispatch loginSuccess when lollipop public key is present", () => {
+    testSaga(handleTestLogin, action)
+      .next()
+      .select(isFastLoginEnabledSelector)
+      .next(true)
+      .select(lollipopPublicKeySelector)
+      .next(O.some(fakePublicKey))
+      .next(E.right(rightResponse))
+      .put(
+        loginSuccess({
+          token: fakeToken,
+          idp: "test"
+        })
+      )
+      .next()
+      .isDone();
+  });
+});
