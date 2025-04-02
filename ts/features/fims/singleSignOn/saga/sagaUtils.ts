@@ -17,7 +17,7 @@ import {
   relyingPartyServiceIdSelector
 } from "../store/selectors";
 import { serviceByIdSelector } from "../../../services/details/store/reducers";
-import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
+import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import NavigationService from "../../../../navigation/NavigationService";
 import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 

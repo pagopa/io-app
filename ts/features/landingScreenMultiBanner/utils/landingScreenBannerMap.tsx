@@ -2,10 +2,10 @@ import { ReactElement } from "react";
 import { GlobalState } from "../../../store/reducers/types";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
 import { isItwPersistedDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/selectors";
-import { LoginExpirationBanner } from "../../login/preferences/components/LoginExpirationBanner";
-import { isSessionExpirationBannerRenderableSelector } from "../../login/preferences/store/selectors";
+import { LoginExpirationBanner } from "../../authentication/loginPreferences/components/LoginExpirationBanner";
+import { isSessionExpirationBannerRenderableSelector } from "../../authentication/loginPreferences/store/selectors";
 import { PNActivationReminderBanner } from "../../pn/reminderBanner/components/PNActivationReminderBanner";
-import { isPnActivationReminderBannerRenderableSelector } from "../../pn/store/reducers/bannerDismiss";
+import { isPnActivationReminderBannerRenderableSelector } from "../../pn/reminderBanner/reducer/bannerDismiss";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
 

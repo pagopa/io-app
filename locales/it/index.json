@@ -130,7 +130,11 @@
           "label": "Aiuto contestuale",
           "hint": "Accedi alle informazioni sul contenuto della schermata corrente"
         }
-      }
+      },
+      "list": {
+        "counter": "Elemento {{index}} di {{total}}"
+      },
+      "progressTracker": "{{index}} di {{total}}"
     },
     "symbols": {
       "question": "?",
@@ -2034,7 +2038,7 @@
       "idTransaction": "Codice identificativo della transazione",
       "amountInfo": {
         "title": "L’importo è diverso da quello riportato sull’avviso pagoPA?",
-        "message": "Quando l'importo cambia, significa che l'ente creditore l'ha aggiornato automaticamente. In questo modo, hai sempre la certezza di pagare l’importo dovuto. Se è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nPer ulteriori dettagli contatta l'ente creditore, poiché pagoPA non conosce i motivi dell'aggiornamento.",
+        "message": "Quando l'importo cambia, significa che è stato aggiornato automaticamente.\n\nSe è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nSe l’avviso pagoPA riguarda una comunicazione a valore legale, l’aumento dell’importo da pagare può dipendere da diversi fattori, per esempio:\n- se hai ricevuto la comunicazione tramite  raccomandata (i cui costi di stampa e invio possono essere a carico del destinatario); \n- il numero di tentativi di recapito. \nPer ulteriori dettagli contatta l'ente creditore.",
         "cta": "Ok, va bene"
       },
       "contextualHelpTitle": "Riepilogo della transazione",
@@ -2493,7 +2497,7 @@
         },
         "WAITING_CONFIRMATION_EMAIL": {
           "title": "Attendi la conferma del pagamento",
-          "subtitle": "Il pagamento non si è ancora concluso: riceverai a breve l’esito all'indirizzo {{email}}. L’operazione può richiedere fino a 15 minuti.",
+          "subtitle": "Il pagamento non si è ancora concluso: se non ricevi l'esito positivo entro 15 minuti all'indirizzo {{email}} riprova di nuovo.",
           "defaultSubtitle": "Il pagamento non si è ancora concluso: riceverai a breve l’esito via email. L’operazione può richiedere fino a 15 minuti."
         },
         "METHOD_NOT_ENABLED": {
@@ -2647,7 +2651,8 @@
       "reminderRemoveFailure": "Errore durante l'eliminazione del promemoria, riprova per piacere",
       "preferenceCalendarSelect": "Seleziona un calendario predefinito",
       "calendarPermDenied": {
-        "title": "Consenti l'accesso",
+        "title": "Per aggiungere il promemoria, devi consentire a IO di accedere al tuo calendario",
+        "preferencesTitle": "Consenti l'accesso",
         "description": "Non abbiamo accesso al tuo calendario. Abilita i permessi per continuare.",
         "ok": "Consenti l'accesso",
         "cancel": "Annulla"
@@ -3489,13 +3494,14 @@
         "merchantsAll": "Tutti i partner",
         "tabs": {
           "perInitiative": "Per categoria",
-          "perMerchant": "Per partner"
+          "perMerchant": "Per partner",
+          "a11y": "Filtra {{label}}, {{index}} di {{total}}"
         },
         "cta": {
           "filter": "Filtra"
         },
         "categoriesList": {
-          "a11y": "{{name}} {{count}} nuove opportunità trovate",
+          "a11y": "{{name}}, {{count}} nuove opportunità trovate",
           "title": "Seleziona una categoria e scopri agevolazioni e opportunità",
           "bottomSheet": {
             "cta": "Come vengono ordinate le categorie?",
@@ -3620,6 +3626,9 @@
           "expiration": {
             "cgn": "Scade il",
             "eyca": "Scade il"
+          },
+          "a11y": {
+            "cardStatus": "Stato della carta: {{status}}"
           }
         }
       },
@@ -4124,7 +4133,7 @@
         "filters": {
           "tabs": {
             "all": "Tutte",
-            "payer": "Pagate in app",
+            "payer": "Pagate da me",
             "debtor": "Intestate a me"
           }
         },
@@ -4134,7 +4143,7 @@
             "subtitle": "Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore."
           },
           "emptyPayer": {
-            "title": "Qui vedrai le ricevute dei pagamenti fatti in app"
+            "title": "Qui vedrai le ricevute dei pagamenti fatti da te"
           }
         }
       },
@@ -4265,8 +4274,17 @@
             "content": "Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!",
             "action": "Inizia"
           },
+          "homeActive": {
+            "title": "Riattiva Documenti su IO",
+            "content": "Per ragioni di sicurezza, quando cambi dispositivo, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
+            "action": "Inizia"
+          },
           "onboarding": {
             "content": "Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!",
+            "action": "Inizia"
+          },
+          "onboardingActive": {
+            "content": "Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio.",
             "action": "Inizia"
           }
         },

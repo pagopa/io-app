@@ -1,18 +1,18 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
-import AuthenticationNavigator from "./AuthenticationNavigator";
+import AuthenticationNavigator from "../features/authentication/common/navigation/AuthenticationNavigator";
+import { AUTHENTICATION_ROUTES } from "../features/authentication/common/navigation/routes";
 import { AppParamsList } from "./params/AppParamsList";
-import ROUTES from "./routes";
 
 const Stack = createStackNavigator<AppParamsList>();
 const NotAuthenticatedStackNavigator = () => (
   <Stack.Navigator
-    initialRouteName={ROUTES.AUTHENTICATION}
+    initialRouteName={AUTHENTICATION_ROUTES.MAIN}
     screenOptions={{ gestureEnabled: false, headerShown: false }}
   >
     <Stack.Screen
-      name={ROUTES.AUTHENTICATION}
+      name={AUTHENTICATION_ROUTES.MAIN}
       component={AuthenticationNavigator}
     />
 

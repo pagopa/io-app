@@ -11,7 +11,7 @@ import {
   TransactionErrorDTO
 } from "../../../../../../definitions/idpay/TransactionErrorDTO";
 import { getNetworkError } from "../../../../../utils/errors";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { idPayGenerateBarcode } from "../../store/actions";
 

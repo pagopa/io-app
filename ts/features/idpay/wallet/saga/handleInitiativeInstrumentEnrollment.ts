@@ -8,7 +8,7 @@ import TypedI18n from "../../../../i18n";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idpayInitiativesInstrumentEnroll } from "../store/actions";
 
