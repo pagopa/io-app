@@ -1,6 +1,6 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
-import { useMemo, useCallback, memo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -12,14 +12,15 @@ import {
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
+import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
 
 /**
- * ITW dicovery banner to be displayed in the wallet card onboarding screen
+ * ITW discovery banner to be displayed in the wallet card onboarding screen
  */
 const ItwDiscoveryBannerOnboarding = () => {
   const navigation = useIONavigation();
   const route = useRoute();
-
+  const bannerType = useItwDiscoveryBannerType();
   const isBannerRenderable = useIOSelector(
     isItwDiscoveryBannerRenderableSelector
   );
@@ -41,10 +42,6 @@ const ItwDiscoveryBannerOnboarding = () => {
     }, [trackBannerProperties, isBannerRenderable])
   );
 
-  if (!isBannerRenderable) {
-    return null;
-  }
-
   const handleOnPress = () => {
     trackItWalletBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -52,13 +49,28 @@ const ItwDiscoveryBannerOnboarding = () => {
     });
   };
 
+  const bannerConfig = {
+    onboarding: {
+      content: I18n.t("features.itWallet.discovery.banner.home.content")
+    },
+    reactivating: {
+      content: I18n.t(
+        "features.itWallet.discovery.banner.onboardingActive.content"
+      )
+    }
+  };
+
+  if (!isBannerRenderable || !bannerType) {
+    return null;
+  }
+
+  const { content } = bannerConfig[bannerType];
+
   return (
     <View style={styles.wrapper}>
       <Banner
         testID="itwDiscoveryBannerOnboardingTestID"
-        content={I18n.t(
-          "features.itWallet.discovery.banner.onboarding.content"
-        )}
+        content={content}
         action={I18n.t("features.itWallet.discovery.banner.onboarding.action")}
         pictogramName="itWallet"
         color="neutral"

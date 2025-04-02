@@ -10,7 +10,7 @@ import { SpecialServiceMetadata } from "../../../../../../definitions/backend/Sp
 import {
   logoutSuccess,
   sessionExpired
-} from "../../../../../store/actions/authentication";
+} from "../../../../authentication/common/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";

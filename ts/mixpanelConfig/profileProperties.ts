@@ -1,15 +1,17 @@
 import * as O from "fp-ts/lib/Option";
 import { mixpanel } from "../mixpanel";
 import { GlobalState } from "../store/reducers/types";
-import { LoginSessionDuration } from "../features/fastLogin/analytics/optinAnalytics";
+import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { BiometricsType, getBiometricsType } from "../utils/biometrics";
 import {
   getNotificationPermissionType,
+  getNotificationTokenType,
   NotificationPermissionType,
   NotificationPreferenceConfiguration,
+  NotificationTokenType,
   ServiceConfigurationTrackingType
 } from "../screens/profile/analytics";
-import { idpSelector } from "../store/reducers/authentication";
+import { idpSelector } from "../features/authentication/common/store/selectors";
 import { tosVersionSelector } from "../store/reducers/profile";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
@@ -46,6 +48,7 @@ type ProfileProperties = {
   BIOMETRIC_TECHNOLOGY: BiometricsType;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
   NOTIFICATION_PERMISSION: NotificationPermissionType;
+  NOTIFICATION_TOKEN: NotificationTokenType;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   TRACKING: MixpanelOptInTrackingType;
   ITW_STATUS_V2: ItwStatus;
@@ -72,6 +75,7 @@ export const updateMixpanelProfileProperties = async (
   const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
   const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
   const notificationsEnabled = await checkNotificationPermissions();
+  const NOTIFICATION_TOKEN = getNotificationTokenType(state);
   const SERVICE_CONFIGURATION = serviceConfigHandler(state);
   const TRACKING = mixpanelOptInHandler(state);
   const ITW_STATUS_V2 = walletStatusHandler(state);
@@ -92,6 +96,7 @@ export const updateMixpanelProfileProperties = async (
     NOTIFICATION_CONFIGURATION,
     NOTIFICATION_PERMISSION:
       getNotificationPermissionType(notificationsEnabled),
+    NOTIFICATION_TOKEN,
     SERVICE_CONFIGURATION,
     TRACKING,
     ITW_STATUS_V2,

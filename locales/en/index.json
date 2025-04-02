@@ -131,6 +131,9 @@
           "hint": "Access information about the contents of the current screen"
         }
       },
+      "list": {
+        "counter": "Element {{index}} of {{total}}"
+      },
       "progressTracker": "{{index}} of {{total}}"
     },
     "symbols": {
@@ -2648,7 +2651,8 @@
       "reminderRemoveFailure": "Error removing reminder, please retry",
       "preferenceCalendarSelect": "Select a default calendar",
       "calendarPermDenied": {
-        "title": "Enable access",
+        "title": "To add the reminder, you need to allow IO to access your calendar",
+        "preferencesTitle": "Enable access",
         "description": "We do not have access to your calendar. Please enable access to continue.",
         "ok": "Enable access",
         "cancel": "Cancel"
@@ -3490,13 +3494,14 @@
         "merchantsAll": "All partners",
         "tabs": {
           "perInitiative": "By category",
-          "perMerchant": "By partner"
+          "perMerchant": "By partner",
+          "a11y": "Filter {{label}}, {{index}} of {{total}}"
         },
         "cta": {
           "filter": "Filter"
         },
         "categoriesList": {
-          "a11y": "{{name}} {{count}} new opportunities found",
+          "a11y": "{{name}}, {{count}} new opportunities found",
           "title": "Select a category and discover the benefits",
           "bottomSheet": {
             "cta": "How are categories ordered by?",
@@ -3621,6 +3626,9 @@
           "expiration": {
             "cgn": "CGN Expiration",
             "eyca": "EYCA Expiration"
+          },
+          "a11y": {
+            "cardStatus": "Card status: {{status}}"
           }
         }
       },
@@ -4124,9 +4132,9 @@
         },
         "filters": {
           "tabs": {
-            "all": "Tutte",
-            "payer": "Paid in app",
-            "debtor": "Intestate a me"
+            "all": "All",
+            "payer": "I paid for it",
+            "debtor": "In my name"
           }
         },
         "list": {
@@ -4135,7 +4143,7 @@
             "subtitle": "Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore."
           },
           "emptyPayer": {
-            "title": "Qui vedrai le ricevute dei pagamenti fatti in app"
+            "title": "Here you will see receipts for payments made by you"
           }
         }
       },
@@ -4266,8 +4274,17 @@
             "content": "Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!",
             "action": "Inizia"
           },
+          "homeActive": {
+            "title": "Riattiva Documenti su IO",
+            "content": "Per ragioni di sicurezza, quando cambi dispositivo, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
+            "action": "Inizia"
+          },
           "onboarding": {
             "content": "Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!",
+            "action": "Inizia"
+          },
+          "onboardingActive": {
+            "content": "Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio.",
             "action": "Inizia"
           }
         },

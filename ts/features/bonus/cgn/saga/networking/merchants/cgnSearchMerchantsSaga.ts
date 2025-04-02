@@ -8,7 +8,7 @@ import {
 } from "../../../../../../utils/errors";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import { cgnSearchMerchants } from "../../../store/actions/merchants";
-import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 
 export function* cgnSearchMerchantsSaga(
   searchMerchants: ReturnType<typeof BackendCgnMerchants>["searchMerchants"],
