@@ -2,9 +2,8 @@ import {
   Body,
   ButtonSolidProps,
   ContentWrapper,
-  GradientBottomActions,
+  FooterActions,
   H2,
-  IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
   VSpacer,
@@ -16,11 +15,8 @@ import * as O from "fp-ts/lib/Option";
 import { ComponentProps, useContext, useMemo } from "react";
 import { Image } from "react-native";
 import Animated, {
-  Easing,
   useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming
+  useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
@@ -40,7 +36,7 @@ type OwnProps = {
   onConfirm?: () => void;
   onCancel?: () => void;
   primaryCtaText: string;
-  secondaryAction?: SecondaryAction;
+  secondaryAction: SecondaryAction;
 };
 
 type SecondaryAction = { type: "back"; text: string };
@@ -101,9 +97,7 @@ const getTosFooter = (
 // value is defined the height of the image
 const imageHeight: number = 270;
 
-const gradientSafeArea: IOSpacingScale = 80;
 const contentEndMargin: IOSpacingScale = 32;
-const spaceBetweenActions: IOSpacer = 24;
 
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
@@ -115,7 +109,6 @@ const BonusInformationComponent = (props: Props) => {
     bonusType[getRemoteLocale()];
   const safeAreaInsets = useSafeAreaInsets();
 
-  const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
 
   const bottomMargin: number = useMemo(
@@ -137,26 +130,14 @@ const BonusInformationComponent = (props: Props) => {
     [bottomMargin, buttonsSolidHeight]
   );
 
-  const gradientAreaHeight: number = useMemo(
-    () => bottomMargin + buttonsSolidHeight + gradientSafeArea,
-    [bottomMargin, buttonsSolidHeight]
-  );
-
   useHeaderSecondLevel({
-    title: bonusTypeLocalizedContent.title || "",
+    title: bonusTypeLocalizedContent.title,
     scrollValues: {
       triggerOffset: imageHeight,
       contentOffsetY: scrollTranslationY
     },
     supportRequest: true
   });
-
-  const footerGradientOpacityTransition = useAnimatedStyle(() => ({
-    opacity: withTiming(gradientOpacity.value, {
-      duration: 200,
-      easing: Easing.ease
-    })
-  }));
 
   const cancelButtonProps: ButtonSolidProps = {
     label: I18n.t("global.buttons.cancel"),
@@ -172,14 +153,12 @@ const BonusInformationComponent = (props: Props) => {
     accessibilityLabel: props.primaryCtaText,
     onPress: props.onConfirm ?? constNull
   };
-  const backButtonProps = props.secondaryAction
-    ? {
-        label: props.secondaryAction.text,
-        fullWidth: true,
-        accessibilityLabel: props.secondaryAction.text,
-        onPress: props.onBack ?? constNull
-      }
-    : undefined;
+  const backButtonProps = {
+    label: props.secondaryAction.text,
+    fullWidth: true,
+    accessibilityLabel: props.secondaryAction.text,
+    onPress: props.onBack ?? constNull
+  };
 
   const handleModalPress = (tos: string) =>
     showModal(<TosBonusComponent tos_url={tos} onClose={hideModal} />);
@@ -194,19 +173,10 @@ const BonusInformationComponent = (props: Props) => {
   const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
   const maybeHeroImage = maybeNotNullyString(bonusType.hero_image);
 
-  const scrollHandler = useAnimatedScrollHandler(
-    ({ contentOffset, layoutMeasurement, contentSize }) => {
-      // eslint-disable-next-line functional/immutable-data
-      scrollTranslationY.value = contentOffset.y;
-
-      const isEndReached =
-        Math.floor(layoutMeasurement.height + contentOffset.y) >=
-        Math.floor(contentSize.height);
-
-      // eslint-disable-next-line functional/immutable-data
-      gradientOpacity.value = isEndReached ? 0 : 1;
-    }
-  );
+  const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
+    // eslint-disable-next-line functional/immutable-data
+    scrollTranslationY.value = contentOffset.y;
+  });
 
   return (
     <>
@@ -254,18 +224,11 @@ const BonusInformationComponent = (props: Props) => {
           )}
         </ContentWrapper>
       </Animated.ScrollView>
-      <GradientBottomActions
-        primaryActionProps={
-          props.onConfirm ? { ...requestButtonProps } : { ...cancelButtonProps }
-        }
-        secondaryActionProps={backButtonProps}
-        transitionAnimStyle={footerGradientOpacityTransition}
-        dimensions={{
-          bottomMargin,
-          extraBottomMargin: 0,
-          gradientAreaHeight,
-          spaceBetweenActions,
-          safeBackgroundHeight: bottomMargin
+      <FooterActions
+        actions={{
+          type: "TwoButtons",
+          primary: props.onConfirm ? requestButtonProps : cancelButtonProps,
+          secondary: backButtonProps
         }}
       />
     </>
