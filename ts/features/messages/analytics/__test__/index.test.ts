@@ -1,6 +1,15 @@
-import { trackCTAFrontMatterDecodingError, trackOpenMessage } from "..";
+import {
+  trackCTAFrontMatterDecodingError,
+  trackMessageNotificationParsingFailure,
+  trackMessageNotificationTap,
+  trackOpenMessage
+} from "..";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import * as MIXPANEL from "../../../../mixpanel";
+
+jest.mock("react-native-i18n", () => ({
+  t: (key: string) => key
+}));
 
 describe("index", () => {
   afterEach(() => {
@@ -93,6 +102,141 @@ describe("index", () => {
         reason,
         serviceId
       });
+    });
+  });
+
+  describe("trackMessageNotificationParsingFailure", () => {
+    [false, true].forEach(optIn =>
+      it(`should call 'mixpanelTrack' with proper parameters if mixpanel is initialized and the user ${
+        optIn ? "has" : "has not"
+      } opted-in`, () => {
+        jest.spyOn(MIXPANEL, "isMixpanelInitialized").mockReturnValue(true);
+        const spiedOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockImplementation();
+        const spiedOnEnqueueMixpanelEvent = jest
+          .spyOn(MIXPANEL, "enqueueMixpanelEvent")
+          .mockImplementation();
+
+        trackMessageNotificationParsingFailure("An id", "A reason", optIn);
+
+        expect(spiedOnMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spiedOnMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(spiedOnMixpanelTrack.mock.calls[0][0]).toBe(
+          "NOTIFICATION_PARSING_FAILURE"
+        );
+        expect(spiedOnMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "KO",
+          reason: "A reason"
+        });
+        expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(0);
+      })
+    );
+    it(`should call 'enqueueMixpanelEvent' with proper parameters if mixpanel is not initialized and the user has opted-in`, () => {
+      jest.spyOn(MIXPANEL, "isMixpanelInitialized").mockReturnValue(false);
+      const spiedOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation();
+      const spiedOnEnqueueMixpanelEvent = jest
+        .spyOn(MIXPANEL, "enqueueMixpanelEvent")
+        .mockImplementation();
+
+      trackMessageNotificationParsingFailure("An id", "A reason", true);
+
+      expect(spiedOnMixpanelTrack.mock.calls.length).toBe(0);
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(1);
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls[0].length).toBe(3);
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][0]).toBe(
+        "NOTIFICATION_PARSING_FAILURE"
+      );
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][1]).toBe("An id");
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][2]).toEqual({
+        event_category: "KO",
+        reason: "A reason"
+      });
+    });
+    it(`should do nothing if mixpanel is not initialized and the user has not opted-in`, () => {
+      jest.spyOn(MIXPANEL, "isMixpanelInitialized").mockReturnValue(false);
+      const spiedOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation();
+      const spiedOnEnqueueMixpanelEvent = jest
+        .spyOn(MIXPANEL, "enqueueMixpanelEvent")
+        .mockImplementation();
+
+      trackMessageNotificationParsingFailure("An id", "A reason", false);
+
+      expect(spiedOnMixpanelTrack.mock.calls.length).toBe(0);
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(0);
+    });
+  });
+
+  describe("trackMessageNotificationTap", () => {
+    const messageId = "01JQVCP04AGJGVZ0D4D8XVK1H0";
+    [false, true].forEach(optIn =>
+      it(`should call 'mixpanelTrack' with proper parameters if mixpanel is initialized and the user ${
+        optIn ? "has" : "has not"
+      } opted-in`, () => {
+        jest.spyOn(MIXPANEL, "isMixpanelInitialized").mockReturnValue(true);
+        const spiedOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockImplementation();
+        const spiedOnEnqueueMixpanelEvent = jest
+          .spyOn(MIXPANEL, "enqueueMixpanelEvent")
+          .mockImplementation();
+
+        trackMessageNotificationTap(messageId, optIn);
+
+        expect(spiedOnMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spiedOnMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(spiedOnMixpanelTrack.mock.calls[0][0]).toBe(
+          "NOTIFICATIONS_MESSAGE_TAP"
+        );
+        expect(spiedOnMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "UX",
+          event_type: "action",
+          messageId
+        });
+        expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(0);
+      })
+    );
+    it(`should call 'enqueueMixpanelEvent' with proper parameters if mixpanel is not initialized and the user has opted-in`, () => {
+      jest.spyOn(MIXPANEL, "isMixpanelInitialized").mockReturnValue(false);
+      const spiedOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation();
+      const spiedOnEnqueueMixpanelEvent = jest
+        .spyOn(MIXPANEL, "enqueueMixpanelEvent")
+        .mockImplementation();
+
+      trackMessageNotificationTap(messageId, true);
+
+      expect(spiedOnMixpanelTrack.mock.calls.length).toBe(0);
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(1);
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls[0].length).toBe(3);
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][0]).toBe(
+        "NOTIFICATIONS_MESSAGE_TAP"
+      );
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][1]).toBe(messageId);
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][2]).toEqual({
+        event_category: "UX",
+        event_type: "action",
+        messageId
+      });
+    });
+    it(`should do nothing if mixpanel is not initialized and the user has not opted-in`, () => {
+      jest.spyOn(MIXPANEL, "isMixpanelInitialized").mockReturnValue(false);
+      const spiedOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation();
+      const spiedOnEnqueueMixpanelEvent = jest
+        .spyOn(MIXPANEL, "enqueueMixpanelEvent")
+        .mockImplementation();
+
+      trackMessageNotificationTap(messageId, false);
+
+      expect(spiedOnMixpanelTrack.mock.calls.length).toBe(0);
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(0);
     });
   });
 });
