@@ -9,7 +9,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { OnboardingNotificationsInfoScreenConsent } from "../OnboardingNotificationsInfoScreenConsent";
 import * as notification from "../../utils";
 import * as analytics from "../../analytics";
-import { notificationsInfoScreenConsent } from "../../store/actions/ProfileNotificationPermissions";
+import { notificationsInfoScreenConsent } from "../../store/actions/profileNotificationPermissions";
 import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 const mockDispatch = jest.fn();

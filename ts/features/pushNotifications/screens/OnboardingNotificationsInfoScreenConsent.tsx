@@ -22,7 +22,7 @@ import {
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInSkipSystemPermissions
 } from "../analytics";
-import { notificationsInfoScreenConsent } from "../store/actions/ProfileNotificationPermissions";
+import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
 import {
   checkNotificationPermissions,
   openSystemNotificationSettingsScreen

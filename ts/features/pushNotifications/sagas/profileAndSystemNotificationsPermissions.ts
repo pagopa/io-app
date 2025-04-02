@@ -15,7 +15,7 @@ import {
   trackPushNotificationSystemPopupShown
 } from "../analytics";
 import { setPushPermissionsRequestDuration } from "../store/actions/environment";
-import { notificationsInfoScreenConsent } from "../store/actions/ProfileNotificationPermissions";
+import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
 import { requestNotificationPermissions } from "../utils";
 import { hasUserSeenSystemNotificationsPromptSelector } from "../store/selectors";
 import {
