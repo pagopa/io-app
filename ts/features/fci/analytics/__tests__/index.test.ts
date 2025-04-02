@@ -341,5 +341,16 @@ describe("index", () => {
         reason: "timeout"
       });
     });
+
+    it("should not call mixpanelTrack for unhandled actions", () => {
+      const unhandledAction = {
+        type: "UNHANDLED_ACTION_TYPE",
+        payload: {}
+      };
+
+      trackFciActionWithEnv(unhandledAction as any);
+
+      expect(mixpanelTrackSpy.mock.calls.length).toBe(0);
+    });
   });
 });

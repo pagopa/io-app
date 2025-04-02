@@ -38,6 +38,9 @@ describe("index", () => {
   beforeEach(() => {
     jest.restoreAllMocks();
   });
+  const spiedMockedMixpanelTrack = jest
+    .spyOn(MIXPANEL, "mixpanelTrack")
+    .mockImplementation((_event, _props) => undefined);
   describe("trackCgnAction", () => {
     (
       [
@@ -162,10 +165,8 @@ describe("index", () => {
     ).forEach(inputTriple => {
       const action = inputTriple[0];
       it(`should call 'mixpanelTrack' with proper event name and properties for action of type '${action.type}'`, () => {
-        const spiedMockedMixpanelTrack = jest
-          .spyOn(MIXPANEL, "mixpanelTrack")
-          .mockImplementation((_event, _props) => undefined);
         trackCgnAction(action);
+
         expect(spiedMockedMixpanelTrack.mock.calls.length).toBe(1);
         const expectedParameters = inputTriple[1];
         expect(spiedMockedMixpanelTrack.mock.calls[0].length).toBe(
@@ -178,6 +179,17 @@ describe("index", () => {
           );
         }
       });
+    });
+
+    it("should not call mixpanelTrack for unhandled actions", () => {
+      const unhandledAction = {
+        type: "UNHANDLED_ACTION_TYPE",
+        payload: {}
+      };
+
+      trackCgnAction(unhandledAction as any);
+
+      expect(spiedMockedMixpanelTrack.mock.calls.length).toBe(0);
     });
   });
 });
