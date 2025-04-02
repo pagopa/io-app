@@ -144,7 +144,10 @@ describe("pushNotifications analytics", () => {
   });
   it("'trackNewPushNotificationsTokenGenerated' should have expected event name and properties", () => {
     const mockMixpanelTrack = getMockMixpanelTrack();
-    void trackNewPushNotificationsTokenGenerated();
+    jest
+      .spyOn(Mixpanel, "isMixpanelInitialized")
+      .mockImplementation(() => true);
+    void trackNewPushNotificationsTokenGenerated("anId", true);
     expect(mockMixpanelTrack.mock.calls.length).toBe(1);
     expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
     expect(mockMixpanelTrack.mock.calls[0][0]).toBe(

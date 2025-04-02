@@ -8,15 +8,16 @@ import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/P
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { StoredCredential } from "../../features/itwallet/common/utils/itwTypesUtils";
 
+jest.mock("react-native-i18n", () => ({
+  t: (key: string) => key
+}));
+
 const mockedSet = jest.fn();
 jest.mock("../../mixpanel", () => ({
-  get mixpanel() {
-    return {
-      getPeople: () => ({
-        set: mockedSet
-      })
-    };
-  }
+  getPeople: () => ({
+    set: mockedSet
+  }),
+  isMixpanelInitialized: () => true
 }));
 
 describe("profileProperties", () => {

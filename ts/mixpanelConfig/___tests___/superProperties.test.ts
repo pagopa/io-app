@@ -1,4 +1,5 @@
 import * as O from "fp-ts/lib/Option";
+import { MixpanelProperties } from "mixpanel-react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { GlobalState } from "../../store/reducers/types";
 import * as BIOMETRICS from "../../utils/biometrics";
@@ -11,6 +12,10 @@ import * as APPVERSION from "../../utils/appVersion";
 import * as DEVICE from "../../utils/device";
 import * as ACCESSIBILITY from "../../utils/accessibility";
 
+jest.mock("react-native-i18n", () => ({
+  t: (key: string) => key
+}));
+
 const mockColorScheme = "light";
 jest.mock("react-native", () => ({
   ...jest.requireActual("react-native"),
@@ -21,11 +26,9 @@ jest.mock("react-native", () => ({
 
 const mockedRegisterSuperProperties = jest.fn();
 jest.mock("../../mixpanel", () => ({
-  get mixpanel() {
-    return {
-      registerSuperProperties: mockedRegisterSuperProperties
-    };
-  }
+  isMixpanelInitialized: () => true,
+  registerSuperProperties: (properties: MixpanelProperties) =>
+    mockedRegisterSuperProperties(properties)
 }));
 
 describe("superProperties", () => {

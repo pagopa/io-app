@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { constNull, constUndefined } from "fp-ts/lib/function";
+import { constUndefined } from "fp-ts/lib/function";
 import PushNotification from "react-native-push-notification";
 import { Platform } from "react-native";
 import {
@@ -10,38 +10,43 @@ import {
 import { Store } from "../../../../store/actions/types";
 import { newPushNotificationsToken } from "../../store/actions/installation";
 import * as ANALYTICS from "../../analytics";
+import * as PROFILEPROPERTIES from "../../../../mixpanelConfig/profileProperties";
 
 jest.mock("react-native-i18n", () => ({
   t: (key: string) => key
 }));
 
 const mockedDispatch = jest.fn();
-const mockStore = {
-  getState: () => ({
-    entities: {
-      messages: {
-        allPaginated: {
-          archive: {
-            data: pot.none,
-            lastRequest: O.none,
-            lastUpdateTime: new Date(0)
-          },
-          inbox: {
-            data: pot.none,
-            lastRequest: O.none,
-            lastUpdateTime: new Date(0)
-          },
-          shownCategory: "INBOX"
+const mockedState = {
+  entities: {
+    messages: {
+      allPaginated: {
+        archive: {
+          data: pot.none,
+          lastRequest: O.none,
+          lastUpdateTime: new Date(0)
         },
-        archiving: {
-          fromArchiveToInbox: new Set(),
-          fromInboxToArchive: new Set(),
-          processingResult: undefined,
-          status: "disabled"
-        }
+        inbox: {
+          data: pot.none,
+          lastRequest: O.none,
+          lastUpdateTime: new Date(0)
+        },
+        shownCategory: "INBOX"
+      },
+      archiving: {
+        fromArchiveToInbox: new Set(),
+        fromInboxToArchive: new Set(),
+        processingResult: undefined,
+        status: "disabled"
       }
     }
-  }),
+  },
+  persistedPreferences: {
+    isMixpanelEnabled: true
+  }
+};
+const mockStore = {
+  getState: () => mockedState,
   dispatch: mockedDispatch
 } as unknown as Store;
 
@@ -78,7 +83,9 @@ describe("configurePushNotifications", () => {
         importance: 4,
         vibrate: true
       });
-      expect(createChannelSpy.mock.calls[0][1]).toEqual(constNull);
+      expect(typeof createChannelSpy.mock.calls[0][1]).toBe("function");
+      expect(createChannelSpy.mock.calls[0][1](true)).toBe(null);
+      expect(createChannelSpy.mock.calls[0][1](false)).toBe(null);
       expect(configureSpy.mock.calls.length).toBe(1);
       const pushNotificationOptions = configureSpy.mock.calls[0][0];
       expect(pushNotificationOptions.onRegister).toBeDefined();
@@ -108,12 +115,17 @@ describe("configurePushNotifications", () => {
       }
     );
     it("should dispatch `newPushNotificationsToken` action and track with `trackNewPushNotificationsTokenGenerated`", () => {
+      const mockedDateNow = new Date("2025-04-02");
+      jest.useFakeTimers().setSystemTime(mockedDateNow);
       const mockToken = {
         token: "123"
       };
       const spiedOnAnalytics = jest
         .spyOn(ANALYTICS, "trackNewPushNotificationsTokenGenerated")
         .mockImplementation(constUndefined);
+      const spyOnMockedUpdateMixpanelProfileProperties = jest
+        .spyOn(PROFILEPROPERTIES, "updateMixpanelProfileProperties")
+        .mockImplementation(_state => new Promise(resolve => resolve()));
 
       testable!.onPushNotificationTokenAvailable(mockStore, mockToken as any);
 
@@ -124,7 +136,20 @@ describe("configurePushNotifications", () => {
         newPushNotificationsToken("123")
       );
       expect(spiedOnAnalytics.mock.calls.length).toBe(1);
-      expect(spiedOnAnalytics.mock.calls[0].length).toBe(0);
+      expect(spiedOnAnalytics.mock.calls[0].length).toBe(2);
+      expect(spiedOnAnalytics.mock.calls[0][0]).toBe(
+        mockedDateNow.getTime().toString()
+      );
+      expect(spiedOnAnalytics.mock.calls[0][1]).toBe(true);
+      expect(spyOnMockedUpdateMixpanelProfileProperties.mock.calls.length).toBe(
+        1
+      );
+      expect(
+        spyOnMockedUpdateMixpanelProfileProperties.mock.calls[0].length
+      ).toBe(1);
+      expect(spyOnMockedUpdateMixpanelProfileProperties.mock.calls[0][0]).toBe(
+        mockedState
+      );
     });
   });
 });
