@@ -1,4 +1,4 @@
-import { createRef, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -7,6 +7,8 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import { mixpanelTrack } from "../mixpanel";
 import I18n from "../i18n";
+import { useIODispatch } from "../store/hooks";
+import { resetDebugData, setDebugData } from "../store/actions/debug";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import { IOStyles } from "./core/variables/IOStyles";
 import { OperationResultScreenContent } from "./screens/OperationResultScreenContent";
@@ -15,7 +17,8 @@ type Props = {
   source: WebViewSourceUri;
 };
 
-const WebviewComponent = (props: Props) => {
+const WebviewComponent = ({ source }: Props) => {
+  const dispatch = useIODispatch();
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
@@ -30,12 +33,26 @@ const WebviewComponent = (props: Props) => {
     }
   };
 
+  useEffect(
+    () => () => {
+      dispatch(resetDebugData(["cgnError"]));
+    },
+    [dispatch]
+  );
+
   const handleError = (event: WebViewErrorEvent | WebViewHttpErrorEvent) => {
     void mixpanelTrack("CGN_LANDING_PAGE_LOAD_ERROR", {
-      uri: props.source.uri,
+      uri: source.uri,
       description: event.nativeEvent?.description
     });
     setHasError(true);
+    dispatch(
+      setDebugData({
+        cgnError: {
+          technicalLog: event.nativeEvent
+        }
+      })
+    );
   };
 
   return (
@@ -65,7 +82,7 @@ const WebviewComponent = (props: Props) => {
             onLoadEnd={() => setLoading(false)}
             onHttpError={handleError}
             onError={handleError}
-            source={props.source}
+            source={source}
           />
         </LoadingSpinnerOverlay>
       )}
