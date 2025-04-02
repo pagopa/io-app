@@ -12,6 +12,7 @@ type EnqueuedMixpanelEvent = {
   properties: Record<string, unknown>;
 };
 
+// Do not export this variables, since it creates a strong dependency on such instances
 // eslint-disable-next-line functional/no-let
 let mixpanel: Mixpanel | undefined;
 const uninitializedMixpanelTrackingQueue = new Map<
