@@ -8,7 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { RefObject, memo } from "react";
 import { Dimensions, View } from "react-native";
-import { useDetectSmallScreen } from "../../../hooks/useDetectSmallScreen";
+import { useDetectSmallScreen } from "../../../../hooks/useDetectSmallScreen";
 
 const { width } = Dimensions.get("screen");
 

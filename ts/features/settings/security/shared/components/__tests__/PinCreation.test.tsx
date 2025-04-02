@@ -2,12 +2,12 @@ import { render, fireEvent } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { PreloadedState, createStore } from "redux";
 import { Alert } from "react-native";
-import { appReducer } from "../../../store/reducers";
-import { applicationChangeState } from "../../../store/actions/application";
-import I18n from "../../../i18n";
-import { PinCreation } from "../PinCreation/PinCreation";
-import { PIN_LENGTH_SIX } from "../../../utils/constants";
-import { defaultPin } from "../../../config";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import I18n from "../../../../../../i18n";
+import { PinCreation } from "../../../shared/components/PinCreation";
+import { PIN_LENGTH_SIX } from "../../../../../../utils/constants";
+import { defaultPin } from "../../../../../../config";
 
 const VALID_PIN = defaultPin.split("");
 const REPEATED_NUMBERS = Array.from({ length: PIN_LENGTH_SIX }, () => "1");
@@ -18,7 +18,7 @@ const DESC_NUMBER_SEQUENCE = Array.from({ length: PIN_LENGTH_SIX }, (_, i) =>
   String(i + 1)
 );
 
-jest.mock("../../../utils/hooks/usePreventScreenCapture", () => ({
+jest.mock("../../../../../../utils/hooks/usePreventScreenCapture", () => ({
   usePreventScreenCapture: jest.fn()
 }));
 
@@ -51,7 +51,7 @@ jest.mock("@react-navigation/native", () => {
     })
   };
 });
-jest.mock("../../../hooks/useCreatePin", () => ({
+jest.mock("../../../../../../hooks/useCreatePin", () => ({
   useCreatePin: () => ({
     handleSubmit: mockHandleSubmit
   })

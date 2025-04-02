@@ -7,7 +7,7 @@ import { H2, IOStyles } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
-import TosWebviewComponent from "../../../../components/TosWebviewComponent";
+import TosWebviewComponent from "../shared/components/TosWebviewComponent";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../../../utils/analytics";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";

@@ -12,31 +12,34 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useCallback, useRef, useState } from "react";
 import { Alert as NativeAlert, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { defaultPin } from "../../../config";
-import { isValidPinNumber } from "../../../features/authentication/fastLogin/utils/pinPolicy";
-import { useCreatePin } from "../../../hooks/useCreatePin";
-import { useDetectSmallScreen } from "../../../hooks/useDetectSmallScreen";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../i18n";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { defaultPin } from "../../../../../config";
+import { isValidPinNumber } from "../../../../../features/authentication/fastLogin/utils/pinPolicy";
+import { useCreatePin } from "../../../../../hooks/useCreatePin";
+import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../../i18n";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import {
   trackPinError,
   trackPinScreen
-} from "../../../features/settings/common/analytics";
-import { useIOSelector } from "../../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../../features/settings/common/store/selectors";
-import { PinString } from "../../../types/PinString";
-import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { getFlowType } from "../../../utils/analytics";
-import { PIN_LENGTH_SIX } from "../../../utils/constants";
-import { isDevEnv } from "../../../utils/environment";
-import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { usePreventScreenCapture } from "../../../utils/hooks/usePreventScreenCapture";
-import { Carousel } from "../../Carousel";
-import { ContextualHelpPropsMarkdown } from "../BaseScreenComponent";
-import { PinCaouselItemProps, PinCarouselItem } from "./PinCarouselItem";
-import usePinValidationBottomSheet from "./usePinValidationBottomSheet";
+} from "../../../../../features/settings/common/analytics";
+import { useIOSelector } from "../../../../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../../../../features/settings/common/store/selectors";
+import { PinString } from "../../../../../types/PinString";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { getFlowType } from "../../../../../utils/analytics";
+import { PIN_LENGTH_SIX } from "../../../../../utils/constants";
+import { isDevEnv } from "../../../../../utils/environment";
+import { useOnboardingAbortAlert } from "../../../../../utils/hooks/useOnboardingAbortAlert";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
+import { Carousel } from "../../../../../components/Carousel";
+import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
+import {
+  PinCaouselItemProps,
+  PinCarouselItem
+} from "../../components/PinCarouselItem";
+import usePinValidationBottomSheet from "../../hooks/usePinValidationBottomSheet";
 
 const CREATION_INDEX = 0;
 const CONFIRMATION_INDEX = 1;

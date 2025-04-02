@@ -10,7 +10,7 @@ import renderer from "react-test-renderer";
 // import I18n from "../../i18n";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import TosWebviewComponent from "../TosWebviewComponent";
-import { FlowType } from "../../utils/analytics";
+import { FlowType } from "../../../../../../utils/analytics";
 // import * as urlUtils from "../../../ts/utils/url";
 
 beforeAll(() => {

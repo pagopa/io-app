@@ -5,17 +5,20 @@ import { FunctionComponent, memo, useCallback, useState } from "react";
 import { View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
-import I18n from "../i18n";
+import I18n from "../../../../../i18n";
 import {
   trackToSWebViewError,
   trackToSWebViewErrorRetry
-} from "../features/authentication/common/analytics";
-import { FlowType } from "../utils/analytics";
-import { openWebUrl } from "../utils/url";
-import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";
-import TosWebviewErrorComponent from "./TosWebviewErrorComponent";
-import { NOTIFY_LINK_CLICK_SCRIPT } from "./ui/Markdown/script";
-import { WebViewMessage } from "./ui/Markdown/types";
+} from "../../../../authentication/common/analytics";
+import { FlowType } from "../../../../../utils/analytics";
+import { openWebUrl } from "../../../../../utils/url";
+import {
+  AVOID_ZOOM_JS,
+  closeInjectedScript
+} from "../../../../../utils/webview";
+import TosWebviewErrorComponent from "../../components/TosWebviewErrorComponent";
+import { NOTIFY_LINK_CLICK_SCRIPT } from "../../../../../components/ui/Markdown/script";
+import { WebViewMessage } from "../../../../../components/ui/Markdown/types";
 
 type Props = {
   webViewSource: WebViewSource;
