@@ -26,6 +26,10 @@ import * as Mixpanel from "../../../../mixpanel";
 import ROUTES from "../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
+jest.mock("react-native-i18n", () => ({
+  t: (key: string) => key
+}));
+
 describe("pushNotifications analytics", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -142,20 +146,67 @@ describe("pushNotifications analytics", () => {
       event_type: "action"
     });
   });
-  it("'trackNewPushNotificationsTokenGenerated' should have expected event name and properties", () => {
-    const mockMixpanelTrack = getMockMixpanelTrack();
-    jest
-      .spyOn(Mixpanel, "isMixpanelInitialized")
-      .mockImplementation(() => true);
-    void trackNewPushNotificationsTokenGenerated("anId", true);
-    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-    expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+  const messageId = "01JQVCP04AGJGVZ0D4D8XVK1H0";
+  [false, true].forEach(optIn =>
+    it(`trackNewPushNotificationsTokenGenerated should call 'mixpanelTrack' with proper parameters if mixpanel is initialized and the user ${
+      optIn ? "has" : "has not"
+    } opted-in`, () => {
+      jest.spyOn(Mixpanel, "isMixpanelInitialized").mockReturnValue(true);
+      const spiedOnMixpanelTrack = jest
+        .spyOn(Mixpanel, "mixpanelTrack")
+        .mockImplementation();
+      const spiedOnEnqueueMixpanelEvent = jest
+        .spyOn(Mixpanel, "enqueueMixpanelEvent")
+        .mockImplementation();
+
+      trackNewPushNotificationsTokenGenerated(messageId, optIn);
+
+      expect(spiedOnMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMixpanelTrack.mock.calls[0][0]).toBe(
+        "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE"
+      );
+      expect(spiedOnMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "TECH"
+      });
+      expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(0);
+    })
+  );
+  it(`trackNewPushNotificationsTokenGenerated should call 'enqueueMixpanelEvent' with proper parameters if mixpanel is not initialized and the user has opted-in`, () => {
+    jest.spyOn(Mixpanel, "isMixpanelInitialized").mockReturnValue(false);
+    const spiedOnMixpanelTrack = jest
+      .spyOn(Mixpanel, "mixpanelTrack")
+      .mockImplementation();
+    const spiedOnEnqueueMixpanelEvent = jest
+      .spyOn(Mixpanel, "enqueueMixpanelEvent")
+      .mockImplementation();
+
+    trackNewPushNotificationsTokenGenerated(messageId, true);
+
+    expect(spiedOnMixpanelTrack.mock.calls.length).toBe(0);
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(1);
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls[0].length).toBe(3);
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][0]).toBe(
       "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE"
     );
-    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][1]).toBe(messageId);
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls[0][2]).toEqual({
       event_category: "TECH"
     });
+  });
+  it(`trackNewPushNotificationsTokenGenerated should do nothing if mixpanel is not initialized and the user has not opted-in`, () => {
+    jest.spyOn(Mixpanel, "isMixpanelInitialized").mockReturnValue(false);
+    const spiedOnMixpanelTrack = jest
+      .spyOn(Mixpanel, "mixpanelTrack")
+      .mockImplementation();
+    const spiedOnEnqueueMixpanelEvent = jest
+      .spyOn(Mixpanel, "enqueueMixpanelEvent")
+      .mockImplementation();
+
+    trackNewPushNotificationsTokenGenerated(messageId, false);
+
+    expect(spiedOnMixpanelTrack.mock.calls.length).toBe(0);
+    expect(spiedOnEnqueueMixpanelEvent.mock.calls.length).toBe(0);
   });
   it("'trackPushNotificationTokenUploadSucceeded' should have expected event name and properties", () => {
     const mockMixpanelTrack = getMockMixpanelTrack();
