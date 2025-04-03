@@ -2,7 +2,8 @@ import {
   FooterActions,
   FooterActionsMeasurements,
   IOColors,
-  IOStyles
+  IOStyles,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp } from "@react-navigation/native";
@@ -27,6 +28,8 @@ export type ReceiptPreviewScreenProps = RouteProp<
 >;
 
 const ReceiptPreviewScreen = () => {
+  const theme = useIOTheme();
+  const backgroundColor = IOColors[theme["appBackground-secondary"]];
   const [footerActionsMeasurements, setFooterActionsMeasurements] =
     useState<FooterActionsMeasurements>({
       actionBlockHeight: 0,
@@ -106,7 +109,7 @@ const ReceiptPreviewScreen = () => {
             fitPolicy={0}
             style={{
               flexGrow: 1,
-              backgroundColor: IOColors["grey-100"]
+              backgroundColor
             }}
             source={{
               uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value.base64File}`,
