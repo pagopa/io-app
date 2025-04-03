@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0-rc.7](https://github.com/pagopa/io-app/compare/3.2.0-rc.6...3.2.0-rc.7) (2025-04-02)
+
+
+### Features
+
+* [[IOPAE-1865](https://pagopa.atlassian.net/browse/IOPAE-1865)] Display the total search result count ([#6839](https://github.com/pagopa/io-app/issues/6839)) ([0297b03](https://github.com/pagopa/io-app/commit/0297b03b048ffa04a38e30754bb61c67debd898c))
+
+
+### Chores
+
+* [[IOBP-1443](https://pagopa.atlassian.net/browse/IOBP-1443)] Adjust accessibility for `CGN` and `EYCA` status label ([#6841](https://github.com/pagopa/io-app/issues/6841)) ([09f27de](https://github.com/pagopa/io-app/commit/09f27de5895705408f91f0a24ec8907f8ede5b83))
+* [[IOBP-1516](https://pagopa.atlassian.net/browse/IOBP-1516)] Add CGN webview landing page debug error logger ([#6859](https://github.com/pagopa/io-app/issues/6859)) ([d3b2038](https://github.com/pagopa/io-app/commit/d3b20389d17ae4e383b2445004596b9fa5dc755a))
+
+## [3.2.0-rc.6](https://github.com/pagopa/io-app/compare/3.2.0-rc.5...3.2.0-rc.6) (2025-04-01)
+
+
+### Chores
+
+* [[IOBP-1530](https://pagopa.atlassian.net/browse/IOBP-1530)] Update locales for Receipt screen tab and outcome text ([#6857](https://github.com/pagopa/io-app/issues/6857)) ([c31000a](https://github.com/pagopa/io-app/commit/c31000a860c536f0a775d5d11388c8ceb6e9314e))
+
 ## [3.2.0-rc.5](https://github.com/pagopa/io-app/compare/3.2.0-rc.4...3.2.0-rc.5) (2025-03-31)
 
 
