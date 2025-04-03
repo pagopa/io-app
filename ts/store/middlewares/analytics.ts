@@ -1,6 +1,7 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
 import { getType } from "typesafe-actions";
+import { isTestEnv } from "../../utils/environment";
 import { isMixpanelInitialized, mixpanelTrack } from "../../mixpanel";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
@@ -210,3 +211,5 @@ export const actionTracking =
     }
     return result;
   };
+
+export const testable = isTestEnv ? { trackAction } : undefined;
