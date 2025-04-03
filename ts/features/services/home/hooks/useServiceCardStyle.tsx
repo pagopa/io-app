@@ -1,4 +1,5 @@
 import {
+  hexToRgba,
   IOColors,
   useIOTheme,
   useIOThemeContext
@@ -8,11 +9,17 @@ import { ViewStyle, ColorValue } from "react-native";
 type ModalStyleProps = {
   default: {
     card: ViewStyle;
-    foreground: IOColors;
+    foreground: {
+      primary: IOColors;
+      secondary: IOColors;
+    };
   };
   new: {
     card: ViewStyle;
-    foreground: IOColors;
+    foreground: {
+      primary: IOColors;
+      secondary: IOColors;
+    };
   };
   skeletonColor: ColorValue;
 };
@@ -24,27 +31,35 @@ export const useServiceCardStyle = (): ModalStyleProps => {
   const theme = useIOTheme();
   const { themeType } = useIOThemeContext();
 
-  const skeletonColor =
-    themeType === "light" ? IOColors["grey-200"] : IOColors["grey-850"];
-
-  const borderColor =
-    themeType === "light" ? IOColors["grey-100"] : IOColors["grey-850"];
-
   return {
     default: {
       card: {
-        borderColor,
+        borderColor:
+          themeType === "light" ? IOColors["grey-100"] : IOColors["grey-850"],
         backgroundColor: IOColors[theme["appBackground-secondary"]]
       },
-      foreground: theme["textHeading-secondary"]
+      foreground: {
+        primary: theme["textHeading-secondary"],
+        secondary: theme["textBody-tertiary"]
+      }
     },
     new: {
       card: {
-        borderColor: IOColors["hanPurple-100"],
-        backgroundColor: IOColors["hanPurple-50"]
+        borderColor:
+          themeType === "light"
+            ? IOColors["hanPurple-100"]
+            : hexToRgba(IOColors["hanPurple-250"], 0.3),
+        backgroundColor:
+          themeType === "light"
+            ? IOColors["hanPurple-50"]
+            : hexToRgba(IOColors["hanPurple-250"], 0.2)
       },
-      foreground: "hanPurple-850"
+      foreground: {
+        primary: themeType === "light" ? "hanPurple-850" : "hanPurple-50",
+        secondary: themeType === "light" ? "grey-700" : "hanPurple-250"
+      }
     },
-    skeletonColor
+    skeletonColor:
+      themeType === "light" ? IOColors["grey-200"] : IOColors["grey-850"]
   };
 };

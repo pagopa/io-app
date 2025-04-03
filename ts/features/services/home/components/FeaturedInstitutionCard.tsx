@@ -85,7 +85,9 @@ const FeaturedInstitutionCard = ({
               lineBreakMode="head"
               numberOfLines={2}
               color={
-                isNew ? newThemeStyle.foreground : defaultThemeStyle.foreground
+                isNew
+                  ? newThemeStyle.foreground.primary
+                  : defaultThemeStyle.foreground.primary
               }
             >
               {name}
