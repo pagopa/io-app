@@ -48,15 +48,26 @@ import {
   upsertUserDataProcessing
 } from "../../actions/userDataProcessing";
 import { ProfileError } from "../../reducers/profileErrorType";
-import { testable } from "../analytics";
+import { actionTracking, testable } from "../analytics";
+import * as CGNANALYTICS from "../../../features/bonus/cgn/analytics";
+import * as SERVICESANALYTICS from "../../../features/services/common/analytics";
+import * as CONTENTANALYTICS from "../contentAnalytics";
+import * as ZENDESKANALYTICS from "../../../features/zendesk/analytics/index";
+import * as FCIANALYTICS from "../../../features/fci/analytics";
+import * as MESSAGESANALYTICS from "../../../features/messages/analytics";
+import * as FCIREDUCERS from "../../../features/fci/store/reducers/fciEnvironment";
+import { Action, MiddlewareAPI } from "../../actions/types";
+import { GlobalState } from "../../reducers/types";
 
 jest.mock("react-native-i18n", () => ({
   t: (key: string) => key
 }));
 
+// eslint-disable-next-line functional/no-let
+let mockIsMixpanelInitialized = true;
 const mockMixpanelTrack = jest.fn();
 jest.mock("../../../mixpanel", () => ({
-  isMixpanelInitialized: () => true,
+  isMixpanelInitialized: () => mockIsMixpanelInitialized,
   mixpanelTrack: (eventName: string, properties: Record<string, unknown>) =>
     mockMixpanelTrack(eventName, properties)
 }));
@@ -66,6 +77,7 @@ describe("analytics", () => {
     jest.clearAllMocks();
   });
   describe("trackAction", () => {
+    mockIsMixpanelInitialized = true;
     it("should call 'mixpanelTrack' for 'applicationChangeState' with proper parameters", () => {
       const action = applicationChangeState("active");
 
@@ -540,6 +552,114 @@ describe("analytics", () => {
         flow: undefined,
         identification_method: "bio"
       });
+    });
+  });
+  describe("actionTracking", () => {
+    it("should invoke proper tracking functions when mixpanel is initialized", () => {
+      mockIsMixpanelInitialized = true;
+      const mockedState = {} as GlobalState;
+      const mockedMiddlewareAPI = {
+        getState: () => mockedState
+      } as unknown as MiddlewareAPI;
+      const mockedDispatch = <T>(action: T) => action;
+      const mockedAction = {} as Action;
+
+      jest
+        .spyOn(FCIREDUCERS, "fciEnvironmentSelector")
+        .mockImplementation(_state => "test");
+
+      const spyOnMockedCgnAnalytics = jest
+        .spyOn(CGNANALYTICS, "default")
+        .mockImplementation();
+      const spyOnMockedContentAnalytics = jest
+        .spyOn(CONTENTANALYTICS, "trackContentAction")
+        .mockImplementation();
+      const spyOnMockedFCIAnalytics = jest
+        .spyOn(FCIANALYTICS, "default")
+        .mockImplementation(_env => (_action: Action) => undefined);
+      const spyOnMockedMessagesAnalytics = jest
+        .spyOn(MESSAGESANALYTICS, "trackMessagesActionsPostDispatch")
+        .mockImplementation();
+      const spyOnMockedZendeskAnalytics = jest
+        .spyOn(ZENDESKANALYTICS, "default")
+        .mockImplementation();
+      const spyOnMockedServicesAnalytics = jest
+        .spyOn(SERVICESANALYTICS, "trackServicesAction")
+        .mockImplementation();
+
+      const result =
+        actionTracking(mockedMiddlewareAPI)(mockedDispatch)(mockedAction);
+
+      // Unfortunately, there is no way to check that the private method trackAction has been called
+
+      expect(spyOnMockedCgnAnalytics).toHaveBeenCalledTimes(1);
+      expect(spyOnMockedCgnAnalytics).toHaveBeenCalledWith(mockedAction);
+
+      expect(spyOnMockedContentAnalytics).toHaveBeenCalledTimes(1);
+      expect(spyOnMockedContentAnalytics).toHaveBeenCalledWith(mockedAction);
+
+      expect(spyOnMockedServicesAnalytics).toHaveBeenCalledTimes(1);
+      expect(spyOnMockedServicesAnalytics).toHaveBeenCalledWith(mockedAction);
+
+      expect(spyOnMockedZendeskAnalytics).toHaveBeenCalledTimes(1);
+      expect(spyOnMockedZendeskAnalytics).toHaveBeenCalledWith(mockedAction);
+
+      expect(spyOnMockedFCIAnalytics).toHaveBeenCalledTimes(1);
+      expect(spyOnMockedFCIAnalytics).toHaveBeenCalledWith("test");
+
+      expect(spyOnMockedMessagesAnalytics).toHaveBeenCalledTimes(1);
+      expect(spyOnMockedMessagesAnalytics).toHaveBeenCalledWith(
+        mockedAction,
+        mockedState
+      );
+
+      expect(result).toBe(mockedAction);
+    });
+    it("should not invoke tracking functions when mixpanel is not initialized", () => {
+      mockIsMixpanelInitialized = false;
+      const mockedState = {} as GlobalState;
+      const mockedMiddlewareAPI = {
+        getState: () => mockedState
+      } as unknown as MiddlewareAPI;
+      const mockedDispatch = <T>(action: T) => action;
+      const mockedAction = {} as Action;
+
+      jest
+        .spyOn(FCIREDUCERS, "fciEnvironmentSelector")
+        .mockImplementation(_state => "test");
+
+      const spyOnMockedCgnAnalytics = jest
+        .spyOn(CGNANALYTICS, "default")
+        .mockImplementation();
+      const spyOnMockedContentAnalytics = jest
+        .spyOn(CONTENTANALYTICS, "trackContentAction")
+        .mockImplementation();
+      const spyOnMockedFCIAnalytics = jest
+        .spyOn(FCIANALYTICS, "default")
+        .mockImplementation(_env => (_action: Action) => undefined);
+      const spyOnMockedMessagesAnalytics = jest
+        .spyOn(MESSAGESANALYTICS, "trackMessagesActionsPostDispatch")
+        .mockImplementation();
+      const spyOnMockedZendeskAnalytics = jest
+        .spyOn(ZENDESKANALYTICS, "default")
+        .mockImplementation();
+      const spyOnMockedServicesAnalytics = jest
+        .spyOn(SERVICESANALYTICS, "trackServicesAction")
+        .mockImplementation();
+
+      const result =
+        actionTracking(mockedMiddlewareAPI)(mockedDispatch)(mockedAction);
+
+      // Unfortunately, there is no way to check that the private method trackAction has not been called
+
+      expect(spyOnMockedCgnAnalytics).toHaveBeenCalledTimes(0);
+      expect(spyOnMockedContentAnalytics).toHaveBeenCalledTimes(0);
+      expect(spyOnMockedServicesAnalytics).toHaveBeenCalledTimes(0);
+      expect(spyOnMockedZendeskAnalytics).toHaveBeenCalledTimes(0);
+      expect(spyOnMockedFCIAnalytics).toHaveBeenCalledTimes(0);
+      expect(spyOnMockedMessagesAnalytics).toHaveBeenCalledTimes(0);
+
+      expect(result).toBe(mockedAction);
     });
   });
 });
