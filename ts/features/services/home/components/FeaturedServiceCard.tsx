@@ -3,7 +3,6 @@ import {
   Badge,
   BodySmall,
   H4,
-  IOColors,
   IOSkeleton,
   IOSpacingScale,
   IOVisualCostants,
@@ -14,8 +13,8 @@ import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
 import { CardPressableBase } from "../../common/components/CardPressableBase";
-import { logoForService } from "../utils";
 import { useServiceCardStyle } from "../hooks/useServiceCardStyle";
+import { logoForService } from "../utils";
 
 export type FeaturedServiceCardProps = WithTestID<{
   id: string;
