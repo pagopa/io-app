@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0-rc.8](https://github.com/pagopa/io-app/compare/3.2.0-rc.7...3.2.0-rc.8) (2025-04-03)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2169](https://pagopa.atlassian.net/browse/SIW-2169)] Add temporary local FF for L3 features ([#6858](https://github.com/pagopa/io-app/issues/6858)) ([9ca16c3](https://github.com/pagopa/io-app/commit/9ca16c387fe94568be2baf8bbbd1b91c93b35824))
+* [[IOBP-1551](https://pagopa.atlassian.net/browse/IOBP-1551)] Replace `GradientScrollView` with `IOScrollView` ([#6868](https://github.com/pagopa/io-app/issues/6868)) ([779e0e1](https://github.com/pagopa/io-app/commit/779e0e1e71d95b0d734c9b2332073098e2d1369d))
+* **IT Wallet:** [[SIW-2174](https://pagopa.atlassian.net/browse/SIW-2174)] Remove lifecycle state ([#6846](https://github.com/pagopa/io-app/issues/6846)) ([49198d0](https://github.com/pagopa/io-app/commit/49198d0fa48db91a08b63eb715b1a027432a06dd))
+* [[IOBP-1542](https://pagopa.atlassian.net/browse/IOBP-1542)] Adapt receipt preview PDF background color for the dark mode ([#6861](https://github.com/pagopa/io-app/issues/6861)) ([024dc98](https://github.com/pagopa/io-app/commit/024dc98e546a01462a4a7102e46ae1ca5f13f621))
+* [[IOBP-1545](https://pagopa.atlassian.net/browse/IOBP-1545)] CGN information tos dark mode action button ([#6863](https://github.com/pagopa/io-app/issues/6863)) ([5fc1b0d](https://github.com/pagopa/io-app/commit/5fc1b0dbd5bf734a440afe25ab51e513936a0010))
+* [[IOPAE-1950](https://pagopa.atlassian.net/browse/IOPAE-1950)]: Revert keyExtractor in the services search ([#6866](https://github.com/pagopa/io-app/issues/6866)) ([247c77e](https://github.com/pagopa/io-app/commit/247c77e398168d0144e6abdbbeb094e1cbecc3a8))
+
 ## [3.2.0-rc.7](https://github.com/pagopa/io-app/compare/3.2.0-rc.6...3.2.0-rc.7) (2025-04-02)
 
 
