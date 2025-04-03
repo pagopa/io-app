@@ -18,7 +18,6 @@ import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../../../itwallet/common/utils/itwMocksUtils";
-import { ItwLifecycleState } from "../../../../itwallet/lifecycle/store/reducers";
 import * as itwLifecycleSelectors from "../../../../itwallet/lifecycle/store/selectors";
 import * as itwWalletInstanceSelectors from "../../../../itwallet/walletInstance/store/selectors";
 import * as itwSelectors from "../../../../itwallet/common/store/selectors/remoteConfig";
@@ -119,9 +118,6 @@ describe("selectWalletCategories", () => {
         _.set(globalState, "features.wallet", {
           cards: [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]
         }),
-        _.set(globalState, "features.itWallet", {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID
-        }),
         _.set(globalState, "features.itWallet.issuance", {
           integrityKeyTag: O.some("dummy")
         }),
@@ -183,9 +179,6 @@ describe("isWalletEmptySelector", () => {
         _.set(globalState, "features.wallet", {
           cards: []
         }),
-        _.set(globalState, "features.itWallet", {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
-        }),
         _.set(globalState, "features.itWallet.issuance", {
           integrityKeyTag: O.none
         }),
@@ -219,9 +212,6 @@ describe("isWalletEmptySelector", () => {
         globalState,
         _.set(globalState, "features.wallet", {
           cards: []
-        }),
-        _.set(globalState, "features.itWallet", {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID
         }),
         _.set(globalState, "features.itWallet.issuance", {
           integrityKeyTag: O.some("dummy")

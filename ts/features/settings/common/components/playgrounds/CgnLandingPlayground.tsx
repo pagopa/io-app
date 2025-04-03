@@ -41,7 +41,7 @@ const CgnLandingPlayground = () => {
   const [reloadKey, setReloadKey] = useState(0);
 
   useHeaderSecondLevel({
-    title: "CGN Landing Playground"
+    title: ""
   });
 
   return (

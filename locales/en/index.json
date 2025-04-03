@@ -2928,6 +2928,11 @@
           "title": "No results found",
           "subtitle": "Enter the name of an existing national or local institution."
         }
+      },
+      "list": {
+        "header": {
+          "title": "Results"
+        }
       }
     },
     "details": {
@@ -3626,6 +3631,9 @@
           "expiration": {
             "cgn": "CGN Expiration",
             "eyca": "EYCA Expiration"
+          },
+          "a11y": {
+            "cardStatus": "Card status: {{status}}"
           }
         }
       },
@@ -4129,9 +4137,9 @@
         },
         "filters": {
           "tabs": {
-            "all": "Tutte",
-            "payer": "Paid in app",
-            "debtor": "Intestate a me"
+            "all": "All",
+            "payer": "I paid for it",
+            "debtor": "In my name"
           }
         },
         "list": {
@@ -4140,7 +4148,7 @@
             "subtitle": "Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore."
           },
           "emptyPayer": {
-            "title": "Qui vedrai le ricevute dei pagamenti fatti in app"
+            "title": "Here you will see receipts for payments made by you"
           }
         }
       },

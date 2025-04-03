@@ -47,8 +47,6 @@ export const itwEidIssuanceMachine = setup({
     storeWalletInstanceAttestation: notImplemented,
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
-    setWalletInstanceToOperational: notImplemented,
-    setWalletInstanceToValid: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
     trackWalletInstanceCreation: notImplemented,
@@ -178,8 +176,7 @@ export const itwEidIssuanceMachine = setup({
             assign(({ event }) => ({
               integrityKeyTag: event.output
             })),
-            "storeIntegrityKeyTag",
-            "setWalletInstanceToOperational"
+            "storeIntegrityKeyTag"
           ],
           target: "WalletInstanceAttestationObtainment"
         },
@@ -619,17 +616,12 @@ export const itwEidIssuanceMachine = setup({
                 guard: "isReissuing",
                 actions: [
                   "storeEidCredential",
-                  "setWalletInstanceToValid",
                   "trackWalletInstanceCreation",
                   "navigateToWallet"
                 ]
               },
               {
-                actions: [
-                  "storeEidCredential",
-                  "setWalletInstanceToValid",
-                  "trackWalletInstanceCreation"
-                ],
+                actions: ["storeEidCredential", "trackWalletInstanceCreation"],
                 target: "#itwEidIssuanceMachine.Success"
               }
             ],

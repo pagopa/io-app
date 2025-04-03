@@ -63,10 +63,6 @@ export const ItwDiscoveryBanner = ({
     dispatch(itwCloseDiscoveryBanner());
   };
 
-  if (!bannerType) {
-    return null;
-  }
-
   const bannerConfig = {
     onboarding: {
       content: I18n.t("features.itWallet.discovery.banner.home.content"),
