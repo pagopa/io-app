@@ -27,10 +27,3 @@ export type PresentationDetails = Awaited<
 export type EnrichedPresentationDetails = Array<
   PresentationDetails[number] & { claimsToDisplay: Array<ClaimDisplayFormat> }
 >;
-
-/**
- * Alias for the Request Object type
- */
-export type RequestObject = Awaited<
-  ReturnType<Credential.Presentation.VerifyRequestObject>
->["requestObject"];

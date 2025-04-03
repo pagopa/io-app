@@ -1,8 +1,8 @@
+import { RequestObject } from "../../../common/utils/itwTypesUtils";
 import {
   EnrichedPresentationDetails,
   ItwRemoteRequestPayload,
-  RelyingPartyConfiguration,
-  RequestObject
+  RelyingPartyConfiguration
 } from "../utils/itwRemoteTypeUtils";
 import { RemoteFailure } from "./failure";
 

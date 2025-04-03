@@ -4,9 +4,9 @@ import * as O from "fp-ts/lib/Option";
 import {
   ItwRemoteRequestPayload,
   EnrichedPresentationDetails,
-  RelyingPartyConfiguration,
-  RequestObject
+  RelyingPartyConfiguration
 } from "../utils/itwRemoteTypeUtils";
+import { RequestObject } from "../../../common/utils/itwTypesUtils";
 import { useIOStore } from "../../../../../store/hooks";
 import { itwCredentialsSelector } from "../../../credentials/store/selectors";
 import { enrichPresentationDetails } from "../utils/itwRemotePresentationUtils";
