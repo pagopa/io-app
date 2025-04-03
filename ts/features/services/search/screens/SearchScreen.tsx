@@ -215,7 +215,7 @@ export const SearchScreen = () => {
           default: "on-drag"
         })}
         keyboardShouldPersistTaps="handled"
-        keyExtractor={item => item.id}
+        keyExtractor={(item, index) => `institution-${item.id}-${index}`}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
         renderItem={renderItem}
