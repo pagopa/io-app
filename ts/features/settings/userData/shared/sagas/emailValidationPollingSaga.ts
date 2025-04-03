@@ -1,13 +1,13 @@
 // watch for all actions regarding Zendesk
 import { takeLatest, call, put, take, select } from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { startTimer } from "../../utils/timer";
+import { startTimer } from "../../../../../utils/timer";
 import {
   emailValidationPollingStart,
   profileLoadRequest,
   profileLoadSuccess
-} from "../../features/settings/common/store/actions";
-import { emailValidationSelector } from "../reducers/emailValidation";
+} from "../../../common/store/actions";
+import { emailValidationSelector } from "../../../../../store/reducers/emailValidation";
 
 const GET_PROFILE_POLLING_INTERVAL = 5000 as Millisecond;
 

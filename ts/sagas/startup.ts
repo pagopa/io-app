@@ -105,7 +105,7 @@ import {
   StartupStatusEnum,
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
-import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
+import { watchEmailValidationSaga } from "../features/settings/userData/shared/sagas/emailValidationPollingSaga";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
