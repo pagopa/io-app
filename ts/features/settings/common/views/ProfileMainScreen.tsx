@@ -32,7 +32,6 @@ import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
@@ -45,6 +44,7 @@ import {
 import { openWebUrl } from "../../../../utils/url";
 import DeveloperModeSection from "../components/DeveloperModeSection";
 import { ProfileMainScreenTopBanner } from "../components/ProfileMainScreenTopBanner";
+import { SETTINGS_ROUTES } from "../navigation/routes";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
@@ -76,8 +76,8 @@ const ProfileMainScreenFC = () => {
   const idResetTap = useRef<number>();
 
   const handleContinue = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_LOGOUT
+    navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_LOGOUT
     });
   }, [navigation]);
 
@@ -147,8 +147,8 @@ const ProfileMainScreenFC = () => {
 
   const navigateToProfile = useCallback(
     () =>
-      navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.PROFILE_DATA
+      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+        screen: SETTINGS_ROUTES.PROFILE_DATA
       }),
     [navigation]
   );
@@ -166,8 +166,8 @@ const ProfileMainScreenFC = () => {
         value: I18n.t("profile.main.preferences.title"),
         description: I18n.t("profile.main.preferences.description"),
         onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.PROFILE_PREFERENCES_HOME
+          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+            screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_HOME
           })
       },
       {
@@ -175,8 +175,8 @@ const ProfileMainScreenFC = () => {
         value: I18n.t("profile.main.security.title"),
         description: I18n.t("profile.main.security.description"),
         onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.PROFILE_SECURITY
+          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+            screen: SETTINGS_ROUTES.PROFILE_SECURITY
           })
       },
       {
@@ -184,8 +184,8 @@ const ProfileMainScreenFC = () => {
         value: I18n.t("profile.main.privacy.title"),
         description: I18n.t("profile.main.privacy.description"),
         onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.PROFILE_PRIVACY_MAIN
+          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+            screen: SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN
           })
       },
       {
@@ -193,8 +193,8 @@ const ProfileMainScreenFC = () => {
         value: I18n.t("profile.main.appInfo.title"),
         description: I18n.t("profile.main.appInfo.description"),
         onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.PROFILE_ABOUT_APP
+          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+            screen: SETTINGS_ROUTES.PROFILE_ABOUT_APP
           })
       }
     ],

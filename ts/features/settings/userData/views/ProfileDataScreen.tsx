@@ -10,7 +10,6 @@ import { ContextualHelpPropsMarkdown } from "../../../../components/screens/Base
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import {
   hasProfileEmailSelector,
   profileEmailSelector,
@@ -19,6 +18,7 @@ import {
 } from "../../common/store/selectors";
 import { useIOSelector } from "../../../../store/hooks";
 import { FAQsCategoriesType } from "../../../../utils/faq";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 type EndElementProps = ComponentProps<typeof ListItemInfo>["endElement"];
 
@@ -42,8 +42,8 @@ const ProfileDataScreen = () => {
 
   const onPressEmail = useCallback(() => {
     if (hasProfileEmail) {
-      navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.INSERT_EMAIL_SCREEN,
+      navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+        screen: SETTINGS_ROUTES.INSERT_EMAIL_SCREEN,
         params: {
           isOnboarding: false
         }
@@ -67,8 +67,8 @@ const ProfileDataScreen = () => {
       type: "buttonLink",
       componentProps: {
         onPress: () => {
-          navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.PROFILE_FISCAL_CODE
+          navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+            screen: SETTINGS_ROUTES.PROFILE_FISCAL_CODE
           });
         },
         label,

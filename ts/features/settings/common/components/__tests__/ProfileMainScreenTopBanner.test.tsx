@@ -7,12 +7,12 @@ import * as profileBannerImport from "../../../../appearanceSettings/store/selec
 import * as analytics from "../../../../pushNotifications/analytics";
 import * as settingsNavigate from "../../../../pushNotifications/utils";
 import TypedI18n from "../../../../../i18n";
-import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 import { ProfileMainScreenTopBanner } from "../ProfileMainScreenTopBanner";
+import { SETTINGS_ROUTES } from "../../navigation/routes";
 
 jest.spyOn(settingsNavigate, "openSystemNotificationSettingsScreen");
 const mockNavigate = jest.fn();
@@ -82,7 +82,7 @@ describe("ProfileMainScreenTopBanner", () => {
     ).toHaveBeenCalledTimes(1);
     expect(
       spyOnMockTrackPushNotificationsBannerVisualized
-    ).toHaveBeenCalledWith(ROUTES.SETTINGS_MAIN);
+    ).toHaveBeenCalledWith(SETTINGS_ROUTES.SETTINGS_MAIN);
     expect(
       settingsNavigate.openSystemNotificationSettingsScreen
     ).toHaveBeenCalled();
@@ -99,9 +99,12 @@ describe("ProfileMainScreenTopBanner", () => {
 
     fireEvent.press(component);
 
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_APPEARANCE
-    });
+    expect(mockNavigate).toHaveBeenCalledWith(
+      SETTINGS_ROUTES.PROFILE_NAVIGATOR,
+      {
+        screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_APPEARANCE
+      }
+    );
   });
   it("should dispatch close action on fiscalCode banner close", () => {
     jest
@@ -134,7 +137,7 @@ describe("ProfileMainScreenTopBanner", () => {
     ).toHaveBeenCalledTimes(1);
     expect(
       spyOnMockTrackPushNotificationsBannerVisualized
-    ).toHaveBeenCalledWith(ROUTES.SETTINGS_MAIN);
+    ).toHaveBeenCalledWith(SETTINGS_ROUTES.SETTINGS_MAIN);
   });
   it(`should not have called 'trackPushNotificationsBannerVisualized' on first rendering if the push notification banner is not the shown one`, () => {
     jest

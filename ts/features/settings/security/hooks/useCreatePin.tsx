@@ -1,21 +1,21 @@
 import { useMemo, useCallback } from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { AccessibilityInfo, Platform } from "react-native";
-import I18n from "../i18n";
-import { createPinSuccess } from "../store/actions/pinset";
-import { useIODispatch, useIOSelector } from "../store/hooks";
-import { assistanceToolConfigSelector } from "../store/reducers/backendStatus/remoteConfig";
-import { PinString } from "../types/PinString";
-import { setPin } from "../utils/keychain";
+import I18n from "../../../../i18n";
+import { createPinSuccess } from "../../../../store/actions/pinset";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { PinString } from "../../../../types/PinString";
+import { setPin } from "../../../../utils/keychain";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
-} from "../utils/supportAssistance";
-import { isProfileFirstOnBoardingSelector } from "../features/settings/common/store/selectors";
-import { getFlowType } from "../utils/analytics";
-import { trackCreatePinSuccess } from "../features/settings/common/analytics";
-import { useIONavigation } from "../navigation/params/AppParamsList";
-import ROUTES from "../navigation/routes";
+} from "../../../../utils/supportAssistance";
+import { isProfileFirstOnBoardingSelector } from "../../common/store/selectors";
+import { getFlowType } from "../../../../utils/analytics";
+import { trackCreatePinSuccess } from "../../common/analytics";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 /**
  *
@@ -49,8 +49,8 @@ export const useCreatePin = (props = { isOnboarding: false }) => {
             if (Platform.OS === "android") {
               AccessibilityInfo.announceForAccessibility(successMessage);
             }
-            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-              screen: ROUTES.PROFILE_SECURITY
+            navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+              screen: SETTINGS_ROUTES.PROFILE_SECURITY
             });
           }
         })

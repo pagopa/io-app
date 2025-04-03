@@ -51,7 +51,7 @@ jest.mock("@react-navigation/native", () => {
     })
   };
 });
-jest.mock("../../../../../../hooks/useCreatePin", () => ({
+jest.mock("../../../hooks/useCreatePin", () => ({
   useCreatePin: () => ({
     handleSubmit: mockHandleSubmit
   })

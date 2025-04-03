@@ -58,6 +58,7 @@ import {
   trackSendValidationEmail
 } from "../../../../../screens/analytics/emailAnalytics";
 import { trackTosUserExit } from "../../../../authentication/common/analytics";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 export type EmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
@@ -386,8 +387,8 @@ const EmailInsertScreen = () => {
               }
             });
           } else {
-            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-              screen: ROUTES.EMAIL_VERIFICATION_SCREEN,
+            navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+              screen: SETTINGS_ROUTES.EMAIL_VERIFICATION_SCREEN,
               params: {
                 isOnboarding: false,
                 sendEmailAtFirstRender,

@@ -1,6 +1,5 @@
 import { PreloadedState, createStore } from "redux";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
-import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -9,6 +8,7 @@ import FiscalCodeScreen from "../FiscalCodeScreen";
 import { profileLoadSuccess } from "../../../common/store/actions";
 import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
 import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 jest.mock("../../../../../utils/brightness", () => ({
   useMaxBrightness: jest.fn()
@@ -59,7 +59,7 @@ const renderComponent = () => {
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       FiscalCodeScreen,
-      ROUTES.PROFILE_FISCAL_CODE,
+      SETTINGS_ROUTES.PROFILE_FISCAL_CODE,
       {},
       store
     ),

@@ -12,10 +12,10 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
-import ROUTES from "../../../../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import TosScreen from "../TosScreen";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 const CurrentTestToSVersion = 2.0;
 
@@ -218,7 +218,7 @@ const commonSetup = () => {
 
   return renderScreenWithNavigationStoreContext(
     () => <TosScreen />,
-    ROUTES.PROFILE_PRIVACY,
+    SETTINGS_ROUTES.PROFILE_PRIVACY,
     {},
     store
   );

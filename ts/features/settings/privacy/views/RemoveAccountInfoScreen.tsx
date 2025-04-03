@@ -9,9 +9,9 @@ import I18n from "../../../../i18n";
 import { loadBonusBeforeRemoveAccount } from "../../common/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 /**
  * A screen to explain how the account removal works.
@@ -32,8 +32,8 @@ const RemoveAccountInfo = () => {
         ),
         onPress: () => {
           dispatch(loadBonusBeforeRemoveAccount());
-          navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
+          navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+            screen: SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
           });
         }
       }

@@ -14,7 +14,6 @@ import { isIdPayCodeOnboardedSelector } from "../../../idpay/code/store/selector
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -37,6 +36,7 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import { FAQsCategoriesType } from "../../../../utils/faq";
 import { fimsIsHistoryEnabledSelector } from "../../../fims/history/store/selectors";
 import { FIMS_ROUTES } from "../../../fims/common/navigation";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -87,8 +87,8 @@ const SecurityScreen = (): ReactElement => {
   const requestIdentificationAndResetPin = useCallback(() => {
     const onSuccess = () => {
       void mixpanelTrack("UPDATE_PIN");
-      navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.PIN_SCREEN
+      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+        screen: SETTINGS_ROUTES.PIN_SCREEN
       });
     };
 

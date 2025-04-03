@@ -7,12 +7,12 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
 import { identificationRequest } from "../../../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../../../config";
 import * as fimsHistorySelectors from "../../../../fims/history/store/selectors";
 import { FIMS_ROUTES } from "../../../../fims/common/navigation";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
@@ -135,7 +135,7 @@ const renderComponent = () => {
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       SecurityScreen,
-      ROUTES.PROFILE_SECURITY,
+      SETTINGS_ROUTES.PROFILE_SECURITY,
       {},
       store
     ),

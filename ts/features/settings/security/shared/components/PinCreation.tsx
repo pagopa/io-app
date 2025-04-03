@@ -14,7 +14,7 @@ import { Alert as NativeAlert, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { defaultPin } from "../../../../../config";
 import { isValidPinNumber } from "../../../../../features/authentication/fastLogin/utils/pinPolicy";
-import { useCreatePin } from "../../../../../hooks/useCreatePin";
+import { useCreatePin } from "../../hooks/useCreatePin";
 import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";

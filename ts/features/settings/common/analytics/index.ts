@@ -3,11 +3,11 @@ import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
-import ROUTES from "../../../../navigation/routes";
 import { TypefaceChoice } from "../../../../store/actions/persistedPreferences";
 import { profileLoadSuccess } from "../store/actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { FlowType, buildEventProperties } from "../../../../utils/analytics";
+import { SETTINGS_ROUTES } from "../navigation/routes";
 
 export async function trackProfileLoadSuccess(state: GlobalState) {
   await updateMixpanelSuperProperties(state);
@@ -243,7 +243,7 @@ export function trackSettingsDiscoverBannerVisualized() {
   const props = buildEventProperties("UX", "screen_view", {
     banner_id: "settingsDiscoveryBanner",
     banner_page: MESSAGES_ROUTES.MESSAGES_HOME,
-    banner_landing: ROUTES.SETTINGS_MAIN
+    banner_landing: SETTINGS_ROUTES.SETTINGS_MAIN
   });
   void mixpanelTrack(eventName, props);
 }
@@ -253,7 +253,7 @@ export function trackSettingsDiscoverBannerTap() {
   const props = buildEventProperties("UX", "action", {
     banner_id: "settingsDiscoveryBanner",
     banner_page: MESSAGES_ROUTES.MESSAGES_HOME,
-    banner_landing: ROUTES.SETTINGS_MAIN
+    banner_landing: SETTINGS_ROUTES.SETTINGS_MAIN
   });
   void mixpanelTrack(eventName, props);
 }
@@ -263,7 +263,7 @@ export function trackSettingsDiscoverBannerClosure() {
   const props = buildEventProperties("UX", "action", {
     banner_id: "settingsDiscoveryBanner",
     banner_page: MESSAGES_ROUTES.MESSAGES_HOME,
-    banner_landing: ROUTES.SETTINGS_MAIN
+    banner_landing: SETTINGS_ROUTES.SETTINGS_MAIN
   });
   void mixpanelTrack(eventName, props);
 }

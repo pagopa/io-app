@@ -5,10 +5,10 @@ import I18n from "../../../../../i18n";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
 import { useIOSelector } from "../../../../../store/hooks";
 import LanguagesPreferencesScreen from "../LanguagesPreferencesScreen";
 import { preferredLanguageSelector } from "../../../../../store/reducers/persistedPreferences";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 // Mock the useIOSelector hook
 jest.mock("../../../../../store/hooks", () => ({
@@ -75,7 +75,7 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext(
     LanguagesPreferencesScreen,
-    ROUTES.PROFILE_PREFERENCES_LANGUAGE,
+    SETTINGS_ROUTES.PROFILE_PREFERENCES_LANGUAGE,
     {},
     store
   );

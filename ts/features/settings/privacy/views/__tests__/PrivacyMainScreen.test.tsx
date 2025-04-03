@@ -3,7 +3,6 @@ import { within, fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import { Alert } from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
-import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -12,6 +11,7 @@ import PrivacyMainScreen from "../PrivacyMainScreen";
 import I18n from "../../../../../i18n";
 import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/UserDataProcessingStatus";
 import * as hooks from "../../../../../utils/hooks/usePrevious";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 jest.spyOn(Alert, "alert");
 
@@ -122,7 +122,7 @@ const renderComponentMockStore = (state: GlobalState) => {
   return {
     component: renderScreenWithNavigationStoreContext(
       PrivacyMainScreen,
-      ROUTES.PROFILE_PRIVACY_MAIN,
+      SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN,
       {},
       store
     ),

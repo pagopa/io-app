@@ -14,11 +14,11 @@ import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { upsertUserDataProcessing } from "../../common/store/actions/userDataProcessing";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { userDataProcessingSelector } from "../../common/store/selectors/userDataProcessing";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 /**
  * A screen to explain how profile data export works.
@@ -57,8 +57,8 @@ const DownloadProfileDataScreen = () => {
   }, [dispatch]);
 
   const handleNavigateToProfilePrivacy = useCallback(() => {
-    navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PRIVACY
+    navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PRIVACY
     });
   }, [navigate]);
 

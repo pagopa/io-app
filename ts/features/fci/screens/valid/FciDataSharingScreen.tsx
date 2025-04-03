@@ -17,7 +17,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   profileEmailSelector,
@@ -32,6 +31,7 @@ import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 
 const styles = StyleSheet.create({
   alertTextContainer: {
@@ -111,8 +111,8 @@ const FciDataSharingScreen = (): ReactElement => {
             asLink
             onPress={() => {
               trackFciUserExit(route.name, fciEnvironment, "modifica_email");
-              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: ROUTES.INSERT_EMAIL_SCREEN,
+              navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+                screen: SETTINGS_ROUTES.INSERT_EMAIL_SCREEN,
                 params: {
                   isOnboarding: false,
                   isFciEditEmailFlow: true

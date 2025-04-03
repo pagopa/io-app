@@ -20,8 +20,7 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { ProfileParamsList } from "../../../../navigation/params/ProfileParamsList";
-import ROUTES from "../../../../navigation/routes";
+import { SettingsParamsList } from "../../common/navigation/params/SettingsParamsList";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing
@@ -30,9 +29,10 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { userDataProcessingSelector } from "../../common/store/selectors/userDataProcessing";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 type Props = {
-  navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
+  navigation: IOStackNavigationProp<SettingsParamsList, "PROFILE_PRIVACY_MAIN">;
 };
 
 const getRequestProcessingAlertTitle = () => ({
@@ -133,11 +133,11 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         // if the user asks for download, navigate to a screen to inform about the process
         // there he/she can request to download his/her data
         if (choice === UserDataProcessingChoiceEnum.DOWNLOAD) {
-          navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
+          navigation.navigate(SETTINGS_ROUTES.PROFILE_DOWNLOAD_DATA);
           return;
         }
         if (choice === UserDataProcessingChoiceEnum.DELETE) {
-          navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
+          navigation.navigate(SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
           return;
         }
       } else {
@@ -236,7 +236,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         // Privacy Policy
         value: I18n.t("profile.main.privacy.privacyPolicy.title"),
         description: I18n.t("profile.main.privacy.privacyPolicy.description"),
-        onPress: () => navigation.navigate(ROUTES.PROFILE_PRIVACY)
+        onPress: () => navigation.navigate(SETTINGS_ROUTES.PROFILE_PRIVACY)
       },
       {
         // Share data
@@ -244,7 +244,8 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         description: I18n.t(
           "profile.main.privacy.shareData.listItem.description"
         ),
-        onPress: () => navigation.navigate(ROUTES.PROFILE_PRIVACY_SHARE_DATA)
+        onPress: () =>
+          navigation.navigate(SETTINGS_ROUTES.PROFILE_PRIVACY_SHARE_DATA)
       },
       {
         // Export your data

@@ -13,10 +13,10 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import I18n from "../../../../i18n";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { requestWriteCalendarPermission } from "../../../../utils/permission";
 import { checkAndRequestPermission } from "../../../../utils/calendar";
 import { openAppSettings } from "../../../../utils/appSettings";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 type PreferencesNavListItem = {
   value: string;
@@ -34,38 +34,38 @@ const PreferencesScreen = () => {
   const navigation = useIONavigation();
 
   const navigateToServicePreferenceScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+    navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_SERVICES
     });
   }, [navigation]);
 
   const navigateToEmailForwardingPreferenceScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
+    navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
     });
   }, [navigation]);
 
   const navigateToCalendarPreferenceScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_CALENDAR
+    navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_CALENDAR
     });
   }, [navigation]);
 
   const navigateToLanguagePreferenceScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_LANGUAGE
+    navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_LANGUAGE
     });
   }, [navigation]);
 
   const navigateToNotificationPreferenceScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
+    navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
     });
   }, [navigation]);
 
   const navigateToAppearancePreferenceScreen = useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_APPEARANCE
+    navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_APPEARANCE
     });
   }, [navigation]);
 

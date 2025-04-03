@@ -65,9 +65,10 @@ import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navi
 import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
 import { PageNotFound } from "../features/pageNotFound/screens/index.tsx";
 import CheckEmailNavigator from "../features/mailCheck/navigation/CheckEmailNavigator.tsx";
+import SettingsStackNavigator from "../features/settings/common/navigation/SettingsNavigator.tsx";
+import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes.ts";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
-import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
 
@@ -166,13 +167,13 @@ const AuthenticatedStackNavigator = () => {
       />
 
       <Stack.Screen
-        name={ROUTES.PROFILE_NAVIGATOR}
+        name={SETTINGS_ROUTES.PROFILE_NAVIGATOR}
         options={{
           ...hideHeaderOptions,
           ...TransitionPresets.SlideFromRightIOS,
           gestureEnabled: isGestureEnabled
         }}
-        component={ProfileStackNavigator}
+        component={SettingsStackNavigator}
       />
 
       <Stack.Screen

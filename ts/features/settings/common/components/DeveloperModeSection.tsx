@@ -26,7 +26,6 @@ import { lollipopPublicKeySelector } from "../../../lollipop/store/reducers/loll
 import { toThumbprint } from "../../../lollipop/utils/crypto";
 import { notificationsInstallationSelector } from "../../../pushNotifications/store/reducers/installation";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { sessionExpired } from "../../../authentication/common/store/actions";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import {
@@ -52,6 +51,7 @@ import { isDevEnv } from "../../../../utils/environment";
 
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewRequest";
+import { SETTINGS_ROUTES } from "../navigation/routes";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -313,8 +313,8 @@ const DesignSystemSection = () => {
         value={I18n.t("profile.main.designSystem")}
         accessibilityLabel={I18n.t("profile.main.designSystem")}
         onPress={() =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.DESIGN_SYSTEM
+          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+            screen: SETTINGS_ROUTES.DESIGN_SYSTEM
           })
         }
       />
@@ -340,45 +340,45 @@ const PlaygroundsSection = () => {
     {
       value: "Lollipop",
       onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.LOLLIPOP_PLAYGROUND
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.LOLLIPOP_PLAYGROUND
         })
     },
     {
       value: "IO Markdown",
       onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.IO_MARKDOWN_PLAYGROUND
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.IO_MARKDOWN_PLAYGROUND
         })
     },
     {
       value: "CGN Landing Page",
       onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.CGN_LANDING_PLAYGROUND
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.CGN_LANDING_PLAYGROUND
         })
     },
     {
       value: I18n.t("profile.main.trial.titleSection"),
       onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.TRIALS_SYSTEM_PLAYGROUND
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.TRIALS_SYSTEM_PLAYGROUND
         })
     },
     {
       condition: isIdPayTestEnabled,
       value: "IDPay Onboarding",
       onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.IDPAY_ONBOARDING_PLAYGROUND
         })
     },
     {
       condition: isIdPayTestEnabled,
       value: "IDPay Code",
       onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.IDPAY_CODE_PLAYGROUND
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.IDPAY_CODE_PLAYGROUND
         })
     },
     {
@@ -391,8 +391,8 @@ const PlaygroundsSection = () => {
     {
       value: "App Feedback",
       onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.APP_FEEDBACK_PLAYGROUND
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND
         })
     }
   ];

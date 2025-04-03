@@ -4,7 +4,6 @@ import { fireEvent } from "@testing-library/react-native";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { PreloadedState, createStore } from "redux";
 import I18n from "../../../../../i18n";
-import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import {
@@ -17,6 +16,7 @@ import ProfileDataScreen from "../ProfileDataScreen";
 import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
 import { profileLoadSuccess } from "../../../common/store/actions";
 import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 const profileWithoutEmail = {
   is_inbox_enabled: true,
@@ -130,12 +130,15 @@ describe("Test ProfileDataScreen", () => {
     fireEvent.press(editEmailButton);
 
     expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.INSERT_EMAIL_SCREEN,
-      params: {
-        isOnboarding: false
+    expect(mockNavigate).toHaveBeenCalledWith(
+      SETTINGS_ROUTES.PROFILE_NAVIGATOR,
+      {
+        screen: SETTINGS_ROUTES.INSERT_EMAIL_SCREEN,
+        params: {
+          isOnboarding: false
+        }
       }
-    });
+    );
   });
 });
 
@@ -149,7 +152,7 @@ const renderComponent = () => {
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <ProfileDataScreen />,
-      ROUTES.PROFILE_DATA,
+      SETTINGS_ROUTES.PROFILE_DATA,
       {},
       store
     ),

@@ -14,8 +14,8 @@ import {
 import { openSystemNotificationSettingsScreen } from "../../../pushNotifications/utils";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { SETTINGS_ROUTES } from "../navigation/routes";
 
 export const ProfileMainScreenTopBanner = () => {
   const bannerToShow = useIOSelector(settingsBannerToShowSelector);
@@ -28,20 +28,20 @@ export const ProfileMainScreenTopBanner = () => {
 
   const navigateToAppearance = useCallback(
     () =>
-      navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.PROFILE_PREFERENCES_APPEARANCE
+      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+        screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_APPEARANCE
       }),
     [navigation]
   );
 
   const onPressNotifications = useCallback(() => {
-    trackPushNotificationsBannerTap(ROUTES.SETTINGS_MAIN);
+    trackPushNotificationsBannerTap(SETTINGS_ROUTES.SETTINGS_MAIN);
     openSystemNotificationSettingsScreen();
   }, []);
 
   useEffect(() => {
     if (bannerToShow === "NOTIFICATIONS") {
-      trackPushNotificationsBannerVisualized(ROUTES.SETTINGS_MAIN);
+      trackPushNotificationsBannerVisualized(SETTINGS_ROUTES.SETTINGS_MAIN);
     }
   }, [bannerToShow]);
 

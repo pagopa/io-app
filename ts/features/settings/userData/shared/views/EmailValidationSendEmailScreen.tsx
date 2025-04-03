@@ -56,6 +56,7 @@ import { FCI_ROUTES } from "../../../../fci/navigation/routes";
 import ROUTES from "../../../../../navigation/routes";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
 import Countdown from "../../components/CountdownComponent";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 const emailSentTimeout = 60000 as Millisecond; // 60 seconds
 const countdownIntervalDuration = 1000 as Millisecond; // 1 second
@@ -190,8 +191,8 @@ const EmailValidationSendEmailScreen = () => {
         }
       });
     } else {
-      navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.INSERT_EMAIL_SCREEN,
+      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+        screen: SETTINGS_ROUTES.INSERT_EMAIL_SCREEN,
         params: {
           isOnboarding: false,
           isFciEditEmailFlow,

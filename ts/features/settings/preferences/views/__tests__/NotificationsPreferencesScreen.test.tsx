@@ -3,13 +3,13 @@ import _ from "lodash";
 import { createStore } from "redux";
 import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../../definitions/backend/ReminderStatus";
-import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { NotificationsPreferencesScreen } from "../NotificationsPreferencesScreen";
 import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 describe("NotificationsPreferencesScreen", () => {
   it("given an undefined 'reminder_status' then the switch should be off", () => {
@@ -200,7 +200,7 @@ const renderScreen = (
 
   return renderScreenWithNavigationStoreContext(
     NotificationsPreferencesScreen,
-    ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS,
+    SETTINGS_ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS,
     {},
     store
   );

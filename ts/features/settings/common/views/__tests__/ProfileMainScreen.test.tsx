@@ -4,10 +4,10 @@ import { Alert } from "react-native";
 import { appReducer } from "../../../../../store/reducers";
 import ProfileMainScreen from "../ProfileMainScreen";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import ROUTES from "../../../../../navigation/routes";
 import I18n from "../../../../../i18n";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { SETTINGS_ROUTES } from "../../navigation/routes";
 
 jest.spyOn(Alert, "alert");
 
@@ -21,7 +21,7 @@ const renderComponent = () => {
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       ProfileMainScreen,
-      ROUTES.SETTINGS_MAIN,
+      SETTINGS_ROUTES.SETTINGS_MAIN,
       {},
       store
     ),
