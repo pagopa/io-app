@@ -12,10 +12,9 @@ import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/se
 import { getFlowType } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
-  trackEmailAlreadyTaken,
-  trackEmailDuplicateEditingConfirm
-} from "../../../screens/analytics/emailAnalytics";
-
+  trackEmailDuplicateEditingConfirm,
+  trackEmailAlreadyTaken
+} from "../analytics";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 

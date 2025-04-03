@@ -56,7 +56,7 @@ import {
   trackEmailEditing,
   trackEmailEditingError,
   trackSendValidationEmail
-} from "../../../../../screens/analytics/emailAnalytics";
+} from "../analytics";
 import { trackTosUserExit } from "../../../../authentication/common/analytics";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 

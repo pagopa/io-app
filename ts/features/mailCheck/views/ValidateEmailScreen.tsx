@@ -8,10 +8,8 @@ import ROUTES from "../../../navigation/routes";
 import { acknowledgeOnEmailValidation } from "../../settings/common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import {
-  trackEmailNotAlreadyConfirmed,
-  trackSendValidationEmail
-} from "../../../screens/analytics/emailAnalytics";
+import { trackSendValidationEmail } from "../../settings/userData/shared/analytics";
+import { trackEmailNotAlreadyConfirmed } from "../analytics";
 import { getFlowType } from "../../../utils/analytics";
 import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/selectors";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";

@@ -46,7 +46,7 @@ import {
   trackEmailValidationSuccess,
   trackEmailValidationSuccessConfirmed,
   trackResendValidationEmail
-} from "../../../../../screens/analytics/emailAnalytics";
+} from "../analytics";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
 import { CountdownProvider } from "../../../../../components/countdown/CountdownProvider";

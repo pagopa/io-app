@@ -1,5 +1,5 @@
-import { mixpanelTrack } from "../../mixpanel";
-import { FlowType, buildEventProperties } from "../../utils/analytics";
+import { mixpanelTrack } from "../../../../../mixpanel";
+import { FlowType, buildEventProperties } from "../../../../../utils/analytics";
 
 export function trackEmailEditing(flow: FlowType) {
   void mixpanelTrack(
@@ -43,20 +43,6 @@ export function trackEmailValidationSuccessConfirmed(flow: FlowType) {
   );
 }
 
-export function trackEmailNotAlreadyConfirmed(flow: FlowType) {
-  void mixpanelTrack(
-    "EMAIL_VALIDATION_STOP",
-    buildEventProperties("UX", "screen_view", undefined, flow)
-  );
-}
-
-export function trackEmailAlreadyTaken(flow: FlowType) {
-  void mixpanelTrack(
-    "EMAIL_DUPLICATE_STOP",
-    buildEventProperties("UX", "screen_view", undefined, flow)
-  );
-}
-
 export function trackSendValidationEmail(flow: FlowType) {
   void mixpanelTrack(
     "EMAIL_VALIDATION_SEND",
@@ -67,13 +53,6 @@ export function trackSendValidationEmail(flow: FlowType) {
 export function trackResendValidationEmail(flow: FlowType) {
   void mixpanelTrack(
     "EMAIL_VALIDATION_RESEND",
-    buildEventProperties("UX", "action", undefined, flow)
-  );
-}
-
-export function trackEmailDuplicateEditingConfirm(flow: FlowType) {
-  void mixpanelTrack(
-    "EMAIL_DUPLICATE_EDITING_CONFIRM",
     buildEventProperties("UX", "action", undefined, flow)
   );
 }
