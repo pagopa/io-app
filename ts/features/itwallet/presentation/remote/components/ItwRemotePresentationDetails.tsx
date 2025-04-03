@@ -11,10 +11,7 @@ import {
 import I18n from "../../../../../i18n";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
 import { ClaimDisplayFormat } from "../../../common/utils/itwClaimsUtils";
-import {
-  selectPresentationDetails,
-  selectUserSelectedOptionalCredentials
-} from "../machine/selectors";
+import { selectPresentationDetails } from "../machine/selectors";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
 import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
@@ -32,9 +29,6 @@ const ItwRemotePresentationDetails = () => {
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const presentationDetails = ItwRemoteMachineContext.useSelector(
     selectPresentationDetails
-  );
-  const selectedOptionalCredentials = ItwRemoteMachineContext.useSelector(
-    selectUserSelectedOptionalCredentials
   );
 
   const { required, optional } = useMemo(

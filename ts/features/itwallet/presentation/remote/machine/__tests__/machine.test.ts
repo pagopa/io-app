@@ -14,7 +14,7 @@ describe("itwRemoteMachine", () => {
   const navigateToFailureScreen = jest.fn();
   const navigateToClaimsDisclosureScreen = jest.fn();
   const navigateToIdentificationModeScreen = jest.fn();
-  const close = jest.fn();
+  const closePresentation = jest.fn();
 
   const isWalletActive = jest.fn();
   const isEidExpired = jest.fn();
@@ -25,7 +25,7 @@ describe("itwRemoteMachine", () => {
       navigateToFailureScreen,
       navigateToClaimsDisclosureScreen,
       navigateToIdentificationModeScreen,
-      close
+      closePresentation
     },
     actors: {},
     guards: {
