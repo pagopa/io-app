@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import LogoutScreen from "../components/screens/LogoutScreen";
+import LogoutScreen from "../features/settings/common/views/LogoutScreen";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import CalendarsPreferencesScreen from "../features/settings/preferences/views/CalendarsPreferencesScreen";
