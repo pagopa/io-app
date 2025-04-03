@@ -41,11 +41,14 @@ export const ItwDiscoveryBanner = ({
 
   const trackBannerProperties = useMemo(
     () => ({
-      banner_id: "itwDiscoveryBannerTestID",
+      banner_id:
+        bannerType === "onboarding"
+          ? "itwDiscoveryBannerTestID"
+          : "itwDiscoveryBannerDeviceChanged",
       banner_page: route.name,
       banner_landing: "ITW_INTRO"
     }),
-    [route.name]
+    [bannerType, route.name]
   );
   const handleOnPress = () => {
     trackItWalletBannerTap(trackBannerProperties);
