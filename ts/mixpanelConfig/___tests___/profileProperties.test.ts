@@ -12,12 +12,14 @@ jest.mock("react-native-i18n", () => ({
   t: (key: string) => key
 }));
 
+// eslint-disable-next-line functional/no-let
+let mockIsMixpanelInitialized = true;
 const mockedSet = jest.fn();
 jest.mock("../../mixpanel", () => ({
   getPeople: () => ({
     set: mockedSet
   }),
-  isMixpanelInitialized: () => true
+  isMixpanelInitialized: () => mockIsMixpanelInitialized
 }));
 
 describe("profileProperties", () => {
@@ -71,6 +73,7 @@ describe("profileProperties", () => {
     reminder_status: ${pushContentReminderTuple[1]},
 })
 `, async () => {
+            mockIsMixpanelInitialized = true;
             const state = generateMockedGlobalState(
               notificationTokenTuple[0],
               pushContentReminderTuple[0] as PushNotificationsContentTypeEnum,
@@ -84,7 +87,9 @@ describe("profileProperties", () => {
               .mockImplementation(() =>
                 Promise.resolve(notificationPermissionTuple[0] as boolean)
               );
+
             await updateMixpanelProfileProperties(state);
+
             expect(mockedSet.mock.calls.length).toBe(1);
             expect(mockedSet.mock.calls[0].length).toBe(1);
             expect(mockedSet.mock.calls[0][0]).toEqual({
@@ -111,6 +116,14 @@ describe("profileProperties", () => {
         )
       )
     );
+  });
+  it("should not do anything if 'isMixpanelInitialized' returns 'false'", async () => {
+    mockIsMixpanelInitialized = false;
+    const fakeState = {} as GlobalState;
+
+    await updateMixpanelProfileProperties(fakeState);
+
+    expect(mockedSet.mock.calls.length).toBe(0);
   });
 });
 

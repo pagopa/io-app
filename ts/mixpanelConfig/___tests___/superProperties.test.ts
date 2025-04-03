@@ -24,9 +24,11 @@ jest.mock("react-native", () => ({
   }
 }));
 
+// eslint-disable-next-line functional/no-let
+let mockIsMixpanelInitialized = true;
 const mockedRegisterSuperProperties = jest.fn();
 jest.mock("../../mixpanel", () => ({
-  isMixpanelInitialized: () => true,
+  isMixpanelInitialized: () => mockIsMixpanelInitialized,
   registerSuperProperties: (properties: MixpanelProperties) =>
     mockedRegisterSuperProperties(properties)
 }));
@@ -67,7 +69,8 @@ describe("superProperties", () => {
       [
         [false, "disabled"],
         [true, "enabled"]
-      ].forEach(notificationPermissionTuple =>
+      ].forEach(notificationPermissionTuple => {
+        mockIsMixpanelInitialized = true;
         it(`should call 'mixpanel.getPeople().set' with proper parameter's value for input
 ({
     notificationPermission: ${notificationPermissionTuple[0]}
@@ -99,7 +102,9 @@ describe("superProperties", () => {
           jest
             .spyOn(ACCESSIBILITY, "isScreenReaderEnabled")
             .mockImplementation(() => Promise.resolve(true));
+
           await updateMixpanelSuperProperties(state);
+
           expect(mockedRegisterSuperProperties.mock.calls.length).toBe(1);
           expect(mockedRegisterSuperProperties.mock.calls[0].length).toBe(1);
           expect(mockedRegisterSuperProperties.mock.calls[0][0]).toEqual({
@@ -122,9 +127,17 @@ describe("superProperties", () => {
             SERVICE_CONFIGURATION: "AUTO",
             WELFARE_STATUS: []
           });
-        })
-      )
+        });
+      })
     );
+  });
+  it("should do nothing if 'isMixpanelInitialized' returns 'false'", async () => {
+    mockIsMixpanelInitialized = false;
+    const state = {} as GlobalState;
+
+    await updateMixpanelSuperProperties(state);
+
+    expect(mockedRegisterSuperProperties.mock.calls.length).toBe(0);
   });
 });
 
