@@ -74,3 +74,11 @@ export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
  */
 export const itwIsWalletInstanceRemotelyActiveSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isWalletInstanceRemotelyActive;
+
+/**
+ * TEMPORARY LOCAL FF - TO BE REPLACED WITH REMOTE FF (SIW-2195)
+ * Returns whether the L3 is enabled, which allows to use the new IT Wallet
+ * features for users with L3 authentication level
+ */
+export const itwIsL3EnabledSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isL3Enabled;
