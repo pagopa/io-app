@@ -19,7 +19,6 @@ import { isCgnActivationLoading } from "../../store/reducers/activation";
 
 const styles = StyleSheet.create({
   container: {
-    ...IOStyles.bgWhite,
     ...IOStyles.centerJustified,
     ...IOStyles.flex
   },
