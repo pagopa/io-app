@@ -60,7 +60,7 @@ export const serializeFailureReason = (
   const reason = !failure.reason
     ? "Reason not provided"
     : failure.reason instanceof Error
-    ? failure.reason.message
+    ? createReasonObject(failure.reason.message)
     : failure.reason;
 
   return {
@@ -68,3 +68,12 @@ export const serializeFailureReason = (
     reason
   };
 };
+
+/**
+ * This logic was agreed upon with the Mixpanel team to allow them to filter these specific error cases.
+ * Instead of sending a plain string, we return a structured object with a code and errorDescription
+ */
+const createReasonObject = (message: string) => ({
+  code: "UNEXPECTED",
+  errorDescription: message
+});
