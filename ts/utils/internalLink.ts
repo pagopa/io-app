@@ -11,6 +11,7 @@ import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { IO_FIMS_LINK_PREFIX } from "../features/fims/singleSignOn/utils";
+import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 import { isTestEnv } from "./environment";
 import {
   IO_INTERNAL_LINK_PREFIX,
@@ -29,11 +30,11 @@ import { extractPathFromURL } from "./url";
 // TODO: string should be replaced with a strong type that express all the allowed routes
 const routesToNavigationLink: Record<string, string> = {
   [MESSAGES_ROUTES.MESSAGES_HOME]: "/main/messages",
-  [ROUTES.PROFILE_PREFERENCES_HOME]: "/profile/preferences",
+  [SETTINGS_ROUTES.PROFILE_PREFERENCES_HOME]: "/profile/preferences",
   [ROUTES.WALLET_HOME]: "/main/wallet",
   [SERVICES_ROUTES.SERVICES_HOME]: "/main/services",
-  [ROUTES.PROFILE_PRIVACY]: "/profile/privacy",
-  [ROUTES.PROFILE_PRIVACY_MAIN]: "/profile/privacy-main"
+  [SETTINGS_ROUTES.PROFILE_PRIVACY]: "/profile/privacy",
+  [SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN]: "/profile/privacy-main"
 };
 
 const legacyRoutesToNavigationLink: Record<string, string> = {

@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { call, take, select } from "typed-redux-saga/macro";
 import { CommonActions } from "@react-navigation/native";
 import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
-import { createPinSuccess } from "../../store/actions/pinset";
+import { createPinSuccess } from "../../features/settings/security/store/actions/pinset";
 
 import { PinString } from "../../types/PinString";
 import { ReduxSagaEffect } from "../../types/utils";

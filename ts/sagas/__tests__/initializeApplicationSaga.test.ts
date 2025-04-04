@@ -6,12 +6,12 @@ import mockedProfile from "../../__mocks__/initializedProfile";
 
 import { sessionExpired } from "../../features/authentication/common/store/actions";
 import { previousInstallationDataDeleteSuccess } from "../../store/actions/installation";
-import { resetProfileState } from "../../store/actions/profile";
+import { resetProfileState } from "../../features/settings/common/store/actions";
 import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../../features/authentication/common/store/selectors";
-import { profileSelector } from "../../store/reducers/profile";
+import { profileSelector } from "../../features/settings/common/store/selectors";
 import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
 import {
@@ -22,13 +22,13 @@ import {
   loadProfile,
   watchProfile,
   watchProfileUpsertRequestsSaga
-} from "../profile";
+} from "../../features/settings/common/sagas/profile";
 import {
   initializeApplicationSaga,
   testWaitForNavigatorServiceInitialization
 } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
-import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
+import { watchProfileEmailValidationChangedSaga } from "../../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,

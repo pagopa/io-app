@@ -78,12 +78,15 @@ import { previousInstallationDataDeleteSuccess } from "../store/actions/installa
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import { clearOnboarding } from "../store/actions/onboarding";
-import { clearCache, resetProfileState } from "../store/actions/profile";
+import {
+  clearCache,
+  resetProfileState
+} from "../features/settings/common/store/actions";
 import {
   startupLoadSuccess,
   startupTransientError
 } from "../store/actions/startup";
-import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
+import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
 import {
   sessionInfoSelector,
   sessionTokenSelector
@@ -94,15 +97,13 @@ import {
   remoteConfigSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { IdentificationResult } from "../store/reducers/identification";
-import {
-  isProfileFirstOnBoarding,
-  profileSelector
-} from "../store/reducers/profile";
+import { profileSelector } from "../features/settings/common/store/selectors";
+import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import {
   StartupStatusEnum,
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
-import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
+import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
@@ -112,6 +113,17 @@ import {
   watchSessionRefreshInOfflineSaga
 } from "../features/ingress/saga";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
+import {
+  loadProfile,
+  watchProfile,
+  watchProfileRefreshRequestsSaga,
+  watchProfileUpsertRequestsSaga
+} from "../features/settings/common/sagas/profile";
+import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
+import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
+import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
+import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
+import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAcknowledgedEmailSaga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -121,19 +133,10 @@ import {
   watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "./mixpanel";
 import { setLanguageFromProfileIfExists } from "./preferences";
-import {
-  loadProfile,
-  watchProfile,
-  watchProfileRefreshRequestsSaga,
-  watchProfileUpsertRequestsSaga
-} from "./profile";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
-import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
-import { watchEmailNotificationPreferencesSaga } from "./startup/checkEmailNotificationPreferencesSaga";
-import { checkEmailSaga } from "./startup/checkEmailSaga";
 import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
@@ -146,8 +149,6 @@ import {
 } from "./startup/watchCheckSessionSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
-import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
-import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;

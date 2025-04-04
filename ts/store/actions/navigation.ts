@@ -6,6 +6,7 @@ import { SERVICES_ROUTES } from "../../features/services/common/navigation/route
 import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
 import { CieCardReaderScreenNavigationParams } from "../../features/authentication/login/cie/screens/CieCardReaderScreen";
 import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
+import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/routes";
 
 /**
  * @deprecated
@@ -118,8 +119,8 @@ export const navigateToServiceDetailsScreen = (
  */
 export const navigateToEmailForwardingPreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
     })
   );
 
@@ -128,8 +129,8 @@ export const navigateToEmailForwardingPreferenceScreen = () =>
  */
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_CALENDAR
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_CALENDAR
     })
   );
 
@@ -138,8 +139,8 @@ export const navigateToCalendarPreferenceScreen = () =>
  */
 export const navigateToLanguagePreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_LANGUAGE
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_LANGUAGE
     })
   );
 
@@ -148,8 +149,8 @@ export const navigateToLanguagePreferenceScreen = () =>
  */
 export const navigateToLogout = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_LOGOUT
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_LOGOUT
     })
   );
 
@@ -158,8 +159,8 @@ export const navigateToLogout = () =>
  */
 export const navigateToRemoveAccountSuccess = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
     })
   );
 
@@ -168,8 +169,8 @@ export const navigateToRemoveAccountSuccess = () =>
  */
 export const navigateToRemoveAccountDetailScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
     })
   );
 
@@ -178,10 +179,10 @@ export const navigateToRemoveAccountDetailScreen = () =>
  */
 export const navigateToPrivacyScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PRIVACY_MAIN,
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN,
       params: {
-        screen: ROUTES.PROFILE_PRIVACY_MAIN
+        screen: SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN
       }
     })
   );
@@ -191,8 +192,8 @@ export const navigateToPrivacyScreen = () =>
  */
 export const navigateToPrivacyShareData = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PRIVACY_SHARE_DATA
+    CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PRIVACY_SHARE_DATA
     })
   );
 

@@ -21,17 +21,3 @@ export function trackBiometricActivationEducationalScreen(flow: FlowType) {
     buildEventProperties("UX", "screen_view", undefined, flow)
   );
 }
-
-export function trackBiometricActivationAccepted(flow: FlowType) {
-  void mixpanelTrack(
-    "PREFERENCE_BIOMETRIC_ACTIVATION_ACCEPTED",
-    buildEventProperties("UX", "action", undefined, flow)
-  );
-}
-
-export function trackBiometricActivationDeclined(flow: FlowType) {
-  void mixpanelTrack(
-    "PREFERENCE_BIOMETRIC_ACTIVATION_DECLINED",
-    buildEventProperties("UX", "action", undefined, flow)
-  );
-}

@@ -12,7 +12,7 @@ import {
   NotificationPermissionType,
   NotificationPreferenceConfiguration,
   ServiceConfigurationTrackingType
-} from "../screens/profile/analytics";
+} from "../features/settings/common/analytics/index.ts";
 
 import { GlobalState } from "../store/reducers/types";
 

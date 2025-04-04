@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { BonusesAvailable } from "../../../../../../definitions/content/BonusesAvailable";
-import { clearCache } from "../../../../../store/actions/profile";
+// import { clearCache } from "../../../../settings/store/actions";
+import { clearCache } from "../../../../settings/common/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { loadAvailableBonuses } from "../actions/availableBonusesTypes";
 

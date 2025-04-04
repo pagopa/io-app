@@ -16,7 +16,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   pushNotificationPreviewEnabledSelector,
   pushNotificationRemindersEnabledSelector
-} from "../../../store/reducers/profile";
+} from "../../settings/common/store/selectors";
 import {
   trackNotificationsOptInOpenSettings,
   trackNotificationsOptInReminderOnPermissionsOff,

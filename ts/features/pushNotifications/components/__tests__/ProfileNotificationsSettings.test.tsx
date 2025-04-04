@@ -4,7 +4,7 @@ import { ProfileNotificationSettings } from "../ProfileNotificationsSettings";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import ROUTES from "../../../../navigation/routes";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 
 describe("ProfileNotificationSettings", () => {
   [...Array(128).keys()].forEach(index => {
@@ -64,7 +64,7 @@ const renderComponent = (
         showSettingsPath={showSettingsPath}
       />
     ),
-    ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS,
+    SETTINGS_ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS,
     {},
     store
   );

@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { Municipality } from "../../definitions/content/Municipality";
-import { ProfileState } from "../store/reducers/profile";
+import { ProfileState } from "../features/settings/common/store/reducers";
 import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";

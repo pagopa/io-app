@@ -5,7 +5,7 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import I18n from "../../../i18n";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import EmailInsertScreen from "../../profile/EmailInsertScreen";
+import EmailInsertScreen from "../../../features/settings/userData/shared/screens/EmailInsertScreen";
 
 describe("EmailInsertScreen", () => {
   it("the components into the page should be render correctly", () => {

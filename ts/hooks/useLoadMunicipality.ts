@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/lib/Either";
 import { useIODispatch, useIOSelector } from "../store/hooks";
-import { profileFiscalCodeSelector } from "../store/reducers/profile";
+import { profileFiscalCodeSelector } from "../features/settings/common/store/selectors";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { contentMunicipalityLoad } from "../store/actions/content";
 

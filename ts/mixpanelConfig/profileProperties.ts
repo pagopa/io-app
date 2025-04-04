@@ -10,9 +10,9 @@ import {
   NotificationPreferenceConfiguration,
   NotificationTokenType,
   ServiceConfigurationTrackingType
-} from "../screens/profile/analytics";
+} from "../features/settings/common/analytics/index.ts";
 import { idpSelector } from "../features/authentication/common/store/selectors";
-import { tosVersionSelector } from "../store/reducers/profile";
+import { tosVersionSelector } from "../features/settings/common/store/selectors/index.ts";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   ItwCed,
