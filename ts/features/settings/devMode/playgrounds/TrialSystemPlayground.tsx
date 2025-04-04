@@ -8,21 +8,21 @@ import {
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useEffect } from "react";
 import { constNull } from "fp-ts/lib/function";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   isLoadingTrialStatusSelector,
   isUpdatingTrialStatusSelector,
   trialStatusSelector
-} from "../../../../trialSystem/store/reducers";
-import { TrialId } from "../../../../../../definitions/trial_system/TrialId";
+} from "../../../trialSystem/store/reducers";
+import { TrialId } from "../../../../../definitions/trial_system/TrialId";
 import {
   trialSystemActivationStatus,
   trialSystemActivationStatusUpsert
-} from "../../../../trialSystem/store/actions";
-import I18n from "../../../../../i18n";
-import { SubscriptionStateEnum } from "../../../../../../definitions/trial_system/SubscriptionState";
+} from "../../../trialSystem/store/actions";
+import I18n from "../../../../i18n";
+import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 
 const styles = StyleSheet.create({
   row: {

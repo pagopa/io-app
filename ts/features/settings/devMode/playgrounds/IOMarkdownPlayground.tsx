@@ -20,10 +20,10 @@ import {
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import IOMarkdown from "../../../../../components/IOMarkdown";
-import { generateMessagesAndServicesRules } from "../../../../common/components/IOMarkdown/customRules";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import IOMarkdownSuggestions from "./IOMarkdownSuggestions";
 
 const ALL = `# Lorem Ipsum

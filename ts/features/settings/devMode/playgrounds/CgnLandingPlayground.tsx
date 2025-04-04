@@ -14,9 +14,9 @@ import {
   TextInput,
   View
 } from "react-native";
-import WebviewComponent from "../../../../../components/WebviewComponent";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import WebviewComponent from "../../../../components/WebviewComponent";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const styles = StyleSheet.create({
   textInput: {

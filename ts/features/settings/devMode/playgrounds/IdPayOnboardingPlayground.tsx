@@ -11,14 +11,14 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Button, ScrollView, View } from "react-native";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { IdPayOnboardingRoutes } from "../../../../idpay/onboarding/navigation/routes";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { IdPayOnboardingRoutes } from "../../../idpay/onboarding/navigation/routes";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
   AppParamsList,
   IOStackNavigationProp
-} from "../../../../../navigation/params/AppParamsList";
-import { isDevEnv } from "../../../../../utils/environment";
+} from "../../../../navigation/params/AppParamsList";
+import { isDevEnv } from "../../../../utils/environment";
 
 const IdPayOnboardingPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();

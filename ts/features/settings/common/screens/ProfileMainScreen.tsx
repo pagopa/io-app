@@ -42,7 +42,7 @@ import {
   appFeedbackUriConfigSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
-import DeveloperModeSection from "../components/DeveloperModeSection";
+import DeveloperModeSection from "../../devMode/components/DeveloperModeSection";
 import { ProfileMainScreenTopBanner } from "../components/ProfileMainScreenTopBanner";
 import { SETTINGS_ROUTES } from "../navigation/routes";
 

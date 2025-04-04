@@ -1,12 +1,12 @@
 import { Body, ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
-import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { clearFeedbackDatas } from "../../../../appReviews/store/actions";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { clearFeedbackDatas } from "../../../appReviews/store/actions";
 import {
   appReviewNegativeFeedbackLogSelector,
   appReviewPositiveFeedbackLogSelector
-} from "../../../../appReviews/store/selectors";
-import { useAppReviewRequest } from "../../../../appReviews/hooks/useAppReviewRequest";
+} from "../../../appReviews/store/selectors";
+import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewRequest";
 
 export const AppFeedbackPlayground = () => {
   const {

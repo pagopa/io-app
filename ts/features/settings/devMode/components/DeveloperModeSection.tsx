@@ -33,7 +33,7 @@ import {
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
 } from "../../../../store/actions/persistedPreferences";
-import { clearCache } from "../store/actions";
+import { clearCache } from "../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   sessionTokenSelector,
@@ -51,7 +51,7 @@ import { isDevEnv } from "../../../../utils/environment";
 
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import { useAppReviewRequest } from "../../../appReviews/hooks/useAppReviewRequest";
-import { SETTINGS_ROUTES } from "../navigation/routes";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
