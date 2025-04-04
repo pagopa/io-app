@@ -92,7 +92,7 @@ export const IngressScreen = () => {
 
   useEffect(() => {
     const visualizeOfflineWallet =
-      !isConnected &&
+      isConnected === false &&
       selectItwLifecycleIsOperationalOrValid &&
       isOfflineAccessEnabled;
 

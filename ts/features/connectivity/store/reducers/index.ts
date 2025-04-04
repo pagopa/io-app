@@ -4,12 +4,13 @@ import { setConnectionStatus } from "../actions";
 
 // Define the type for the connection state
 export type ConnectivityState = {
-  isConnected: boolean;
+  isConnected?: boolean;
 };
 
 // Define the initial state
+// add unefined state in order to manage the initially value (before dispatch setConnectionStatus)
 const initialState: ConnectivityState = {
-  isConnected: true
+  isConnected: undefined
 };
 
 // Define the reducer

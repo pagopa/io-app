@@ -1,4 +1,4 @@
-import { put, select, takeLatest } from "typed-redux-saga/macro";
+import { put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { setOfflineAccessReason } from "../store/actions";
 import { itwLifecycleIsOperationalOrValid } from "../../itwallet/lifecycle/store/selectors";
@@ -8,6 +8,7 @@ import { OfflineAccessReasonEnum } from "../store/reducer";
 import { startupLoadSuccess } from "../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../store/reducers/startup";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
+import { setConnectionStatus } from "../../connectivity/store/actions";
 
 /**
  * Handles the transition to offline mode during startup.
@@ -61,16 +62,24 @@ export function* watchSessionRefreshInOfflineSaga() {
  * @returns {boolean} - Returns `true` if offline access is available and the device is offline, otherwise `false`.
  */
 export function* isDeviceOfflineWithWalletSaga() {
-  const isConnected = yield* select(isConnectedSelector);
+  // eslint-disable-next-line functional/no-let
+  let isConnected = yield* select(isConnectedSelector);
   const selectItwLifecycleIsOperationalOrValid = yield* select(
     itwLifecycleIsOperationalOrValid
   );
   const isItwOfflineAccessEnabled = yield* select(
     isItwOfflineAccessEnabledSelector
   );
+  // this logic allows synchronization with the data in case isConnected is undefined
+  if (isConnected === undefined) {
+    // wait for isConnected data to be dispatched.
+    const connectedStatusAction = yield* take(setConnectionStatus);
+    // re-set locally value about connetion
+    isConnected = connectedStatusAction.payload;
+  }
 
   if (
-    !isConnected &&
+    isConnected === false &&
     selectItwLifecycleIsOperationalOrValid &&
     isItwOfflineAccessEnabled
   ) {
