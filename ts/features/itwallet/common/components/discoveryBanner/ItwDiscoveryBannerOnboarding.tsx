@@ -60,7 +60,7 @@ const ItwDiscoveryBannerOnboarding = () => {
     }
   };
 
-  if (!isBannerRenderable || !bannerType) {
+  if (!isBannerRenderable) {
     return null;
   }
 
