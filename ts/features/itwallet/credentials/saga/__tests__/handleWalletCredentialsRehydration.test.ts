@@ -6,7 +6,6 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
 import { walletAddCards } from "../../../../wallet/store/actions/cards";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
   const expirationClaim = { value: "2100-09-04", name: "exp" };
@@ -30,7 +29,6 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
             eid: O.some(mockedEid),
@@ -60,7 +58,6 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
             eid: O.some(mockedEid),
@@ -115,7 +112,6 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED,
           issuance: { integrityKeyTag: O.none },
           credentials: {
             eid: O.none,

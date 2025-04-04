@@ -1,7 +1,6 @@
 import {
   ContentWrapper,
   Divider,
-  GradientScrollView,
   H1,
   IOSkeleton,
   IOToast,
@@ -30,6 +29,7 @@ import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -203,7 +203,7 @@ const CgnMerchantDetailScreen = () => {
 // ------------------------ render utils
 
 const CgnMerchantDetailScreenSkeleton = () => (
-  <GradientScrollView primaryActionProps={undefined}>
+  <IOScrollView>
     <IOSkeleton
       shape="rectangle"
       width="100%"
@@ -222,7 +222,7 @@ const CgnMerchantDetailScreenSkeleton = () => (
     <IOSkeleton shape="rectangle" width="100%" height={170} radius={8} />
     <VSpacer size={24} />
     <ListItemHeader label="" />
-  </GradientScrollView>
+  </IOScrollView>
 );
 
 // ------------------------ styles - consts - export
