@@ -2,14 +2,11 @@ import {
   Badge,
   H6,
   HStack,
-  IOColors,
   IOModuleStyles,
   Icon,
   Tag,
   VStack,
-  hexToRgba,
   useIOTheme,
-  useIOThemeContext,
   useScaleAnimation
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -18,6 +15,7 @@ import Animated from "react-native-reanimated";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import I18n from "../../../../../i18n";
+import { useCgnStyle } from "../../hooks/useCgnStyle";
 import { getCategorySpecs } from "../../utils/filters";
 import {
   isValidDiscount,
@@ -51,30 +49,12 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
 
 export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
   const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
 
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
+  const { module: moduleStyle } = useCgnStyle();
 
   const accessibilityLabel = moduleCGNaccessibilityLabel(discount);
-
-  const themeStyle = {
-    default: {
-      borderColor:
-        themeType === "light" ? IOColors["grey-100"] : IOColors["grey-850"],
-      backgroundColor: IOColors[theme["appBackground-secondary"]]
-    },
-    new: {
-      borderColor:
-        themeType === "light"
-          ? IOColors["hanPurple-250"]
-          : hexToRgba(IOColors["hanPurple-250"], 0.35),
-      backgroundColor:
-        themeType === "light"
-          ? IOColors["hanPurple-50"]
-          : hexToRgba(IOColors["hanPurple-250"], 0.2)
-    }
-  };
 
   return (
     <Pressable
@@ -90,7 +70,7 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
         style={[
           { borderWidth: 1 },
           IOModuleStyles.button,
-          discount.isNew ? themeStyle.new : themeStyle.default,
+          discount.isNew ? moduleStyle.new : moduleStyle.default,
           scaleAnimatedStyle
         ]}
       >
