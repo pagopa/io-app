@@ -44,8 +44,6 @@ describe("itwEidIssuanceMachine", () => {
   const storeWalletInstanceAttestation = jest.fn();
   const storeEidCredential = jest.fn();
   const closeIssuance = jest.fn();
-  const setWalletInstanceToOperational = jest.fn();
-  const setWalletInstanceToValid = jest.fn();
   const handleSessionExpired = jest.fn();
   const onInit = jest.fn();
 
@@ -88,8 +86,6 @@ describe("itwEidIssuanceMachine", () => {
       storeWalletInstanceAttestation,
       storeEidCredential,
       closeIssuance,
-      setWalletInstanceToOperational,
-      setWalletInstanceToValid,
       handleSessionExpired,
       resetWalletInstance,
       trackWalletInstanceCreation,
@@ -282,7 +278,6 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual("Success");
     expect(storeEidCredential).toHaveBeenCalledTimes(1);
-    expect(setWalletInstanceToValid).toHaveBeenCalledTimes(1);
     expect(navigateToSuccessScreen).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
@@ -1117,7 +1112,6 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-to-wallet" });
 
     expect(storeEidCredential).toHaveBeenCalledTimes(1);
-    expect(setWalletInstanceToValid).toHaveBeenCalledTimes(1);
     expect(navigateToWallet).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({

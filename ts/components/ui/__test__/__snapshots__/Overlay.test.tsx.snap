@@ -13,20 +13,32 @@ exports[`Overlay Should match all-properties snapshot 1`] = `
     style={
       [
         {
-          "backgroundColor": "#FFFFFF",
           "bottom": 0,
-          "justifyContent": "center",
           "left": 0,
           "position": "absolute",
           "right": 0,
           "top": 0,
-          "zIndex": 1,
+          "zIndex": 0,
         },
         {
           "backgroundColor": "#FF0000",
           "opacity": 0.65,
         },
       ]
+    }
+  />
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "bottom": 0,
+        "justifyContent": "center",
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "zIndex": 1,
+      }
     }
   >
     <Text>
@@ -61,6 +73,24 @@ exports[`Overlay Should match base snapshot 1`] = `
   }
   testID="overlayComponent"
 >
+  <View
+    style={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 0,
+        },
+        {
+          "backgroundColor": "#FFFFFF",
+          "opacity": 1,
+        },
+      ]
+    }
+  />
   <View
     style={
       [
