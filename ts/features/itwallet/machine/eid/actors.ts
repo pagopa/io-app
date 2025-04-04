@@ -20,6 +20,7 @@ import {
   itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import type {
   AuthenticationContext,
   CieContext,
@@ -91,6 +92,29 @@ export const createEidIssuanceActorsImplementation = (
     return { isNFCEnabled, isCIEAuthenticationSupported };
   }),
 
+  startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
+    async ({ input }) => {
+      assert(
+        input.walletInstanceAttestation,
+        "walletInstanceAttestation is undefined"
+      );
+      assert(input.identification, "identification is undefined");
+
+      const isItwL3Enabled = itwIsL3EnabledSelector(store.getState());
+
+      const authenticationContext = await issuanceUtils.startAuthFlow({
+        walletAttestation: input.walletInstanceAttestation,
+        identification: input.identification,
+        isItwL3Enabled
+      });
+
+      return {
+        ...authenticationContext,
+        callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
+      };
+    }
+  ),
+
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
       assert(input.identification, "identification is undefined");
@@ -116,26 +140,6 @@ export const createEidIssuanceActorsImplementation = (
         ...authParams,
         ...input.authenticationContext
       });
-    }
-  ),
-
-  startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
-    async ({ input }) => {
-      assert(
-        input.walletInstanceAttestation,
-        "walletInstanceAttestation is undefined"
-      );
-      assert(input.identification, "identification is undefined");
-
-      const authenticationContext = await issuanceUtils.startAuthFlow({
-        walletAttestation: input.walletInstanceAttestation,
-        identification: input.identification
-      });
-
-      return {
-        ...authenticationContext,
-        callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
-      };
     }
   ),
 
