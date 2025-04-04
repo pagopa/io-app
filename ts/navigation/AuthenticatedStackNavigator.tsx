@@ -5,6 +5,8 @@ import {
 import { Platform } from "react-native";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
+import { CdcNavigator } from "../features/bonus/cdc/navigation/navigator.tsx";
+import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes.ts";
 import {
   CgnActivationNavigator,
   CgnDetailsNavigator,
@@ -33,10 +35,13 @@ import { IdPayUnsubscriptionNavigator } from "../features/idpay/unsubscription/n
 import { IdPayUnsubscriptionRoutes } from "../features/idpay/unsubscription/navigation/routes";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
+import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
+import { PageNotFound } from "../features/pageNotFound/screens/index.tsx";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
@@ -56,14 +61,12 @@ import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator"
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { useIOSelector } from "../store/hooks";
 import {
+  isCdcEnabledSelector,
   isCGNEnabledSelector,
   isFciEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
-import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
-import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
-import { PageNotFound } from "../features/pageNotFound/screens/index.tsx";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -78,6 +81,7 @@ const hideHeaderOptions = {
 };
 
 const AuthenticatedStackNavigator = () => {
+  const cdcEnabled = useIOSelector(isCdcEnabledSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
@@ -206,6 +210,14 @@ const AuthenticatedStackNavigator = () => {
           name={CGN_ROUTES.EYCA.ACTIVATION.MAIN}
           options={hideHeaderOptions}
           component={CgnEYCAActivationNavigator}
+        />
+      )}
+
+      {cdcEnabled && (
+        <Stack.Screen
+          name={CDC_ROUTES.CDC_MAIN}
+          options={hideHeaderOptions}
+          component={CdcNavigator}
         />
       )}
 
