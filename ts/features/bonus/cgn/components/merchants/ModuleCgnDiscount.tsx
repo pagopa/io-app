@@ -2,9 +2,7 @@ import {
   Badge,
   H6,
   HStack,
-  IOColors,
   IOModuleStyles,
-  IOStyles,
   Icon,
   Tag,
   VStack,
@@ -12,11 +10,12 @@ import {
   useScaleAnimation
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import I18n from "../../../../../i18n";
+import { useCgnStyle } from "../../hooks/useCgnStyle";
 import { getCategorySpecs } from "../../utils/filters";
 import {
   isValidDiscount,
@@ -29,20 +28,6 @@ export type ModuleCgnDiscount = {
   discount: Discount;
 };
 
-const styles = StyleSheet.create({
-  backgroundDefault: {
-    backgroundColor: IOColors["grey-50"],
-    borderColor: IOColors["grey-100"]
-  },
-  backgroundNewItem: {
-    backgroundColor: IOColors["hanPurple-50"],
-    borderColor: IOColors["hanPurple-250"]
-  },
-  moduleButton: {
-    borderWidth: 1
-  }
-});
-
 type CategoryTagProps = {
   category: ProductCategory;
 };
@@ -53,7 +38,6 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
   return O.isSome(categorySpecs) ? (
     <Tag
       text={I18n.t(categorySpecs.value.nameKey)}
-      forceLightMode
       variant="custom"
       icon={{
         name: categorySpecs.value.icon,
@@ -65,8 +49,10 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
 
 export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
   const theme = useIOTheme();
+
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
+  const { module: moduleStyle } = useCgnStyle();
 
   const accessibilityLabel = moduleCGNaccessibilityLabel(discount);
 
@@ -82,18 +68,19 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
     >
       <Animated.View
         style={[
+          { borderWidth: 1 },
           IOModuleStyles.button,
-          styles.moduleButton,
-          discount.isNew ? styles.backgroundNewItem : styles.backgroundDefault,
+          discount.isNew ? moduleStyle.new : moduleStyle.default,
           scaleAnimatedStyle
         ]}
       >
         <View
-          style={[
-            { flexGrow: 1 },
-            IOStyles.row,
-            { alignItems: "center", justifyContent: "space-between" }
-          ]}
+          style={{
+            flexGrow: 1,
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexDirection: "row"
+          }}
         >
           <VStack space={8} style={{ flexShrink: 1 }}>
             {(discount.discount || discount.isNew) && (
@@ -118,7 +105,7 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
               </HStack>
             )}
 
-            <H6 color={"grey-850"}>{discount.name}</H6>
+            <H6 color={theme["textHeading-secondary"]}>{discount.name}</H6>
             <HStack space={4} style={{ flexWrap: "wrap" }}>
               {discount.productCategories.map(categoryKey => (
                 <CategoryTag key={categoryKey} category={categoryKey} />
