@@ -84,7 +84,7 @@ const T_CREDENTIAL_DEFINITION: AuthorizationDetail = {
 };
 const T_REQUESTED_CREDENTIAL: RequestObject = {
   client_id: T_CLIENT_ID,
-  client_id_scheme: "entity_id",
+  // client_id_scheme: "entity_id",
   exp: 0,
   iat: 0,
   iss: "",

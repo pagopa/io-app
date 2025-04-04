@@ -79,6 +79,9 @@ const extractErrorCode = (failure: Props["failure"]) => {
   ) {
     return rawError.code ?? failure.type;
   }
+  if (rawError instanceof Errors.IoWalletError) {
+    return rawError.code;
+  }
   if (rawError instanceof Error) {
     return rawError.message;
   }
