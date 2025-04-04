@@ -33,6 +33,9 @@ export const itwSetWalletInstanceRemotelyActive = createStandardAction(
   "ITW_SET_WALLET_INSTANCE_REMOTELY_ACTIVE"
 )<boolean | undefined>();
 
+export const itwSetL3Enabled =
+  createStandardAction("ITW_SET_L3_ENABLED")<boolean>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
@@ -41,4 +44,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
-  | ActionType<typeof itwSetWalletInstanceRemotelyActive>;
+  | ActionType<typeof itwSetWalletInstanceRemotelyActive>
+  | ActionType<typeof itwSetL3Enabled>;
