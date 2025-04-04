@@ -8,6 +8,7 @@ import { Platform } from "react-native";
 import PushNotification, {
   ReceivedNotification
 } from "react-native-push-notification";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { maximumItemsFromAPI, pageSize } from "../../../config";
 import {
   loadPreviousPageMessages,
@@ -121,7 +122,7 @@ const messageIdFromPushNotification = (
   if (E.isLeft(payloadDecodeEither)) {
     // The notification payload is not valid, we need to track the error
     handleTrackingOfDecodingFailure(
-      payloadDecodeEither.left,
+      readableReport(payloadDecodeEither.left),
       userAnalyticsOptIn
     );
     return undefined;

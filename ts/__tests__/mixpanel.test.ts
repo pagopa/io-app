@@ -47,10 +47,6 @@ jest.mock("../mixpanelConfig/profileProperties", () => ({
   updateMixpanelProfileProperties: jest.fn().mockResolvedValue(undefined)
 }));
 
-jest.mock("../utils/environment", () => ({
-  isTestEnv: true
-}));
-
 describe("Mixpanel module", () => {
   // eslint-disable-next-line functional/no-let
   let mockMixpanelInstance: Mixpanel;
