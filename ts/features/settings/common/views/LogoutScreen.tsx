@@ -1,11 +1,8 @@
-import { connect } from "react-redux";
 import { useEffect } from "react";
-import { Dispatch } from "../../../../store/actions/types";
 import { logoutRequest } from "../../../authentication/common/store/actions";
 import I18n from "../../../../i18n";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-
-type Props = ReturnType<typeof mapDispatchToProps>;
+import { useIODispatch } from "../../../../store/hooks";
 
 /**
  * It handles the logout loading.
@@ -14,21 +11,16 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  * logout success -> session closed client&server
  * logout failure/success -> app removes all session info from local storage
  */
-const LogoutScreen = (props: Props) => {
-  // do logout on component mount
-  const { logout } = props;
+const LogoutScreen = () => {
+  const dispatch = useIODispatch();
+
   useEffect(() => {
-    logout();
-  }, [logout]);
+    dispatch(logoutRequest({ withApiCall: true }));
+  }, [dispatch]);
 
   return (
     <LoadingScreenContent contentTitle={I18n.t("profile.logout.loading")} />
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // hard-logout
-  logout: () => dispatch(logoutRequest({ withApiCall: true }))
-});
-
-export default connect(undefined, mapDispatchToProps)(LogoutScreen);
+export default LogoutScreen;
