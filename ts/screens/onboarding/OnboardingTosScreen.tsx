@@ -23,10 +23,10 @@ import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import {
-  isProfileFirstOnBoarding,
   isProfileFirstOnBoardingSelector,
   profileSelector
 } from "../../features/settings/common/store/selectors";
+import { isProfileFirstOnBoarding } from "../../features/settings/common/store/utils/guards";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackTosUserExit } from "../../features/authentication/common/analytics";

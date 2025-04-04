@@ -5,7 +5,7 @@ import { InitializedProfile } from "../../../definitions/backend/InitializedProf
 import { navigateToTosScreen } from "../../store/actions/navigation";
 import { tosAccepted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../features/settings/common/store/actions";
-import { isProfileFirstOnBoarding } from "../../features/settings/common/store/selectors";
+import { isProfileFirstOnBoarding } from "../../features/settings/common/store/utils/guards";
 import { ReduxSagaEffect } from "../../types/utils";
 import NavigationService from "../../navigation/NavigationService";
 import { tosConfigSelector } from "../../features/tos/store/selectors";

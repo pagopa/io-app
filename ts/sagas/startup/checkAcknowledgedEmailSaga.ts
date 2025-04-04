@@ -5,10 +5,10 @@ import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { emailAcknowledged } from "../../store/actions/onboarding";
 import {
-  hasProfileEmail,
   isProfileEmailValidated,
-  isProfileFirstOnBoarding
-} from "../../features/settings/common/store/selectors";
+  isProfileFirstOnBoarding,
+  hasProfileEmail
+} from "../../features/settings/common/store/utils/guards";
 import { ReduxSagaEffect } from "../../types/utils";
 
 /**

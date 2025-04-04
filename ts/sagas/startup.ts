@@ -97,10 +97,8 @@ import {
   remoteConfigSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { IdentificationResult } from "../store/reducers/identification";
-import {
-  isProfileFirstOnBoarding,
-  profileSelector
-} from "../features/settings/common/store/selectors";
+import { profileSelector } from "../features/settings/common/store/selectors";
+import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import {
   StartupStatusEnum,
   startupTransientErrorInitialState

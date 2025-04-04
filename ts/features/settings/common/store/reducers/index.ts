@@ -15,7 +15,7 @@ import {
 } from "../actions";
 import { Action } from "../../../../../store/actions/types";
 import { ProfileError } from "../types";
-import { isProfileFirstOnBoarding } from "../selectors";
+import { isProfileFirstOnBoarding } from "../utils/guards";
 
 export type ProfileState = pot.Pot<InitializedProfile, ProfileError>;
 

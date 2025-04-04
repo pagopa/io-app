@@ -21,10 +21,10 @@ import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../features/settings/common/store/actions";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import {
-  isServicesPreferenceModeSet,
   profileSelector,
   profileServicePreferencesModeSelector
 } from "../../features/settings/common/store/selectors";
+import { isServicesPreferenceModeSet } from "../../features/settings/common/store/utils/guards";
 import { getFlowType } from "../../utils/analytics";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";

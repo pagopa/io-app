@@ -3,16 +3,18 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import mockedProfile from "../../../../../__mocks__/initializedProfile";
 import { ProfileState } from "../reducers";
 import {
-  hasProfileEmail,
-  isProfileEmailValidated,
   isProfileEmailValidatedSelector,
-  isProfileFirstOnBoarding,
   profileEmailSelector,
   profileHasErrorSelector,
   profileIsUpdatingSelector,
   pushNotificationPreviewEnabledSelector,
   pushNotificationRemindersEnabledSelector
 } from "../selectors";
+import {
+  isProfileEmailValidated,
+  isProfileFirstOnBoarding,
+  hasProfileEmail
+} from "../utils/guards";
 import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ReminderStatusEnum } from "../../../../../../definitions/backend/ReminderStatus";

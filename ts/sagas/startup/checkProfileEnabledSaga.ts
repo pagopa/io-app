@@ -11,7 +11,7 @@ import {
 import {
   hasProfileEmail,
   isProfileFirstOnBoarding
-} from "../../features/settings/common/store/selectors";
+} from "../../features/settings/common/store/utils/guards";
 import { ReduxSagaEffect } from "../../types/utils";
 
 function* enableProfileInboxWebhook() {

@@ -4,11 +4,11 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
+import { profileSelector } from "../../features/settings/common/store/selectors";
 import {
   isProfileEmailValidated,
-  isProfileEmailAlreadyTaken,
-  profileSelector
-} from "../../features/settings/common/store/selectors";
+  isProfileEmailAlreadyTaken
+} from "../../features/settings/common/store/utils/guards";
 import { setEmailCheckAtStartupFailure } from "../../features/settings/common/store/actions";
 import { emailAcknowledged } from "../../store/actions/onboarding";
 

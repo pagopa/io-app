@@ -3,13 +3,18 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { ProfileState } from "../reducers";
-import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
 import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
 import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../../definitions/backend/ReminderStatus";
 import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { capitalize } from "../../../../../utils/strings";
+import {
+  isProfileFirstOnBoarding,
+  isProfileEmailValidated,
+  hasProfileEmail,
+  getProfileEmail
+} from "../utils/guards";
 
 export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
@@ -27,13 +32,6 @@ export const isInboxEnabledSelector = createSelector(profileSelector, profile =>
     : false
 );
 
-export const getProfileEmail = (
-  user: InitializedProfile
-): O.Option<EmailAddress> => O.fromNullable(user.email);
-
-export const getProfileSpidEmail = (
-  user: InitializedProfile
-): O.Option<EmailAddress> => O.fromNullable(user.spid_email);
 // return the email address (as a string) if the profile pot is some and its value is of kind InitializedProfile and it has an email
 
 export const profileEmailSelector = createSelector(
@@ -82,10 +80,6 @@ export const profileNameSurnameSelector = createSelector(
 );
 // return true if the profile has an email
 
-export const hasProfileEmail = (user: InitializedProfile): boolean =>
-  user.email !== undefined;
-// return true if the profile has an email
-
 export const hasProfileEmailSelector = createSelector(
   profileSelector,
   (profile: ProfileState): boolean =>
@@ -113,28 +107,6 @@ export const isProfileEmailAlreadyTakenSelector = createSelector(
       undefined
     )
 );
-// return true if the profile services preference mode is set (mode is set only when AUTO or MANUAL is the current mode)
-
-export const isServicesPreferenceModeSet = (
-  mode: ServicesPreferencesModeEnum | undefined
-): boolean =>
-  [ServicesPreferencesModeEnum.AUTO, ServicesPreferencesModeEnum.MANUAL].some(
-    sp => sp === mode
-  );
-// return true if the profile has an email and it is validated
-
-export const isProfileEmailValidated = (user: InitializedProfile): boolean =>
-  user.is_email_validated !== undefined && user.is_email_validated === true;
-// return true if the profile has an email and it is validated
-
-export const isProfileEmailAlreadyTaken = (user: InitializedProfile): boolean =>
-  !!user.is_email_already_taken;
-// Returns true if the profile has service_preferences_settings set to Legacy.
-// A profile that has completed onboarding will have this value mandatory set to auto or manual
-
-export const isProfileFirstOnBoarding = (user: InitializedProfile): boolean =>
-  user.service_preferences_settings.mode === ServicesPreferencesModeEnum.LEGACY;
-// Same as above, but Selector
 
 export const isProfileFirstOnBoardingSelector = createSelector(
   profileSelector,
