@@ -10,12 +10,12 @@ import { PersistedAuthenticationState } from "../../features/authentication/comm
 import { CieState } from "../../features/authentication/login/cie/store/reducers/cie";
 import { ProfileState } from "../../features/settings/common/store/reducers";
 import { UserDataProcessingState } from "../../features/settings/common/store/reducers/userDataProcessing";
+import { EmailValidationState } from "../../features/settings/userData/shared/store/reducers/emailValidation";
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { ContentState } from "./content";
 import { CrossSessionsState } from "./crossSessions";
 import { PersistedDebugState } from "./debug";
-import { EmailValidationState } from "./emailValidation";
 import { PersistedEntitiesState } from "./entities";
 import { PersistedIdentificationState } from "./identification";
 import { InstallationState } from "./installation";

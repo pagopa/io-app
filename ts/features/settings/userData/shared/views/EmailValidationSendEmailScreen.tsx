@@ -38,7 +38,7 @@ import {
   profileEmailSelector
 } from "../../../common/store/selectors";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { emailValidationSelector } from "../../../../../store/reducers/emailValidation";
+import { emailValidationSelector } from "../store/selectors/emailValidation";
 import { emailAcknowledged } from "../../../../../store/actions/onboarding";
 import { getFlowType } from "../../../../../utils/analytics";
 import {

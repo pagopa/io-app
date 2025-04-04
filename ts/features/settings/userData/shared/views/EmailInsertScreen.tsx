@@ -37,7 +37,7 @@ import ROUTES from "../../../../../navigation/routes";
 import { abortOnboarding } from "../../../../../store/actions/onboarding";
 import { profileUpsert } from "../../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { emailValidationSelector } from "../../../../../store/reducers/emailValidation";
+import { emailValidationSelector } from "../store/selectors/emailValidation";
 import {
   isProfileEmailAlreadyTakenSelector,
   isProfileEmailValidatedSelector,

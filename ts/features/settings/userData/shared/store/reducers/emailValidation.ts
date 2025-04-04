@@ -13,9 +13,8 @@ import {
   emailValidationPollingStop,
   setEmailCheckAtStartupFailure,
   startEmailValidation
-} from "../../features/settings/common/store/actions";
-import { Action } from "../actions/types";
-import { GlobalState } from "./types";
+} from "../../../../common/store/actions";
+import { Action } from "../../../../../../store/actions/types";
 
 export type EmailValidationState = {
   sendEmailValidationRequest: pot.Pot<void, Error>;
@@ -30,12 +29,6 @@ const INITIAL_STATE: EmailValidationState = {
   emailCheckAtStartupFailed: O.none,
   isEmailValidationPollingRunning: false
 };
-
-// Selector
-// return the pot of email validation
-export const emailValidationSelector = (
-  state: GlobalState
-): EmailValidationState => state.emailValidation;
 
 const reducer = (
   state: EmailValidationState = INITIAL_STATE,
