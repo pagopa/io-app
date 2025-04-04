@@ -119,7 +119,7 @@ export const IngressScreen = () => {
   ]);
 
   if (
-    !isConnected &&
+    isConnected === false &&
     (!selectItwLifecycleIsOperationalOrValid || !isOfflineAccessEnabled)
   ) {
     return <IngressScreenNoInternetConnection />;
