@@ -3,31 +3,26 @@ import {
   H3,
   HStack,
   IOColors,
-  IOStyles,
+  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useEffect, useRef } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import I18n from "../../../../../../i18n";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
+import { useCgnStyle } from "../../../hooks/useCgnStyle";
 import { CategoryTag } from "../ModuleCgnDiscount";
 import { isValidDiscount, normalizedDiscountPercentage } from "../utils";
 
 type CgnDiscountHeaderProps = {
-  onLayout: (event: any) => void;
   discountDetails: Discount;
 };
 
 export const CgnDiscountHeader = ({
-  onLayout,
   discountDetails
 }: CgnDiscountHeaderProps) => {
-  const discountColor = discountDetails.isNew
-    ? styles.backgroundNewItem
-    : styles.backgroundDefault;
-
   const { isNew, discount, name, productCategories } = discountDetails;
 
   const ref = useRef<View>(null);
@@ -36,21 +31,28 @@ export const CgnDiscountHeader = ({
     setAccessibilityFocus(ref, 400 as Millisecond);
   }, [ref]);
 
+  const { header: headerStyle } = useCgnStyle();
+
+  const backgroundColor = isNew
+    ? headerStyle.new.backgroundColor
+    : headerStyle.default.backgroundColor;
+
+  const foreground: IOColors = isNew
+    ? headerStyle.new.foreground
+    : headerStyle.default.foreground;
+
   return (
     <View
-      onLayout={onLayout}
-      style={[
-        IOStyles.horizontalContentPadding,
-        {
-          backgroundColor: discountColor.backgroundColor,
-          paddingBottom: 24
-        }
-      ]}
+      style={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        backgroundColor,
+        paddingBottom: 24
+      }}
     >
       <View>
         {(isNew || isValidDiscount(discount)) && (
           <>
-            <View style={[IOStyles.row, { gap: 8 }]}>
+            <View style={{ flexDirection: "row", gap: 8 }}>
               {isNew && (
                 <Badge
                   variant="cgn"
@@ -68,7 +70,7 @@ export const CgnDiscountHeader = ({
             <VSpacer size={12} />
           </>
         )}
-        <H3 accessible ref={ref} color="grey-850">
+        <H3 accessible ref={ref} color={foreground}>
           {name}
         </H3>
         <VSpacer size={12} />
@@ -81,14 +83,3 @@ export const CgnDiscountHeader = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  backgroundDefault: {
-    backgroundColor: IOColors["grey-50"],
-    borderColor: IOColors["grey-100"]
-  },
-  backgroundNewItem: {
-    backgroundColor: IOColors["hanPurple-50"],
-    borderColor: IOColors["hanPurple-250"]
-  }
-});
