@@ -1,5 +1,6 @@
 import { Appearance, ColorSchemeName } from "react-native";
 import * as O from "fp-ts/Option";
+import { isMixpanelInitialized, registerSuperProperties } from "../mixpanel.ts";
 import { isScreenReaderEnabled } from "../utils/accessibility";
 import { getAppVersion } from "../utils/appVersion";
 import {
@@ -13,10 +14,7 @@ import {
   NotificationPreferenceConfiguration,
   ServiceConfigurationTrackingType
 } from "../screens/profile/analytics";
-
 import { GlobalState } from "../store/reducers/types";
-
-import { mixpanel } from "../mixpanel";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
@@ -68,7 +66,7 @@ export const updateMixpanelSuperProperties = async (
   state: GlobalState,
   forceUpdateFor?: PropertyToUpdate<SuperProperties>
 ) => {
-  if (!mixpanel) {
+  if (!isMixpanelInitialized()) {
     return;
   }
   const screenReaderEnabled: boolean = await isScreenReaderEnabled();
@@ -114,7 +112,7 @@ export const updateMixpanelSuperProperties = async (
     forceUpdate<keyof SuperProperties>(superPropertiesObject, forceUpdateFor);
   }
 
-  mixpanel.registerSuperProperties(superPropertiesObject);
+  registerSuperProperties(superPropertiesObject);
 };
 
 const forceUpdate = <T extends keyof SuperProperties>(
