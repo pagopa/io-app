@@ -736,7 +736,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                 },
                               ]
                             }
-                            tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
                             width={36}
@@ -1260,7 +1259,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                   },
                                 ]
                               }
-                              tintColor="#614C15"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}

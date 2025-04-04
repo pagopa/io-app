@@ -1618,7 +1618,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                               <View
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 24,

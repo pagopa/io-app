@@ -452,7 +452,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                           <View
                             accessibilityRole="progressbar"
                             accessible={true}
-                            importantForAccessibility="no-hide-descendants"
                             style={
                               {
                                 "height": 24,
@@ -1160,7 +1159,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
@@ -1686,7 +1684,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                 },
                               ]
                             }
-                            tintColor="#0B3EE3"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -2259,7 +2256,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}

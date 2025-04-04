@@ -288,7 +288,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
@@ -389,7 +388,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     ]
                                   }
                                   testID="attachment-tag"
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={16}
@@ -902,7 +900,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                       ]
                                     }
-                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -1129,7 +1126,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                       ]
                                     }
-                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -1297,7 +1293,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                       ]
                                     }
-                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -1507,7 +1502,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                       ]
                                     }
-                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -1821,7 +1815,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                 },
                                               ]
                                             }
-                                            tintColor="#0B3EE3"
                                             vbHeight={24}
                                             vbWidth={24}
                                             width={36}
@@ -2060,7 +2053,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                 },
                                               ]
                                             }
-                                            tintColor="#0B3EE3"
                                             vbHeight={24}
                                             vbWidth={24}
                                             width={36}
@@ -2236,7 +2228,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -2408,7 +2399,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -3079,7 +3069,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -3251,7 +3240,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}

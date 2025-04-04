@@ -2051,7 +2051,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -2648,7 +2647,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
