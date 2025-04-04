@@ -37,6 +37,10 @@ export const useCgnStyle = (): CgnStyleProps => {
   const theme = useIOTheme();
   const { themeType } = useIOThemeContext();
 
+  // Solid color obtained from 20% opacity of hanPurple-250,
+  // because you can't use `rgba` values in the `HeaderSecondLevel` component
+  const hanPurple250_20 = "#343141";
+
   return {
     module: {
       default: {
@@ -62,9 +66,7 @@ export const useCgnStyle = (): CgnStyleProps => {
       },
       new: {
         backgroundColor:
-          themeType === "light"
-            ? IOColors["hanPurple-50"]
-            : IOColors["hanPurple-850"],
+          themeType === "light" ? IOColors["hanPurple-50"] : hanPurple250_20,
         foreground: theme["textHeading-default"]
       }
     }

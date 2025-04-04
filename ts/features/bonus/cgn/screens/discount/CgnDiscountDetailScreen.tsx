@@ -225,10 +225,7 @@ const CgnDiscountDetailScreen = () => {
   if (discountDetails && merchantDetails) {
     return (
       <>
-        <FocusAwareStatusBar
-          backgroundColor={backgroundColor}
-          barStyle={"dark-content"}
-        />
+        <FocusAwareStatusBar backgroundColor={backgroundColor} />
         <IOScrollView
           animatedRef={animatedScrollViewRef}
           includeContentMargins={false}
