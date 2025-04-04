@@ -103,7 +103,7 @@ import {
   StartupStatusEnum,
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
-import { watchEmailValidationSaga } from "../features/settings/userData/shared/sagas/emailValidationPollingSaga";
+import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
@@ -120,7 +120,10 @@ import {
   watchProfileUpsertRequestsSaga
 } from "../features/settings/common/sagas/profile";
 import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
-import { watchProfileEmailValidationChangedSaga } from "../features/settings/userData/shared/sagas/watchProfileEmailValidationChangedSaga";
+import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
+import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
+import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
+import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAcknowledgedEmailSaga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -133,10 +136,7 @@ import { setLanguageFromProfileIfExists } from "./preferences";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
-import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
-import { watchEmailNotificationPreferencesSaga } from "./startup/checkEmailNotificationPreferencesSaga";
-import { checkEmailSaga } from "./startup/checkEmailSaga";
 import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";

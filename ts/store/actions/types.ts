@@ -46,7 +46,7 @@ import { AuthenticationActions } from "../../features/authentication/common/stor
 import { ProfileActions } from "../../features/settings/common/store/actions";
 import { UserDataProcessingActions } from "../../features/settings/common/store/actions/userDataProcessing";
 import { PinSetActions } from "../../features/settings/security/store/actions/pinset";
-import { ProfileEmailValidationAction } from "../../features/settings/userData/shared/store/actions/profileEmailValidationChange";
+import { ProfileEmailValidationAction } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { BackendStatusActions } from "./backendStatus";

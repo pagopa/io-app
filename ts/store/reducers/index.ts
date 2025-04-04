@@ -43,7 +43,7 @@ import authenticationReducer, {
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import profileReducer from "../../features/settings/common/store/reducers";
 import userDataProcessingReducer from "../../features/settings/common/store/reducers/userDataProcessing";
-import emailValidationReducer from "../../features/settings/userData/shared/store/reducers/emailValidation";
+import emailValidationReducer from "../../features/mailCheck/store/reducers/emailValidation";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import contentReducer, {

@@ -13,8 +13,8 @@ import {
   emailValidationPollingStop,
   setEmailCheckAtStartupFailure,
   startEmailValidation
-} from "../../../../common/store/actions";
-import { Action } from "../../../../../../store/actions/types";
+} from "../../../settings/common/store/actions";
+import { Action } from "../../../../store/actions/types";
 
 export type EmailValidationState = {
   sendEmailValidationRequest: pot.Pot<void, Error>;

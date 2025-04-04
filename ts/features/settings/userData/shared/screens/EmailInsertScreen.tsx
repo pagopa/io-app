@@ -37,7 +37,7 @@ import ROUTES from "../../../../../navigation/routes";
 import { abortOnboarding } from "../../../../../store/actions/onboarding";
 import { profileUpsert } from "../../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { emailValidationSelector } from "../store/selectors/emailValidation";
+import { emailValidationSelector } from "../../../../mailCheck/store/selectors/emailValidation";
 import {
   isProfileEmailAlreadyTakenSelector,
   isProfileEmailValidatedSelector,
@@ -56,7 +56,7 @@ import {
   trackEmailEditing,
   trackEmailEditingError,
   trackSendValidationEmail
-} from "../analytics";
+} from "../../../../mailCheck/analytics";
 import { trackTosUserExit } from "../../../../authentication/common/analytics";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 

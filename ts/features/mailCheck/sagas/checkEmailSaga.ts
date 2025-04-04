@@ -2,15 +2,15 @@ import { call, put, select, take } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CommonActions } from "@react-navigation/native";
-import NavigationService from "../../navigation/NavigationService";
-import ROUTES from "../../navigation/routes";
-import { profileSelector } from "../../features/settings/common/store/selectors";
+import NavigationService from "../../../navigation/NavigationService";
+import ROUTES from "../../../navigation/routes";
+import { profileSelector } from "../../settings/common/store/selectors";
 import {
   isProfileEmailValidated,
   isProfileEmailAlreadyTaken
-} from "../../features/settings/common/store/utils/guards";
-import { setEmailCheckAtStartupFailure } from "../../features/settings/common/store/actions";
-import { emailAcknowledged } from "../../store/actions/onboarding";
+} from "../../settings/common/store/utils/guards";
+import { setEmailCheckAtStartupFailure } from "../../settings/common/store/actions";
+import { emailAcknowledged } from "../../../store/actions/onboarding";
 
 export function* checkEmailSaga() {
   // We get the latest profile from the store

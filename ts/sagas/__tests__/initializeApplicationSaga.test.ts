@@ -28,7 +28,7 @@ import {
   testWaitForNavigatorServiceInitialization
 } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
-import { watchProfileEmailValidationChangedSaga } from "../../features/settings/userData/shared/sagas/watchProfileEmailValidationChangedSaga";
+import { watchProfileEmailValidationChangedSaga } from "../../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,

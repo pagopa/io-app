@@ -1,4 +1,4 @@
-import { GlobalState } from "../../../../../../store/reducers/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import { EmailValidationState } from "../reducers/emailValidation";
 
 // return the pot of email validation

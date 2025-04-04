@@ -1,11 +1,11 @@
 import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 import { profileLoadSuccess } from "../../features/settings/common/store/actions";
-import { profileEmailValidationChanged } from "../../features/settings/userData/shared/store/actions/profileEmailValidationChange";
+import { profileEmailValidationChanged } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
 import {
   isProfileEmailValidatedChanged,
   testableCheckProfileEmailChanged as checkProfileEmailChanged
-} from "../../features/settings/userData/shared/sagas/watchProfileEmailValidationChangedSaga";
+} from "../../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import mockedProfile from "../../__mocks__/initializedProfile";
 
 describe("isEmailValidatedChanged", () => {

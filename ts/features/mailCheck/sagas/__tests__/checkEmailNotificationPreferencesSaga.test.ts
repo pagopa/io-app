@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
-import { isCustomEmailChannelEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { isCustomEmailChannelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { watchEmailNotificationPreferencesSaga } from "../checkEmailNotificationPreferencesSaga";
 
 describe("watchEmailNotificationPreferencesSaga", () => {

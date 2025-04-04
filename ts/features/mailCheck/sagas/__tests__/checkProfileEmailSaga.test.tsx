@@ -1,15 +1,15 @@
 import { View } from "react-native";
 import { createStore } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
-import mockedProfile from "../../../__mocks__/initializedProfile";
-import NavigationService from "../../../navigation/NavigationService";
-import ROUTES from "../../../navigation/routes";
-import { applicationChangeState } from "../../../store/actions/application";
+import mockedProfile from "../../../../__mocks__/initializedProfile";
+import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
+import { applicationChangeState } from "../../../../store/actions/application";
 
-import { appReducer } from "../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import { appReducer } from "../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
-import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 
 describe("checkAcknowledgedEmailSaga", () => {
   beforeEach(() => {

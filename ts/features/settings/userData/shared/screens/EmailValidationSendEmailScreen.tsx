@@ -38,7 +38,7 @@ import {
   profileEmailSelector
 } from "../../../common/store/selectors";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { emailValidationSelector } from "../store/selectors/emailValidation";
+import { emailValidationSelector } from "../../../../mailCheck/store/selectors/emailValidation";
 import { emailAcknowledged } from "../../../../../store/actions/onboarding";
 import { getFlowType } from "../../../../../utils/analytics";
 import {
@@ -46,7 +46,7 @@ import {
   trackEmailValidationSuccess,
   trackEmailValidationSuccessConfirmed,
   trackResendValidationEmail
-} from "../analytics";
+} from "../../../../mailCheck/analytics";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
 import { CountdownProvider } from "../../../../../components/countdown/CountdownProvider";

@@ -44,7 +44,7 @@ import {
   profileUpsert,
   removeAccountMotivation
 } from "../../features/settings/common/store/actions";
-import { profileEmailValidationChanged } from "../../features/settings/userData/shared/store/actions/profileEmailValidationChange";
+import { profileEmailValidationChanged } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
 import { searchMessagesEnabled } from "../actions/search";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
