@@ -76,14 +76,11 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
         accessibilityRole="button"
         accessible={true}
         style={
-          [
-            {
-              "flex": 1,
-            },
-            {
-              "alignSelf": "center",
-            },
-          ]
+          {
+            "alignSelf": "center",
+            "flex": 1,
+            "gap": 4,
+          }
         }
       >
         <Text
@@ -106,13 +103,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
         >
           Do you want to change the typeface used in the app?
         </Text>
-        <View
-          style={
-            {
-              "height": 4,
-            }
-          }
-        />
         <View
           accessibilityElementsHidden={true}
           accessibilityLabel="Edit typeface style"
@@ -152,7 +142,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           <View
             style={
               {
-                "height": 4,
+                "height": 8,
               }
             }
           />

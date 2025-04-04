@@ -1,7 +1,7 @@
 import { VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -181,7 +181,7 @@ const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
     <>
       <ServicesHeaderSection
         extraBottomPadding={headerPaddingBottom}
-        logoUri={logosForService(service)}
+        logoUri={logosForService(service) as ImageSourcePropType}
         title={service_name}
         subTitle={organization_name}
       />

@@ -478,9 +478,14 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                            },
+                                            {
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                            },
+                                          ]
                                         }
                                         style={
                                           {
@@ -1439,9 +1444,14 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                            },
+                                            {
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                            },
+                                          ]
                                         }
                                         style={
                                           {
@@ -6255,9 +6265,14 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                            },
+                                            {
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                            },
+                                          ]
                                         }
                                         style={
                                           {
@@ -6986,9 +7001,14 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                            },
+                                            {
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                            },
+                                          ]
                                         }
                                         style={
                                           {

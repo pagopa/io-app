@@ -1,4 +1,5 @@
 import {
+  BannerErrorState,
   Divider,
   IOStyles,
   ListItemHeader,
@@ -15,7 +16,6 @@ import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
 import { walletLatestReceiptListPotSelector } from "../../receipts/store/selectors";
 import * as analytics from "../analytics";
 import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
-import { BannerErrorState } from "../../../../components/ui/BannerErrorState";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { usePaymentsBackoffRetry } from "../../common/hooks/usePaymentsBackoffRetry";

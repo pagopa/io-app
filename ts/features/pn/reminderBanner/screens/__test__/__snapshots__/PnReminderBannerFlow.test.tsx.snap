@@ -6734,7 +6734,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -7331,7 +7330,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -7928,7 +7926,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -8525,7 +8522,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -9122,7 +9118,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,

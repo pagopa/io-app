@@ -1,5 +1,6 @@
 import {
   Banner,
+  BannerErrorState,
   IOVisualCostants,
   ListItemHeader,
   VSpacer
@@ -22,7 +23,6 @@ import { paymentsSetAddMethodsBannerVisible } from "../store/actions";
 import { isAddMethodsBannerVisibleSelector } from "../store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { BannerErrorState } from "../../../../components/ui/BannerErrorState";
 import { usePaymentsBackoffRetry } from "../../common/hooks/usePaymentsBackoffRetry";
 import { clearPaymentsBackoffRetry } from "../../common/store/actions";
 import {

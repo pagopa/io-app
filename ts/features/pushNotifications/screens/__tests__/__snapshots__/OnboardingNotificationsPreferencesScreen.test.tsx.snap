@@ -829,14 +829,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
-                                  [
-                                    {
-                                      "flex": 1,
-                                    },
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                  ]
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
                                 }
                               >
                                 <Text
@@ -2253,14 +2250,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
-                                  [
-                                    {
-                                      "flex": 1,
-                                    },
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                  ]
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
                                 }
                               >
                                 <Text
@@ -3678,14 +3672,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
-                                  [
-                                    {
-                                      "flex": 1,
-                                    },
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                  ]
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
                                 }
                               >
                                 <Text
@@ -5103,14 +5094,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
-                                  [
-                                    {
-                                      "flex": 1,
-                                    },
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                  ]
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
                                 }
                               >
                                 <Text
@@ -6249,7 +6237,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   <View
                                     accessibilityRole="progressbar"
                                     accessible={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "height": 24,
@@ -6586,7 +6573,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   <View
                                     accessibilityRole="progressbar"
                                     accessible={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "height": 24,
@@ -6820,14 +6806,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
-                                  [
-                                    {
-                                      "flex": 1,
-                                    },
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                  ]
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
                                 }
                               >
                                 <Text
@@ -7126,7 +7109,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               <View
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 24,

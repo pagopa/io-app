@@ -403,14 +403,11 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                               accessibilityRole="button"
                               accessible={true}
                               style={
-                                [
-                                  {
-                                    "flex": 1,
-                                  },
-                                  {
-                                    "alignSelf": "center",
-                                  },
-                                ]
+                                {
+                                  "alignSelf": "center",
+                                  "flex": 1,
+                                  "gap": 4,
+                                }
                               }
                             >
                               <Text
@@ -433,13 +430,6 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                               >
                                 Ricevi le tue comunicazioni a valore legale su IO!
                               </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 4,
-                                  }
-                                }
-                              />
                               <Text
                                 allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
@@ -460,13 +450,6 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                               >
                                 Con IO è più semplice, ti basta attivare il servizio SEND.
                               </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Attiva SEND su IO"
@@ -506,7 +489,7 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                                 <View
                                   style={
                                     {
-                                      "height": 4,
+                                      "height": 8,
                                     }
                                   }
                                 />

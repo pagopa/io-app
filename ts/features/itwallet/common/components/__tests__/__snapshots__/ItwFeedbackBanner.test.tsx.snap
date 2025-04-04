@@ -402,14 +402,11 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                               accessibilityRole="button"
                               accessible={true}
                               style={
-                                [
-                                  {
-                                    "flex": 1,
-                                  },
-                                  {
-                                    "alignSelf": "center",
-                                  },
-                                ]
+                                {
+                                  "alignSelf": "center",
+                                  "flex": 1,
+                                  "gap": 4,
+                                }
                               }
                             >
                               <Text
@@ -432,13 +429,6 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                               >
                                 Dicci cosa ne pensi
                               </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 4,
-                                  }
-                                }
-                              />
                               <Text
                                 allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
@@ -459,13 +449,6 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                               >
                                 Raccontaci la tua esperienza con la funzionalità Documenti su IO.
                               </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
@@ -505,7 +488,7 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                                 <View
                                   style={
                                     {
-                                      "height": 4,
+                                      "height": 8,
                                     }
                                   }
                                 />

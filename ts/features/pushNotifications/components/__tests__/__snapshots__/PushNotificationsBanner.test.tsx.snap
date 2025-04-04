@@ -404,14 +404,11 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                               accessibilityRole="button"
                               accessible={true}
                               style={
-                                [
-                                  {
-                                    "flex": 1,
-                                  },
-                                  {
-                                    "alignSelf": "center",
-                                  },
-                                ]
+                                {
+                                  "alignSelf": "center",
+                                  "flex": 1,
+                                  "gap": 4,
+                                }
                               }
                             >
                               <Text
@@ -434,13 +431,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                               >
                                 Don't miss any important messages!
                               </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 4,
-                                  }
-                                }
-                              />
                               <Text
                                 allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
@@ -461,13 +451,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                               >
                                 Turn on push notifications to know when you get a message on IO.
                               </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Turn on push notifications"
@@ -507,7 +490,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 <View
                                   style={
                                     {
-                                      "height": 4,
+                                      "height": 8,
                                     }
                                   }
                                 />

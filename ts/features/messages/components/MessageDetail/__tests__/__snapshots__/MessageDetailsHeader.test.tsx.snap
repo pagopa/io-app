@@ -522,9 +522,14 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 accessibilityIgnoresInvertColors={true}
                                 onError={[Function]}
                                 source={
-                                  {
-                                    "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
-                                  }
+                                  [
+                                    {
+                                      "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
+                                    },
+                                    {
+                                      "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/FSCLCD.png",
+                                    },
+                                  ]
                                 }
                                 style={
                                   {

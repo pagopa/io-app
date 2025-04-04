@@ -2972,7 +2972,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                               <View
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 24,

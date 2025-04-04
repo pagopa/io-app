@@ -10,7 +10,7 @@ import {
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
-import { ImageURISource, StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
 const AVATAR_MARGIN_RIGHT: IOSpacingScale = 16;
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 });
 
 export type ServicesHeaderProps = {
-  logoUri: ReadonlyArray<ImageURISource>;
+  logoUri: ImageSourcePropType;
   title: string;
   subTitle: string;
 };

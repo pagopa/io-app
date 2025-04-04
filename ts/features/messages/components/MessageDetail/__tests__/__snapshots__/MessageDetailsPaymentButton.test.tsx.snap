@@ -417,7 +417,6 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
                             <View
                               accessibilityRole="progressbar"
                               accessible={true}
-                              importantForAccessibility="no-hide-descendants"
                               style={
                                 {
                                   "height": 24,

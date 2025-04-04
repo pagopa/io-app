@@ -604,9 +604,14 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       accessibilityIgnoresInvertColors={true}
                                       onError={[Function]}
                                       source={
-                                        {
-                                          "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
-                                        }
+                                        [
+                                          {
+                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
+                                          },
+                                          {
+                                            "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/FSCLCD.png",
+                                          },
+                                        ]
                                       }
                                       style={
                                         {
