@@ -1,7 +1,7 @@
 import { OnboardingNotificationsPreferencesScreenNavigationParams } from "../../features/pushNotifications/screens/OnboardingNotificationsPreferencesScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
-import { EmailInsertScreenNavigationParams } from "../../features/settings/userData/shared/views/EmailInsertScreen";
-import { SendEmailValidationScreenProp } from "../../features/settings/userData/shared/views/EmailValidationSendEmailScreen";
+import { EmailInsertScreenNavigationParams } from "../../features/settings/userData/shared/screens/EmailInsertScreen";
+import { SendEmailValidationScreenProp } from "../../features/settings/userData/shared/screens/EmailValidationSendEmailScreen";
 import ROUTES from "../routes";
 
 export type OnboardingParamsList = {
