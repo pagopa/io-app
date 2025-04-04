@@ -41,7 +41,7 @@ export function* handleDisableReceipt(
       first_time_opening: paymentsAnalyticsData?.receiptFirstTimeOpening,
       user: paymentsAnalyticsData?.receiptUser,
       organization_fiscal_code:
-        paymentsAnalyticsData?.verifiedData?.paFiscalCode
+        paymentsAnalyticsData?.receiptOrganizationFiscalCode
     });
   };
 
