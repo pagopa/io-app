@@ -28,13 +28,6 @@ export function trackIngressScreen() {
   );
 }
 
-export function trackTosScreen(flow: FlowType) {
-  void mixpanelTrack(
-    "TOS",
-    buildEventProperties("UX", "screen_view", undefined, flow)
-  );
-}
-
 export function trackMixpanelScreen(flow: FlowType) {
   void mixpanelTrack(
     "TRACKING",
@@ -78,28 +71,6 @@ export function trackCreatePinSuccess(flow: FlowType) {
   void mixpanelTrack(
     "CREATE_PIN_SUCCESS",
     buildEventProperties("UX", "action", undefined, flow)
-  );
-}
-
-export async function trackTosAccepted(
-  acceptedTosVersion: number,
-  flow: FlowType,
-  state: GlobalState
-) {
-  await updateMixpanelProfileProperties(state, {
-    property: "TOS_ACCEPTED_VERSION",
-    value: acceptedTosVersion
-  });
-  mixpanelTrack(
-    "TOS_ACCEPTED",
-    buildEventProperties(
-      "UX",
-      "action",
-      {
-        acceptedTosVersion
-      },
-      flow
-    )
   );
 }
 
