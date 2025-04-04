@@ -17,9 +17,9 @@ import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import {
   trackBiometricActivationAccepted,
-  trackBiometricActivationDeclined,
-  trackBiometricActivationEducationalScreen
-} from "./analytics";
+  trackBiometricActivationDeclined
+} from "../../../features/settings/security/shared/analytics";
+import { trackBiometricActivationEducationalScreen } from "./analytics";
 
 type IOScrollViewActions = ComponentProps<typeof IOScrollView>["actions"];
 

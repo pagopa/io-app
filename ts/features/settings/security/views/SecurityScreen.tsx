@@ -31,7 +31,7 @@ import {
 import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined
-} from "../../../../screens/onboarding/biometric&securityChecks/analytics";
+} from "../shared/analytics";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { FAQsCategoriesType } from "../../../../utils/faq";
 import { fimsIsHistoryEnabledSelector } from "../../../fims/history/store/selectors";
