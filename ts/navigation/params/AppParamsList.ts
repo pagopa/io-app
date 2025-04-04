@@ -59,7 +59,8 @@ import { SERVICES_ROUTES } from "../../features/services/common/navigation/route
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
-import { AuthenticationParamsList } from "./AuthenticationParamsList";
+import { AuthenticationParamsList } from "../../features/authentication/common/navigation/params/AuthenticationParamsList.ts";
+import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes.ts";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { OnboardingParamsList } from "./OnboardingParamsList";
@@ -69,7 +70,7 @@ export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
   [ROUTES.UNSUPPORTED_DEVICE]: undefined;
   [ROUTES.BACKGROUND]: undefined;
-  [ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
+  [AUTHENTICATION_ROUTES.MAIN]: NavigatorScreenParams<AuthenticationParamsList>;
   [ROUTES.CHECK_EMAIL]: NavigatorScreenParams<CheckEmailParamsList>;
   [ROUTES.ONBOARDING]: NavigatorScreenParams<OnboardingParamsList>;
   [ROUTES.MAIN]: NavigatorScreenParams<MainTabParamsList>;

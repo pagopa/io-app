@@ -2,13 +2,13 @@ import * as O from "fp-ts/lib/Option";
 import { type DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
-import { sessionTokenSelector } from "../../../../../store/reducers/authentication";
+import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getWalletInstanceStatus } from "../../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwIntegrityServiceStatusSelector } from "../../../issuance/store/selectors";
 import { itwIsWalletInstanceAttestationValidSelector } from "../../../walletInstance/store/selectors";
-import { ItwLifecycleState } from "../../store/reducers";
+
 import { checkIntegrityServiceReadySaga } from "../checkIntegrityServiceReadySaga";
 import {
   checkWalletInstanceInconsistencySaga,
@@ -27,7 +27,6 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED,
           issuance: { integrityKeyTag: O.none },
           credentials: { eid: O.none, credentials: [] }
         }
@@ -45,7 +44,6 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
           issuance: {
             integrityServiceStatus: "ready",
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
@@ -74,7 +72,6 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
           issuance: {
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
@@ -101,7 +98,6 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
@@ -128,7 +124,6 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
@@ -155,7 +150,6 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
           issuance: { integrityKeyTag: O.none },
           credentials: { eid: O.some({} as StoredCredential), credentials: [] }
         }

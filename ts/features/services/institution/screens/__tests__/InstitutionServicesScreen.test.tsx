@@ -45,9 +45,7 @@ describe("InstitutionServicesScreen", () => {
     expect(component).toBeTruthy();
     expect(component).not.toBeNull();
     expect(component.queryByTestId("services-header-skeleton")).not.toBeNull();
-    expect(
-      component.queryByTestId("intitution-services-list-skeleton")
-    ).not.toBeNull();
+    expect(component.queryByTestId("service-list-skeleton")).not.toBeNull();
   });
 
   it("should render the institution's services with pot.some", () => {

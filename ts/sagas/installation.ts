@@ -4,7 +4,7 @@
 import { put, select } from "typed-redux-saga/macro";
 import { isFirstRunAfterInstallSelector } from "../store/reducers/installation";
 import { ReduxSagaEffect } from "../types/utils";
-import { clearCurrentSession } from "../store/actions/authentication";
+import { clearCurrentSession } from "../features/authentication/common/store/actions";
 
 /**
  * This generator function removes user data from previous application

@@ -13,20 +13,32 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
     style={
       [
         {
-          "backgroundColor": "#FFFFFF",
           "bottom": 0,
-          "justifyContent": "center",
           "left": 0,
           "position": "absolute",
           "right": 0,
           "top": 0,
-          "zIndex": 1,
+          "zIndex": 0,
         },
         {
           "backgroundColor": "rgba(255,255,255,0.65)",
           "opacity": 1,
         },
       ]
+    }
+  />
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "bottom": 0,
+        "justifyContent": "center",
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "zIndex": 1,
+      }
     }
   >
     <View
@@ -402,6 +414,24 @@ exports[`LoadingSpinnerOverlay Should match all-properties and not-loading snaps
     style={
       [
         {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 0,
+        },
+        {
+          "backgroundColor": "rgba(255,255,255,0.65)",
+          "opacity": 1,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      [
+        {
           "flex": 1,
         },
         {
@@ -430,20 +460,32 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
     style={
       [
         {
-          "backgroundColor": "#FFFFFF",
           "bottom": 0,
-          "justifyContent": "center",
           "left": 0,
           "position": "absolute",
           "right": 0,
           "top": 0,
-          "zIndex": 1,
+          "zIndex": 0,
         },
         {
           "backgroundColor": "rgba(255,255,255,0.7)",
           "opacity": 1,
         },
       ]
+    }
+  />
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "bottom": 0,
+        "justifyContent": "center",
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "zIndex": 1,
+      }
     }
   >
     <View
@@ -693,6 +735,24 @@ exports[`LoadingSpinnerOverlay Should match base no-loading snapshot 1`] = `
   }
   testID="overlayComponent"
 >
+  <View
+    style={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 0,
+        },
+        {
+          "backgroundColor": "rgba(255,255,255,0.7)",
+          "opacity": 1,
+        },
+      ]
+    }
+  />
   <View
     style={
       [

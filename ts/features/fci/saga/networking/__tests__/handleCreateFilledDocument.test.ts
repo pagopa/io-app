@@ -12,7 +12,7 @@ import {
 } from "../handleCreateFilledDocument";
 import { FilledDocumentDetailView } from "../../../../../../definitions/fci/FilledDocumentDetailView";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
 const mockedPayload: CreateFilledDocument = {
   document_url: "https://mockedUrl" as NonEmptyString

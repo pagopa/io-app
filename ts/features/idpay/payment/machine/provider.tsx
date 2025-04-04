@@ -8,7 +8,7 @@ import {
 } from "../../../../config";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { bpdTokenSelector } from "../../../../store/reducers/authentication";
+import { bpdTokenSelector } from "../../../authentication/common/store/selectors";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
