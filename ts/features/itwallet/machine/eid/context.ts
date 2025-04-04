@@ -40,6 +40,9 @@ export type Context = {
   eid: StoredCredential | undefined;
   failure: IssuanceFailure | undefined;
   isReissuing: boolean;
+  // Flag to check if IT Wallet L3 is enabled and thus we should allow to request
+  // a PID credential and upgrade the existing credentials to L3
+  isItwL3Enabled: boolean;
 };
 
 export const InitialContext: Context = {
@@ -50,5 +53,6 @@ export const InitialContext: Context = {
   authenticationContext: undefined,
   eid: undefined,
   failure: undefined,
-  isReissuing: false
+  isReissuing: false,
+  isItwL3Enabled: false
 };

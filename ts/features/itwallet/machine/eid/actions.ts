@@ -214,6 +214,7 @@ export const createEidIssuanceActionsImplementation = (
       const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
+
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
         walletInstanceAttestation

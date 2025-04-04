@@ -30,6 +30,8 @@ const CREDENTIAL_TYPE = "PersonIdentificationData";
 type StartAuthFlowParams = {
   walletAttestation: string;
   identification: IdentificationContext;
+  // Flag to check if IT Wallet L3 is enabled and L3 should return a PID credential
+  isItwL3Enabled: boolean;
 };
 
 /**
@@ -42,14 +44,16 @@ type StartAuthFlowParams = {
  */
 const startAuthFlow = async ({
   walletAttestation,
-  identification
+  identification,
+  isItwL3Enabled = false
 }: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: itwPidProviderBaseUrl,
     credentialType: CREDENTIAL_TYPE
   });
 
-  const idpHint = getIdpHint(identification);
+  // In case we are requiesting an L3 PID we should remove the idpHint from the request
+  const idpHint = isItwL3Enabled ? undefined : getIdpHint(identification);
 
   const { issuerUrl, credentialType } = startFlow();
 
