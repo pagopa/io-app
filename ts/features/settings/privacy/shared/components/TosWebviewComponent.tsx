@@ -6,10 +6,6 @@ import { View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import I18n from "../../../../../i18n";
-import {
-  trackToSWebViewError,
-  trackToSWebViewErrorRetry
-} from "../../../../authentication/common/analytics";
 import { FlowType } from "../../../../../utils/analytics";
 import { openWebUrl } from "../../../../../utils/url";
 import {
@@ -19,6 +15,7 @@ import {
 import TosWebviewErrorComponent from "../../components/TosWebviewErrorComponent";
 import { NOTIFY_LINK_CLICK_SCRIPT } from "../../../../../components/ui/Markdown/script";
 import { WebViewMessage } from "../../../../../components/ui/Markdown/types";
+import { trackToSWebViewError, trackToSWebViewErrorRetry } from "./analytics";
 
 type Props = {
   webViewSource: WebViewSource;
