@@ -2,7 +2,7 @@ import { useMemo, useCallback } from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import { AccessibilityInfo, Platform } from "react-native";
 import I18n from "../../../../i18n";
-import { createPinSuccess } from "../../../../store/actions/pinset";
+import { createPinSuccess } from "../store/actions/pinset";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { PinString } from "../../../../types/PinString";

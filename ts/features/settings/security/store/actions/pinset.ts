@@ -3,7 +3,7 @@
  */
 
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { PinString } from "../../types/PinString";
+import { PinString } from "../../../../../types/PinString";
 
 export const createPinSuccess =
   createStandardAction("CREATE_PIN_SUCCESS")<PinString>();

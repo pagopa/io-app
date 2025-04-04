@@ -120,6 +120,7 @@ import {
   watchProfileUpsertRequestsSaga
 } from "../features/settings/common/sagas/profile";
 import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
+import { watchProfileEmailValidationChangedSaga } from "../features/settings/userData/shared/sagas/watchProfileEmailValidationChangedSaga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -148,7 +149,6 @@ import {
 } from "./startup/watchCheckSessionSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
-import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
