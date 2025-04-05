@@ -8,7 +8,7 @@ import {
   isLoggedOutWithIdp,
   isSessionExpired
 } from "../utils/guards";
-import { SpidIdp } from "../../../../../../definitions/content/SpidIdp";
+import { SpidIdp } from "../../../../../utils/idps";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { format } from "../../../../../utils/dates";
 import { AuthenticationState, AuthenticationStateWithIdp } from "../models";
