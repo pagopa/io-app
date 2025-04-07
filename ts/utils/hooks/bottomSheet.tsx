@@ -10,10 +10,8 @@ import {
 import {
   IOBottomSheetHeaderRadius,
   IOColors,
-  IOVisualCostants,
   VSpacer,
-  useIOTheme,
-  useIOThemeContext
+  IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import {
@@ -37,6 +35,7 @@ import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeade
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { isScreenReaderEnabled } from "../accessibility";
+import { useModalStyle } from "./useModalStyle";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -71,7 +70,6 @@ type BottomSheetOptions = {
   title: string | ReactNode;
   snapPoint?: NonEmptyArray<number | string>;
   footer?: ReactElement;
-  fullScreen?: boolean;
   onDismiss?: () => void;
 };
 
@@ -86,7 +84,7 @@ export const useIOBottomSheetModal = ({
   snapPoint,
   footer,
   onDismiss
-}: Omit<BottomSheetOptions, "fullScreen">): IOBottomSheetModal => {
+}: BottomSheetOptions): IOBottomSheetModal => {
   const insets = useSafeAreaInsets();
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -94,10 +92,10 @@ export const useIOBottomSheetModal = ({
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
 
-  const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
-  const backdropOpacity = themeType === "light" ? 0.15 : 0.6;
+  const {
+    backdrop: { opacity: backdropOpacity },
+    modal: { backgroundColor }
+  } = useModalStyle();
 
   const header = <BottomSheetHeader title={title} onClose={dismissAll} />;
   const bottomSheetContent = (

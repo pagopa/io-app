@@ -6,8 +6,8 @@ import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profile
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { profileUpsert } from "../../../store/actions/profile";
-import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
+import { profileUpsert } from "../../settings/common/store/actions";
+import { isProfileFirstOnBoarding } from "../../settings/common/store/utils/guards";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   trackNotificationsOptInPreviewStatus,
