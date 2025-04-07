@@ -9,7 +9,7 @@ import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { loadServiceDetail } from "../../store/actions/details";
 import { handleServiceDetails } from "../handleServiceDetails";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { BackendClient } from "../../../../../api/__mocks__/backend";
+import { ServicesClient } from "../../../common/api/__mocks__/client";
 
 const mockedServiceId = "A01" as ServiceId;
 
@@ -32,13 +32,13 @@ describe("handleServiceDetails", () => {
   it("returns an error if backend response is 500", () => {
     testSaga(
       handleServiceDetails,
-      BackendClient.getService,
+      ServicesClient.getServiceById,
       loadServiceDetail.request(mockedServiceId)
     )
       .next()
       .call(
         withRefreshApiCall,
-        BackendClient.getService({ service_id: mockedServiceId }),
+        ServicesClient.getServiceById({ service_id: mockedServiceId }),
         loadServiceDetail.request(mockedServiceId)
       )
       .next(E.right({ status: 500, value: "generic error" }))
@@ -55,13 +55,13 @@ describe("handleServiceDetails", () => {
   it("returns service detail if the backend response is 200", () => {
     testSaga(
       handleServiceDetails,
-      BackendClient.getService,
+      ServicesClient.getServiceById,
       loadServiceDetail.request(mockedServiceId)
     )
       .next()
       .call(
         withRefreshApiCall,
-        BackendClient.getService({ service_id: mockedServiceId }),
+        ServicesClient.getServiceById({ service_id: mockedServiceId }),
         loadServiceDetail.request(mockedServiceId)
       )
       .next(E.right({ status: 200, value: mockedService }))
