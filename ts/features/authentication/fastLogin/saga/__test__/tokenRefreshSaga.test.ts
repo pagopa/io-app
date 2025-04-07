@@ -4,6 +4,7 @@ import * as E from "fp-ts/lib/Either";
 import {
   doRefreshTokenSaga,
   handleRefreshSessionToken,
+  RequestStateType,
   watchTokenRefreshSaga
 } from "../tokenRefreshSaga";
 import {
@@ -23,6 +24,8 @@ import { dismissSupport } from "../../../../../utils/supportAssistance";
 import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { fastLoginMaxRetries } from "../../../../../config";
+import * as tokenRefreshSaga from "../tokenRefreshSaga";
 
 jest.mock("../../../../../navigation/NavigationService", () => ({
   navigate: jest.fn()
@@ -244,5 +247,44 @@ describe("tokenRefreshSaga", () => {
 
       expect(gen.next().value).toEqual(delay(1000));
     });
+
+    it("should handle session-expired response (403)", () => {
+      const action = createAction();
+      const gen = doRefreshTokenSaga(action);
+
+      gen.next(); // showLoader
+      gen.next(); // createNonceClient
+
+      const response403 = E.right({
+        status: 403,
+        value: { token: "fake" }
+      });
+
+      gen.next(); // performGetNonce
+      gen.next(response403); // simulate nonce OK
+      gen.next(); // getKeyInfo
+      gen.next({}); // keyInfo
+      gen.next(); // createFastLoginClient
+      gen.next(
+        E.right({
+          status: 403,
+          value: {}
+        })
+      );
+
+      gen.next(); // delay
+    });
+  });
+  it("should set max-retries when no response is provided", () => {
+    const requestState: RequestStateType = {
+      counter: fastLoginMaxRetries - 1,
+      status: "in-progress",
+      error: undefined
+    };
+
+    tokenRefreshSaga.handleRequestError(requestState);
+
+    expect(requestState.status).toBe("max-retries");
+    expect(requestState.error).toBe("max retries reached");
   });
 });

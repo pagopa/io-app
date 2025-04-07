@@ -2,14 +2,12 @@ import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
+import { loadSessionInformationSaga } from "../loadSessionInformationSaga";
+import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
 import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
-} from "../store/actions";
-
-import { PublicSession } from "../../../../../definitions/session_manager/PublicSession";
-
-import { loadSessionInformationSaga } from "../saga/loadSessionInformationSaga";
+} from "../../store/actions";
 
 describe("loadSessionInformationSaga", () => {
   it("should emit the session on valid response from backend", () => {

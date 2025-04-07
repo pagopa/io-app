@@ -98,7 +98,7 @@ export function* handleRefreshSessionToken(
   }
 }
 
-type RequestStateType = {
+export type RequestStateType = {
   counter: number;
   status: "in-progress" | "success" | "max-retries" | "session-expired";
   error: string | undefined;
@@ -182,7 +182,7 @@ export function* doRefreshTokenSaga(
   }
 }
 
-const handleRequestError = (
+export const handleRequestError = (
   requestState: RequestStateType,
   response?: E.Either<
     ReadonlyArray<ValidationError>,
@@ -196,6 +196,7 @@ const handleRequestError = (
       () => ({
         description: "max retries reached"
       }),
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       response =>
         pipe(
           response,

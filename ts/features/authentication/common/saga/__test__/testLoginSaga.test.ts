@@ -3,6 +3,7 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import * as reporters from "@pagopa/ts-commons/lib/reporters";
 import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { lollipopPublicKeySelector } from "../../../../lollipop/store/reducers/lollipop";
@@ -138,5 +139,36 @@ describe("handleTestLogin saga", () => {
       )
       .next()
       .isDone();
+  });
+
+  it("should extract status code from readableReport in loginFailure", () => {
+    const leftWithStatus = E.left([
+      {
+        context: [],
+        value: { message: "Some error", status: 403 }
+      }
+    ]);
+
+    const mockReadableReport = jest
+      .spyOn(reporters, "readableReport")
+      .mockReturnValue(`{"status":403,"message":"Some error"}`);
+
+    testSaga(handleTestLogin, action)
+      .next()
+      .select(isFastLoginEnabledSelector)
+      .next(false)
+      .select(lollipopPublicKeySelector)
+      .next(O.none)
+      .next(leftWithStatus)
+      .put(
+        loginFailure({
+          error: new Error('"status":403'),
+          idp: "test"
+        })
+      )
+      .next()
+      .isDone();
+
+    mockReadableReport.mockRestore();
   });
 });
