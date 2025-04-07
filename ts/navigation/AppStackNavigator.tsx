@@ -42,6 +42,7 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import { linkingSubscription } from "./linkingSubscription";
 import NavigationService, {
@@ -121,12 +122,12 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
             [ROUTES.PAYMENTS_HOME]: "payments"
           }
         },
-        [ROUTES.PROFILE_NAVIGATOR]: {
+        [SETTINGS_ROUTES.PROFILE_NAVIGATOR]: {
           path: "profile",
           screens: {
-            [ROUTES.PROFILE_PREFERENCES_HOME]: "preferences",
-            [ROUTES.PROFILE_PRIVACY]: "privacy",
-            [ROUTES.PROFILE_PRIVACY_MAIN]: "privacy-main"
+            [SETTINGS_ROUTES.PROFILE_PREFERENCES_HOME]: "preferences",
+            [SETTINGS_ROUTES.PROFILE_PRIVACY]: "privacy",
+            [SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN]: "privacy-main"
           }
         },
         [SERVICES_ROUTES.SERVICES_NAVIGATOR]: {

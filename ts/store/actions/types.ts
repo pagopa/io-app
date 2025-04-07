@@ -43,6 +43,10 @@ import { GlobalState } from "../reducers/types";
 import { ConnectivityActions } from "../../features/connectivity/store/actions";
 import { LoginPreferencesActions } from "../../features/authentication/loginPreferences/store/actions";
 import { AuthenticationActions } from "../../features/authentication/common/store/actions";
+import { ProfileActions } from "../../features/settings/common/store/actions";
+import { UserDataProcessingActions } from "../../features/settings/common/store/actions/userDataProcessing";
+import { PinSetActions } from "../../features/settings/security/store/actions/pinset";
+import { ProfileEmailValidationAction } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { BackendStatusActions } from "./backendStatus";
@@ -56,13 +60,9 @@ import { MixpanelActions } from "./mixpanel";
 import { OnboardingActions } from "./onboarding";
 import { OrganizationsActions } from "./organizations";
 import { PersistedPreferencesActions } from "./persistedPreferences";
-import { PinSetActions } from "./pinset";
 import { PreferencesActions } from "./preferences";
-import { ProfileActions } from "./profile";
-import { ProfileEmailValidationAction } from "./profileEmailValidationChange";
 import { SearchActions } from "./search";
 import { StartupActions } from "./startup";
-import { UserDataProcessingActions } from "./userDataProcessing";
 
 export type Action =
   | AnalyticsActions

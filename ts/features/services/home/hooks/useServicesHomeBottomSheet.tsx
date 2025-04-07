@@ -8,9 +8,9 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import * as analytics from "../../common/analytics";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 
 const styles = StyleSheet.create({
   containerList: {
@@ -24,15 +24,15 @@ export const useServicesHomeBottomSheet = () => {
 
   const handleNavigateToServicesPreferencesScreen = useCallback(() => {
     analytics.trackServicesPreferencesSelected("preferences_services");
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
+    navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_SERVICES
     });
   }, [navigation]);
 
   const handleNavigateToSettingsScreen = useCallback(() => {
     analytics.trackServicesPreferencesSelected("profile_main");
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.SETTINGS_MAIN
+    navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+      screen: SETTINGS_ROUTES.SETTINGS_MAIN
     });
   }, [navigation]);
 
