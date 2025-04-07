@@ -14,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useIODispatch } from "../../../../../store/hooks";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { onLoginUriChanged } from "../../../../../utils/login";
+import { onLoginUriChanged } from "../../../common/utils/login";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { trackLoginCieDataSharingError } from "../../../common/analytics/cieAnalytics";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
