@@ -26,7 +26,7 @@ type Props = {
   refund: RefundDetailDTO;
 };
 
-const TimelineRefundDetailsComponent = (props: Props) => {
+const IdPayTimelineRefundDetailsComponent = (props: Props) => {
   const { refund } = props;
 
   const { close: closeBottomSheet } = useBottomSheet();
@@ -129,4 +129,4 @@ const TimelineRefundDetailsComponent = (props: Props) => {
   );
 };
 
-export { TimelineRefundDetailsComponent };
+export { IdPayTimelineRefundDetailsComponent };

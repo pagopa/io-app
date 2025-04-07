@@ -27,9 +27,9 @@ import {
 } from "../../../../utils/hooks/bottomSheet";
 import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
-import { TimelineDiscountTransactionDetailsComponent } from "./TimelineDiscountTransactionDetailsComponent";
-import { TimelineRefundDetailsComponent } from "./TimelineRefundDetailsComponent";
-import { TimelineTransactionDetailsComponent } from "./TimelineTransactionDetailsComponent";
+import { IdPayTimelineDiscountTransactionDetailsComponent } from "./IdPayTimelineDiscountTransactionDetailsComponent";
+import { IdPayTimelineRefundDetailsComponent } from "./IdPayTimelineRefundDetailsComponent";
+import { IdPayTimelineTransactionDetailsComponent } from "./IdPayTimelineTransactionDetailsComponent";
 
 type OperationWithDetailsType = t.TypeOf<typeof OperationWithDetailsType>;
 
@@ -40,7 +40,10 @@ const OperationWithDetailsType = enumType<
   "OperationWithDetails"
 );
 
-type TimelineDetailsBottomSheetModal = Omit<IOBottomSheetModal, "present"> & {
+type IdPayTimelineDetailsBottomSheetModal = Omit<
+  IOBottomSheetModal,
+  "present"
+> & {
   present: (operation: OperationListDTO) => void;
 };
 
@@ -48,9 +51,9 @@ type TimelineDetailsBottomSheetModal = Omit<IOBottomSheetModal, "present"> & {
  * This hook is used to show the bottom sheet with the details of a timeline operation
  * @param initiativeId ID of the initiative associated to the operation details
  */
-const useTimelineDetailsBottomSheet = (
+const useIdPayTimelineDetailsBottomSheet = (
   initiativeId: InitiativeDTO["initiativeId"]
-): TimelineDetailsBottomSheetModal => {
+): IdPayTimelineDetailsBottomSheetModal => {
   const dispatch = useIODispatch();
 
   const detailsPot = useIOSelector(idpayTimelineDetailsSelector);
@@ -86,22 +89,24 @@ const useTimelineDetailsBottomSheet = (
           case TransactionOperationTypeEnum.TRANSACTION:
             if (details.channel === ChannelEnum.RTD) {
               return (
-                <TimelineTransactionDetailsComponent transaction={details} />
+                <IdPayTimelineTransactionDetailsComponent
+                  transaction={details}
+                />
               );
             }
             return (
-              <TimelineDiscountTransactionDetailsComponent
+              <IdPayTimelineDiscountTransactionDetailsComponent
                 transaction={details}
               />
             );
 
           case TransactionOperationTypeEnum.REVERSAL:
             return (
-              <TimelineTransactionDetailsComponent transaction={details} />
+              <IdPayTimelineTransactionDetailsComponent transaction={details} />
             );
           case RefundOperationTypeEnum.PAID_REFUND:
           case RefundOperationTypeEnum.REJECTED_REFUND:
-            return <TimelineRefundDetailsComponent refund={details} />;
+            return <IdPayTimelineRefundDetailsComponent refund={details} />;
           default:
             // We don't show additional info for other operation types
             return <></>;
@@ -185,5 +190,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export { useTimelineDetailsBottomSheet };
-export type { TimelineDetailsBottomSheetModal };
+export { useIdPayTimelineDetailsBottomSheet };
+export type { IdPayTimelineDetailsBottomSheetModal };

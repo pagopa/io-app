@@ -25,7 +25,7 @@ type Props = {
   transaction: TransactionDetailDTO;
 };
 
-const TimelineTransactionDetailsComponent = (props: Props) => {
+const IdPayTimelineTransactionDetailsComponent = (props: Props) => {
   const { transaction } = props;
 
   const reversalAlertComponent = pipe(
@@ -126,4 +126,4 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
   );
 };
 
-export { TimelineTransactionDetailsComponent };
+export { IdPayTimelineTransactionDetailsComponent };

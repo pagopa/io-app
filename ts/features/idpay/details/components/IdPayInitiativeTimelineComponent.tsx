@@ -17,7 +17,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { useTimelineDetailsBottomSheet } from "../../timeline/components/TimelineDetailsBottomSheet";
+import { useIdPayTimelineDetailsBottomSheet } from "../../timeline/components/IdPayTimelineDetailsBottomSheet";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
   idpayInitiativeDetailsSelector,
@@ -38,7 +38,7 @@ const IdPayInitiativeTimelineComponent = ({
 }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const detailsBottomSheet = useTimelineDetailsBottomSheet(initiativeId);
+  const detailsBottomSheet = useIdPayTimelineDetailsBottomSheet(initiativeId);
 
   const paginatedTimelinePot = useIOSelector(idpayPaginatedTimelineSelector);
   const timeline = useIOSelector(idpayOperationListSelector);
