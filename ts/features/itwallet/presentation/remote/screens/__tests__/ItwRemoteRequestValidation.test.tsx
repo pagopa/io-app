@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import { fromPromise } from "xstate";
 import { ITW_REMOTE_ROUTES } from "../../navigation/routes.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
 import { GlobalState } from "../../../../../../store/reducers/types.ts";
@@ -31,7 +32,6 @@ describe("ItwRemoteRequestValidationScreen", () => {
 
   it("should render failure screen if missing required fields", () => {
     const partialPayload = {
-      clientId: "abc123xy",
       requestUri: "https://example.com/callback"
     } as ItwRemoteRequestPayload;
 
@@ -78,6 +78,10 @@ describe("ItwRemoteRequestValidationScreen", () => {
       },
       actions: {
         navigateToClaimsDisclosureScreen: jest.fn()
+      },
+      actors: {
+        evaluateRelyingPartyTrust: fromPromise(jest.fn()),
+        getPresentationDetails: fromPromise(jest.fn())
       }
     });
 
