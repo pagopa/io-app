@@ -1,6 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { BackendClient } from "../../../../api/backend";
+import { ServicesClient } from "../../common/api/client";
 import {
   loadServicePreference,
   upsertServicePreference
@@ -11,13 +12,14 @@ import { handleUpsertServicePreference } from "./handleUpsertServicePreference";
 import { handleServiceDetails } from "./handleServiceDetails";
 
 export function* watchServicesDetailsSaga(
-  backendClient: BackendClient
+  backendClient: BackendClient,
+  servicesClient: ServicesClient
 ): SagaIterator {
   // handle the single load service request
   yield* takeEvery(
     loadServiceDetail.request,
     handleServiceDetails,
-    backendClient.getService
+    servicesClient.getServiceById
   );
 
   // handle the load of service preference request

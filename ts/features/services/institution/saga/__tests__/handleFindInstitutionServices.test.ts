@@ -9,6 +9,7 @@ import {
   paginatedServicesGet
 } from "../../store/actions";
 import { handleFindInstitutionServices } from "../handleFindInstitutionServices";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 const MOCK_INSTITUTION_ID = "I01";
 
@@ -21,17 +22,17 @@ const DEFAULT_REQUEST_PAYLOAD: PaginatedServicesGetPayload = {
 const MOCK_RESPONSE_PAYLOAD: InstitutionServicesResource = {
   services: [
     {
-      id: "1",
+      id: "1" as ServiceId,
       name: "Service 1",
       version: 1
     },
     {
-      id: "2",
+      id: "2" as ServiceId,
       name: "Service 2",
       version: 1
     },
     {
-      id: "3",
+      id: "3" as ServiceId,
       name: "Service 3",
       version: 1
     }

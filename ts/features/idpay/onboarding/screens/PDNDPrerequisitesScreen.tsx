@@ -33,7 +33,7 @@ export const PDNDPrerequisitesScreen = () => {
     pot.toOption,
     O.fold(
       () => I18n.t("idpay.onboarding.PDNDPrerequisites.fallbackInitiativeName"),
-      service => service.service_name
+      service => service.name
     )
   );
 

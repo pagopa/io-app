@@ -12,7 +12,7 @@ import {
   ScrollView
 } from "react-native";
 import { connect } from "react-redux";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -110,7 +110,7 @@ class AvailableBonusScreen extends PureComponent<Props> {
             },
             s => () =>
               this.props.navigateToServiceDetailsScreen({
-                serviceId: s.service_id
+                serviceId: s.id
               })
           )
         );

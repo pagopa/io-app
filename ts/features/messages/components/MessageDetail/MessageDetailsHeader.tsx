@@ -64,9 +64,9 @@ export const MessageDetailsHeader = ({
           <OrganizationHeader
             messageId={messageId}
             logoUri={logosForService(service)}
-            organizationName={service.organization_name}
+            organizationName={service.organization.name}
             serviceId={serviceId}
-            serviceName={service.service_name}
+            serviceName={service.name}
           />
           <Divider />
         </>

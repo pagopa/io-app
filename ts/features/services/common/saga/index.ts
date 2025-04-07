@@ -15,7 +15,7 @@ export function* watchServicesSaga(
 ): SagaIterator {
   const servicesClient = createServicesClient(apiUrlPrefix, bearerToken);
 
-  yield* fork(watchServicesDetailsSaga, backendClient);
+  yield* fork(watchServicesDetailsSaga, backendClient, servicesClient);
   yield* fork(watchHomeSaga, servicesClient);
   yield* fork(watchInstitutionSaga, servicesClient);
   yield* fork(watchSearchSaga, servicesClient);
