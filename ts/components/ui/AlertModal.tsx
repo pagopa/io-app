@@ -8,7 +8,7 @@ import { StyleSheet, View } from "react-native";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import themeVariables from "../../theme/variables";
 import { useModalStyle } from "../../utils/hooks/useModalStyle";
-import { Overlay } from "./Overlay";
+import { AlertModalOverlay } from "./AlertModalOverlay";
 
 const styles = StyleSheet.create({
   container: {
@@ -37,7 +37,7 @@ export const AlertModal = ({ message }: AlertModalProps) => {
   const { backdrop, modal } = useModalStyle();
 
   return (
-    <Overlay
+    <AlertModalOverlay
       backgroundColor={backdrop.backgroundColor}
       opacity={backdrop.opacity}
       foreground={
