@@ -98,10 +98,10 @@ describe("test decodeIOBarcode function", () => {
         O.some({
           type: "ITW_REMOTE",
           itwRemoteRequestPayload: {
-            client_id: "abc123xy",
-            request_uri: "https://example.com/callback",
+            clientId: "abc123xy",
+            requestUri: "https://example.com/callback",
             state: "hyqizm592",
-            request_uri_method: "GET"
+            requestUriMethod: "get"
           }
         })
       );
@@ -109,7 +109,7 @@ describe("test decodeIOBarcode function", () => {
 
     it("should decode request_uri_method if provided", () => {
       const value =
-        "https://continua.io.pagopa.it/itw/auth?client_id=abc123xy&request_uri=https%3A%2F%2Fexample.com%2Fcallback&state=hyqizm592&request_uri_method=POST";
+        "https://continua.io.pagopa.it/itw/auth?client_id=abc123xy&request_uri=https%3A%2F%2Fexample.com%2Fcallback&state=hyqizm592&request_uri_method=post";
 
       const output = decodeIOBarcode(value);
 
@@ -117,10 +117,10 @@ describe("test decodeIOBarcode function", () => {
         O.some({
           type: "ITW_REMOTE",
           itwRemoteRequestPayload: {
-            client_id: "abc123xy",
-            request_uri: "https://example.com/callback",
+            clientId: "abc123xy",
+            requestUri: "https://example.com/callback",
             state: "hyqizm592",
-            request_uri_method: "POST"
+            requestUriMethod: "post"
           }
         })
       );
