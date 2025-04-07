@@ -7,7 +7,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { getTimeoutError } from "../../../../utils/errors";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { TestLoginState } from "../../../../store/reducers/testLogin";
+import { TestLoginState } from "../store/reducers/testLogin";
 import { getAppVersion } from "../../../../utils/appVersion";
 import {
   loginFailure,

@@ -1,5 +1,5 @@
 import { Divider, ListItemCheckbox } from "@pagopa/io-app-design-system";
-import { CieEntityIds } from "../../../../../components/cie/CieRequestAuthenticationOverlay";
+import { CieEntityIds } from "../components/CieRequestAuthenticationOverlay";
 import { cieLoginDisableUat, cieLoginEnableUat } from "../store/actions";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";

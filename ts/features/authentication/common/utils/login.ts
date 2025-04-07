@@ -2,11 +2,11 @@ import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
-import { SessionToken } from "../types/SessionToken";
-import { trackLoginSpidError } from "../features/authentication/common/analytics/spidAnalytics";
-import { apiUrlPrefix, spidRelayState } from "../config";
-import { IdpData } from "../../definitions/content/IdpData";
-import { isStringNullyOrEmpty } from "./strings";
+import { SessionToken } from "../../../../types/SessionToken";
+import { trackLoginSpidError } from "../analytics/spidAnalytics";
+import { apiUrlPrefix, spidRelayState } from "../../../../config";
+import { IdpData } from "../../../../../definitions/content/IdpData";
+import { isStringNullyOrEmpty } from "../../../../utils/strings";
 /**
  * Helper functions for handling the SPID login flow through a webview.
  */
