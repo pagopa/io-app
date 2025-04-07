@@ -151,7 +151,9 @@ describe("pushNotifications analytics", () => {
     it(`trackNewPushNotificationsTokenGenerated should call 'mixpanelTrack' with proper parameters if mixpanel is initialized and the user ${
       optIn ? "has" : "has not"
     } opted-in`, () => {
-      jest.spyOn(Mixpanel, "isMixpanelInitialized").mockReturnValue(true);
+      jest
+        .spyOn(Mixpanel, "isMixpanelInstanceInitialized")
+        .mockReturnValue(true);
       const spiedOnMixpanelTrack = jest
         .spyOn(Mixpanel, "mixpanelTrack")
         .mockImplementation();
@@ -173,7 +175,9 @@ describe("pushNotifications analytics", () => {
     })
   );
   it(`trackNewPushNotificationsTokenGenerated should call 'enqueueMixpanelEvent' with proper parameters if mixpanel is not initialized and the user has opted-in`, () => {
-    jest.spyOn(Mixpanel, "isMixpanelInitialized").mockReturnValue(false);
+    jest
+      .spyOn(Mixpanel, "isMixpanelInstanceInitialized")
+      .mockReturnValue(false);
     const spiedOnMixpanelTrack = jest
       .spyOn(Mixpanel, "mixpanelTrack")
       .mockImplementation();
@@ -195,7 +199,9 @@ describe("pushNotifications analytics", () => {
     });
   });
   it(`trackNewPushNotificationsTokenGenerated should do nothing if mixpanel is not initialized and the user has not opted-in`, () => {
-    jest.spyOn(Mixpanel, "isMixpanelInitialized").mockReturnValue(false);
+    jest
+      .spyOn(Mixpanel, "isMixpanelInstanceInitialized")
+      .mockReturnValue(false);
     const spiedOnMixpanelTrack = jest
       .spyOn(Mixpanel, "mixpanelTrack")
       .mockImplementation();

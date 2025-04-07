@@ -19,7 +19,7 @@ jest.mock("../../mixpanel", () => ({
   getPeople: () => ({
     set: mockedSet
   }),
-  isMixpanelInitialized: () => mockIsMixpanelInitialized
+  isMixpanelInstanceInitialized: () => mockIsMixpanelInitialized
 }));
 
 describe("profileProperties", () => {
@@ -117,7 +117,7 @@ describe("profileProperties", () => {
       )
     );
   });
-  it("should not do anything if 'isMixpanelInitialized' returns 'false'", async () => {
+  it("should not do anything if 'isMixpanelInstanceInitialized' returns 'false'", async () => {
     mockIsMixpanelInitialized = false;
     const fakeState = {} as GlobalState;
 

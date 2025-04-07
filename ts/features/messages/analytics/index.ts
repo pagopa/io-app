@@ -5,7 +5,7 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import {
   enqueueMixpanelEvent,
-  isMixpanelInitialized,
+  isMixpanelInstanceInitialized,
   mixpanelTrack
 } from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
@@ -102,7 +102,7 @@ export const trackMessageNotificationParsingFailure = (
   const props = buildEventProperties("KO", undefined, {
     reason: typeof reason !== "string" ? readablePrivacyReport(reason) : reason
   });
-  if (isMixpanelInitialized()) {
+  if (isMixpanelInstanceInitialized()) {
     mixpanelTrack(eventName, props);
   } else if (userOptedIn) {
     enqueueMixpanelEvent(eventName, id, props);
@@ -117,7 +117,7 @@ export const trackMessageNotificationTap = (
   const props = buildEventProperties("UX", "action", {
     messageId
   });
-  if (isMixpanelInitialized()) {
+  if (isMixpanelInstanceInitialized()) {
     mixpanelTrack(eventName, props);
   } else if (userOptedIn) {
     enqueueMixpanelEvent(eventName, messageId, props);

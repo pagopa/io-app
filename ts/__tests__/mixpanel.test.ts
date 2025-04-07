@@ -161,7 +161,7 @@ describe("Mixpanel module", () => {
       expect(mockMixpanelInstance.optOutTracking).toHaveBeenCalled();
 
       // Should be undefined after termination
-      expect(MixpanelModule.isMixpanelInitialized()).toBe(false);
+      expect(MixpanelModule.isMixpanelInstanceInitialized()).toBe(false);
     });
 
     it("should do nothing if mixpanel is not initialized", () => {
@@ -176,18 +176,18 @@ describe("Mixpanel module", () => {
     });
   });
 
-  describe("isMixpanelInitialized", () => {
+  describe("isMixpanelInstanceInitialized", () => {
     it("should return true when mixpanel is initialized", async () => {
       const mockState = {} as any;
       await MixpanelModule.initializeMixPanel(mockState);
 
-      expect(MixpanelModule.isMixpanelInitialized()).toBe(true);
+      expect(MixpanelModule.isMixpanelInstanceInitialized()).toBe(true);
     });
 
     it("should return false when mixpanel is not initialized", () => {
       MixpanelModule.terminateMixpanel();
 
-      expect(MixpanelModule.isMixpanelInitialized()).toBe(false);
+      expect(MixpanelModule.isMixpanelInstanceInitialized()).toBe(false);
     });
   });
 

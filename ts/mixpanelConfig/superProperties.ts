@@ -1,6 +1,9 @@
 import { Appearance, ColorSchemeName } from "react-native";
 import * as O from "fp-ts/Option";
-import { isMixpanelInitialized, registerSuperProperties } from "../mixpanel.ts";
+import {
+  isMixpanelInstanceInitialized,
+  registerSuperProperties
+} from "../mixpanel.ts";
 import { isScreenReaderEnabled } from "../utils/accessibility";
 import { getAppVersion } from "../utils/appVersion";
 import {
@@ -66,7 +69,7 @@ export const updateMixpanelSuperProperties = async (
   state: GlobalState,
   forceUpdateFor?: PropertyToUpdate<SuperProperties>
 ) => {
-  if (!isMixpanelInitialized()) {
+  if (!isMixpanelInstanceInitialized()) {
     return;
   }
   const screenReaderEnabled: boolean = await isScreenReaderEnabled();

@@ -2,7 +2,7 @@
 // disabled in order to allows comments between the switch
 import { getType } from "typesafe-actions";
 import { isTestEnv } from "../../utils/environment";
-import { isMixpanelInitialized, mixpanelTrack } from "../../mixpanel";
+import { isMixpanelInstanceInitialized, mixpanelTrack } from "../../mixpanel";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
 import trackFciAction from "../../features/fci/analytics";
@@ -184,7 +184,7 @@ export const actionTracking =
   (middleware: MiddlewareAPI) =>
   (next: Dispatch) =>
   (action: Action): Action => {
-    if (isMixpanelInitialized()) {
+    if (isMixpanelInstanceInitialized()) {
       // Call mixpanel tracking only after we have
       // initialized mixpanel with the API token
 
@@ -201,7 +201,7 @@ export const actionTracking =
     }
     // This dispatches the action towards the redux store
     const result = next(action);
-    if (isMixpanelInitialized()) {
+    if (isMixpanelInstanceInitialized()) {
       // Call mixpanel tracking only after we have
       // initialized mixpanel with the API token
 

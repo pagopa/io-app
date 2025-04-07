@@ -67,7 +67,7 @@ jest.mock("react-native-i18n", () => ({
 let mockIsMixpanelInitialized = true;
 const mockMixpanelTrack = jest.fn();
 jest.mock("../../../mixpanel", () => ({
-  isMixpanelInitialized: () => mockIsMixpanelInitialized,
+  isMixpanelInstanceInitialized: () => mockIsMixpanelInitialized,
   mixpanelTrack: (eventName: string, properties: Record<string, unknown>) =>
     mockMixpanelTrack(eventName, properties)
 }));

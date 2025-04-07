@@ -28,7 +28,7 @@ jest.mock("react-native", () => ({
 let mockIsMixpanelInitialized = true;
 const mockedRegisterSuperProperties = jest.fn();
 jest.mock("../../mixpanel", () => ({
-  isMixpanelInitialized: () => mockIsMixpanelInitialized,
+  isMixpanelInstanceInitialized: () => mockIsMixpanelInitialized,
   registerSuperProperties: (properties: MixpanelProperties) =>
     mockedRegisterSuperProperties(properties)
 }));
@@ -131,7 +131,7 @@ describe("superProperties", () => {
       })
     );
   });
-  it("should do nothing if 'isMixpanelInitialized' returns 'false'", async () => {
+  it("should do nothing if 'isMixpanelInstanceInitialized' returns 'false'", async () => {
     mockIsMixpanelInitialized = false;
     const state = {} as GlobalState;
 

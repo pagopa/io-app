@@ -2,7 +2,7 @@ import { PushNotificationsContentTypeEnum } from "../../../../definitions/backen
 import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStatus";
 import {
   enqueueMixpanelEvent,
-  isMixpanelInitialized,
+  isMixpanelInstanceInitialized,
   mixpanelTrack
 } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
@@ -57,7 +57,7 @@ export const trackNewPushNotificationsTokenGenerated = (
 ) => {
   const eventName = "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE";
   const props = buildEventProperties("TECH", undefined);
-  if (isMixpanelInitialized()) {
+  if (isMixpanelInstanceInitialized()) {
     mixpanelTrack(eventName, props);
   } else if (userOptedIn) {
     enqueueMixpanelEvent(eventName, id, props);

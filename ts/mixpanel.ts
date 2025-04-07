@@ -66,7 +66,7 @@ export const terminateMixpanel = () => {
   }
 };
 
-export const isMixpanelInitialized = () => mixpanel != null;
+export const isMixpanelInstanceInitialized = () => mixpanel != null;
 
 export const getPeople = () => mixpanel?.getPeople();
 
