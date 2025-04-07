@@ -15,12 +15,12 @@ import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStat
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../../navigation/params/OnboardingParamsList";
-import { profileUpsert } from "../../../store/actions/profile";
+import { profileUpsert } from "../../settings/common/store/actions";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   profileHasErrorSelector,
   profileIsUpdatingSelector
-} from "../../../store/reducers/profile";
+} from "../../settings/common/store/selectors";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../../utils/analytics";
 import {
@@ -28,7 +28,7 @@ import {
   trackNotificationScreen,
   trackNotificationsPreferencesPreviewStatus,
   trackNotificationsPreferencesReminderStatus
-} from "../../../screens/profile/analytics";
+} from "../../settings/common/analytics";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { ProfileNotificationSettings } from "../components/ProfileNotificationsSettings";

@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import mockedProfile from "../../__mocks__/initializedProfile";
-import { NotificationPreferenceConfiguration } from "../../screens/profile/analytics";
+import { NotificationPreferenceConfiguration } from "../../features/settings/common/analytics";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";

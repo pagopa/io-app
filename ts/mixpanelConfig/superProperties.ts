@@ -16,7 +16,7 @@ import {
   NotificationPermissionType,
   NotificationPreferenceConfiguration,
   ServiceConfigurationTrackingType
-} from "../screens/profile/analytics";
+} from "../features/settings/common/analytics/index.ts";
 import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
