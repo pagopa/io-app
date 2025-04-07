@@ -89,7 +89,9 @@ const ContentView = () => {
       <ContentWrapper>
         <VStack space={24}>
           <ItwDataExchangeIcons
-            requesterLogoUri={require("../../../../../../img/features/itWallet/issuer/IPZS.png")} // TODO: get the Relying Party logo
+            requesterLogoUri={
+              rpData?.logo_uri ? { uri: rpData.logo_uri } : undefined
+            }
           />
 
           <VStack space={8}>
