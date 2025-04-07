@@ -94,9 +94,7 @@ const ReceiptDetailsScreen = () => {
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
       user: paymentAnalyticsData?.receiptUser,
-      organization_fiscal_code:
-        paymentAnalyticsData?.verifiedData?.paFiscalCode,
-      payment_status: "paid"
+      organization_fiscal_code: paymentAnalyticsData?.verifiedData?.paFiscalCode
     });
     toast.error(I18n.t("features.payments.transactions.receipt.error"));
   };
@@ -113,8 +111,7 @@ const ReceiptDetailsScreen = () => {
       organization_fiscal_code:
         paymentAnalyticsData?.verifiedData?.paFiscalCode,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentAnalyticsData?.receiptUser,
-      payment_status: "paid"
+      user: paymentAnalyticsData?.receiptUser
     });
     dispatch(
       getPaymentsReceiptDownloadAction.request({

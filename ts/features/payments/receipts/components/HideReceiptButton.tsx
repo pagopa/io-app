@@ -23,9 +23,7 @@ const HideReceiptButton = (props: Props) => {
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
       user: paymentAnalyticsData?.receiptUser,
-      organization_fiscal_code:
-        paymentAnalyticsData?.verifiedData?.paFiscalCode,
-      payment_status: "paid"
+      organization_fiscal_code: paymentAnalyticsData?.verifiedData?.paFiscalCode
     });
   };
 
@@ -34,9 +32,7 @@ const HideReceiptButton = (props: Props) => {
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
       user: paymentAnalyticsData?.receiptUser,
-      organization_fiscal_code:
-        paymentAnalyticsData?.verifiedData?.paFiscalCode,
-      payment_status: "paid"
+      organization_fiscal_code: paymentAnalyticsData?.verifiedData?.paFiscalCode
     });
   };
 
