@@ -8,7 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
-import { clearCache } from "../../../../../store/actions/profile";
+import { clearCache } from "../../../../settings/common/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { getLookUpId } from "../../../../../utils/pmLookUpId";
 import {
@@ -223,7 +223,6 @@ const reducer = (
       receiptsAnalytics.trackPaymentsOpenReceipt({
         organization_name: action.payload.carts?.[0]?.payee?.name,
         organization_fiscal_code: action.payload.carts?.[0]?.payee?.taxCode,
-        payment_status: "paid",
         first_time_opening: state.analyticsData?.receiptFirstTimeOpening,
         user: state.analyticsData?.receiptUser
       });

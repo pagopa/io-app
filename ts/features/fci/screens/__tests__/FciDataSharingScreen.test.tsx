@@ -13,7 +13,7 @@ import {
   profileFiscalCodeSelector,
   profileNameSelector,
   profileSelector
-} from "../../../../store/reducers/profile";
+} from "../../../settings/common/store/selectors";
 import { capitalize } from "../../../../utils/strings";
 import mockedProfile from "../../../../__mocks__/initializedProfile";
 
