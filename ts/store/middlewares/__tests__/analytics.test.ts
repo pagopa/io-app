@@ -40,14 +40,14 @@ import {
   profileUpsert,
   removeAccountMotivation,
   RemoveAccountMotivationEnum
-} from "../../actions/profile";
-import { profileEmailValidationChanged } from "../../actions/profileEmailValidationChange";
+} from "../../../features/settings/common/store/actions";
+import { profileEmailValidationChanged } from "../../../features/mailCheck/store/actions/profileEmailValidationChange";
 import { searchMessagesEnabled } from "../../actions/search";
 import {
   deleteUserDataProcessing,
   upsertUserDataProcessing
-} from "../../actions/userDataProcessing";
-import { ProfileError } from "../../reducers/profileErrorType";
+} from "../../../features/settings/common/store/actions/userDataProcessing";
+import { ProfileError } from "../../../features/settings/common/store/types";
 import { actionTracking, testable } from "../analytics";
 import * as CGNANALYTICS from "../../../features/bonus/cgn/analytics";
 import * as SERVICESANALYTICS from "../../../features/services/common/analytics";
