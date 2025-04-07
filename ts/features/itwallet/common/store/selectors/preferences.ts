@@ -81,4 +81,4 @@ export const itwIsWalletInstanceRemotelyActiveSelector = (state: GlobalState) =>
  * features for users with L3 authentication level
  */
 export const itwIsL3EnabledSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isL3Enabled || false;
+  state.features.itWallet.preferences.isL3Enabled ?? false;
