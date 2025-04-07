@@ -41,6 +41,9 @@ import authenticationReducer, {
   INITIAL_STATE as authenticationInitialState
 } from "../../features/authentication/common/store/reducers";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
+import profileReducer from "../../features/settings/common/store/reducers";
+import userDataProcessingReducer from "../../features/settings/common/store/reducers/userDataProcessing";
+import emailValidationReducer from "../../features/mailCheck/store/reducers/emailValidation";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import contentReducer, {
@@ -48,7 +51,6 @@ import contentReducer, {
 } from "./content";
 import crossSessionsReducer from "./crossSessions";
 import { debugPersistor } from "./debug";
-import emailValidationReducer from "./emailValidation";
 import entitiesReducer, {
   entitiesPersistConfig,
   EntitiesState
@@ -65,11 +67,9 @@ import persistedPreferencesReducer, {
   initialPreferencesState
 } from "./persistedPreferences";
 import preferencesReducer from "./preferences";
-import profileReducer from "./profile";
 import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
-import userDataProcessingReducer from "./userDataProcessing";
 import remoteConfigReducer from "./backendStatus/remoteConfig";
 import statusMessagesReducer from "./backendStatus/statusMessages";
 import sectionStatusReducer from "./backendStatus/sectionStatus";
