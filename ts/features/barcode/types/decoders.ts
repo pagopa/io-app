@@ -115,11 +115,10 @@ const decodeFciBarcode: IOBarcodeDecoderFn = (data: string) =>
 
 const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
   pipe(
-    // TODO: restore after testing
-    // O.fromNullable(data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)),
-    // O.map(match => new URLSearchParams(match[1])),
-    O.fromNullable(data.match(/^(openid4vp|haip):\/\/\?(.*)$/)),
-    O.map(match => new URLSearchParams(match[2])),
+    O.fromNullable(
+      data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)
+    ),
+    O.map(match => new URLSearchParams(match[1])),
     O.chainEitherK(params =>
       validateItwPresentationQrCodeParams({
         clientId: params.get("client_id"),
