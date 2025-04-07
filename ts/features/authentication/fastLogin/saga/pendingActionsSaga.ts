@@ -18,7 +18,7 @@ export function* watchPendingActionsSaga(): SagaIterator {
   yield* takeLatest(applicationInitialized, handleApplicationInitialized);
 }
 
-function* handleApplicationInitialized(
+export function* handleApplicationInitialized(
   _: ReturnType<typeof applicationInitialized>
 ) {
   const { actionsToWaitFor } = _.payload;

@@ -50,7 +50,7 @@ export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
 }
 
-function* handleRefreshSessionToken(
+export function* handleRefreshSessionToken(
   refreshSessionTokenRequestAction: ReturnType<
     typeof refreshSessionToken.request
   >
@@ -106,7 +106,7 @@ type RequestStateType = {
 
 const MAX_RETRIES = fastLoginMaxRetries;
 
-function* doRefreshTokenSaga(
+export function* doRefreshTokenSaga(
   refreshSessionTokenRequestAction: ReturnType<
     typeof refreshSessionToken.request
   >

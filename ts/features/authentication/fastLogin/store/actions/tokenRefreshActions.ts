@@ -31,7 +31,7 @@ export const clearTokenRefreshError = createStandardAction(
   "CLEAR_TOKEN_REFRESH_ERROR"
 )<void>();
 
-type RefreshSessionTokenRequestPayload = {
+export type RefreshSessionTokenRequestPayload = {
   withUserInteraction: boolean;
   showIdentificationModalAtStartup: boolean;
   showLoader: boolean;
