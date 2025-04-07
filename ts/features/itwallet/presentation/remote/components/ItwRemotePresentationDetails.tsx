@@ -1,10 +1,12 @@
 import { memo, useMemo } from "react";
 import { View } from "react-native";
 import {
+  Alert,
   BodySmall,
   ClaimsSelector,
   ListItemCheckbox,
   ListItemHeader,
+  VSpacer,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -99,6 +101,13 @@ const ItwRemotePresentationDetails = () => {
             }
           />
           {renderCredentialsBlock(credentials)}
+          <VSpacer size={16} />
+          <Alert
+            variant="info"
+            content={I18n.t(
+              "features.itWallet.presentation.selectiveDisclosure.optionalClaimsAlert"
+            )}
+          />
         </View>
       ))}
     </VStack>
