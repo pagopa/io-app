@@ -1,6 +1,7 @@
 import {
   Body,
   FooterActionsInline,
+  ListItemCheckbox,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
@@ -15,7 +16,6 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
 import { IdPayUnsubscriptionParamsList } from "../navigation/params";
 import { IdPayUnsubscriptionRoutes } from "../navigation/routes";
 import { idPayUnsubscribeAction } from "../store/actions";
@@ -87,7 +87,7 @@ const checksByInitiativeType = {
   ]
 };
 
-const UnsubscriptionConfirmationScreen = () => {
+const IdPayUnsubscriptionConfirmationScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const { params } = useRoute<RouteProps>();
@@ -170,11 +170,10 @@ const UnsubscriptionConfirmationScreen = () => {
       includeContentMargins
     >
       {unsubscriptionChecks.map((item, index) => (
-        <UnsubscriptionCheckListItem
+        <ListItemCheckbox
           key={index}
-          title={item.title}
-          subtitle={item.subtitle}
-          checked={checks.values[index]}
+          value={item.title}
+          description={item.subtitle}
           onValueChange={value => checks.setValue(index, value)}
         />
       ))}
@@ -191,4 +190,4 @@ const UnsubscriptionConfirmationScreen = () => {
   );
 };
 
-export default UnsubscriptionConfirmationScreen;
+export default IdPayUnsubscriptionConfirmationScreen;

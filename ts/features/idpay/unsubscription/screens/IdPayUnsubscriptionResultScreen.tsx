@@ -14,7 +14,7 @@ type ScreenContentType = {
   buttonLabel: string;
 };
 
-const UnsubscriptionResultScreen = () => {
+const IdPayUnsubscriptionResultScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isFailure = useIOSelector(isFailureSelector);
@@ -60,4 +60,4 @@ const UnsubscriptionResultScreen = () => {
   );
 };
 
-export default UnsubscriptionResultScreen;
+export default IdPayUnsubscriptionResultScreen;
