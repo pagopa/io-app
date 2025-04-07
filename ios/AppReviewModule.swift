@@ -16,11 +16,11 @@ import SwiftUICore
 class AppReviewModule: NSObject {
   @MainActor @objc
   func requestReview () -> Void {
+    let activeWindowScene = UIApplication.shared.connectedScenes.first { scene in
+      return scene.activationState == .foregroundActive && scene is UIWindowScene
+    }
+    
     if #available(iOS 16.0, *) {
-      let activeWindowScene = UIApplication.shared.connectedScenes.first { scene in
-        return scene.activationState == .foregroundActive && scene is UIWindowScene
-      }
-      
       if let scene = activeWindowScene as? UIWindowScene {
         AppStore.requestReview(in: scene)
         return
@@ -28,10 +28,6 @@ class AppReviewModule: NSObject {
     }
     
     if #available(iOS 14.0, *) {
-      let activeWindowScene = UIApplication.shared.connectedScenes.first { scene in
-        return scene.activationState == .foregroundActive && scene is UIWindowScene
-      }
-      
       if let scene = activeWindowScene as? UIWindowScene {
         SKStoreReviewController.requestReview(in: scene)
         return
