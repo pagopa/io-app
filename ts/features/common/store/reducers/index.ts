@@ -5,7 +5,7 @@ import { Action } from "../../../../store/actions/types";
 import {
   TestLoginState,
   testLoginReducer
-} from "../../../../store/reducers/testLogin";
+} from "../../../authentication/common/store/reducers/testLogin";
 import {
   CieLoginState,
   cieLoginPersistor
