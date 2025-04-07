@@ -12,18 +12,26 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
-import { ClaimDisplayFormat } from "../../../common/utils/itwClaimsUtils";
+import {
+  ClaimDisplayFormat,
+  getClaimDisplayValue
+} from "../../../common/utils/itwClaimsUtils";
 import { selectPresentationDetails } from "../machine/selectors";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
 import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
 
 const mapClaims = (claims: Array<ClaimDisplayFormat>) =>
-  claims.map(c => ({
-    id: c.id,
-    title: c.value as string,
-    description: c.label
-  }));
+  claims.map(c => {
+    const displayValue = getClaimDisplayValue(c);
+    return {
+      id: c.id,
+      title: Array.isArray(displayValue)
+        ? displayValue.join(", ")
+        : displayValue,
+      description: c.label
+    };
+  });
 
 const ItwRemotePresentationDetails = () => {
   const theme = useIOTheme();
