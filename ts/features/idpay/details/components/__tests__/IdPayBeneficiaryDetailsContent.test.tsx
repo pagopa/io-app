@@ -6,9 +6,9 @@ import {
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import I18n, { setLocale } from "../../../../../i18n";
 import {
-  BeneficiaryDetailsContent,
+  IdPayBeneficiaryDetailsContent,
   BeneficiaryDetailsProps
-} from "../BeneficiaryDetailsContent";
+} from "../IdPayBeneficiaryDetailsContent";
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../../definitions/idpay/OnboardingStatusDTO";
 import { RewardValueTypeEnum } from "../../../../../../definitions/idpay/RewardValueDTO";
 import { appReducer } from "../../../../../store/reducers";
@@ -53,7 +53,7 @@ const T_REWARD_VALUE = 30;
 const T_REWARD_VALUE_PERCENTAGE_STRING = "30%";
 const T_REWARD_VALUE_ABSOLUTE_STRING = "30,00 €";
 
-describe("Test BeneficiaryDetailsContent component", () => {
+describe("Test IdPayBeneficiaryDetailsContent component", () => {
   it("should correctly render all the info ", () => {
     const { component } = renderComponent(InitiativeRewardTypeEnum.REFUND);
 
@@ -222,7 +222,7 @@ const renderComponent = (
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <BeneficiaryDetailsContent {...props} />,
+      () => <IdPayBeneficiaryDetailsContent {...props} />,
       IDPayDetailsRoutes.IDPAY_DETAILS_MAIN,
       {},
       store

@@ -17,7 +17,7 @@ type Props = {
   initiative: InitiativeDTO;
 };
 
-const InitiativeDiscountSettingsComponent = (props: Props) => {
+const IdPayInitiativeDiscountSettingsComponent = (props: Props) => {
   const { initiative } = props;
 
   const navigation =
@@ -98,4 +98,4 @@ const InitiativeDiscountSettingsComponent = (props: Props) => {
   );
 };
 
-export { InitiativeDiscountSettingsComponent };
+export { IdPayInitiativeDiscountSettingsComponent };

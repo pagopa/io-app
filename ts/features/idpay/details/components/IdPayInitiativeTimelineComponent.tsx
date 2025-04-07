@@ -25,14 +25,17 @@ import {
   idpayPaginatedTimelineSelector
 } from "../store";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
-import { TimelineOperationListItem } from "./TimelineOperationListItem";
+import { IdPayTimelineOperationListItem } from "./IdPayTimelineOperationListItem";
 
 type Props = {
   initiativeId: string;
   size?: number;
 };
 
-const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
+const IdPayInitiativeTimelineComponent = ({
+  initiativeId,
+  size = 3
+}: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const detailsBottomSheet = useTimelineDetailsBottomSheet(initiativeId);
@@ -65,7 +68,7 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
       <>
         {timeline.slice(0, size).map((operation, index) => (
           <Fragment key={operation.operationId}>
-            <TimelineOperationListItem
+            <IdPayTimelineOperationListItem
               operation={operation}
               pressable={
                 initiative?.initiativeRewardType !==
@@ -127,7 +130,7 @@ const TimelineComponentSkeleton = ({ size = 3 }: Pick<Props, "size">) => (
   <View testID="IDPayTimelineSkeletonTestID">
     {Array.from({ length: size }).map((_, index) => (
       <Fragment key={index}>
-        <TimelineOperationListItem isLoading={true} />
+        <IdPayTimelineOperationListItem isLoading={true} />
         {index < size - 1 ? <Divider /> : undefined}
       </Fragment>
     ))}
@@ -146,7 +149,7 @@ const EmptyTimelineComponent = () => (
   </BodySmall>
 );
 
-const InitiativeTimelineComponentSkeleton = ({
+const IdPayInitiativeTimelineComponentSkeleton = ({
   size = 3
 }: Pick<Props, "size">) => (
   <>
@@ -156,4 +159,7 @@ const InitiativeTimelineComponentSkeleton = ({
   </>
 );
 
-export { InitiativeTimelineComponent, InitiativeTimelineComponentSkeleton };
+export {
+  IdPayInitiativeTimelineComponent,
+  IdPayInitiativeTimelineComponentSkeleton
+};

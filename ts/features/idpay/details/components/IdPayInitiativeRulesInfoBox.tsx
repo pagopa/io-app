@@ -20,7 +20,7 @@ type Props = {
   content: string;
 };
 
-const InitiativeRulesInfoBox = (props: Props) => {
+const IdPayInitiativeRulesInfoBox = (props: Props) => {
   const { content } = props;
   const theme = useIOTheme();
 
@@ -68,7 +68,7 @@ const InitiativeRulesInfoBox = (props: Props) => {
   );
 };
 
-const InitiativeRulesInfoBoxSkeleton = () => (
+const IdPayInitiativeRulesInfoBoxSkeleton = () => (
   <View style={styles.infoBox}>
     <IOSkeleton shape="rectangle" width={"40%"} height={24} radius={4} />
     <VSpacer size={16} />
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { InitiativeRulesInfoBox, InitiativeRulesInfoBoxSkeleton };
+export { IdPayInitiativeRulesInfoBox, IdPayInitiativeRulesInfoBoxSkeleton };

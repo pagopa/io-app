@@ -23,7 +23,7 @@ type Props = {
   initiative?: InitiativeDTO;
 };
 
-const InitiativeRefundSettingsComponent = (props: Props) => {
+const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
   const { initiative } = props;
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -184,4 +184,4 @@ const InitiativeRefundSettingsComponent = (props: Props) => {
   );
 };
 
-export { InitiativeRefundSettingsComponent };
+export { IdPayInitiativeRefundSettingsComponent };

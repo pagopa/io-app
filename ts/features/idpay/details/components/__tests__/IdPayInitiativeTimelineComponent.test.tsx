@@ -7,7 +7,7 @@ import { NetworkError } from "../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { IDPayDetailsRoutes } from "../../navigation";
 import { PaginatedTimelineDTO } from "../../store";
-import { InitiativeTimelineComponent } from "../InitiativeTimelineComponent";
+import { IdPayInitiativeTimelineComponent } from "../IdPayInitiativeTimelineComponent";
 
 const mockedTimeline: PaginatedTimelineDTO = {
   0: {
@@ -20,7 +20,7 @@ const mockedTimeline: PaginatedTimelineDTO = {
   }
 };
 
-describe("Test InitiativeTimelineComponent screen", () => {
+describe("Test IdPayInitiativeTimelineComponent screen", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
@@ -77,7 +77,7 @@ const renderComponent = (
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <InitiativeTimelineComponent initiativeId="ABC" />,
+      () => <IdPayInitiativeTimelineComponent initiativeId="ABC" />,
       IDPayDetailsRoutes.IDPAY_DETAILS_MAIN,
       {},
       store

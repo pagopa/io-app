@@ -39,9 +39,9 @@ import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
 import { IdPayUnsubscriptionRoutes } from "../../unsubscription/navigation/routes";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
-  InitiativeRulesInfoBox,
-  InitiativeRulesInfoBoxSkeleton
-} from "./InitiativeRulesInfoBox";
+  IdPayInitiativeRulesInfoBox,
+  IdPayInitiativeRulesInfoBoxSkeleton
+} from "./IdPayInitiativeRulesInfoBox";
 
 type TableRow = WithTestID<{
   label: string;
@@ -64,7 +64,7 @@ export type BeneficiaryDetailsProps =
 
 const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
-const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
+const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const { startIdPaySupport } = useIdPaySupportModal();
   const { initiativeDetails, beneficiaryDetails, onboardingStatus, isLoading } =
@@ -85,7 +85,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     O.fromNullable,
     O.fold(
       () => undefined,
-      info => <InitiativeRulesInfoBox content={info} />
+      info => <IdPayInitiativeRulesInfoBox content={info} />
     )
   );
 
@@ -364,7 +364,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
 
 const BeneficiaryDetailsContentSkeleton = () => (
   <>
-    <InitiativeRulesInfoBoxSkeleton />
+    <IdPayInitiativeRulesInfoBoxSkeleton />
     {Array.from({ length: 3 }).map((_, i) => (
       <View key={i}>
         <VSpacer size={32} />
@@ -389,4 +389,4 @@ const BeneficiaryDetailsContentSkeleton = () => (
   </>
 );
 
-export { BeneficiaryDetailsContent };
+export { IdPayBeneficiaryDetailsContent };

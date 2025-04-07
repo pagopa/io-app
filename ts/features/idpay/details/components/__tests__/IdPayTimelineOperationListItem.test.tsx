@@ -13,10 +13,10 @@ import {
 } from "../../../../../../definitions/idpay/RefundOperationDTO";
 import I18n, { setLocale } from "../../../../../i18n";
 import {
-  TimelineOperationListItem,
+  IdPayTimelineOperationListItem,
   getOperationSubtitle,
   getOperationSubtitleWithAmount
-} from "../TimelineOperationListItem";
+} from "../IdPayTimelineOperationListItem";
 import {
   InstrumentOperationDTO,
   OperationTypeEnum as InstrumentOperationTypeEnum,
@@ -34,7 +34,7 @@ import {
 
 setLocale("it");
 
-describe("Test TimelineOperationListItem", () => {
+describe("Test IdPayTimelineOperationListItem", () => {
   describe("when operation DTO is OnboardingOperationDTO", () => {
     it("should render the component correctly", () => {
       const T_DATE = new Date(2023, 4, 5, 16, 31);
@@ -50,7 +50,7 @@ describe("Test TimelineOperationListItem", () => {
       };
 
       const component = render(
-        <TimelineOperationListItem operation={T_OPERATION} />
+        <IdPayTimelineOperationListItem operation={T_OPERATION} />
       );
 
       expect(component).toBeTruthy();
@@ -77,7 +77,7 @@ describe("Test TimelineOperationListItem", () => {
       };
 
       const component = render(
-        <TimelineOperationListItem operation={T_OPERATION} />
+        <IdPayTimelineOperationListItem operation={T_OPERATION} />
       );
 
       expect(component).toBeTruthy();
@@ -106,7 +106,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem
+          <IdPayTimelineOperationListItem
             operation={T_OPERATION}
             onPress={mockOnPress}
             pressable
@@ -151,7 +151,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem
+          <IdPayTimelineOperationListItem
             operation={T_OPERATION}
             onPress={mockOnPress}
             pressable
@@ -211,7 +211,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
 
         expect(component).toBeTruthy();
@@ -243,7 +243,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
 
         expect(component).toBeTruthy();
@@ -274,7 +274,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
 
         expect(component).toBeTruthy();
@@ -301,7 +301,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
 
         expect(component).toBeTruthy();
@@ -341,7 +341,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
 
         expect(component).toBeTruthy();
@@ -373,7 +373,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
 
         expect(component).toBeTruthy();
@@ -404,7 +404,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
 
         expect(component).toBeTruthy();
@@ -440,7 +440,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
         expect(component.queryByTestId("genericLogoTestID")).toBeFalsy();
@@ -472,7 +472,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
         expect(component.queryByTestId("genericLogoTestID")).toBeFalsy();
@@ -506,7 +506,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
         expect(component.queryByTestId("genericLogoTestID")).toBeTruthy();
@@ -545,7 +545,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
         expect(component.queryByTestId("genericLogoTestID")).toBeFalsy();
@@ -584,7 +584,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
         expect(component.queryByTestId("genericLogoTestID")).toBeFalsy();
@@ -621,7 +621,7 @@ describe("Test TimelineOperationListItem", () => {
         };
 
         const component = render(
-          <TimelineOperationListItem operation={T_OPERATION} />
+          <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
         expect(component.queryByTestId("genericLogoTestID")).toBeTruthy();

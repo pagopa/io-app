@@ -68,7 +68,7 @@ export type TimelineOperationListItemProps = WithTestID<
   | { isLoading: true; operation?: never; onPress?: never; pressable?: never }
 >;
 
-export const TimelineOperationListItem = (
+export const IdPayTimelineOperationListItem = (
   props: TimelineOperationListItemProps
 ) => {
   const { isLoading, operation, pressable, onPress, testID } = props;

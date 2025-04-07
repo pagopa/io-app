@@ -20,7 +20,7 @@ type Props = {
   status: InitiativeStatusEnum;
 };
 
-const MissingConfigurationAlert = (props: Props) => {
+const IdPayMissingConfigurationAlert = (props: Props) => {
   const navigation = useIONavigation();
 
   const { status, initiativeId } = props;
@@ -74,4 +74,4 @@ const MissingConfigurationAlert = (props: Props) => {
   );
 };
 
-export { MissingConfigurationAlert };
+export { IdPayMissingConfigurationAlert };
