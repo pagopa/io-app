@@ -36,7 +36,9 @@ type InstrumentEnrollmentSwitchProps = {
 /**
  * A component to enable/disable the enrollment of an instrument
  */
-const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
+const IdPayInstrumentEnrollmentSwitch = (
+  props: InstrumentEnrollmentSwitchProps
+) => {
   const { wallet, isStaged, onValueChange } = props;
   const { useSelector } = IdPayConfigurationMachineContext;
 
@@ -127,4 +129,4 @@ const getPaymentMaskedPan = (wallet: Wallet): string => {
   }
 };
 
-export { InstrumentEnrollmentSwitch };
+export { IdPayInstrumentEnrollmentSwitch };

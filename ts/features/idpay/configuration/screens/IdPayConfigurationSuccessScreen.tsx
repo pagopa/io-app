@@ -11,7 +11,7 @@ import {
   selectInitiativeDetails
 } from "../machine/selectors";
 
-export const ConfigurationSuccessScreen = () => {
+export const IdPayConfigurationSuccessScreen = () => {
   const navigation = useIONavigation();
   const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
   const machine = useActorRef();

@@ -29,7 +29,7 @@ type RouteProps = RouteProp<
   "IDPAY_CONFIGURATION_IBAN_ENROLLMENT"
 >;
 
-export const IbanEnrollmentScreen = () => {
+export const IdPayIbanEnrollmentScreen = () => {
   const { params } = useRoute<RouteProps>();
   const { initiativeId } = params;
   const machine = IdPayConfigurationMachineContext.useActorRef();

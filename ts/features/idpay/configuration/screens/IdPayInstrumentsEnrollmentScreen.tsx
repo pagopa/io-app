@@ -18,7 +18,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
 import { isLoadingSelector } from "../../common/machine/selectors";
-import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
+import { IdPayInstrumentEnrollmentSwitch } from "../components/IdPayInstrumentEnrollmentSwitch";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import {
   failureSelector,
@@ -41,7 +41,7 @@ type RouteProps = RouteProp<
   "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT"
 >;
 
-export const InstrumentsEnrollmentScreen = () => {
+export const IdPayInstrumentsEnrollmentScreen = () => {
   const navigation = useIONavigation();
   const { params } = useRoute<RouteProps>();
   const { initiativeId } = params;
@@ -228,7 +228,7 @@ export const InstrumentsEnrollmentScreen = () => {
     >
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
         {walletInstruments.map(walletInstrument => (
-          <InstrumentEnrollmentSwitch
+          <IdPayInstrumentEnrollmentSwitch
             key={walletInstrument.idWallet}
             wallet={walletInstrument}
             isStaged={stagedWalletId === walletInstrument.idWallet}

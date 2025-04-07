@@ -30,7 +30,7 @@ type RouteProps = RouteProp<
   "IDPAY_CONFIGURATION_INTRO"
 >;
 
-export const InitiativeConfigurationIntroScreen = () => {
+export const IdPayInitiativeConfigurationIntroScreen = () => {
   const { params } = useRoute<RouteProps>();
   const { initiativeId, mode } = params;
   const { useActorRef, useSelector } = IdPayConfigurationMachineContext;

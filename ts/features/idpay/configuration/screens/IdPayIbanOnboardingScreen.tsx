@@ -14,7 +14,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 
-export const IbanOnboardingScreen = () => {
+export const IdPayIbanOnboardingScreen = () => {
   const machine = IdPayConfigurationMachineContext.useActorRef();
 
   const [iban, setIban] = useState<{

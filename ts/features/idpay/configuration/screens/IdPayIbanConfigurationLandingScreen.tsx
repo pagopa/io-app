@@ -11,7 +11,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 
-export const IbanConfigurationLanding = () => {
+export const IdPayIbanConfigurationLandingScreen = () => {
   const { useActorRef } = IdPayConfigurationMachineContext;
   const machine = useActorRef();
 
