@@ -30,7 +30,7 @@ import {
   loadContextualHelpData,
   loadIdps
 } from "../actions/content";
-import { clearCache } from "../actions/profile";
+import { clearCache } from "../../features/settings/common/store/actions";
 import { Action } from "../actions/types";
 import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";

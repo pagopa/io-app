@@ -17,7 +17,7 @@ import {
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes
 } from "../actions";
-import { clearCache } from "../../../../store/actions/profile";
+import { clearCache } from "../../../settings/common/store/actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage, UIMessageId } from "../../types";

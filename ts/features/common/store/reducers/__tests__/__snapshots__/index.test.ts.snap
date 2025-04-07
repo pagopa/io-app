@@ -10,7 +10,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "showAppearanceBanner": true,
   },
   "connectivityStatus": {
-    "isConnected": true,
+    "isConnected": undefined,
   },
   "fci": {
     "documentPreview": {

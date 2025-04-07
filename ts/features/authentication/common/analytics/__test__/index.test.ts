@@ -1,6 +1,10 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
 import { buildEventProperties } from "../../../../../utils/analytics";
+import {
+  trackToSWebViewError,
+  trackToSWebViewErrorRetry
+} from "../../../../settings/privacy/shared/components/analytics";
 import { SpidLevel } from "../../../login/cie/utils";
 import {
   IdpCIE,
@@ -20,8 +24,6 @@ import {
   trackCieIDLoginSuccess,
   trackSpidLoginSuccess,
   trackTosUserExit,
-  trackToSWebViewError,
-  trackToSWebViewErrorRetry,
   trackLoginUserExit,
   trackLoginEnded
 } from "../index";
