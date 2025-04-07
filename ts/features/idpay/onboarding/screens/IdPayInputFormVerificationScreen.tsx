@@ -13,7 +13,7 @@ import {
   textRequiredCriteriaSelector
 } from "../machine/selectors";
 
-const InputFormVerificationScreen = () => {
+const IdPayInputFormVerificationScreen = () => {
   const { useSelector } = IdPayOnboardingMachineContext;
 
   const pagerRef = useRef<PagerView>(null);
@@ -94,4 +94,4 @@ const InputFormVerificationContent = ({
   );
 };
 
-export default InputFormVerificationScreen;
+export default IdPayInputFormVerificationScreen;

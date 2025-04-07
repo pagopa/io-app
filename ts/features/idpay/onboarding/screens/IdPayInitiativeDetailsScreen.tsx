@@ -13,9 +13,9 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
-import { OnboardingDescriptionMarkdownSkeleton } from "../components/OnboardingDescriptionMarkdown";
-import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
-import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
+import { IdPayOnboardingDescriptionSkeleton } from "../components/IdPayOnboardingDescriptionSkeleton";
+import { IdPayOnboardingPrivacyAdvice } from "../components/IdPayOnboardingPrivacyAdvice";
+import { IdPayOnboardingServiceHeader } from "../components/IdPayOnboardingServiceHeader";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 import { IdPayOnboardingParamsList } from "../navigation/params";
@@ -29,7 +29,7 @@ type InitiativeDetailsScreenParamsRouteProps = RouteProp<
   "IDPAY_ONBOARDING_INITIATIVE_DETAILS"
 >;
 
-export const InitiativeDetailsScreen = () => {
+export const IdPayInitiativeDetailsScreen = () => {
   const { params } = useRoute<InitiativeDetailsScreenParamsRouteProps>();
 
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -55,7 +55,10 @@ export const InitiativeDetailsScreen = () => {
     O.fold(
       () => null,
       ({ privacyLink, tcLink }) => (
-        <OnboardingPrivacyAdvice privacyUrl={privacyLink} tosUrl={tcLink} />
+        <IdPayOnboardingPrivacyAdvice
+          privacyUrl={privacyLink}
+          tosUrl={tcLink}
+        />
       )
     )
   );
@@ -63,7 +66,7 @@ export const InitiativeDetailsScreen = () => {
   const descriptionComponent = pipe(
     initiative,
     O.fold(
-      () => <OnboardingDescriptionMarkdownSkeleton />,
+      () => <IdPayOnboardingDescriptionSkeleton />,
       ({ description }) => <IOMarkdown content={description} />
     )
   );
@@ -93,7 +96,7 @@ export const InitiativeDetailsScreen = () => {
     >
       <ContentWrapper>
         <VSpacer size={24} />
-        <OnboardingServiceHeader initiative={initiative} />
+        <IdPayOnboardingServiceHeader initiative={initiative} />
         <VSpacer size={24} />
         {descriptionComponent}
         <VSpacer size={8} />

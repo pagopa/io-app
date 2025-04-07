@@ -1,7 +1,7 @@
 import { IOSkeleton, VSpacer } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 
-const OnboardingDescriptionMarkdownSkeleton = () => (
+const IdPayOnboardingDescriptionSkeleton = () => (
   <>
     {Array.from({ length: 30 }).map((_, i) => (
       <View key={i}>
@@ -16,4 +16,4 @@ const OnboardingDescriptionMarkdownSkeleton = () => (
   </>
 );
 
-export { OnboardingDescriptionMarkdownSkeleton };
+export { IdPayOnboardingDescriptionSkeleton };

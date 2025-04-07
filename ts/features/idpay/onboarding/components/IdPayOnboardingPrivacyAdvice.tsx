@@ -2,12 +2,14 @@ import { Body, IOToast, BodySmall } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
 
-type OnboardingPrivacyAdviceProps = {
+type IdPayOnboardingPrivacyAdviceProps = {
   tosUrl: string;
   privacyUrl: string;
 };
 
-const OnboardingPrivacyAdvice = (props: OnboardingPrivacyAdviceProps) => {
+const IdPayOnboardingPrivacyAdvice = (
+  props: IdPayOnboardingPrivacyAdviceProps
+) => {
   const { tosUrl, privacyUrl } = props;
 
   const handlePrivacyLinkPress = () =>
@@ -44,4 +46,4 @@ const OnboardingPrivacyAdvice = (props: OnboardingPrivacyAdviceProps) => {
   );
 };
 
-export { OnboardingPrivacyAdvice };
+export { IdPayOnboardingPrivacyAdvice };

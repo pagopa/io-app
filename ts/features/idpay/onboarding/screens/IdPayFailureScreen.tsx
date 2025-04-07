@@ -10,7 +10,7 @@ import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectOnboardingFailure } from "../machine/selectors";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
 
-const FailureScreen = () => {
+const IdPayFailureScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
@@ -168,4 +168,4 @@ const FailureScreen = () => {
   return <OperationResultScreenContent {...contentProps} />;
 };
 
-export default FailureScreen;
+export default IdPayFailureScreen;

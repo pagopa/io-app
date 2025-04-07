@@ -13,7 +13,7 @@ import {
 } from "../machine/selectors";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
-const MultiValuePrerequisitesScreen = () => {
+const IdPayMultiValuePrerequisitesScreen = () => {
   const pagerRef = useRef<PagerView>(null);
 
   const multiSelfDeclarations = IdPayOnboardingMachineContext.useSelector(
@@ -105,4 +105,4 @@ const MultiValuePrerequisiteItemScreenContent = ({
   );
 };
 
-export default MultiValuePrerequisitesScreen;
+export default IdPayMultiValuePrerequisitesScreen;

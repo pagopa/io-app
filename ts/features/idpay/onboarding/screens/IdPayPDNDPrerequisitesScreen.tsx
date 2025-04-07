@@ -19,7 +19,7 @@ import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 
-export const PDNDPrerequisitesScreen = () => {
+export const IdPayPDNDPrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
@@ -115,4 +115,4 @@ export const PDNDPrerequisitesScreen = () => {
   );
 };
 
-export default PDNDPrerequisitesScreen;
+export default IdPayPDNDPrerequisitesScreen;

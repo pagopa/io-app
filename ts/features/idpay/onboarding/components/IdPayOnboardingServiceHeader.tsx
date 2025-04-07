@@ -8,7 +8,7 @@ type Props = {
   initiative: O.Option<InitiativeDataDTO>;
 };
 
-const OnboardingServiceHeader = (props: Props) => {
+const IdPayOnboardingServiceHeader = (props: Props) => {
   const { initiative } = props;
 
   return pipe(
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { OnboardingServiceHeader };
+export { IdPayOnboardingServiceHeader };

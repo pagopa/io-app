@@ -7,7 +7,7 @@ import I18n from "../../../../i18n";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 
-const CompletionScreen = () => {
+const IdPayCompletionScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
@@ -43,4 +43,4 @@ const CompletionScreen = () => {
   );
 };
 
-export default CompletionScreen;
+export default IdPayCompletionScreen;

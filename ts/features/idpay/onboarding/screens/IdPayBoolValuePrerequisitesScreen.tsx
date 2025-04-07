@@ -13,7 +13,7 @@ import {
   selectSelfDeclarationBoolAnswers
 } from "../machine/selectors";
 
-const InitiativeSelfDeclarationsScreen = () => {
+const IdPayBoolValuePrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
@@ -73,4 +73,4 @@ const InitiativeSelfDeclarationsScreen = () => {
   );
 };
 
-export default InitiativeSelfDeclarationsScreen;
+export default IdPayBoolValuePrerequisitesScreen;
