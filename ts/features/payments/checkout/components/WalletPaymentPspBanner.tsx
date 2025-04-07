@@ -52,7 +52,7 @@ const WalletPaymentPspBanner = () => {
       return;
     }
     void mixpanelTrack("VOC_USER_EXIT", {
-      screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
+      screen_name: "PAYMENT_PICK_PSP_SCREEN"
     });
     return openAuthenticationSession(bannerConfig.action.url, "");
   };
