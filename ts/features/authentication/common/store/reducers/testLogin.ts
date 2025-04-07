@@ -1,12 +1,12 @@
 import { getType } from "typesafe-actions";
-import { Action } from "../actions/types";
+import { Action } from "../../../../../store/actions/types";
 import {
   loginFailure,
   loginSuccess,
   testLoginCleanUp,
   testLoginRequest
-} from "../../features/authentication/common/store/actions";
-import { GlobalState } from "./types";
+} from "../actions";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export type TestLoginInitialState = {
   kind: "idle";
