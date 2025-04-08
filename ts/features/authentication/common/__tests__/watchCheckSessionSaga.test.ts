@@ -1,19 +1,19 @@
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { testSaga } from "redux-saga-test-plan";
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
+import { PublicSession } from "../../../../../definitions/session_manager/PublicSession";
 import {
   checkCurrentSession,
   sessionExpired,
   sessionInformationLoadSuccess
-} from "../../../features/authentication/common/store/actions";
+} from "../store/actions";
 import {
   testableCheckSession,
   checkSessionResult
-} from "../watchCheckSessionSaga";
-import { handleSessionExpiredSaga } from "../../../features/authentication/fastLogin/saga/utils";
-import { isFastLoginEnabledSelector } from "../../../features/authentication/fastLogin/store/selectors";
-import { sessionInfoSelector } from "../../../features/authentication/common/store/selectors";
+} from "../saga/watchCheckSessionSaga";
+import { handleSessionExpiredSaga } from "../../fastLogin/saga/utils";
+import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
+import { sessionInfoSelector } from "../store/selectors";
 
 describe("checkSession", () => {
   const getSessionValidity = jest.fn();

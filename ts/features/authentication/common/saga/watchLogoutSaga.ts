@@ -3,20 +3,16 @@ import * as E from "fp-ts/lib/Either";
 
 import { call, fork, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { BackendClient } from "../../api/backend";
-import { deleteCurrentLollipopKeyAndGenerateNewKeyTag } from "../../features/lollipop/saga";
-import { startApplicationInitialization } from "../../store/actions/application";
-import {
-  logoutFailure,
-  logoutRequest,
-  logoutSuccess
-} from "../../features/authentication/common/store/actions";
-import { startupLoadSuccess } from "../../store/actions/startup";
-import { SagaCallReturnType } from "../../types/utils";
-import { convertUnknownToError } from "../../utils/errors";
-import { resetAssistanceData } from "../../utils/supportAssistance";
-import { StartupStatusEnum } from "../../store/reducers/startup";
-import { resetMixpanelSaga } from "../mixpanel";
+import { BackendClient } from "../../../../api/backend";
+import { deleteCurrentLollipopKeyAndGenerateNewKeyTag } from "../../../lollipop/saga";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import { logoutFailure, logoutRequest, logoutSuccess } from "../store/actions";
+import { startupLoadSuccess } from "../../../../store/actions/startup";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { convertUnknownToError } from "../../../../utils/errors";
+import { resetAssistanceData } from "../../../../utils/supportAssistance";
+import { StartupStatusEnum } from "../../../../store/reducers/startup";
+import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
 
 export function* logoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"],

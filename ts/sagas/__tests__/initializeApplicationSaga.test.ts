@@ -27,7 +27,7 @@ import {
   initializeApplicationSaga,
   testWaitForNavigatorServiceInitialization
 } from "../startup";
-import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
+import { watchSessionExpiredSaga } from "../../features/authentication/common/saga/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import {
@@ -39,14 +39,14 @@ import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducer
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
-import { watchLogoutSaga } from "../startup/watchLogoutSaga";
+import { watchLogoutSaga } from "../../features/authentication/common/saga/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
 import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
 import { trackKeychainFailures } from "../../utils/analytics";
-import { checkSession } from "../startup/watchCheckSessionSaga";
+import { checkSession } from "../../features/authentication/common/saga/watchCheckSessionSaga";
 import { formatRequestedTokenString } from "../../features/zendesk/utils";
 import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
 import { userFromSuccessLoginSelector } from "../../features/authentication/loginInfo/store/selectors";

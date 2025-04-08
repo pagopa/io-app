@@ -10,7 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { PureComponent } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
-import { CircularProgress } from "../ui/CircularProgress";
+import { CircularProgress } from "../../../../../components/ui/CircularProgress";
 
 export enum ReadingState {
   "reading" = "reading",
