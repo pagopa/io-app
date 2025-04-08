@@ -397,6 +397,40 @@ export const isPaymentsFeedbackBannerEnabledSelector = createSelector(
 );
 
 /**
+ * Return the remote feature flag about the payment-method-specific psp banner enabled/disabled
+ * that is shown after a successful payment.
+ */
+export const isPaymentsPspBannerEnabledSelector = (paymentMethodName: string) =>
+  createSelector(remoteConfigSelector, (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? config.newPaymentSection.pspBanner?.[paymentMethodName]
+                ?.min_app_version.ios
+            : config.newPaymentSection.pspBanner?.[paymentMethodName]
+                ?.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+  );
+
+/**
+ * Return the remote config about the payment-method-specific psp banner
+ */
+export const paymentsPspBannerConfigSelector = (paymentMethodName: string) =>
+  createSelector(remoteConfigSelector, (remoteConfig): Banner | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.newPaymentSection.pspBanner?.[paymentMethodName]),
+      O.toUndefined
+    )
+  );
+
+/**
  * Return the remote config about the payment feedback banner
  */
 export const paymentsFeedbackBannerConfigSelector = createSelector(
