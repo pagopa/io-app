@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IO_BACKEND_VERSION=v16.10.2-RELEASE
+IO_BACKEND_VERSION=v16.12.1
 # need to change after merge on io-services-metadata
 IO_SERVICES_METADATA_VERSION=1.0.65
 # Session manager version
@@ -21,7 +21,7 @@ declare -a apis=(
   # IDPay APIs
   "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v12.2.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml"
   # Services APIs
-  "./definitions/services https://raw.githubusercontent.com/pagopa/io-backend/refs/heads/IOPAE-1951-update-app-backend-getservice-openapi/api_services_app_backend.yaml"
+  "./definitions/services https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_services_app_backend.yaml"
   # Lollipop APIs
   "./definitions/lollipop https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_lollipop_first_consumer.yaml"
   # Trial system APIs
