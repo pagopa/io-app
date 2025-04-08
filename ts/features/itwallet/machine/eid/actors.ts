@@ -20,7 +20,6 @@ import {
   itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import type {
   AuthenticationContext,
   CieContext,
@@ -36,6 +35,7 @@ export type RequestEidActorParams = {
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
   identification: IdentificationContext | undefined;
+  isL3IssuanceEnabled?: boolean;
 };
 
 export type GetWalletAttestationActorParams = {
@@ -100,12 +100,10 @@ export const createEidIssuanceActorsImplementation = (
       );
       assert(input.identification, "identification is undefined");
 
-      const isItwL3Enabled = itwIsL3EnabledSelector(store.getState());
-
       const authenticationContext = await issuanceUtils.startAuthFlow({
         walletAttestation: input.walletInstanceAttestation,
         identification: input.identification,
-        isItwL3Enabled
+        isL3IssuanceEnabled: input.isL3IssuanceEnabled || false
       });
 
       return {
