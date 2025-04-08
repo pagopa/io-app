@@ -61,11 +61,12 @@ export type FastLoginTokenRefreshState = {
   pendingActions: Array<Action>;
 };
 
-const FastLoginTokenRefreshHandlerInitialState: FastLoginTokenRefreshState = {
-  userInteractionForSessionExpiredNeeded: false,
-  tokenRefresh: { kind: "idle" },
-  pendingActions: []
-};
+export const FastLoginTokenRefreshHandlerInitialState: FastLoginTokenRefreshState =
+  {
+    userInteractionForSessionExpiredNeeded: false,
+    tokenRefresh: { kind: "idle" },
+    pendingActions: []
+  };
 
 export const FastLoginTokenRefreshReducer = (
   state: FastLoginTokenRefreshState = FastLoginTokenRefreshHandlerInitialState,

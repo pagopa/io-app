@@ -22,7 +22,7 @@ export const automaticSessionRefreshInitialState: AutomaticSessionRefreshState =
     areAlreadyTwoMinAfterLastActivity: false
   };
 
-const AutomaticSessionRefreshReducer = (
+export const AutomaticSessionRefreshReducer = (
   state: AutomaticSessionRefreshState = automaticSessionRefreshInitialState,
   action: Action
 ): AutomaticSessionRefreshState => {
@@ -42,7 +42,7 @@ const AutomaticSessionRefreshReducer = (
 
 const CURRENT_REDUX_SESSION_REFRESH_STORE_VERSION = 0;
 
-const migrations: MigrationManifest = {
+export const migrations: MigrationManifest = {
   // we changed the way we compute the installation ID
   "0": (state: PersistedState) =>
     _.omit(

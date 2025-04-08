@@ -1,18 +1,28 @@
 import * as O from "fp-ts/lib/Option";
 import { Tuple2, ITuple2 } from "@pagopa/ts-commons/lib/tuples";
-import { BackendStatus } from "../../../../../../../definitions/content/BackendStatus";
-import { baseRawBackendStatus } from "../../../../../../store/reducers/__mock__/backendStatus";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { getAppVersion } from "../../../../../../utils/appVersion";
-import { isFastLoginEnabledSelector } from "..";
-import { Config } from "../../../../../../../definitions/content/Config";
+import { DeepPartial } from "redux";
+import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
+import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { getAppVersion } from "../../../../../utils/appVersion";
+import {
+  fastLoginOptInSelector,
+  fastLoginPendingActionsSelector,
+  hasTwoMinutesElapsedSinceLastActivitySelector,
+  isFastLoginEnabledSelector,
+  isFastLoginUserInteractionNeededForSessionExpiredSelector,
+  isSecurityAdviceAcknowledgedEnabled,
+  isSecurityAdviceReadyToShow,
+  tokenRefreshSelector
+} from "../selectors";
+import { Config } from "../../../../../../definitions/content/Config";
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
   getVersion: jest.fn().mockReturnValue("1.2.3.4")
 }));
 
-jest.mock("../../../../../../config", () => ({
+jest.mock("../../../../../config", () => ({
   fastLoginEnabled: true
 }));
 
@@ -152,5 +162,65 @@ describe("FastLogin remote flag test", () => {
     ].forEach((t: ITuple2<string | undefined, boolean>) =>
       checkFastLoginFlagTest(t.e1, currentAppVersion, t.e2)
     );
+  });
+});
+
+describe("FastLogin selectors", () => {
+  const baseState: DeepPartial<GlobalState> = {
+    features: {
+      loginFeatures: {
+        fastLogin: {
+          optIn: { enabled: true, _persist: { version: 0, rehydrated: true } },
+          automaticSessionRefresh: {
+            areAlreadyTwoMinAfterLastActivity: true,
+            _persist: { version: 0, rehydrated: true }
+          },
+          securityAdviceAcknowledged: {
+            acknowledged: true,
+            readyToShow: false,
+            _persist: { version: 0, rehydrated: true }
+          },
+          tokenRefreshHandler: {
+            userInteractionForSessionExpiredNeeded: true,
+            tokenRefresh: { kind: "in-progress" },
+            pendingActions: [{ type: "SOME_ACTION" }, { type: "SOME_ACTION" }]
+          }
+        }
+      }
+    }
+  };
+
+  const fullState = baseState as GlobalState;
+
+  it("should select fastLoginOptIn", () => {
+    expect(fastLoginOptInSelector(fullState).enabled).toBe(true);
+  });
+
+  it("should select hasTwoMinutesElapsedSinceLastActivitySelector", () => {
+    expect(hasTwoMinutesElapsedSinceLastActivitySelector(fullState)).toBe(true);
+  });
+
+  it("should select isSecurityAdviceAcknowledgedEnabled", () => {
+    expect(isSecurityAdviceAcknowledgedEnabled(fullState)).toBe(true);
+  });
+
+  it("should select isSecurityAdviceReadyToShow", () => {
+    expect(isSecurityAdviceReadyToShow(fullState)).toBe(false);
+  });
+
+  it("should select isFastLoginUserInteractionNeededForSessionExpiredSelector", () => {
+    expect(
+      isFastLoginUserInteractionNeededForSessionExpiredSelector(fullState)
+    ).toBe(true);
+  });
+
+  it("should select tokenRefreshSelector", () => {
+    expect(tokenRefreshSelector(fullState)).toEqual({ kind: "in-progress" });
+  });
+
+  it("should deduplicate pending actions", () => {
+    expect(fastLoginPendingActionsSelector(fullState)).toEqual([
+      { type: "SOME_ACTION" }
+    ]);
   });
 });

@@ -18,7 +18,7 @@ export const INITIAL_STATE: SecurityAdviceAcknowledgedState = {
   readyToShow: false
 };
 
-const securityAdviceAcknowledgedReducer = (
+export const securityAdviceAcknowledgedReducer = (
   state: SecurityAdviceAcknowledgedState = INITIAL_STATE,
   action: Action
 ): SecurityAdviceAcknowledgedState => {
