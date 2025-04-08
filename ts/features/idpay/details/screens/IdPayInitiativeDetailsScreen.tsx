@@ -38,13 +38,13 @@ import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { ConfigurationMode } from "../../configuration/types";
 import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
-import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
-import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
+import { IdPayInitiativeDiscountSettingsComponent } from "../components/IdPayInitiativeDiscountSettingsComponent";
+import { IdPayInitiativeRefundSettingsComponent } from "../components/IdPayInitiativeRefundSettingsComponent";
 import {
-  InitiativeTimelineComponent,
-  InitiativeTimelineComponentSkeleton
-} from "../components/InitiativeTimelineComponent";
-import { MissingConfigurationAlert } from "../components/MissingConfigurationAlert";
+  IdPayInitiativeTimelineComponent,
+  IdPayInitiativeTimelineComponentSkeleton
+} from "../components/IdPayInitiativeTimelineComponent";
+import { IdPayMissingConfigurationAlert } from "../components/IdPayMissingConfigurationAlert";
 import { useIdPayDiscountDetailsBottomSheet } from "../hooks/useIdPayDiscountDetailsBottomSheet";
 import { IDPayDetailsParamsList, IDPayDetailsRoutes } from "../navigation";
 import {
@@ -127,7 +127,7 @@ const IdPayInitiativeDetailsScreen = () => {
           <VSpacer size={8} />
           <IdPayInitiativeLastUpdateCounter isLoading={true} />
           <VSpacer size={8} />
-          <InitiativeTimelineComponentSkeleton size={5} />
+          <IdPayInitiativeTimelineComponentSkeleton size={5} />
           <VSpacer size={32} />
         </ContentWrapper>
       </BonusCardScreenComponent>
@@ -232,11 +232,11 @@ const IdPayInitiativeDetailsScreen = () => {
                 <ContentWrapper>
                   <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
                   <Animated.View layout={LinearTransition.duration(200)}>
-                    <InitiativeTimelineComponent
+                    <IdPayInitiativeTimelineComponent
                       initiativeId={initiative.initiativeId}
                       size={5}
                     />
-                    <InitiativeDiscountSettingsComponent
+                    <IdPayInitiativeDiscountSettingsComponent
                       initiative={initiative}
                     />
                   </Animated.View>
@@ -246,7 +246,7 @@ const IdPayInitiativeDetailsScreen = () => {
               return (
                 <ContentWrapper>
                   <VSpacer size={8} />
-                  <InitiativeTimelineComponent
+                  <IdPayInitiativeTimelineComponent
                     initiativeId={initiativeId}
                     size={3}
                   />
@@ -289,17 +289,19 @@ const IdPayInitiativeDetailsScreen = () => {
 
               return (
                 <ContentWrapper>
-                  <MissingConfigurationAlert
+                  <IdPayMissingConfigurationAlert
                     initiativeId={initiativeId}
                     status={initiative.status}
                   />
                   <VSpacer size={8} />
-                  <InitiativeTimelineComponent
+                  <IdPayInitiativeTimelineComponent
                     initiativeId={initiativeId}
                     size={3}
                   />
                   <VSpacer size={24} />
-                  <InitiativeRefundSettingsComponent initiative={initiative} />
+                  <IdPayInitiativeRefundSettingsComponent
+                    initiative={initiative}
+                  />
                   <VSpacer size={32} />
                 </ContentWrapper>
               );

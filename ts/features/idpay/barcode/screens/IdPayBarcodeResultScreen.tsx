@@ -23,7 +23,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { formatNumberCurrencyCents } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../../details/navigation";
-import { IdPayBarcodeExpireProgressBar } from "../components/BarcodeExpirationProgressBar";
+import { IdPayBarcodeExpireProgressBar } from "../components/IdPayBarcodeExpireProgressBar";
 import { IdPayBarcodeParamsList } from "../navigation/params";
 import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { idPayGenerateBarcode } from "../store/actions";
