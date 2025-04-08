@@ -134,6 +134,11 @@ jest.mock("react-native", () => {
   // eslint-disable-next-line functional/immutable-data
   RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
 
+  // eslint-disable-next-line functional/immutable-data
+  RN.NativeModules.AppReviewModule = {
+    requestReview: jest.fn()
+  };
+
   return RN;
 });
 
