@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import MockDate from "mockdate";
 import { ItwPresentationCredentialStatusAlert } from "../ItwPresentationCredentialStatusAlert";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -18,6 +19,14 @@ type TestCaseParams = [
 ];
 
 describe("ItwPresentationCredentialStatusAlert", () => {
+  beforeAll(() => {
+    MockDate.set(new Date(2025, 1, 1));
+  });
+
+  afterAll(() => {
+    MockDate.reset();
+  });
+
   test.each([
     ["jwtExpiring", undefined],
     ["jwtExpired", undefined],
