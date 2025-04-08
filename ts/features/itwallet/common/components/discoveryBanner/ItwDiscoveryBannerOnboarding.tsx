@@ -27,11 +27,14 @@ const ItwDiscoveryBannerOnboarding = () => {
 
   const trackBannerProperties = useMemo(
     () => ({
-      banner_id: "itwDiscoveryBannerOnboardingTestID",
+      banner_id:
+        bannerType === "onboarding"
+          ? "itwDiscoveryBannerOnboardingTestID"
+          : "itwDiscoveryBannerOnboardingDeviceChanged",
       banner_page: route.name,
       banner_landing: "ITW_ONBOARDING"
     }),
-    [route.name]
+    [bannerType, route.name]
   );
 
   useOnFirstRender(
@@ -60,7 +63,7 @@ const ItwDiscoveryBannerOnboarding = () => {
     }
   };
 
-  if (!isBannerRenderable) {
+  if (!isBannerRenderable || !bannerType) {
     return null;
   }
 

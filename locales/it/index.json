@@ -4281,7 +4281,7 @@
           },
           "homeActive": {
             "title": "Riattiva Documenti su IO",
-            "content": "Per ragioni di sicurezza, quando cambi dispositivo, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
+            "content": "Per ragioni di sicurezza, quando cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
             "action": "Inizia"
           },
           "onboarding": {
