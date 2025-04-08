@@ -2049,8 +2049,6 @@ PODS:
     - Yoga
   - RNShare (10.2.1):
     - React-Core
-  - RNStoreReview (0.4.3):
-    - React-Core
   - RNSVG (15.8.0):
     - React-Core
   - Sentry/HybridSDK (8.41.0)
@@ -2204,7 +2202,6 @@ DEPENDENCIES:
   - RNScreenshotPrevent (from `../node_modules/react-native-screenshot-prevent`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
-  - RNStoreReview (from `../node_modules/react-native-store-review`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -2457,8 +2454,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@sentry/react-native"
   RNShare:
     :path: "../node_modules/react-native-share"
-  RNStoreReview:
-    :path: "../node_modules/react-native-store-review"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   VisionCamera:
@@ -2583,7 +2578,6 @@ SPEC CHECKSUMS:
   RNScreenshotPrevent: 5f8473abaa2db2476561ef8f3704b66491ce7b01
   RNSentry: c5075bc124ebc8afa84e037c7fe257053a0b2cda
   RNShare: 694e19d7f74ac4c04de3a8af0649e9ccc03bd8b1
-  RNStoreReview: 613c43e9132998ed41a65946e20c223c91b36464
   RNSVG: 8542aa11770b27563714bbd8494a8436385fc85f
   Sentry: 54d0fe6c0df448497c8ed4cce66ccf7027e1823e
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
