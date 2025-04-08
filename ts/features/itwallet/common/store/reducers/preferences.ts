@@ -120,7 +120,15 @@ const reducer = (
       };
     }
     case getType(itwLifecycleStoresReset):
-      return { ...itwPreferencesInitialState };
+      // When the wallet is being reset, we need to persist only the preferences:
+      // - claimValuesHidden
+      // - isL3Enabled
+      const { claimValuesHidden, isL3Enabled } = state;
+      return {
+        ...itwPreferencesInitialState,
+        claimValuesHidden,
+        isL3Enabled
+      };
 
     default:
       return state;
