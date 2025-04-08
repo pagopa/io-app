@@ -57,8 +57,8 @@ import {
   extractLoginResult,
   getEitherLoginResult,
   getIdpLoginUri
-} from "../../../../../utils/login";
-import { getSpidErrorCodeDescription } from "../../../../../utils/spidErrorCode";
+} from "../../../common/utils/login";
+import { getSpidErrorCodeDescription } from "../utils/spidErrorCode";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog

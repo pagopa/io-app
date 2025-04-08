@@ -1,10 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
-import {
-  logoutFailure,
-  logoutRequest,
-  logoutSuccess
-} from "../../../features/authentication/common/store/actions";
-import { watchLogoutSaga, logoutSaga } from "../watchLogoutSaga";
+import { logoutFailure, logoutRequest, logoutSuccess } from "../store/actions";
+import { watchLogoutSaga, logoutSaga } from "../saga/watchLogoutSaga";
 
 const logout = jest.fn();
 

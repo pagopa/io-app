@@ -40,7 +40,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 import CieCardReadingAnimation, {
   ReadingState
-} from "../../../../../components/cie/CieCardReadingAnimation";
+} from "../components/CieCardReadingAnimation";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieUatEndpoint } from "../utils/endpoints";
 import I18n from "../../../../../i18n";

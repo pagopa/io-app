@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { extractLoginResult, getIntentFallbackUrl } from "../login";
-import { SessionToken } from "../../types/SessionToken";
+import { SessionToken } from "../../../../../types/SessionToken";
 
 describe("hook the login outcome from the url", () => {
   const remoteHost = "https://somedomain.com/somepath";
