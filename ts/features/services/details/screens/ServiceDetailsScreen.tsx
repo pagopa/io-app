@@ -2,7 +2,7 @@ import { VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -11,7 +11,7 @@ import { getServiceCTAs, handleCtaAction } from "../../../messages/utils/ctas";
 import { useFIMSFromServiceId } from "../../../fims/common/hooks";
 import { ServiceDetailsScreenComponent } from "../components/ServiceDetailsScreenComponent";
 import { CTA } from "../../../../types/LocalizedCTAs";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import * as analytics from "../../common/analytics";
 import { CtaCategoryType } from "../../common/analytics";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
@@ -93,13 +93,13 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     () => {
       analytics.trackServiceDetails({
         bottom_cta_available: !!serviceMetadata?.cta,
-        organization_fiscal_code: service?.organization_fiscal_code ?? "",
-        organization_name: service?.organization_name ?? "",
+        organization_fiscal_code: service?.organization.fiscal_code ?? "",
+        organization_name: service?.organization.name ?? "",
         service_category: serviceMetadataInfo.isSpecialService
           ? "special"
           : "standard",
         service_id: serviceId,
-        service_name: service?.service_name ?? ""
+        service_name: service?.name ?? ""
       });
     },
     () => !!service
@@ -156,7 +156,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
       kind={serviceMetadataInfo.serviceKind}
       onPressCta={handlePressCta}
       serviceId={serviceId}
-      title={service.service_name}
+      title={service.name}
     >
       <ServiceDetailsContent service={service} />
     </ServiceDetailsScreenComponent>
@@ -164,41 +164,29 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
 };
 
 type ServiceDetailsContentProps = {
-  service: ServicePublic;
+  service: ServiceDetails;
 };
 
 const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
-  const {
-    organization_name,
-    organization_fiscal_code,
-    service_id,
-    service_name,
-    available_notification_channels,
-    service_metadata
-  } = service;
+  const { description, id, name, organization } = service;
 
   return (
     <>
       <ServicesHeaderSection
         extraBottomPadding={headerPaddingBottom}
         logoUri={logosForService(service)}
-        title={service_name}
-        subTitle={organization_name}
+        title={name}
+        subTitle={organization.name}
       />
       <VStack space={40}>
-        {service_metadata?.description && (
-          <View style={styles.cardContainer}>
-            <CardWithMarkdownContent content={service_metadata.description} />
-          </View>
-        )}
-        <ServiceDetailsTosAndPrivacy serviceId={service_id} />
-        <ServiceDetailsPreferences
-          serviceId={service_id}
-          availableChannels={available_notification_channels}
-        />
+        <View style={styles.cardContainer}>
+          <CardWithMarkdownContent content={description} />
+        </View>
+        <ServiceDetailsTosAndPrivacy serviceId={id} />
+        <ServiceDetailsPreferences serviceId={id} />
         <ServiceDetailsMetadata
-          organizationFiscalCode={organization_fiscal_code}
-          serviceId={service_id}
+          organizationFiscalCode={organization.fiscal_code}
+          serviceId={id}
         />
       </VStack>
     </>

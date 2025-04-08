@@ -2,7 +2,7 @@ import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import {
@@ -32,20 +32,22 @@ export const serviceId_1 = "service_one" as ServiceId;
 export const serviceId_2 = "service_two" as ServiceId;
 
 export const service_1 = {
-  service_id: serviceId_1,
-  service_name: "health",
-  organization_name: "Ċentru tas-Saħħa",
-  department_name: "covid-19",
-  organization_fiscal_code: "FSCLCD" as OrganizationFiscalCode
-} as ServicePublic;
+  id: serviceId_1,
+  name: "health",
+  organization: {
+    fiscal_code: "FSCLCD" as OrganizationFiscalCode,
+    name: "Ċentru tas-Saħħa"
+  }
+} as ServiceDetails;
 
 export const service_2 = {
-  service_id: serviceId_2,
-  service_name: "alert",
-  organization_name: "Наркомвнудел",
-  department_name: "РСФСР",
-  organization_fiscal_code: "CDFSCL" as OrganizationFiscalCode
-} as ServicePublic;
+  id: serviceId_2,
+  name: "alert",
+  organization: {
+    fiscal_code: "CDFSCL" as OrganizationFiscalCode,
+    name: "Наркомвнудел"
+  }
+} as ServiceDetails;
 
 export const apiPayload = {
   items: [
@@ -57,9 +59,9 @@ export const apiPayload = {
       is_read: true,
       sender_service_id: serviceId_1,
       time_to_live: 3600,
-      service_name: service_1.service_name,
-      organization_name: service_1.organization_name,
-      organization_fiscal_code: service_1.organization_fiscal_code,
+      service_name: service_1.name,
+      organization_name: service_1.organization.name,
+      organization_fiscal_code: service_1.organization.fiscal_code,
       message_title: "Għandek flus?"
     },
     {
@@ -70,9 +72,9 @@ export const apiPayload = {
       is_read: false,
       sender_service_id: serviceId_1,
       time_to_live: 3600,
-      service_name: service_1.service_name,
-      organization_name: service_1.organization_name,
-      organization_fiscal_code: service_1.organization_fiscal_code,
+      service_name: service_1.name,
+      organization_name: service_1.organization.name,
+      organization_fiscal_code: service_1.organization.fiscal_code,
       message_title: "Analiżi tad-demm"
     },
     {
@@ -103,9 +105,9 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     isRead: true,
     serviceId: serviceId_1,
     timeToLive,
-    serviceName: service_1.service_name,
-    organizationName: service_1.organization_name,
-    organizationFiscalCode: service_1.organization_fiscal_code,
+    serviceName: service_1.name,
+    organizationName: service_1.organization.name,
+    organizationFiscalCode: service_1.organization.fiscal_code,
     title: "Għandek flus?",
     hasPrecondition: false,
     raw: apiPayload.items[0] as any
@@ -119,9 +121,9 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     isArchived: false,
     serviceId: serviceId_1,
     timeToLive,
-    serviceName: service_1.service_name,
-    organizationName: service_1.organization_name,
-    organizationFiscalCode: service_1.organization_fiscal_code,
+    serviceName: service_1.name,
+    organizationName: service_1.organization.name,
+    organizationFiscalCode: service_1.organization.fiscal_code,
     title: "Analiżi tad-demm",
     hasPrecondition: false,
     raw: apiPayload.items[1] as any
@@ -135,9 +137,9 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     isRead: true,
     serviceId: serviceId_2,
     timeToLive,
-    serviceName: service_2.service_name,
-    organizationName: service_2.organization_name,
-    organizationFiscalCode: service_2.organization_fiscal_code,
+    serviceName: service_2.name,
+    organizationName: service_2.organization.name,
+    organizationFiscalCode: service_2.organization.fiscal_code,
     title: "позвоните нам!",
     hasPrecondition: false,
     raw: apiPayload.items[2] as any

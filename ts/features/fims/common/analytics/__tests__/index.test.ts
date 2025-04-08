@@ -13,7 +13,7 @@ import {
   trackInAppBrowserOpening
 } from "..";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import * as mixpanel from "../../../../../mixpanel";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
@@ -368,11 +368,13 @@ describe("computeAndTrackDataShare", () => {
               .mockImplementation(_ => ctaLabel);
             const mixpanelTrackMock = generateMixpanelTrackMock();
             const service = {
-              organization_fiscal_code: organizationFiscalCode,
-              organization_name: organizationName,
-              service_id: referenceServiceId,
-              service_name: serviceName
-            } as ServicePublic;
+              id: referenceServiceId,
+              name: serviceName,
+              organization: {
+                fiscal_code: organizationFiscalCode,
+                name: organizationName
+              }
+            } as ServiceDetails;
             const globalState = {} as GlobalState;
 
             void computeAndTrackDataShare(service, globalState);
@@ -386,7 +388,7 @@ describe("computeAndTrackDataShare", () => {
               fims_label: ctaLabel,
               organization_fiscal_code: organizationFiscalCode,
               organization_name: organizationName,
-              service_id: service.service_id,
+              service_id: service.id,
               service_name: serviceName
             });
           });
@@ -415,15 +417,17 @@ describe("computeAndTrackDataShareAccepted", () => {
             ctaLabel ? "defined   " : "undefined "
           } cta label`, () => {
             const service = {
-              organization_fiscal_code: organizationFiscalCode,
-              organization_name: organizationName,
-              service_id: referenceServiceId,
-              service_name: serviceName
-            } as ServicePublic;
+              id: referenceServiceId,
+              name: serviceName,
+              organization: {
+                fiscal_code: organizationFiscalCode,
+                name: organizationName
+              }
+            } as ServiceDetails;
             jest
               .spyOn(serviceSelectors, "serviceByIdSelector")
               .mockImplementation((_state, innerServiceId) =>
-                innerServiceId === service.service_id ? service : undefined
+                innerServiceId === service.id ? service : undefined
               );
             jest
               .spyOn(fimsAuthenticationSelectors, "fimsCtaTextSelector")
@@ -447,7 +451,7 @@ describe("computeAndTrackDataShareAccepted", () => {
               fims_label: ctaLabel,
               organization_fiscal_code: organizationFiscalCode,
               organization_name: organizationName,
-              service_id: service.service_id,
+              service_id: service.id,
               service_name: serviceName
             });
           });

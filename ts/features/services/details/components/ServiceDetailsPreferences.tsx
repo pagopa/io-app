@@ -7,11 +7,7 @@ import {
   ListItemHeader,
   ListItemSwitch
 } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import { pipe } from "fp-ts/lib/function";
-import { NotificationChannelEnum } from "../../../../../definitions/backend/NotificationChannel";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPremiumMessagesOptInOutEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -27,28 +23,16 @@ import {
   servicePreferenceResponseSuccessSelector
 } from "../store/reducers";
 
-const hasChannel = (
-  notificationChannel: NotificationChannelEnum,
-  channels: ReadonlyArray<NotificationChannelEnum> = []
-) =>
-  pipe(
-    channels,
-    RA.findFirst(channel => channel === notificationChannel),
-    O.isSome
-  );
-
 type PreferenceSwitchListItem = {
   condition?: boolean;
 } & ComponentProps<typeof ListItemSwitch>;
 
 export type ServiceDetailsPreferencesProps = {
   serviceId: ServiceId;
-  availableChannels?: ReadonlyArray<NotificationChannelEnum>;
 };
 
 export const ServiceDetailsPreferences = ({
-  serviceId,
-  availableChannels = []
+  serviceId
 }: ServiceDetailsPreferencesProps) => {
   const isFirstRender = useFirstRender();
 
@@ -134,9 +118,7 @@ export const ServiceDetailsPreferences = ({
       value: servicePreferenceResponseSuccess?.value.inbox
     },
     {
-      condition:
-        isInboxPreferenceEnabled &&
-        hasChannel(NotificationChannelEnum.WEBHOOK, availableChannels),
+      condition: isInboxPreferenceEnabled,
       icon: "bell",
       isLoading: isLoadingServicePreference,
       label: I18n.t("services.details.preferences.pushNotifications"),

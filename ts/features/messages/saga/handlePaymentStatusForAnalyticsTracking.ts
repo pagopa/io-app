@@ -58,9 +58,9 @@ function* trackPaymentUpdates() {
 
     const serviceId = messagePaymentUpdateResult.payload.serviceId;
     const service = yield* select(serviceByIdSelector, serviceId);
-    const organizationName = service?.organization_name;
-    const organizationFiscalCode = service?.organization_fiscal_code;
-    const serviceName = service?.service_name;
+    const organizationName = service?.organization.name;
+    const organizationFiscalCode = service?.organization.fiscal_code;
+    const serviceName = service?.name;
     const paymentStatus = paymentStatusFromPaymentUpdateResult(
       messagePaymentUpdateResult
     );
