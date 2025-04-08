@@ -18,7 +18,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { ComponentProps, FunctionComponent, ReactElement } from "react";
-import { SpidIdp } from "../../definitions/content/SpidIdp";
+import { SpidIdp } from "../../../../../../definitions/content/SpidIdp";
 
 type OwnProps = {
   contentContainerStyle?: StyleProp<ViewStyle>;

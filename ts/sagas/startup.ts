@@ -124,6 +124,13 @@ import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sa
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
 import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAcknowledgedEmailSaga";
+import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
+import {
+  checkSession,
+  watchCheckSessionSaga
+} from "../features/authentication/common/saga/watchCheckSessionSaga";
+import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
+import { watchSessionExpiredSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -140,15 +147,8 @@ import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
-import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { checkAcknowledgedFingerprintSaga } from "./startup/onboarding/biometric/checkAcknowledgedFingerprintSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
-import {
-  checkSession,
-  watchCheckSessionSaga
-} from "./startup/watchCheckSessionSaga";
-import { watchLogoutSaga } from "./startup/watchLogoutSaga";
-import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;

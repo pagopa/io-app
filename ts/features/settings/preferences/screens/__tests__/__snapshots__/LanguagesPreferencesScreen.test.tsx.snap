@@ -205,24 +205,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                           style={
                             [
                               {
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
-                                "zIndex": 0,
-                              },
-                              {
-                                "backgroundColor": "rgba(255,255,255,0.7)",
-                                "opacity": 1,
-                              },
-                            ]
-                          }
-                        />
-                        <View
-                          style={
-                            [
-                              {
                                 "flex": 1,
                               },
                               {

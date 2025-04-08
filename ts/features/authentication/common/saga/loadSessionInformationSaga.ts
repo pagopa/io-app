@@ -2,16 +2,16 @@ import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
-import { PublicSession } from "../../../definitions/session_manager/PublicSession";
+import { PublicSession } from "../../../../../definitions/session_manager/PublicSession";
 
 import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
-} from "../../features/authentication/common/store/actions";
+} from "../store/actions";
 
-import { BackendClient } from "../../api/backend";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
-import { convertUnknownToError } from "../../utils/errors";
+import { BackendClient } from "../../../../api/backend";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
+import { convertUnknownToError } from "../../../../utils/errors";
 
 /**
  * Load session info from the Backend
