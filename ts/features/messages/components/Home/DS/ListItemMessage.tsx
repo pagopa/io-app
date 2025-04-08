@@ -11,6 +11,7 @@ import {
   IOVisualCostants,
   Tag,
   useIOTheme,
+  useIOThemeContext,
   useListItemAnimation,
   WithTestID
 } from "@pagopa/io-app-design-system";
@@ -114,16 +115,17 @@ export const ListItemMessage = ({
   testID
 }: ListItemMessage) => {
   const theme = useIOTheme();
+  const { themeType } = useIOThemeContext();
 
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 
   // Component colors
   const unreadBadgeColor = IOColors[theme["interactiveElem-default"]];
-  const selectedBgColor = hexToRgba(
-    IOColors[theme["tab-item-background-selected"]],
-    0.2
-  );
+  const selectedBgColor =
+    themeType === "dark"
+      ? hexToRgba(IOColors["blueIO-300"], 0.1)
+      : IOColors["blueIO-50"];
 
   return (
     <Pressable
