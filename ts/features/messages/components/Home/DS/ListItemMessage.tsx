@@ -3,6 +3,7 @@ import {
   Avatar,
   BodySmall,
   H6,
+  hexToRgba,
   HStack,
   IOColors,
   IOListItemStyles,
@@ -14,7 +15,13 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { ComponentProps } from "react";
-import { ImageURISource, Pressable, StyleSheet, View } from "react-native";
+import {
+  ColorValue,
+  ImageURISource,
+  Pressable,
+  StyleSheet,
+  View
+} from "react-native";
 import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 import I18n from "../../../../../i18n";
@@ -80,18 +87,13 @@ export type ListItemMessage = WithTestID<{
   >;
 
 type UnreadBadgeProps = {
-  color?: IOColors;
+  color: ColorValue;
   width?: number;
 };
 
 const UnreadBadge = ({ color, width = 14 }: UnreadBadgeProps) => (
   <Svg width={width} height={width}>
-    <Circle
-      cx={"50%"}
-      cy={"50%"}
-      r={width / 2}
-      fill={color ?? IOColors["blueIO-500"]}
-    />
+    <Circle cx={"50%"} cy={"50%"} r={width / 2} fill={color} />
   </Svg>
 );
 
@@ -116,6 +118,13 @@ export const ListItemMessage = ({
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 
+  // Component colors
+  const unreadBadgeColor = IOColors[theme["interactiveElem-default"]];
+  const selectedBgColor = hexToRgba(
+    IOColors[theme["tab-item-background-selected"]],
+    0.2
+  );
+
   return (
     <Pressable
       onPress={onPress}
@@ -128,7 +137,7 @@ export const ListItemMessage = ({
       accessibilityRole={accessibilityRole || "button"}
       accessibilityLabel={accessibilityLabel}
       style={{
-        backgroundColor: selected ? IOColors["blueIO-50"] : undefined,
+        backgroundColor: selected ? selectedBgColor : undefined,
         minHeight: tag
           ? ListItemMessageEnhancedHeight
           : ListItemMessageStandardHeight
@@ -196,7 +205,7 @@ export const ListItemMessage = ({
                 </BodySmall>
                 {!isRead && (
                   <View style={styles.messageReadContainer}>
-                    <UnreadBadge />
+                    <UnreadBadge color={unreadBadgeColor} />
                   </View>
                 )}
               </View>
