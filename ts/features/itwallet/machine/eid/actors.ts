@@ -4,7 +4,7 @@ import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
-import * as cieUtils from "../../../../utils/cie";
+import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
 import {
   getAttestation,

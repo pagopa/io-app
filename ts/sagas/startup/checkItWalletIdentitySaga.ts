@@ -2,7 +2,7 @@ import { call, take, select, fork, cancel } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import NavigationService from "../../navigation/NavigationService";
 import { itwLifecycleIsValidSelector } from "../../features/itwallet/lifecycle/store/selectors";
-import { profileFiscalCodeSelector } from "../../store/reducers/profile";
+import { profileFiscalCodeSelector } from "../../features/settings/common/store/selectors";
 import { selectFiscalCodeFromEid } from "../../features/itwallet/credentials/store/selectors";
 import { itwLifecycleIdentityCheckCompleted } from "../../features/itwallet/lifecycle/store/actions";
 import { watchItwLifecycleSaga } from "../../features/itwallet/lifecycle/saga";

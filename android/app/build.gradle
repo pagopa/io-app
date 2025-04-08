@@ -119,8 +119,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100154953
-        versionName "3.2.0.7"
+        versionCode 100154954
+        versionName "3.2.0.8"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -207,6 +207,11 @@ dependencies {
     // Required by react-native-image-picker because we target a minSdkVersion < 30. In can be removed when we target minSdkVersion >= 30.
     // https://github.com/react-native-image-picker/react-native-image-picker?tab=readme-ov-file#android-1
     implementation("androidx.activity:activity:1.9.+")
+
+    // Google Play In-App Review API (Requires google() Maven repository)  
+    implementation 'com.google.android.play:review:2.0.2'  
+    // Kotlin extensions for Play In-App Review API  
+    implementation 'com.google.android.play:review-ktx:2.0.2'  
 }
 
 // Add the following line to the bottom of the file:

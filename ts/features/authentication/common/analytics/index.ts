@@ -114,20 +114,6 @@ export function trackTosUserExit(flow: FlowType) {
     buildEventProperties("UX", "exit", undefined, flow)
   );
 }
-export function trackToSWebViewError(flow: FlowType) {
-  void mixpanelTrack(
-    "TOS_LOAD_FAILURE",
-    buildEventProperties("KO", undefined, { flow })
-  );
-}
-
-export function trackToSWebViewErrorRetry(flow: FlowType) {
-  void mixpanelTrack(
-    "TOS_LOAD_RETRY",
-    buildEventProperties("UX", "action", undefined, flow)
-  );
-}
-
 export function trackLoginUserExit() {
   void mixpanelTrack("LOGIN_USER_EXIT", buildEventProperties("UX", "exit"));
 }

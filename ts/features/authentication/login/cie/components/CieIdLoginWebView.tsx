@@ -19,7 +19,7 @@ import { SessionToken } from "../../../../../types/SessionToken";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { isDevEnv } from "../../../../../utils/environment";
-import { onLoginUriChanged } from "../../../../../utils/login";
+import { onLoginUriChanged } from "../../../common/utils/login";
 import { apiUrlPrefix } from "../../../../../config";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
 import { IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
@@ -32,7 +32,7 @@ import {
   CIE_ID_ERROR_MESSAGE,
   IO_LOGIN_CIE_SOURCE_APP,
   IO_LOGIN_CIE_URL_SCHEME
-} from "../../../../../utils/cie";
+} from "../utils/cie";
 import { useOnboardingAbortAlert } from "../../../../../utils/hooks/useOnboardingAbortAlert";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
