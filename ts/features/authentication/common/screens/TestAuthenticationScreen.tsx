@@ -22,7 +22,7 @@ import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import I18n from "../../../../i18n";
 import { testLoginCleanUp, testLoginRequest } from "../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { testLoginSelector } from "../../../../store/reducers/testLogin";
+import { testLoginSelector } from "../store/reducers/testLogin";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { handleRegenerateKey } from "../../../lollipop";
 import { lollipopKeyTagSelector } from "../../../lollipop/store/reducers/lollipop";

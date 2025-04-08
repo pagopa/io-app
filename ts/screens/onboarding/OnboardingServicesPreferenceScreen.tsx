@@ -18,13 +18,13 @@ import {
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import ROUTES from "../../navigation/routes";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
-import { profileUpsert } from "../../store/actions/profile";
+import { profileUpsert } from "../../features/settings/common/store/actions";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import {
-  isServicesPreferenceModeSet,
   profileSelector,
   profileServicePreferencesModeSelector
-} from "../../store/reducers/profile";
+} from "../../features/settings/common/store/selectors";
+import { isServicesPreferenceModeSet } from "../../features/settings/common/store/utils/guards";
 import { getFlowType } from "../../utils/analytics";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
@@ -32,9 +32,9 @@ import { usePrevious } from "../../utils/hooks/usePrevious";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
-} from "../profile/analytics";
-import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
-import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
+} from "../../features/settings/common/analytics";
+import { useManualConfigBottomSheet } from "../../features/settings/preferences/shared/hooks/useManualConfigBottomSheet";
+import ServicesContactComponent from "../../features/settings/preferences/shared/components/ServicesContactComponent";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {

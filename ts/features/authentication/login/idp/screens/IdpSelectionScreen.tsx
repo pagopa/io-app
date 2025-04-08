@@ -29,7 +29,7 @@ import { nativeLoginSelector } from "../../../nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../../nativeLogin/store/selectors";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import IdpsGrid from "../../../../../components/IdpsGrid";
+import IdpsGrid from "../components/IdpsGrid";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import {
   useIODispatch,
