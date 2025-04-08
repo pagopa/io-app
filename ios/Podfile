@@ -1,3 +1,5 @@
+ENV['RCT_NEW_ARCH_ENABLED'] = '0'
+
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 def node_require(script)
   # Resolve script with node to allow for hoisting
@@ -45,11 +47,6 @@ target 'ItaliaApp' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
-
-  target 'ItaliaAppTests' do
-    inherit! :complete
-    # Pods for testing
-  end
 
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
