@@ -94,10 +94,10 @@ export function* computeAndTrackAuthenticationError(reason: string) {
     : undefined;
   yield* call(
     trackAuthenticationError,
-    serviceOrUndefined?.service_id,
-    serviceOrUndefined?.service_name,
-    serviceOrUndefined?.organization_name,
-    serviceOrUndefined?.organization_fiscal_code,
+    serviceOrUndefined?.id,
+    serviceOrUndefined?.name,
+    serviceOrUndefined?.organization.name,
+    serviceOrUndefined?.organization.fiscal_code,
     reason
   );
 }

@@ -28,10 +28,8 @@ import {
   GetActivationStatusT,
   getPaymentInfoDefaultDecoder,
   GetPaymentInfoT,
-  getServiceDefaultDecoder,
   getServicePreferencesDefaultDecoder,
   GetServicePreferencesT,
-  GetServiceT,
   getUserDataProcessingDefaultDecoder,
   GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
@@ -149,14 +147,6 @@ export function BackendClient(
       withoutUndefinedValues({ ["fields"]: fields }),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     response_decoder: getSessionStateDefaultDecoder()
-  };
-
-  const getServiceT: GetServiceT = {
-    method: "get",
-    url: params => `/api/v1/services/${params.service_id}`,
-    query: _ => ({}),
-    headers: tokenHeaderProducer,
-    response_decoder: getServiceDefaultDecoder()
   };
 
   const getServicePreferenceT: GetServicePreferencesT = {
@@ -341,7 +331,6 @@ export function BackendClient(
   const withBearerToken = withToken(token);
   return {
     getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
-    getService: withBearerToken(createFetchRequestForApi(getServiceT, options)),
     getServicePreference: withBearerToken(
       createFetchRequestForApi(getServicePreferenceT, options)
     ),

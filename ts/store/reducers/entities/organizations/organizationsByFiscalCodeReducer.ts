@@ -30,8 +30,8 @@ const reducer = (
     case getType(updateOrganizations):
       return {
         ...state,
-        [action.payload.organization_fiscal_code]:
-          action.payload.organization_name
+        [action.payload.organization.fiscal_code]:
+          action.payload.organization.name
       };
 
     case getType(logoutSuccess):

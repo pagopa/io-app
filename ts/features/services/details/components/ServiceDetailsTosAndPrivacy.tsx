@@ -10,7 +10,7 @@ import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceMetadataByIdSelector } from "../store/reducers";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 type TosAndPrivacyListItem = {
   condition?: boolean;

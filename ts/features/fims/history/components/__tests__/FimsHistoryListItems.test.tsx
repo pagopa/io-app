@@ -1,6 +1,6 @@
 import React from "react";
 import { createStore } from "redux";
-import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { Access } from "../../../../../../definitions/fims_history/Access";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -13,7 +13,7 @@ import {
 } from "../FimsHistoryListItems";
 import { FIMS_ROUTES } from "../../../common/navigation";
 
-const mockServicePublic = { organization_name: "TEST" } as ServicePublic;
+const mockServiceDetails = { organization: { name: "TEST" } } as ServiceDetails;
 const mockAccess: Access = {
   id: "TESTING",
   redirect: { display_name: "TESTING", uri: "TESTING" },
@@ -27,7 +27,7 @@ describe("FimsHistoryListItems", () => {
   });
   it("should match snapshot for SuccessListItem", () => {
     const component = renderComponent(
-      { consent: mockAccess, serviceData: mockServicePublic },
+      { consent: mockAccess, serviceData: mockServiceDetails },
       FimsHistorySuccessListItem
     );
 
