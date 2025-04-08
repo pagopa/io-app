@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.2.0-rc.8",
+  "version": "3.3.0-rc.0",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -148,7 +148,6 @@
     "react-native-screenshot-prevent": "^1.2.1",
     "react-native-share": "^10.2.1",
     "react-native-splash-screen": "^3.2.0",
-    "react-native-store-review": "^0.4.3",
     "react-native-svg": "^15.6.0",
     "react-native-tab-view": "3.5.2",
     "react-native-url-polyfill": "^2.0.0",
