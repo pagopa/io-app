@@ -5,7 +5,7 @@ import { SessionToken } from "../../../../types/SessionToken";
 import { watchHomeSaga } from "../../home/saga";
 import { watchInstitutionSaga } from "../../institution/saga";
 import { watchSearchSaga } from "../../search/saga";
-import { createServicesClient } from "../api/client";
+import { createServicesClient } from "../api/servicesClient";
 import { watchServicesDetailsSaga } from "../../details/saga";
 import { BackendClient } from "../../../../api/backend";
 
