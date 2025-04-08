@@ -1,8 +1,11 @@
 import { memo } from "react";
 import { Alert } from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../../../i18n.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import {
+  ClaimsLocales,
   getClaimsFullLocale,
   getCredentialExpireDays
 } from "../../../common/utils/itwClaimsUtils.ts";
@@ -114,7 +117,8 @@ type IssuerDynamicErrorAlertProps = {
 };
 
 const IssuerDynamicErrorAlert = ({ message }: IssuerDynamicErrorAlertProps) => {
-  const localizedMessage = message[getClaimsFullLocale()];
+  const localizedMessage = getLocalizedMessageOrFallback(message);
+
   const bottomSheet = useIOBottomSheetModal({
     title: localizedMessage.title,
     component: <IOMarkdown content={localizedMessage.description} />
@@ -132,6 +136,19 @@ const IssuerDynamicErrorAlert = ({ message }: IssuerDynamicErrorAlertProps) => {
     </>
   );
 };
+
+const getLocalizedMessageOrFallback = (
+  message: IssuerDynamicErrorAlertProps["message"]
+) =>
+  pipe(
+    message[getClaimsFullLocale()],
+    O.fromNullable,
+    O.alt(() => O.fromNullable(message[ClaimsLocales.it])),
+    O.getOrElse(() => ({
+      title: I18n.t("features.itWallet.card.status.unknown"),
+      description: I18n.t("features.itWallet.card.status.unknown")
+    }))
+  );
 
 const Memoized = memo(ItwPresentationCredentialStatusAlert);
 
