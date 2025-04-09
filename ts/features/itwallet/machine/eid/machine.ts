@@ -515,7 +515,8 @@ export const itwEidIssuanceMachine = setup({
                 src: "startAuthFlow",
                 input: ({ context }) => ({
                   walletInstanceAttestation: context.walletInstanceAttestation,
-                  identification: context.identification
+                  identification: context.identification,
+                  isL3IssuanceEnabled: context.isL3FeaturesEnabled
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({

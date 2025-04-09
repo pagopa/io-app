@@ -2,7 +2,7 @@ import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { PathTraversalSafePathParam } from "../../../../../definitions/backend/PathTraversalSafePathParam";
-import { BackendClient } from "../../../../api/backend";
+import { ServicesClient } from "../../common/api/servicesClient";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
@@ -15,7 +15,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
  * @param action
  */
 export function* handleServiceDetails(
-  getService: BackendClient["getService"],
+  getServiceById: ServicesClient["getServiceById"],
   action: ActionType<typeof loadServiceDetail.request>
 ) {
   try {
@@ -33,11 +33,11 @@ export function* handleServiceDetails(
 
     const response = (yield* call(
       withRefreshApiCall,
-      getService({
-        service_id: action.payload
+      getServiceById({
+        serviceId: action.payload
       }),
       action
-    )) as unknown as SagaCallReturnType<typeof getService>;
+    )) as unknown as SagaCallReturnType<typeof getServiceById>;
 
     if (E.isRight(response)) {
       if (response.right.status === 401) {

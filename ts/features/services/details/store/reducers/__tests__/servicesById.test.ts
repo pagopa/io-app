@@ -4,11 +4,11 @@ import {
   OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
 import { Action, createStore } from "redux";
-import { ServiceId } from "../../../../../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../../../../../definitions/backend/ServicePublic";
-import { ServiceScopeEnum } from "../../../../../../../definitions/backend/ServiceScope";
-import { SpecialServiceCategoryEnum } from "../../../../../../../definitions/backend/SpecialServiceCategory";
-import { StandardServiceCategoryEnum } from "../../../../../../../definitions/backend/StandardServiceCategory";
+import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
+import { ServiceDetails } from "../../../../../../../definitions/services/ServiceDetails";
+import { StandardServiceCategoryEnum } from "../../../../../../../definitions/services/StandardServiceCategory";
+import { ScopeTypeEnum } from "../../../../../../../definitions/services/ScopeType";
+import { SpecialServiceCategoryEnum } from "../../../../../../../definitions/services/SpecialServiceCategory";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
   logoutSuccess,
@@ -29,12 +29,13 @@ import {
 const serviceId = "serviceId" as ServiceId;
 
 const service = {
-  service_id: serviceId,
-  service_name: "health",
-  organization_name: "Ċentru tas-Saħħa",
-  department_name: "covid-19",
-  organization_fiscal_code: "FSCLCD" as OrganizationFiscalCode
-} as ServicePublic;
+  id: serviceId,
+  name: "name",
+  organization: {
+    fiscal_code: "FSCLCD" as OrganizationFiscalCode,
+    name: "Ċentru tas-Saħħa"
+  }
+} as ServiceDetails;
 
 describe("serviceById reducer", () => {
   it("should have initial state", () => {
@@ -102,7 +103,7 @@ describe("serviceById reducer", () => {
 
 describe("serviceById selectors", () => {
   describe("serviceByIdSelector", () => {
-    it("should return the ServicePublic when pot.some", () => {
+    it("should return the ServiceDetails when pot.some", () => {
       const serviceById = serviceByIdSelector(
         appReducer({} as GlobalState, loadServiceDetail.success(service)),
         serviceId
@@ -200,9 +201,9 @@ describe("serviceById selectors", () => {
           {} as GlobalState,
           loadServiceDetail.success({
             ...service,
-            service_metadata: {
+            metadata: {
               category: StandardServiceCategoryEnum.STANDARD,
-              scope: ServiceScopeEnum.LOCAL
+              scope: ScopeTypeEnum.LOCAL
             }
           })
         ),
@@ -210,7 +211,7 @@ describe("serviceById selectors", () => {
       );
       expect(serviceById).toStrictEqual({
         category: StandardServiceCategoryEnum.STANDARD,
-        scope: ServiceScopeEnum.LOCAL
+        scope: ScopeTypeEnum.LOCAL
       });
     });
 
@@ -258,9 +259,9 @@ describe("serviceById selectors", () => {
           {} as GlobalState,
           loadServiceDetail.success({
             ...service,
-            service_metadata: {
+            metadata: {
               category: SpecialServiceCategoryEnum.SPECIAL,
-              scope: ServiceScopeEnum.NATIONAL,
+              scope: ScopeTypeEnum.NATIONAL,
               custom_special_flow: "pn" as NonEmptyString
             }
           })

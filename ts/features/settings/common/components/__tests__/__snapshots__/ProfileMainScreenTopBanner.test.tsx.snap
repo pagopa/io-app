@@ -410,7 +410,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                   },
                 ]
               }
-              tintColor="#0E0F13"
               vbHeight={24}
               vbWidth={24}
               width={36}
@@ -558,7 +557,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               },
             ]
           }
-          tintColor="#5D1313"
           vbHeight={24}
           vbWidth={24}
           width={36}

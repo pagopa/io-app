@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isLoadingPnActivationSelector } from "../store/reducers/activation";

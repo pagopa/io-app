@@ -652,7 +652,6 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#FFFFFF"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={30}
