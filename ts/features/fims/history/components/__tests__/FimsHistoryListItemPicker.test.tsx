@@ -3,7 +3,7 @@ jest.mock("../FimsHistoryLoaders.tsx");
 
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
-import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { Access } from "../../../../../../definitions/fims_history/Access";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -14,7 +14,7 @@ import { FimsHistoryListItemPicker } from "../FimsHistoryListItemPicker";
 import { FIMS_ROUTES } from "../../../common/navigation";
 import * as LOADERS from "../FimsHistoryLoaders";
 
-const mockServicePublic = { organization_name: "TEST" } as ServicePublic;
+const mockServiceDetails = { organization: { name: "TEST" } } as ServiceDetails;
 const mockAccess: Access = {
   id: "TESTING",
   redirect: { display_name: "TESTING", uri: "TESTING" },
@@ -35,7 +35,7 @@ describe("FimsHistoryListItem", () => {
     );
     jest
       .spyOn(FETCH_HOOKS, "useAutoFetchingServiceByIdPot")
-      .mockImplementation(() => pot.some(mockServicePublic));
+      .mockImplementation(() => pot.some(mockServiceDetails));
 
     const component = renderComponent(mockAccess);
     const calls = testSuccessComponent.mock.calls;
@@ -43,7 +43,7 @@ describe("FimsHistoryListItem", () => {
     expect(calls[0].length).toBe(2);
     expect(calls[0][0]).toEqual({
       consent: mockAccess,
-      serviceData: mockServicePublic
+      serviceData: mockServiceDetails
     });
     expect(component.toJSON()).toMatchSnapshot();
   });
@@ -54,7 +54,7 @@ describe("FimsHistoryListItem", () => {
     );
     jest
       .spyOn(FETCH_HOOKS, "useAutoFetchingServiceByIdPot")
-      .mockImplementation(() => pot.someLoading(mockServicePublic));
+      .mockImplementation(() => pot.someLoading(mockServiceDetails));
 
     const component = renderComponent(mockAccess);
 
@@ -64,7 +64,7 @@ describe("FimsHistoryListItem", () => {
     expect(calls[0].length).toBe(2);
     expect(calls[0][0]).toEqual({
       consent: mockAccess,
-      serviceData: mockServicePublic
+      serviceData: mockServiceDetails
     });
     expect(component.toJSON()).toMatchSnapshot();
   });
@@ -76,7 +76,7 @@ describe("FimsHistoryListItem", () => {
 
     jest
       .spyOn(FETCH_HOOKS, "useAutoFetchingServiceByIdPot")
-      .mockImplementation(() => pot.someError(mockServicePublic, new Error()));
+      .mockImplementation(() => pot.someError(mockServiceDetails, new Error()));
 
     const component = renderComponent(mockAccess);
 
@@ -86,7 +86,7 @@ describe("FimsHistoryListItem", () => {
 
     expect(calls[0][0]).toEqual({
       consent: mockAccess,
-      serviceData: mockServicePublic
+      serviceData: mockServiceDetails
     });
     expect(component.toJSON()).toMatchSnapshot();
   });
@@ -114,9 +114,9 @@ describe("FimsHistoryListItem", () => {
 
   const states = [
     pot.noneLoading,
-    pot.noneUpdating(mockServicePublic),
+    pot.noneUpdating(mockServiceDetails),
     pot.none,
-    pot.someUpdating(mockServicePublic, mockServicePublic)
+    pot.someUpdating(mockServiceDetails, mockServiceDetails)
   ];
 
   it.each(states)(

@@ -31,15 +31,15 @@ const reducer = (
   switch (action.type) {
     case getType(loadServiceDetail.success):
       const organization = state.find(
-        _ => _.fiscalCode === action.payload.organization_fiscal_code
+        _ => _.fiscalCode === action.payload.organization.fiscal_code
       );
       // add only if it is not already present
       if (organization === undefined) {
         return [
           ...state,
           {
-            name: action.payload.organization_name,
-            fiscalCode: action.payload.organization_fiscal_code
+            name: action.payload.organization.name,
+            fiscalCode: action.payload.organization.fiscal_code
           }
         ];
       }
