@@ -219,6 +219,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "paymentDetails": {
         "kind": "PotNone",
       },
+      "pspBannerClosed": Set {},
       "pspList": {
         "kind": "PotNone",
       },
