@@ -1574,7 +1574,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#FFFFFF"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={30}
@@ -1759,7 +1758,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  tintColor="#FFFFFF"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={30}
@@ -2123,7 +2121,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -2877,7 +2874,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}

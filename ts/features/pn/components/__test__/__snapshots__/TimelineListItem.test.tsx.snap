@@ -434,7 +434,6 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
@@ -2755,7 +2754,6 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
@@ -5076,7 +5074,6 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
@@ -5643,7 +5640,6 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}

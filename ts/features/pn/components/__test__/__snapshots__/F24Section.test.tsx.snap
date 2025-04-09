@@ -747,7 +747,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
@@ -974,7 +973,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
@@ -2679,7 +2677,6 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}

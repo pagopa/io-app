@@ -409,7 +409,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  tintColor="#BBC2D6"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -520,7 +519,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  tintColor="#BBC2D6"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -655,7 +653,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  tintColor="#BBC2D6"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -793,7 +790,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       },
                                     ]
                                   }
-                                  tintColor="#BBC2D6"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}

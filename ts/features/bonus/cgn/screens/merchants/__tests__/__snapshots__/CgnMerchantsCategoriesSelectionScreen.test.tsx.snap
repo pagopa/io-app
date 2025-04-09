@@ -513,7 +513,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={16}
@@ -670,7 +669,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                             },
                                           ]
                                         }
-                                        tintColor="#0E0F13"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={16}
@@ -1057,7 +1055,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -1232,7 +1229,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -1348,7 +1344,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
