@@ -3398,7 +3398,6 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                     },
                                   ]
                                 }
-                                tintColor="#0E0F13"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={NaN}
@@ -6734,7 +6733,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -7331,7 +7329,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -7928,7 +7925,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -8525,7 +8521,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -9122,7 +9117,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,

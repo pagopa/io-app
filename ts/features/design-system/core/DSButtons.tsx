@@ -80,7 +80,10 @@ export const DSButtons = () => {
 const renderButtonSolid = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="ButtonSolid · Primary variant">
-      <VStack space={buttonBlockInnerSpacing}>
+      <VStack
+        space={buttonBlockInnerSpacing}
+        style={{ alignItems: "flex-start" }}
+      >
         <ButtonSolid
           accessibilityLabel="Tap to trigger test alert"
           label={"Primary button"}
@@ -122,7 +125,10 @@ const renderButtonSolid = () => (
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="ButtonSolid · Primary, disabled">
-      <VStack space={buttonBlockInnerSpacing}>
+      <VStack
+        space={buttonBlockInnerSpacing}
+        style={{ alignItems: "flex-start" }}
+      >
         <ButtonSolid
           disabled
           accessibilityLabel="Tap to trigger test alert"
@@ -140,7 +146,10 @@ const renderButtonSolid = () => (
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="ButtonSolid · Danger variant">
-      <VStack space={buttonBlockInnerSpacing}>
+      <VStack
+        space={buttonBlockInnerSpacing}
+        style={{ alignItems: "flex-start" }}
+      >
         <ButtonSolid
           color="danger"
           label={"Danger button"}
@@ -177,7 +186,10 @@ const renderButtonSolid = () => (
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="ButtonSolid · Danger, disabled">
-      <VStack space={buttonBlockInnerSpacing}>
+      <VStack
+        space={buttonBlockInnerSpacing}
+        style={{ alignItems: "flex-start" }}
+      >
         <ButtonSolid
           color="danger"
           disabled
@@ -212,7 +224,10 @@ const renderButtonSolid = () => (
           name="ButtonSolid · Contrast variant"
           colorMode="dark"
         >
-          <VStack space={buttonBlockInnerSpacing}>
+          <VStack
+            space={buttonBlockInnerSpacing}
+            style={{ alignItems: "flex-start" }}
+          >
             <ButtonSolid
               color="contrast"
               label={"Contrast button"}
@@ -270,7 +285,10 @@ const renderButtonSolid = () => (
           name="ButtonSolid · Contrast, disabled"
           colorMode="dark"
         >
-          <VStack space={buttonBlockInnerSpacing}>
+          <VStack
+            space={buttonBlockInnerSpacing}
+            style={{ alignItems: "flex-start" }}
+          >
             <ButtonSolid
               disabled
               color="contrast"
@@ -304,7 +322,10 @@ const renderButtonSolid = () => (
 const renderButtonOutline = () => (
   <VStack space={buttonBlockMargin}>
     <DSComponentViewerBox name="ButtonOutline · Primary variant">
-      <VStack space={buttonBlockInnerSpacing}>
+      <VStack
+        space={buttonBlockInnerSpacing}
+        style={{ alignItems: "flex-start" }}
+      >
         <ButtonOutline
           accessibilityLabel="Tap to trigger test alert"
           label={"Primary button"}
@@ -344,7 +365,10 @@ const renderButtonOutline = () => (
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ButtonOutline · Primary, disabled">
-      <VStack space={buttonBlockInnerSpacing}>
+      <VStack
+        space={buttonBlockInnerSpacing}
+        style={{ alignItems: "flex-start" }}
+      >
         <ButtonOutline
           disabled
           accessibilityLabel="Tap to trigger test alert"
@@ -369,7 +393,10 @@ const renderButtonOutline = () => (
           name="ButtonOutline · Contrast variant"
           colorMode="dark"
         >
-          <VStack space={buttonBlockInnerSpacing}>
+          <VStack
+            space={buttonBlockInnerSpacing}
+            style={{ alignItems: "flex-start" }}
+          >
             <ButtonOutline
               color="contrast"
               label={"Contrast button"}
@@ -413,7 +440,10 @@ const renderButtonOutline = () => (
           name="ButtonOutline · Contrast, disabled"
           colorMode="dark"
         >
-          <VStack space={buttonBlockInnerSpacing}>
+          <VStack
+            space={buttonBlockInnerSpacing}
+            style={{ alignItems: "flex-start" }}
+          >
             <ButtonOutline
               disabled
               color="contrast"
