@@ -23,7 +23,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import CieCardReadingAnimation, {
   ReadingState
-} from "../../../../../components/cie/CieCardReadingAnimation";
+} from "../../../../authentication/login/cie/components/CieCardReadingAnimation";
 import I18n from "../../../../../i18n";
 import {
   setAccessibilityFocus,

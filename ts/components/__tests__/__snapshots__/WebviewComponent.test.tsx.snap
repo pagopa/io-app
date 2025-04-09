@@ -44,7 +44,6 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
         accessibilityLabel="Loading"
         accessibilityRole="progressbar"
         accessible={true}
-        importantForAccessibility="no-hide-descendants"
         style={
           {
             "height": 48,

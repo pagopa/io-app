@@ -10,7 +10,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "showAppearanceBanner": true,
   },
   "connectivityStatus": {
-    "isConnected": true,
+    "isConnected": undefined,
   },
   "fci": {
     "documentPreview": {
@@ -136,7 +136,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "_tag": "None",
       },
     },
-    "lifecycle": 0,
     "preferences": {
       "requestedCredentials": {},
     },
@@ -220,6 +219,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "paymentDetails": {
         "kind": "PotNone",
       },
+      "pspBannerClosed": Set {},
       "pspList": {
         "kind": "PotNone",
       },

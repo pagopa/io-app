@@ -19,7 +19,7 @@ import { dismissSupport } from "../../../utils/supportAssistance";
 import { identificationRequest } from "../../../store/actions/identification";
 import { zendeskGetSessionPollingRunningSelector } from "../store/reducers";
 import { startTimer } from "../../../utils/timer";
-import { checkSession } from "../../../sagas/startup/watchCheckSessionSaga";
+import { checkSession } from "../../../features/authentication/common/saga/watchCheckSessionSaga";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import { BackendClient } from "../../../api/backend";
 import { SagaCallReturnType } from "../../../types/utils";

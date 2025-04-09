@@ -7,6 +7,7 @@ import {
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
+  itwSetL3Enabled,
   itwSetReviewPending,
   itwSetWalletInstanceRemotelyActive,
   itwUnflagCredentialAsRequested
@@ -32,6 +33,10 @@ export type ItwPreferencesState = {
   // Indicates whether the user has an already active wallet instance
   // but the actual local wallet is not active
   isWalletInstanceRemotelyActive?: boolean;
+  // TEMPORARY LOCAL FF - TO BE REPLACED WITH REMOTE FF (SIW-2195)
+  // Indicates whether the L3 is enabled, which allows to use the new IT Wallet
+  // features for users with L3 authentication level
+  isL3Enabled?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -108,8 +113,22 @@ const reducer = (
       };
     }
 
+    case getType(itwSetL3Enabled): {
+      return {
+        ...state,
+        isL3Enabled: action.payload
+      };
+    }
     case getType(itwLifecycleStoresReset):
-      return { ...itwPreferencesInitialState };
+      // When the wallet is being reset, we need to persist only the preferences:
+      // - claimValuesHidden
+      // - isL3Enabled
+      const { claimValuesHidden, isL3Enabled } = state;
+      return {
+        ...itwPreferencesInitialState,
+        claimValuesHidden,
+        isL3Enabled
+      };
 
     default:
       return state;

@@ -3,10 +3,10 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { ServiceMetadata } from "../../../../../../definitions/backend/ServiceMetadata";
-import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
-import { SpecialServiceMetadata } from "../../../../../../definitions/backend/SpecialServiceMetadata";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
+import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
+import { SpecialServiceMetadata } from "../../../../../../definitions/services/SpecialServiceMetadata";
 import {
   logoutSuccess,
   sessionExpired
@@ -30,7 +30,7 @@ import { ServiceKind } from "../../components/ServiceDetailsScreenComponent";
 import { EnabledChannels } from "../../../../../utils/profile";
 
 export type ServicesDetailsState = {
-  byId: Record<string, pot.Pot<ServicePublic, Error>>;
+  byId: Record<string, pot.Pot<ServiceDetails, Error>>;
   servicePreference: pot.Pot<
     ServicePreferenceResponse,
     WithServiceID<NetworkError>
@@ -69,7 +69,7 @@ const servicesDetailsReducer = (
         ...state,
         byId: {
           ...state.byId,
-          [action.payload.service_id]: pot.some(action.payload)
+          [action.payload.id]: pot.some(action.payload)
         }
       };
 
@@ -137,13 +137,13 @@ export const servicesByIdSelector = (state: GlobalState) =>
 export const serviceByIdPotSelector = (
   state: GlobalState,
   id: ServiceId
-): pot.Pot<ServicePublic, Error> =>
+): pot.Pot<ServiceDetails, Error> =>
   state.features.services.details.byId[id] ?? pot.none;
 
 export const serviceByIdSelector = (
   state: GlobalState,
   id: ServiceId
-): ServicePublic | undefined =>
+): ServiceDetails | undefined =>
   pipe(serviceByIdPotSelector(state, id), pot.toUndefined);
 
 export const isLoadingServiceByIdSelector = (
@@ -160,7 +160,7 @@ export const serviceMetadataByIdSelector = createSelector(
     pipe(
       serviceByIdPot,
       pot.toOption,
-      O.chainNullableK(service => service.service_metadata),
+      O.chainNullableK(service => service.metadata),
       O.toUndefined
     )
 );
