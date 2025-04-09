@@ -11,12 +11,12 @@ import {
   useFIMSRemoteServiceConfiguration
 } from "..";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
 import { loadServiceDetail } from "../../../../services/details/store/actions/details";
 import { FIMS_ROUTES } from "../../navigation";
 import { FimsServiceConfiguration } from "../../../../../../definitions/content/FimsServiceConfiguration";
@@ -52,7 +52,7 @@ jest.mock("@react-navigation/native", () => {
 });
 
 // eslint-disable-next-line functional/no-let
-let serviceDataPot: pot.Pot<ServicePublic, Error> | undefined;
+let serviceDataPot: pot.Pot<ServiceDetails, Error> | undefined;
 // eslint-disable-next-line functional/no-let
 let serviceData: FIMSServiceData | undefined;
 // eslint-disable-next-line functional/no-let
@@ -72,7 +72,7 @@ describe("index", () => {
     authenticationCallbackWithServiceId = undefined;
   });
   describe("useAutoFetchingServiceByIdPot", () => {
-    const service = {} as ServicePublic;
+    const service = {} as ServiceDetails;
     [
       pot.none,
       pot.noneLoading,
@@ -111,7 +111,7 @@ describe("index", () => {
 
       renderAutoFetchHook(
         hookServiceId,
-        pot.some({} as ServicePublic),
+        pot.some({} as ServiceDetails),
         "8MEW12P7WPYVC01JMESJKA9HS2" as ServiceId
       );
 
@@ -127,11 +127,13 @@ describe("index", () => {
   describe("useFIMSFromServiceId", () => {
     const serviceId = "01JMEWNY9BC3KVRCGTY1737J0S" as ServiceId;
     const service = {
-      organization_fiscal_code: "01234567891",
-      organization_name: "An organization name",
-      service_id: serviceId,
-      service_name: "A service name"
-    } as ServicePublic;
+      id: serviceId,
+      name: "A service name",
+      organization: {
+        fiscal_code: "01234567891",
+        name: "An organization name"
+      }
+    } as ServiceDetails;
     [
       pot.none,
       pot.noneLoading,
@@ -146,9 +148,9 @@ describe("index", () => {
         const expectedServiceData = pot.isSome(servicePot)
           ? {
               serviceId,
-              organizationFiscalCode: service.organization_fiscal_code,
-              organizationName: service.organization_name,
-              serviceName: service.service_name
+              organizationFiscalCode: service.organization.fiscal_code,
+              organizationName: service.organization.name,
+              serviceName: service.name
             }
           : {
               serviceId
@@ -172,15 +174,13 @@ describe("index", () => {
             ctaUrl: "https://relyingParty.url/login",
             ctaText: label,
             organizationFiscalCode: pot.isSome(servicePot)
-              ? service.organization_fiscal_code
+              ? service.organization.fiscal_code
               : undefined,
             organizationName: pot.isSome(servicePot)
-              ? service.organization_name
+              ? service.organization.name
               : undefined,
-            serviceId: service.service_id,
-            serviceName: pot.isSome(servicePot)
-              ? service.service_name
-              : undefined,
+            serviceId: service.id,
+            serviceName: pot.isSome(servicePot) ? service.name : undefined,
             source: MESSAGES_ROUTES.MESSAGE_DETAIL
           }
         });
@@ -221,11 +221,13 @@ describe("index", () => {
   describe("useFIMSAuthenticationFlow", () => {
     const serviceId = "01JMEWNY9BC3KVRCGTY1737J0S" as ServiceId;
     const service = {
-      organization_fiscal_code: "01234567891",
-      organization_name: "An organization name",
-      service_id: serviceId,
-      service_name: "A service name"
-    } as ServicePublic;
+      id: serviceId,
+      name: "A service name",
+      organization: {
+        fiscal_code: "01234567891",
+        name: "An organization name"
+      }
+    } as ServiceDetails;
     [
       pot.none,
       pot.noneLoading,
@@ -254,15 +256,13 @@ describe("index", () => {
             ctaUrl: "https://relyingParty.url/login",
             ctaText: label,
             organizationFiscalCode: pot.isSome(servicePot)
-              ? service.organization_fiscal_code
+              ? service.organization.fiscal_code
               : undefined,
             organizationName: pot.isSome(servicePot)
-              ? service.organization_name
+              ? service.organization.name
               : undefined,
-            serviceId: service.service_id,
-            serviceName: pot.isSome(servicePot)
-              ? service.service_name
-              : undefined,
+            serviceId: service.id,
+            serviceName: pot.isSome(servicePot) ? service.name : undefined,
             source: MESSAGES_ROUTES.MESSAGE_DETAIL
           }
         });
@@ -449,11 +449,13 @@ describe("index", () => {
   describe("serviceDataFromServiceId", () => {
     const serviceId = "01JMFEZR305XG9VSAB9RYX6X6B" as ServiceId;
     const service = {
-      service_id: serviceId,
-      organization_fiscal_code: "01234567890",
-      organization_name: "Organization name",
-      service_name: "Service name"
-    } as ServicePublic;
+      id: serviceId,
+      name: "Service name",
+      organization: {
+        fiscal_code: "01234567890",
+        name: "Organization name"
+      }
+    } as ServiceDetails;
     [
       pot.none,
       pot.noneLoading,
@@ -484,13 +486,13 @@ describe("index", () => {
 
         expect(internalServiceData).toEqual({
           organizationFiscalCode: pot.isSome(servicePot)
-            ? service.organization_fiscal_code
+            ? service.organization.fiscal_code
             : undefined,
           organizationName: pot.isSome(servicePot)
-            ? service.organization_name
+            ? service.organization.name
             : undefined,
-          serviceId: service.service_id,
-          serviceName: pot.isSome(servicePot) ? service.service_name : undefined
+          serviceId: service.id,
+          serviceName: pot.isSome(servicePot) ? service.name : undefined
         });
       });
     });
@@ -566,7 +568,7 @@ describe("index", () => {
 
 const renderAutoFetchHook = (
   hookServiceId: ServiceId,
-  servicePot: pot.Pot<ServicePublic, Error>,
+  servicePot: pot.Pot<ServiceDetails, Error>,
   storeServiceId: ServiceId
 ) => {
   const appState = {
@@ -585,7 +587,7 @@ const renderAutoFetchHook = (
 
 const renderFromServiceIdHook = (
   hookServiceId: ServiceId,
-  servicePot: pot.Pot<ServicePublic, Error>,
+  servicePot: pot.Pot<ServiceDetails, Error>,
   storeServiceId: ServiceId
 ) => {
   const appState = {
@@ -603,7 +605,7 @@ const renderFromServiceIdHook = (
 };
 
 const renderFromAuthenticationFlowHook = (
-  servicePot: pot.Pot<ServicePublic, Error>,
+  servicePot: pot.Pot<ServiceDetails, Error>,
   storeServiceId: ServiceId
 ) => {
   const appState = {

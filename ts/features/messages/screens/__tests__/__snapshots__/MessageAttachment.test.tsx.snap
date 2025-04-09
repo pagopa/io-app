@@ -236,7 +236,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               accessibilityLabel="Loading"
                               accessibilityRole="progressbar"
                               accessible={true}
-                              importantForAccessibility="no-hide-descendants"
                               style={
                                 {
                                   "height": 48,
@@ -767,7 +766,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -939,7 +937,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -1610,7 +1607,6 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -1782,7 +1778,6 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}

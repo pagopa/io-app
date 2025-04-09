@@ -624,7 +624,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -796,7 +795,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -1482,7 +1480,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -1654,7 +1651,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -2088,7 +2084,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -2260,7 +2255,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -2946,7 +2940,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -3118,7 +3111,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -3552,7 +3544,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -3724,7 +3715,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}

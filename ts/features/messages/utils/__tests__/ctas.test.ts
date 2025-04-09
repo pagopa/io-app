@@ -21,7 +21,7 @@ import {
 } from "../ctas";
 import * as ANALYTICS from "../../analytics";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
+import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
 
 const messageBody = `### this is a message
 

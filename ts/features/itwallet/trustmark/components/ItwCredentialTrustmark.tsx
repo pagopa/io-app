@@ -89,18 +89,25 @@ export const ItwCredentialTrustmark = ({
 
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
   const currentRoll = useSharedValue(0);
-  const { roll: initialRoll } = rotationSensor.sensor.value;
+  const initialRoll = useSharedValue(0);
 
   useAnimatedReaction(
     () => rotationSensor.sensor.value,
-    s => (currentRoll.value = s.roll),
+    s => {
+      if (initialRoll.value === 0) {
+        initialRoll.value = s.roll;
+      }
+      currentRoll.value = s.roll;
+    },
     []
   );
 
   /* Not all devices are in an initial flat position on a surface
     (e.g. a table) then we use a relative rotation value,
     not an absolute one  */
-  const relativeRoll = useDerivedValue(() => initialRoll - currentRoll.value);
+  const relativeRoll = useDerivedValue(
+    () => initialRoll.value - currentRoll.value
+  );
 
   /* Get button size to set the basic boundaries */
   const [buttonSize, setButtonSize] = useState<ButtonSize>();

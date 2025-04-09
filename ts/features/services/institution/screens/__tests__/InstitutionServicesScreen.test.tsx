@@ -9,6 +9,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as hooks from "../../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../../common/navigation/routes";
 import { InstitutionServicesScreen } from "../InstitutionServicesScreen";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 const MOCK_INSTITUTION_SERVICES: InstitutionServicesResource = {
   count: 3,
@@ -16,17 +17,17 @@ const MOCK_INSTITUTION_SERVICES: InstitutionServicesResource = {
   offset: 0,
   services: [
     {
-      id: "1",
+      id: "1" as ServiceId,
       name: "Service 1",
       version: 1
     },
     {
-      id: "2",
+      id: "2" as ServiceId,
       name: "Service 2",
       version: 1
     },
     {
-      id: "3",
+      id: "3" as ServiceId,
       name: "Service 3",
       version: 1
     }
