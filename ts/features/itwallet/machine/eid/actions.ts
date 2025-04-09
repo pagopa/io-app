@@ -13,11 +13,7 @@ import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
 } from "../../issuance/store/actions";
-import {
-  itwLifecycleStateUpdated,
-  itwLifecycleWalletReset
-} from "../../lifecycle/store/actions";
-import { ItwLifecycleState } from "../../lifecycle/store/reducers";
+import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import {
@@ -28,6 +24,7 @@ import {
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -154,18 +151,6 @@ export const createEidIssuanceActionsImplementation = (
     navigation.popToTop();
   },
 
-  setWalletInstanceToOperational: () => {
-    store.dispatch(
-      itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL)
-    );
-  },
-
-  setWalletInstanceToValid: () => {
-    store.dispatch(
-      itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID)
-    );
-  },
-
   storeIntegrityKeyTag: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
@@ -230,9 +215,12 @@ export const createEidIssuanceActionsImplementation = (
       const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
+      const isL3FeaturesEnabled = itwIsL3EnabledSelector(state);
+
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
-        walletInstanceAttestation
+        walletInstanceAttestation,
+        isL3FeaturesEnabled
       };
     }
   )

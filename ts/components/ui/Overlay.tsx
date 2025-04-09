@@ -32,6 +32,11 @@ type Props = Readonly<{
  * Creates a full screen overlay on top of another screen.
  *
  * Used for loading spinners and error screens.
+ *
+ * @deprecated This component is really old and it's already used
+ * in many components with different tasks. We should refactor
+ * the existing components with a more specific component
+ * for each case.
  */
 export const Overlay = ({
   backgroundColor = IOColors.white,

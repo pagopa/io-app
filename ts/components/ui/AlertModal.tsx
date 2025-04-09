@@ -1,15 +1,14 @@
 import {
   Body,
+  hexToRgba,
   IOColors,
-  IOVisualCostants,
-  hexToRgba
+  IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import themeVariables from "../../theme/variables";
-import { Overlay } from "./Overlay";
-
-const opaqueBgColor = hexToRgba(IOColors.black, 0.6);
+import { useModalStyle } from "../../utils/hooks/useModalStyle";
+import { AlertModalOverlay } from "./AlertModalOverlay";
 
 const styles = StyleSheet.create({
   container: {
@@ -18,7 +17,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "auto",
     width: "auto",
-    backgroundColor: IOColors.white,
     padding: themeVariables.contentPadding,
     marginHorizontal: IOVisualCostants.appMarginDefault,
     borderCurve: "continuous",
@@ -36,12 +34,24 @@ type AlertModalProps = Readonly<{
 export const AlertModal = ({ message }: AlertModalProps) => {
   useHardwareBackButton(() => true);
 
+  const { backdrop, modal } = useModalStyle();
+
   return (
-    <Overlay
-      backgroundColor={opaqueBgColor}
+    <AlertModalOverlay
+      backgroundColor={backdrop.backgroundColor}
+      opacity={backdrop.opacity}
       foreground={
-        <View style={styles.container}>
-          <Body color="grey-850">{message}</Body>
+        <View
+          style={[
+            styles.container,
+            {
+              backgroundColor: modal.backgroundColor,
+              borderWidth: 1,
+              borderColor: hexToRgba(IOColors.white, 0.1)
+            }
+          ]}
+        >
+          <Body>{message}</Body>
         </View>
       }
     />

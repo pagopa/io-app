@@ -3,7 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import { apiUrlPrefix } from "../../../config";
 
-const IO_REACHABIITY_URL = `${apiUrlPrefix}/api/v1/status`;
+const IO_REACHABIITY_URL = `${apiUrlPrefix}/api/v1/ping`;
 
 export const configureNetInfo = () =>
   configure({

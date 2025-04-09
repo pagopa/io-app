@@ -4,7 +4,7 @@ import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScr
 import I18n from "../../../i18n";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
+import { isProfileFirstOnBoardingSelector } from "../../../features/settings/common/store/selectors";
 import { getFlowType } from "../../../utils/analytics";
 import {
   BiometriActivationUserType,
@@ -17,9 +17,9 @@ import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import {
   trackBiometricActivationAccepted,
-  trackBiometricActivationDeclined,
-  trackBiometricActivationEducationalScreen
-} from "./analytics";
+  trackBiometricActivationDeclined
+} from "../../../features/settings/security/shared/analytics";
+import { trackBiometricActivationEducationalScreen } from "./analytics";
 
 type IOScrollViewActions = ComponentProps<typeof IOScrollView>["actions"];
 

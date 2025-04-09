@@ -7,6 +7,7 @@ import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import {
   RequestGetMessageDataActionType,
   cancelGetMessageDataAction,
@@ -37,7 +38,6 @@ import {
 } from "../analytics";
 import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
-import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 
 import { extractContentFromMessageSources } from "../utils";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
@@ -243,7 +243,7 @@ function* getMessageDetails(messageId: UIMessageId) {
 function* getThirdPartyDataMessage(
   messageId: UIMessageId,
   isPNMessage: boolean,
-  service: ServicePublic,
+  service: ServiceDetails,
   tag: string
 ) {
   // Third party data may change anytime, so we must retrieve them on every request
@@ -251,7 +251,7 @@ function* getThirdPartyDataMessage(
   yield* put(
     loadThirdPartyMessage.request({
       id: messageId,
-      serviceId: service.service_id,
+      serviceId: service.id,
       tag
     })
   );
@@ -365,7 +365,7 @@ function* commonFailureHandling(
 const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
   isPNMessage: boolean,
   thirdPartyMessageOrUndefined: ThirdPartyMessageWithContent | undefined,
-  service: ServicePublic,
+  service: ServiceDetails,
   tag: string
 ) =>
   pipe(
@@ -382,10 +382,10 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
         E.mapLeft(errors =>
           pipe(errors, readableReport, reason =>
             trackRemoteContentMessageDecodingWarning(
-              service.service_id,
-              service.service_name,
-              service.organization_name,
-              service.organization_fiscal_code,
+              service.id,
+              service.name,
+              service.organization.name,
+              service.organization.fiscal_code,
               tag,
               reason
             )

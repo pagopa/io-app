@@ -15,6 +15,7 @@ import {
   upsertMessageStatusAttributes
 } from "../../store/actions";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
@@ -25,7 +26,6 @@ import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus/re
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
 import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { trackMessageDataLoadFailure } from "../../analytics";
 import { MessageGetStatusFailurePhaseType } from "../../store/reducers/messageGetStatus";
 
@@ -104,7 +104,7 @@ describe("getPaginatedMessage", () => {
 describe("getService", () => {
   it("when no service is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceDetails = { service_id: serviceId } as ServicePublic;
+    const serviceDetails = { id: serviceId } as ServiceDetails;
     testSaga(testable!.getServiceDetails, serviceId)
       .next()
       .select(serviceByIdPotSelector, serviceId)
@@ -119,7 +119,7 @@ describe("getService", () => {
   });
   it("when an error is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceDetails = { service_id: serviceId } as ServicePublic;
+    const serviceDetails = { id: serviceId } as ServiceDetails;
     testSaga(testable!.getServiceDetails, serviceId)
       .next()
       .select(serviceByIdPotSelector, serviceId)
@@ -134,7 +134,7 @@ describe("getService", () => {
   });
   it("when a service with error is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceDetails = { service_id: serviceId } as ServicePublic;
+    const serviceDetails = { id: serviceId } as ServiceDetails;
     testSaga(testable!.getServiceDetails, serviceId)
       .next()
       .select(serviceByIdPotSelector, serviceId)
@@ -149,7 +149,7 @@ describe("getService", () => {
   });
   it("when a service is in store, it should return its details", () => {
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceDetails = { service_id: serviceId } as ServicePublic;
+    const serviceDetails = { id: serviceId } as ServiceDetails;
     testSaga(testable!.getServiceDetails, serviceId)
       .next()
       .select(serviceByIdPotSelector, serviceId)
@@ -245,11 +245,13 @@ describe("getThirdPartyDataMessage", () => {
   it("should dispatch a loadThirdPartyMessage.request and return the third party message when the related saga succeeds ", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
     const service = {
-      service_id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
-      service_name: "The name",
-      organization_name: "Org name",
-      organization_fiscal_code: "OrgFisCod"
-    } as ServicePublic;
+      id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
+      name: "The name",
+      organization: {
+        fiscal_code: "OrgFisCod",
+        name: "Org name"
+      }
+    } as ServiceDetails;
     const messageCategoryTag = "GENERIC";
     const thirdPartyMessage = { id: "1" } as ThirdPartyMessageWithContent;
     testSaga(
@@ -263,7 +265,7 @@ describe("getThirdPartyDataMessage", () => {
       .put(
         loadThirdPartyMessage.request({
           id: messageId,
-          serviceId: service.service_id,
+          serviceId: service.id,
           tag: messageCategoryTag
         })
       )
@@ -290,11 +292,13 @@ describe("getThirdPartyDataMessage", () => {
   it("should dispatch a loadThirdPartyMessage.request and return undefined when the related saga fails ", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
     const service = {
-      service_id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
-      service_name: "The name",
-      organization_name: "Org name",
-      organization_fiscal_code: "OrgFisCod"
-    } as ServicePublic;
+      id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
+      name: "The name",
+      organization: {
+        fiscal_code: "OrgFisCod",
+        name: "Org name"
+      }
+    } as ServiceDetails;
     const messageCategoryTag = "GENERIC";
     testSaga(
       testable!.getThirdPartyDataMessage,
@@ -307,7 +311,7 @@ describe("getThirdPartyDataMessage", () => {
       .put(
         loadThirdPartyMessage.request({
           id: messageId,
-          serviceId: service.service_id,
+          serviceId: service.id,
           tag: messageCategoryTag
         })
       )
@@ -807,8 +811,8 @@ describe("loadMessageData", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceDetails = {
-      service_id: serviceId
-    } as ServicePublic;
+      id: serviceId
+    } as ServiceDetails;
     const paginatedMessage = { id: messageId, serviceId } as UIMessage;
     testSaga(testable!.loadMessageData, {
       messageId,
@@ -840,8 +844,8 @@ describe("loadMessageData", () => {
       category: { tag: TagEnum.PN }
     } as UIMessage;
     const serviceDetails = {
-      service_id: serviceId
-    } as ServicePublic;
+      id: serviceId
+    } as ServiceDetails;
     const messageDetails = {} as UIMessageDetails;
     testSaga(testable!.loadMessageData, {
       messageId,
@@ -874,8 +878,8 @@ describe("loadMessageData", () => {
       hasPrecondition: true
     } as UIMessage;
     const serviceDetails = {
-      service_id: serviceId
-    } as ServicePublic;
+      id: serviceId
+    } as ServiceDetails;
     const messageDetails = {} as UIMessageDetails;
     testSaga(testable!.loadMessageData, {
       messageId,
@@ -909,8 +913,8 @@ describe("loadMessageData", () => {
       hasPrecondition: false
     } as UIMessage;
     const serviceDetails = {
-      service_id: serviceId
-    } as ServicePublic;
+      id: serviceId
+    } as ServiceDetails;
     const messageDetails = { hasThirdPartyData: true } as UIMessageDetails;
     testSaga(testable!.loadMessageData, {
       messageId,
@@ -952,8 +956,8 @@ describe("loadMessageData", () => {
       hasPrecondition: false
     } as UIMessage;
     const serviceDetails = {
-      service_id: serviceId
-    } as ServicePublic;
+      id: serviceId
+    } as ServiceDetails;
     const messageDetails = { hasThirdPartyData: true } as UIMessageDetails;
     const thirdPartyMessage = {} as ThirdPartyMessageWithContent;
     testSaga(testable!.loadMessageData, {
@@ -997,8 +1001,8 @@ describe("loadMessageData", () => {
       hasPrecondition: false
     } as UIMessage;
     const serviceDetails = {
-      service_id: serviceId
-    } as ServicePublic;
+      id: serviceId
+    } as ServiceDetails;
     const messageDetails = { hasThirdPartyData: false } as UIMessageDetails;
     testSaga(testable!.loadMessageData, {
       messageId,
@@ -1034,8 +1038,8 @@ describe("loadMessageData", () => {
       hasPrecondition: false
     } as UIMessage;
     const serviceDetails = {
-      service_id: serviceId
-    } as ServicePublic;
+      id: serviceId
+    } as ServiceDetails;
     const messageDetails = { hasThirdPartyData: true } as UIMessageDetails;
     const thirdPartyMessage = {} as ThirdPartyMessageWithContent;
     testSaga(testable!.loadMessageData, {
@@ -1085,8 +1089,8 @@ describe("loadMessageData", () => {
       hasPrecondition: true
     } as UIMessage;
     const serviceDetails = {
-      service_id: serviceId
-    } as ServicePublic;
+      id: serviceId
+    } as ServiceDetails;
     const messageDetails = {} as UIMessageDetails;
     const thirdPartyMessage = {} as ThirdPartyMessageWithContent;
     testSaga(testable!.loadMessageData, {
@@ -1135,8 +1139,8 @@ describe("loadMessageData", () => {
       hasPrecondition: false
     } as UIMessage;
     const serviceDetails = {
-      service_id: serviceId
-    } as ServicePublic;
+      id: serviceId
+    } as ServiceDetails;
     const messageDetails = { hasThirdPartyData: false } as UIMessageDetails;
     testSaga(testable!.loadMessageData, {
       messageId,

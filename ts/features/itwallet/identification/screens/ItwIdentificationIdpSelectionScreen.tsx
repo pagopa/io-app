@@ -2,7 +2,7 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useRef, useCallback } from "react";
 import { isReady } from "../../../../common/model/RemoteValue";
-import IdpsGrid from "../../../../components/IdpsGrid";
+import IdpsGrid from "../../../authentication/login/idp/components/IdpsGrid";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { randomOrderIdps } from "../../../authentication/login/idp/screens/IdpSelectionScreen";
 import { loadIdps } from "../../../../store/actions/content";

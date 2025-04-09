@@ -10,7 +10,7 @@ import {
   isItwOfflineAccessEnabledSelector,
   isMixpanelEnabled as isMixpanelEnabledSelector
 } from "../../../store/reducers/persistedPreferences";
-import { trackIngressScreen } from "../../../screens/profile/analytics";
+import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -92,7 +92,7 @@ export const IngressScreen = () => {
 
   useEffect(() => {
     const visualizeOfflineWallet =
-      !isConnected &&
+      isConnected === false &&
       selectItwLifecycleIsOperationalOrValid &&
       isOfflineAccessEnabled;
 
@@ -119,7 +119,7 @@ export const IngressScreen = () => {
   ]);
 
   if (
-    !isConnected &&
+    isConnected === false &&
     (!selectItwLifecycleIsOperationalOrValid || !isOfflineAccessEnabled)
   ) {
     return <IngressScreenNoInternetConnection />;

@@ -6,7 +6,7 @@ import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import * as mixpanel from "../../../../mixpanel";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { profileLoadSuccess } from "../../../../store/actions/profile";
+import { profileLoadSuccess } from "../../../settings/common/store/actions";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { SessionToken } from "../../../../types/SessionToken";
