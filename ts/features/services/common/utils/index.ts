@@ -1,5 +1,5 @@
 import { ImageURISource } from "react-native";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { contentRepoUrl } from "../../../../config";
 
 export function getLogoForInstitution(
@@ -19,12 +19,12 @@ export function getLogoForInstitution(
  * The arrays will have first the service logo, then the organization logo.
  */
 export function logosForService(
-  service: ServicePublic,
+  service: ServiceDetails,
   logosRepoUrl: string = `${contentRepoUrl}/logos`
 ): ReadonlyArray<ImageURISource> {
   return [
-    `services/${service.service_id.toLowerCase()}`,
-    `organizations/${service.organization_fiscal_code.replace(/^0+/, "")}`
+    `services/${service.id.toLowerCase()}`,
+    `organizations/${service.organization.fiscal_code.replace(/^0+/, "")}`
   ].map(u => ({
     uri: `${logosRepoUrl}/${u}.png`
   }));

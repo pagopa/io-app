@@ -11,9 +11,9 @@ import { BackendStatus } from "../../../../../../definitions/content/BackendStat
 import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { Config } from "../../../../../../definitions/content/Config";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
-import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import {
   ServicePreferenceResponse,
   WithServiceID
@@ -27,12 +27,13 @@ const backendStatus: BackendStatus = {
 const serviceId = "servicePn" as ServiceId;
 
 const service = {
-  service_id: serviceId,
-  service_name: "health",
-  organization_name: "Ċentru tas-Saħħa",
-  department_name: "covid-19",
-  organization_fiscal_code: "FSCLCD" as OrganizationFiscalCode
-} as ServicePublic;
+  id: serviceId,
+  name: "health",
+  organization: {
+    fiscal_code: "FSCLCD" as OrganizationFiscalCode,
+    name: "Ċentru tas-Saħħa"
+  }
+} as ServiceDetails;
 
 const servicePreferenceError: WithServiceID<NetworkError> = {
   id: serviceId,
@@ -40,7 +41,7 @@ const servicePreferenceError: WithServiceID<NetworkError> = {
 };
 
 const servicePreferenceWihInboxEnabled: ServicePreferenceResponse = {
-  id: serviceId,
+  id: serviceId as ServiceId,
   kind: "success",
   value: {
     inbox: true,
@@ -52,7 +53,7 @@ const servicePreferenceWihInboxEnabled: ServicePreferenceResponse = {
 };
 
 const servicePreferenceWihInboxDisabled: ServicePreferenceResponse = {
-  id: serviceId,
+  id: serviceId as ServiceId,
   kind: "success",
   value: {
     inbox: false,

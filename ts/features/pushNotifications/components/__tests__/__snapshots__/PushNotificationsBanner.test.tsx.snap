@@ -763,7 +763,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}

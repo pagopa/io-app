@@ -1,3 +1,3 @@
-import * as StoreReview from "react-native-store-review";
+import AppReviewModule from "../native/AppReview";
 
-export const requestAppReview = () => StoreReview.requestReview();
+export const requestAppReview = () => AppReviewModule.requestReview();

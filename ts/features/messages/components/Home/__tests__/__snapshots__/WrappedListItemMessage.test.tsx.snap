@@ -794,7 +794,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                               },
                                             ]
                                           }
-                                          tintColor="#0B3EE3"
                                           vbHeight={24}
                                           vbWidth={24}
                                           width={24}
@@ -915,7 +914,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                               },
                                             ]
                                           }
-                                          tintColor="#636B82"
                                           vbHeight={24}
                                           vbWidth={24}
                                           width={24}
@@ -1815,7 +1813,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                               },
                                             ]
                                           }
-                                          tintColor="#0B3EE3"
                                           vbHeight={24}
                                           vbWidth={24}
                                           width={24}
@@ -1936,7 +1933,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                               },
                                             ]
                                           }
-                                          tintColor="#636B82"
                                           vbHeight={24}
                                           vbWidth={24}
                                           width={24}
@@ -2556,7 +2552,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                               },
                                             ]
                                           }
-                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}
@@ -2898,7 +2893,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                               },
                                             ]
                                           }
-                                          tintColor="#427940"
                                           vbHeight={24}
                                           vbWidth={24}
                                           width={24}
@@ -3548,7 +3542,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                               },
                                             ]
                                           }
-                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}
@@ -3945,7 +3938,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                               },
                                             ]
                                           }
-                                          tintColor="#427940"
                                           vbHeight={24}
                                           vbWidth={24}
                                           width={24}
@@ -4595,7 +4587,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                               },
                                             ]
                                           }
-                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}
@@ -5448,7 +5439,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                               },
                                             ]
                                           }
-                                          tintColor="#0066CC"
                                           vbHeight={32}
                                           vbWidth={32}
                                           width={20}

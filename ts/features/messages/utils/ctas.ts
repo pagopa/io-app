@@ -6,7 +6,7 @@ import FM from "front-matter";
 import { Linking } from "react-native";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
+import { ServiceMetadata } from "../../../../definitions/services/ServiceMetadata";
 import { Locales } from "../../../../locales/locales";
 import {
   deriveCustomHandledLink,

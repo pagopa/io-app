@@ -10,7 +10,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { Access } from "../../../../../definitions/fims_history/Access";
 import I18n from "../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
@@ -19,7 +19,7 @@ import { FimsHistorySharedStyles } from "../utils/styles";
 // ------- TYPES
 
 export type FimsHistorySuccessListItemProps = {
-  serviceData: ServicePublic;
+  serviceData: ServiceDetails;
   consent: Access;
 };
 export type FimsHistoryBaseListItemProps = {
@@ -48,7 +48,7 @@ export const FimsHistorySuccessListItem = ({
 
       <VSpacer size={8} />
 
-      <H6>{serviceData.organization_name}</H6>
+      <H6>{serviceData.organization.name}</H6>
       <BodySmall weight="Regular" color="grey-700">
         {consent.redirect?.display_name}
       </BodySmall>
