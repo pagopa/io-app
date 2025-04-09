@@ -451,7 +451,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
-                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -567,7 +566,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
-                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -686,7 +684,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
-                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
