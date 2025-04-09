@@ -44,7 +44,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
         accessibilityLabel="Loading"
         accessibilityRole="progressbar"
         accessible={true}
-        importantForAccessibility="no-hide-descendants"
         style={
           {
             "height": 48,
@@ -461,7 +460,6 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
         accessibilityLabel="Loading"
         accessibilityRole="progressbar"
         accessible={true}
-        importantForAccessibility="no-hide-descendants"
         style={
           {
             "height": 48,
