@@ -5,11 +5,11 @@ import * as matchers from "redux-saga-test-plan/matchers";
 import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
-} from "../../../features/authentication/common/store/actions";
+} from "../store/actions";
 
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
+import { PublicSession } from "../../../../../definitions/session_manager/PublicSession";
 
-import { loadSessionInformationSaga } from "../loadSessionInformationSaga";
+import { loadSessionInformationSaga } from "../saga/loadSessionInformationSaga";
 
 describe("loadSessionInformationSaga", () => {
   it("should emit the session on valid response from backend", () => {

@@ -13795,7 +13795,6 @@ __metadata:
     react-native-screenshot-prevent: ^1.2.1
     react-native-share: ^10.2.1
     react-native-splash-screen: ^3.2.0
-    react-native-store-review: ^0.4.3
     react-native-svg: ^15.11.2
     react-native-svg-transformer: ^0.14.3
     react-native-tab-view: 3.5.2
@@ -19345,13 +19344,6 @@ __metadata:
   peerDependencies:
     react-native: ">=0.57.0"
   checksum: acce2f5616fadd1d6b895aa9450d62af1fde27fd0d92fa380e92cec666e8196044ff510ad86545e0668b4fa39108a03bfb7cb6be981a1a5814d24d698cc85b8c
-  languageName: node
-  linkType: hard
-
-"react-native-store-review@npm:^0.4.3":
-  version: 0.4.3
-  resolution: "react-native-store-review@npm:0.4.3"
-  checksum: e889a922ccc5a055748430b6c7872d191fbffa61126c075fd5b861e450e6e1ad7ebf2248bc92884cefd3f58dbd0fa07b36ea2ea547f3b7b2c594a0fbe9ab18d5
   languageName: node
   linkType: hard
 

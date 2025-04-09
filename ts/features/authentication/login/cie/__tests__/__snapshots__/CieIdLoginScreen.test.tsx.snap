@@ -96,32 +96,20 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
           style={
             [
               {
+                "backgroundColor": "#FFFFFF",
                 "bottom": 0,
+                "justifyContent": "center",
                 "left": 0,
                 "position": "absolute",
                 "right": 0,
                 "top": 0,
-                "zIndex": 0,
+                "zIndex": 1,
               },
               {
                 "backgroundColor": "rgba(255,255,255,0.7)",
                 "opacity": 1,
               },
             ]
-          }
-        />
-        <View
-          style={
-            {
-              "alignItems": "center",
-              "bottom": 0,
-              "justifyContent": "center",
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": 1,
-            }
           }
         >
           <View
