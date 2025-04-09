@@ -4,7 +4,7 @@ import { getType } from "typesafe-actions";
 import { FeaturedService } from "../../../../../../definitions/services/FeaturedService";
 import { FeaturedServices } from "../../../../../../definitions/services/FeaturedServices";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { ServicesClient } from "../../../common/api/__mocks__/client";
+import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
 import { featuredServicesGet } from "../../store/actions";
 import { handleGetFeaturedServices } from "../handleGetFeaturedServices";
 

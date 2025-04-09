@@ -42,9 +42,14 @@ export const paymentCompletedSuccess = createStandardAction(
   "PAYMENTS_PAYMENT_COMPLETED_SUCCESS"
 )<PaymentCompletedSuccessPayload>();
 
+export const paymentMethodPspBannerClose = createStandardAction(
+  "PAYMENTS_PSP_BANNER_CLOSE"
+)<string>();
+
 export type PaymentsCheckoutOrchestrationActions =
   | ActionType<typeof walletPaymentSetCurrentStep>
   | ActionType<typeof initPaymentStateAction>
   | ActionType<typeof selectPaymentMethodAction>
   | ActionType<typeof selectPaymentPspAction>
-  | ActionType<typeof paymentCompletedSuccess>;
+  | ActionType<typeof paymentCompletedSuccess>
+  | ActionType<typeof paymentMethodPspBannerClose>;

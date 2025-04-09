@@ -200,7 +200,7 @@ export class SimpleDate {
  * This is used to get the correct locale for the claims.
  * Currently the only supported locales are it-IT and en-US.
  */
-enum ClaimsLocales {
+export enum ClaimsLocales {
   it = "it-IT",
   en = "en-US"
 }
