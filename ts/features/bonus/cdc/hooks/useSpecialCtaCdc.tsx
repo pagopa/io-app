@@ -3,7 +3,7 @@ import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isCdcEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isCdcAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useServicePreferenceByChannel } from "../../../services/details/hooks/useServicePreference";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import { CDC_ROUTES } from "../navigation/routes";
@@ -34,7 +34,7 @@ const useCdcActivation = () => {
 export const useSpecialCtaCdc = ():
   | IOScrollViewActions["primary"]
   | undefined => {
-  const isCdcEnabled = useIOSelector(isCdcEnabledSelector);
+  const isCdcEnabled = useIOSelector(isCdcAppVersionSupportedSelector);
 
   const { subscribeHandler } = useCdcActivation();
 

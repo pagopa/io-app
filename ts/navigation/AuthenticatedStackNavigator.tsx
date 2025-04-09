@@ -64,7 +64,7 @@ import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator"
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { useIOSelector } from "../store/hooks";
 import {
-  isCdcEnabledSelector,
+  isCdcAppVersionSupportedSelector,
   isCGNEnabledSelector,
   isFciEnabledSelector,
   isIdPayEnabledSelector
@@ -82,7 +82,7 @@ const hideHeaderOptions = {
 };
 
 const AuthenticatedStackNavigator = () => {
-  const cdcEnabled = useIOSelector(isCdcEnabledSelector);
+  const cdcEnabled = useIOSelector(isCdcAppVersionSupportedSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
