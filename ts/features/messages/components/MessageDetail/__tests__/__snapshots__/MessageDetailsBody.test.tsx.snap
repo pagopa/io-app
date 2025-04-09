@@ -1175,7 +1175,6 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
                                   },
                                 ]
                               }
-                              tintColor="#614C15"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
