@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import * as O from "fp-ts/Option";
-import { pipe } from "fp-ts/function";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { itwIsWalletInstanceRemotelyActiveSelector } from "../store/selectors/preferences";
 import { useIOSelector } from "../../../../store/hooks.ts";
 
@@ -21,27 +20,13 @@ export const useItwDiscoveryBannerType = ():
     itwIsWalletInstanceRemotelyActiveSelector
   );
 
-  // Store the determined banner type
-  const [determinedBannerType, setDeterminedBannerType] = useState<
-    DiscoveryBannerType | undefined
-  >();
-
-  useEffect(() => {
-    pipe(
-      O.fromNullable(isWalletInstanceRemotelyActive),
-      O.fold(
-        // If the value is still undefined, do nothing
-        () => undefined,
-        // Otherwise, set the banner type based on the definitive value
-        isActive => {
-          const newType: DiscoveryBannerType = isActive
-            ? "reactivating"
-            : "onboarding";
-          setDeterminedBannerType(newType);
-        }
-      )
-    );
-  }, [isWalletInstanceRemotelyActive]);
-
-  return determinedBannerType;
+  return pipe(
+    O.fromNullable(isWalletInstanceRemotelyActive),
+    O.fold(
+      // If the value is still undefined, do nothing
+      () => undefined,
+      // Otherwise, set the banner type based on the definitive value
+      isActive => (isActive ? "reactivating" : "onboarding")
+    )
+  );
 };
