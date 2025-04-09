@@ -15,7 +15,7 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceMinified } from "../../../../../definitions/services/ServiceMinified";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";

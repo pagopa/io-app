@@ -3645,6 +3645,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jsep-plugin/assignment@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@jsep-plugin/assignment@npm:1.3.0"
+  peerDependencies:
+    jsep: ^0.4.0||^1.0.0
+  checksum: 5549497d403a6c00969d61202a6d3dafc5a349929d190a524363dcfacb3436dbda3d9f88b2ec1330247a594ad3c5f1c17b0997769d0b206802281bad6cf9a410
+  languageName: node
+  linkType: hard
+
+"@jsep-plugin/regex@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "@jsep-plugin/regex@npm:1.0.4"
+  peerDependencies:
+    jsep: ^0.4.0||^1.0.0
+  checksum: 78ef01554535ac6c108851a2a6d86377bce10de01a263ad7b31f9b37c8aa9fc6c49f24b753e5da7d771c5921c913e43c1c33e0bc0fa5d02562d906c83a237836
+  languageName: node
+  linkType: hard
+
 "@native-html/css-processor@npm:1.11.0":
   version: 1.11.0
   resolution: "@native-html/css-processor@npm:1.11.0"
@@ -3850,14 +3868,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:^0.28.0":
-  version: 0.28.0
-  resolution: "@pagopa/io-react-native-wallet@npm:0.28.0"
+"@pagopa/io-react-native-wallet@npm:^0.28.2":
+  version: 0.28.2
+  resolution: "@pagopa/io-react-native-wallet@npm:0.28.2"
   dependencies:
+    dcql: ^0.2.21
     js-base64: ^3.7.7
     js-sha256: ^0.9.0
+    jsonpath-plus: ^10.2.0
     parse-url: ^9.2.0
     react-native-url-polyfill: ^2.0.0
+    react-native-uuid: ^2.0.1
     uuid: ^11.0.3
     zod: ^3.21.4
   peerDependencies:
@@ -3865,7 +3886,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": "*"
     react: "*"
     react-native: "*"
-  checksum: 291aad5dc46245a84320459881970ced8bd6b65d8087f28d3830ebd5583bdbabb8485b3e189d3bb26134d6756c6e9c2013c2a729c3ea95b382f3a71aa13ed21d
+  checksum: 94effeb7778fe07c5a4ca1e83c6516dfc82b61a852bcd05ba28f3b90719783c47b54a3aa6bd34ef4f132a1626f0e7ca5694592833eea932c67de6655f6138d31
   languageName: node
   linkType: hard
 
@@ -9564,6 +9585,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dcql@npm:^0.2.21":
+  version: 0.2.21
+  resolution: "dcql@npm:0.2.21"
+  dependencies:
+    valibot: 1.0.0-beta.8
+  checksum: feb42bd697225460ee315197182ab7bb9c04f59624016d2f27fba2cb4ecb0da61b4fde4db040f92012dfdc782a62d4b96edc2a2d8cc985414ebd57ed27f3546c
+  languageName: node
+  linkType: hard
+
 "debug@npm:2.6.9, debug@npm:^2.2.0, debug@npm:^2.3.3, debug@npm:^2.6.8, debug@npm:^2.6.9":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
@@ -13647,7 +13677,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^1.4.0
     "@pagopa/io-react-native-login-utils": ^1.0.8
     "@pagopa/io-react-native-secure-storage": ^0.2.0
-    "@pagopa/io-react-native-wallet": ^0.28.0
+    "@pagopa/io-react-native-wallet": ^0.28.2
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.0.0
     "@pagopa/react-native-cie": ^1.4.2
@@ -14942,6 +14972,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jsep@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "jsep@npm:1.4.0"
+  checksum: 8e7af5ecb91483b227092b87a3e85b5df3e848dbe6f201b19efcb18047567530d21dfeecb0978e09d1f66554fcfaed84176819eeacdfc86f61dc05c40c18f824
+  languageName: node
+  linkType: hard
+
 "jsesc@npm:^2.5.1":
   version: 2.5.2
   resolution: "jsesc@npm:2.5.2"
@@ -15079,6 +15116,20 @@ __metadata:
   version: 1.3.1
   resolution: "jsonparse@npm:1.3.1"
   checksum: 6514a7be4674ebf407afca0eda3ba284b69b07f9958a8d3113ef1005f7ec610860c312be067e450c569aab8b89635e332cee3696789c750692bb60daba627f4d
+  languageName: node
+  linkType: hard
+
+"jsonpath-plus@npm:^10.2.0":
+  version: 10.3.0
+  resolution: "jsonpath-plus@npm:10.3.0"
+  dependencies:
+    "@jsep-plugin/assignment": ^1.3.0
+    "@jsep-plugin/regex": ^1.0.4
+    jsep: ^1.4.0
+  bin:
+    jsonpath: bin/jsonpath-cli.js
+    jsonpath-plus: bin/jsonpath-cli.js
+  checksum: b0f7e9af4d3c586911690c0afc20cbdc3c8af963a739c7f7a62905ed34a25bf5279f2c254e7222aa65f834d2ae3c8cc217986d528c8206896afa008d6619cde7
   languageName: node
   linkType: hard
 
@@ -19400,6 +19451,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-uuid@npm:^2.0.1":
+  version: 2.0.3
+  resolution: "react-native-uuid@npm:2.0.3"
+  checksum: e47774481feaed5d38f75fb4b03f5189c03e7452038f1b0fa56677add8a8bdef64ec7ad5e83f9fa761d8788cac5c8e554ade07e82a2818145337df7c883e2124
+  languageName: node
+  linkType: hard
+
 "react-native-vision-camera@npm:^4.5.3":
   version: 4.5.3
   resolution: "react-native-vision-camera@npm:4.5.3"
@@ -22863,6 +22921,18 @@ __metadata:
     "@types/istanbul-lib-coverage": ^2.0.1
     convert-source-map: ^2.0.0
   checksum: 31ef98c6a31b1dab6be024cf914f235408cd4c0dc56a5c744a5eea1a9e019ba279e1b6f90d695b78c3186feed391ed492380ccf095009e2eb91f3d058f0b4491
+  languageName: node
+  linkType: hard
+
+"valibot@npm:1.0.0-beta.8":
+  version: 1.0.0-beta.8
+  resolution: "valibot@npm:1.0.0-beta.8"
+  peerDependencies:
+    typescript: ">=5"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 75812aa4d3e71ae96f7fb7dae4dc729e4ef92747565aafb90d4220f2809eb3a7caabdec6ef6b982252728ae20086c1d57f8cb8279f0dc702a27b8d45874f6ad8
   languageName: node
   linkType: hard
 

@@ -1,4 +1,4 @@
-import { InitiativeDetailsScreenParams } from "../screens/InitiativeDetailsScreen";
+import { InitiativeDetailsScreenParams } from "../screens/IdPayInitiativeDetailsScreen";
 import { IdPayOnboardingRoutes } from "./routes";
 
 export type IdPayOnboardingParamsList = {

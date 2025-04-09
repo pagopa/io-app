@@ -1,7 +1,7 @@
 import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ComponentProps } from "react";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";

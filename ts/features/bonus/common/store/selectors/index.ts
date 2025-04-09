@@ -6,7 +6,7 @@ import { BonusAvailable } from "../../../../../../definitions/content/BonusAvail
 import { BonusesAvailable } from "../../../../../../definitions/content/BonusesAvailable";
 import { GlobalState } from "../../../../../store/reducers/types";
 
-import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
 import { servicesByIdSelector } from "../../../../services/details/store/reducers";
 import { mapBonusIdFeatureFlag } from "../../utils";
@@ -85,7 +85,7 @@ export const serviceFromAvailableBonusSelector = (idBonusType: number) =>
   createSelector(
     supportedAvailableBonusSelector,
     servicesByIdSelector,
-    (supportedBonus, servicesById): O.Option<ServicePublic> =>
+    (supportedBonus, servicesById): O.Option<ServiceDetails> =>
       pipe(
         supportedBonus.find(sp => sp.id_type === idBonusType),
         O.fromNullable,
