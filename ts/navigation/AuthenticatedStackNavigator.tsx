@@ -38,6 +38,7 @@ import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
 import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
+import CheckEmailNavigator from "../features/mailCheck/navigation/CheckEmailNavigator.tsx";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
@@ -57,6 +58,8 @@ import { SystemNotificationPermissionsScreen } from "../features/pushNotificatio
 import ServicesNavigator from "../features/services/common/navigation/navigator";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { SearchScreen } from "../features/services/search/screens/SearchScreen";
+import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes.ts";
+import SettingsStackNavigator from "../features/settings/common/navigation/SettingsNavigator.tsx";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { useIOSelector } from "../store/hooks";
@@ -67,10 +70,8 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
-import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
-import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
 
@@ -170,13 +171,13 @@ const AuthenticatedStackNavigator = () => {
       />
 
       <Stack.Screen
-        name={ROUTES.PROFILE_NAVIGATOR}
+        name={SETTINGS_ROUTES.PROFILE_NAVIGATOR}
         options={{
           ...hideHeaderOptions,
           ...TransitionPresets.SlideFromRightIOS,
           gestureEnabled: isGestureEnabled
         }}
-        component={ProfileStackNavigator}
+        component={SettingsStackNavigator}
       />
 
       <Stack.Screen

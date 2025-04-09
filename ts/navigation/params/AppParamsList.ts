@@ -61,10 +61,11 @@ import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
 import { AuthenticationParamsList } from "../../features/authentication/common/navigation/params/AuthenticationParamsList.ts";
 import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes.ts";
+import { SettingsParamsList } from "../../features/settings/common/navigation/params/SettingsParamsList.ts";
+import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/routes.ts";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { OnboardingParamsList } from "./OnboardingParamsList";
-import { ProfileParamsList } from "./ProfileParamsList";
 
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
@@ -80,7 +81,7 @@ export type AppParamsList = {
   [NOTIFICATIONS_ROUTES.SYSTEM_NOTIFICATION_PERMISSIONS]: undefined;
   [SERVICES_ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
   [SERVICES_ROUTES.SEARCH]: undefined;
-  [ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<ProfileParamsList>;
+  [SETTINGS_ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<SettingsParamsList>;
 
   [ROUTES.BARCODE_SCAN]: undefined;
 

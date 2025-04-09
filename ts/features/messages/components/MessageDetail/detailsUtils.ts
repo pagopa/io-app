@@ -13,9 +13,9 @@ export const computeAndTrackCTAPressAnalytics = (
   const service = serviceByIdSelector(state, serviceId);
   trackCTAPressed(
     serviceId,
-    service?.service_name,
-    service?.organization_name,
-    service?.organization_fiscal_code,
+    service?.name,
+    service?.organization.name,
+    service?.organization.fiscal_code,
     isFirstCTA,
     cta.text
   );
@@ -28,8 +28,8 @@ export const computeAndTrackPaymentStart = (
   const service = serviceByIdSelector(state, serviceId);
   trackPaymentStart(
     serviceId,
-    service?.service_name,
-    service?.organization_name,
-    service?.organization_fiscal_code
+    service?.name,
+    service?.organization.name,
+    service?.organization.fiscal_code
   );
 };

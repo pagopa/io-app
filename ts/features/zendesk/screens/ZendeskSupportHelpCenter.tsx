@@ -52,7 +52,7 @@ import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/
 import {
   isProfileEmailValidatedSelector,
   profileSelector
-} from "../../../store/reducers/profile";
+} from "../../settings/common/store/selectors";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import {
