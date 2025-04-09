@@ -120,4 +120,27 @@ describe("IT Wallet preferences reducer", () => {
       claimValuesHidden: true
     });
   });
+
+  it("should persist preferences when the wallet is being reset", () => {
+    const action = itwLifecycleStoresReset();
+    const newState = reducer(
+      {
+        hideFeedbackBannerUntilDate: "abcd",
+        hideDiscoveryBannerUntilDate: "abcd",
+        requestedCredentials: { MDL: "abcd" },
+        isPendingReview: true,
+        authLevel: "L2",
+        claimValuesHidden: true,
+        isWalletInstanceRemotelyActive: true,
+        isL3Enabled: true
+      },
+      action
+    );
+
+    expect(newState).toEqual({
+      ...itwPreferencesInitialState,
+      claimValuesHidden: true,
+      isL3Enabled: true
+    });
+  });
 });

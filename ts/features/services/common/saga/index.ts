@@ -5,7 +5,7 @@ import { SessionToken } from "../../../../types/SessionToken";
 import { watchHomeSaga } from "../../home/saga";
 import { watchInstitutionSaga } from "../../institution/saga";
 import { watchSearchSaga } from "../../search/saga";
-import { createServicesClient } from "../api/client";
+import { createServicesClient } from "../api/servicesClient";
 import { watchServicesDetailsSaga } from "../../details/saga";
 import { BackendClient } from "../../../../api/backend";
 
@@ -15,7 +15,7 @@ export function* watchServicesSaga(
 ): SagaIterator {
   const servicesClient = createServicesClient(apiUrlPrefix, bearerToken);
 
-  yield* fork(watchServicesDetailsSaga, backendClient);
+  yield* fork(watchServicesDetailsSaga, backendClient, servicesClient);
   yield* fork(watchHomeSaga, servicesClient);
   yield* fork(watchInstitutionSaga, servicesClient);
   yield* fork(watchSearchSaga, servicesClient);

@@ -117,10 +117,10 @@ const serviceDataFromServiceId = (
   const service = serviceByIdSelector(state, serviceId);
   return service != null
     ? {
-        organizationFiscalCode: service.organization_fiscal_code,
-        organizationName: service.organization_name,
-        serviceId: service.service_id,
-        serviceName: service.service_name
+        organizationFiscalCode: service.organization.fiscal_code,
+        organizationName: service.organization.name,
+        serviceId: service.id,
+        serviceName: service.name
       }
     : { serviceId };
 };
