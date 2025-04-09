@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0-rc.1](https://github.com/pagopa/io-app/compare/3.3.0-rc.0...3.3.0-rc.1) (2025-04-08)
+
+
+### Features
+
+* [[IOBP-1563](https://pagopa.atlassian.net/browse/IOBP-1563)] Add remote banner specific for payment method PSP screen ([#6883](https://github.com/pagopa/io-app/issues/6883)) ([1b0fd47](https://github.com/pagopa/io-app/commit/1b0fd470fd0bd474efaec77d2a381fb2414ed335))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2164](https://pagopa.atlassian.net/browse/SIW-2164)] Update PID machine for L3 Wallet ([#6875](https://github.com/pagopa/io-app/issues/6875)) ([fbca924](https://github.com/pagopa/io-app/commit/fbca9247c0ea91e58ffaf67c6f463ee28eb1889e))
+* [[IOBP-263](https://pagopa.atlassian.net/browse/IOBP-263)] add missing `IdPay` prefix to the appropriate files ([#6882](https://github.com/pagopa/io-app/issues/6882)) ([95ecac4](https://github.com/pagopa/io-app/commit/95ecac4703db95c737359a95b97632fe0f9e2604))
+* [[IOPAE-1189](https://pagopa.atlassian.net/browse/IOPAE-1189)] Replace `getService` with `getServiceById` ([#6884](https://github.com/pagopa/io-app/issues/6884)) ([264dc39](https://github.com/pagopa/io-app/commit/264dc399fe7fa8b6349cd87cd32d85e377c14157))
+
 ## [3.3.0-rc.0](https://github.com/pagopa/io-app/compare/3.2.0-rc.8...3.3.0-rc.0) (2025-04-08)
 
 

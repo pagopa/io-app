@@ -1,5 +1,5 @@
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
@@ -123,15 +123,15 @@ export const trackHistoryFailure = (reason: string) => {
 };
 
 export const computeAndTrackDataShare = (
-  service: ServicePublic,
+  service: ServiceDetails,
   state: GlobalState
 ) => {
   const ctaText = fimsCtaTextSelector(state);
   trackDataShare(
-    service.service_id,
-    service.service_name,
-    service.organization_name,
-    service.organization_fiscal_code,
+    service.id,
+    service.name,
+    service.organization.name,
+    service.organization.fiscal_code,
     ctaText
   );
 };
@@ -144,9 +144,9 @@ export const computeAndTrackDataShareAccepted = (
   const ctaText = fimsCtaTextSelector(state);
   trackDataShareAccepted(
     serviceId,
-    service?.service_name,
-    service?.organization_name,
-    service?.organization_fiscal_code,
+    service?.name,
+    service?.organization.name,
+    service?.organization.fiscal_code,
     ctaText
   );
 };
