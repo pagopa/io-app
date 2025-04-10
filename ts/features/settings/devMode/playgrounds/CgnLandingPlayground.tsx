@@ -96,9 +96,8 @@ const CgnLandingPlayground = () => {
               source={{
                 uri: loadUri,
                 headers: {
-                  "X-PagoPa-CGN-Referer": refererValue,
-                  "User-Agent":
-                    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)"
+                  referer: refererValue,
+                  "X-PagoPa-CGN-Referer": refererValue
                 }
               }}
             />
