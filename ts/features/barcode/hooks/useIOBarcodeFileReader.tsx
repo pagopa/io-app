@@ -96,7 +96,7 @@ const imageLibraryOptions: ImageLibraryOptions = {
   includeBase64: true
 };
 
-const documentPickerOptions: DocumentPickerOptions<"ios" | "android"> = {
+const documentPickerOptions: DocumentPickerOptions = {
   presentationStyle: "fullScreen",
   mode: "open",
   type: [types.pdf]
