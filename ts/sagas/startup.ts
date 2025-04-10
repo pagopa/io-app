@@ -96,7 +96,7 @@ import {
   isPnEnabledSelector,
   remoteConfigSelector
 } from "../store/reducers/backendStatus/remoteConfig";
-import { IdentificationResult } from "../store/reducers/identification";
+import { IdentificationResult } from "../features/identification/store/reducers";
 import { profileSelector } from "../features/settings/common/store/selectors";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import {
@@ -131,7 +131,7 @@ import {
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
 import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
 import { watchSessionExpiredSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
-import { startAndReturnIdentificationResult } from "./identification";
+import { startAndReturnIdentificationResult } from "../features/identification/sagas";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,

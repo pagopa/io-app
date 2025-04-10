@@ -14,7 +14,7 @@ import { isIdPayCodeOnboardedSelector } from "../../../idpay/code/store/selector
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { identificationRequest } from "../../../../store/actions/identification";
+import { identificationRequest } from "../../../identification/store/actions";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {

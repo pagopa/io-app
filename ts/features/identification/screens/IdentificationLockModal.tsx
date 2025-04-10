@@ -8,17 +8,17 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import I18n from "../../i18n";
-import { useIODispatch } from "../../store/hooks";
-import { identificationHideLockModal } from "../../store/actions/identification";
-import { IOStyleVariables } from "../../components/core/variables/IOStyleVariables";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import I18n from "../../../i18n";
+import { useIODispatch } from "../../../store/hooks";
+import { identificationHideLockModal } from "../store/actions";
+import { IOStyleVariables } from "../../../components/core/variables/IOStyleVariables";
 import {
   CountdownProvider,
   useCountdown
-} from "../../components/countdown/CountdownProvider";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { ProgressIndicator } from "../../components/ui/ProgressIndicator";
+} from "../../../components/countdown/CountdownProvider";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { ProgressIndicator } from "../../../components/ui/ProgressIndicator";
 
 type Props = {
   countdownInMs: Millisecond;

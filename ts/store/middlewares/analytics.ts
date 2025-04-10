@@ -29,15 +29,6 @@ import {
 import { cieAuthenticationError } from "../../features/authentication/login/cie/store/actions";
 import { contentMunicipalityLoad } from "../actions/content";
 import {
-  identificationCancel,
-  identificationFailure,
-  identificationForceLogout,
-  identificationPinReset,
-  identificationRequest,
-  identificationStart,
-  identificationSuccess
-} from "../actions/identification";
-import {
   profileFirstLogin,
   profileLoadFailure,
   profileLoadRequest,
@@ -54,6 +45,7 @@ import {
 import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
+import { trackIdentificationAction } from "../../features/identification/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
 const trackAction =
@@ -133,15 +125,6 @@ const trackAction =
       case getType(sessionExpired):
       case getType(sessionInvalid):
       case getType(logoutSuccess):
-      // identification
-      // identificationSuccess is handled separately
-      // because it has a payload.
-      case getType(identificationRequest):
-      case getType(identificationStart):
-      case getType(identificationCancel):
-      case getType(identificationFailure):
-      case getType(identificationPinReset):
-      case getType(identificationForceLogout):
       // profile
       case getType(profileUpsert.success):
       case getType(profileLoadRequest):
@@ -164,14 +147,6 @@ const trackAction =
           choice: action.payload.choice,
           reason: action.payload.error.message
         });
-      // identification: identificationSuccess
-      case getType(identificationSuccess):
-        return mp.track(
-          action.type,
-          buildEventProperties("UX", "confirm", {
-            identification_method: action.payload.isBiometric ? "bio" : "pin"
-          })
-        );
     }
   };
 
@@ -193,6 +168,7 @@ export const actionTracking =
       void trackContentAction(mixpanel)(action);
       void trackServicesAction(mixpanel)(action);
       void trackZendesk(mixpanel)(action);
+      void trackIdentificationAction(mixpanel)(action);
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(mixpanel, fciEnvironment)(action);

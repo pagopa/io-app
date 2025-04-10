@@ -1,8 +1,8 @@
 import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { PinString } from "../../../types/PinString";
-import { reproduceSequence } from "../../../utils/tests";
+import { PinString } from "../../../../../types/PinString";
+import { reproduceSequence } from "../../../../../utils/tests";
 import {
   identificationCancel,
   identificationFailure,
@@ -10,26 +10,30 @@ import {
   identificationReset,
   identificationStart,
   identificationSuccess
-} from "../../actions/identification";
-import { Action } from "../../actions/types";
-import reducer, {
+} from "../../actions";
+import { Action } from "../../../../../store/actions/types";
+import {
   deltaTimespanBetweenAttempts,
   freeAttempts,
+  identificationReducer,
   IdentificationState,
   maxAttempts
-} from "../identification";
+} from "..";
 
 const identificationStartMock = identificationStart("111111" as PinString);
 
 describe("Identification reducer", () => {
   it("should return the initial state", () => {
-    const result = reducer(undefined, identificationStartMock);
+    const result = identificationReducer(undefined, identificationStartMock);
     expect(result.progress.kind).toEqual("started");
     expect(result.fail).toEqual(undefined);
   });
   it("should return correct state after identification success", () => {
-    const startState = reducer(undefined, identificationStartMock);
-    const successState = reducer(
+    const startState = identificationReducer(
+      undefined,
+      identificationStartMock
+    );
+    const successState = identificationReducer(
       startState,
       identificationSuccess({ isBiometric: false })
     );
@@ -43,22 +47,28 @@ describe("Identification reducer", () => {
     ];
     const finalState = reproduceSequence(
       {} as IdentificationState,
-      reducer,
+      identificationReducer,
       sequenceOfActions
     );
     expect(finalState.progress.kind).toEqual("started");
     expectFailState(finalState, maxAttempts - 1, 0);
   });
   it("should return correct state after the complete sequence of fails", () => {
-    const initialState = reducer(undefined, identificationStartMock);
+    const initialState = identificationReducer(
+      undefined,
+      identificationStartMock
+    );
     expectFailSequence(initialState);
   });
   it("should return correct state after a complete sequence of fails followed by another fail action (overflow)", () => {
-    const initialState = reducer(undefined, identificationStartMock);
+    const initialState = identificationReducer(
+      undefined,
+      identificationStartMock
+    );
     const finalState = expectFailSequence(initialState);
 
     // check what happens in the event of an overflow of action
-    const overflow = reducer(finalState, identificationFailure());
+    const overflow = identificationReducer(finalState, identificationFailure());
     expectFailState(
       overflow,
       1,
@@ -66,19 +76,22 @@ describe("Identification reducer", () => {
     );
   });
   it("should return correct state after a complete sequence of fails followed by another action", () => {
-    const initialState = reducer(undefined, identificationStartMock);
+    const initialState = identificationReducer(
+      undefined,
+      identificationStartMock
+    );
     const failState = expectFailSequence(initialState);
 
     // expect to reset the fail state when the next action is used
     const expectFailStateReset = (nextAction: Action, expectedKind: string) => {
-      const nextState = reducer(failState, nextAction);
+      const nextState = identificationReducer(failState, nextAction);
       expect(nextState.progress.kind).toEqual(expectedKind);
       expect(nextState.fail).toEqual(undefined);
     };
 
     // expect to keep the fail state  when the next action is used
     const expectFailStateKeep = (nextAction: Action, expectedKind: string) => {
-      const nextState = reducer(failState, nextAction);
+      const nextState = identificationReducer(failState, nextAction);
       expect(nextState.progress.kind).toEqual(expectedKind);
       expectFailState(
         nextState,
@@ -106,11 +119,16 @@ describe("Identification reducer", () => {
     expectFailStateKeep(identificationForceLogout(), "started");
   });
   it("should return correct fail state after starting the complete failing sequence from different states", () => {
-    const identificationResetState = reducer(undefined, identificationReset());
+    const identificationResetState = identificationReducer(
+      undefined,
+      identificationReset()
+    );
     expectFailSequence(identificationResetState);
 
     const expectFailSequenceFromStartingState = (action: Action) => {
-      expectFailSequence(reducer(identificationResetState, action));
+      expectFailSequence(
+        identificationReducer(identificationResetState, action)
+      );
     };
     // start the full identification sequence from different states
     [
@@ -120,15 +138,22 @@ describe("Identification reducer", () => {
     ].forEach(action => expectFailSequenceFromStartingState(action));
   });
   it("should execute multiple fail sequence after a reset of the fail state correctly", () => {
-    const identificationResetState = reducer(undefined, identificationReset());
+    const identificationResetState = identificationReducer(
+      undefined,
+      identificationReset()
+    );
 
     pipe(
       identificationResetState,
       expectFailSequence,
       (state: IdentificationState) =>
-        reducer(state, identificationSuccess({ isBiometric: false })),
+        identificationReducer(
+          state,
+          identificationSuccess({ isBiometric: false })
+        ),
       expectFailSequence,
-      (state: IdentificationState) => reducer(state, identificationReset()),
+      (state: IdentificationState) =>
+        identificationReducer(state, identificationReset()),
       expectFailSequence
     );
   });
@@ -156,7 +181,7 @@ const expectFailSequence = (
     );
 
   const finalState = sequenceOfActions.reduce((acc, val, i) => {
-    const newState = reducer(acc, val);
+    const newState = identificationReducer(acc, val);
     expectFailState(newState, maxAttempts - i - 1, expectedTimespan[i]);
     return newState;
   }, initialState);
