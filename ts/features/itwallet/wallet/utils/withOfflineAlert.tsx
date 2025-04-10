@@ -8,6 +8,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback } from "react";
 import { StatusBar } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
 import { startApplicationInitialization } from "../../../../store/actions/application";
@@ -19,6 +20,12 @@ import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { resetOfflineAccessReason } from "../../../ingress/store/actions";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import {
+  trackItwOfflineBanner,
+  trackItwOfflineReloadFailure,
+  trackItwOfflineRicaricaAppIO
+} from "../../analytics";
 
 const MODAL_BOTTOM_PADDING = 175;
 
@@ -48,6 +55,9 @@ const useOfflineAlertDetailModal = (
 
   const handleAppRestart = useCallback(() => {
     if (isConnected) {
+      trackItwOfflineRicaricaAppIO({
+        source: "banner"
+      });
       // Reset the offline access reason.
       // Since this state is `undefined` when the user is online,
       // the startup saga will proceed without blocking.
@@ -58,6 +68,7 @@ const useOfflineAlertDetailModal = (
       dispatch(startApplicationInitialization());
     } else {
       toast.error(I18n.t("features.itWallet.offline.failure"));
+      trackItwOfflineReloadFailure();
     }
   }, [dispatch, isConnected, toast]);
 
@@ -115,6 +126,15 @@ const OfflineAlertWrapper = ({
   children
 }: React.PropsWithChildren<OfflineAlertWrapperProps>) => {
   const detailModal = useOfflineAlertDetailModal(offlineAccessReason);
+  const { name } = useRoute();
+
+  useOnFirstRender(() => {
+    trackItwOfflineBanner({
+      screen: name,
+      error_message_type: offlineAccessReason,
+      use_case: "starting_app"
+    });
+  });
 
   return (
     <AlertEdgeToEdgeWrapper

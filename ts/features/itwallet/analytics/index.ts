@@ -7,6 +7,7 @@ import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
 import { ItwCredentialStatus } from "../common/utils/itwTypesUtils";
 import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
+import { OfflineAccessReasonEnum } from "../../ingress/store/reducer";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -161,6 +162,16 @@ type ItwCopyListItem = {
   item_copied: string;
 };
 
+type ItwOfflineBanner = {
+  screen: string;
+  error_message_type: OfflineAccessReasonEnum;
+  use_case: "starting_app" | "foreground" | "background";
+};
+
+type ItwOfflineRicaricaAppIO = {
+  source: "bottom_sheet" | "banner";
+};
+
 // #region SCREEN VIEW EVENTS
 export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
@@ -268,6 +279,20 @@ export function trackWalletCredentialFAC_SIMILE() {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS["ITW_CREDENTIAL_FAC-SIMILE"],
     buildEventProperties("UX", "screen_view", { credential: "ITW_TS_V2" })
+  );
+}
+
+export function trackItwOfflineWallet() {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_WALLET,
+    buildEventProperties("UX", "screen_view")
+  );
+}
+
+export function trackItwOfflineBottomSheet() {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_BOTTOM_SHEET,
+    buildEventProperties("UX", "screen_view")
   );
 }
 // #endregion SCREEN VIEW EVENTS
@@ -524,6 +549,17 @@ export function trackCredentialCardModal(credential: MixPanelCredential) {
   );
 }
 
+export function trackItwOfflineRicaricaAppIO({
+  source
+}: ItwOfflineRicaricaAppIO) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_OFFLINE_RICARICA_APP_IO,
+    buildEventProperties("UX", "action", {
+      source
+    })
+  );
+}
+
 export const trackCopyListItem = (properties: ItwCopyListItem) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_COPY_LIST_ITEM,
@@ -720,6 +756,20 @@ export const trackItwTrustmarkRenewFailure = (
   );
 };
 
+export const trackItwOfflineReloadFailure = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_OFFLINE_RELOAD_FAILURE,
+    buildEventProperties("KO", "error")
+  );
+};
+
+export const trackItwOfflineActionNotAllowed = (screen: { screen: string }) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_OFFLINE_ACTION_NOT_ALLOWED,
+    buildEventProperties("KO", "error", { screen })
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
@@ -821,6 +871,22 @@ export const trackItwRequestSuccess = (
     );
   }
 };
+
+export const trackItwOfflineBanner = ({
+  screen,
+  error_message_type,
+  use_case
+}: ItwOfflineBanner) => {
+  void mixpanelTrack(
+    ITW_TECH_EVENTS.ITW_ID_REQUEST_SUCCESS,
+    buildEventProperties("TECH", undefined, {
+      screen,
+      error_message_type,
+      use_case
+    })
+  );
+};
+
 // #endregion TECH
 
 // #region PROFILE AND SUPER PROPERTIES UPDATE
