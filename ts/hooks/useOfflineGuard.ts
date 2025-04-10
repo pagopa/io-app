@@ -2,12 +2,17 @@ import { useIOToast } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
+import { useRoute } from "@react-navigation/native";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import I18n from "../i18n";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import ROUTES from "../navigation/routes";
 import { useIOSelector } from "../store/hooks";
+import {
+  trackItwContentNotAvailable,
+  trackItwOfflineActionNotAllowed
+} from "../features/itwallet/analytics";
 
 /**
  * The type of offline guard to use.
@@ -54,7 +59,7 @@ export const useOfflineGuard = <TArgs extends Array<any>, TReturn>(
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
   const navigation = useIONavigation();
   const toast = useIOToast();
-
+  const { name } = useRoute();
   const { type = "screen", reasons = Object.values(OfflineAccessReasonEnum) } =
     options;
 
@@ -64,11 +69,15 @@ export const useOfflineGuard = <TArgs extends Array<any>, TReturn>(
   const guardFn = useCallback(() => {
     if (type === "screen") {
       navigation.navigate(ROUTES.OFFLINE_FAILURE);
+      trackItwContentNotAvailable();
     } else if (type === "toast") {
       toast.error(I18n.t("global.offline.toast"));
+      trackItwOfflineActionNotAllowed({
+        screen: name
+      });
     }
     return undefined as unknown as TReturn;
-  }, [navigation, toast, type]);
+  }, [name, navigation, toast, type]);
 
   return pipe(
     offlineAccessReason,
