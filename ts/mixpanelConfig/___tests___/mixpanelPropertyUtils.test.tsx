@@ -16,25 +16,6 @@ import {
 } from "../mixpanelPropertyUtils";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
-import { WalletStatusEnum } from "../../../definitions/pagopa/walletv3/WalletStatus";
-import { WalletInfo } from "../../../definitions/pagopa/walletv3/WalletInfo";
-
-const MOCK_WALLET: WalletInfo = {
-  walletId: "1",
-  creationDate: new Date(),
-  applications: [],
-  paymentMethodAsset: "",
-  paymentMethodId: "",
-  status: WalletStatusEnum.CREATED,
-  clients: {},
-  updateDate: new Date(),
-  details: {
-    type: "",
-    maskedNumber: 1,
-    instituteCode: 1,
-    bankName: ""
-  }
-};
 
 describe("mixpanelPropertyUtils", () => {
   const state = appReducer(undefined, applicationChangeState("active"));
@@ -193,12 +174,19 @@ describe("mixpanelPropertyUtils", () => {
       ...state,
       features: {
         ...state.features,
-        payments: {
-          ...state.features.payments,
-          wallet: {
-            userMethods: pot.some({
-              wallets: [MOCK_WALLET, MOCK_WALLET]
-            })
+        wallet: {
+          ...state.features.wallet,
+          cards: {
+            "1": {
+              key: "12345",
+              category: "payment",
+              type: "placeholder"
+            },
+            "2": {
+              key: "123456",
+              category: "payment",
+              type: "placeholder"
+            }
           }
         }
       }
