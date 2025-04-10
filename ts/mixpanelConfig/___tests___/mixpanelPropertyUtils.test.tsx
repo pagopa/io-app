@@ -176,16 +176,11 @@ describe("mixpanelPropertyUtils", () => {
         ...state.features,
         wallet: {
           ...state.features.wallet,
-          cards: {
-            "1": {
-              key: "12345",
-              category: "payment",
-              type: "placeholder"
-            },
-            "2": {
-              key: "123456",
-              category: "payment",
-              type: "placeholder"
+          placeholders: {
+            ...state.features.wallet.placeholders,
+            items: {
+              "1": "payment",
+              "2": "payment"
             }
           }
         }
