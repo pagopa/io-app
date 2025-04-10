@@ -18,7 +18,7 @@ export const useLoadPotValue = <T, E>(
   loadAction: () => void
 ) => {
   const [idState, setId] = useState("");
-  const timerRetry = useRef<number | undefined>(undefined);
+  const timerRetry = useRef<NodeJS.Timeout | undefined>(undefined);
   const navigation = useNavigation();
   const retry = useCallback(() => {
     timerRetry.current = undefined;
@@ -33,7 +33,7 @@ export const useLoadPotValue = <T, E>(
    * focus: false -> clear all the pending schedule
    */
   useEffect(() => {
-    clearTimeout(timerRetry.current);
+    clearTimeout(timerRetry.current as NodeJS.Timeout);
     timerRetry.current = undefined;
   }, [isFocused, idState]);
 
@@ -57,7 +57,7 @@ export const useLoadPotValue = <T, E>(
   // Component unmount, clear scheduled
   useEffect(
     () => () => {
-      clearTimeout(timerRetry.current);
+      clearTimeout(timerRetry.current as NodeJS.Timeout);
     },
     []
   );

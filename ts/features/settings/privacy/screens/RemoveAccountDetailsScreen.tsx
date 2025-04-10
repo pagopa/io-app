@@ -80,7 +80,7 @@ const RemoveAccountDetails = () => {
   const dispatch = useIODispatch();
   const { navigate } = useIONavigation();
   const toast = useIOToast();
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
   const hasActiveBonus = useIOSelector(isCgnEnrolledSelector);
   const isLoading = useIOSelector(isUserDataProcessingDeleteLoadingSelector);
@@ -114,7 +114,7 @@ const RemoveAccountDetails = () => {
       if (isError) {
         dispatch(resetDeleteUserDataProcessing());
       }
-      clearTimeout(timeoutRef.current);
+      clearTimeout(timeoutRef.current as NodeJS.Timeout);
     };
   }, [dispatch, isError]);
 

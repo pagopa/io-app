@@ -68,7 +68,7 @@ export const IngressScreen = () => {
   }, [isMixpanelInitialized, isMixpanelEnabled]);
 
   useEffect(() => {
-    const timeouts: Array<number> = [];
+    const timeouts: Array<NodeJS.Timeout> = [];
 
     timeouts.push(
       setTimeout(() => {

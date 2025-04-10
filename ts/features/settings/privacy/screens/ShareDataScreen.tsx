@@ -25,7 +25,7 @@ import { useConfirmOptOutBottomSheet } from "../shared/hooks/useConfirmOptOutBot
 import { ShareDataComponent } from "../shared/components/ShareDataComponent";
 
 const ShareDataScreen = () => {
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<NodeJS.Timeout>();
   const store = useIOStore();
   const dispatch = useIODispatch();
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector) ?? true;
@@ -69,7 +69,7 @@ const ShareDataScreen = () => {
   // eslint-disable-next-line arrow-body-style
   useEffect(() => {
     return () => {
-      clearTimeout(timeoutRef.current);
+      clearTimeout(timeoutRef.current as NodeJS.Timeout);
     };
   }, []);
 
