@@ -34,9 +34,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -64,18 +67,26 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -83,13 +94,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -143,11 +156,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -192,20 +210,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -275,15 +303,19 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={10}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -971,9 +1003,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -1001,18 +1036,26 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -1020,13 +1063,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -1080,11 +1125,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -1129,20 +1179,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -1212,15 +1272,19 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={12}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2145,9 +2209,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -2175,18 +2242,26 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -2194,13 +2269,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -2254,11 +2331,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -2303,20 +2385,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -2386,15 +2478,19 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={11}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -3201,9 +3297,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -3231,18 +3330,26 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -3250,13 +3357,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -3310,11 +3419,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -3359,20 +3473,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -3442,15 +3566,19 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={4}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -4027,9 +4155,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -4057,18 +4188,26 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -4076,13 +4215,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -4136,11 +4277,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -4185,20 +4331,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -4268,15 +4424,19 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={6}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -5090,9 +5250,12 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -5120,18 +5283,26 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -5139,13 +5310,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -5199,11 +5372,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -5248,20 +5426,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -5331,15 +5519,19 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={5}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -6035,9 +6227,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -6065,18 +6260,26 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -6084,13 +6287,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -6144,11 +6349,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -6193,20 +6403,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -6276,15 +6496,19 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={7}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -6949,9 +7173,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -6979,18 +7206,26 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -6998,13 +7233,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -7058,11 +7295,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -7107,20 +7349,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -7190,15 +7442,19 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={9}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -8100,9 +8356,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -8130,18 +8389,26 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -8149,13 +8416,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -8209,11 +8478,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -8258,20 +8532,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -8341,15 +8625,19 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={8}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -9133,9 +9421,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -9163,18 +9454,26 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -9182,13 +9481,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -9242,11 +9543,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -9291,20 +9597,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -9374,15 +9690,19 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={1}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -9936,9 +10256,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -9966,18 +10289,26 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -9985,13 +10316,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -10045,11 +10378,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -10094,20 +10432,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -10177,15 +10525,19 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={3}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -10976,9 +11328,12 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -11006,18 +11361,26 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -11025,13 +11388,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -11085,11 +11450,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   WALLET_HOME
@@ -11134,20 +11504,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -11217,15 +11597,19 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={2}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}

@@ -14,12 +14,12 @@ PODS:
   - jail-monkey (2.8.0):
     - React-Core
   - JOSESwift (2.4.0)
-  - lottie-ios (4.4.1)
-  - lottie-react-native (6.7.2):
+  - lottie-ios (4.5.0)
+  - lottie-react-native (7.2.2):
     - DoubleConversion
     - glog
     - hermes-engine
-    - lottie-ios (= 4.4.1)
+    - lottie-ios (= 4.5.0)
     - RCT-Folly (= 2024.11.18.00)
     - RCTRequired
     - RCTTypeSafety
@@ -1439,7 +1439,7 @@ PODS:
     - React-Core
   - react-native-cookies (6.2.1):
     - React-Core
-  - react-native-document-picker (9.3.1):
+  - react-native-document-picker (10.1.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1512,15 +1512,34 @@ PODS:
     - Yoga
   - react-native-pdf (6.7.7):
     - React-Core
-  - react-native-pdf-thumbnail (1.2.1):
+  - react-native-pdf-thumbnail (1.3.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
     - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-render-html (6.3.1):
     - React-Core
   - react-native-safe-area-context (5.3.0):
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
-  - react-native-skia (1.5.10):
+  - react-native-skia (1.12.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1547,7 +1566,7 @@ PODS:
     - React
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-webview (13.12.3):
+  - react-native-webview (13.13.5):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1867,7 +1886,7 @@ PODS:
     - React-Core
   - RNDeviceInfo (14.0.4):
     - React-Core
-  - RNFlashList (1.7.0):
+  - RNFlashList (1.8.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1890,7 +1909,7 @@ PODS:
     - Yoga
   - RNFS (2.18.0):
     - React
-  - RNGestureHandler (2.20.2):
+  - RNGestureHandler (2.25.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2147,16 +2166,16 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (15.8.0):
+  - RNSVG (15.11.2):
     - React-Core
   - Sentry/HybridSDK (8.41.0)
   - SocketRocket (0.7.1)
   - SwiftCBOR (0.5.0)
-  - VisionCamera (4.5.3):
-    - VisionCamera/Core (= 4.5.3)
-    - VisionCamera/React (= 4.5.3)
-  - VisionCamera/Core (4.5.3)
-  - VisionCamera/React (4.5.3):
+  - VisionCamera (4.6.4):
+    - VisionCamera/Core (= 4.6.4)
+    - VisionCamera/React (= 4.6.4)
+  - VisionCamera/Core (4.6.4)
+  - VisionCamera/React (4.6.4):
     - React-Core
   - Yoga (0.0.0)
   - ZendeskAnswerBotProvidersSDK (6.0.0):
@@ -2241,7 +2260,7 @@ DEPENDENCIES:
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
   - react-native-config (from `../node_modules/react-native-config`)
   - "react-native-cookies (from `../node_modules/@react-native-cookies/cookies`)"
-  - react-native-document-picker (from `../node_modules/react-native-document-picker`)
+  - "react-native-document-picker (from `../node_modules/@react-native-documents/picker`)"
   - react-native-fingerprint-scanner (from `../node_modules/react-native-fingerprint-scanner`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
@@ -2439,7 +2458,7 @@ EXTERNAL SOURCES:
   react-native-cookies:
     :path: "../node_modules/@react-native-cookies/cookies"
   react-native-document-picker:
-    :path: "../node_modules/react-native-document-picker"
+    :path: "../node_modules/@react-native-documents/picker"
   react-native-fingerprint-scanner:
     :path: "../node_modules/react-native-fingerprint-scanner"
   react-native-get-random-values:
@@ -2583,8 +2602,8 @@ SPEC CHECKSUMS:
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
   jail-monkey: 1846061ac12e861ac5a8ec7197b0daa775b83733
   JOSESwift: 7ff178bb9173ff42c6e990929a9f2fa702a34f69
-  lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
-  lottie-react-native: 76f9dc4a2eac545f18750ab0bce7d5fde0c7a111
+  lottie-ios: a881093fab623c467d3bce374367755c272bdd59
+  lottie-react-native: 35b7c1125a01f847fa5905d380e54951132d2450
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 37259ace491ca9d927c0f81498e6577a32a69f43
   pagopa-io-react-native-cieid: fbec2a09807357509e986e1ae831c38e559d4ac2
@@ -2629,7 +2648,7 @@ SPEC CHECKSUMS:
   react-native-blob-util: ce2014444133bd568c054bf58eece8375ae5ef3c
   react-native-config: e588441fd919c50e75a1ae023763f760b5e3adfe
   react-native-cookies: d648ab7025833b977c0b19e142503034f5f29411
-  react-native-document-picker: 67f639fe9ec052951315abb7b5514ec61fe5e1b7
+  react-native-document-picker: c780d87965984ba151680826bc2175c0536ff173
   react-native-fingerprint-scanner: 91bf6825709dd7bd3abc4588a4772eb097a2b2d8
   react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba
   react-native-image-picker: 8c8f120521f283d7a069c51d519fbd654e8de8e3
@@ -2637,14 +2656,14 @@ SPEC CHECKSUMS:
   react-native-notifications-utils: 2684eeb23e47ea5d892b151c28ae07840d1448d1
   react-native-pager-view: 68e8a65a607a6f91a1e25865002192c3c4f53fcf
   react-native-pdf: 6a51a22ccefb23eb93298771e4bf090913e86d70
-  react-native-pdf-thumbnail: b811c3676a0799d49e4885817ad79aa1d5c05168
+  react-native-pdf-thumbnail: 2d69e506eb4ea4940f284a228b975f5ab74ab61b
   react-native-render-html: 05a7d4490ffc85c88094601207f3e48a90533476
   react-native-safe-area-context: fdb0a66feac038cb6eb1edafcf2ccee2b5cf0284
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
-  react-native-skia: b71e1e0f14f6b684e21d98b93b301d90d59c440d
+  react-native-skia: 81f2137249d4528d44142fcd56253b264f25b448
   react-native-slider: 5299110eb902bc5169b1dd94192aa28e1bf15ad8
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
-  react-native-webview: 63334f5dae7f1859188dc2e15dae39382820eff7
+  react-native-webview: 079eca50edf657503318b66687dadfb903731aa8
   React-NativeModulesApple: fd0545efbb7f936f78edd15a6564a72d2c34bb32
   React-perflogger: 5f8fa36a8e168fb355efe72099efe77213bc2ac6
   React-performancetimeline: 8c0ecfa1ae459cc5678a65f95ac3bf85644d6feb
@@ -2679,9 +2698,9 @@ SPEC CHECKSUMS:
   RNCClipboard: 47593431a9e763a71950798683b28f691f16b98d
   RNCPushNotificationIOS: 9f3ee8e3b19b6d1941990d0e6306e89fc7610c83
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
-  RNFlashList: 3ab06ad9aa4b5587d6e2f34f5c8ff3380960d8db
+  RNFlashList: ff5a0b3113c4cda0eaf4b94df8572ccad3c40fd5
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
-  RNGestureHandler: 2ebc802eff9a69843f7b3d376b70aab9e1cca8d1
+  RNGestureHandler: 92e89a04cd0d1c77f383a55d14c15e7f423f4c00
   RNI18n: 11ec5086508673ef71b5b567da3e8bcca8a926e1
   RNKeychain: e593cdad28fe4365dbfa703d25560d765a16bc52
   RNPermissions: e65447d4a83dc5882f35fe277d163fc8ebb22a8b
@@ -2692,11 +2711,11 @@ SPEC CHECKSUMS:
   RNScreenshotPrevent: 5f8473abaa2db2476561ef8f3704b66491ce7b01
   RNSentry: bd94aeeb12e27addc3fcea745483e74f88c29e42
   RNShare: b1660f26d8bc57cbf9acf11872a8eb2f3ecf4825
-  RNSVG: 8542aa11770b27563714bbd8494a8436385fc85f
+  RNSVG: 4c63b12b7b5761063bca4f20dd228f6a8370f614
   Sentry: 54d0fe6c0df448497c8ed4cce66ccf7027e1823e
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftCBOR: aa87349b4ccddd19f861aa544f7c27d43dee5772
-  VisionCamera: 5590dbf85b4e7be8894bf0b7db86aa6275cdc228
+  VisionCamera: f56eaedde0d3fa095143b78374d29e89e71735f9
   Yoga: 66a9a23a82dd4081b393babe509967097759b3d6
   ZendeskAnswerBotProvidersSDK: 2f3d0e38acdbd4507862b4e4a7b28d3764072854
   ZendeskAnswerBotSDK: de9759a504d4a262c453784e9c6d9d6907ad2222

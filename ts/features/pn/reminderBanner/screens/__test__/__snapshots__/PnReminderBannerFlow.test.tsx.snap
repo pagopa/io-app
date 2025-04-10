@@ -4136,9 +4136,12 @@ exports[`error screens should display an error screen in case of missing_sid err
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -4166,18 +4169,26 @@ exports[`error screens should display an error screen in case of missing_sid err
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -4185,13 +4196,15 @@ exports[`error screens should display an error screen in case of missing_sid err
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -4245,11 +4258,16 @@ exports[`error screens should display an error screen in case of missing_sid err
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   PN_ACTIVATION_BANNER_FLOW
@@ -4294,20 +4312,30 @@ exports[`error screens should display an error screen in case of missing_sid err
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -4377,15 +4405,19 @@ exports[`error screens should display an error screen in case of missing_sid err
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={10}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -4467,17 +4499,10 @@ exports[`error screens should display an error screen in case of missing_sid err
                               false,
                             ]
                           }
-                          handlerTag={11}
+                          handlerTag={-1}
                           handlerType="NativeViewGestureHandler"
                           onGestureHandlerEvent={[Function]}
                           onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
-                            ]
-                          }
                         >
                           <View>
                             <View
@@ -4897,9 +4922,12 @@ exports[`error screens should display an error screen in case of preferences err
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -4927,18 +4955,26 @@ exports[`error screens should display an error screen in case of preferences err
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -4946,13 +4982,15 @@ exports[`error screens should display an error screen in case of preferences err
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -5006,11 +5044,16 @@ exports[`error screens should display an error screen in case of preferences err
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   PN_ACTIVATION_BANNER_FLOW
@@ -5055,20 +5098,30 @@ exports[`error screens should display an error screen in case of preferences err
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -5138,15 +5191,19 @@ exports[`error screens should display an error screen in case of preferences err
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={12}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -5228,17 +5285,10 @@ exports[`error screens should display an error screen in case of preferences err
                               false,
                             ]
                           }
-                          handlerTag={13}
+                          handlerTag={-1}
                           handlerType="NativeViewGestureHandler"
                           onGestureHandlerEvent={[Function]}
                           onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
-                            ]
-                          }
                         >
                           <View>
                             <View
@@ -5658,9 +5708,12 @@ exports[`loading screens + error interop should render the correct loading scree
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -5688,18 +5741,26 @@ exports[`loading screens + error interop should render the correct loading scree
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -5707,13 +5768,15 @@ exports[`loading screens + error interop should render the correct loading scree
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -5767,11 +5830,16 @@ exports[`loading screens + error interop should render the correct loading scree
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   PN_ACTIVATION_BANNER_FLOW
@@ -5816,20 +5884,30 @@ exports[`loading screens + error interop should render the correct loading scree
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -5899,15 +5977,19 @@ exports[`loading screens + error interop should render the correct loading scree
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={14}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -5989,17 +6071,10 @@ exports[`loading screens + error interop should render the correct loading scree
                               false,
                             ]
                           }
-                          handlerTag={15}
+                          handlerTag={-1}
                           handlerType="NativeViewGestureHandler"
                           onGestureHandlerEvent={[Function]}
                           onGestureHandlerStateChange={[Function]}
-                          waitFor={
-                            [
-                              {
-                                "current": null,
-                              },
-                            ]
-                          }
                         >
                           <View>
                             <View
@@ -6419,9 +6494,12 @@ exports[`loading screens + error interop should render the correct loading scree
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -6449,18 +6527,26 @@ exports[`loading screens + error interop should render the correct loading scree
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -6468,13 +6554,15 @@ exports[`loading screens + error interop should render the correct loading scree
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -6528,11 +6616,16 @@ exports[`loading screens + error interop should render the correct loading scree
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   PN_ACTIVATION_BANNER_FLOW
@@ -6577,20 +6670,30 @@ exports[`loading screens + error interop should render the correct loading scree
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -6660,15 +6763,19 @@ exports[`loading screens + error interop should render the correct loading scree
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={16}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -7016,9 +7123,12 @@ exports[`loading screens + error interop should render the correct loading scree
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -7046,18 +7156,26 @@ exports[`loading screens + error interop should render the correct loading scree
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -7065,13 +7183,15 @@ exports[`loading screens + error interop should render the correct loading scree
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -7125,11 +7245,16 @@ exports[`loading screens + error interop should render the correct loading scree
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   PN_ACTIVATION_BANNER_FLOW
@@ -7174,20 +7299,30 @@ exports[`loading screens + error interop should render the correct loading scree
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -7257,15 +7392,19 @@ exports[`loading screens + error interop should render the correct loading scree
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={19}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -7613,9 +7752,12 @@ exports[`loading screens + error interop should render the correct loading scree
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -7643,18 +7785,26 @@ exports[`loading screens + error interop should render the correct loading scree
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -7662,13 +7812,15 @@ exports[`loading screens + error interop should render the correct loading scree
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -7722,11 +7874,16 @@ exports[`loading screens + error interop should render the correct loading scree
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   PN_ACTIVATION_BANNER_FLOW
@@ -7771,20 +7928,30 @@ exports[`loading screens + error interop should render the correct loading scree
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -7854,15 +8021,19 @@ exports[`loading screens + error interop should render the correct loading scree
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={20}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -8210,9 +8381,12 @@ exports[`loading screens + error interop should render the correct loading scree
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -8240,18 +8414,26 @@ exports[`loading screens + error interop should render the correct loading scree
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -8259,13 +8441,15 @@ exports[`loading screens + error interop should render the correct loading scree
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -8319,11 +8503,16 @@ exports[`loading screens + error interop should render the correct loading scree
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   PN_ACTIVATION_BANNER_FLOW
@@ -8368,20 +8557,30 @@ exports[`loading screens + error interop should render the correct loading scree
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -8451,15 +8650,19 @@ exports[`loading screens + error interop should render the correct loading scree
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={17}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -8807,9 +9010,12 @@ exports[`loading screens + error interop should render the correct loading scree
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -8837,18 +9043,26 @@ exports[`loading screens + error interop should render the correct loading scree
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -8856,13 +9070,15 @@ exports[`loading screens + error interop should render the correct loading scree
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -8916,11 +9132,16 @@ exports[`loading screens + error interop should render the correct loading scree
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   PN_ACTIVATION_BANNER_FLOW
@@ -8965,20 +9186,30 @@ exports[`loading screens + error interop should render the correct loading scree
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -9048,15 +9279,19 @@ exports[`loading screens + error interop should render the correct loading scree
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={18}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}

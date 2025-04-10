@@ -51,20 +51,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -134,9 +144,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -386,7 +400,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -921,7 +934,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -1051,7 +1063,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -1225,7 +1236,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -1272,14 +1282,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -1338,20 +1356,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -1421,9 +1449,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -1673,7 +1705,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2208,7 +2239,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -2338,7 +2368,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -2512,7 +2541,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -2559,14 +2587,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -2625,20 +2661,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -2708,9 +2754,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -2960,7 +3010,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -3495,7 +3544,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -3625,7 +3673,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -3799,7 +3846,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -3846,14 +3892,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -3912,20 +3966,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -3995,9 +4059,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -4247,7 +4315,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4782,7 +4849,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -4912,7 +4978,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -5086,7 +5151,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -5133,14 +5197,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -5199,20 +5271,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -5282,9 +5364,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -5534,7 +5620,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -6069,7 +6154,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -6199,7 +6283,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -6373,7 +6456,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -6420,14 +6502,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -6486,20 +6576,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -6569,9 +6669,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -6821,7 +6925,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -7356,7 +7459,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -7486,7 +7588,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -7660,7 +7761,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -7707,14 +7807,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -7773,20 +7881,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -7856,9 +7974,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -8108,7 +8230,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -8643,7 +8764,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -8773,7 +8893,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -8947,7 +9066,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -8994,14 +9112,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -9060,20 +9186,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -9143,9 +9279,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -9395,7 +9535,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -9930,7 +10069,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -10060,7 +10198,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -10234,7 +10371,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -10281,14 +10417,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -10347,20 +10491,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -10430,9 +10584,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -10682,7 +10840,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -11217,7 +11374,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -11347,7 +11503,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -11521,7 +11676,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -11568,14 +11722,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -11634,20 +11796,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -11717,9 +11889,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -11969,7 +12145,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -12504,7 +12679,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -12634,7 +12808,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -12808,7 +12981,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -12855,14 +13027,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -12921,20 +13101,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -13004,9 +13194,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -13256,7 +13450,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -13791,7 +13984,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -13921,7 +14113,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -14095,7 +14286,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -14142,14 +14332,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -14208,20 +14406,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -14291,9 +14499,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -14543,7 +14755,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -15078,7 +15289,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -15208,7 +15418,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -15382,7 +15591,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -15429,14 +15637,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -15495,20 +15711,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -15578,9 +15804,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -15830,7 +16060,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -16365,7 +16594,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -16495,7 +16723,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -16669,7 +16896,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -16716,14 +16942,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -16782,20 +17016,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -16865,9 +17109,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -17117,7 +17365,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -17652,7 +17899,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -17782,7 +18028,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -17956,7 +18201,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -18003,14 +18247,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -18069,20 +18321,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -18152,9 +18414,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -18404,7 +18670,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -18939,7 +19204,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -19069,7 +19333,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -19243,7 +19506,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -19290,14 +19552,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -19356,20 +19626,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -19439,9 +19719,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -19691,7 +19975,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -20226,7 +20509,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -20356,7 +20638,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -20530,7 +20811,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -20577,14 +20857,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -20643,20 +20931,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -20726,9 +21024,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -20978,7 +21280,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -21513,7 +21814,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -21643,7 +21943,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -21817,7 +22116,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -21864,14 +22162,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>
@@ -21930,20 +22236,30 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -22013,9 +22329,13 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
@@ -22265,7 +22585,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#555C70"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -22800,7 +23119,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                     <View
                       collapsable={false}
                       pointerEvents="box-none"
-                      style={{}}
                     >
                       <View
                         accessibilityElementsHidden={false}
@@ -22930,7 +23248,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -23104,7 +23421,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -23151,14 +23467,22 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
         }
       />
     </View>

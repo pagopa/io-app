@@ -10,8 +10,9 @@ import { Alert, Linking, View } from "react-native";
 import DocumentPicker, {
   DocumentPickerOptions,
   DocumentPickerResponse,
+  NonEmptyArray,
   types
-} from "react-native-document-picker";
+} from "@react-native-documents/picker";
 import {
   launchImageLibrary,
   ImagePickerResponse,
@@ -176,7 +177,11 @@ const useIOBarcodeFileReader = ({
   /**
    * Handles the Barcode decoding from a PDF document
    */
-  const onDocumentSelected = async ({ uri, type }: DocumentPickerResponse) => {
+  const onDocumentSelected = async (
+    documentPickerResponse: NonEmptyArray<DocumentPickerResponse>
+  ) => {
+    const { uri, type } = documentPickerResponse[0];
+
     if (type !== "application/pdf") {
       // If the file is not a PDF document, show an error
       return onBarcodeError({ reason: "INVALID_FILE" }, "file");
@@ -219,10 +224,7 @@ const useIOBarcodeFileReader = ({
   const showDocumentPicker = async () => {
     setIsLoading(true);
     await pipe(
-      TE.tryCatch(
-        () => DocumentPicker.pickSingle(documentPickerOptions),
-        E.toError
-      ),
+      TE.tryCatch(() => DocumentPicker.pick(documentPickerOptions), E.toError),
       TE.map(onDocumentSelected),
       TE.mapLeft(() => setIsLoading(false))
     )();

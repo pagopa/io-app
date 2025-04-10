@@ -31,17 +31,10 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
         false,
       ]
     }
-    handlerTag={1}
+    handlerTag={-1}
     handlerType="NativeViewGestureHandler"
     onGestureHandlerEvent={[Function]}
     onGestureHandlerStateChange={[Function]}
-    waitFor={
-      [
-        {
-          "current": null,
-        },
-      ]
-    }
   >
     <View>
       <View

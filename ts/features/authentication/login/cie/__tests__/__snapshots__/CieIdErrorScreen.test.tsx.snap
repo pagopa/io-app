@@ -31,17 +31,10 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
         false,
       ]
     }
-    handlerTag={6}
+    handlerTag={-1}
     handlerType="NativeViewGestureHandler"
     onGestureHandlerEvent={[Function]}
     onGestureHandlerStateChange={[Function]}
-    waitFor={
-      [
-        {
-          "current": null,
-        },
-      ]
-    }
   >
     <View>
       <View
@@ -520,17 +513,10 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
         false,
       ]
     }
-    handlerTag={2}
+    handlerTag={-1}
     handlerType="NativeViewGestureHandler"
     onGestureHandlerEvent={[Function]}
     onGestureHandlerStateChange={[Function]}
-    waitFor={
-      [
-        {
-          "current": null,
-        },
-      ]
-    }
   >
     <View>
       <View

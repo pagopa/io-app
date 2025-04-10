@@ -34,9 +34,12 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -64,18 +67,26 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -83,13 +94,15 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -143,11 +156,16 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   MESSAGE_DETAIL
@@ -192,20 +210,30 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -275,15 +303,19 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={1}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -435,7 +467,6 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
@@ -595,9 +626,12 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -625,18 +659,26 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -644,13 +686,15 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -704,11 +748,16 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   MESSAGE_DETAIL
@@ -753,20 +802,30 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -836,15 +895,19 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={2}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -996,7 +1059,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
@@ -1212,9 +1274,12 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -1242,18 +1307,26 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -1261,13 +1334,15 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -1321,11 +1396,16 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   MESSAGE_DETAIL
@@ -1370,20 +1450,30 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -1453,15 +1543,19 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={3}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -1613,7 +1707,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
@@ -1927,7 +2020,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -2013,9 +2105,12 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -2043,18 +2138,26 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -2062,13 +2165,15 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -2122,11 +2227,16 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   MESSAGE_DETAIL
@@ -2171,20 +2281,30 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -2254,15 +2374,19 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={4}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2414,7 +2538,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
@@ -2728,7 +2851,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -2814,9 +2936,12 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -2844,18 +2969,26 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -2863,13 +2996,15 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -2923,11 +3058,16 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   MESSAGE_DETAIL
@@ -2972,20 +3112,30 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -3055,15 +3205,19 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={5}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -3215,7 +3369,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
@@ -3529,7 +3682,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -3721,7 +3873,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -3807,9 +3958,12 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -3837,18 +3991,26 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -3856,13 +4018,15 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -3916,11 +4080,16 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   MESSAGE_DETAIL
@@ -3965,20 +4134,30 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -4048,15 +4227,19 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={6}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -4208,7 +4391,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
@@ -4522,7 +4704,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -4714,7 +4895,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -4800,9 +4980,12 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -4830,18 +5013,26 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -4849,13 +5040,15 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -4909,11 +5102,16 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   MESSAGE_DETAIL
@@ -4958,20 +5156,30 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -5041,15 +5249,19 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={8}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -5201,7 +5413,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
@@ -5515,7 +5726,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -5754,7 +5964,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -5946,7 +6155,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -6185,7 +6393,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -6377,7 +6584,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -6569,7 +6775,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -6655,9 +6860,12 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -6685,18 +6893,26 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -6704,13 +6920,15 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -6764,11 +6982,16 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   MESSAGE_DETAIL
@@ -6813,20 +7036,30 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -6896,15 +7129,19 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={7}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -7056,7 +7293,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                   },
                                 ]
                               }
-                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={36}
@@ -7370,7 +7606,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -7609,7 +7844,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
@@ -7801,7 +8035,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={36}
