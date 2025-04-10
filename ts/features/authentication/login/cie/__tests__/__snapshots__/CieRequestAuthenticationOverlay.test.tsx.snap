@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CieRequestAuthenticationOverlay Should match the snapshot 1`] = `
+exports[`CieRequestAuthenticationOverlay should render correctly and match snapshot 1`] = `
 <View
   style={
     {
@@ -150,7 +150,7 @@ exports[`CieRequestAuthenticationOverlay Should match the snapshot 1`] = `
                     }
                   }
                 >
-                  DUMMY
+                  DUMMY_SCREEN
                 </Text>
               </View>
               <View
