@@ -100,7 +100,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
       void updateMixpanelProfileProperties(store.getState(), {
         property: "SAVED_PAYMENT_METHOD",
-        value: (availablePaymentMethods?.length || 0) + 1
+        value: (availablePaymentMethods?.length ?? 0) + 1
       });
     }
   });
