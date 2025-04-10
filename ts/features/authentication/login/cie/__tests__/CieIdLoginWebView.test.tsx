@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { fireEvent, render } from "@testing-library/react-native";
-import { Linking } from "react-native";
+import { EmitterSubscription, Linking } from "react-native";
 import CieIdLoginWebView from "../components/CieIdLoginWebView";
 import * as loginHooks from "../../../../lollipop/hooks/useLollipopLoginSource";
 import * as authSelectors from "../../../common/store/selectors";
@@ -252,6 +252,64 @@ describe(CieIdLoginWebView, () => {
         authLevel: "L2",
         params: { spidLevel: SPID_LEVEL, isUat: IS_UAT }
       }
+    });
+  });
+  it("Should set authenticatedUrl if URL is whitelisted", () => {
+    const url = "https://idserver.servizicie.interno.gov.it/profile";
+    jest
+      .spyOn(Linking, "addEventListener")
+      .mockImplementation(
+        (_: "url", handler: (event: { url: string }) => void) => {
+          handler({ url: `iologincie:${url}` });
+          return { remove: jest.fn() } as unknown as EmitterSubscription;
+        }
+      );
+
+    const { getByTestId } = renderComponent();
+    expect(getByTestId("cie-id-webview")).toBeTruthy();
+  });
+
+  it("Should handle generic CIEID error if no message is provided", () => {
+    const url = "https://idserver.servizicie.interno.gov.it/cieiderror";
+
+    jest
+      .spyOn(Linking, "addEventListener")
+      .mockImplementation(
+        (_: "url", handler: (event: { url: string }) => void) => {
+          handler({ url: `iologincie:${url}` });
+          return { remove: jest.fn() } as unknown as EmitterSubscription;
+        }
+      );
+
+    renderComponent();
+    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      params: {
+        errorCodeOrMessage: undefined,
+        authMethod: "CIE_ID",
+        authLevel: "L2",
+        params: { spidLevel: SPID_LEVEL, isUat: IS_UAT }
+      }
+    });
+  });
+
+  it("Should call navigateToCieIdAuthUrlError if URL is malformed", () => {
+    const url = "not-a-valid-url";
+
+    jest
+      .spyOn(Linking, "addEventListener")
+      .mockImplementation(
+        (_: "url", handler: (event: { url: string }) => void) => {
+          handler({ url: `iologincie:${url}` });
+          return { remove: jest.fn() } as unknown as EmitterSubscription;
+        }
+      );
+
+    renderComponent();
+
+    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
+      params: { url: "not-a-valid-url" }
     });
   });
 });
