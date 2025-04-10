@@ -604,10 +604,14 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       source={
                                         [
                                           {
+                                            "height": 180,
                                             "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
+                                            "width": 180,
                                           },
                                           {
+                                            "height": 180,
                                             "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/FSCLCD.png",
+                                            "width": 180,
                                           },
                                         ]
                                       }
