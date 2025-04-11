@@ -595,6 +595,7 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                               <TextInput
                                 accessibilityElementsHidden={false}
                                 accessibilityLabel="Codice avviso"
+                                accessibilityLiveRegion="polite"
                                 accessibilityState={
                                   {
                                     "disabled": false,
