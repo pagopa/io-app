@@ -146,7 +146,10 @@ const generateMockedGlobalState = (
         }
       },
       wallet: {
-        cards: {}
+        cards: {},
+        placeholders: {
+          items: {}
+        }
       }
     },
     notifications: {
