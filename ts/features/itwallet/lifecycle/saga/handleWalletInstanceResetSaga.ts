@@ -11,6 +11,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../store/actions";
+import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
 
 const getKeyTag = (credential: O.Option<StoredCredential>) =>
   pipe(
@@ -25,6 +26,8 @@ export function* handleWalletInstanceResetSaga() {
 
   yield* put(itwLifecycleStoresReset());
   yield* put(walletRemoveCardsByCategory("itw"));
+  // Set the remote wallet instance as inactive since it has been revoked on the server.
+  yield* put(itwSetWalletInstanceRemotelyActive(false));
 
   // Remove all keys within the wallet.
   // On iOS skip the integrity key tag as it is managed by the App Attest service.
