@@ -462,9 +462,13 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                       accessibilityIgnoresInvertColors={true}
                                       onError={[Function]}
                                       source={
-                                        {
-                                          "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/1.png",
-                                        }
+                                        [
+                                          {
+                                            "height": 180,
+                                            "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/1.png",
+                                            "width": 180,
+                                          },
+                                        ]
                                       }
                                       style={
                                         {
@@ -990,9 +994,13 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                       accessibilityIgnoresInvertColors={true}
                                       onError={[Function]}
                                       source={
-                                        {
-                                          "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/1.png",
-                                        }
+                                        [
+                                          {
+                                            "height": 180,
+                                            "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/1.png",
+                                            "width": 180,
+                                          },
+                                        ]
                                       }
                                       style={
                                         {

@@ -18,7 +18,7 @@ import {
 import { ComponentProps } from "react";
 import {
   ColorValue,
-  ImageURISource,
+  ImageSourcePropType,
   Pressable,
   StyleSheet,
   View
@@ -74,7 +74,7 @@ export type ListItemMessage = WithTestID<{
   onPress: () => void;
   organizationName: string;
   selected?: boolean;
-  serviceLogos?: ReadonlyArray<ImageURISource>;
+  serviceLogos?: ImageSourcePropType;
   serviceName: string;
 }> &
   Pick<

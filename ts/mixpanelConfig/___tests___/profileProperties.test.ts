@@ -100,7 +100,7 @@ describe("profileProperties", () => {
               NOTIFICATION_CONFIGURATION: pushContentReminderTuple[2],
               NOTIFICATION_PERMISSION: notificationPermissionTuple[1],
               NOTIFICATION_TOKEN: notificationTokenTuple[1],
-              SAVED_PAYMENT_METHOD: undefined,
+              SAVED_PAYMENT_METHOD: 0,
               SERVICE_CONFIGURATION: "AUTO",
               TOS_ACCEPTED_VERSION: 1,
               TRACKING: "accepted",
@@ -146,7 +146,10 @@ const generateMockedGlobalState = (
         }
       },
       wallet: {
-        cards: {}
+        cards: {},
+        placeholders: {
+          items: {}
+        }
       }
     },
     notifications: {
