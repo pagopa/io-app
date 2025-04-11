@@ -14,7 +14,7 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { ComponentProps } from "react";
-import { ImageURISource, Pressable, StyleSheet, View } from "react-native";
+import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 import I18n from "../../../../../i18n";
@@ -66,7 +66,7 @@ export type ListItemMessage = WithTestID<{
   onPress: () => void;
   organizationName: string;
   selected?: boolean;
-  serviceLogos?: ReadonlyArray<ImageURISource>;
+  serviceLogos?: ImageSourcePropType;
   serviceName: string;
 }> &
   Pick<
