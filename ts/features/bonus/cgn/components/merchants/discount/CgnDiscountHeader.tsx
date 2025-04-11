@@ -2,7 +2,6 @@ import {
   Badge,
   H3,
   HStack,
-  IOColors,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -33,9 +32,9 @@ export const CgnDiscountHeader = ({
 
   const { header: headerStyle } = useCgnStyle();
 
- const { backgroundColor, foreground } = isNew
-   ? headerStyle.new
-   : headerStyle.default;
+  const { backgroundColor, foreground } = isNew
+    ? headerStyle.new
+    : headerStyle.default;
 
   return (
     <View
