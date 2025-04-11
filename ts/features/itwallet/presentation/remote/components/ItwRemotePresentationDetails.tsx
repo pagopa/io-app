@@ -2,7 +2,6 @@ import { memo, useMemo } from "react";
 import { View } from "react-native";
 import {
   Alert,
-  BodySmall,
   ClaimsSelector,
   ListItemCheckbox,
   ListItemHeader,
@@ -79,15 +78,14 @@ const ItwRemotePresentationDetails = () => {
             )}
             iconName="security"
             iconColor={theme["icon-decorative"]}
+            description={
+              purpose
+                ? I18n.t("features.itWallet.presentation.remote.purpose", {
+                    purpose
+                  })
+                : undefined
+            }
           />
-
-          {purpose && (
-            <BodySmall>
-              {I18n.t("features.itWallet.presentation.remote.purpose", {
-                purpose
-              })}
-            </BodySmall>
-          )}
           {renderCredentialsBlock(credentials)}
         </View>
       ))}
