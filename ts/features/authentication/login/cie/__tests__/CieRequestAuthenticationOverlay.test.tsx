@@ -151,7 +151,7 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext(
     () => <CieRequestAuthenticationOverlay {...props} />,
-    "DUMMY_SCREEN",
+    "DUMMY",
     {},
     store
   );

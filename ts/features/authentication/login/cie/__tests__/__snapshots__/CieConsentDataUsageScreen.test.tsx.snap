@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CieRequestAuthenticationOverlay should render correctly and match snapshot 1`] = `
+exports[`CieConsentDataUsageScreen should render correctly and match snapshot 1`] = `
 <View
   style={
     {
@@ -150,7 +150,7 @@ exports[`CieRequestAuthenticationOverlay should render correctly and match snaps
                     }
                   }
                 >
-                  DUMMY
+                  CIE_CONSENT_DATA_USAGE
                 </Text>
               </View>
               <View
@@ -334,13 +334,46 @@ exports[`CieRequestAuthenticationOverlay should render correctly and match snaps
                         }
                       }
                     >
-                      <View
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "additive",
+                            "right": "additive",
+                            "top": "additive",
+                          }
+                        }
                         style={
                           {
                             "flex": 1,
                           }
                         }
-                      />
+                      >
+                        <View
+                          androidCameraAccessDisabled={true}
+                          androidMicrophoneAccessDisabled={true}
+                          javaScriptEnabled={true}
+                          onError={[Function]}
+                          onHttpError={[Function]}
+                          onShouldStartLoadWithRequest={[Function]}
+                          originWhitelist={
+                            [
+                              "https://*",
+                              "intent://*",
+                              "iologin://*",
+                              "http://*",
+                            ]
+                          }
+                          renderLoading={[Function]}
+                          source={
+                            {
+                              "uri": "https://fake.url/consent",
+                            }
+                          }
+                          testID="webview-cie-test"
+                          textZoom={100}
+                        />
+                      </RNCSafeAreaView>
                     </View>
                   </View>
                 </View>
