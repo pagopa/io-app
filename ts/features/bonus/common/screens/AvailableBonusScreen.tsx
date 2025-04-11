@@ -28,7 +28,7 @@ import {
 import { Dispatch } from "../../../../store/actions/types";
 import {
   isCGNEnabledSelector,
-  isCdcEnabledSelector
+  isCdcAppVersionSupportedSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 import { storeUrl } from "../../../../utils/appVersion";
@@ -221,7 +221,7 @@ const mapStateToProps = (state: GlobalState) => ({
   // show error only when we have an error and no data to show
   isError: isAvailableBonusNoneErrorSelector(state),
   isCgnEnabled: isCGNEnabledSelector(state),
-  isCdcEnabled: isCdcEnabledSelector(state),
+  isCdcEnabled: isCdcAppVersionSupportedSelector(state),
   cdcService: () => serviceFromAvailableBonusSelector(ID_CDC_TYPE)(state)
 });
 
