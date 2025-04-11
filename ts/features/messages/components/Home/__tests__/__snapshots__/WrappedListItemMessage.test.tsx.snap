@@ -478,9 +478,18 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
+                                            },
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                              "width": 180,
+                                            },
+                                          ]
                                         }
                                         style={
                                           {
@@ -1437,9 +1446,18 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
+                                            },
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                              "width": 180,
+                                            },
+                                          ]
                                         }
                                         style={
                                           {
@@ -2463,7 +2481,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           onError={[Function]}
                                           source={
                                             {
+                                              "height": 180,
                                               "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
                                             }
                                           }
                                           style={
@@ -3453,7 +3473,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           onError={[Function]}
                                           source={
                                             {
+                                              "height": 180,
                                               "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
                                             }
                                           }
                                           style={
@@ -4498,7 +4520,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           onError={[Function]}
                                           source={
                                             {
+                                              "height": 180,
                                               "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
                                             }
                                           }
                                           style={
@@ -5350,7 +5374,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           onError={[Function]}
                                           source={
                                             {
+                                              "height": 180,
                                               "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
                                             }
                                           }
                                           style={
@@ -6245,9 +6271,18 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
+                                            },
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                              "width": 180,
+                                            },
+                                          ]
                                         }
                                         style={
                                           {
@@ -6976,9 +7011,18 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
+                                            },
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                              "width": 180,
+                                            },
+                                          ]
                                         }
                                         style={
                                           {

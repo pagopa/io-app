@@ -3128,6 +3128,9 @@
           }
         }
       }
+    },
+    "cdc": {
+      "request": "Richiedi Carta della Cultura"
     }
   },
   "features": {
