@@ -164,7 +164,10 @@ export const ListItemMessage = ({
                     }
                   ]}
                 >
-                  <AnimatedMessageCheckbox checked={selected} />
+                  <AnimatedMessageCheckbox
+                    accessible={false}
+                    checked={selected}
+                  />
                 </View>
               </View>
             </View>
