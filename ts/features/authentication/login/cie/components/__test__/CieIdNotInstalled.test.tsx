@@ -4,8 +4,8 @@ import CieIdNotInstalled, {
   CIE_ID_ANDROID_COLL_LINK,
   CIE_ID_ANDROID_LINK,
   CIE_ID_IOS_LINK
-} from "../components/CieIdNotInstalled";
-import * as urlUtils from "../../../../../utils/url";
+} from "../CieIdNotInstalled";
+import * as urlUtils from "../../../../../../utils/url";
 
 const UAT_ENV_ENABLE_STATES = [true, false];
 

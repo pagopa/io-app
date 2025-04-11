@@ -1,30 +1,30 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { WebViewHttpErrorEvent } from "react-native-webview/lib/WebViewTypes";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import CieConsentDataUsageScreen from "../screens/CieConsentDataUsageScreen";
-import * as loginUtils from "../../../common/utils/login";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import CieConsentDataUsageScreen from "../CieConsentDataUsageScreen";
+import * as loginUtils from "../../../../common/utils/login";
 
-jest.mock("../../../../../store/hooks", () => ({
+jest.mock("../../../../../../store/hooks", () => ({
   useIOSelector: jest.fn(),
   useIODispatch: () => jest.fn(),
   useIOStore: jest.fn()
 }));
 
-jest.mock("../../../../../utils/hooks/useOnboardingAbortAlert", () => ({
+jest.mock("../../../../../../utils/hooks/useOnboardingAbortAlert", () => ({
   useOnboardingAbortAlert: () => ({
     showAlert: jest.fn()
   })
 }));
 
-jest.mock("../../../../../hooks/useHeaderSecondLevel", () => ({
+jest.mock("../../../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
 }));
 
-jest.mock("../../../common/utils/login", () => ({
+jest.mock("../../../../common/utils/login", () => ({
   onLoginUriChanged: jest.fn(() => () => false)
 }));
 

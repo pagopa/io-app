@@ -1,13 +1,13 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import CieLoginConfigScreenContent from "../screens/CieLoginConfigScreenContent";
-import { cieLoginEnableUat, cieLoginDisableUat } from "../store/actions";
-import * as hooks from "../../../../../store/hooks";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { cieLoginEnableUat, cieLoginDisableUat } from "../../store/actions";
+import * as hooks from "../../../../../../store/hooks";
+import CieLoginConfigScreenContent from "../CieLoginConfigScreenContent";
 
-jest.mock("../../../../../store/hooks", () => ({
+jest.mock("../../../../../../store/hooks", () => ({
   useIOSelector: jest.fn(),
   useIODispatch: jest.fn(),
   useIOStore: jest.fn()

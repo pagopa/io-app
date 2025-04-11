@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { fireEvent, render } from "@testing-library/react-native";
 import { EmitterSubscription, Linking } from "react-native";
-import CieIdLoginWebView from "../components/CieIdLoginWebView";
-import * as loginHooks from "../../../../lollipop/hooks/useLollipopLoginSource";
-import * as authSelectors from "../../../common/store/selectors";
-import { SessionToken } from "../../../../../types/SessionToken";
-import { SpidLevelEnum } from "../../../../../../definitions/session_manager/SpidLevel";
-import { loginFailure, loginSuccess } from "../../../common/store/actions";
-import { withStore } from "../../../../../utils/jest/withStore";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import CieIdLoginWebView from "../CieIdLoginWebView";
+import * as loginHooks from "../../../../../lollipop/hooks/useLollipopLoginSource";
+import * as authSelectors from "../../../../common/store/selectors";
+import { SessionToken } from "../../../../../../types/SessionToken";
+import { SpidLevelEnum } from "../../../../../../../definitions/session_manager/SpidLevel";
+import { loginFailure, loginSuccess } from "../../../../common/store/actions";
+import { withStore } from "../../../../../../utils/jest/withStore";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 const API_PREFIX_URL = "http://example.com";
 const SPID_LEVEL = "SpidL2";
@@ -31,11 +31,11 @@ jest.mock("@react-navigation/native", () => ({
     replace: mockReplace
   })
 }));
-jest.mock("../../../../../config", () => ({
+jest.mock("../../../../../../config", () => ({
   apiUrlPrefix: API_PREFIX_URL
 }));
 
-jest.mock("../../../../../hooks/useHeaderSecondLevel", () => ({
+jest.mock("../../../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
 }));
 

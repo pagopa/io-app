@@ -1,14 +1,14 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import CieIdWizard, { CIE_ID_LINK } from "../screens/wizards/CieIdWizard";
-import CiePinWizard, { CIE_PIN_LINK } from "../screens/wizards/CiePinWizard";
-import SpidWizard from "../screens/wizards/SpidWizard";
+import CieIdWizard, { CIE_ID_LINK } from "../wizards/CieIdWizard";
+import CiePinWizard, { CIE_PIN_LINK } from "../wizards/CiePinWizard";
+import SpidWizard from "../wizards/SpidWizard";
 import IDActivationWizard, {
   ACTIVATE_CIE_URL,
   ACTIVATE_SPID_URL,
   REQUEST_CIE_URL
-} from "../screens/wizards/IDActivationWizard";
-import * as urlUtils from "../../../../../utils/url";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+} from "../wizards/IDActivationWizard";
+import * as urlUtils from "../../../../../../utils/url";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 const anyFunction = expect.any(Function);
 const mockNavigateToCieIdLoginScreen = jest.fn();
@@ -37,10 +37,10 @@ jest.mock("react-redux", () => ({
 jest.mock("react-native-safe-area-context", () => ({
   useSafeAreaInsets: jest.fn
 }));
-jest.mock("../../../../../utils/url", () => ({
+jest.mock("../../../../../../utils/url", () => ({
   openWebUrl: jest.fn()
 }));
-jest.mock("../../hooks/useNavigateToLoginMethod", () => ({
+jest.mock("../../../hooks/useNavigateToLoginMethod", () => ({
   __esModule: true,
   default: () => ({
     navigateToCieIdLoginScreen: mockNavigateToCieIdLoginScreen,
@@ -50,9 +50,9 @@ jest.mock("../../hooks/useNavigateToLoginMethod", () => ({
 }));
 
 jest.mock("@gorhom/bottom-sheet", () =>
-  jest.requireActual("../../../../../__mocks__/@gorhom/bottom-sheet.ts")
+  jest.requireActual("../../../../../../__mocks__/@gorhom/bottom-sheet.ts")
 );
-jest.mock("../analytics");
+jest.mock("../../analytics");
 
 describe(CieIdWizard, () => {
   afterEach(jest.clearAllMocks);

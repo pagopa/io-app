@@ -2,29 +2,29 @@ import { fireEvent } from "@testing-library/react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { createStore } from "redux";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import CiePinScreen from "../screens/CiePinScreen";
-import * as hooks from "../../../../../store/hooks";
-import I18n from "../../../../../i18n";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import * as cieAnalytics from "../../../common/analytics/cieAnalytics";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import CiePinScreen from "../../screens/CiePinScreen";
+import * as hooks from "../../../../../../store/hooks";
+import I18n from "../../../../../../i18n";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
 
-jest.mock("../../../../../store/hooks", () => ({
+jest.mock("../../../../../../store/hooks", () => ({
   useIOSelector: jest.fn(),
   useIODispatch: jest.fn(),
   useIOStore: jest.fn()
 }));
 
-jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
+jest.mock("../../../../../../utils/hooks/bottomSheet", () => ({
   useIOBottomSheetAutoresizableModal: jest.fn(() => ({
     present: jest.fn(),
     bottomSheet: <></>
   }))
 }));
 
-jest.mock("../../../../../hooks/useHeaderSecondLevel", () => ({
+jest.mock("../../../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
 }));
 
@@ -41,8 +41,8 @@ jest.mock("typesafe-actions", () => {
   };
 });
 
-jest.mock("../store/actions", () => {
-  const actual = jest.requireActual("../store/actions");
+jest.mock("../../store/actions", () => {
+  const actual = jest.requireActual("../../store/actions");
   return {
     ...actual,
     nfcIsEnabled: {

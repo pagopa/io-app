@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { render } from "@testing-library/react-native";
 import { Linking } from "react-native";
-import CieIdLoginScreen from "../screens/CieIdLoginScreen";
-import { withStore } from "../../../../../utils/jest/withStore";
+import CieIdLoginScreen from "../CieIdLoginScreen";
+import { withStore } from "../../../../../../utils/jest/withStore";
 
 const TestComponent = withStore(CieIdLoginScreen);
 const mockUseRoute = jest.fn();
@@ -15,7 +15,7 @@ jest.mock("@react-navigation/native", () => ({
   })
 }));
 
-jest.mock("../../../../../hooks/useHeaderSecondLevel", () => ({
+jest.mock("../../../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
 }));
 

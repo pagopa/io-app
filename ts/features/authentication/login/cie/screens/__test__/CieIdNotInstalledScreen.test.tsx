@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react-native";
-import CieIdNotInstalledScreen from "../screens/CieIdNotInstalledScreen";
+import CieIdNotInstalledScreen from "../CieIdNotInstalledScreen";
 
 const mockUseRoute = jest.fn();
 

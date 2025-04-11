@@ -1,7 +1,7 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import CieIdErrorScreen from "../screens/CieIdErrorScreen";
-import * as useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import CieIdErrorScreen from "../CieIdErrorScreen";
+import * as useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 const mockReplace = jest.fn();
 const mockNavigate = jest.fn();
@@ -25,7 +25,7 @@ describe("CieIdErrorScreen where device supports NFC", () => {
   afterEach(jest.clearAllMocks);
   beforeEach(() => {
     jest.spyOn(useNavigateToLoginMethod, "default").mockImplementation(() => ({
-      ...jest.requireActual("../../hooks/useNavigateToLoginMethod"),
+      ...jest.requireActual("../../../hooks/useNavigateToLoginMethod"),
       isCieSupported: true
     }));
   });
@@ -49,7 +49,7 @@ describe("CieIdErrorScreen where device doesn't support NFC", () => {
   afterEach(jest.clearAllMocks);
   beforeEach(() => {
     jest.spyOn(useNavigateToLoginMethod, "default").mockImplementation(() => ({
-      ...jest.requireActual("../../hooks/useNavigateToLoginMethod"),
+      ...jest.requireActual("../../../hooks/useNavigateToLoginMethod"),
       isCieSupported: false
     }));
   });

@@ -1,11 +1,11 @@
 import { createStore } from "redux";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { CieCardReaderScreenWrapper } from "../screens/CieCardReaderScreenWrapper";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { CieCardReaderScreenWrapper } from "../CieCardReaderScreenWrapper";
 
-jest.mock("../../../../../utils/hooks/theme", () => ({
+jest.mock("../../../../../../utils/hooks/theme", () => ({
   useInteractiveElementDefaultColorName: jest.fn(() => "blueIO-500")
 }));
 

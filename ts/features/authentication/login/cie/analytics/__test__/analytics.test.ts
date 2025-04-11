@@ -15,18 +15,18 @@ import {
   trackCieIdErrorSpidFallbackScreen,
   trackCieIdErrorCiePinSelected,
   trackCieIdErrorSpidSelected
-} from "../analytics";
+} from "..";
 
-import { mixpanelTrack } from "../../../../../mixpanel";
-import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
-import { IdpCIE, IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { mixpanelTrack } from "../../../../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../../../../mixpanelConfig/profileProperties";
+import { IdpCIE, IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
+import { GlobalState } from "../../../../../../store/reducers/types";
 
-jest.mock("../../../../../mixpanel", () => ({
+jest.mock("../../../../../../mixpanel", () => ({
   mixpanelTrack: jest.fn()
 }));
 
-jest.mock("../../../../../mixpanelConfig/profileProperties", () => ({
+jest.mock("../../../../../../mixpanelConfig/profileProperties", () => ({
   updateMixpanelProfileProperties: jest.fn()
 }));
 

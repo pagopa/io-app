@@ -1,8 +1,8 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import i18n from "../../../../../i18n";
-import * as analytics from "../analytics";
-import CieIdAuthUrlError from "../screens/CieIdAuthUrlError";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import i18n from "../../../../../../i18n";
+import * as analytics from "../../analytics";
+import CieIdAuthUrlError from "../CieIdAuthUrlError";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 const mockNavigate = jest.fn();
 const mockUrl = "https://unauthorized-url.com";
 
@@ -18,7 +18,7 @@ jest.mock("@react-navigation/native", () => ({
   })
 }));
 
-jest.mock("../analytics");
+jest.mock("../../analytics");
 
 describe("CieIdAuthUrlError", () => {
   it("Should match the snapshot", () => {

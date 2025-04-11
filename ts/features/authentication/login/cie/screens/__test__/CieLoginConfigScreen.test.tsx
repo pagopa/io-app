@@ -1,9 +1,8 @@
-import { fireEvent, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
-import CieLoginConfigScreen from "../screens/CieLoginConfigScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
+import CieLoginConfigScreen from "../CieLoginConfigScreen";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 
 describe("CieLoginConfigScreen", () => {
   it("renders the OTPInput initially", () => {

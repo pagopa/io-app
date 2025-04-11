@@ -1,4 +1,4 @@
-import { isAuthenticationUrl } from "../utils";
+import { isAuthenticationUrl } from "..";
 
 const NOT_AUTH_URLS = [
   "http://localhost/livello2mobile?id=1",

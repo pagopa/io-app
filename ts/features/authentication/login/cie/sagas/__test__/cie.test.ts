@@ -6,7 +6,7 @@ import {
   hasApiLevelSupport,
   hasNFCFeature,
   nfcIsEnabled
-} from "../store/actions";
+} from "../../store/actions";
 import {
   checkCieAvailabilitySaga,
   checkHasApiLevelSupportSaga,
@@ -14,9 +14,9 @@ import {
   checkNfcEnablementSaga,
   stopCieManager,
   watchCieAuthenticationSaga
-} from "../sagas/cie";
-import { convertUnknownToError } from "../../../../../utils/errors";
-import { startTimer } from "../../../../../utils/timer";
+} from "../cie";
+import { convertUnknownToError } from "../../../../../../utils/errors";
+import { startTimer } from "../../../../../../utils/timer";
 
 jest.mock("@pagopa/react-native-cie", () => ({
   stopListeningNFC: jest.fn(),
@@ -26,7 +26,7 @@ jest.mock("@pagopa/react-native-cie", () => ({
   isNFCEnabled: jest.fn()
 }));
 
-jest.mock("../../../../../utils/timer", () => ({
+jest.mock("../../../../../../utils/timer", () => ({
   startTimer: jest.fn(() => Promise.resolve())
 }));
 
