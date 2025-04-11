@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0-rc.3](https://github.com/pagopa/io-app/compare/3.3.0-rc.2...3.3.0-rc.3) (2025-04-10)
+
+
+### Features
+
+* [[IOBP-1419](https://pagopa.atlassian.net/browse/IOBP-1419)] CDC activation screen ([#6848](https://github.com/pagopa/io-app/issues/6848)) ([2d9fb5c](https://github.com/pagopa/io-app/commit/2d9fb5ceba44fc81d40e1ba27b326da96dd350e8))
+
+## [3.3.0-rc.2](https://github.com/pagopa/io-app/compare/3.3.0-rc.1...3.3.0-rc.2) (2025-04-09)
+
+
+### Chores
+
+* [[IOPLT-1045](https://pagopa.atlassian.net/browse/IOPLT-1045)] Update `reanimated`, `react-native-svg` and `react-native-skia` dependencies ([#6844](https://github.com/pagopa/io-app/issues/6844)) ([df3f44c](https://github.com/pagopa/io-app/commit/df3f44cdbf78bdea8964057db28d451bb680c20c))
+
 ## [3.3.0-rc.1](https://github.com/pagopa/io-app/compare/3.3.0-rc.0...3.3.0-rc.1) (2025-04-08)
 
 
