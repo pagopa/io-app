@@ -1,5 +1,5 @@
 import { call, put, select } from "typed-redux-saga/macro";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors/index.ts";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getCurrentWalletInstanceStatus } from "../../common/utils/itwAttestationUtils.ts";

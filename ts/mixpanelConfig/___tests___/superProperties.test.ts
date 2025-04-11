@@ -115,7 +115,7 @@ describe("superProperties", () => {
             LOGIN_SESSION: "365",
             NOTIFICATION_CONFIGURATION: pushContentReminderTuple[2],
             NOTIFICATION_PERMISSION: notificationPermissionTuple[1],
-            SAVED_PAYMENT_METHOD: undefined,
+            SAVED_PAYMENT_METHOD: 0,
             SERVICE_CONFIGURATION: "AUTO",
             WELFARE_STATUS: []
           });
@@ -157,7 +157,10 @@ const generateMockedGlobalState = (
         }
       },
       wallet: {
-        cards: {}
+        cards: {},
+        placeholders: {
+          items: {}
+        }
       }
     },
     persistedPreferences: {

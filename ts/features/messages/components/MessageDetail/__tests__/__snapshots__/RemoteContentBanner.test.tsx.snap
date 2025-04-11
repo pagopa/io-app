@@ -401,14 +401,11 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                             accessibilityRole="button"
                             accessible={true}
                             style={
-                              [
-                                {
-                                  "flex": 1,
-                                },
-                                {
-                                  "alignSelf": "center",
-                                },
-                              ]
+                              {
+                                "alignSelf": "center",
+                                "flex": 1,
+                                "gap": 4,
+                              }
                             }
                           >
                             <Text
@@ -431,13 +428,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                             >
                               This is a dynamic message: its content may change over time to give you up-to-date information.
                             </Text>
-                            <View
-                              style={
-                                {
-                                  "height": 8,
-                                }
-                              }
-                            />
                             <View
                               accessibilityElementsHidden={true}
                               accessibilityLabel="Learn more"
@@ -477,7 +467,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               <View
                                 style={
                                   {
-                                    "height": 4,
+                                    "height": 8,
                                   }
                                 }
                               />
