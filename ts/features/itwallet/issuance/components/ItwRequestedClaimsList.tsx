@@ -5,26 +5,15 @@ import {
   IOColors,
   BodySmall
 } from "@pagopa/io-app-design-system";
-import * as E from "fp-ts/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
 import { StyleSheet, View } from "react-native";
-import * as O from "fp-ts/Option";
 import I18n from "../../../../i18n";
 import {
-  BoolClaim,
   ClaimDisplayFormat,
-  ClaimValue,
   DisclosureClaim,
-  DrivingPrivilegesClaim,
-  EmptyStringClaim,
-  extractFiscalCode,
-  FiscalCodeClaim,
-  getSafeText,
-  ImageClaim,
-  PlaceOfBirthClaim,
-  SimpleDateClaim,
-  StringClaim
+  getClaimDisplayValue,
+  getSafeText
 } from "../../common/utils/itwClaimsUtils";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
 
@@ -74,44 +63,6 @@ const ClaimText = ({ claim }: { claim: ClaimDisplayFormat }) => {
     <H6>{getSafeText(displayValue)}</H6>
   );
 };
-
-export const getClaimDisplayValue = (
-  claim: ClaimDisplayFormat
-): string | Array<string> =>
-  pipe(
-    claim.value,
-    ClaimValue.decode,
-    E.fold(
-      () => I18n.t("features.itWallet.generic.placeholders.claimNotAvailable"),
-      decoded => {
-        if (PlaceOfBirthClaim.is(decoded)) {
-          return `${decoded.locality} (${decoded.country})`;
-        } else if (SimpleDateClaim.is(decoded)) {
-          return decoded.toString();
-        } else if (ImageClaim.is(decoded)) {
-          return decoded;
-        } else if (DrivingPrivilegesClaim.is(decoded)) {
-          return decoded.map(e => e.driving_privilege);
-        } else if (FiscalCodeClaim.is(decoded)) {
-          return pipe(
-            decoded,
-            extractFiscalCode,
-            O.getOrElseW(() => decoded)
-          );
-        } else if (BoolClaim.is(decoded)) {
-          return I18n.t(
-            `features.itWallet.presentation.credentialDetails.boolClaim.${decoded}`
-          );
-        } else if (StringClaim.is(decoded) || EmptyStringClaim.is(decoded)) {
-          return decoded; // must be the last one to be checked due to overlap with IPatternStringTag
-        }
-
-        return I18n.t(
-          "features.itWallet.generic.placeholders.claimNotAvailable"
-        );
-      }
-    )
-  );
 
 const styles = StyleSheet.create({
   container: {

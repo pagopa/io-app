@@ -17,8 +17,8 @@ export type StartIssuanceFlow = Awaited<
  * Consider add the type into the package public interface
  */
 export type RequestObject = Awaited<
-  ReturnType<Credential.Issuance.GetRequestedCredentialToBePresented>
->;
+  ReturnType<Credential.Presentation.VerifyRequestObject>
+>["requestObject"];
 
 /**
  * Alias type for the relying party entity configuration.

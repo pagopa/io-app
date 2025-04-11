@@ -522,3 +522,46 @@ export const getFamilyNameFromCredential = (
     O.chain(extractClaim(WellKnownClaim.family_name)),
     O.getOrElse(() => "")
   );
+
+/**
+ * Get the display value of a claim without being coupled to a specific UI component
+ * @param claim The claim in {@link ClaimDisplayFormat}
+ * @returns The display value as a string or an array of strings
+ */
+export const getClaimDisplayValue = (
+  claim: ClaimDisplayFormat
+): string | Array<string> =>
+  pipe(
+    claim.value,
+    ClaimValue.decode,
+    E.fold(
+      () => I18n.t("features.itWallet.generic.placeholders.claimNotAvailable"),
+      decoded => {
+        if (PlaceOfBirthClaim.is(decoded)) {
+          return `${decoded.locality} (${decoded.country})`;
+        } else if (SimpleDateClaim.is(decoded)) {
+          return decoded.toString();
+        } else if (ImageClaim.is(decoded)) {
+          return decoded;
+        } else if (DrivingPrivilegesClaim.is(decoded)) {
+          return decoded.map(e => e.driving_privilege);
+        } else if (FiscalCodeClaim.is(decoded)) {
+          return pipe(
+            decoded,
+            extractFiscalCode,
+            O.getOrElseW(() => decoded)
+          );
+        } else if (BoolClaim.is(decoded)) {
+          return I18n.t(
+            `features.itWallet.presentation.credentialDetails.boolClaim.${decoded}`
+          );
+        } else if (StringClaim.is(decoded) || EmptyStringClaim.is(decoded)) {
+          return decoded; // must be the last one to be checked due to overlap with IPatternStringTag
+        }
+
+        return I18n.t(
+          "features.itWallet.generic.placeholders.claimNotAvailable"
+        );
+      }
+    )
+  );
