@@ -73,22 +73,24 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     }
   }, [dispatch, paymentMethodsPot]);
 
-  const handleOnMethodPress = (walletId: string, isExpired: boolean) => () => {
-    analytics.trackPaymentWalletMethodDetail({
-      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
-      payment_method_status: isExpired ? "invalid" : "valid"
-    });
+  const handleOnMethodPress =
+    (walletId: string, isExpired: boolean, payment_method_selected?: string) =>
+    () => {
+      analytics.trackPaymentWalletMethodDetail({
+        payment_method_selected,
+        payment_method_status: isExpired ? "invalid" : "valid"
+      });
 
-    navigation.navigate(
-      PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
-      {
-        screen: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN,
-        params: {
-          walletId
+      navigation.navigate(
+        PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
+        {
+          screen: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN,
+          params: {
+            walletId
+          }
         }
-      }
-    );
-  };
+      );
+    };
 
   const handleOnAddMethodPress = () => {
     analytics.trackPaymentWalletAddStart({
@@ -114,7 +116,8 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
       ...getPaymentCardPropsFromWalletInfo(method),
       onPress: handleOnMethodPress(
         method.walletId,
-        getPaymentCardPropsFromWalletInfo(method)?.isExpired ?? false
+        getPaymentCardPropsFromWalletInfo(method)?.isExpired ?? false,
+        method.details?.type
       )
     })
   );

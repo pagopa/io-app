@@ -4,18 +4,21 @@ import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesP
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { fastLoginOptInSelector } from "../features/authentication/fastLogin/store/selectors";
-import { selectWalletCardsByType } from "../features/wallet/store/selectors";
+import {
+  selectWalletCardsByType,
+  selectWalletPlaceholderCards
+} from "../features/wallet/store/selectors";
 import { WalletCardBonus } from "../features/wallet/types";
 import { paymentsWalletUserMethodsSelector } from "../features/payments/wallet/store/selectors";
 import {
   NotificationPreferenceConfiguration,
   ServiceConfigurationTrackingType,
   getNotificationPreferenceConfiguration
-} from "../screens/profile/analytics";
+} from "../features/settings/common/analytics";
 import {
   profileNotificationSettingsSelector,
   profileServicePreferencesModeSelector
-} from "../store/reducers/profile";
+} from "../features/settings/common/store/selectors";
 import { GlobalState } from "../store/reducers/types";
 import { isMixpanelEnabled } from "./../store/reducers/persistedPreferences";
 
@@ -84,8 +87,12 @@ export const paymentsWalletUserMethodsNumberFromPotSelector = createSelector(
   walletPot => pot.getOrElse(walletPot, undefined)
 );
 
-export const paymentMethodsHandler = (state: GlobalState): number | undefined =>
-  paymentsWalletUserMethodsNumberFromPotSelector(state)?.length;
+export const paymentMethodsHandler = (state: GlobalState): number => {
+  const placeholderCards = selectWalletPlaceholderCards(state);
+  return (
+    placeholderCards?.filter(card => card.category === "payment")?.length ?? 0
+  );
+};
 
 export const cgnStatusHandler = (state: GlobalState): TrackCgnStatus => {
   const cgnCard = selectWalletCardsByType(state, "cgn");

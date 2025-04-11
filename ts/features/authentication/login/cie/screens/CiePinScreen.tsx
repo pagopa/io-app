@@ -29,7 +29,7 @@ import { IdpData } from "../../../../../../definitions/content/IdpData";
 import {
   CieEntityIds,
   CieRequestAuthenticationOverlay
-} from "../../../../../components/cie/CieRequestAuthenticationOverlay";
+} from "../components/CieRequestAuthenticationOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import {
   BottomTopAnimation,
@@ -54,7 +54,7 @@ import { SessionToken } from "../../../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { getIdpLoginUri } from "../../../../../utils/login";
+import { getIdpLoginUri } from "../../../common/utils/login";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
 import {

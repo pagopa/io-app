@@ -625,7 +625,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -797,7 +796,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -1487,7 +1485,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -1659,7 +1656,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -2096,7 +2092,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -2268,7 +2263,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -2705,7 +2699,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -2877,7 +2870,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}

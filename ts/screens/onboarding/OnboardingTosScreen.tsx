@@ -15,7 +15,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, View } from "react-native";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import TosWebviewComponent from "../../components/TosWebviewComponent";
+import TosWebviewComponent from "../../features/settings/privacy/shared/components/TosWebviewComponent";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { tosConfigSelector } from "../../features/tos/store/selectors";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
@@ -23,14 +23,17 @@ import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import {
-  isProfileFirstOnBoarding,
   isProfileFirstOnBoardingSelector,
   profileSelector
-} from "../../store/reducers/profile";
+} from "../../features/settings/common/store/selectors";
+import { isProfileFirstOnBoarding } from "../../features/settings/common/store/utils/guards";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackTosUserExit } from "../../features/authentication/common/analytics";
-import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
+import {
+  trackTosAccepted,
+  trackTosScreen
+} from "../../features/settings/privacy/shared/components/analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",

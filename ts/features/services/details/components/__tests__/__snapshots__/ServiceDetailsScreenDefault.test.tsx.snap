@@ -372,7 +372,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -544,7 +543,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -1233,7 +1231,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -1405,7 +1402,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -2213,7 +2209,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -2385,7 +2380,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}

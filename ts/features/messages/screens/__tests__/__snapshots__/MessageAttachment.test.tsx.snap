@@ -205,32 +205,20 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                           style={
                             [
                               {
+                                "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "justifyContent": "center",
                                 "left": 0,
                                 "position": "absolute",
                                 "right": 0,
                                 "top": 0,
-                                "zIndex": 0,
+                                "zIndex": 1,
                               },
                               {
                                 "backgroundColor": "rgba(255,255,255,0.7)",
                                 "opacity": 1,
                               },
                             ]
-                          }
-                        />
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "bottom": 0,
-                              "justifyContent": "center",
-                              "left": 0,
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 0,
-                              "zIndex": 1,
-                            }
                           }
                         >
                           <View
@@ -778,7 +766,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -950,7 +937,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -1624,7 +1610,6 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -1796,7 +1781,6 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}

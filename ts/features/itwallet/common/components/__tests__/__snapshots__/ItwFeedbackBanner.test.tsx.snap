@@ -684,8 +684,8 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                                 {
                                   "opacity": 0.6,
                                   "position": "absolute",
-                                  "right": 6,
-                                  "top": 6,
+                                  "right": 10,
+                                  "top": 10,
                                 }
                               }
                             >
@@ -774,7 +774,6 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}

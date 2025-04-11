@@ -16,8 +16,7 @@ import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { profileSelector } from "../../../../../store/reducers/profile";
-import { buildEventProperties } from "../../../../../utils/analytics";
+import { profileSelector } from "../../../../settings/common/store/selectors";
 import { openWebUrl } from "../../../../../utils/url";
 import { CgnDiscountContent } from "../../components/merchants/discount/CgnDiscountContent";
 import { CgnDiscountHeader } from "../../components/merchants/discount/CgnDiscountHeader";
@@ -38,6 +37,7 @@ import {
 } from "../../store/reducers/merchants";
 import { cgnOtpDataSelector } from "../../store/reducers/otp";
 import { getCgnUserAgeRange } from "../../utils/dates";
+import { buildEventProperties } from "../../../../../utils/analytics";
 
 const CgnDiscountDetailScreen = () => {
   const dispatch = useIODispatch();

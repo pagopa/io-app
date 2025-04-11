@@ -673,8 +673,8 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 {
                                   "opacity": 0.6,
                                   "position": "absolute",
-                                  "right": 6,
-                                  "top": 6,
+                                  "right": 10,
+                                  "top": 10,
                                 }
                               }
                             >
@@ -763,7 +763,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}

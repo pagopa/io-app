@@ -611,7 +611,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -783,7 +782,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -1459,7 +1457,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -1631,7 +1628,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -2525,7 +2521,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -2697,7 +2692,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -3373,7 +3367,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -3545,7 +3538,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}
@@ -4221,7 +4213,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={36}
@@ -4393,7 +4384,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={36}

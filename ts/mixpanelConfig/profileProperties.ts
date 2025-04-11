@@ -10,9 +10,9 @@ import {
   NotificationPreferenceConfiguration,
   NotificationTokenType,
   ServiceConfigurationTrackingType
-} from "../screens/profile/analytics";
+} from "../features/settings/common/analytics/index.ts";
 import { idpSelector } from "../features/authentication/common/store/selectors";
-import { tosVersionSelector } from "../store/reducers/profile";
+import { tosVersionSelector } from "../features/settings/common/store/selectors/index.ts";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   ItwCed,
@@ -56,7 +56,7 @@ type ProfileProperties = {
   ITW_PG_V2: ItwPg;
   ITW_TS_V2: ItwTs;
   ITW_CED_V2: ItwCed;
-  SAVED_PAYMENT_METHOD?: number;
+  SAVED_PAYMENT_METHOD: number;
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
   FONT_PREFERENCE: string;

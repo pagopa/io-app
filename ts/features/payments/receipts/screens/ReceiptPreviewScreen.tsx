@@ -60,7 +60,6 @@ const ReceiptPreviewScreen = () => {
       return;
     }
     analytics.trackPaymentsSaveAndShareReceipt({
-      payment_status: "paid",
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
       user: paymentAnalyticsData?.receiptUser,
