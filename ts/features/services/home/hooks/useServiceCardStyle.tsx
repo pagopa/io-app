@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ViewStyle, ColorValue } from "react-native";
 
-type ModalStyleProps = {
+type ServiceCardStyleProps = {
   default: {
     card: ViewStyle;
     foreground: {
@@ -25,9 +25,9 @@ type ModalStyleProps = {
 };
 
 /**
- * Returns the common style used for modals
+ * Returns the common style used for service cards
  */
-export const useServiceCardStyle = (): ModalStyleProps => {
+export const useServiceCardStyle = (): ServiceCardStyleProps => {
   const theme = useIOTheme();
   const { themeType } = useIOThemeContext();
 
