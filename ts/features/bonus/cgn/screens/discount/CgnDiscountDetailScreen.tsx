@@ -158,9 +158,9 @@ const CgnDiscountDetailScreen = () => {
     header: { default: defaultHeaderStyle, new: newHeaderStyle }
   } = useCgnStyle();
 
-  const backgroundColor = discountDetails?.isNew
-    ? newHeaderStyle.backgroundColor
-    : defaultHeaderStyle.backgroundColor;
+  const { backgroundColor } = discountDetails?.isNew
+    ? newHeaderStyle
+    : defaultHeaderStyle;
 
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
