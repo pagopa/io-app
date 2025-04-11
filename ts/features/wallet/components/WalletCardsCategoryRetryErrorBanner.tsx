@@ -1,6 +1,6 @@
+import { BannerErrorState } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "react-native";
-import { BannerErrorState } from "../../../components/ui/BannerErrorState";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";

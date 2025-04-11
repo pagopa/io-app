@@ -13,7 +13,11 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
@@ -34,6 +38,7 @@ import {
 import { usePaymentFailureSupportModal } from "../../checkout/hooks/usePaymentFailureSupportModal";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -79,6 +84,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
     isOnboarding: true
   });
   const paymentMethodSelectedRef = useRef<string | undefined>();
+  const store = useIOStore();
 
   const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
     Object.values(WalletOnboardingOutcomeEnum).indexOf(outcome)
@@ -91,6 +97,12 @@ const PaymentsOnboardingFeedbackScreen = () => {
     // eslint-disable-next-line functional/immutable-data
     paymentMethodSelectedRef.current = payment_method_selected;
     analytics.trackAddOnboardingPaymentMethod(outcome, payment_method_selected);
+    if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
+      void updateMixpanelProfileProperties(store.getState(), {
+        property: "SAVED_PAYMENT_METHOD",
+        value: (availablePaymentMethods?.length ?? 0) + 1
+      });
+    }
   });
 
   useEffect(
