@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import IOMarkdown from "../../../../../components/IOMarkdown";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../../i18n";
 import { SpidIdp } from "../../../../../../definitions/content/SpidIdp";
 import { StandardLoginRequestInfo } from "../store/types";
@@ -68,7 +68,7 @@ export const usePosteIDApp2AppEducational = ({
     presentedRef.current = true;
   }, []);
 
-  const { bottomSheet, present } = useIOBottomSheetAutoresizableModal({
+  const { bottomSheet, present } = useIOBottomSheetModal({
     title: I18n.t("authentication.idp_login.poste_id.bottom_sheet.title"),
     component: bottomSheetContent,
     onDismiss: handleOnDismiss
