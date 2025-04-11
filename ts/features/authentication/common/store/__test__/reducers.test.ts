@@ -47,7 +47,7 @@ describe("authenticationReducer", () => {
     const state = {
       kind: "LoggedInWithoutSessionInfo",
       idp: "idp",
-      sessionToken: "token"
+      sessionToken: "fakeToken"
     } as any;
 
     const sessionInfo = { name: "Mario" };
@@ -64,7 +64,7 @@ describe("authenticationReducer", () => {
       kind: "LoggedInWithSessionInfo",
       sessionInfo: {},
       idp: "idp",
-      sessionToken: "token"
+      sessionToken: "fakeToken"
     } as any;
 
     const action = logoutRequest({ withApiCall: false });
@@ -84,7 +84,7 @@ describe("authenticationReducer", () => {
     const state = {
       kind: "LoggedInWithSessionInfo",
       idp: "idp",
-      sessionToken: "token",
+      sessionToken: "fakeToken",
       sessionInfo: {}
     } as any;
 

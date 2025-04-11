@@ -712,14 +712,11 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                       accessibilityRole="text"
                                       accessible={true}
                                       style={
-                                        [
-                                          {
-                                            "flex": 1,
-                                          },
-                                          {
-                                            "alignSelf": "center",
-                                          },
-                                        ]
+                                        {
+                                          "alignSelf": "center",
+                                          "flex": 1,
+                                          "gap": 4,
+                                        }
                                       }
                                     >
                                       <Text
