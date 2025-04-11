@@ -148,6 +148,7 @@ const messageIdFromPushNotification = (
       "No 'messageId' found in push notification payload data",
       userAnalyticsOptIn
     );
+    return undefined;
   }
   return messageIdOnAndroid;
 };
