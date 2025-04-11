@@ -748,14 +748,11 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                               accessibilityRole="button"
                               accessible={true}
                               style={
-                                [
-                                  {
-                                    "flex": 1,
-                                  },
-                                  {
-                                    "alignSelf": "center",
-                                  },
-                                ]
+                                {
+                                  "alignSelf": "center",
+                                  "flex": 1,
+                                  "gap": 4,
+                                }
                               }
                             >
                               <Text
@@ -778,13 +775,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                               >
                                 Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
                               </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
@@ -824,7 +814,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                 <View
                                   style={
                                     {
-                                      "height": 4,
+                                      "height": 8,
                                     }
                                   }
                                 />
@@ -1461,14 +1451,11 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                               accessibilityRole="button"
                               accessible={true}
                               style={
-                                [
-                                  {
-                                    "flex": 1,
-                                  },
-                                  {
-                                    "alignSelf": "center",
-                                  },
-                                ]
+                                {
+                                  "alignSelf": "center",
+                                  "flex": 1,
+                                  "gap": 4,
+                                }
                               }
                             >
                               <Text
@@ -1491,13 +1478,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                               >
                                 Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
                               </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
@@ -1537,7 +1517,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                                 <View
                                   style={
                                     {
-                                      "height": 4,
+                                      "height": 8,
                                     }
                                   }
                                 />
@@ -2174,14 +2154,11 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                               accessibilityRole="button"
                               accessible={true}
                               style={
-                                [
-                                  {
-                                    "flex": 1,
-                                  },
-                                  {
-                                    "alignSelf": "center",
-                                  },
-                                ]
+                                {
+                                  "alignSelf": "center",
+                                  "flex": 1,
+                                  "gap": 4,
+                                }
                               }
                             >
                               <Text
@@ -2204,13 +2181,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                               >
                                 Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio.
                               </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
@@ -2250,7 +2220,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                                 <View
                                   style={
                                     {
-                                      "height": 4,
+                                      "height": 8,
                                     }
                                   }
                                 />

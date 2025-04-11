@@ -6,7 +6,7 @@ import {
   BodySmall
 } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
-import { ImageURISource, StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -20,7 +20,7 @@ export type OrganizationHeaderProps = {
   organizationName: string;
   serviceId: ServiceId;
   serviceName: string;
-  logoUri?: ReadonlyArray<ImageURISource>;
+  logoUri?: ImageSourcePropType;
 };
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;

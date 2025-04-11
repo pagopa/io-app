@@ -595,6 +595,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                               <TextInput
                                 accessibilityElementsHidden={false}
                                 accessibilityLabel="Codice fiscale Ente Creditore"
+                                accessibilityLiveRegion="polite"
                                 accessibilityState={
                                   {
                                     "disabled": false,
@@ -768,6 +769,8 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                               }
                             >
                               <Text
+                                accessibilityLabel=", 0"
+                                accessibilityLiveRegion="polite"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
                                 maxFontSizeMultiplier={1.5}
