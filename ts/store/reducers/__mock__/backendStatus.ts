@@ -252,6 +252,12 @@ export const baseRawBackendStatus: BackendStatus = {
     cdc: {
       enabled: false
     },
+    cdcV2: {
+      min_app_version: {
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
+      }
+    },
     barcodesScanner: {
       dataMatrixPosteEnabled: false
     },
@@ -353,6 +359,12 @@ export const baseBackendConfig: Config = {
   },
   cdc: {
     enabled: false
+  },
+  cdcV2: {
+    min_app_version: {
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
+    }
   },
   barcodesScanner: {
     dataMatrixPosteEnabled: false
