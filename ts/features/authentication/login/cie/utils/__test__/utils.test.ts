@@ -1,4 +1,6 @@
+import { Platform } from "react-native";
 import { isAuthenticationUrl } from "..";
+import { getCieUatEndpoint } from "../endpoints";
 
 const NOT_AUTH_URLS = [
   "http://localhost/livello2mobile?id=1",
@@ -26,5 +28,30 @@ describe(isAuthenticationUrl, () => {
 
       expect(isAuthUrl).toBe(true);
     });
+  });
+});
+
+describe("getCieUatEndpoint", () => {
+  const baseUrl = "https://collaudo.idserver.servizicie.interno.gov.it/idp/";
+
+  it("should return iOS URL when platform is ios", () => {
+    jest
+      .spyOn(Platform, "select")
+      .mockImplementation((options: any) => options.ios);
+    expect(getCieUatEndpoint()).toBe(`${baseUrl}Authn/SSL/Login2`);
+  });
+
+  it("should return Android URL when platform is android", () => {
+    jest
+      .spyOn(Platform, "select")
+      .mockImplementation((options: any) => options.android);
+    expect(getCieUatEndpoint()).toBe(baseUrl);
+  });
+
+  it("should return null for unknown platform", () => {
+    jest
+      .spyOn(Platform, "select")
+      .mockImplementation((options: any) => options.default);
+    expect(getCieUatEndpoint()).toBeNull();
   });
 });
