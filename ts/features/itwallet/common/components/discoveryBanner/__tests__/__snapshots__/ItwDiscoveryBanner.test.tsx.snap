@@ -1127,14 +1127,11 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                               accessibilityRole="button"
                               accessible={true}
                               style={
-                                [
-                                  {
-                                    "flex": 1,
-                                  },
-                                  {
-                                    "alignSelf": "center",
-                                  },
-                                ]
+                                {
+                                  "alignSelf": "center",
+                                  "flex": 1,
+                                  "gap": 4,
+                                }
                               }
                             >
                               <Text
@@ -1157,13 +1154,6 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                               >
                                 Riattiva Documenti su IO
                               </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 4,
-                                  }
-                                }
-                              />
                               <Text
                                 allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
@@ -1184,13 +1174,6 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                               >
                                 Per ragioni di sicurezza, quando cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio.
                               </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
@@ -1230,7 +1213,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                                 <View
                                   style={
                                     {
-                                      "height": 4,
+                                      "height": 8,
                                     }
                                   }
                                 />
