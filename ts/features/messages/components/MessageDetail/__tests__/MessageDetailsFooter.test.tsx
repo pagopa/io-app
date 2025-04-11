@@ -11,7 +11,7 @@ import { loadServiceDetail } from "../../../../services/details/store/actions/de
 import { messageId_1, service_1 } from "../../../__mocks__/messages";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { MessageDetailsFooter } from "../MessageDetailsFooter";
-import { ServiceMetadata } from "../../../../../../definitions/backend/ServiceMetadata";
+import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
 const mockPresentBottomSheet = jest.fn();
@@ -24,7 +24,7 @@ jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
 
 const defaultProps: ComponentProps<typeof MessageDetailsFooter> = {
   messageId: messageId_1,
-  serviceId: service_1.service_id
+  serviceId: service_1.id
 };
 
 const noticeNumber = "111122223333444455";
@@ -40,7 +40,7 @@ describe("MessageDetailsFooter component", () => {
       applicationChangeState("active"),
       loadServiceDetail.success({
         ...service_1,
-        service_metadata: {
+        metadata: {
           email: "test@test.com",
           phone: "+393331234567"
         } as ServiceMetadata
@@ -62,7 +62,7 @@ describe("MessageDetailsFooter component", () => {
       applicationChangeState("active"),
       loadServiceDetail.success({
         ...service_1,
-        service_metadata: {
+        metadata: {
           email: "test@test.com",
           phone: "+393331234567"
         } as ServiceMetadata
@@ -87,7 +87,7 @@ describe("MessageDetailsFooter component", () => {
       applicationChangeState("active"),
       loadServiceDetail.success({
         ...service_1,
-        service_metadata: {
+        metadata: {
           email: "test@test.com",
           phone: "+393331234567"
         } as ServiceMetadata
@@ -112,7 +112,7 @@ describe("MessageDetailsFooter component", () => {
       applicationChangeState("active"),
       loadServiceDetail.success({
         ...service_1,
-        service_metadata: {
+        metadata: {
           email: "test@test.com",
           phone: "+393331234567"
         } as ServiceMetadata
@@ -231,7 +231,7 @@ describe("MessageDetailsFooter component", () => {
       applicationChangeState("active"),
       loadServiceDetail.success({
         ...service_1,
-        service_metadata: {
+        metadata: {
           email: "test@test.com",
           phone: "+393331234567"
         } as ServiceMetadata

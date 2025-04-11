@@ -51,7 +51,7 @@ export const FimsFlowSuccessBody = ({
 
   const servicePot = useAutoFetchingServiceByIdPot(serviceId);
   const serviceData = pot.toUndefined(servicePot);
-  const privacyUrl = serviceData?.service_metadata?.privacy_url;
+  const privacyUrl = serviceData?.metadata?.privacy_url;
   const isPrivacyUrlMissing =
     pot.isSome(servicePot) && privacyUrl === undefined;
 
@@ -79,8 +79,7 @@ export const FimsFlowSuccessBody = ({
     O.fromNullable,
     O.fold(
       () => undefined,
-      service =>
-        logoForService(service.service_id, service.organization_fiscal_code)
+      service => logoForService(service.id, service.organization.fiscal_code)
     )
   );
 
@@ -88,7 +87,7 @@ export const FimsFlowSuccessBody = ({
     serviceData !== undefined ? (
       <Body>
         <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle")}</Body>
-        <Body weight="Semibold">{serviceData.organization_name}</Body>
+        <Body weight="Semibold">{serviceData.organization.name}</Body>
         <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle2")}</Body>
         <Body weight="Semibold">{consents.redirect.display_name ?? ""}.</Body>
       </Body>

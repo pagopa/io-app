@@ -389,9 +389,9 @@ export function* computeAndTrackInAppBrowserOpening() {
   yield* call(
     trackInAppBrowserOpening,
     serviceId,
-    service?.service_name,
-    service?.organization_name,
-    service?.organization_fiscal_code,
+    service?.name,
+    service?.organization.name,
+    service?.organization.fiscal_code,
     ctaText
   );
 }

@@ -22,7 +22,7 @@ import { unknownToReason } from "../utils";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { serviceByIdSelector } from "../../services/details/store/reducers";
-import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 
 export function* handleThirdPartyMessage(
   getThirdPartyMessage: BackendClient["getThirdPartyMessage"],
@@ -36,9 +36,9 @@ export function* handleThirdPartyMessage(
   const serviceDetails = yield* select(serviceByIdSelector, serviceId);
   trackRemoteContentLoadRequest(
     serviceId,
-    serviceDetails?.service_name,
-    serviceDetails?.organization_name,
-    serviceDetails?.organization_fiscal_code,
+    serviceDetails?.name,
+    serviceDetails?.organization.name,
+    serviceDetails?.organization.fiscal_code,
     tag
   );
 
@@ -74,14 +74,14 @@ export function* handleThirdPartyMessage(
 
 const trackSuccess = (
   messageFromApi: ThirdPartyMessageWithContent,
-  serviceDetails: ServicePublic | undefined,
+  serviceDetails: ServiceDetails | undefined,
   tag: string
 ) => {
   trackRemoteContentLoadSuccess(
-    serviceDetails?.service_id,
-    serviceDetails?.service_name,
-    serviceDetails?.organization_name,
-    serviceDetails?.organization_fiscal_code,
+    serviceDetails?.id,
+    serviceDetails?.name,
+    serviceDetails?.organization.name,
+    serviceDetails?.organization.fiscal_code,
     tag
   );
   if (tag === TagEnum.PN) {
@@ -102,14 +102,14 @@ const trackSuccess = (
 
 const trackFailure = (
   reason: string,
-  serviceDetails: ServicePublic | undefined,
+  serviceDetails: ServiceDetails | undefined,
   tag: string
 ) => {
   trackRemoteContentLoadFailure(
-    serviceDetails?.service_id,
-    serviceDetails?.service_name,
-    serviceDetails?.organization_name,
-    serviceDetails?.organization_fiscal_code,
+    serviceDetails?.id,
+    serviceDetails?.name,
+    serviceDetails?.organization.name,
+    serviceDetails?.organization.fiscal_code,
     tag,
     reason
   );

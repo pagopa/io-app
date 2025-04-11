@@ -15,7 +15,6 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
     accessibilityLabel="Loading"
     accessibilityRole="progressbar"
     accessible={true}
-    importantForAccessibility="no-hide-descendants"
     style={
       {
         "height": 48,

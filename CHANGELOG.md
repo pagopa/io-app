@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0-rc.3](https://github.com/pagopa/io-app/compare/3.3.0-rc.2...3.3.0-rc.3) (2025-04-10)
+
+
+### Features
+
+* [[IOBP-1419](https://pagopa.atlassian.net/browse/IOBP-1419)] CDC activation screen ([#6848](https://github.com/pagopa/io-app/issues/6848)) ([2d9fb5c](https://github.com/pagopa/io-app/commit/2d9fb5ceba44fc81d40e1ba27b326da96dd350e8))
+
+## [3.3.0-rc.2](https://github.com/pagopa/io-app/compare/3.3.0-rc.1...3.3.0-rc.2) (2025-04-09)
+
+
+### Chores
+
+* [[IOPLT-1045](https://pagopa.atlassian.net/browse/IOPLT-1045)] Update `reanimated`, `react-native-svg` and `react-native-skia` dependencies ([#6844](https://github.com/pagopa/io-app/issues/6844)) ([df3f44c](https://github.com/pagopa/io-app/commit/df3f44cdbf78bdea8964057db28d451bb680c20c))
+
+## [3.3.0-rc.1](https://github.com/pagopa/io-app/compare/3.3.0-rc.0...3.3.0-rc.1) (2025-04-08)
+
+
+### Features
+
+* [[IOBP-1563](https://pagopa.atlassian.net/browse/IOBP-1563)] Add remote banner specific for payment method PSP screen ([#6883](https://github.com/pagopa/io-app/issues/6883)) ([1b0fd47](https://github.com/pagopa/io-app/commit/1b0fd470fd0bd474efaec77d2a381fb2414ed335))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2164](https://pagopa.atlassian.net/browse/SIW-2164)] Update PID machine for L3 Wallet ([#6875](https://github.com/pagopa/io-app/issues/6875)) ([fbca924](https://github.com/pagopa/io-app/commit/fbca9247c0ea91e58ffaf67c6f463ee28eb1889e))
+* [[IOBP-263](https://pagopa.atlassian.net/browse/IOBP-263)] add missing `IdPay` prefix to the appropriate files ([#6882](https://github.com/pagopa/io-app/issues/6882)) ([95ecac4](https://github.com/pagopa/io-app/commit/95ecac4703db95c737359a95b97632fe0f9e2604))
+* [[IOPAE-1189](https://pagopa.atlassian.net/browse/IOPAE-1189)] Replace `getService` with `getServiceById` ([#6884](https://github.com/pagopa/io-app/issues/6884)) ([264dc39](https://github.com/pagopa/io-app/commit/264dc399fe7fa8b6349cd87cd32d85e377c14157))
+
+## [3.3.0-rc.0](https://github.com/pagopa/io-app/compare/3.2.0-rc.8...3.3.0-rc.0) (2025-04-08)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2204](https://pagopa.atlassian.net/browse/SIW-2204)] Fix crash in credential detail with a dynamic error when the language is not italian ([#6876](https://github.com/pagopa/io-app/issues/6876)) ([638ce10](https://github.com/pagopa/io-app/commit/638ce104e6bf176cbecbeef2a00588d7ca57d935))
+* [[IOBP-1560](https://pagopa.atlassian.net/browse/IOBP-1560)] Mixpanel `organization_fiscal_code` property ([#6873](https://github.com/pagopa/io-app/issues/6873)) ([308a2e6](https://github.com/pagopa/io-app/commit/308a2e67c61931091e8bb6d0afbc7afd8bd9fac4))
+* [[IOPLT-965](https://pagopa.atlassian.net/browse/IOPLT-965)] Fix `Overlay` visual regression ([#6880](https://github.com/pagopa/io-app/issues/6880)) ([264283a](https://github.com/pagopa/io-app/commit/264283ac4c9dde0485e77f2da29888d1be324f59))
+
+
+### Chores
+
+* [[IOBP-1561](https://pagopa.atlassian.net/browse/IOBP-1561)] Adjust `payment_method_selected` mixpanel property ([#6877](https://github.com/pagopa/io-app/issues/6877)) ([b5e44a1](https://github.com/pagopa/io-app/commit/b5e44a140481200a7bb80374f722551b3ad1ed18))
+* **IT Wallet:** [[SIW-2198](https://pagopa.atlassian.net/browse/SIW-2198)]  Improve serializeFailureReason for Mixpanel tracking   ([#6870](https://github.com/pagopa/io-app/issues/6870)) ([74589be](https://github.com/pagopa/io-app/commit/74589bebce92e67ae4130812f2caebbc41624d7d))
+* [[IOBP-1550](https://pagopa.atlassian.net/browse/IOBP-1550)] Align `CGN_MERCHANTS_DETAIL` screen with dark mode ([#6864](https://github.com/pagopa/io-app/issues/6864)) ([e99c9b4](https://github.com/pagopa/io-app/commit/e99c9b4a1d3ecc6adc420d9d19b7f88b63811336))
+* [[IOBP-1559](https://pagopa.atlassian.net/browse/IOBP-1559)] `payment_status` always set to `paid` – removed from analytics ([#6872](https://github.com/pagopa/io-app/issues/6872)) ([7bdfb55](https://github.com/pagopa/io-app/commit/7bdfb55e5ffedc3f2e92696670196bf3ff8cfc6e))
+* [[IOPLT-965](https://pagopa.atlassian.net/browse/IOPLT-965)] Add dark mode support to `AlertModal` ([#6862](https://github.com/pagopa/io-app/issues/6862)) ([c398ef0](https://github.com/pagopa/io-app/commit/c398ef0b2105729fbc7a79269183c7fc3ac65d14))
+
 ## [3.2.0-rc.8](https://github.com/pagopa/io-app/compare/3.2.0-rc.7...3.2.0-rc.8) (2025-04-03)
 
 

@@ -80,24 +80,7 @@ const ProgressLoaderViewerBox = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <View
-      style={{
-        borderRadius: 16,
-        borderCurve: "continuous",
-        overflow: "hidden",
-        borderColor: hexToRgba(IOColors.black, 0.15),
-        borderWidth: 1
-      }}
-    >
-      <View style={{ backgroundColor: IOColors.white, padding: 16 }}>
-        <ProgressLoader progress={progress} />
-      </View>
-      <View style={{ backgroundColor: IOColors["blueIO-500"], padding: 16 }}>
-        <ProgressLoader progress={90} />
-      </View>
-    </View>
-  );
+  return <ProgressLoader progress={progress} />;
 };
 
 const CircularProgressViewerBox = () => {
@@ -109,7 +92,7 @@ const CircularProgressViewerBox = () => {
       progress={10}
       size={imgDimension}
       strokeWidth={circleBorderWidth}
-      strokeBgColor={IOColors["grey-100"]}
+      strokeBgColor={IOColors[theme["appBackground-tertiary"]]}
       strokeColor={IOColors[theme["interactiveElem-default"]]}
     >
       <View style={styles.imgWrapper}>
@@ -130,29 +113,31 @@ export const DSLoaders = () => {
       <VStack space={sectionMargin}>
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Activity Indicator</H4>
-          <SpinnerViewerBox name="ActivityIndicator · Large size, primary color">
-            <ActivityIndicator
-              animating={true}
-              size={"large"}
-              color={IOColors[theme["interactiveElem-default"]]}
-              accessible={true}
-              accessibilityHint={I18n.t(
-                "global.accessibility.activityIndicator.hint"
-              )}
-              accessibilityLabel={I18n.t(
-                "global.accessibility.activityIndicator.label"
-              )}
-              importantForAccessibility={"no-hide-descendants"}
-              testID={"activityIndicator"}
-            />
-          </SpinnerViewerBox>
+          <DSComponentViewerBox name="ActivityIndicator · Large size, primary color">
+            <View style={{ alignItems: "flex-start" }}>
+              <ActivityIndicator
+                animating={true}
+                size={"large"}
+                color={IOColors[theme["interactiveElem-default"]]}
+                accessible={true}
+                accessibilityHint={I18n.t(
+                  "global.accessibility.activityIndicator.hint"
+                )}
+                accessibilityLabel={I18n.t(
+                  "global.accessibility.activityIndicator.label"
+                )}
+                importantForAccessibility={"no-hide-descendants"}
+                testID={"activityIndicator"}
+              />
+            </View>
+          </DSComponentViewerBox>
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Loading Indicator</H4>
-          <SpinnerViewerBox name="LoadingIndicator, with predefined visual attributes">
+          <DSComponentViewerBox name="LoadingIndicator, with predefined visual attributes">
             <LoadingIndicator />
-          </SpinnerViewerBox>
+          </DSComponentViewerBox>
         </VStack>
 
         <VStack space={sectionTitleMargin}>
@@ -167,9 +152,9 @@ export const DSLoaders = () => {
             >
               <LoadingSpinner color="white" />
             </SpinnerViewerBox>
-            <SpinnerViewerBox name="LoadingSpinner · Size 48, default color">
+            <DSComponentViewerBox name="LoadingSpinner · Size 48, default color">
               <LoadingSpinner size={48} />
-            </SpinnerViewerBox>
+            </DSComponentViewerBox>
           </VStack>
         </VStack>
 
