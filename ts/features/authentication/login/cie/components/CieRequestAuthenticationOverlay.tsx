@@ -283,6 +283,7 @@ const CieWebView = (props: Props) => {
       {requestInfo.requestState === "AUTHORIZED" &&
         internalState.authUrl === undefined && (
           <WebView
+            testID="webview"
             androidCameraAccessDisabled={true}
             androidMicrophoneAccessDisabled={true}
             ref={webView}

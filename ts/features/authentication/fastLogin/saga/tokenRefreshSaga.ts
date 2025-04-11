@@ -50,7 +50,7 @@ export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
 }
 
-function* handleRefreshSessionToken(
+export function* handleRefreshSessionToken(
   refreshSessionTokenRequestAction: ReturnType<
     typeof refreshSessionToken.request
   >
@@ -98,7 +98,7 @@ function* handleRefreshSessionToken(
   }
 }
 
-type RequestStateType = {
+export type RequestStateType = {
   counter: number;
   status: "in-progress" | "success" | "max-retries" | "session-expired";
   error: string | undefined;
@@ -106,7 +106,7 @@ type RequestStateType = {
 
 const MAX_RETRIES = fastLoginMaxRetries;
 
-function* doRefreshTokenSaga(
+export function* doRefreshTokenSaga(
   refreshSessionTokenRequestAction: ReturnType<
     typeof refreshSessionToken.request
   >
@@ -182,7 +182,7 @@ function* doRefreshTokenSaga(
   }
 }
 
-const handleRequestError = (
+export const handleRequestError = (
   requestState: RequestStateType,
   response?: E.Either<
     ReadonlyArray<ValidationError>,
@@ -196,6 +196,7 @@ const handleRequestError = (
       () => ({
         description: "max retries reached"
       }),
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       response =>
         pipe(
           response,

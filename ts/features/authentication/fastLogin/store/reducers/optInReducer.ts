@@ -16,7 +16,7 @@ export const fastLoginOptInInitialState: FastLoginOptInState = {
   enabled: undefined
 };
 
-const fastLoginOptInReducer = (
+export const fastLoginOptInReducer = (
   state: FastLoginOptInState = fastLoginOptInInitialState,
   action: Action
 ): FastLoginOptInState => {
