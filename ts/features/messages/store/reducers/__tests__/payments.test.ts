@@ -33,7 +33,7 @@ import {
 import { getRptIdStringFromPaymentData } from "../../../utils";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as versionInfo from "../../../../../common/versionInfo/store/reducers/versionInfo";
-import * as profile from "../../../../../store/reducers/profile";
+import * as profile from "../../../../settings/common/store/selectors";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 

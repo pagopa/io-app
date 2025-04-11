@@ -4,7 +4,7 @@ import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
-import * as cieUtils from "../../../../utils/cie";
+import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
 import {
   getAttestation,
@@ -35,6 +35,7 @@ export type RequestEidActorParams = {
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
   identification: IdentificationContext | undefined;
+  isL3IssuanceEnabled?: boolean;
 };
 
 export type GetWalletAttestationActorParams = {
@@ -91,6 +92,27 @@ export const createEidIssuanceActorsImplementation = (
     return { isNFCEnabled, isCIEAuthenticationSupported };
   }),
 
+  startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
+    async ({ input }) => {
+      assert(
+        input.walletInstanceAttestation,
+        "walletInstanceAttestation is undefined"
+      );
+      assert(input.identification, "identification is undefined");
+
+      const authenticationContext = await issuanceUtils.startAuthFlow({
+        walletAttestation: input.walletInstanceAttestation,
+        identification: input.identification,
+        isL3IssuanceEnabled: input.isL3IssuanceEnabled || false
+      });
+
+      return {
+        ...authenticationContext,
+        callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
+      };
+    }
+  ),
+
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
       assert(input.identification, "identification is undefined");
@@ -116,26 +138,6 @@ export const createEidIssuanceActorsImplementation = (
         ...authParams,
         ...input.authenticationContext
       });
-    }
-  ),
-
-  startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
-    async ({ input }) => {
-      assert(
-        input.walletInstanceAttestation,
-        "walletInstanceAttestation is undefined"
-      );
-      assert(input.identification, "identification is undefined");
-
-      const authenticationContext = await issuanceUtils.startAuthFlow({
-        walletAttestation: input.walletInstanceAttestation,
-        identification: input.identification
-      });
-
-      return {
-        ...authenticationContext,
-        callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
-      };
     }
   ),
 

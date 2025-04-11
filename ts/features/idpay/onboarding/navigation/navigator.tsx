@@ -4,13 +4,13 @@ import {
   IdPayOnboardingMachineContext,
   IdPayOnboardingMachineProvider
 } from "../machine/provider";
-import BoolValuePrerequisitesScreen from "../screens/BoolValuePrerequisitesScreen";
-import CompletionScreen from "../screens/CompletionScreen";
-import FailureScreen from "../screens/FailureScreen";
-import InputFormVerificationScreen from "../screens/InputFormVerificationScreen";
-import { InitiativeDetailsScreen } from "../screens/InitiativeDetailsScreen";
-import MultiValuePrerequisitesScreen from "../screens/MultiValuePrerequisitesScreen";
-import PDNDPrerequisitesScreen from "../screens/PDNDPrerequisitesScreen";
+import IdPayBoolValuePrerequisitesScreen from "../screens/IdPayBoolValuePrerequisitesScreen";
+import IdPayCompletionScreen from "../screens/IdPayCompletionScreen";
+import IdPayFailureScreen from "../screens/IdPayFailureScreen";
+import IdPayInputFormVerificationScreen from "../screens/IdPayInputFormVerificationScreen";
+import { IdPayInitiativeDetailsScreen } from "../screens/IdPayInitiativeDetailsScreen";
+import IdPayMultiValuePrerequisitesScreen from "../screens/IdPayMultiValuePrerequisitesScreen";
+import IdPayPDNDPrerequisitesScreen from "../screens/IdPayPDNDPrerequisitesScreen";
 import { IdPayOnboardingParamsList } from "./params";
 import { IdPayOnboardingRoutes } from "./routes";
 
@@ -42,32 +42,32 @@ export const InnerNavigator = () => {
     >
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}
-        component={InitiativeDetailsScreen}
+        component={IdPayInitiativeDetailsScreen}
       />
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS}
-        component={BoolValuePrerequisitesScreen}
+        component={IdPayBoolValuePrerequisitesScreen}
       />
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM}
-        component={InputFormVerificationScreen}
+        component={IdPayInputFormVerificationScreen}
       />
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}
-        component={MultiValuePrerequisitesScreen}
+        component={IdPayMultiValuePrerequisitesScreen}
       />
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
-        component={PDNDPrerequisitesScreen}
+        component={IdPayPDNDPrerequisitesScreen}
       />
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION}
-        component={CompletionScreen}
+        component={IdPayCompletionScreen}
         options={{ gestureEnabled: false }}
       />
       <Stack.Screen
         name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE}
-        component={FailureScreen}
+        component={IdPayFailureScreen}
         options={{ gestureEnabled: false, headerShown: false }}
       />
     </Stack.Navigator>
