@@ -4,7 +4,7 @@ import { ActionType, getType } from "typesafe-actions";
 import { backgroundActivityTimeout } from "../../config";
 import NavigationService from "../../navigation/NavigationService";
 import { applicationChangeState } from "../../store/actions/application";
-import { identificationRequest } from "../../store/actions/identification";
+import { identificationRequest } from "../../features/identification/store/actions";
 import { ReduxSagaEffect } from "../../types/utils";
 import {
   StartupStatusEnum,

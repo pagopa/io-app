@@ -11,7 +11,7 @@ import * as selectors from "../../connectivity/store/selectors";
 import * as persistedSelectors from "../../../store/reducers/persistedPreferences";
 import * as lifecycleSelectors from "../../itwallet/lifecycle/store/selectors";
 import * as ioHook from "../../../store/hooks";
-import { identificationRequest } from "../../../store/actions/identification";
+import { identificationRequest } from "../../identification/store/actions";
 
 jest.useFakeTimers();
 

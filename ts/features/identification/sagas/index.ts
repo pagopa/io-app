@@ -1,11 +1,11 @@
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
-import { startApplicationInitialization } from "../store/actions/application";
+import { startApplicationInitialization } from "../../../store/actions/application";
 import {
   checkCurrentSession,
   sessionInvalid
-} from "../features/authentication/common/store/actions";
+} from "../../authentication/common/store/actions";
 import {
   identificationCancel,
   identificationForceLogout,
@@ -14,18 +14,19 @@ import {
   identificationReset,
   identificationStart,
   identificationSuccess
-} from "../store/actions/identification";
+} from "../store/actions";
 import {
   IdentificationCancelData,
   IdentificationGenericData,
   IdentificationResult,
   IdentificationSuccessData
-} from "../store/reducers/identification";
-import { PinString } from "../types/PinString";
-import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
-import { deletePin, getPin } from "../utils/keychain";
-import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
-import { isFastLoginEnabledSelector } from "./../features/authentication/fastLogin/store/selectors/index";
+} from "../store/reducers";
+import { PinString } from "../../../types/PinString";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+import { deletePin, getPin } from "../../../utils/keychain";
+import { handlePendingMessageStateIfAllowed } from "../../pushNotifications/sagas/common";
+import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors/index";
+import { isDevEnv } from "../../../utils/environment";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -152,3 +153,10 @@ export function* watchIdentification(): IterableIterator<ReduxSagaEffect> {
     startAndHandleIdentificationResult
   );
 }
+
+export const testable = isDevEnv
+  ? {
+      startAndHandleIdentificationResult,
+      waitIdentificationResult
+    }
+  : undefined;

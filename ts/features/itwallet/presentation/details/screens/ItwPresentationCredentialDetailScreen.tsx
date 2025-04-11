@@ -41,7 +41,7 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
-import { identificationRequest } from "../../../../../store/actions/identification.ts";
+import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 import { useOfflineGuard } from "../../../../../hooks/useOfflineGuard.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {

@@ -26,41 +26,40 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import { areTwoMinElapsedFromLastActivity } from "../../features/authentication/fastLogin/store/actions/sessionRefreshActions";
-import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
+import { areTwoMinElapsedFromLastActivity } from "../../authentication/fastLogin/store/actions/sessionRefreshActions";
+import { refreshSessionToken } from "../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   hasTwoMinutesElapsedSinceLastActivitySelector,
   isFastLoginEnabledSelector
-} from "../../features/authentication/fastLogin/store/selectors";
-import { useDetectSmallScreen } from "../../hooks/useDetectSmallScreen";
-import I18n from "../../i18n";
+} from "../../authentication/fastLogin/store/selectors";
+import { useDetectSmallScreen } from "../../../hooks/useDetectSmallScreen";
+import I18n from "../../../i18n";
 import {
   identificationCancel,
   identificationFailure,
   identificationPinReset,
   identificationSuccess
-} from "../../store/actions/identification";
-import { useIOSelector } from "../../store/hooks";
-import { appCurrentStateSelector } from "../../store/reducers/appState";
-import {
-  IdentificationCancelData,
-  identificationFailSelector,
-  maxAttempts,
-  progressSelector
-} from "../../store/reducers/identification";
-import { profileNameSelector } from "../../features/settings/common/store/selectors";
-import { setAccessibilityFocus } from "../../utils/accessibility";
-import { biometricAuthenticationRequest } from "../../utils/biometrics";
-import { useAppBackgroundAccentColorName } from "../../utils/hooks/theme";
-import { useBiometricType } from "../../utils/hooks/useBiometricType";
-import { usePrevious } from "../../utils/hooks/usePrevious";
+} from "../store/actions";
+import { useIOSelector } from "../../../store/hooks";
+import { appCurrentStateSelector } from "../../../store/reducers/appState";
+import { IdentificationCancelData, maxAttempts } from "../store/reducers";
+import { profileNameSelector } from "../../settings/common/store/selectors";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
+import { biometricAuthenticationRequest } from "../../../utils/biometrics";
+import { useAppBackgroundAccentColorName } from "../../../utils/hooks/theme";
+import { useBiometricType } from "../../../utils/hooks/useBiometricType";
+import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {
   FAIL_ATTEMPTS_TO_SHOW_ALERT,
   IdentificationInstructionsComponent,
   getBiometryIconName
-} from "../../utils/identification";
+} from "../utils";
+import { IdentificationNumberPad } from "../components/IdentificationNumberPad";
+import {
+  identificationFailSelector,
+  progressSelector
+} from "../store/selectors";
 import { IdentificationLockModal } from "./IdentificationLockModal";
-import { IdentificationNumberPad } from "./components/IdentificationNumberPad";
 
 const VERTICAL_PADDING = 16;
 const A11Y_FOCUS_DELAY = 1000 as Millisecond;
@@ -68,7 +67,7 @@ const A11Y_FOCUS_DELAY = 1000 as Millisecond;
 const onRequestCloseHandler = () => undefined;
 
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
-const IdentificationModal = () => {
+export const IdentificationModal = () => {
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
   const showRetryText = useRef(false);
   const headerRef = useRef<View>(null);
@@ -374,6 +373,7 @@ const IdentificationModal = () => {
     />
   ) : (
     <Modal
+      testID="identification-modal"
       statusBarTranslucent
       transparent
       onRequestClose={onRequestCloseHandler}
@@ -493,5 +493,3 @@ const styles = StyleSheet.create({
     bottom: -32
   }
 });
-
-export default IdentificationModal;

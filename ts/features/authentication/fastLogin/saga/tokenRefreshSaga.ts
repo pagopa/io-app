@@ -31,7 +31,7 @@ import {
   identificationFailure,
   identificationRequest,
   identificationSuccess
-} from "../../../../store/actions/identification";
+} from "../../../identification/store/actions";
 import NavigationService from "../../../../navigation/NavigationService";
 import { FastLoginT } from "../../../../../definitions/fast_login/requestTypes";
 import {

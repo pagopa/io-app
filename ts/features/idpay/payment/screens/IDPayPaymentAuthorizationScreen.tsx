@@ -16,7 +16,7 @@ import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPay
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
-import { identificationRequest } from "../../../../store/actions/identification";
+import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";

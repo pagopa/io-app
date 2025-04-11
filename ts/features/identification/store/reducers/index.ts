@@ -3,7 +3,7 @@ import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
 import { pipe } from "fp-ts/lib/function";
-import { PinString } from "../../types/PinString";
+import { PinString } from "../../../../types/PinString";
 import {
   identificationCancel,
   identificationFailure,
@@ -11,9 +11,8 @@ import {
   identificationReset,
   identificationStart,
   identificationSuccess
-} from "../actions/identification";
-import { Action } from "../actions/types";
-import { GlobalState } from "./types";
+} from "../actions";
+import { Action } from "../../../../store/actions/types";
 
 export const freeAttempts = 4;
 // in seconds
@@ -121,7 +120,7 @@ const nextErrorData = (
   };
 };
 
-const reducer = (
+export const identificationReducer = (
   state: IdentificationState = INITIAL_STATE,
   action: Action
 ): IdentificationState => {
@@ -188,12 +187,3 @@ const reducer = (
       return state;
   }
 };
-
-export default reducer;
-
-// Selectors
-export const identificationFailSelector = (state: GlobalState) =>
-  O.fromNullable(state.identification.fail);
-
-export const progressSelector = (state: GlobalState) =>
-  state.identification.progress;

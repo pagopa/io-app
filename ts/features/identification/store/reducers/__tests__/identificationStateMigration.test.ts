@@ -3,8 +3,8 @@ import { PersistPartial } from "redux-persist";
 import {
   IDENTIFICATION_STATE_MIGRATION_VERSION,
   identificationStateMigration
-} from "..";
-import { IdentificationState } from "../identification";
+} from "../../../../../store/reducers";
+import { IdentificationState } from "..";
 
 MockDate.set(new Date("2024-03-13T10:30:20.000Z"));
 
@@ -25,7 +25,7 @@ const previousState: MockState = {
   }
 };
 
-describe("IdentificationStateMigration", () => {
+describe("IdentificationStateMigration - Sanity Check", () => {
   it("should pass the sanity check", () => {
     const actualDate = new Date();
     const expectedDate = new Date("2024-03-13T10:30:20.000Z");

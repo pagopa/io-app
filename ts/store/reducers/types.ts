@@ -11,13 +11,13 @@ import { CieState } from "../../features/authentication/login/cie/store/reducers
 import { ProfileState } from "../../features/settings/common/store/reducers";
 import { UserDataProcessingState } from "../../features/settings/common/store/reducers/userDataProcessing";
 import { EmailValidationState } from "../../features/mailCheck/store/reducers/emailValidation";
+import { PersistedIdentificationState } from "../../features/identification/store/reducers";
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { ContentState } from "./content";
 import { CrossSessionsState } from "./crossSessions";
 import { PersistedDebugState } from "./debug";
 import { PersistedEntitiesState } from "./entities";
-import { PersistedIdentificationState } from "./identification";
 import { InstallationState } from "./installation";
 import { NavigationState } from "./navigation";
 import { OnboardingState } from "./onboarding";
