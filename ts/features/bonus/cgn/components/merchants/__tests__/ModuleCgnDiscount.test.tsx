@@ -5,7 +5,7 @@ import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/mercha
 import I18n from "../../../../../../i18n";
 import { ModuleCgnDiscount } from "../ModuleCgnDiscount";
 
-describe("CgnModuleDiscount", () => {
+describe("ModuleCgnDiscount", () => {
   const discount: Discount = {
     name: "Small Rubber Chips" as NonEmptyString,
     id: "28201" as NonEmptyString,
