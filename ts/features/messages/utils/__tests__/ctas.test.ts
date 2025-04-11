@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { Linking } from "react-native";
 import FM from "front-matter";
@@ -219,17 +220,17 @@ some noise`;
 
 describe("removeCTAsFromMarkdown", () => {
   const serviceId = "01JQ943CGG15SZF926E9NWJDT6" as ServiceId;
-  it("should be the same", async () => {
+  it("should be the same (right either)", async () => {
     const markdown = "simple text";
     const cleaned = removeCTAsFromMarkdown(
       markdown as MessageBodyMarkdown,
       serviceId
     );
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(cleaned).toEqual(markdown);
+    expect(cleaned).toEqual(E.right(markdown));
   });
 
-  it("should be cleaned", async () => {
+  it("should be cleaned (right either)", async () => {
     const withCTA = `---
 it:
     cta_1:
@@ -239,29 +240,29 @@ it:
 some noise`;
     const cleaned = removeCTAsFromMarkdown(withCTA, serviceId);
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(cleaned).toEqual("some noise");
+    expect(cleaned).toEqual(E.right("some noise"));
   });
 
-  it("should be cleaned (extended version)", async () => {
+  it("should be cleaned (extended version, right either)", async () => {
     const cleaned = removeCTAsFromMarkdown(CTA_2, serviceId);
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(cleaned).toEqual(messageBody);
+    expect(cleaned).toEqual(E.right(messageBody));
   });
 
-  it("should return empty string for empty string input", () => {
+  it("should return empty string for empty string input (right either)", () => {
     const input = "";
     const markdown = removeCTAsFromMarkdown(input, serviceId);
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(markdown).toBe("");
+    expect(markdown).toEqual(E.right(""));
   });
-  it("should return the markdown for a proper formatted message (with front matter and body)", () => {
+  it("should return the markdown for a proper formatted message (with front matter and body, right either)", () => {
     const input =
       "---\nit:\n cta_1:\n  text: Il testo\n  action: ioit://messages\nen:\n cta_1:\n  text: The text\n  action: ioit//messages\n---\nThis is the message body";
     const markdown = removeCTAsFromMarkdown(input, serviceId);
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(markdown).toBe("This is the message body");
+    expect(markdown).toEqual(E.right("This is the message body"));
   });
-  it("should return input string for invalid front matter", () => {
+  it("should return input string for invalid front matter (left either)", () => {
     const input =
       "---\nit:\n cta_1:\n  text: Il testo  action: ioit://messages\nen:\n cta_1:\n  text: The text\n  action: ioit//messages\n---\nThis is the message body";
     const markdown = removeCTAsFromMarkdown(input, serviceId);
@@ -271,7 +272,7 @@ some noise`;
       "A failure occourred while parsing or extracting body from input with front matter"
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
-    expect(markdown).toBe(input);
+    expect(markdown).toEqual(E.left(input));
   });
 });
 
@@ -1856,7 +1857,7 @@ describe("handleCtaAction", () => {
 
 describe("containsFrontMatterHeader", () => {
   const serviceId = "01JQ94XH4M0PQ2QGDTNYJ1ASS7" as ServiceId;
-  it("should return false for empty string", () => {
+  it("should return false for empty string (right either)", () => {
     const input = "";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -1865,9 +1866,9 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(false);
+    expect(containsFrontMatter).toEqual(E.right(false));
   });
-  it("should return false for non front matter string", () => {
+  it("should return false for non front matter string (right either)", () => {
     const input = "it:\n cta_1:\n  text: The text";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -1876,9 +1877,9 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(false);
+    expect(containsFrontMatter).toEqual(E.right(false));
   });
-  it("should return false for non opening front matter", () => {
+  it("should return false for non opening front matter (right either)", () => {
     const input = "it:\n cta_1:\n  text: The text\n---";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -1887,9 +1888,9 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(false);
+    expect(containsFrontMatter).toEqual(E.right(false));
   });
-  it("should return false for non closing front matter", () => {
+  it("should return false for non closing front matter (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -1898,9 +1899,9 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(false);
+    expect(containsFrontMatter).toEqual(E.right(false));
   });
-  it("should return false for opening front matter without newline", () => {
+  it("should return false for opening front matter without newline (right either)", () => {
     const input = "---it:\n cta_1:\n  text: The text\n---";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -1909,9 +1910,9 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(false);
+    expect(containsFrontMatter).toEqual(E.right(false));
   });
-  it("should return false for closing front matter without newline", () => {
+  it("should return false for closing front matter without newline (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text---";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -1920,9 +1921,9 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(false);
+    expect(containsFrontMatter).toEqual(E.right(false));
   });
-  it("should return false for proper front matter that has extra characters (on the same line) after closing", () => {
+  it("should return false for proper front matter that has extra characters (on the same line) after closing (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---Something else";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -1931,9 +1932,9 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(false);
+    expect(containsFrontMatter).toEqual(E.right(false));
   });
-  it("should return false for proper front matter that has extra space before opening", () => {
+  it("should return false for proper front matter that has extra space before opening (right either)", () => {
     const input = " ---\nit:\n cta_1:\n  text: The text\n---";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -1942,9 +1943,9 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(false);
+    expect(containsFrontMatter).toEqual(E.right(false));
   });
-  it("should return false for proper front matter that has extra space before closing", () => {
+  it("should return false for proper front matter that has extra space before closing (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n ---";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -1953,9 +1954,9 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(false);
+    expect(containsFrontMatter).toEqual(E.right(false));
   });
-  it("should return false for a front matter that has wrong opening", () => {
+  it("should return false for a front matter that has wrong opening (right either)", () => {
     const input = "...\nit:\n cta_1:\n  text: The text\n---";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -1964,9 +1965,9 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(false);
+    expect(containsFrontMatter).toEqual(E.right(false));
   });
-  it("should return false if the library throws an exception", () => {
+  it("should return a left either if the library throws an exception", () => {
     jest.spyOn(FM, "test").mockImplementation(_input => {
       throw Error("An error");
     });
@@ -1983,10 +1984,10 @@ describe("containsFrontMatterHeader", () => {
       "A failure occoured while testing for front matter"
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
-    expect(containsFrontMatter).toBe(false);
+    expect(containsFrontMatter).toEqual(E.left(undefined));
     jest.restoreAllMocks();
   });
-  it("should return true for proper front matter", () => {
+  it("should return true for proper front matter (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -1995,9 +1996,9 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(true);
+    expect(containsFrontMatter).toEqual(E.right(true));
   });
-  it("should return true for proper front matter with invalid yaml", () => {
+  it("should return true for proper front matter with invalid yaml (right either)", () => {
     const input = "---\nit: cta_1: text: The text\n---";
 
     const containsFrontMatter = testable!.containsFrontMatterHeader(
@@ -2006,114 +2007,114 @@ describe("containsFrontMatterHeader", () => {
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(containsFrontMatter).toBe(true);
+    expect(containsFrontMatter).toEqual(E.right(true));
   });
 });
 
 describe("extractBodyAfterFrontMatter", () => {
   const serviceId = "01JQ94YTF42SGK4WWMP7M4F6SX" as ServiceId;
-  it("should return input string for non opening front matter", () => {
+  it("should return input string for non opening front matter (right either)", () => {
     const input = "it:\n cta_1:\n  text: The text\n---\nThis is the body";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe(input);
+    expect(body).toEqual(E.right(input));
   });
-  it("should return input string for non closing front matter", () => {
+  it("should return input string for non closing front matter (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\nThis is the body";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe(input);
+    expect(body).toEqual(E.right(input));
   });
-  it("should return input string for opening front matter without newline", () => {
+  it("should return input string for opening front matter without newline (right either)", () => {
     const input = "---it:\n cta_1:\n  text: The text\n---\nThis is the body";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe(input);
+    expect(body).toEqual(E.right(input));
   });
-  it("should return input string for closing front matter without newline", () => {
+  it("should return input string for closing front matter without newline (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text---\nThis is the body";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe(input);
+    expect(body).toEqual(E.right(input));
   });
-  it("should return input string for proper front matter that has extra characters (on the same line) after closing", () => {
+  it("should return input string for proper front matter that has extra characters (on the same line) after closing (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---This is the body";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe(input);
+    expect(body).toEqual(E.right(input));
   });
-  it("should return input string for proper front matter that has extra space before opening", () => {
+  it("should return input string for proper front matter that has extra space before opening (right either)", () => {
     const input = " ---\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe(input);
+    expect(body).toEqual(E.right(input));
   });
-  it("should return input string for proper front matter that has extra space before closing", () => {
+  it("should return input string for proper front matter that has extra space before closing (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n ---\nThis is the body";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe(input);
+    expect(body).toEqual(E.right(input));
   });
-  it("should return input string for a front matter that has wrong opening", () => {
+  it("should return input string for a front matter that has wrong opening (right either)", () => {
     const input = "...\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe(input);
+    expect(body).toEqual(E.right(input));
   });
-  it("should extract body for valid front matter", () => {
+  it("should extract body for valid front matter (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---\nThis is the body";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe("This is the body");
+    expect(body).toEqual(E.right("This is the body"));
   });
-  it("should extract empty body for valid front matter with no body", () => {
+  it("should extract empty body for valid front matter with no body (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---\n";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe("");
+    expect(body).toEqual(E.right(""));
   });
-  it("should extract empty body for valid front matter with no body and no newline", () => {
+  it("should extract empty body for valid front matter with no body and no newline (right either)", () => {
     const input = "---\nit:\n cta_1:\n  text: The text\n---";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe("");
+    expect(body).toEqual(E.right(""));
   });
-  it("should extract body for a string with no front matter", () => {
+  it("should extract body for a string with no front matter (right either)", () => {
     const input = "This is the body";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe("This is the body");
+    expect(body).toEqual(E.right("This is the body"));
   });
-  it("should extract empty body from an empty string", () => {
+  it("should extract empty body from an empty string (right either)", () => {
     const input = "";
 
     const body = testable!.extractBodyAfterFrontMatter(input, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
-    expect(body).toBe("");
+    expect(body).toEqual(E.right(""));
   });
 });

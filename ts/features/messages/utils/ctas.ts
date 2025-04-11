@@ -111,13 +111,17 @@ export const getServiceCTAs = (
 export const removeCTAsFromMarkdown = (
   markdownText: MessageBodyMarkdown | string,
   serviceId: ServiceId
-): string => {
-  const isValidFrontMatterHeader = containsFrontMatterHeader(
+): E.Either<string, string> => {
+  const isValidFrontMatterHeaderEither = containsFrontMatterHeader(
     markdownText,
     serviceId
   );
-  if (!isValidFrontMatterHeader) {
-    return markdownText;
+  if (E.isLeft(isValidFrontMatterHeaderEither)) {
+    return E.left(markdownText);
+  }
+  const hasFrontMatterHeader = isValidFrontMatterHeaderEither.right;
+  if (!hasFrontMatterHeader) {
+    return E.right(markdownText);
   }
   return extractBodyAfterFrontMatter(markdownText, serviceId);
 };
@@ -154,10 +158,14 @@ export const localizedCTAsFromFrontMatter = (
   if (frontMatterText == null) {
     return undefined;
   }
-  const isValidFrontMatterHeader = containsFrontMatterHeader(
+  const isValidFrontMatterHeaderEither = containsFrontMatterHeader(
     frontMatterText,
     serviceId
   );
+  if (E.isLeft(isValidFrontMatterHeaderEither)) {
+    return undefined;
+  }
+  const isValidFrontMatterHeader = isValidFrontMatterHeaderEither.right;
   if (!isValidFrontMatterHeader) {
     return undefined;
   }
@@ -260,31 +268,31 @@ const isCtaActionValid = (
 const containsFrontMatterHeader = (
   input: string,
   serviceId: ServiceId
-): boolean => {
+): E.Either<void, boolean> => {
   try {
-    return FM.test(input);
+    return E.right(FM.test(input));
   } catch {
     trackCTAFrontMatterDecodingError(
       "A failure occoured while testing for front matter",
       serviceId
     );
-    return false;
+    return E.left(undefined);
   }
 };
 
 const extractBodyAfterFrontMatter = (
   text: string,
   serviceId: ServiceId
-): string => {
+): E.Either<string, string> => {
   try {
     const frontMatter = FM(text);
-    return frontMatter.body;
+    return E.right(frontMatter.body);
   } catch (e) {
     trackCTAFrontMatterDecodingError(
       "A failure occourred while parsing or extracting body from input with front matter",
       serviceId
     );
-    return text;
+    return E.left(text);
   }
 };
 

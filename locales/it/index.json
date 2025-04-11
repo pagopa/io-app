@@ -2777,7 +2777,12 @@
         "email": "Scrivi un'email"
       }
     },
-    "markdownLinkUnsupported": "Questo link non è supportato"
+    "markdownLinkUnsupported": "Questo link non è supportato",
+    "markdown": {
+      "decodingErrorContent": "Il contenuto del messaggio non può essere mostrato correttamente.",
+      "decodingErrorHide": "Nascondi contenuto",
+      "decodingErrorShow": "Mostra comunque"
+    }
   },
   "messagePDFPreview": {
     "title": "Anteprima PDF",
