@@ -373,6 +373,7 @@ export const IdentificationModal = () => {
     />
   ) : (
     <Modal
+      testID="identification-modal"
       statusBarTranslucent
       transparent
       onRequestClose={onRequestCloseHandler}

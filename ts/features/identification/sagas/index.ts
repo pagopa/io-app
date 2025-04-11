@@ -26,6 +26,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { deletePin, getPin } from "../../../utils/keychain";
 import { handlePendingMessageStateIfAllowed } from "../../pushNotifications/sagas/common";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors/index";
+import { isDevEnv } from "../../../utils/environment";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -152,3 +153,10 @@ export function* watchIdentification(): IterableIterator<ReduxSagaEffect> {
     startAndHandleIdentificationResult
   );
 }
+
+export const testable = isDevEnv
+  ? {
+      startAndHandleIdentificationResult,
+      waitIdentificationResult
+    }
+  : undefined;

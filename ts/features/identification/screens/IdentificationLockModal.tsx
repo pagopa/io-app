@@ -80,7 +80,7 @@ export const IdentificationLockModal = (props: Props) => {
   }, [dispatch]);
 
   return (
-    <Modal>
+    <Modal testID="identification-lock-modal">
       <SafeAreaView style={styles.container}>
         <ContentWrapper>
           <View style={styles.content}>
