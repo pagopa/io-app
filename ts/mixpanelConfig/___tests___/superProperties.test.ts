@@ -157,7 +157,10 @@ const generateMockedGlobalState = (
         }
       },
       wallet: {
-        cards: {}
+        cards: {},
+        placeholders: {
+          items: {}
+        }
       }
     },
     persistedPreferences: {
