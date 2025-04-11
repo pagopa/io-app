@@ -4,7 +4,10 @@ import { sessionTokenSelector } from "../../../authentication/common/store/selec
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getNetworkError } from "../../../../utils/errors";
-import { trackItwStatusWalletAttestationFailure, trackItwWalletInstanceRevocation } from "../../analytics";
+import {
+  trackItwStatusWalletAttestationFailure,
+  trackItwWalletInstanceRevocation
+} from "../../analytics";
 import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";

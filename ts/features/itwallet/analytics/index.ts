@@ -5,7 +5,10 @@ import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
-import { ItwCredentialStatus, WalletInstanceRevocationReason } from "../common/utils/itwTypesUtils";
+import {
+  ItwCredentialStatus,
+  WalletInstanceRevocationReason
+} from "../common/utils/itwTypesUtils";
 import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
 import {
   ITW_ACTIONS_EVENTS,
