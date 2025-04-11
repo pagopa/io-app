@@ -33,13 +33,9 @@ export const CgnDiscountHeader = ({
 
   const { header: headerStyle } = useCgnStyle();
 
-  const backgroundColor = isNew
-    ? headerStyle.new.backgroundColor
-    : headerStyle.default.backgroundColor;
-
-  const foreground: IOColors = isNew
-    ? headerStyle.new.foreground
-    : headerStyle.default.foreground;
+ const { backgroundColor, foreground } = isNew
+   ? headerStyle.new
+   : headerStyle.default;
 
   return (
     <View
