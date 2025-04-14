@@ -2893,6 +2893,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
