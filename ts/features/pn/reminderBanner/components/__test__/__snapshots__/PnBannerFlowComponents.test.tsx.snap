@@ -389,6 +389,7 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
                               maxFontSizeMultiplier={1.5}

@@ -3549,6 +3549,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
                               maxFontSizeMultiplier={1.5}
