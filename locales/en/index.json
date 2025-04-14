@@ -4625,7 +4625,7 @@
           },
           "eidExpiredScreen": {
             "title": "Verifica la tua identità",
-            "subtitle": "È un passaggio di verifica necessario per continuare ad usare Documenti su IO per autenticarti.",
+            "subtitle": "È un passaggio di verifica necessario per continuare ad usare IT-Wallet e per autenticarti.",
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           }
