@@ -1,9 +1,14 @@
-import { ActionType, createStandardAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentStartOrigin, WalletPaymentStepEnum } from "../../types";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import { NetworkError } from "../../../../../utils/errors";
 
 export const walletPaymentSetCurrentStep = createStandardAction(
   "WALLET_PAYMENT_SET_CURRENT_STEP"
@@ -20,6 +25,12 @@ export type PaymentInitStateParams = {
 export type PaymentCompletedSuccessPayload = {
   rptId: RptId;
   kind: "COMPLETED" | "DUPLICATED";
+};
+
+export type PaymentStartWebViewPayload = {
+  url: string;
+  onSuccess?: (url: string) => void;
+  onError?: (error: NetworkError) => void;
 };
 
 /**
@@ -46,10 +57,15 @@ export const paymentMethodPspBannerClose = createStandardAction(
   "PAYMENTS_PSP_BANNER_CLOSE"
 )<string>();
 
+export const paymentStartWebViewFlow = createStandardAction(
+  "PAYMENTS_START_WEB_VIEW_FLOW"
+)<PaymentStartWebViewPayload>();
+
 export type PaymentsCheckoutOrchestrationActions =
   | ActionType<typeof walletPaymentSetCurrentStep>
   | ActionType<typeof initPaymentStateAction>
   | ActionType<typeof selectPaymentMethodAction>
   | ActionType<typeof selectPaymentPspAction>
   | ActionType<typeof paymentCompletedSuccess>
-  | ActionType<typeof paymentMethodPspBannerClose>;
+  | ActionType<typeof paymentMethodPspBannerClose>
+  | ActionType<typeof paymentStartWebViewFlow>;
