@@ -1,14 +1,10 @@
-import {
-  ActionType,
-  createAsyncAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createStandardAction } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
-import { PaymentStartOrigin, WalletPaymentStepEnum } from "../../types";
-import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { NetworkError } from "../../../../../utils/errors";
+import { PaymentStartOrigin, WalletPaymentStepEnum } from "../../types";
 
 export const walletPaymentSetCurrentStep = createStandardAction(
   "WALLET_PAYMENT_SET_CURRENT_STEP"
