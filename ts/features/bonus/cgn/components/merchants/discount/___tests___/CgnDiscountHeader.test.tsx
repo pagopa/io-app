@@ -24,7 +24,7 @@ jest.mock("@react-navigation/elements", () => ({
 describe("CgnDiscountHeader", () => {
   it("should render correctly with new discount", () => {
     const { getByText } = render(
-      <CgnDiscountHeader onLayout={jest.fn()} discountDetails={mockDiscount} />
+      <CgnDiscountHeader discountDetails={mockDiscount} />
     );
 
     expect(getByText(I18n.t("bonus.cgn.merchantsList.news"))).toBeTruthy();
@@ -34,10 +34,7 @@ describe("CgnDiscountHeader", () => {
   it("should render correctly without new discount", () => {
     const discountDetails = { ...mockDiscount, isNew: false };
     const { queryByText } = render(
-      <CgnDiscountHeader
-        onLayout={jest.fn()}
-        discountDetails={discountDetails}
-      />
+      <CgnDiscountHeader discountDetails={discountDetails} />
     );
 
     expect(queryByText(I18n.t("bonus.cgn.merchantsList.news"))).toBeNull();
@@ -47,10 +44,7 @@ describe("CgnDiscountHeader", () => {
   it("should render correctly without discount", () => {
     const discountDetails = { ...mockDiscount, discount: 0 };
     const { queryByText } = render(
-      <CgnDiscountHeader
-        onLayout={jest.fn()}
-        discountDetails={discountDetails}
-      />
+      <CgnDiscountHeader discountDetails={discountDetails} />
     );
 
     expect(queryByText(I18n.t("bonus.cgn.merchantsList.news"))).toBeTruthy();

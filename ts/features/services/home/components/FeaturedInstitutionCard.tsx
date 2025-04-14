@@ -1,7 +1,6 @@
 import {
   Avatar,
   H6,
-  IOColors,
   IOSkeleton,
   IOSpacingScale,
   IOVisualCostants,
@@ -11,6 +10,7 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import { WithTestID } from "../../../../types/WithTestID";
 import { CardPressableBase } from "../../common/components/CardPressableBase";
 import { getLogoForInstitution } from "../../common/utils";
+import { useServiceCardStyle } from "../hooks/useServiceCardStyle";
 
 export type FeaturedInstitutionCardProps = WithTestID<{
   id: string;
@@ -35,14 +35,8 @@ const styles = StyleSheet.create({
     borderRadius: cardBorderRadius,
     borderCurve: "continuous",
     borderWidth: 1,
-    borderColor: IOColors["grey-100"],
-    backgroundColor: IOColors["grey-50"],
     flexDirection: "row",
     alignItems: "center"
-  },
-  cardContainerNew: {
-    borderColor: IOColors["hanPurple-100"],
-    backgroundColor: IOColors["hanPurple-50"]
   },
   cardContent: {
     flexDirection: "row",
@@ -57,60 +51,91 @@ const styles = StyleSheet.create({
   }
 });
 
-const FeaturedInstitutionCard = (props: FeaturedInstitutionCardProps) => (
-  <CardPressableBase
-    onPress={props.onPress}
-    testID={`${props.testID}-pressable`}
-    accessibilityLabel={props.accessibilityLabel}
-  >
+const FeaturedInstitutionCard = ({
+  id,
+  name,
+  accessibilityLabel,
+  isNew,
+  onPress,
+  testID
+}: FeaturedInstitutionCardProps) => {
+  const { default: defaultThemeStyle, new: newThemeStyle } =
+    useServiceCardStyle();
+
+  return (
+    <CardPressableBase
+      onPress={onPress}
+      testID={`${testID}-pressable`}
+      accessibilityLabel={accessibilityLabel}
+    >
+      <View
+        style={[
+          styles.cardContainer,
+          defaultThemeStyle.card,
+          isNew && newThemeStyle.card
+        ]}
+        testID={testID}
+      >
+        <View style={styles.cardContent}>
+          <View style={styles.cardAvatar}>
+            <Avatar logoUri={getLogoForInstitution(id)} size="small" />
+          </View>
+          <View style={styles.cardLabel}>
+            <H6
+              lineBreakMode="head"
+              numberOfLines={2}
+              color={
+                isNew
+                  ? newThemeStyle.foreground.primary
+                  : defaultThemeStyle.foreground.primary
+              }
+            >
+              {name}
+            </H6>
+          </View>
+        </View>
+      </View>
+    </CardPressableBase>
+  );
+};
+
+const FeaturedInstitutionCardSkeleton = ({ testID }: WithTestID<unknown>) => {
+  const { default: defaultThemeStyle, skeletonColor } = useServiceCardStyle();
+
+  return (
     <View
-      style={[styles.cardContainer, props.isNew && styles.cardContainerNew]}
-      testID={props.testID}
+      style={[styles.cardContainer, defaultThemeStyle.card]}
+      testID={`${testID}-skeleton`}
     >
       <View style={styles.cardContent}>
         <View style={styles.cardAvatar}>
-          <Avatar logoUri={getLogoForInstitution(props.id)} size="small" />
+          <IOSkeleton
+            color={skeletonColor}
+            shape="square"
+            radius={IOVisualCostants.avatarRadiusSizeSmall}
+            size={IOVisualCostants.avatarSizeSmall}
+          />
         </View>
         <View style={styles.cardLabel}>
-          <H6 lineBreakMode="head" numberOfLines={2} color="hanPurple-850">
-            {props.name}
-          </H6>
+          <IOSkeleton
+            color={skeletonColor}
+            shape="rectangle"
+            radius={8}
+            width="70%"
+            height={16}
+          />
+          <VSpacer size={8} />
+          <IOSkeleton
+            color={skeletonColor}
+            shape="rectangle"
+            radius={8}
+            width="55%"
+            height={16}
+          />
         </View>
       </View>
     </View>
-  </CardPressableBase>
-);
-
-const FeaturedInstitutionCardSkeleton = ({ testID }: WithTestID<unknown>) => (
-  <View style={styles.cardContainer} testID={`${testID}-skeleton`}>
-    <View style={styles.cardContent}>
-      <View style={styles.cardAvatar}>
-        <IOSkeleton
-          color={IOColors["grey-200"]}
-          shape="square"
-          radius={IOVisualCostants.avatarRadiusSizeSmall}
-          size={IOVisualCostants.avatarSizeSmall}
-        />
-      </View>
-      <View style={styles.cardLabel}>
-        <IOSkeleton
-          color={IOColors["grey-200"]}
-          shape="rectangle"
-          radius={8}
-          width="70%"
-          height={16}
-        />
-        <VSpacer size={8} />
-        <IOSkeleton
-          color={IOColors["grey-200"]}
-          shape="rectangle"
-          radius={8}
-          width="55%"
-          height={16}
-        />
-      </View>
-    </View>
-  </View>
-);
+  );
+};
 
 export { FeaturedInstitutionCard, FeaturedInstitutionCardSkeleton };
