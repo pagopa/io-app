@@ -1,17 +1,9 @@
-import {
-  IOColors,
-  IOToast,
-  IOVisualCostants
-} from "@pagopa/io-app-design-system";
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { LayoutChangeEvent, Platform, StyleSheet, View } from "react-native";
-import Animated, {
-  useAnimatedRef,
-  useSharedValue
-} from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useCallback, useEffect, useMemo } from "react";
+import { Platform, View } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
@@ -28,6 +20,7 @@ import { profileSelector } from "../../../../settings/common/store/selectors";
 import { openWebUrl } from "../../../../../utils/url";
 import { CgnDiscountContent } from "../../components/merchants/discount/CgnDiscountContent";
 import { CgnDiscountHeader } from "../../components/merchants/discount/CgnDiscountHeader";
+import { useCgnStyle } from "../../hooks/useCgnStyle";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCodeFromBucket } from "../../store/actions/bucket";
@@ -61,10 +54,6 @@ const CgnDiscountDetailScreen = () => {
     ? merchantDetailsRemoteValue.value
     : undefined;
 
-  const [titleHeight, setTitleHeight] = useState(0);
-  const translationY = useSharedValue(0);
-  const insets = useSafeAreaInsets();
-
   const bucketResponse = useIOSelector(cgnBucketSelector);
   const discountOtp = useIOSelector(cgnOtpDataSelector);
   const discountCode = useIOSelector(cgnSelectedDiscountCodeSelector);
@@ -89,13 +78,6 @@ const CgnDiscountDetailScreen = () => {
       ),
     [cgnUserAgeRange, discountDetails, merchantDetails]
   );
-
-  const getTitleHeight = (event: LayoutChangeEvent) => {
-    const { height } = event.nativeEvent.layout;
-    if (titleHeight === 0) {
-      setTitleHeight(height - insets.top - IOVisualCostants.headerHeight);
-    }
-  };
 
   const onNavigateToDiscountUrl = () => {
     mixpanelCgnEvent("CGN_DISCOUNT_URL_REQUEST");
@@ -172,22 +154,21 @@ const CgnDiscountDetailScreen = () => {
     }
   };
 
+  const {
+    header: { default: defaultHeaderStyle, new: newHeaderStyle }
+  } = useCgnStyle();
+
   const { backgroundColor } = discountDetails?.isNew
-    ? styles.backgroundNewItem
-    : styles.backgroundDefault;
+    ? newHeaderStyle
+    : defaultHeaderStyle;
 
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({
     title: discountDetails?.name ?? "",
-    scrollValues: {
-      contentOffsetY: translationY,
-      triggerOffset: titleHeight
-    },
     backgroundColor,
     canGoBack: true,
     supportRequest: true,
-    variant: "neutral",
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef
   });
@@ -244,13 +225,9 @@ const CgnDiscountDetailScreen = () => {
   if (discountDetails && merchantDetails) {
     return (
       <>
-        <FocusAwareStatusBar
-          backgroundColor={backgroundColor}
-          barStyle={"dark-content"}
-        />
+        <FocusAwareStatusBar backgroundColor={backgroundColor} />
         <IOScrollView
           animatedRef={animatedScrollViewRef}
-          snapOffset={titleHeight}
           includeContentMargins={false}
           actions={renderActions()}
         >
@@ -266,10 +243,7 @@ const CgnDiscountDetailScreen = () => {
               }}
             />
           )}
-          <CgnDiscountHeader
-            onLayout={getTitleHeight}
-            discountDetails={discountDetails}
-          />
+          <CgnDiscountHeader discountDetails={discountDetails} />
           <CgnDiscountContent discountDetails={discountDetails} />
         </IOScrollView>
       </>
@@ -278,16 +252,5 @@ const CgnDiscountDetailScreen = () => {
 
   return null;
 };
-
-const styles = StyleSheet.create({
-  backgroundDefault: {
-    backgroundColor: IOColors["grey-50"],
-    borderColor: IOColors["grey-100"]
-  },
-  backgroundNewItem: {
-    backgroundColor: IOColors["hanPurple-50"],
-    borderColor: IOColors["hanPurple-250"]
-  }
-});
 
 export default CgnDiscountDetailScreen;
