@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0-rc.4](https://github.com/pagopa/io-app/compare/3.3.0-rc.3...3.3.0-rc.4) (2025-04-11)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2048](https://pagopa.atlassian.net/browse/SIW-2048),[SIW-2192](https://pagopa.atlassian.net/browse/SIW-2192)] Implement reactivation banner  ([#6889](https://github.com/pagopa/io-app/issues/6889)) ([d709777](https://github.com/pagopa/io-app/commit/d7097770a52e73415b7df520d4b7eeaf64b6621c))
+
+
+### Bug Fixes
+
+* [[IOBP-1552](https://pagopa.atlassian.net/browse/IOBP-1552)] Saved payment methods profile property with right value ([#6890](https://github.com/pagopa/io-app/issues/6890)) ([c37d5f5](https://github.com/pagopa/io-app/commit/c37d5f5352bc196b4dfc85bd05d35891e439f35f))
+
+
+### Chores
+
+* [[IOPLT-1048](https://pagopa.atlassian.net/browse/IOPLT-1048)] Remove local `BannerErrorState` + Update types used to render `Avatar` ([#6856](https://github.com/pagopa/io-app/issues/6856)) ([807552b](https://github.com/pagopa/io-app/commit/807552b2d848983b5204a0ba57a5cc173f9c9630))
+* [[IOPLT-1073](https://pagopa.atlassian.net/browse/IOPLT-1073)] Add dark mode support for featured service cards ([#6865](https://github.com/pagopa/io-app/issues/6865)) ([574eb51](https://github.com/pagopa/io-app/commit/574eb515061e4ba347c1d5c2532311229f2bced8))
+* [[IOPLT-1076](https://pagopa.atlassian.net/browse/IOPLT-1076)] Add dark mode support for CGN screens and modules ([#6874](https://github.com/pagopa/io-app/issues/6874)) ([dc1d00e](https://github.com/pagopa/io-app/commit/dc1d00e98a2e1c94954c6a30ea9e212befcd856d))
+* [[IOPLT-1078](https://pagopa.atlassian.net/browse/IOPLT-1078)] Add dark mode support for `ListItemMessage` ([#6885](https://github.com/pagopa/io-app/issues/6885)) ([5ef1245](https://github.com/pagopa/io-app/commit/5ef124505e4765c6ffb211f2d893fd8e65c10eb0))
+
 ## [3.3.0-rc.3](https://github.com/pagopa/io-app/compare/3.3.0-rc.2...3.3.0-rc.3) (2025-04-10)
 
 
