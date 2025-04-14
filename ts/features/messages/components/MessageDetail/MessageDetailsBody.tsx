@@ -25,7 +25,7 @@ export const MessageDetailsBody = ({
   serviceId,
   scrollViewRef
 }: MessageDetailsBodyProps) => {
-  const [rawContentShown, setRawContentShown] = useState<boolean>(false);
+  const [showRawContent, setShowRawContent] = useState<boolean>(false);
   const linkTo = useLinkTo();
   const useIOMarkdown = useIOSelector(
     isIOMarkdownEnabledForMessagesAndServicesSelector
@@ -42,15 +42,15 @@ export const MessageDetailsBody = ({
           content={I18n.t("messageDetails.markdown.decodingErrorContent")}
           action={I18n.t(
             `messageDetails.markdown.${
-              rawContentShown ? "decodingErrorHide" : "decodingErrorShow"
+              showRawContent ? "decodingErrorHide" : "decodingErrorShow"
             }`
           )}
           onPress={() =>
-            setRawContentShown(innerRawContentShown => !innerRawContentShown)
+            setShowRawContent(innerShowRawContent => !innerShowRawContent)
           }
           testID="markdown-decoding-error-alert"
         />
-        {rawContentShown && (
+        {showRawContent && (
           <Animated.View entering={FadeInUp}>
             <VSpacer size={16} />
             <Body testID="markdown-decoding-error-raw">
