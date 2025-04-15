@@ -9,6 +9,19 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import WalletPaymentWebViewScreen from "../WalletPaymentWebViewScreen";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../../common/utils/const";
 
+const mockSetOptions = jest.fn();
+const mockNavigate = {
+  navigate: jest.fn(),
+  getParent: jest.fn().mockReturnValue({
+    setOptions: mockSetOptions
+  })
+};
+
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
+  useNavigation: () => mockNavigate
+}));
+
 describe("WalletPaymentWebViewScreen", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
