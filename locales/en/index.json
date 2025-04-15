@@ -4309,6 +4309,33 @@
         }
       },
       "identification": {
+        "l3": {
+          "mode": {
+            "title": "Preparati a verificare la tua identità con CIE",
+            "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet.",
+            "action": "Inizia",
+            "ciePin": {
+              "header": "Avrai bisogno di:",
+              "card": "La tua carta d’identità elettronica (CIE)",
+              "pin": "Il PIN della CIE a 8 cifre"
+            },
+            "cieId": {
+              "header": "In alternativa:",
+              "title": "Usa l'app CieID",
+              "subtitle": "Utile se hai già installato l’app CieID"
+            },
+            "bottomSheet": {
+              "cie": {
+                "title": "Carta di identità elettronica (CIE)",
+                "content": "La CIE è la Carta d'Identità in formato elettronico introdotto in Italia per sostituire la tradizionale carta d'identità cartacea.\n\nTi è utile averla per:\n * Accedere ai servizi online della Pubblica Amministrazione (es. INPS, Agenzia delle Entrate)\n * Identificarti ufficialmente in Italia e all’estero\n * Viaggiare nei Paesi dell’UE e in altri che la accettano al posto del passaporto."
+              },
+              "pin": {
+                "title": "PIN della CIE",
+                "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE;\n * le ultime 4 cifre le hai ricevute insieme alla CIE."
+              }
+            }
+          }
+        },
         "mode": {
           "title": "Verifica la tua identità",
           "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
