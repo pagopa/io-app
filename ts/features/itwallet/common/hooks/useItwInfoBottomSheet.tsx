@@ -38,8 +38,12 @@ export const useItwInfoBottomSheet = ({
         <VStack key={`${index}_${item.title}`} space={8}>
           {item.title && <H6>{item.title}</H6>}
           <IOMarkdown content={item.body} />
-          <VSpacer size={16} />
-          {imageSrc && <AnimatedImage source={imageSrc} style={styles.image} />}
+          {imageSrc && (
+            <>
+              <VSpacer size={16} />
+              <AnimatedImage source={imageSrc} style={styles.image} />
+            </>
+          )}
         </VStack>
       ))}
       <VSpacer size={24} />
