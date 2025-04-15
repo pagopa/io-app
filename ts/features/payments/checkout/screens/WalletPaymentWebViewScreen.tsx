@@ -1,32 +1,33 @@
-import { WebView } from "react-native-webview";
+import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIOSelector } from "../../../../store/hooks";
-import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
+import WalletPaymentWebView from "../components/WalletPaymentWebView";
 import { walletPaymentWebViewPayloadSelector } from "../store/selectors";
-import { isDevEnv } from "../../../../utils/environment";
 
 const WalletPaymentWebViewScreen = () => {
   const payload = useIOSelector(walletPaymentWebViewPayloadSelector);
 
-  const originSchemasWhiteList = [
-    "https://*",
-    "iowallet://*",
-    ...(isDevEnv ? ["http://*"] : [])
-  ];
+  const navigation = useNavigation();
 
-  return (
-    <WebView
-      originWhitelist={originSchemasWhiteList}
-      onShouldStartLoadWithRequest={event => {
-        if (event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA)) {
-          payload?.onSuccess?.(event.url);
-        }
-        return !event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA);
-      }}
-      style={{ flex: 1 }}
-      source={{ uri: payload?.url ?? "" }}
-      androidCameraAccessDisabled
-      androidMicrophoneAccessDisabled
+  useEffect(() => {
+    // Disable swipe gesure from parent navigator
+    navigation.getParent()?.setOptions({ gestureEnabled: false });
+
+    // Re-enable gesture on unmount
+    return () => {
+      navigation.getParent()?.setOptions({ gestureEnabled: true });
+    };
+  }, [navigation]);
+
+  return payload?.url ? (
+    <WalletPaymentWebView
+      onError={payload.onError}
+      onSuccess={payload.onSuccess}
+      uri={payload.url}
     />
+  ) : (
+    <LoadingSpinnerOverlay isLoading />
   );
 };
 
