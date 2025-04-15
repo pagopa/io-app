@@ -7,6 +7,7 @@ import {
   setSecurityAdviceReadyToShow
 } from "../actions/securityAdviceActions";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
+import { isDevEnv } from "../../../../../utils/environment";
 
 export type SecurityAdviceAcknowledgedState = {
   acknowledged: boolean | undefined;
@@ -18,7 +19,7 @@ export const INITIAL_STATE: SecurityAdviceAcknowledgedState = {
   readyToShow: false
 };
 
-export const securityAdviceAcknowledgedReducer = (
+const securityAdviceAcknowledgedReducer = (
   state: SecurityAdviceAcknowledgedState = INITIAL_STATE,
   action: Action
 ): SecurityAdviceAcknowledgedState => {
@@ -53,3 +54,9 @@ export const securityAdviceAcknowledgedPersistor = persistReducer<
   SecurityAdviceAcknowledgedState,
   Action
 >(persistConfig, securityAdviceAcknowledgedReducer);
+
+export const testableSecurityAdviceAcknowledgedReducer = isDevEnv
+  ? {
+      securityAdviceAcknowledgedReducer
+    }
+  : undefined;

@@ -5,6 +5,7 @@ import {
 } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { SessionToken } from "../../../../../types/SessionToken";
+import { isDevEnv } from "../../../../../utils/environment";
 
 type PendingActionPayload = { pendingAction: Action };
 export const savePendingAction = createStandardAction(
@@ -31,7 +32,7 @@ export const clearTokenRefreshError = createStandardAction(
   "CLEAR_TOKEN_REFRESH_ERROR"
 )<void>();
 
-export type RefreshSessionTokenRequestPayload = {
+type RefreshSessionTokenRequestPayload = {
   withUserInteraction: boolean;
   showIdentificationModalAtStartup: boolean;
   showLoader: boolean;
@@ -56,3 +57,12 @@ export type FastLoginTokenRefreshActions =
   | ActionType<PendingActionTypes>
   | ActionType<typeof refreshSessionToken>
   | ActionType<typeof askUserToRefreshSessionToken>;
+
+export const testable = isDevEnv
+  ? {
+      types: {
+        RefreshSessionTokenRequestPayload:
+          {} as RefreshSessionTokenRequestPayload
+      }
+    }
+  : undefined;

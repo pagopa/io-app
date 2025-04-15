@@ -1,8 +1,7 @@
 import { PersistedState } from "redux-persist";
 import {
   cieLoginInitialState,
-  cieLoginReducer,
-  migrations
+  testableCieLoginReducer
 } from "../reducers/cieLogin";
 import {
   cieLoginDisableUat,
@@ -12,6 +11,11 @@ import {
 } from "../actions";
 
 describe("cieLoginReducer", () => {
+  if (!testableCieLoginReducer) {
+    throw new Error("cieLoginReducer is not available in test environment");
+  }
+  const cieLoginReducer = testableCieLoginReducer.cieLoginReducer;
+
   it("should return initial state by default", () => {
     const result = cieLoginReducer(undefined, { type: "UNKNOWN" } as any);
     expect(result).toEqual(cieLoginInitialState);
@@ -47,6 +51,11 @@ describe("cieLoginReducer", () => {
 });
 
 describe("cieLogin migrations", () => {
+  if (!testableCieLoginReducer) {
+    throw new Error("cieLoginReducer is not available in test environment");
+  }
+  const migrations = testableCieLoginReducer.migrations;
+
   it("should set `isCieIDTourGuideEnabled` to true in version 0", () => {
     const state = {};
     expect(migrations["0"](state)).toEqual({ isCieIDTourGuideEnabled: true });

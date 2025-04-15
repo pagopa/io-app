@@ -7,7 +7,7 @@ import {
   take
 } from "typed-redux-saga/macro";
 import {
-  handleApplicationInitialized,
+  testableHandleApplicationInitialized,
   watchPendingActionsSaga
 } from "../pendingActionsSaga";
 import { applicationInitialized } from "../../../../../store/actions/application";
@@ -22,6 +22,14 @@ describe("pendingActionsSaga", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
+
+  if (!testableHandleApplicationInitialized) {
+    throw new Error(
+      "handleApplicationInitialized is not available in test environment"
+    );
+  }
+  const handleApplicationInitialized =
+    testableHandleApplicationInitialized.handleApplicationInitialized;
 
   it("should watch applicationInitialized with takeLatest", () => {
     const gen = watchPendingActionsSaga();

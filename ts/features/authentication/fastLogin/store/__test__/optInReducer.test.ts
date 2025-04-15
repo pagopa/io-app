@@ -1,7 +1,7 @@
 import {
   fastLoginOptInInitialState,
-  fastLoginOptInReducer,
-  FastLoginOptInState
+  FastLoginOptInState,
+  testableFastLoginOptInReducer
 } from "../reducers/optInReducer";
 import {
   logoutSuccess,
@@ -10,6 +10,14 @@ import {
 import { setFastLoginOptIn } from "../actions/optInActions";
 
 describe("fastLoginOptInReducer", () => {
+  if (!testableFastLoginOptInReducer) {
+    throw new Error(
+      "fastLoginOptInReducer is not available in test environment"
+    );
+  }
+  const fastLoginOptInReducer =
+    testableFastLoginOptInReducer.fastLoginOptInReducer;
+
   it("should return initial state by default", () => {
     const state = fastLoginOptInReducer(undefined, {
       type: "UNKNOWN_ACTION"

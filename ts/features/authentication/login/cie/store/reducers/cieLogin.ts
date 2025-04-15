@@ -29,7 +29,7 @@ export const cieLoginInitialState = {
   isCieIDTourGuideEnabled: true
 };
 
-export const cieLoginReducer = (
+const cieLoginReducer = (
   state: CieLoginState = cieLoginInitialState,
   action: Action
 ): CieLoginState => {
@@ -61,7 +61,7 @@ export const cieLoginReducer = (
 
 const CURRENT_REDUX_CIE_LOGIN_STORE_VERSION = 1;
 
-export const migrations: MigrationManifest = {
+const migrations: MigrationManifest = {
   "0": (state: PersistedState) => ({
     ...state,
     isCieIDTourGuideEnabled: true
@@ -85,3 +85,10 @@ export const cieLoginPersistor = persistReducer<CieLoginState, Action>(
   persistConfig,
   cieLoginReducer
 );
+
+export const testableCieLoginReducer = isDevEnv
+  ? {
+      cieLoginReducer,
+      migrations
+    }
+  : undefined;

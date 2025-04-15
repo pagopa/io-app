@@ -5,8 +5,8 @@ import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import CieCardReadingAnimation, {
-  CieCardReadingAnimationProps,
-  ReadingState
+  ReadingState,
+  testableCieCardReadingAnimation
 } from "../CieCardReadingAnimation";
 
 /**
@@ -15,13 +15,21 @@ import CieCardReadingAnimation, {
  * https://pagopa.atlassian.net/browse/IOPID-1857
  */
 
-jest.useFakeTimers();
+if (!testableCieCardReadingAnimation) {
+  throw new Error(
+    "handleApplicationInitialized is not available in test environment"
+  );
+}
+const CieCardReadingAnimationProps =
+  testableCieCardReadingAnimation.types.CieCardReadingAnimationProps;
 
-const defaultProps: CieCardReadingAnimationProps = {
+const defaultProps: typeof CieCardReadingAnimationProps = {
   readingState: ReadingState.waiting_card,
   pictogramName: "accessDenied",
   circleColor: "#000000"
 };
+
+jest.useFakeTimers();
 
 describe("CieCardReadingAnimation", () => {
   it("Should match the snapshot", () => {

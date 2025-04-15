@@ -10,14 +10,22 @@ import {
   showRefreshTokenLoader
 } from "../actions/tokenRefreshActions";
 import {
-  FastLoginTokenRefreshHandlerInitialState,
-  FastLoginTokenRefreshReducer
+  FastLoginTokenRefreshReducer,
+  testableFastLoginTokenRefreshReducer
 } from "../reducers/tokenRefreshReducer";
 
 const dummyAction = { type: "DUMMY_ACTION" };
 const aSessionToken = "a_session_token" as SessionToken;
 
 describe("FastLoginTokenRefreshReducer", () => {
+  if (!testableFastLoginTokenRefreshReducer) {
+    throw new Error(
+      "FastLoginTokenRefreshReducer is not available in test environment"
+    );
+  }
+  const FastLoginTokenRefreshHandlerInitialState =
+    testableFastLoginTokenRefreshReducer.FastLoginTokenRefreshHandlerInitialState;
+
   it("should return initial state by default", () => {
     const state = FastLoginTokenRefreshReducer(undefined, dummyAction);
     expect(state).toEqual(FastLoginTokenRefreshHandlerInitialState);

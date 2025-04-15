@@ -2,12 +2,20 @@ import { areTwoMinElapsedFromLastActivity } from "../actions/sessionRefreshActio
 import { logoutFailure, logoutSuccess } from "../../../common/store/actions";
 import {
   automaticSessionRefreshInitialState,
-  AutomaticSessionRefreshReducer,
-  AutomaticSessionRefreshState
+  AutomaticSessionRefreshState,
+  testableAutomaticSessionRefreshReducer
 } from "../reducers/sessionRefreshReducer";
 import { setSecurityAdviceReadyToShow } from "../actions/securityAdviceActions";
 
 describe("AutomaticSessionRefreshReducer", () => {
+  if (!testableAutomaticSessionRefreshReducer) {
+    throw new Error(
+      "AutomaticSessionRefreshReducer is not available in test environment"
+    );
+  }
+  const AutomaticSessionRefreshReducer =
+    testableAutomaticSessionRefreshReducer.AutomaticSessionRefreshReducer;
+
   it("should return initial state by default", () => {
     const state = AutomaticSessionRefreshReducer(
       undefined,

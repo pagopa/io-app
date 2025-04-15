@@ -45,12 +45,13 @@ import { getPin } from "../../../../utils/keychain";
 import { dismissSupport } from "../../../../utils/supportAssistance";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
+import { isDevEnv } from "../../../../utils/environment";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
 }
 
-export function* handleRefreshSessionToken(
+function* handleRefreshSessionToken(
   refreshSessionTokenRequestAction: ReturnType<
     typeof refreshSessionToken.request
   >
@@ -98,7 +99,7 @@ export function* handleRefreshSessionToken(
   }
 }
 
-export type RequestStateType = {
+type RequestStateType = {
   counter: number;
   status: "in-progress" | "success" | "max-retries" | "session-expired";
   error: string | undefined;
@@ -106,7 +107,7 @@ export type RequestStateType = {
 
 const MAX_RETRIES = fastLoginMaxRetries;
 
-export function* doRefreshTokenSaga(
+function* doRefreshTokenSaga(
   refreshSessionTokenRequestAction: ReturnType<
     typeof refreshSessionToken.request
   >
@@ -182,7 +183,7 @@ export function* doRefreshTokenSaga(
   }
 }
 
-export const handleRequestError = (
+const handleRequestError = (
   requestState: RequestStateType,
   response?: E.Either<
     ReadonlyArray<ValidationError>,
@@ -238,3 +239,14 @@ type FastLoginTokenRefreshError = {
   status?: number;
   description: string;
 };
+
+export const testableTokenRefreshSaga = isDevEnv
+  ? {
+      handleRefreshSessionToken,
+      doRefreshTokenSaga,
+      handleRequestError,
+      types: {
+        RequestStateType: {} as RequestStateType
+      }
+    }
+  : undefined;

@@ -13,7 +13,6 @@ import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { startApplicationInitialization } from "../../../../../store/actions/application";
 import * as error from "../../../../../utils/errors";
 
-// ✅ MOCK del logout reale
 const logout = jest.fn();
 
 const takeCancellableAction = [logoutRequest, logoutSuccess, logoutFailure];
@@ -24,12 +23,10 @@ const logoutFailureAct = logoutFailure({
   error: new Error()
 });
 
-// ✅ MOCK di supportAssistance
 jest.mock("../../../../../utils/supportAssistance", () => ({
   resetAssistanceData: jest.fn()
 }));
 
-// ✅ MOCK di deleteCurrentLollipopKeyAndGenerateNewKeyTag
 jest.mock("../../../../lollipop/saga", () => ({
   // eslint-disable-next-line object-shorthand, require-yield
   deleteCurrentLollipopKeyAndGenerateNewKeyTag: function* () {

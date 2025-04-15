@@ -1,7 +1,7 @@
 import {
   INITIAL_STATE,
-  securityAdviceAcknowledgedReducer,
-  SecurityAdviceAcknowledgedState
+  SecurityAdviceAcknowledgedState,
+  testableSecurityAdviceAcknowledgedReducer
 } from "../reducers/securityAdviceReducer";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import {
@@ -10,6 +10,14 @@ import {
 } from "../actions/securityAdviceActions";
 
 describe("securityAdviceAcknowledgedReducer", () => {
+  if (!testableSecurityAdviceAcknowledgedReducer) {
+    throw new Error(
+      "securityAdviceAcknowledgedReducer is not available in test environment"
+    );
+  }
+  const securityAdviceAcknowledgedReducer =
+    testableSecurityAdviceAcknowledgedReducer.securityAdviceAcknowledgedReducer;
+
   it("should return initial state by default", () => {
     const state = securityAdviceAcknowledgedReducer(undefined, {
       type: "UNKNOWN_ACTION"

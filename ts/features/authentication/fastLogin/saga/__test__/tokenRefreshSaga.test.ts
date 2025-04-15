@@ -2,16 +2,14 @@ import { put, call, takeLatest, take, delay } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import {
-  doRefreshTokenSaga,
-  handleRefreshSessionToken,
-  RequestStateType,
+  testableTokenRefreshSaga,
   watchTokenRefreshSaga
 } from "../tokenRefreshSaga";
 import {
   askUserToRefreshSessionToken,
   refreshSessionToken,
-  RefreshSessionTokenRequestPayload,
-  refreshTokenNoPinError
+  refreshTokenNoPinError,
+  testable
 } from "../../store/actions/tokenRefreshActions";
 import {
   identificationFailure,
@@ -25,7 +23,6 @@ import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import { fastLoginMaxRetries } from "../../../../../config";
-import * as tokenRefreshSaga from "../tokenRefreshSaga";
 
 jest.mock("../../../../../navigation/NavigationService", () => ({
   navigate: jest.fn()
@@ -44,6 +41,25 @@ describe("tokenRefreshSaga", () => {
     jest.clearAllMocks();
   });
 
+  if (!testableTokenRefreshSaga) {
+    throw new Error(
+      "handleApplicationInitialized is not available in test environment"
+    );
+  }
+  const handleRefreshSessionToken =
+    testableTokenRefreshSaga.handleRefreshSessionToken;
+  const doRefreshTokenSaga = testableTokenRefreshSaga.doRefreshTokenSaga;
+  const handleRequestError = testableTokenRefreshSaga.handleRequestError;
+  const RequestStateType = testableTokenRefreshSaga.types.RequestStateType;
+
+  if (!testable?.types.RefreshSessionTokenRequestPayload) {
+    throw new Error(
+      "RefreshSessionTokenRequestPayload is not available in test environment"
+    );
+  }
+  const RefreshSessionTokenRequestPayload =
+    testable?.types.RefreshSessionTokenRequestPayload;
+
   it("should watch refreshSessionToken.request with takeLatest", () => {
     const gen = watchTokenRefreshSaga();
     expect(gen.next().value).toEqual(
@@ -53,7 +69,7 @@ describe("tokenRefreshSaga", () => {
 
   describe("handleRefreshSessionToken", () => {
     const createAction = (
-      withUserInteraction: RefreshSessionTokenRequestPayload
+      withUserInteraction: typeof RefreshSessionTokenRequestPayload
     ) => refreshSessionToken.request(withUserInteraction);
 
     it("should dispatch refreshTokenNoPinError if pin is missing and interaction is true", () => {
@@ -229,7 +245,7 @@ describe("tokenRefreshSaga", () => {
 
   describe("doRefreshTokenSaga", () => {
     const createAction = (
-      payload: RefreshSessionTokenRequestPayload = {
+      payload: typeof RefreshSessionTokenRequestPayload = {
         withUserInteraction: false,
         showIdentificationModalAtStartup: false,
         showLoader: false
@@ -276,13 +292,13 @@ describe("tokenRefreshSaga", () => {
     });
   });
   it("should set max-retries when no response is provided", () => {
-    const requestState: RequestStateType = {
+    const requestState: typeof RequestStateType = {
       counter: fastLoginMaxRetries - 1,
       status: "in-progress",
       error: undefined
     };
 
-    tokenRefreshSaga.handleRequestError(requestState);
+    handleRequestError(requestState);
 
     expect(requestState.status).toBe("max-retries");
     expect(requestState.error).toBe("max retries reached");

@@ -11,6 +11,7 @@ import {
 import { PureComponent } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
 import { CircularProgress } from "../../../../../components/ui/CircularProgress";
+import { isDevEnv } from "../../../../../utils/environment";
 
 export enum ReadingState {
   "reading" = "reading",
@@ -19,7 +20,7 @@ export enum ReadingState {
   "waiting_card" = "waiting_card"
 }
 
-export type CieCardReadingAnimationProps = Readonly<{
+type CieCardReadingAnimationProps = Readonly<{
   readingState: ReadingState;
   pictogramName: IOPictograms;
   circleColor: string;
@@ -174,3 +175,11 @@ export default class CieCardReadingAnimation extends PureComponent<
     );
   }
 }
+
+export const testableCieCardReadingAnimation = isDevEnv
+  ? {
+      types: {
+        CieCardReadingAnimationProps: {} as CieCardReadingAnimationProps
+      }
+    }
+  : undefined;

@@ -9,6 +9,7 @@ import {
   savePendingAction,
   showRefreshTokenLoader
 } from "../actions/tokenRefreshActions";
+import { isDevEnv } from "../../../../../utils/environment";
 
 type FastLoginUserInteractionChoiceNone = {
   type: "none";
@@ -61,12 +62,11 @@ export type FastLoginTokenRefreshState = {
   pendingActions: Array<Action>;
 };
 
-export const FastLoginTokenRefreshHandlerInitialState: FastLoginTokenRefreshState =
-  {
-    userInteractionForSessionExpiredNeeded: false,
-    tokenRefresh: { kind: "idle" },
-    pendingActions: []
-  };
+const FastLoginTokenRefreshHandlerInitialState: FastLoginTokenRefreshState = {
+  userInteractionForSessionExpiredNeeded: false,
+  tokenRefresh: { kind: "idle" },
+  pendingActions: []
+};
 
 export const FastLoginTokenRefreshReducer = (
   state: FastLoginTokenRefreshState = FastLoginTokenRefreshHandlerInitialState,
@@ -131,3 +131,9 @@ export const FastLoginTokenRefreshReducer = (
       return state;
   }
 };
+
+export const testableFastLoginTokenRefreshReducer = isDevEnv
+  ? {
+      FastLoginTokenRefreshHandlerInitialState
+    }
+  : undefined;
