@@ -17,6 +17,8 @@ const WalletPaymentWebViewScreen = () => {
       }}
       style={{ flex: 1 }}
       source={{ uri: payload?.url ?? "" }}
+      androidCameraAccessDisabled
+      androidMicrophoneAccessDisabled
     />
   );
 };
