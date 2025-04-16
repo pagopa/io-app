@@ -73,6 +73,7 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { useInfoBottomsheetComponent } from "../components/UseInfoBottomsheetComponent";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
@@ -107,6 +108,9 @@ export const LandingScreen = () => {
     void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
     navigateToCieIdLoginScreen(SPID_LEVEL);
   }, [store, navigateToCieIdLoginScreen]);
+
+  const { presentInfoBottomsheet, infoBottomsheetComponent } =
+    useInfoBottomsheetComponent();
 
   const {
     present,
@@ -270,7 +274,13 @@ export const LandingScreen = () => {
       title: "",
       supportRequest: true,
       canGoBack: false,
-      contextualHelpMarkdown
+      contextualHelpMarkdown,
+      variant: "primary",
+      secondAction: {
+        icon: "info",
+        onPress: presentInfoBottomsheet,
+        accessibilityLabel: "info"
+      }
     });
 
     const { name: routeName } = useRoute();
@@ -415,6 +425,7 @@ export const LandingScreen = () => {
           </View>
           {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
           {bottomSheet}
+          {infoBottomsheetComponent}
         </ContentWrapper>
       </View>
     );
