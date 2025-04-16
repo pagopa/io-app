@@ -74,7 +74,8 @@ describe("ItwRemoteRequestValidationScreen", () => {
     const logic = itwRemoteMachine.provide({
       guards: {
         isWalletActive: jest.fn().mockReturnValue(true),
-        isEidExpired: jest.fn().mockReturnValue(false)
+        isEidExpired: jest.fn().mockReturnValue(false),
+        isRPTrusted: jest.fn().mockReturnValue(true)
       },
       actions: {
         navigateToClaimsDisclosureScreen: jest.fn()
