@@ -58,6 +58,7 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
         },
       ]
     }
+    testID="webview"
     textInteractionEnabled={true}
     useSharedProcessPool={true}
   />
