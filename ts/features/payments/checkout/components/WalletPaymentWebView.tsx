@@ -33,6 +33,7 @@ const WalletPaymentWebView = ({ onSuccess, onError, uri }: Props) => {
 
   return (
     <WebView
+      testID="webview"
       ref={webViewRef}
       originWhitelist={originSchemasWhiteList}
       onShouldStartLoadWithRequest={event => {
