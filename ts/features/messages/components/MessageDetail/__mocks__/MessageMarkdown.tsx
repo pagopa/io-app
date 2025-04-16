@@ -3,8 +3,13 @@ import { MarkdownProps } from "../../../../../components/ui/Markdown/Markdown";
 
 type Props = Omit<MarkdownProps, "cssStyle">;
 
-export const MessageMarkdown = ({ onError, onLoadEnd, testID }: Props) => (
+export const MessageMarkdown = ({
+  children,
+  onError,
+  onLoadEnd,
+  testID
+}: Props) => (
   <WebView onError={onError} onLoadEnd={onLoadEnd} testID={testID}>
-    Mock Message Markdown
+    {children}
   </WebView>
 );
