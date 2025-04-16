@@ -140,21 +140,21 @@ const ContentView = ({ failure }: ContentViewProps) => {
         case RemoteFailureType.NOT_TRUSTED_RP: {
           return {
             title: I18n.t(
-              "features.itWallet.presentation.remote.RPNotTrustedScreen.title"
+              "features.itWallet.presentation.remote.NotTrustedRPScreen.title"
             ),
             subtitle: I18n.t(
-              "features.itWallet.presentation.remote.RPNotTrustedScreen.subtitle"
+              "features.itWallet.presentation.remote.NotTrustedRPScreen.subtitle"
             ),
             pictogram: "stopSecurity",
             action: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.RPNotTrustedScreen.primaryAction"
+                "features.itWallet.presentation.remote.NotTrustedRPScreen.primaryAction"
               ),
               onPress: () => machineRef.send({ type: "close" })
             },
             secondaryAction: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.RPNotTrustedScreen.secondaryAction"
+                "features.itWallet.presentation.remote.NotTrustedRPScreen.secondaryAction"
               ),
               onPress: present
             }
