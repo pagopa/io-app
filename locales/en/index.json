@@ -807,6 +807,14 @@
           "hint": "Carousel that contains an introduction guide to IO functionalities. Select to know the content."
         }
       },
+      "useful_resources": {
+        "bottomSheet": {
+          "title": "Risorse utili",
+          "privacy_policy": "Informativa Privacy",
+          "manage_access": "Gestisci i tuoi accessi",
+          "io_more_informations": "Cosa puoi fare con l’app IO"
+        }
+      },
       "session_expired": {
         "title": "Log in again",
         "body": "We need to check your identity from time to time for security reasons",

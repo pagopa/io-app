@@ -73,7 +73,7 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { useInfoBottomsheetComponent } from "../components/UseInfoBottomsheetComponent";
+import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
@@ -279,7 +279,9 @@ export const LandingScreen = () => {
       secondAction: {
         icon: "info",
         onPress: presentInfoBottomsheet,
-        accessibilityLabel: "info"
+        accessibilityLabel: I18n.t(
+          "authentication.landing.useful_resources.bottomSheet.title"
+        )
       }
     });
 
