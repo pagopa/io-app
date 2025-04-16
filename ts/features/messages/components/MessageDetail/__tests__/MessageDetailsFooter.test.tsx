@@ -1,5 +1,4 @@
 import { ComponentProps } from "react";
-
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
