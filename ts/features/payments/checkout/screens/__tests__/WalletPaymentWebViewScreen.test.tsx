@@ -2,12 +2,12 @@ import { render } from "@testing-library/react-native";
 import { WebView } from "react-native-webview";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
+import I18n from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-
-import WalletPaymentWebViewScreen from "../WalletPaymentWebViewScreen";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../../common/utils/const";
+import WalletPaymentWebViewScreen from "../WalletPaymentWebViewScreen";
 
 const mockSetOptions = jest.fn();
 const mockNavigate = {
@@ -107,5 +107,16 @@ describe("WalletPaymentWebViewScreen", () => {
     expect(onSuccessMock).toHaveBeenCalledTimes(1);
     // Verify navigation is allowed (returns true)
     expect(resultForNormalUrl).toBe(true);
+  });
+
+  it("should render the spinner on no url", () => {
+    const enrichedStore: ReturnType<typeof mockStore> = mockStore(globalState);
+    const { getByText } = render(
+      <Provider store={enrichedStore}>
+        <WalletPaymentWebViewScreen />
+      </Provider>
+    );
+    const loadingSpinnerText = getByText(I18n.t("global.remoteStates.wait"));
+    expect(loadingSpinnerText).toBeTruthy();
   });
 });
