@@ -130,7 +130,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
-        case RemoteFailureType.RP_NOT_TRUSTED: {
+        case RemoteFailureType.NOT_TRUSTED_RP: {
           return {
             title: I18n.t(
               "features.itWallet.presentation.remote.RPNotTrustedScreen.title"
