@@ -18,6 +18,7 @@ describe("itwRemoteMachine", () => {
 
   const isWalletActive = jest.fn();
   const isEidExpired = jest.fn();
+  const isRPTrusted = jest.fn();
 
   const mockedMachine = itwRemoteMachine.provide({
     actions: {
@@ -30,7 +31,8 @@ describe("itwRemoteMachine", () => {
     actors: {},
     guards: {
       isWalletActive,
-      isEidExpired
+      isEidExpired,
+      isRPTrusted
     }
   });
 
@@ -156,12 +158,34 @@ describe("itwRemoteMachine", () => {
     expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
   });
 
+  it("should transition from Idle to Failure when the RP is not trusted", () => {
+    isWalletActive.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+    isRPTrusted.mockReturnValue(false);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: {
+        client_id: T_CLIENT_ID,
+        request_uri: T_REQUEST_URI,
+        state: T_STATE
+      } as ItwRemoteRequestPayload
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
+  });
+
   it("should transition from Idle to ClaimsDisclosure when ITWallet is active", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
     isWalletActive.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
+    isRPTrusted.mockReturnValue(true);
 
     actor.send({
       type: "start",

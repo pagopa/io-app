@@ -15,6 +15,7 @@ import I18n from "../../../../../i18n.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
+import { useItwRemoteNotTrustedRPBottomSheet } from "../hooks/useItwRemoteNotTrustedRPBottomSheet.tsx";
 
 export const ItwRemoteFailureScreen = () => {
   const failureOption =
@@ -38,6 +39,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
   useDebugInfo({
     failure: serializeFailureReason(failure)
   });
+
+  const { bottomSheet, present } = useItwRemoteNotTrustedRPBottomSheet();
 
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
@@ -127,6 +130,29 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
+        case RemoteFailureType.RP_NOT_TRUSTED: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.RPNotTrustedScreen.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.RPNotTrustedScreen.subtitle"
+            ),
+            pictogram: "stopSecurity",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.RPNotTrustedScreen.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.RPNotTrustedScreen.secondaryAction"
+              ),
+              onPress: present
+            }
+          };
+        }
       }
     };
 
@@ -138,6 +164,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
         {...resultScreenProps}
         subtitleProps={{ textBreakStrategy: "simple" }}
       />
+      {bottomSheet}
     </>
   );
 };

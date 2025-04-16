@@ -24,7 +24,8 @@ export const itwRemoteMachine = setup({
   guards: {
     isWalletActive: notImplemented,
     areRequiredCredentialsAvailable: notImplemented,
-    isEidExpired: notImplemented
+    isEidExpired: notImplemented,
+    isRPTrusted: notImplemented
   }
 }).createMachine({
   id: "itwRemoteMachine",
@@ -63,6 +64,16 @@ export const itwRemoteMachine = setup({
             failure: {
               type: RemoteFailureType.EID_EXPIRED,
               reason: "EID is expired"
+            }
+          }),
+          target: "Failure"
+        },
+        {
+          guard: not("isRPTrusted"),
+          actions: assign({
+            failure: {
+              type: RemoteFailureType.NOT_TRUSTED_RP,
+              reason: "RP is not trusted"
             }
           }),
           target: "Failure"
