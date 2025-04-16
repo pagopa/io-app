@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { Divider, H3, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { localeDateFormat } from "../../../../utils/locale";
@@ -63,10 +63,10 @@ export const MessageDetailsHeader = ({
         <>
           <OrganizationHeader
             messageId={messageId}
-            logoUri={logosForService(service)}
-            organizationName={service.organization_name}
+            logoUri={logosForService(service) as ImageSourcePropType}
+            organizationName={service.organization.name}
             serviceId={serviceId}
-            serviceName={service.service_name}
+            serviceName={service.name}
           />
           <Divider />
         </>

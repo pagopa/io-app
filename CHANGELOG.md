@@ -2,6 +2,69 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0-rc.6](https://github.com/pagopa/io-app/compare/3.3.0-rc.5...3.3.0-rc.6) (2025-04-15)
+
+
+### Features
+
+* [[IOCOM-2219](https://pagopa.atlassian.net/browse/IOCOM-2219)] UI/UX for message CTA decoding failure ([#6887](https://github.com/pagopa/io-app/issues/6887)) ([be046c9](https://github.com/pagopa/io-app/commit/be046c9867ad1fd67d175eb3ff79e89fe9318907))
+
+## [3.3.0-rc.5](https://github.com/pagopa/io-app/compare/3.3.0-rc.4...3.3.0-rc.5) (2025-04-14)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2250](https://pagopa.atlassian.net/browse/SIW-2250)] Track Wi revocation reason and attestation failure on Mixpanel ([#6893](https://github.com/pagopa/io-app/issues/6893)) ([d388fca](https://github.com/pagopa/io-app/commit/d388fca613ae37a692a7cb373019a673ff7ccc33))
+* [[IOBP-1577](https://pagopa.atlassian.net/browse/IOBP-1577)] Add remote feature flag to enable the payment webview flow ([#6895](https://github.com/pagopa/io-app/issues/6895)) ([a61c31b](https://github.com/pagopa/io-app/commit/a61c31bb2ae0e6f9b9e34107f378f8a8a4d29aab))
+
+## [3.3.0-rc.4](https://github.com/pagopa/io-app/compare/3.3.0-rc.3...3.3.0-rc.4) (2025-04-11)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2048](https://pagopa.atlassian.net/browse/SIW-2048),[SIW-2192](https://pagopa.atlassian.net/browse/SIW-2192)] Implement reactivation banner  ([#6889](https://github.com/pagopa/io-app/issues/6889)) ([d709777](https://github.com/pagopa/io-app/commit/d7097770a52e73415b7df520d4b7eeaf64b6621c))
+
+
+### Bug Fixes
+
+* [[IOBP-1552](https://pagopa.atlassian.net/browse/IOBP-1552)] Saved payment methods profile property with right value ([#6890](https://github.com/pagopa/io-app/issues/6890)) ([c37d5f5](https://github.com/pagopa/io-app/commit/c37d5f5352bc196b4dfc85bd05d35891e439f35f))
+
+
+### Chores
+
+* [[IOPLT-1048](https://pagopa.atlassian.net/browse/IOPLT-1048)] Remove local `BannerErrorState` + Update types used to render `Avatar` ([#6856](https://github.com/pagopa/io-app/issues/6856)) ([807552b](https://github.com/pagopa/io-app/commit/807552b2d848983b5204a0ba57a5cc173f9c9630))
+* [[IOPLT-1073](https://pagopa.atlassian.net/browse/IOPLT-1073)] Add dark mode support for featured service cards ([#6865](https://github.com/pagopa/io-app/issues/6865)) ([574eb51](https://github.com/pagopa/io-app/commit/574eb515061e4ba347c1d5c2532311229f2bced8))
+* [[IOPLT-1076](https://pagopa.atlassian.net/browse/IOPLT-1076)] Add dark mode support for CGN screens and modules ([#6874](https://github.com/pagopa/io-app/issues/6874)) ([dc1d00e](https://github.com/pagopa/io-app/commit/dc1d00e98a2e1c94954c6a30ea9e212befcd856d))
+* [[IOPLT-1078](https://pagopa.atlassian.net/browse/IOPLT-1078)] Add dark mode support for `ListItemMessage` ([#6885](https://github.com/pagopa/io-app/issues/6885)) ([5ef1245](https://github.com/pagopa/io-app/commit/5ef124505e4765c6ffb211f2d893fd8e65c10eb0))
+
+## [3.3.0-rc.3](https://github.com/pagopa/io-app/compare/3.3.0-rc.2...3.3.0-rc.3) (2025-04-10)
+
+
+### Features
+
+* [[IOBP-1419](https://pagopa.atlassian.net/browse/IOBP-1419)] CDC activation screen ([#6848](https://github.com/pagopa/io-app/issues/6848)) ([2d9fb5c](https://github.com/pagopa/io-app/commit/2d9fb5ceba44fc81d40e1ba27b326da96dd350e8))
+
+## [3.3.0-rc.2](https://github.com/pagopa/io-app/compare/3.3.0-rc.1...3.3.0-rc.2) (2025-04-09)
+
+
+### Chores
+
+* [[IOPLT-1045](https://pagopa.atlassian.net/browse/IOPLT-1045)] Update `reanimated`, `react-native-svg` and `react-native-skia` dependencies ([#6844](https://github.com/pagopa/io-app/issues/6844)) ([df3f44c](https://github.com/pagopa/io-app/commit/df3f44cdbf78bdea8964057db28d451bb680c20c))
+
+## [3.3.0-rc.1](https://github.com/pagopa/io-app/compare/3.3.0-rc.0...3.3.0-rc.1) (2025-04-08)
+
+
+### Features
+
+* [[IOBP-1563](https://pagopa.atlassian.net/browse/IOBP-1563)] Add remote banner specific for payment method PSP screen ([#6883](https://github.com/pagopa/io-app/issues/6883)) ([1b0fd47](https://github.com/pagopa/io-app/commit/1b0fd470fd0bd474efaec77d2a381fb2414ed335))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2164](https://pagopa.atlassian.net/browse/SIW-2164)] Update PID machine for L3 Wallet ([#6875](https://github.com/pagopa/io-app/issues/6875)) ([fbca924](https://github.com/pagopa/io-app/commit/fbca9247c0ea91e58ffaf67c6f463ee28eb1889e))
+* [[IOBP-263](https://pagopa.atlassian.net/browse/IOBP-263)] add missing `IdPay` prefix to the appropriate files ([#6882](https://github.com/pagopa/io-app/issues/6882)) ([95ecac4](https://github.com/pagopa/io-app/commit/95ecac4703db95c737359a95b97632fe0f9e2604))
+* [[IOPAE-1189](https://pagopa.atlassian.net/browse/IOPAE-1189)] Replace `getService` with `getServiceById` ([#6884](https://github.com/pagopa/io-app/issues/6884)) ([264dc39](https://github.com/pagopa/io-app/commit/264dc399fe7fa8b6349cd87cd32d85e377c14157))
+
 ## [3.3.0-rc.0](https://github.com/pagopa/io-app/compare/3.2.0-rc.8...3.3.0-rc.0) (2025-04-08)
 
 

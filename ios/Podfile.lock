@@ -1500,7 +1500,7 @@ PODS:
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
-  - react-native-skia (1.5.10):
+  - react-native-skia (1.11.18):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1913,7 +1913,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNReanimated (3.16.3):
+  - RNReanimated (3.16.7):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1933,10 +1933,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated (= 3.16.3)
-    - RNReanimated/worklets (= 3.16.3)
+    - RNReanimated/reanimated (= 3.16.7)
+    - RNReanimated/worklets (= 3.16.7)
     - Yoga
-  - RNReanimated/reanimated (3.16.3):
+  - RNReanimated/reanimated (3.16.7):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1956,9 +1956,9 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated/apple (= 3.16.3)
+    - RNReanimated/reanimated/apple (= 3.16.7)
     - Yoga
-  - RNReanimated/reanimated/apple (3.16.3):
+  - RNReanimated/reanimated/apple (3.16.7):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1979,7 +1979,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNReanimated/worklets (3.16.3):
+  - RNReanimated/worklets (3.16.7):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2049,7 +2049,7 @@ PODS:
     - Yoga
   - RNShare (10.2.1):
     - React-Core
-  - RNSVG (15.8.0):
+  - RNSVG (15.11.2):
     - React-Core
   - Sentry/HybridSDK (8.41.0)
   - SocketRocket (0.7.0)
@@ -2529,7 +2529,7 @@ SPEC CHECKSUMS:
   react-native-render-html: 05a7d4490ffc85c88094601207f3e48a90533476
   react-native-safe-area-context: 17a482f540310e2209f884fd49472d9e1c0e73d6
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
-  react-native-skia: 3054428a8b83ff083d7036e2bd73cda213326b1a
+  react-native-skia: 834c7cbcdd986806860ce075571123b6c2c82633
   react-native-slider: 5299110eb902bc5169b1dd94192aa28e1bf15ad8
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
   react-native-webview: 1d14b6d22fe11c300bac255eafe1ef5202c8c525
@@ -2573,12 +2573,12 @@ SPEC CHECKSUMS:
   RNPermissions: a4ae2524bd9cfb86f9c490b200b17f8dadb12e5a
   RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
   RNReactNativeHapticFeedback: 00ba111b82aa266bb3ee1aa576831c2ea9a9dfad
-  RNReanimated: 26a5a401a5de1c0cf1a3226873825b00ffa85377
+  RNReanimated: fea25bf524c62b2e7167edef63a398ca16a157fd
   RNScreens: 35bb8e81aeccf111baa0ea01a54231390dbbcfd9
   RNScreenshotPrevent: 5f8473abaa2db2476561ef8f3704b66491ce7b01
   RNSentry: c5075bc124ebc8afa84e037c7fe257053a0b2cda
   RNShare: 694e19d7f74ac4c04de3a8af0649e9ccc03bd8b1
-  RNSVG: 8542aa11770b27563714bbd8494a8436385fc85f
+  RNSVG: 7d403633772d39f695b8a1ccb64db8499e807dac
   Sentry: 54d0fe6c0df448497c8ed4cce66ccf7027e1823e
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   SwiftCBOR: aa87349b4ccddd19f861aa544f7c27d43dee5772

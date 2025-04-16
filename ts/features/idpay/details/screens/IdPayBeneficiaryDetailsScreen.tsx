@@ -8,7 +8,7 @@ import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { BeneficiaryDetailsContent } from "../components/BeneficiaryDetailsContent";
+import { IdPayBeneficiaryDetailsContent } from "../components/IdPayBeneficiaryDetailsContent";
 import { IDPayDetailsParamsList } from "../navigation";
 import {
   idPayBeneficiaryDetailsSelector,
@@ -53,8 +53,8 @@ const IdPayBeneficiaryDetailsScreen = () => {
       onboardingStatus: pipe(idPayOnboardingStatusPot, pot.toOption)
     }),
     O.fold(
-      () => <BeneficiaryDetailsContent isLoading={true} />,
-      props => <BeneficiaryDetailsContent {...props} />
+      () => <IdPayBeneficiaryDetailsContent isLoading={true} />,
+      props => <IdPayBeneficiaryDetailsContent {...props} />
     )
   );
 

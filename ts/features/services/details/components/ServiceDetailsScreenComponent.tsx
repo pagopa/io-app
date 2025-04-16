@@ -1,3 +1,4 @@
+import { ServiceDetailsScreenCdc } from "./ServiceDetailsScreenCdc";
 import {
   ServiceDetailsScreenCgn,
   ServiceDetailsScreenCgnProps
@@ -15,6 +16,10 @@ type ServiceDetailsScreenCgn = {
   kind: "cgn";
 } & ServiceDetailsScreenCgnProps;
 
+type ServiceDetailsScreenCdc = {
+  kind: "cdc";
+} & ServiceDetailsScreenCgnProps;
+
 type ServiceDetailsScreenDefault = {
   kind?: "default";
 } & ServiceDetailsScreenDefaultProps;
@@ -24,6 +29,7 @@ type ServiceDetailsScreenPn = {
 } & ServiceDetailsScreenPnProps;
 
 export type ServiceDetailsScreenComponent =
+  | ServiceDetailsScreenCdc
   | ServiceDetailsScreenCgn
   | ServiceDetailsScreenDefault
   | ServiceDetailsScreenPn;
@@ -39,6 +45,10 @@ export const ServiceDetailsScreenComponent = ({
   ...rest
 }: ServiceDetailsScreenComponent) => {
   switch (rest.kind) {
+    case "cdc":
+      return (
+        <ServiceDetailsScreenCdc {...rest}>{children}</ServiceDetailsScreenCdc>
+      );
     case "cgn":
       return (
         <ServiceDetailsScreenCgn {...rest}>{children}</ServiceDetailsScreenCgn>

@@ -1,5 +1,6 @@
 import {
   Banner,
+  BannerErrorState,
   FeatureInfo,
   H4,
   VStack,
@@ -9,7 +10,6 @@ import {
 import { Alert } from "react-native";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { BannerErrorState } from "../../../components/ui/BannerErrorState";
 
 const onLinkPress = () => {
   Alert.alert("Alert", "Action triggered");
