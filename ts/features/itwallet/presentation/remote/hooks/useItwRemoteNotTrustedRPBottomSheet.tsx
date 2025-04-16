@@ -16,19 +16,19 @@ export const ItwRemoteNotTrustedRPBottomSheetContent = () =>
       <View>
         <Body>
           {I18n.t(
-            "features.itWallet.presentation.remote.RPNotTrustedScreen.bottomSheet.contentTop"
+            "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.contentTop"
           )}
         </Body>
         <VSpacer size={16} />
         <View>
           <ListItemHeader
             label={I18n.t(
-              "features.itWallet.presentation.remote.RPNotTrustedScreen.bottomSheet.subtitle"
+              "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.subtitle"
             )}
           />
           <Body>
             {I18n.t(
-              "features.itWallet.presentation.remote.RPNotTrustedScreen.bottomSheet.contentBottom"
+              "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.contentBottom"
             )}
           </Body>
         </View>
@@ -45,7 +45,7 @@ export const useItwRemoteNotTrustedRPBottomSheet = () =>
   useIOBottomSheetAutoresizableModal(
     {
       title: I18n.t(
-        "features.itWallet.presentation.remote.RPNotTrustedScreen.bottomSheet.title"
+        "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.title"
       ),
       component: <ItwRemoteNotTrustedRPBottomSheetContent />
       // TODO: [SIW-2266] Uncomment when the FAQ are ready and use NOT_TRUSTED_RP_INFO_BOTTOM_PADDING instead of 100
@@ -56,7 +56,7 @@ export const useItwRemoteNotTrustedRPBottomSheet = () =>
           primary: {
             onPress: () => {},
             label: I18n.t(
-              "features.itWallet.presentation.remote.RPNotTrustedScreen.bottomSheet.primaryAction"
+              "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.primaryAction"
             )
           }
         }}
