@@ -16,6 +16,7 @@ import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUt
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwRemoteNotTrustedRPBottomSheet } from "../hooks/useItwRemoteNotTrustedRPBottomSheet.tsx";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 
 export const ItwRemoteFailureScreen = () => {
   const failureOption =
@@ -41,6 +42,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
   });
 
   const { bottomSheet, present } = useItwRemoteNotTrustedRPBottomSheet();
+  const dismissalDialog = useItwDismissalDialog({
+    handleDismiss: () => machineRef.send({ type: "close" }),
+    customBodyMessage: I18n.t(
+      "features.itWallet.presentation.remote.walletInactiveScreen.alert.body"
+    )
+  });
 
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
@@ -75,7 +82,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 "features.itWallet.presentation.remote.walletInactiveScreen.secondaryAction"
               ),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: dismissalDialog.show
             }
           };
         case RemoteFailureType.MISSING_CREDENTIALS: {
