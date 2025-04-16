@@ -2777,7 +2777,12 @@
         "email": "Send email"
       }
     },
-    "markdownLinkUnsupported": "This link is not supported"
+    "markdownLinkUnsupported": "This link is not supported",
+    "markdown": {
+      "decodingErrorContent": "Message content cannot be displayed.",
+      "decodingErrorHide": "Hide content",
+      "decodingErrorShow": "Show anyway"
+    }
   },
   "messagePDFPreview": {
     "title": "PDF Preview",
@@ -4628,7 +4633,7 @@
           },
           "eidExpiredScreen": {
             "title": "Verifica la tua identità",
-            "subtitle": "È un passaggio di verifica necessario per continuare ad usare Documenti su IO per autenticarti.",
+            "subtitle": "È un passaggio di verifica necessario per continuare ad usare IT-Wallet e per autenticarti.",
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           }
