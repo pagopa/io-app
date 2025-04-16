@@ -4,7 +4,6 @@
  */
 import {
   Banner,
-  ButtonLink,
   ButtonSolid,
   ContentWrapper,
   ModuleNavigation,
@@ -53,7 +52,6 @@ import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../../utils/url";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { tosConfigSelector } from "../../../../tos/store/selectors";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { cieIDDisableTourGuide } from "../../cie/store/actions";
@@ -68,7 +66,6 @@ import {
   trackCieIDLoginSelected,
   trackCieLoginSelected,
   trackCiePinLoginSelected,
-  trackMethodInfo,
   trackSpidLoginSelected
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
@@ -174,9 +171,6 @@ export const LandingScreen = () => {
     snapPoint: [400]
   });
 
-  const tosConfig = useIOSelector(tosConfigSelector, _isEqual);
-  const privacyUrl = tosConfig.tos_url;
-
   const [isRootedOrJailbroken, setIsRootedOrJailbroken] = useState<
     O.Option<boolean>
   >(O.none);
@@ -255,11 +249,6 @@ export const LandingScreen = () => {
       handleNavigateToCieIdLoginScreen();
     }
   }, [present, isCieSupported, handleNavigateToCieIdLoginScreen]);
-
-  const navigateToPrivacyUrl = useCallback(() => {
-    trackMethodInfo();
-    openWebUrl(privacyUrl);
-  }, [privacyUrl]);
 
   const navigateToCieUatSelectionScreen = useCallback(() => {
     if (isCieSupported) {
@@ -415,7 +404,9 @@ export const LandingScreen = () => {
             }}
           />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-          <View style={IOStyles.selfCenter}>
+          {/* This code has not been removed because an equal link will have to
+          be reinstated when this story will be implemented: https://pagopa.atlassian.net/browse/IOPID-2689 */}
+          {/* <View style={IOStyles.selfCenter}>
             <ButtonLink
               accessibilityRole="link"
               accessibilityLabel={I18n.t("authentication.landing.privacyLink")}
@@ -424,7 +415,7 @@ export const LandingScreen = () => {
               onPress={navigateToPrivacyUrl}
             />
             <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-          </View>
+          </View> */}
           {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
           {bottomSheet}
           {infoBottomsheetComponent}
