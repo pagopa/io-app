@@ -21,5 +21,5 @@ export const createRemoteGuardsImplementation = (
   },
   isRPTrusted: () =>
     // TODO: implementation depends on RP certificates check
-    false
+    true
 });
