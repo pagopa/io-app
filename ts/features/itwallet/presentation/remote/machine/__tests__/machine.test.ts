@@ -24,7 +24,6 @@ describe("itwRemoteMachine", () => {
 
   const isWalletActive = jest.fn();
   const isEidExpired = jest.fn();
-  const isRPTrusted = jest.fn();
 
   const evaluateRelyingPartyTrust = jest.fn();
   const getPresentationDetails = jest.fn();
@@ -181,7 +180,6 @@ describe("itwRemoteMachine", () => {
 
     isWalletActive.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
-    isRPTrusted.mockReturnValue(true);
 
     actor.send({
       type: "start",

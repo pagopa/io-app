@@ -18,8 +18,5 @@ export const createRemoteGuardsImplementation = (
     const eidStatus = itwCredentialsEidStatusSelector(store.getState());
 
     return eidStatus === "jwtExpired";
-  },
-  isRPTrusted: () =>
-    // TODO: implementation depends on RP certificates check
-    true
+  }
 });
