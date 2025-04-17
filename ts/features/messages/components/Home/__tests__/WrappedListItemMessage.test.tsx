@@ -17,6 +17,9 @@ import {
 } from "../../../store/actions/preconditions";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
+jest.mock("rn-qr-generator", () => ({}));
+jest.mock("react-native-screenshot-prevent", () => ({}));
+
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual<typeof import("@react-navigation/native")>(

@@ -90,8 +90,8 @@ export const WrappedListItemMessage = ({
       : undefined;
 
   const accessibilityLabel = useMemo(
-    () => accessibilityLabelForMessageItem(message, isSelected),
-    [isSelected, message]
+    () => accessibilityLabelForMessageItem(message, source, isSelected),
+    [isSelected, message, source]
   );
 
   const toggleScheduledMessageArchivingCallback = useCallback(() => {

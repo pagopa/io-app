@@ -2593,13 +2593,16 @@
   "messages": {
     "accessibility": {
       "message": {
+        "archive": "archive",
+        "description": "{{newMessage}} {{selected}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}",
+        "deselectInstructions": "Press and hold to deselect",
         "read": "Message",
-        "unread": "Unread message",
-        "archived": "Archived",
-        "description": "{{newMessage}} {{selected}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}",
-        "received_on": "received on",
         "received_at": "received at",
-        "selected": "selected"
+        "received_on": "received on",
+        "selectInstructions": "Press and hold to select and later",
+        "selected": "selected",
+        "unarchive": "unarchive",
+        "unread": "Unread message"
       }
     },
     "contextualHelpTitle": "About this section",

@@ -337,7 +337,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                       <View
                         accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
-  . "
+  . Press and hold to select and later archive"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -1305,7 +1305,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                       <View
                         accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
-  . "
+  . Press and hold to select and later archive"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -2328,7 +2328,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                       <View
                         accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
-  . "
+  . Press and hold to select and later archive"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -3320,7 +3320,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                       <View
                         accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
-  . "
+  . Press and hold to select and later archive"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -4367,7 +4367,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                       <View
                         accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
-  . "
+  . Press and hold to select and later archive"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -5221,7 +5221,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                       <View
                         accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
-  . "
+  . Press and hold to select and later archive"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -6130,7 +6130,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                       <View
                         accessibilityLabel="Message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
-  . "
+  . Press and hold to select and later archive"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -6870,7 +6870,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                       <View
                         accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
     received on January 2nd 1990
-  . "
+  . Press and hold to select and later archive"
                         accessibilityRole="button"
                         accessibilityState={
                           {

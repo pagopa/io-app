@@ -2413,13 +2413,16 @@
   "messages": {
     "accessibility": {
       "message": {
+        "archive": "archiviare",
+        "description": "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}",
+        "deselectInstructions": "Tieni premuto per deselezionare",
         "read": "Mitteilung",
-        "unread": "Ungelesene Mitteilung",
-        "archived": "Archiviert",
-        "description": "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}",
-        "received_on": "erhalten am",
         "received_at": "erhalten um",
-        "selected": "ausgewählt"
+        "received_on": "erhalten am",
+        "selectInstructions": "Press and hold to select and later",
+        "selected": "ausgewählt",
+        "unarchive": "unarchive",
+        "unread": "Ungelesene Mitteilung"
       }
     },
     "contextualHelpTitle": "Mitteilungen verwenden",

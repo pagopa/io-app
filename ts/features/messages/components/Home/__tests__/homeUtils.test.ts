@@ -204,7 +204,7 @@ describe("messageViewPageIndexToListCategory", () => {
 });
 
 describe("accessibilityLabelForMessageItem", () => {
-  it("should match expected string, unread message, received more than one day ago", () => {
+  it("should match expected string, unread message, received more than one day ago, inbox", () => {
     const organizationName = "Organization Name";
     const serviceName = "Service Name";
     const title = "Message Title";
@@ -212,7 +212,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const expectedOutput = `Unread message , received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
       createdAt,
       "MMMM Do YYYY"
-    )}\n  . `;
+    )}\n  . Press and hold to select and later archive`;
     const message = {
       createdAt,
       serviceName,
@@ -220,10 +220,13 @@ describe("accessibilityLabelForMessageItem", () => {
       title,
       isRead: false
     } as UIMessage;
-    const accessibilityLabel = accessibilityLabelForMessageItem(message);
+    const accessibilityLabel = accessibilityLabelForMessageItem(
+      message,
+      "INBOX"
+    );
     expect(accessibilityLabel).toStrictEqual(expectedOutput);
   });
-  it("should match expected string, unread message, received less than one day ago", () => {
+  it("should match expected string, unread message, received less than one day ago, inbox", () => {
     const organizationName = "Organization Name";
     const serviceName = "Service Name";
     const title = "Message Title";
@@ -232,7 +235,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const expectedOutput = `Unread message , received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
       createdAt,
       "H:mm"
-    )}. `;
+    )}. Press and hold to select and later archive`;
     const message = {
       createdAt,
       serviceName,
@@ -240,10 +243,13 @@ describe("accessibilityLabelForMessageItem", () => {
       title,
       isRead: false
     } as UIMessage;
-    const accessibilityLabel = accessibilityLabelForMessageItem(message);
+    const accessibilityLabel = accessibilityLabelForMessageItem(
+      message,
+      "INBOX"
+    );
     expect(accessibilityLabel).toStrictEqual(expectedOutput);
   });
-  it("should match expected string, read message, received more than one day ago", () => {
+  it("should match expected string, read message, received more than one day ago, inbox", () => {
     const organizationName = "Organization Name";
     const serviceName = "Service Name";
     const title = "Message Title";
@@ -251,7 +257,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const expectedOutput = `Message , received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
       createdAt,
       "MMMM Do YYYY"
-    )}\n  . `;
+    )}\n  . Press and hold to select and later archive`;
     const message = {
       createdAt,
       serviceName,
@@ -259,10 +265,13 @@ describe("accessibilityLabelForMessageItem", () => {
       title,
       isRead: true
     } as UIMessage;
-    const accessibilityLabel = accessibilityLabelForMessageItem(message);
+    const accessibilityLabel = accessibilityLabelForMessageItem(
+      message,
+      "INBOX"
+    );
     expect(accessibilityLabel).toStrictEqual(expectedOutput);
   });
-  it("should match expected string, read message, received less than one day ago", () => {
+  it("should match expected string, read message, received less than one day ago, inbox", () => {
     const organizationName = "Organization Name";
     const serviceName = "Service Name";
     const title = "Message Title";
@@ -271,7 +280,7 @@ describe("accessibilityLabelForMessageItem", () => {
     const expectedOutput = `Message , received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
       createdAt,
       "H:mm"
-    )}. `;
+    )}. Press and hold to select and later archive`;
     const message = {
       createdAt,
       serviceName,
@@ -279,7 +288,10 @@ describe("accessibilityLabelForMessageItem", () => {
       title,
       isRead: true
     } as UIMessage;
-    const accessibilityLabel = accessibilityLabelForMessageItem(message);
+    const accessibilityLabel = accessibilityLabelForMessageItem(
+      message,
+      "INBOX"
+    );
     expect(accessibilityLabel).toStrictEqual(expectedOutput);
   });
 });
