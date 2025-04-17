@@ -13,7 +13,6 @@ import {
   trackLoginInfoResourceTap,
   trackLoginInfoTap
 } from "../../../common/analytics";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { isFastLoginFFEnabledSelector } from "../../../fastLogin/store/selectors";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
@@ -46,10 +45,6 @@ export const useInfoBottomsheetComponent = () => {
     () => dispatch(idpSelected(TestIdp)),
     [dispatch]
   );
-
-  useOnFirstRender(() => {
-    trackLoginInfoBottomsheet();
-  });
 
   const navigateToPrivacyUrl = useCallback(() => {
     trackLoginInfoResourceTap("privacy_policy");
@@ -136,6 +131,7 @@ export const useInfoBottomsheetComponent = () => {
 
   const presentInfoBottomsheetWithTracking = useCallback(() => {
     trackLoginInfoTap();
+    trackLoginInfoBottomsheet();
     present();
   }, [present]);
 
