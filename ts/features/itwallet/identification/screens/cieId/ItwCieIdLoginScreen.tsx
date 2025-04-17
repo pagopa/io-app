@@ -38,9 +38,9 @@ const ItwCieIdLoginScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const [isWebViewLoading, setWebViewLoading] = useState(true);
 
-  const dismissalDialog = useItwDismissalDialog(() =>
-    machineRef.send({ type: "back" })
-  );
+  const dismissalDialog = useItwDismissalDialog({
+    handleDismiss: () => machineRef.send({ type: "back" })
+  });
 
   const {
     authUrl,
