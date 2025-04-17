@@ -7,7 +7,7 @@ import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
 
 const originSchemasWhiteList = [
   "https://*",
-  "iowallet://*",
+  `${WALLET_WEBVIEW_OUTCOME_SCHEMA}://*`,
   ...(isDevEnv ? ["http://*"] : [])
 ];
 
