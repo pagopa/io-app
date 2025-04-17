@@ -75,8 +75,7 @@ export const useWalletPaymentAuthorizationModal = ({
     (url: string): Promise<string> =>
       new Promise((resolve, reject) => {
         navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-          screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_WEB_VIEW,
-          params: { url }
+          screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_WEB_VIEW
         });
         dispatch(
           paymentStartWebViewFlow({
