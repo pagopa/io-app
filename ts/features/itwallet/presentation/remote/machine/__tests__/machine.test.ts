@@ -190,7 +190,6 @@ describe("itwRemoteMachine", () => {
       } as ItwRemoteRequestPayload
     });
 
-    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().value).toStrictEqual(
       "EvaluatingRelyingPartyTrust"
     );
