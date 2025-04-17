@@ -17,6 +17,14 @@ import {
 } from "../../../store/actions/preconditions";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
+jest.mock("rn-qr-generator", () => ({}));
+jest.mock("react-native-screenshot-prevent", () => ({}));
+
+jest.mock("react-native-i18n", () => ({
+  currentLocale: () => "en",
+  t: (key: string) => key
+}));
+
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual<typeof import("@react-navigation/native")>(
