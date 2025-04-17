@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0-rc.7](https://github.com/pagopa/io-app/compare/3.3.0-rc.6...3.3.0-rc.7) (2025-04-16)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2207](https://pagopa.atlassian.net/browse/SIW-2207)] Remote presentation, inactive IT-Wallet failure screen ([#6900](https://github.com/pagopa/io-app/issues/6900)) ([e908a22](https://github.com/pagopa/io-app/commit/e908a22e83c01e9f116c8fd28b5d940670b0c0b1))
+* **IT Wallet:** [[SIW-2208](https://pagopa.atlassian.net/browse/SIW-2208)] Remote presentation, update copy eID expired screen ([#6901](https://github.com/pagopa/io-app/issues/6901)) ([c7aadaf](https://github.com/pagopa/io-app/commit/c7aadaf3782f2e00fe4ff25b2ac6e72c20e5cec7))
+
 ## [3.3.0-rc.6](https://github.com/pagopa/io-app/compare/3.3.0-rc.5...3.3.0-rc.6) (2025-04-15)
 
 
