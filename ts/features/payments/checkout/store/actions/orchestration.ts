@@ -3,8 +3,8 @@ import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { NetworkError } from "../../../../../utils/errors";
 import { PaymentStartOrigin, WalletPaymentStepEnum } from "../../types";
+import { WalletPaymentOutcomeEnum } from "../../types/PaymentOutcomeEnum";
 
 export const walletPaymentSetCurrentStep = createStandardAction(
   "WALLET_PAYMENT_SET_CURRENT_STEP"
@@ -26,7 +26,8 @@ export type PaymentCompletedSuccessPayload = {
 export type PaymentStartWebViewPayload = {
   url: string;
   onSuccess?: (url: string) => void;
-  onError?: (error: NetworkError) => void;
+  onCancel?: (outcome?: WalletPaymentOutcomeEnum) => void;
+  onError?: (outcome?: WalletPaymentOutcomeEnum) => void;
 };
 
 /**

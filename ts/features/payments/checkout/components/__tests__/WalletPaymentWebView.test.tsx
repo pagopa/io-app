@@ -1,8 +1,8 @@
 import { fireEvent, render } from "@testing-library/react-native";
 
-import { getNetworkError } from "../../../../../utils/errors";
-import WalletPaymentWebView from "../WalletPaymentWebView";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../../common/utils/const";
+import { WalletPaymentOutcomeEnum } from "../../types/PaymentOutcomeEnum";
+import WalletPaymentWebView from "../WalletPaymentWebView";
 
 // Mock for WebView component
 jest.mock("react-native-webview", () => {
@@ -37,6 +37,7 @@ jest.mock("../../../../../utils/errors", () => ({
 
 describe("WalletPaymentWebView", () => {
   const mockOnSuccess = jest.fn();
+  const mockOnCancel = jest.fn();
   const mockOnError = jest.fn();
 
   beforeEach(() => {
@@ -46,8 +47,9 @@ describe("WalletPaymentWebView", () => {
   it("should render the WebView with the correct URI", () => {
     const { getByTestId } = render(
       <WalletPaymentWebView
-        uri="https://example.com"
+        url="https://example.com"
         onSuccess={mockOnSuccess}
+        onCancel={mockOnCancel}
         onError={mockOnError}
       />
     );
@@ -59,8 +61,9 @@ describe("WalletPaymentWebView", () => {
   it("should call onSuccess when the URL matches the outcome schema", () => {
     const { getByTestId } = render(
       <WalletPaymentWebView
-        uri="https://example.com"
+        url="https://example.com"
         onSuccess={mockOnSuccess}
+        onCancel={mockOnCancel}
         onError={mockOnError}
       />
     );
@@ -78,11 +81,12 @@ describe("WalletPaymentWebView", () => {
     expect(mockOnSuccess).toHaveBeenCalledWith(successUrl);
   });
 
-  it("should call onError when the URL is about:blank", () => {
+  it("should call IN_APP_BROWSER_CLOSED_BY_USER when the URL is about:blank", () => {
     const { getByTestId } = render(
       <WalletPaymentWebView
-        uri="https://example.com"
+        url="https://example.com"
         onSuccess={mockOnSuccess}
+        onCancel={mockOnCancel}
         onError={mockOnError}
       />
     );
@@ -92,16 +96,17 @@ describe("WalletPaymentWebView", () => {
       url: "about:blank"
     });
 
-    expect(mockOnError).toHaveBeenCalledWith(
-      getNetworkError("WalletPaymentWebViewScreen")
+    expect(mockOnCancel).toHaveBeenCalledWith(
+      WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER
     );
   });
 
   it("should update canGoBack state on navigation state change", () => {
     const { getByTestId } = render(
       <WalletPaymentWebView
-        uri="https://example.com"
+        url="https://example.com"
         onSuccess={mockOnSuccess}
+        onCancel={mockOnCancel}
         onError={mockOnError}
       />
     );
@@ -110,15 +115,16 @@ describe("WalletPaymentWebView", () => {
     fireEvent(webView, "onNavigationStateChange", { canGoBack: true });
 
     // Since canGoBack is internal state, we cannot directly assert it.
-    // Instead, we ensure no errors occur during this event.
-    expect(mockOnError).not.toHaveBeenCalled();
+    // Instead, we ensure no errors occur durlng this event.
+    expect(mockOnCancel).not.toHaveBeenCalled();
   });
 
   it("should handle hardware back button when canGoBack is true", () => {
     const { getByTestId } = render(
       <WalletPaymentWebView
-        uri="https://example.com"
+        url="https://example.com"
         onSuccess={mockOnSuccess}
+        onCancel={mockOnCancel}
         onError={mockOnError}
       />
     );
@@ -132,18 +138,16 @@ describe("WalletPaymentWebView", () => {
     mockUseHardwareBackButton();
 
     // The webView should have received a goBack call (cannot verify directly)
-    expect(mockOnError).not.toHaveBeenCalled();
+    expect(mockOnCancel).not.toHaveBeenCalled();
   });
 
-  it("should call onError when hardware back button is pressed and cannot go back", () => {
-    const error = { message: "Network error" };
-    (getNetworkError as jest.Mock).mockReturnValueOnce(error);
-
+  it("should call IN_APP_BROWSER_CLOSED_BY_USER when hardware back button is pressed and cannot go back", () => {
     const { getByTestId } = render(
       <WalletPaymentWebView
-        uri="https://example.com"
+        url="https://example.com"
         onSuccess={mockOnSuccess}
         onError={mockOnError}
+        onCancel={mockOnCancel}
       />
     );
 
@@ -154,6 +158,8 @@ describe("WalletPaymentWebView", () => {
     // Simulate hardware back button press
     mockUseHardwareBackButton();
 
-    expect(mockOnError).toHaveBeenCalledWith(error);
+    expect(mockOnCancel).toHaveBeenCalledWith(
+      WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER
+    );
   });
 });

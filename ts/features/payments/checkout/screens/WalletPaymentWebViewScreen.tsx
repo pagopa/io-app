@@ -23,8 +23,9 @@ const WalletPaymentWebViewScreen = () => {
   return payload?.url ? (
     <WalletPaymentWebView
       onError={payload.onError}
+      onCancel={payload.onCancel}
       onSuccess={payload.onSuccess}
-      uri={payload.url}
+      url={payload.url}
     />
   ) : (
     <LoadingSpinnerOverlay isLoading />
