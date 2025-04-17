@@ -26,6 +26,7 @@ type MetadataListItemAction = MetadataListItemBase & {
 
 type MetadataListItemInfo = MetadataListItemBase & {
   kind: "ListItemInfo";
+  label: string;
 } & ListItemInfo;
 
 type MetadataListItemInfoCopy = MetadataListItemBase & {

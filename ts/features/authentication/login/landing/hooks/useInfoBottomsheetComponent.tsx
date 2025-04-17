@@ -9,7 +9,6 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { tosConfigSelector } from "../../../../tos/store/selectors";
 import { openWebUrl } from "../../../../../utils/url";
 import {
-  trackLoginInfoBottomsheet,
   trackLoginInfoResourceTap,
   trackLoginInfoTap
 } from "../../../common/analytics";
@@ -131,7 +130,6 @@ export const useInfoBottomsheetComponent = () => {
 
   const presentInfoBottomsheetWithTracking = useCallback(() => {
     trackLoginInfoTap();
-    trackLoginInfoBottomsheet();
     present();
   }, [present]);
 

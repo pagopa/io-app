@@ -146,13 +146,6 @@ export function trackLoginInfoTap() {
   );
 }
 
-export function trackLoginInfoBottomsheet() {
-  void mixpanelTrack(
-    "LOGIN_START_FLOW_RESOURCES",
-    buildEventProperties("UX", "screen_view")
-  );
-}
-
 export function trackLoginInfoResourceTap(
   resource_selected: "privacy_policy" | "manage_access" | "app_features"
 ) {
