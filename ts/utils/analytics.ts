@@ -227,3 +227,19 @@ export function trackHelpCenterCtaTapped(
 }
 
 // #endregion
+
+// #region Offline
+
+/**
+ * Track the event when the user tries to access a content that is not available offline
+ *
+ * @param screen - The screen where the user tried to access the content
+ */
+export const trackOfflineActionNotAllowed = (screen: { screen: string }) => {
+  void mixpanelTrack(
+    "OFFLINE_ACTION_NOT_ALLOWED",
+    buildEventProperties("KO", "error", { screen })
+  );
+};
+
+// #endregion

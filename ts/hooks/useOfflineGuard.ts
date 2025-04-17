@@ -9,10 +9,8 @@ import I18n from "../i18n";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import ROUTES from "../navigation/routes";
 import { useIOSelector } from "../store/hooks";
-import {
-  trackItwContentNotAvailable,
-  trackItwOfflineActionNotAllowed
-} from "../features/itwallet/analytics";
+import { trackItwContentNotAvailable } from "../features/itwallet/analytics";
+import { trackOfflineActionNotAllowed } from "../utils/analytics.ts";
 
 /**
  * The type of offline guard to use.
@@ -72,7 +70,7 @@ export const useOfflineGuard = <TArgs extends Array<any>, TReturn>(
       trackItwContentNotAvailable();
     } else if (type === "toast") {
       toast.error(I18n.t("global.offline.toast"));
-      trackItwOfflineActionNotAllowed({
+      trackOfflineActionNotAllowed({
         screen: name
       });
     }

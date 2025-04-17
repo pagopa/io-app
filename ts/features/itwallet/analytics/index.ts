@@ -763,13 +763,6 @@ export const trackItwOfflineReloadFailure = () => {
   );
 };
 
-export const trackItwOfflineActionNotAllowed = (screen: { screen: string }) => {
-  void mixpanelTrack(
-    ITW_ERRORS_EVENTS.ITW_OFFLINE_ACTION_NOT_ALLOWED,
-    buildEventProperties("KO", "error", { screen })
-  );
-};
-
 export const trackItwContentNotAvailable = () => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_OFFLINE_CONTENT_NOT_AVAILABLE,
