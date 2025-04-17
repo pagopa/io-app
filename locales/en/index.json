@@ -809,10 +809,10 @@
       },
       "useful_resources": {
         "bottomSheet": {
-          "title": "Risorse utili",
-          "privacy_policy": "Informativa Privacy",
-          "manage_access": "Gestisci i tuoi accessi",
-          "io_more_informations": "Cosa puoi fare con l’app IO"
+          "title": "Useful resources",
+          "privacy_policy": "Privacy policy",
+          "manage_access": "Manage access",
+          "io_more_informations": "What you can do with the IO app"
         }
       },
       "session_expired": {
