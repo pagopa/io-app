@@ -72,8 +72,7 @@ export const PaymentsCheckoutNavigator = () => (
       name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_WEB_VIEW}
       component={WalletPaymentWebViewScreen}
       options={{
-        gestureEnabled: false,
-        headerShown: false
+        gestureEnabled: false
       }}
     />
   </Stack.Navigator>
