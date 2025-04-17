@@ -96,7 +96,7 @@ describe("handleTestLogin saga", () => {
       .next(validationError)
       .put(
         loginFailure({
-          error: new Error("unknown error"), // viene dal fallback del readableReport.match
+          error: new Error("unknown error"),
           idp: "test"
         })
       )

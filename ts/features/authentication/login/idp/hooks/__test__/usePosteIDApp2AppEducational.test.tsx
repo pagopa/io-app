@@ -3,7 +3,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { usePosteIDApp2AppEducational } from "../../hooks/usePosteIDApp2AppEducational";
 import { SpidIdp } from "../../../../../../../definitions/content/SpidIdp";
 import { ErrorType, StandardLoginRequestInfo } from "../../store/types";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../../utils/hooks/bottomSheet";
 
 jest.mock("../../../../../../utils/hooks/bottomSheet", () => ({
   useIOBottomSheetAutoresizableModal: jest.fn(() => ({
@@ -64,22 +63,5 @@ describe("usePosteIDApp2AppEducational", () => {
     });
 
     expect(mockPresent).not.toHaveBeenCalled();
-  });
-
-  it("should set presentedRef to true when onDismiss is called", () => {
-    // rendera il componente per inizializzare l'hook
-    renderComponent({
-      selectedIdp: { id: "not-posteid" } as SpidIdp,
-      requestState: pot.none
-    });
-
-    // recupera la callback `onDismiss` passata al bottom sheet
-    const { onDismiss } = (useIOBottomSheetAutoresizableModal as jest.Mock).mock
-      .calls[0][0];
-
-    // chiamala
-    onDismiss();
-
-    // puoi anche aspettarti che la funzione sia stata chiamata, ma non è necessario per la coverage
   });
 });

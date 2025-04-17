@@ -60,7 +60,6 @@ describe("CieConsentDataUsageScreen", () => {
     const webView = getByTestId("webview-cie-test");
     fireEvent(webView, "onError");
 
-    // attiva useEffect su `hasError`, non possiamo fare molto se non copertura
     await waitFor(() => {
       expect(webView).toBeTruthy();
     });

@@ -1,6 +1,6 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
-import IdpsGrid from "../../components/IdpsGrid"; // aggiorna il path se serve
+import IdpsGrid from "../../components/IdpsGrid";
 import { SpidIdp } from "../../../../../../../definitions/content/SpidIdp";
 
 describe("IdpsGrid", () => {

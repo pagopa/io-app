@@ -19,7 +19,7 @@ describe("CIE selectors", () => {
       isNfcEnabled: pot.some(false),
       readingEvent: pot.none
     }
-  } as any; // Cast per evitare di dover definire tutto il GlobalState
+  } as any;
 
   it("should return correct value for isCieLoginUatEnabledSelector", () => {
     expect(selectors.isCieLoginUatEnabledSelector(baseState)).toBe(true);
