@@ -2,8 +2,9 @@ import { useRef, useState } from "react";
 import WebView from "react-native-webview";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { isDevEnv } from "../../../../utils/environment";
-import { getNetworkError, NetworkError } from "../../../../utils/errors";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
+import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import { PaymentStartWebViewPayload } from "../store/actions/orchestration";
 
 const originSchemasWhiteList = [
   "https://*",
@@ -11,22 +12,20 @@ const originSchemasWhiteList = [
   ...(isDevEnv ? ["http://*"] : [])
 ];
 
-type Props = {
-  onSuccess?: (url: string) => void;
-  onError?: (error: NetworkError) => void;
-  uri: string;
-};
-
-const WalletPaymentWebView = ({ onSuccess, onError, uri }: Props) => {
+const WalletPaymentWebView = ({
+  onSuccess,
+  onCancel,
+  onError,
+  url: uri
+}: PaymentStartWebViewPayload) => {
   const [canGoBack, setCanGoBack] = useState<boolean>(false);
   const webViewRef = useRef<WebView>(null);
 
   useHardwareBackButton(() => {
-    const error = getNetworkError("WalletPaymentWebViewScreen");
     if (canGoBack) {
       webViewRef.current?.goBack();
     } else {
-      onError?.(error);
+      onCancel?.(WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER);
     }
     return true;
   });
@@ -41,11 +40,13 @@ const WalletPaymentWebView = ({ onSuccess, onError, uri }: Props) => {
           onSuccess?.(event.url);
         }
         if (event.url === "about:blank") {
-          onError?.(getNetworkError("WalletPaymentWebViewScreen"));
+          onCancel?.(WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER);
         }
         return !event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA);
       }}
       onNavigationStateChange={event => setCanGoBack(event.canGoBack)}
+      onHttpError={() => onError?.(WalletPaymentOutcomeEnum.GENERIC_ERROR)}
+      onError={() => onError?.(WalletPaymentOutcomeEnum.GENERIC_ERROR)}
       allowsBackForwardNavigationGestures
       style={{ flex: 1 }}
       source={{

@@ -7,6 +7,7 @@ import WalletPaymentWebView from "../components/WalletPaymentWebView";
 import { walletPaymentWebViewPayloadSelector } from "../store/selectors";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import I18n from "../../../../i18n";
+import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 const WalletPaymentWebViewScreen = () => {
   const payload = useIOSelector(walletPaymentWebViewPayloadSelector);
@@ -24,7 +25,7 @@ const WalletPaymentWebViewScreen = () => {
   }, [navigation]);
 
   const handleConfirmClose = () => {
-    payload?.onError?.({} as any);
+    payload?.onCancel?.(WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER);
   };
 
   const handleCloseAlert = () => {
@@ -63,9 +64,10 @@ const WalletPaymentWebViewScreen = () => {
 
   return payload?.url ? (
     <WalletPaymentWebView
-      onError={promptUserToClose}
+      onError={payload.onError}
+      onCancel={promptUserToClose}
       onSuccess={payload.onSuccess}
-      uri={payload.url}
+      url={payload.url}
     />
   ) : (
     <LoadingSpinnerOverlay isLoading />
