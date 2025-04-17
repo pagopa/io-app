@@ -4607,8 +4607,9 @@
         },
         "remote": {
           "loadingScreen": {
-            "title": "Stiamo facendo alcune verifiche di sicurezza...",
-            "subtitle": "Attendi qualche secondo"
+            "request": "Stiamo facendo alcune verifiche di sicurezza",
+            "response": "Stiamo comunicando i tuoi dati a {{relyingParty}}",
+            "subtitle": "Attendi qualche secondo..."
           },
           "walletInactiveScreen": {
             "title": "Ottieni IT-Wallet per \ncontinuare",
@@ -4649,6 +4650,11 @@
               "contentBottom": "Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.",
               "primaryAction": "Scopri di più"
             }
+          },
+          "purpose": "Finalità: {{purpose}}",
+          "success": {
+            "title": "Fatto!",
+            "subtitle": "Continua sul sito dell'ente"
           }
         }
       },

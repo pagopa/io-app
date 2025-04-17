@@ -1,5 +1,10 @@
-import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
-import { RemoteFailure } from "./failure.ts";
+import { RequestObject } from "../../../common/utils/itwTypesUtils";
+import {
+  EnrichedPresentationDetails,
+  ItwRemoteRequestPayload,
+  RelyingPartyConfiguration
+} from "../utils/itwRemoteTypeUtils";
+import { RemoteFailure } from "./failure";
 
 export type Context = {
   /**
@@ -10,9 +15,35 @@ export type Context = {
    * The failure of the remote presentation machine
    */
   failure?: RemoteFailure;
+  /**
+   * Relying party Entity Configuration subject
+   */
+  rpSubject: string | undefined;
+  /**
+   * Relying party Entity Configuration metadata
+   */
+  rpConf: RelyingPartyConfiguration | undefined;
+  /**
+   * The Request Object fetched from the Relying Party with the presentation details
+   */
+  requestObject: RequestObject | undefined;
+  /**
+   * Details of the presentation requested by the Relying Party
+   * It includes the requested claims and credentials
+   */
+  presentationDetails: EnrichedPresentationDetails | undefined;
+  /**
+   * Optional credentials selected by the user, identified by their presentation ID
+   */
+  selectedOptionalCredentials: Set<string>;
 };
 
 export const InitialContext: Context = {
   payload: undefined,
-  failure: undefined
+  failure: undefined,
+  rpSubject: undefined,
+  rpConf: undefined,
+  requestObject: undefined,
+  presentationDetails: undefined,
+  selectedOptionalCredentials: new Set()
 };
