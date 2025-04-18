@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-/* globals jest, NativeModules, require, global */
+/* globals jest, require, global */
 /**
  * Set up of the testing environment
  */
@@ -10,10 +10,18 @@ import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
+const mockRNQRGenerator = {
+  default: {
+    detect: jest.fn().mockResolvedValue(null),
+    generate: jest.fn().mockResolvedValue({
+      uri: 'mock-qr-uri'
+    })
+  }
+};
 
 import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
-
+jest.mock("rn-qr-generator", () => mockRNQRGenerator);
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("@react-native-community/push-notification-ios", () => jest.fn());
@@ -26,7 +34,7 @@ jest.mock("react-native-reanimated", () => {
 
   // The mock misses the `addWhitelistedUIProps` implementation
   // So we override it with a no-op
-  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function, prettier/prettier
+  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function
   Reanimated.default.addWhitelistedUIProps = () => {};
 
   return {
@@ -95,6 +103,37 @@ jest.mock("react-native-permissions", () =>
   require("react-native-permissions/mock")
 );
 
+const mockSubscription = {
+  callback: jest.fn(),
+  remove: jest.fn()
+};
+
+jest.mock("react-native", () => {
+  const RN = jest.requireActual("react-native"); // use original implementation, which comes with mocks out of the box
+
+  // eslint-disable-next-line functional/immutable-data
+  RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
+
+  // eslint-disable-next-line functional/immutable-data
+  RN.NativeModules.AppReviewModule = {
+    requestReview: jest.fn()
+  };
+
+  // eslint-disable-next-line functional/immutable-data
+  RN.AppState = {
+    ...RN.AppState,
+    addEventListener: jest.fn((event, callback) => {
+      // Store the callback for later use in tests
+      if (event === "change") {
+        // eslint-disable-next-line functional/immutable-data
+        mockSubscription.callback = callback;
+      }
+      return mockSubscription;
+    })
+  };
+  return RN;
+});
+
 /*
  * Turbo modules mocks.
  */
@@ -110,13 +149,40 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
       const modulesToMock = [
         "RNDocumentPicker",
         "RNHapticFeedback",
-        "RNCWebViewModule"
+        "RNCWebViewModule",
+        "AppState"
       ];
       if (modulesToMock.includes(name)) {
         return null;
       }
       return turboModuleRegistry.getEnforcing(name);
     }
+  };
+});
+
+jest.mock("react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo", ()  => {
+  const accessibilityInfo = jest.requireActual(
+    "react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo"
+  );
+
+  return {
+    ...accessibilityInfo,
+    addEventListener: () => ({
+      remove: jest.fn()
+    })
+  };
+});
+
+jest.mock("react-native/Libraries/AppState/AppState", ()  => {
+  const appState = jest.requireActual(
+    "react-native/Libraries/AppState/AppState"
+  );
+
+  return {
+    ...appState,
+    addEventListener: () => ({
+      remove: jest.fn()
+    })
   };
 });
 
@@ -127,20 +193,6 @@ jest.mock("mixpanel-react-native", () => ({
     init: jest.fn()
   }))
 }));
-
-jest.mock("react-native", () => {
-  const RN = jest.requireActual("react-native"); // use original implementation, which comes with mocks out of the box
-
-  // eslint-disable-next-line functional/immutable-data
-  RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
-
-  // eslint-disable-next-line functional/immutable-data
-  RN.NativeModules.AppReviewModule = {
-    requestReview: jest.fn()
-  };
-
-  return RN;
-});
 
 // eslint-disable-next-line functional/immutable-data
 NativeModules.CameraView = {
@@ -153,15 +205,6 @@ jest.mock("react-native-vision-camera", () => ({
     onCodeScanned: jest.fn()
   }))
 }));
-
-/* Force the useBoldTextEnabled to return false to resolve tests */
-jest.mock("@pagopa/io-app-design-system", () => {
-  const actual = jest.requireActual("@pagopa/io-app-design-system");
-  return {
-    ...actual,
-    useBoldTextEnabled: jest.fn(() => Promise.resolve(false))
-  };
-});
 
 jest
   .spyOn(AccessibilityInfo, "isBoldTextEnabled")

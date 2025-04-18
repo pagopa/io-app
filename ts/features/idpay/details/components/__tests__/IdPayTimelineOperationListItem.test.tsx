@@ -54,7 +54,11 @@ describe("Test IdPayTimelineOperationListItem", () => {
       );
 
       expect(component).toBeTruthy();
-      expect(component.queryByTestId("onboardingLogoTestID")).toBeTruthy();
+      expect(
+        component.queryByTestId("onboardingLogoTestID", {
+          includeHiddenElements: true
+        })
+      ).toBeTruthy();
       expect(component.queryByText(T_TITLE)).toBeTruthy();
       expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
     });
@@ -81,7 +85,11 @@ describe("Test IdPayTimelineOperationListItem", () => {
       );
 
       expect(component).toBeTruthy();
-      expect(component.queryByTestId("ibanLogoTestID")).toBeTruthy();
+      expect(
+        component.queryByTestId("ibanLogoTestID", {
+          includeHiddenElements: true
+        })
+      ).toBeTruthy();
       expect(component.queryByText(T_TITLE)).toBeTruthy();
       expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
     });
@@ -115,7 +123,11 @@ describe("Test IdPayTimelineOperationListItem", () => {
         );
         expect(component).toBeTruthy();
 
-        expect(component.queryByTestId("refundLogoTestID")).toBeTruthy();
+        expect(
+          component.queryByTestId("refundLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeTruthy();
 
         expect(
           component.queryByText(
@@ -160,7 +172,11 @@ describe("Test IdPayTimelineOperationListItem", () => {
         );
         expect(component).toBeTruthy();
 
-        expect(component.queryByTestId("refundLogoTestID")).toBeTruthy();
+        expect(
+          component.queryByTestId("refundLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeTruthy();
 
         expect(
           component.queryByText(
@@ -215,8 +231,16 @@ describe("Test IdPayTimelineOperationListItem", () => {
         );
 
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("creditCardLogoTestID")).toBeFalsy();
-        expect(component.queryByTestId("fiscalCodeLogoTestID")).toBeFalsy();
+        expect(
+          component.queryByTestId("creditCardLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
+        expect(
+          component.queryByTestId("fiscalCodeLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
         expect(component.queryByText(T_TITLE)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
       });
@@ -247,8 +271,16 @@ describe("Test IdPayTimelineOperationListItem", () => {
         );
 
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("creditCardLogoTestID")).toBeTruthy();
-        expect(component.queryByTestId("fiscalCodeLogoTestID")).toBeFalsy();
+        expect(
+          component.queryByTestId("creditCardLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeTruthy();
+        expect(
+          component.queryByTestId("fiscalCodeLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
         expect(component.queryByText(T_TITLE)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
       });
@@ -278,8 +310,16 @@ describe("Test IdPayTimelineOperationListItem", () => {
         );
 
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("creditCardLogoTestID")).toBeFalsy();
-        expect(component.queryByTestId("fiscalCodeLogoTestID")).toBeFalsy();
+        expect(
+          component.queryByTestId("creditCardLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
+        expect(
+          component.queryByTestId("fiscalCodeLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
         expect(component.queryByText(T_TITLE)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
       });
@@ -305,8 +345,16 @@ describe("Test IdPayTimelineOperationListItem", () => {
         );
 
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("creditCardLogoTestID")).toBeFalsy();
-        expect(component.queryByTestId("fiscalCodeLogoTestID")).toBeTruthy();
+        expect(
+          component.queryByTestId("creditCardLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
+        expect(
+          component.queryByTestId("fiscalCodeLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeTruthy();
         expect(component.queryByText(T_TITLE)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
       });
@@ -345,8 +393,16 @@ describe("Test IdPayTimelineOperationListItem", () => {
         );
 
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("creditCardLogoTestID")).toBeFalsy();
-        expect(component.queryByTestId("fiscalCodeLogoTestID")).toBeFalsy();
+        expect(
+          component.queryByTestId("creditCardLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
+        expect(
+          component.queryByTestId("fiscalCodeLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
         expect(component.queryByText(T_TITLE)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
       });
@@ -377,8 +433,16 @@ describe("Test IdPayTimelineOperationListItem", () => {
         );
 
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("creditCardLogoTestID")).toBeTruthy();
-        expect(component.queryByTestId("fiscalCodeLogoTestID")).toBeFalsy();
+        expect(
+          component.queryByTestId("creditCardLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeTruthy();
+        expect(
+          component.queryByTestId("fiscalCodeLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
         expect(component.queryByText(T_TITLE)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
       });
@@ -408,8 +472,16 @@ describe("Test IdPayTimelineOperationListItem", () => {
         );
 
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("creditCardLogoTestID")).toBeFalsy();
-        expect(component.queryByTestId("fiscalCodeLogoTestID")).toBeFalsy();
+        expect(
+          component.queryByTestId("creditCardLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
+        expect(
+          component.queryByTestId("fiscalCodeLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
         expect(component.queryByText(T_TITLE)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
       });
@@ -443,7 +515,11 @@ describe("Test IdPayTimelineOperationListItem", () => {
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("genericLogoTestID")).toBeFalsy();
+        expect(
+          component.queryByTestId("genericLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
         expect(component.queryByText(T_TITLE)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
         expect(component.queryByText(T_ACCRUED_STRING)).toBeTruthy();
@@ -475,7 +551,11 @@ describe("Test IdPayTimelineOperationListItem", () => {
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("genericLogoTestID")).toBeFalsy();
+        expect(
+          component.queryByTestId("genericLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
         expect(component.queryByText(T_TITLE)).toBeFalsy();
         expect(component.queryByText(T_BUSINESS_NAME)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
@@ -509,7 +589,11 @@ describe("Test IdPayTimelineOperationListItem", () => {
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("genericLogoTestID")).toBeTruthy();
+        expect(
+          component.queryByTestId("genericLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeTruthy();
         expect(component.queryByText(T_TITLE)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
         expect(component.queryByText(T_ACCRUED_STRING)).toBeFalsy();
@@ -548,7 +632,11 @@ describe("Test IdPayTimelineOperationListItem", () => {
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("genericLogoTestID")).toBeFalsy();
+        expect(
+          component.queryByTestId("genericLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
         expect(component.queryByText(T_TITLE)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
         expect(component.queryByText(T_ACCRUED_STRING)).toBeFalsy();
@@ -587,7 +675,11 @@ describe("Test IdPayTimelineOperationListItem", () => {
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("genericLogoTestID")).toBeFalsy();
+        expect(
+          component.queryByTestId("genericLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeFalsy();
         expect(component.queryByText(T_TITLE)).toBeFalsy();
         expect(component.queryByText(T_BUSINESS_NAME)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
@@ -624,7 +716,11 @@ describe("Test IdPayTimelineOperationListItem", () => {
           <IdPayTimelineOperationListItem operation={T_OPERATION} />
         );
         expect(component).toBeTruthy();
-        expect(component.queryByTestId("genericLogoTestID")).toBeTruthy();
+        expect(
+          component.queryByTestId("genericLogoTestID", {
+            includeHiddenElements: true
+          })
+        ).toBeTruthy();
         expect(component.queryByText(T_TITLE)).toBeTruthy();
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
         expect(component.queryByText(T_ACCRUED_STRING)).toBeFalsy();

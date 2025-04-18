@@ -37,6 +37,10 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
     jest.clearAllMocks();
     mockAccessibilityInfo(false);
   });
+  it("should match snapshot", () => {
+    const screen = renderScreen();
+    expect(screen).toMatchSnapshot();
+  });
 
   it("Click on the button continue check that the NOTIFICATIONS_INFO_SCREEN_CONSENT action is triggered", () => {
     const screen = renderScreen();
@@ -67,11 +71,16 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
     }
   });
 
+  const mockRemoveEventListener = jest.fn();
   it("If AppState is active and permissions true trigger NOTIFICATIONS_INFO_SCREEN_CONSENT action", async () => {
     checkNotificationPermissions.mockImplementation(() =>
       Promise.resolve(true)
     );
-    const appStateSpy = jest.spyOn(AppState, "addEventListener");
+    const appStateSpy = jest
+      .spyOn(AppState, "addEventListener")
+      .mockReturnValue({
+        remove: mockRemoveEventListener
+      });
 
     const screen = renderScreen();
     expect(screen).not.toBeNull();
@@ -92,7 +101,11 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
     checkNotificationPermissions.mockImplementation(() =>
       Promise.resolve(false)
     );
-    const appStateSpy = jest.spyOn(AppState, "addEventListener");
+    const appStateSpy = jest
+      .spyOn(AppState, "addEventListener")
+      .mockReturnValue({
+        remove: mockRemoveEventListener
+      });
 
     const screen = renderScreen();
     expect(screen).not.toBeNull();
@@ -113,17 +126,15 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
   ];
   appStateStatuses.forEach(appStateStatus => {
     it(`AppState '${appStateStatus}' does not trigger NOTIFICATIONS_INFO_SCREEN_CONSENT action`, () => {
+      jest.spyOn(AppState, "addEventListener").mockReturnValue({
+        remove: mockRemoveEventListener
+      });
       const screen = renderScreen(appStateStatus);
       expect(screen).not.toBeNull();
 
       expect(checkNotificationPermissions).not.toHaveBeenCalled();
       expect(mockDispatch.mock.calls.length).toBe(0);
     });
-  });
-
-  it("should match snapshot", () => {
-    const screen = renderScreen();
-    expect(screen.toJSON()).toMatchSnapshot();
   });
 });
 

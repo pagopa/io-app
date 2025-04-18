@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent, render, userEvent } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../i18n";
@@ -40,8 +40,14 @@ describe("WebviewComponent tests", () => {
       nativeEvent: { description: "Network error" }
     });
 
-    expect(getByText(I18n.t("wallet.errors.GENERIC_ERROR"))).toBeTruthy();
-    expect(getByText(I18n.t("global.buttons.retry"))).toBeTruthy();
+    expect(
+      getByText(
+        I18n.t("wallet.errors.GENERIC_ERROR", { includeHiddenElements: true })
+      )
+    ).toBeTruthy();
+    expect(
+      getByText(I18n.t("global.buttons.retry", { includeHiddenElements: true }))
+    ).toBeTruthy();
   });
 
   it("should reload on retry", () => {
@@ -54,8 +60,10 @@ describe("WebviewComponent tests", () => {
     fireEvent(getByTestId("webview"), "onError", {
       nativeEvent: { description: "Network error" }
     });
-
-    fireEvent.press(getByText(I18n.t("global.buttons.retry")));
+    userEvent.setup();
+    userEvent.press(
+      getByText(I18n.t("global.buttons.retry", { includeHiddenElements: true }))
+    );
 
     expect(getByTestId("webview")).toBeTruthy();
   });

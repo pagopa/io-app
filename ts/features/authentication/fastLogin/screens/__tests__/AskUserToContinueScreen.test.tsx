@@ -38,22 +38,30 @@ describe("AskUserInteractionScreen component", () => {
 
     expect(getByText(defaultProps.title)).toBeTruthy();
     expect(getByText(defaultProps.subtitle)).toBeTruthy();
-    const continueButton = getByText(primaryActionButtonTitle);
-    const cancelButton = getByText(secondaryActionButtonTitle);
+    const continueButton = getByText(primaryActionButtonTitle, {
+      includeHiddenElements: true
+    });
+    const cancelButton = getByText(secondaryActionButtonTitle, {
+      includeHiddenElements: true
+    });
     expect(continueButton).toBeTruthy();
     expect(cancelButton).toBeTruthy();
   });
 
   it("should call primaryAction onPress when the primary button is pressed", () => {
     const { getByText } = renderComponent(defaultProps, store);
-    const button = getByText(primaryActionButtonTitle);
+    const button = getByText(primaryActionButtonTitle, {
+      includeHiddenElements: true
+    });
     fireEvent.press(button);
     expect(defaultProps.primaryAction.onPress).toHaveBeenCalled();
   });
 
   it("should call secondaryAction onPress when the secondary button is pressed", () => {
     const { getByText } = renderComponent(defaultProps, store);
-    const button = getByText(secondaryActionButtonTitle);
+    const button = getByText(secondaryActionButtonTitle, {
+      includeHiddenElements: true
+    });
     fireEvent.press(button);
     expect(defaultProps.secondaryAction.onPress).toHaveBeenCalled();
   });

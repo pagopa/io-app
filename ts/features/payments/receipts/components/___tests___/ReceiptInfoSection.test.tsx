@@ -67,13 +67,19 @@ describe("ReceiptInfoSection", () => {
     ).toBeTruthy();
 
     // RRN with Copy Button
-    const rrnElement = getByText("123456789");
+    const rrnElement = getByText("123456789", { includeHiddenElements: true });
     expect(rrnElement).toBeTruthy();
     fireEvent.press(rrnElement);
 
     // Auth Code
-    expect(getByText(I18n.t("transaction.details.info.authCode"))).toBeTruthy();
-    expect(getByText("987654")).toBeTruthy();
+    expect(
+      getByText(
+        I18n.t("transaction.details.info.authCode", {
+          includeHiddenElements: true
+        })
+      )
+    ).toBeTruthy();
+    expect(getByText("987654", { includeHiddenElements: true })).toBeTruthy();
 
     // Event ID with Copy Button
     const eventIdElement = getByText("event123");

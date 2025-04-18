@@ -2,7 +2,7 @@ import * as fs from "fs";
 
 describe("React Native Push Notifications iOS library integration", () => {
   it("ItaliaApp-Bridgeing-Header.h integrates react-native-push-notification-ios library", () => {
-    const hAppBridgeingHeader = "./ios/ItaliaApp/ItaliaApp-Bridgeing-Header.h";
+    const hAppBridgeingHeader = "./ios/ItaliaApp-Bridgeing-Header.h";
 
     // eslint-disable-next-line functional/no-let
     let fileExists = false;
@@ -23,7 +23,7 @@ describe("React Native Push Notifications iOS library integration", () => {
   });
 
   it("AppDelegate.swift integrates react-native-push-notification-ios library", () => {
-    const swiftAppDelegateFilePath = "./ios/ItaliaApp/AppDelegate.swift";
+    const swiftAppDelegateFilePath = "./ios/AppDelegate.swift";
 
     // eslint-disable-next-line functional/no-let
     let fileExists = false;
