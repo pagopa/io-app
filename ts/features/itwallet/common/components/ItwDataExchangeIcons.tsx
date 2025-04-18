@@ -9,7 +9,7 @@ import {
 } from "@pagopa/io-app-design-system";
 
 type Props = {
-  requesterLogoUri: ImageURISource;
+  requesterLogoUri: ImageURISource | undefined;
 };
 
 /**

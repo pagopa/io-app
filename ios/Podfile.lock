@@ -12,7 +12,7 @@ PODS:
   - hermes-engine/Pre-built (0.75.4)
   - jail-monkey (2.8.0):
     - React-Core
-  - JOSESwift (2.4.0)
+  - JOSESwift (3.0.0)
   - lottie-ios (4.4.1)
   - lottie-react-native (6.7.2):
     - DoubleConversion
@@ -128,11 +128,11 @@ PODS:
     - ReactCommon/turbomodule/core
     - SwiftCBOR
     - Yoga
-  - pagopa-io-react-native-jwt (1.4.0):
+  - pagopa-io-react-native-jwt (2.1.0):
     - DoubleConversion
     - glog
     - hermes-engine
-    - JOSESwift (~> 2.3)
+    - JOSESwift (~> 3.0)
     - RCT-Folly (= 2024.01.01.00)
     - RCTRequired
     - RCTTypeSafety
@@ -2471,7 +2471,7 @@ SPEC CHECKSUMS:
   glog: 69ef571f3de08433d766d614c73a9838a06bf7eb
   hermes-engine: ea92f60f37dba025e293cbe4b4a548fd26b610a0
   jail-monkey: 1846061ac12e861ac5a8ec7197b0daa775b83733
-  JOSESwift: 7ff178bb9173ff42c6e990929a9f2fa702a34f69
+  JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
   lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
   lottie-react-native: 5b9cfa4080058d83f8e8ca442704b9e5d5b81a7a
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
@@ -2480,7 +2480,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-crypto: c034b48871e47aefa569eda55cdb8432dab91aa5
   pagopa-io-react-native-http-client: d75b25d4375b795f173f396675cb3a12b888fe27
   pagopa-io-react-native-integrity: 48c93d245cfea4bcbfeaab76ab5cda83e0e9c8c0
-  pagopa-io-react-native-jwt: 78511df5928a85c210f7ead75174726d23d8e7bd
+  pagopa-io-react-native-jwt: 4f1c348d8260f0dc882412243531b3a516608e97
   pagopa-io-react-native-login-utils: 2e6ec74e7d03cfef7dc6e6eda0df6f1294ef64ac
   pagopa-io-react-native-secure-storage: 0297d41360d93f89e9f89c8412b99916e0dbf520
   pagopa-react-native-zendesk: c2a9da883eeba042919e0aa8b5c426ce4af81096

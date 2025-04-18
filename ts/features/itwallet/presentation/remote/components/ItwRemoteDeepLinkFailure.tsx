@@ -1,7 +1,7 @@
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import I18n from "../../../../../i18n.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
-import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
 import {
   ZendeskSubcategoryValue,
   useItwFailureSupportModal
@@ -13,26 +13,35 @@ import {
 } from "../../../common/utils/ItwFailureTypes.ts";
 
 type Props = {
+  /**
+   * The validation error
+   */
+  failure: Error;
+  /**
+   * The original payload that caused the error
+   */
   payload: Partial<ItwRemoteRequestPayload>;
 };
+
 /**
  * Component that renders an error message for an invalid deep link payload
  * and provides access to the support bottom sheet.
  */
-export const ItwRemoteDeepLinkFailure = ({ payload }: Props) => {
+export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   const navigation = useIONavigation();
 
   useDebugInfo({
-    failure: payload
+    failure,
+    payload
   });
 
-  const failure: ItwFailure = {
+  const itwFailure: ItwFailure = {
     type: ItwFailureType.ITW_REMOTE_PAYLOAD_INVALID,
-    reason: payload
+    reason: failure
   };
 
   const supportModal = useItwFailureSupportModal({
-    failure,
+    failure: itwFailure,
     supportChatEnabled: true,
     zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA
   });
