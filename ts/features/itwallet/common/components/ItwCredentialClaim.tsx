@@ -5,7 +5,7 @@ import { pipe } from "fp-ts/lib/function";
 import { Fragment, useMemo } from "react";
 import { Image } from "react-native";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   BoolClaim,
   ClaimDisplayFormat,
@@ -243,7 +243,7 @@ const DrivingPrivilegesClaimItem = ({
 }) => {
   const localExpiryDate = claim.expiry_date.toString("DD/MM/YYYY");
   const localIssueDate = claim.issue_date.toString("DD/MM/YYYY");
-  const privilegeBottomSheet = useIOBottomSheetAutoresizableModal({
+  const privilegeBottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       "features.itWallet.verifiableCredentials.claims.mdl.category",
       { category: claim.driving_privilege }

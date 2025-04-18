@@ -497,7 +497,6 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         backgroundStyle={
@@ -506,15 +505,12 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                           }
                         }
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -532,9 +528,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -2294,6 +2290,20 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 </Text>
                               </View>
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>
@@ -2807,7 +2817,6 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         backgroundStyle={
@@ -2816,15 +2825,12 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                           }
                         }
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -2842,9 +2848,9 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -4604,6 +4610,20 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 </Text>
                               </View>
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>
@@ -5117,7 +5137,6 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         backgroundStyle={
@@ -5126,15 +5145,12 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                           }
                         }
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -5152,14 +5168,29 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <View />
+                          <View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                          </View>
                         </RCTScrollView>
                       </Modal>
                     </View>
@@ -5672,7 +5703,6 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         backgroundStyle={
@@ -5681,15 +5711,12 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                           }
                         }
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -5707,14 +5734,29 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <View />
+                          <View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                          </View>
                         </RCTScrollView>
                       </Modal>
                     </View>

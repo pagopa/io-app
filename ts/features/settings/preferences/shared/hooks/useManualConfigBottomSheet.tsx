@@ -1,9 +1,7 @@
 import { FooterActionsInline } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import IOMarkdown from "../../../../../components/IOMarkdown";
-
-const SNAP_POINT_VALUE = 200;
 
 const ManualConfigConfirm = (): React.ReactElement => (
   <IOMarkdown
@@ -16,33 +14,27 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     present,
     bottomSheet: manualConfigBottomSheet,
     dismiss
-  } = useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t(
-        "services.optIn.preferences.manualConfig.bottomSheet.title"
-      ),
-      component: <ManualConfigConfirm />,
-      fullScreen: true,
-      footer: (
-        <FooterActionsInline
-          startAction={{
-            color: "primary",
-            label: I18n.t("global.buttons.cancel"),
-            onPress: () => dismiss()
-          }}
-          endAction={{
-            color: "danger",
-            label: I18n.t("global.buttons.confirm"),
-            onPress: () => {
-              onConfirm();
-              dismiss();
-            }
-          }}
-        />
-      )
-    },
-    SNAP_POINT_VALUE
-  );
+  } = useIOBottomSheetModal({
+    title: I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title"),
+    component: <ManualConfigConfirm />,
+    footer: (
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.cancel"),
+          onPress: () => dismiss()
+        }}
+        endAction={{
+          color: "danger",
+          label: I18n.t("global.buttons.confirm"),
+          onPress: () => {
+            onConfirm();
+            dismiss();
+          }
+        }}
+      />
+    )
+  });
 
   return { present, manualConfigBottomSheet, dismiss };
 };

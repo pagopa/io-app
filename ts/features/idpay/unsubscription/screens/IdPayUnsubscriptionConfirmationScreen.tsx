@@ -15,7 +15,7 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { IdPayUnsubscriptionParamsList } from "../navigation/params";
 import { IdPayUnsubscriptionRoutes } from "../navigation/routes";
 import { idPayUnsubscribeAction } from "../store/actions";
@@ -116,37 +116,34 @@ const IdPayUnsubscriptionConfirmationScreen = () => {
     }
   }, [navigation, isFailure, isSuccess]);
 
-  const confirmModal = useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t("idpay.unsubscription.modal.title", { initiativeName }),
-      component: (
-        <View>
-          <Body>{I18n.t("idpay.unsubscription.modal.content")}</Body>
-          <VSpacer size={16} />
-        </View>
-      ),
-      footer: (
-        <FooterActionsInline
-          startAction={{
-            color: "primary",
-            label: I18n.t("global.buttons.cancel"),
-            onPress: () => {
-              confirmModal.dismiss();
-            }
-          }}
-          endAction={{
-            color: "danger",
-            label: I18n.t("idpay.unsubscription.button.continue"),
-            onPress: () => {
-              confirmModal.dismiss();
-              handleConfirmPress();
-            }
-          }}
-        />
-      )
-    },
-    175
-  );
+  const confirmModal = useIOBottomSheetModal({
+    title: I18n.t("idpay.unsubscription.modal.title", { initiativeName }),
+    component: (
+      <View>
+        <Body>{I18n.t("idpay.unsubscription.modal.content")}</Body>
+        <VSpacer size={16} />
+      </View>
+    ),
+    footer: (
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.cancel"),
+          onPress: () => {
+            confirmModal.dismiss();
+          }
+        }}
+        endAction={{
+          color: "danger",
+          label: I18n.t("idpay.unsubscription.button.continue"),
+          onPress: () => {
+            confirmModal.dismiss();
+            handleConfirmPress();
+          }
+        }}
+      />
+    )
+  });
 
   const body = (
     <IOScrollViewWithLargeHeader
