@@ -138,7 +138,9 @@ const CtaScreen = ({
       />
       <VSpacer size={24} />
       <View style={IOStyles.horizontalContentPadding}>
-        <H2>{I18n.t(`${ctaScreenBaseI18nKey}.title`)}</H2>
+        <H2 accessibilityRole="header">
+          {I18n.t(`${ctaScreenBaseI18nKey}.title`)}
+        </H2>
         <VSpacer size={24} />
 
         <H6>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph1.title`)}</H6>
