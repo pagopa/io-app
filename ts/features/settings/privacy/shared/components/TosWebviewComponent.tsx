@@ -1,4 +1,4 @@
-import { FooterActions, IOStyles } from "@pagopa/io-app-design-system";
+import { FooterActions } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { FunctionComponent, memo, useCallback, useState } from "react";
@@ -65,12 +65,12 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
     <TosWebviewErrorComponent handleRetry={handleRetry} />
   ) : (
     <>
-      <View style={IOStyles.flex} testID="toSWebViewContainer">
+      <View style={{ flex: 1 }} testID="toSWebViewContainer">
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           textZoom={100}
-          style={IOStyles.flex}
+          style={{ flex: 1 }}
           onLoadEnd={handleLoadEnd}
           onError={handleError}
           onHttpError={handleError}
