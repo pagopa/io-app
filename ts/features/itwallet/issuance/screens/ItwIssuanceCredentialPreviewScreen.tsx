@@ -90,10 +90,11 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   useFocusEffect(() => {
     trackCredentialPreview(mixPanelCredential);
   });
-
-  const dismissDialog = useItwDismissalDialog(() => {
-    machineRef.send({ type: "close" });
-    trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+  const dismissDialog = useItwDismissalDialog({
+    handleDismiss: () => {
+      machineRef.send({ type: "close" });
+      trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+    }
   });
 
   const handleSaveToWallet = () => {

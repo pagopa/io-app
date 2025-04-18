@@ -95,9 +95,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
     parsedCredential: eid.parsedCredential
   });
 
-  const dismissDialog = useItwDismissalDialog(() => {
-    machineRef.send({ type: "close" });
-    trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+  const dismissDialog = useItwDismissalDialog({
+    handleDismiss: () => {
+      machineRef.send({ type: "close" });
+      trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+    }
   });
 
   const handleSaveToWallet = () => {
