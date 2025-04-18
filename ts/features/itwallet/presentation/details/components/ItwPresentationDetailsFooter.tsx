@@ -86,10 +86,9 @@ const ItwPresentationDetailsFooter = ({
     startSupportRequest();
   });
 
-  const docNumber = getCredentialDocumentNumber(credential.parsedCredential);
   const credentialActions = useMemo(
-    () => getCredentialActions(credential.credentialType, docNumber),
-    [credential.credentialType, docNumber]
+    () => getCredentialActions(credential),
+    [credential]
   );
 
   return (
@@ -126,17 +125,18 @@ const ItwPresentationDetailsFooter = ({
 /**
  * Returns custom CTAs for a credential
  */
-const getCredentialActions = (
-  credentialType: string,
-  docNumber?: string
-): ReactNode =>
-  ({
+const getCredentialActions = (credential: StoredCredential): ReactNode => {
+  const { credentialType, parsedCredential } = credential;
+  const docNumber = getCredentialDocumentNumber(parsedCredential);
+
+  return {
     MDL: [
       <IPatenteListItemAction key="iPatenteActionMdl" docNumber={docNumber} />
     ],
     EuropeanHealthInsuranceCard: [],
     EuropeanDisabilityCard: []
-  }[credentialType]);
+  }[credentialType];
+};
 
 /**
  * Renders the IPatente service action item
