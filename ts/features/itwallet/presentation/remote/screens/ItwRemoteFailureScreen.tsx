@@ -15,6 +15,7 @@ import I18n from "../../../../../i18n.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
+import { useItwRemoteNotTrustedRPBottomSheet } from "../hooks/useItwRemoteNotTrustedRPBottomSheet.tsx";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 
 export const ItwRemoteFailureScreen = () => {
@@ -40,6 +41,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
     failure: serializeFailureReason(failure)
   });
 
+  const { bottomSheet, present } = useItwRemoteNotTrustedRPBottomSheet();
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "close" }),
     customBodyMessage: I18n.t(
@@ -135,6 +137,29 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
+        case RemoteFailureType.NOT_TRUSTED_RP: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.NotTrustedRPScreen.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.NotTrustedRPScreen.subtitle"
+            ),
+            pictogram: "stopSecurity",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.NotTrustedRPScreen.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.NotTrustedRPScreen.secondaryAction"
+              ),
+              onPress: present
+            }
+          };
+        }
       }
     };
 
@@ -146,6 +171,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
         {...resultScreenProps}
         subtitleProps={{ textBreakStrategy: "simple" }}
       />
+      {bottomSheet}
     </>
   );
 };

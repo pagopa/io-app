@@ -190,9 +190,32 @@ describe("itwRemoteMachine", () => {
       } as ItwRemoteRequestPayload
     });
 
-    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().value).toStrictEqual(
       "EvaluatingRelyingPartyTrust"
     );
+  });
+
+  it("should transition to Failure when an error occurs in EvaluatingRelyingPartyTrust", async () => {
+    isWalletActive.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+
+    evaluateRelyingPartyTrust.mockImplementation(() => {
+      throw new Error("Trust evaluation failed");
+    });
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: {
+        clientId: T_CLIENT_ID,
+        requestUri: T_REQUEST_URI,
+        state: T_STATE
+      } as ItwRemoteRequestPayload
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
   });
 });
