@@ -85,9 +85,7 @@ export const IdentificationLockModal = (props: Props) => {
         <ContentWrapper>
           <View style={styles.content}>
             <Pictogram name="accessDenied" />
-            <VSpacer
-              size={IOStyleVariables.defaultSpaceBetweenPictogramAndText}
-            />
+            <VSpacer size={24} />
             <H4
               style={styles.contentTitle}
               accessibilityLabel={tooManyAttemptsText}
