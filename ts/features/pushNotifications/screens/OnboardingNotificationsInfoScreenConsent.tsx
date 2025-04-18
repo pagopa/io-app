@@ -166,7 +166,9 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
 
   const ListHeader = (
     <View>
-      <H2>{I18n.t("onboarding.infoConsent.title")}</H2>
+      <H2 accessibilityRole="header">
+        {I18n.t("onboarding.infoConsent.title")}
+      </H2>
       <VSpacer size={16} />
       <Body>{I18n.t("onboarding.infoConsent.subTitle")}</Body>
       <VSpacer size={16} />
