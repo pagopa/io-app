@@ -14,7 +14,8 @@ import {
   messageListCategoryToViewPageIndex,
   messageViewPageIndexToListCategory,
   nextPageLoadingWaitMillisecondsGenerator,
-  refreshIntervalMillisecondsGenerator
+  refreshIntervalMillisecondsGenerator,
+  archiveUnarchiveAccessibilityInstructions
 } from "../homeUtils";
 import { maximumItemsFromAPI, pageSize } from "../../../../../config";
 import { Action } from "../../../../../store/actions/types";
@@ -36,6 +37,60 @@ import {
   ArchivingStatus,
   INITIAL_STATE
 } from "../../../store/reducers/archiving";
+
+const resolveKey = (key: string) => {
+  switch (key) {
+    case "messages.accessibility.message.archive":
+      return "archive";
+    case "messages.accessibility.message.description":
+      return "{{newMessage}} {{selected}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}";
+    case "messages.accessibility.message.deselectInstructions":
+      return "Press and hold to deselect";
+    case "messages.accessibility.message.read":
+      return "Message";
+    case "messages.accessibility.message.received_at":
+      return "received at";
+    case "messages.accessibility.message.received_on":
+      return "received on";
+    case "messages.accessibility.message.selectInstructions":
+      return "Press and hold to select and later";
+    case "messages.accessibility.message.selected":
+      return "selected";
+    case "messages.accessibility.message.unarchive":
+      return "unarchive";
+    case "messages.accessibility.message.unread":
+      return "Unread message";
+    case "global.accessibility.dateFormat":
+      return "MMMM Do YYYY";
+    default:
+      return key;
+  }
+};
+
+const applyParameters = (
+  template: string,
+  params?: Record<string, string | number | undefined>
+): string =>
+  // Use a regular expression to find all {{paramName}} placeholders
+  params != null
+    ? template.replace(/\{\{(\w+)\}\}/g, (_match, paramName) => {
+        const value = params[paramName];
+        return value !== undefined ? String(value) : `{{${paramName}}}`;
+      })
+    : template;
+
+jest.mock("../../../../../i18n", () => ({
+  currentLocale: () => "en",
+  localeToPreferredLanguageMapping: new Map([
+    ["it", "it_IT"],
+    ["en", "en_GB"],
+    ["de", "de_DE"]
+  ]),
+  t: jest.fn(
+    (key: string, params?: Record<string, string | number | undefined>) =>
+      applyParameters(resolveKey(key), params)
+  )
+}));
 
 const createGlobalState = (
   archiveData: allPaginated.MessagePagePot,
@@ -629,4 +684,60 @@ describe("getLoadNextPreviousPageMessagesActionIfAllowed", () => {
       )
     )
   );
+});
+
+describe("archiveUnarchiveAccessibilityInstructions", () => {
+  it("should return empty string when source is SEARCH and isSelected is undefined", () => {
+    const result = archiveUnarchiveAccessibilityInstructions(
+      "SEARCH",
+      undefined
+    );
+    expect(result).toBe("");
+  });
+
+  it("should return empty string when source is SEARCH and isSelected is false", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("SEARCH", false);
+    expect(result).toBe("");
+  });
+
+  it("should return empty string when source is SEARCH and isSelected is true", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("SEARCH", true);
+    expect(result).toBe("");
+  });
+
+  it("should return deselect instructions when isSelected is true and source is INBOX", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("INBOX", true);
+    expect(result).toBe("Press and hold to deselect");
+  });
+
+  it("should return deselect instructions when isSelected is true and source is ARCHIVE", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("ARCHIVE", true);
+    expect(result).toBe("Press and hold to deselect");
+  });
+
+  it("should return archive instructions when source is INBOX and isSelected is false", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("INBOX", false);
+    expect(result).toBe("Press and hold to select and later archive");
+  });
+
+  it("should return unarchive instructions when source is ARCHIVE and isSelected is false", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("ARCHIVE", false);
+    expect(result).toBe("Press and hold to select and later unarchive");
+  });
+
+  it("should return archive instructions when source is INBOX and isSelected is undefined", () => {
+    const result = archiveUnarchiveAccessibilityInstructions(
+      "INBOX",
+      undefined
+    );
+    expect(result).toBe("Press and hold to select and later archive");
+  });
+
+  it("should return unarchive instructions when source is ARCHIVE and isSelected is undefined", () => {
+    const result = archiveUnarchiveAccessibilityInstructions(
+      "ARCHIVE",
+      undefined
+    );
+    expect(result).toBe("Press and hold to select and later unarchive");
+  });
 });
