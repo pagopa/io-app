@@ -17,6 +17,10 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { isPaymentsWebViewFlowEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
+import { paymentStartWebViewFlow } from "../store/actions/orchestration";
 
 type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
@@ -42,6 +46,10 @@ export const useWalletPaymentAuthorizationModal = ({
   const isLoading = pot.isLoading(authorizationUrlPot);
   const isError = pot.isError(authorizationUrlPot);
 
+  const navigation = useIONavigation();
+
+  const isWebViewEnabled = useIOSelector(isPaymentsWebViewFlowEnabledSelector);
+
   const handleAuthorizationOutcome = useCallback(
     (outcome: WalletPaymentOutcome) => {
       onAuthorizationOutcome(outcome);
@@ -63,6 +71,23 @@ export const useWalletPaymentAuthorizationModal = ({
     [handleAuthorizationOutcome]
   );
 
+  const startWebviewPaymentSession = useCallback(
+    (url: string): Promise<string> =>
+      new Promise((resolve, reject) => {
+        navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+          screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_WEB_VIEW
+        });
+        dispatch(
+          paymentStartWebViewFlow({
+            url,
+            onSuccess: resolve,
+            onError: reject
+          })
+        );
+      }),
+    [dispatch, navigation]
+  );
+
   useEffect(() => {
     if (isPendingAuthorization) {
       return;
@@ -76,10 +101,9 @@ export const useWalletPaymentAuthorizationModal = ({
         TE.tryCatch(
           () => {
             setIsPendingAuthorization(true);
-            return openAuthenticationSession(
-              url,
-              WALLET_WEBVIEW_OUTCOME_SCHEMA
-            );
+            return isWebViewEnabled
+              ? startWebviewPaymentSession(url)
+              : openAuthenticationSession(url, WALLET_WEBVIEW_OUTCOME_SCHEMA);
           },
           () => {
             handleAuthorizationOutcome(
@@ -97,7 +121,9 @@ export const useWalletPaymentAuthorizationModal = ({
     authorizationUrlPot,
     handleAuthorizationResult,
     handleAuthorizationOutcome,
-    dispatch
+    dispatch,
+    isWebViewEnabled,
+    startWebviewPaymentSession
   ]);
 
   useEffect(
