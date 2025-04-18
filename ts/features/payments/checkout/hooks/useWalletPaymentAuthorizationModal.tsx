@@ -81,7 +81,8 @@ export const useWalletPaymentAuthorizationModal = ({
           paymentStartWebViewFlow({
             url,
             onSuccess: resolve,
-            onError: reject
+            onError: reject,
+            onCancel: reject
           })
         );
       }),
