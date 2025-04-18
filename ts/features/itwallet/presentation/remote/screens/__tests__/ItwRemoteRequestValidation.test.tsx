@@ -20,8 +20,8 @@ describe("ItwRemoteRequestValidationScreen", () => {
 
   it("should render the loading screen if payload is valid", () => {
     const validPayload = {
-      clientId: "abc123xy",
-      requestUri: "https://example.com/callback",
+      client_id: "abc123xy",
+      request_uri: "https://example.com/callback",
       state: "hyqizm592"
     } as ItwRemoteRequestPayload;
 
@@ -32,7 +32,7 @@ describe("ItwRemoteRequestValidationScreen", () => {
 
   it("should render failure screen if missing required fields", () => {
     const partialPayload = {
-      requestUri: "https://example.com/callback"
+      request_uri: "https://example.com/callback"
     } as ItwRemoteRequestPayload;
 
     const { getByTestId } = renderComponent(partialPayload);
@@ -42,8 +42,8 @@ describe("ItwRemoteRequestValidationScreen", () => {
 
   it("should render failure screen if required fields are empty", () => {
     const partialPayload = {
-      clientId: "",
-      requestUri: "https://example.com/callback",
+      client_id: "",
+      request_uri: "https://example.com/callback",
       state: "hyqizm592"
     } as ItwRemoteRequestPayload;
 

@@ -2,6 +2,13 @@ import { Credential } from "@pagopa/io-react-native-wallet";
 import { ClaimDisplayFormat } from "../../../common/utils/itwClaimsUtils";
 
 /**
+ * Type for the raw parameters extracted from the QR code or the deep link.
+ * These parameters need to be validated so can be invalid or null.
+ */
+export type ItwRemoteQrRawPayload =
+  Parameters<Credential.Presentation.StartFlow>[number];
+
+/**
  * Type for the parameters requested to start the presentation flow
  */
 export type ItwRemoteRequestPayload =

@@ -121,12 +121,12 @@ const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
     O.map(match => new URLSearchParams(match[1])),
     O.chainEitherK(params =>
       validateItwPresentationQrCodeParams({
-        clientId: params.get("client_id"),
-        requestUri: params.get("request_uri"),
+        client_id: params.get("client_id"),
+        request_uri: params.get("request_uri"),
         state: params.get("state"),
-        requestUriMethod: params.get(
+        request_uri_method: params.get(
           "request_uri_method"
-        ) as ItwRemoteRequestPayload["requestUriMethod"]
+        ) as ItwRemoteRequestPayload["request_uri_method"]
       })
     ),
     O.map(itwRemoteRequestPayload => ({

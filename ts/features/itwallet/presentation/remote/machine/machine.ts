@@ -101,7 +101,7 @@ export const itwRemoteMachine = setup({
       description: "Determine whether the Relying Party is a trusted entity",
       invoke: {
         src: "evaluateRelyingPartyTrust",
-        input: ({ context }) => ({ clientId: context.payload?.clientId }),
+        input: ({ context }) => ({ clientId: context.payload?.client_id }),
         onDone: {
           target: "GettingPresentationDetails",
           actions: assign(({ event }) => event.output)

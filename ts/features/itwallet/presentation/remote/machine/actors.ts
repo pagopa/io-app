@@ -65,16 +65,16 @@ export const createRemoteActorsImplementation = (
       "Missing required getPresentationDetails actor params"
     );
 
-    const { requestUri, clientId, state } = qrCodePayload;
+    const { request_uri, client_id, state } = qrCodePayload;
 
     const { requestObjectEncodedJwt } =
-      await Credential.Presentation.getRequestObject(requestUri);
+      await Credential.Presentation.getRequestObject(request_uri);
 
     const { requestObject } = await Credential.Presentation.verifyRequestObject(
       requestObjectEncodedJwt,
       {
         rpConf,
-        clientId,
+        clientId: client_id,
         rpSubject,
         state
       }

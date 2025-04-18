@@ -7,7 +7,7 @@ import {
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import {
   EnrichedPresentationDetails,
-  ItwRemoteRequestPayload,
+  ItwRemoteQrRawPayload,
   PresentationDetails
 } from "./itwRemoteTypeUtils";
 
@@ -17,17 +17,11 @@ import {
  * @param params The raw parameters extracted from the QR code.
  * @returns An Either type with the validated parameters or the error.
  */
-export const validateItwPresentationQrCodeParams = (params: {
-  [K in keyof ItwRemoteRequestPayload]?: ItwRemoteRequestPayload[K] | null;
-}) =>
+export const validateItwPresentationQrCodeParams = (
+  params: ItwRemoteQrRawPayload
+) =>
   E.tryCatch(
-    () =>
-      Credential.Presentation.startFlowFromQR({
-        clientId: params.clientId ?? undefined,
-        requestUri: params.requestUri ?? undefined,
-        requestUriMethod: params.requestUriMethod ?? undefined,
-        state: params.state ?? undefined
-      }),
+    () => Credential.Presentation.startFlowFromQR(params),
     e =>
       e instanceof Error
         ? e
