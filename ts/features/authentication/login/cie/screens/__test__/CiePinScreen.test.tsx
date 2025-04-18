@@ -10,16 +10,17 @@ import * as hooks from "../../../../../../store/hooks";
 import I18n from "../../../../../../i18n";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
+import * as accessibilityUtils from "../../../../../../utils/accessibility";
 
 jest.mock("../../../../../../store/hooks", () => ({
   useIOSelector: jest.fn(),
   useIODispatch: jest.fn(),
   useIOStore: jest.fn()
 }));
-
+const mockPresent = jest.fn();
 jest.mock("../../../../../../utils/hooks/bottomSheet", () => ({
   useIOBottomSheetAutoresizableModal: jest.fn(() => ({
-    present: jest.fn(),
+    present: mockPresent,
     bottomSheet: <></>
   }))
 }));
@@ -109,6 +110,19 @@ describe("CiePinScreen", () => {
   it("should show default banner content if FastLogin is disabled", () => {
     const { getByText } = renderComponent();
     expect(getByText(I18n.t("login.expiration_info"))).toBeTruthy();
+  });
+
+  it("should focus pinPadViewRef on focus", () => {
+    const focusSpy = jest.spyOn(accessibilityUtils, "setAccessibilityFocus");
+    renderComponent();
+    expect(focusSpy).toHaveBeenCalled();
+  });
+
+  it("should call present() when pressing subtitleCTA", () => {
+    const { getByText } = renderComponent();
+    const cta = getByText(I18n.t("authentication.cie.pin.subtitleCTA"));
+    fireEvent.press(cta);
+    expect(mockPresent).toHaveBeenCalled();
   });
 });
 

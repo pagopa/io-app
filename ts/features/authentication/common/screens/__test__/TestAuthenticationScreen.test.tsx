@@ -1,6 +1,6 @@
 import { Text } from "react-native";
 import { createStore } from "redux";
-import { RenderAPI } from "@testing-library/react-native";
+import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import {
   loginFailure,
   loginSuccess,
@@ -165,6 +165,23 @@ describe("Test TestAuthenticationScreen", () => {
     checkSuccessView(component);
 
     expect(component.queryByTestId("confirmButton")).not.toBeNull();
+  });
+
+  it("should trigger handlePressLoginButton when inputs are valid", () => {
+    const { component } = render({
+      kind: "idle"
+    });
+
+    const usernameInput = component.getByTestId("usernameInput");
+    const passwordInput = component.getByTestId("passwordInput");
+    const confirmButton = component.getByTestId("confirmButton");
+
+    fireEvent.changeText(usernameInput, "RSSMRA85T10A562S");
+    fireEvent.changeText(passwordInput, "password123");
+
+    expect(confirmButton).not.toBeDisabled();
+
+    fireEvent.press(confirmButton);
   });
 });
 
