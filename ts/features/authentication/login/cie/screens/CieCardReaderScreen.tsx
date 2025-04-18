@@ -566,7 +566,10 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 
   public render(): ReactNode {
     return (
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID="cie-card-reader-screen-test-id"
+      >
         <ScrollView
           centerContent={true}
           contentContainerStyle={styles.contentContainer}

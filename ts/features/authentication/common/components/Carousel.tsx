@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type CarouselProps = {
+export type CarouselProps = {
   carouselCards: ReadonlyArray<ComponentProps<typeof LandingCardComponent>>;
   dotEasterEggCallback?: () => void;
 };
@@ -84,6 +84,7 @@ const CarouselDots = (props: CarouselDotsProps) => {
     <View
       importantForAccessibility="yes"
       accessibilityElementsHidden={false}
+      testID="carousel-dots"
       style={styles.indicatorContainer}
       onTouchEnd={(_: GestureResponderEvent) => {
         // eslint-disable-next-line functional/immutable-data

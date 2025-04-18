@@ -7,6 +7,7 @@ import {
   logoutFailure,
   logoutSuccess
 } from "../../../../authentication/common/store/actions";
+import { isDevEnv } from "../../../../../utils/environment";
 
 export type FastLoginOptInState = {
   enabled: boolean | undefined;
@@ -47,3 +48,9 @@ export const fastLoginOptInPersistor = persistReducer<
   FastLoginOptInState,
   Action
 >(persistConfig, fastLoginOptInReducer);
+
+export const testableFastLoginOptInReducer = isDevEnv
+  ? {
+      fastLoginOptInReducer
+    }
+  : undefined;

@@ -11,6 +11,7 @@ import {
 import { PureComponent } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
 import { CircularProgress } from "../../../../../components/ui/CircularProgress";
+import { isDevEnv } from "../../../../../utils/environment";
 
 export enum ReadingState {
   "reading" = "reading",
@@ -19,7 +20,7 @@ export enum ReadingState {
   "waiting_card" = "waiting_card"
 }
 
-type Props = Readonly<{
+type CieCardReadingAnimationProps = Readonly<{
   readingState: ReadingState;
   pictogramName: IOPictograms;
   circleColor: string;
@@ -44,13 +45,13 @@ const styles = StyleSheet.create({
 });
 
 export default class CieCardReadingAnimation extends PureComponent<
-  Props,
+  CieCardReadingAnimationProps,
   State
 > {
   private progressAnimation?: Animated.CompositeAnimation;
   private progressAnimatedValue: Animated.Value;
 
-  constructor(props: Props) {
+  constructor(props: CieCardReadingAnimationProps) {
     super(props);
     this.state = {
       progressBarValue: 0
@@ -77,7 +78,7 @@ export default class CieCardReadingAnimation extends PureComponent<
       easing: Easing.linear,
       duration: 10000
     });
-    // eslint-disable-next-line
+    // eslint-disable-next-line functional/immutable-data
     this.progressAnimation = Animated.sequence([firstAnim, secondAnim]);
     this.addAnimationListener();
   }
@@ -121,10 +122,12 @@ export default class CieCardReadingAnimation extends PureComponent<
     this.progressAnimatedValue.removeAllListeners();
   };
 
-  public componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(
+    prevCieCardReadingAnimationProps: CieCardReadingAnimationProps
+  ) {
     // If we start reading the card, start the animation
     if (
-      prevProps.readingState !== ReadingState.reading &&
+      prevCieCardReadingAnimationProps.readingState !== ReadingState.reading &&
       this.props.readingState === ReadingState.reading
     ) {
       this.startAnimation();
@@ -132,7 +135,7 @@ export default class CieCardReadingAnimation extends PureComponent<
     // If we are not reading the card, stop the animation
     if (
       this.progressAnimation !== undefined &&
-      prevProps.readingState === ReadingState.reading &&
+      prevCieCardReadingAnimationProps.readingState === ReadingState.reading &&
       this.props.readingState !== ReadingState.reading
     ) {
       this.progressAnimation.stop();
@@ -172,3 +175,11 @@ export default class CieCardReadingAnimation extends PureComponent<
     );
   }
 }
+
+export const testableCieCardReadingAnimation = isDevEnv
+  ? {
+      types: {
+        CieCardReadingAnimationProps: {} as CieCardReadingAnimationProps
+      }
+    }
+  : undefined;

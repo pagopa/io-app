@@ -85,3 +85,10 @@ export const cieLoginPersistor = persistReducer<CieLoginState, Action>(
   persistConfig,
   cieLoginReducer
 );
+
+export const testableCieLoginReducer = isDevEnv
+  ? {
+      cieLoginReducer,
+      migrations
+    }
+  : undefined;
