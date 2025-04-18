@@ -118,7 +118,9 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
     <>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <ContentWrapper>
-          <H1>{I18n.t("profile.preferences.notifications.title")}</H1>
+          <H1 accessibilityRole="header">
+            {I18n.t("profile.preferences.notifications.title")}
+          </H1>
           <VSpacer size={16} />
           <Body>{I18n.t("profile.preferences.notifications.subtitle")}</Body>
           <ProfileNotificationSettings
