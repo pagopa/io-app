@@ -372,6 +372,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -2370,6 +2371,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -4347,6 +4349,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -6311,6 +6314,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -8288,6 +8292,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -10251,6 +10256,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -12276,6 +12282,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -14329,6 +14336,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -16242,6 +16250,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -18239,6 +18248,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -20216,6 +20226,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -22213,6 +22224,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -24176,6 +24188,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -26263,6 +26276,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -28260,6 +28274,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -30265,6 +30280,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -32242,6 +32258,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -34177,6 +34194,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -36274,6 +36292,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -38257,6 +38276,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -40471,6 +40491,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -42722,6 +42743,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -44657,6 +44679,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -46775,6 +46798,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -48858,6 +48882,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -50863,6 +50888,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -52840,6 +52866,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -54837,6 +54864,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}

@@ -209,6 +209,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -1634,6 +1635,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -3060,6 +3062,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -4486,6 +4489,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -5912,6 +5916,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}

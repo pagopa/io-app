@@ -141,7 +141,9 @@ export const FimsFlowSuccessBody = ({
         </HStack>
 
         <VSpacer size={24} />
-        <H2>{I18n.t("FIMS.consentsScreen.title")}</H2>
+        <H2 accessibilityRole="header">
+          {I18n.t("FIMS.consentsScreen.title")}
+        </H2>
         <VSpacer size={16} />
         <Subtitle />
 

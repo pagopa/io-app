@@ -78,7 +78,9 @@ const OperationResultScreenContent = forwardRef<
             <VSpacer size={24} />
           </View>
         )}
-        <H3 style={{ textAlign: "center" }}>{title}</H3>
+        <H3 accessibilityRole="header" style={{ textAlign: "center" }}>
+          {title}
+        </H3>
         {subtitle && (
           <>
             <VSpacer size={8} />
