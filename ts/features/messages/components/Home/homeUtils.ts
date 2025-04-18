@@ -81,6 +81,7 @@ export const messageViewPageIndexToListCategory = (
 
 export const accessibilityLabelForMessageItem = (
   message: UIMessage,
+  source: MessageListCategory | "SEARCH",
   isSelected?: boolean
 ): string =>
   I18n.t("messages.accessibility.message.description", {
@@ -94,8 +95,34 @@ export const accessibilityLabelForMessageItem = (
     serviceName: message.serviceName,
     subject: message.title,
     receivedAt: convertReceivedDateToAccessible(message.createdAt),
-    state: ""
+    instructions: archiveUnarchiveAccessibilityInstructions(source, isSelected)
   });
+
+export const archiveUnarchiveAccessibilityInstructions = (
+  source: MessageListCategory | "SEARCH",
+  isSelected?: boolean
+): string => {
+  // Search screen does not allow archiving/unarchiving
+  if (source === "SEARCH") {
+    return "";
+  }
+
+  // When selected, a message can only be deselected,
+  // it does not matter if it is archived or not
+  if (isSelected) {
+    return I18n.t("messages.accessibility.message.deselectInstructions");
+  }
+
+  // When selecting a message, we must specify what the
+  // final operation will be (to archive or to unarchive)
+  const sourceInstructions =
+    source === "ARCHIVE"
+      ? I18n.t("messages.accessibility.message.unarchive")
+      : I18n.t("messages.accessibility.message.archive");
+  return `${I18n.t(
+    "messages.accessibility.message.selectInstructions"
+  )} ${sourceInstructions}`;
+};
 
 export const getLoadNextPageMessagesActionIfAllowed = (
   state: GlobalState,

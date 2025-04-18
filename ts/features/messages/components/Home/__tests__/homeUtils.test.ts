@@ -14,7 +14,8 @@ import {
   messageListCategoryToViewPageIndex,
   messageViewPageIndexToListCategory,
   nextPageLoadingWaitMillisecondsGenerator,
-  refreshIntervalMillisecondsGenerator
+  refreshIntervalMillisecondsGenerator,
+  archiveUnarchiveAccessibilityInstructions
 } from "../homeUtils";
 import { maximumItemsFromAPI, pageSize } from "../../../../../config";
 import { Action } from "../../../../../store/actions/types";
@@ -24,7 +25,6 @@ import {
   reloadAllMessages
 } from "../../../store/actions";
 import { UIMessage } from "../../../types";
-import { format } from "../../../../../utils/dates";
 import {
   isLoadingOrUpdating,
   isSomeOrSomeError,
@@ -36,6 +36,19 @@ import {
   ArchivingStatus,
   INITIAL_STATE
 } from "../../../store/reducers/archiving";
+import { mockI18nApplyParameters } from "../../../../../__tests__/testUtilities.test";
+import { mockI18nResolveKeyMessages } from "../../../__tests__/messagesTestUtilities.test";
+
+jest.mock("../../../../../i18n", () => ({
+  currentLocale: () => "it",
+  localeToPreferredLanguageMapping: new Map([
+    ["it", "it_IT"],
+    ["en", "en_GB"],
+    ["de", "de_DE"]
+  ]),
+  t: (key: string, params?: Record<string, string | number | undefined>) =>
+    mockI18nApplyParameters(mockI18nResolveKeyMessages(key), params)
+}));
 
 const createGlobalState = (
   archiveData: allPaginated.MessagePagePot,
@@ -204,83 +217,216 @@ describe("messageViewPageIndexToListCategory", () => {
 });
 
 describe("accessibilityLabelForMessageItem", () => {
-  it("should match expected string, unread message, received more than one day ago", () => {
-    const organizationName = "Organization Name";
-    const serviceName = "Service Name";
-    const title = "Message Title";
-    const createdAt = new Date(1990, 0, 2, 1, 1, 1);
-    const expectedOutput = `Unread message , received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
-      createdAt,
-      "MMMM Do YYYY"
-    )}\n  . `;
+  const baseMessage = {
+    organizationName: "Organization A",
+    serviceName: "Service A",
+    title: "Message Title",
+    createdAt: new Date(2023, 5, 15)
+  } as UIMessage;
+
+  it("should match expected output for unread message, in archive, selected is undefined", () => {
     const message = {
-      createdAt,
-      serviceName,
-      organizationName,
-      title,
+      ...baseMessage,
       isRead: false
-    } as UIMessage;
-    const accessibilityLabel = accessibilityLabelForMessageItem(message);
-    expect(accessibilityLabel).toStrictEqual(expectedOutput);
+    };
+    const result = accessibilityLabelForMessageItem(
+      message,
+      "ARCHIVE",
+      undefined
+    );
+    expect(result).toBe(
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito disarchiviare"
+    );
   });
-  it("should match expected string, unread message, received less than one day ago", () => {
-    const organizationName = "Organization Name";
-    const serviceName = "Service Name";
-    const title = "Message Title";
-    const createdAt = new Date();
-    createdAt.setTime(createdAt.getTime() - 60 * 60 * 1000);
-    const expectedOutput = `Unread message , received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
-      createdAt,
-      "H:mm"
-    )}. `;
+  it("should match expected output for unread message, in archive, selected is false", () => {
     const message = {
-      createdAt,
-      serviceName,
-      organizationName,
-      title,
+      ...baseMessage,
       isRead: false
-    } as UIMessage;
-    const accessibilityLabel = accessibilityLabelForMessageItem(message);
-    expect(accessibilityLabel).toStrictEqual(expectedOutput);
+    };
+    const result = accessibilityLabelForMessageItem(message, "ARCHIVE", false);
+    expect(result).toBe(
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito disarchiviare"
+    );
   });
-  it("should match expected string, read message, received more than one day ago", () => {
-    const organizationName = "Organization Name";
-    const serviceName = "Service Name";
-    const title = "Message Title";
-    const createdAt = new Date(1990, 0, 2, 1, 1, 1);
-    const expectedOutput = `Message , received by ${organizationName}, ${serviceName}. ${title}. \n    received on ${format(
-      createdAt,
-      "MMMM Do YYYY"
-    )}\n  . `;
+  it("should match expected output for unread message, in archive, selected is true", () => {
     const message = {
-      createdAt,
-      serviceName,
-      organizationName,
-      title,
-      isRead: true
-    } as UIMessage;
-    const accessibilityLabel = accessibilityLabelForMessageItem(message);
-    expect(accessibilityLabel).toStrictEqual(expectedOutput);
+      ...baseMessage,
+      isRead: false
+    };
+    const result = accessibilityLabelForMessageItem(message, "ARCHIVE", true);
+    expect(result).toBe(
+      "Messaggio non letto selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per deselezionare"
+    );
   });
-  it("should match expected string, read message, received less than one day ago", () => {
-    const organizationName = "Organization Name";
-    const serviceName = "Service Name";
-    const title = "Message Title";
-    const createdAt = new Date();
-    createdAt.setTime(createdAt.getTime() - 60 * 60 * 1000);
-    const expectedOutput = `Message , received by ${organizationName}, ${serviceName}. ${title}. received at ${format(
-      createdAt,
-      "H:mm"
-    )}. `;
+  it("should match expected output for unread message, in inbox  , selected is undefined", () => {
     const message = {
-      createdAt,
-      serviceName,
-      organizationName,
-      title,
+      ...baseMessage,
+      isRead: false
+    };
+    const result = accessibilityLabelForMessageItem(
+      message,
+      "INBOX",
+      undefined
+    );
+    expect(result).toBe(
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito archiviare"
+    );
+  });
+  it("should match expected output for unread message, in inbox  , selected is false", () => {
+    const message = {
+      ...baseMessage,
+      isRead: false
+    };
+    const result = accessibilityLabelForMessageItem(message, "INBOX", false);
+    expect(result).toBe(
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito archiviare"
+    );
+  });
+  it("should match expected output for unread message, in inbox  , selected is true", () => {
+    const message = {
+      ...baseMessage,
+      isRead: false
+    };
+    const result = accessibilityLabelForMessageItem(message, "INBOX", true);
+    expect(result).toBe(
+      "Messaggio non letto selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per deselezionare"
+    );
+  });
+  it("should match expected output for unread message, in search , selected is undefined", () => {
+    const message = {
+      ...baseMessage,
+      isRead: false
+    };
+    const result = accessibilityLabelForMessageItem(
+      message,
+      "SEARCH",
+      undefined
+    );
+    expect(result).toBe(
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
+    );
+  });
+  it("should match expected output for unread message, in search , selected is false", () => {
+    const message = {
+      ...baseMessage,
+      isRead: false
+    };
+    const result = accessibilityLabelForMessageItem(message, "SEARCH", false);
+    expect(result).toBe(
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
+    );
+  });
+  it("should match expected output for unread message, in search , selected is true", () => {
+    const message = {
+      ...baseMessage,
+      isRead: false
+    };
+    const result = accessibilityLabelForMessageItem(message, "SEARCH", true);
+    expect(result).toBe(
+      "Messaggio non letto selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
+    );
+  });
+  it("should match expected output for read message  , in archive, selected is undefined", () => {
+    const message = {
+      ...baseMessage,
       isRead: true
-    } as UIMessage;
-    const accessibilityLabel = accessibilityLabelForMessageItem(message);
-    expect(accessibilityLabel).toStrictEqual(expectedOutput);
+    };
+    const result = accessibilityLabelForMessageItem(
+      message,
+      "ARCHIVE",
+      undefined
+    );
+    expect(result).toBe(
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito disarchiviare"
+    );
+  });
+  it("should match expected output for read message  , in archive, selected is false", () => {
+    const message = {
+      ...baseMessage,
+      isRead: true
+    };
+    const result = accessibilityLabelForMessageItem(message, "ARCHIVE", false);
+    expect(result).toBe(
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito disarchiviare"
+    );
+  });
+  it("should match expected output for read message  , in archive, selected is true", () => {
+    const message = {
+      ...baseMessage,
+      isRead: true
+    };
+    const result = accessibilityLabelForMessageItem(message, "ARCHIVE", true);
+    expect(result).toBe(
+      "Messaggio selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per deselezionare"
+    );
+  });
+  it("should match expected output for read message  , in inbox  , selected is undefined", () => {
+    const message = {
+      ...baseMessage,
+      isRead: true
+    };
+    const result = accessibilityLabelForMessageItem(
+      message,
+      "INBOX",
+      undefined
+    );
+    expect(result).toBe(
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito archiviare"
+    );
+  });
+  it("should match expected output for read message  , in inbox  , selected is false", () => {
+    const message = {
+      ...baseMessage,
+      isRead: true
+    };
+    const result = accessibilityLabelForMessageItem(message, "INBOX", false);
+    expect(result).toBe(
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito archiviare"
+    );
+  });
+  it("should match expected output for read message  , in inbox  , selected is true", () => {
+    const message = {
+      ...baseMessage,
+      isRead: true
+    };
+    const result = accessibilityLabelForMessageItem(message, "INBOX", true);
+    expect(result).toBe(
+      "Messaggio selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per deselezionare"
+    );
+  });
+  it("should match expected output for read message  , in search , selected is undefined", () => {
+    const message = {
+      ...baseMessage,
+      isRead: true
+    };
+    const result = accessibilityLabelForMessageItem(
+      message,
+      "SEARCH",
+      undefined
+    );
+    expect(result).toBe(
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
+    );
+  });
+  it("should match expected output for read message  , in search , selected is false", () => {
+    const message = {
+      ...baseMessage,
+      isRead: true
+    };
+    const result = accessibilityLabelForMessageItem(message, "SEARCH", false);
+    expect(result).toBe(
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
+    );
+  });
+  it("should match expected output for read message  , in search , selected is true", () => {
+    const message = {
+      ...baseMessage,
+      isRead: true
+    };
+    const result = accessibilityLabelForMessageItem(message, "SEARCH", true);
+    expect(result).toBe(
+      "Messaggio selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
+    );
   });
 });
 
@@ -617,4 +763,68 @@ describe("getLoadNextPreviousPageMessagesActionIfAllowed", () => {
       )
     )
   );
+});
+
+describe("archiveUnarchiveAccessibilityInstructions", () => {
+  it("should return empty string when source is SEARCH and isSelected is undefined", () => {
+    const result = archiveUnarchiveAccessibilityInstructions(
+      "SEARCH",
+      undefined
+    );
+    expect(result).toBe("");
+  });
+
+  it("should return empty string when source is SEARCH and isSelected is false", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("SEARCH", false);
+    expect(result).toBe("");
+  });
+
+  it("should return empty string when source is SEARCH and isSelected is true", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("SEARCH", true);
+    expect(result).toBe("");
+  });
+
+  it("should return deselect instructions when isSelected is true and source is INBOX", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("INBOX", true);
+    expect(result).toBe("Tieni premuto per deselezionare");
+  });
+
+  it("should return deselect instructions when isSelected is true and source is ARCHIVE", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("ARCHIVE", true);
+    expect(result).toBe("Tieni premuto per deselezionare");
+  });
+
+  it("should return archive instructions when source is INBOX and isSelected is false", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("INBOX", false);
+    expect(result).toBe(
+      "Tieni premuto per selezionare e in seguito archiviare"
+    );
+  });
+
+  it("should return unarchive instructions when source is ARCHIVE and isSelected is false", () => {
+    const result = archiveUnarchiveAccessibilityInstructions("ARCHIVE", false);
+    expect(result).toBe(
+      "Tieni premuto per selezionare e in seguito disarchiviare"
+    );
+  });
+
+  it("should return archive instructions when source is INBOX and isSelected is undefined", () => {
+    const result = archiveUnarchiveAccessibilityInstructions(
+      "INBOX",
+      undefined
+    );
+    expect(result).toBe(
+      "Tieni premuto per selezionare e in seguito archiviare"
+    );
+  });
+
+  it("should return unarchive instructions when source is ARCHIVE and isSelected is undefined", () => {
+    const result = archiveUnarchiveAccessibilityInstructions(
+      "ARCHIVE",
+      undefined
+    );
+    expect(result).toBe(
+      "Tieni premuto per selezionare e in seguito disarchiviare"
+    );
+  });
 });
