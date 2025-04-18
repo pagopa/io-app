@@ -1,7 +1,6 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { AccessibilityInfo, SafeAreaView, View } from "react-native";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { setMixpanelEnabled } from "../../../../store/actions/mixpanel";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
@@ -128,10 +127,10 @@ const ShareDataScreen = () => {
       description={I18n.t("profile.main.privacy.shareData.screen.description")}
       actions={buttonProps}
     >
-      <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.horizontalContentPadding, { flexGrow: 1 }]}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <ContentWrapper style={{ flexGrow: 1 }}>
           <ShareDataComponent trackAction={handleTrackingAction} />
-        </View>
+        </ContentWrapper>
 
         {bottomSheet}
       </SafeAreaView>

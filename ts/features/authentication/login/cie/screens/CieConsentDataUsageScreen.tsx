@@ -2,26 +2,26 @@
  * A screen to display, by a webview, the consent to send user sensitive data
  * to backend and proceed with the onboarding process
  */
+import { VSpacer } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import WebView from "react-native-webview";
 import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { IOStyles, VSpacer } from "@pagopa/io-app-design-system";
-import { Route, useRoute } from "@react-navigation/native";
-import WebView from "react-native-webview";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useIODispatch } from "../../../../../store/hooks";
-import { loginFailure, loginSuccess } from "../../../common/store/actions";
-import { SessionToken } from "../../../../../types/SessionToken";
-import { onLoginUriChanged } from "../../../common/utils/login";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
-import { trackLoginCieDataSharingError } from "../../../common/analytics/cieAnalytics";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useOnboardingAbortAlert } from "../../../../../utils/hooks/useOnboardingAbortAlert";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../../store/hooks";
+import { SessionToken } from "../../../../../types/SessionToken";
+import { useOnboardingAbortAlert } from "../../../../../utils/hooks/useOnboardingAbortAlert";
+import { trackLoginCieDataSharingError } from "../../../common/analytics/cieAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { loginFailure, loginSuccess } from "../../../common/store/actions";
+import { onLoginUriChanged } from "../../../common/utils/login";
+import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -150,7 +150,7 @@ const CieConsentDataUsageScreen = () => {
   }
   if (!hasError) {
     return (
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={{ flex: 1 }}>
         <WebView
           testID="webview-cie-test"
           androidCameraAccessDisabled={true}

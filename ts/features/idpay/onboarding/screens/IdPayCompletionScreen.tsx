@@ -1,6 +1,5 @@
 import { SafeAreaView } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -23,7 +22,7 @@ const IdPayCompletionScreen = () => {
 
   if (isLoading) {
     return (
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={{ flex: 1 }}>
         <LoadingSpinnerOverlay isLoading />
       </SafeAreaView>
     );

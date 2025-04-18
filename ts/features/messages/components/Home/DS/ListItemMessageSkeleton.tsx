@@ -1,6 +1,5 @@
 import {
   IOSkeleton,
-  IOStyles,
   IOVisualCostants,
   WithTestID
 } from "@pagopa/io-app-design-system";
@@ -16,11 +15,8 @@ const styles = StyleSheet.create({
     height: SkeletonHeight,
     padding: 16
   },
-  serviceLogo: {
-    justifyContent: "center"
-  },
   textContainer: {
-    ...IOStyles.flex,
+    flex: 1,
     marginLeft: 8
   },
   textRow1Container: {
@@ -30,12 +26,6 @@ const styles = StyleSheet.create({
   timeContainer: {
     marginLeft: 12,
     width: 30
-  },
-  titleContainer: {
-    flexDirection: "row"
-  },
-  titleRow: {
-    ...IOStyles.flex
   }
 });
 
@@ -47,7 +37,7 @@ export const ListItemMessageSkeleton = ({
   accessibilityLabel
 }: ListItemMessageSkeletonProps) => (
   <View accessibilityLabel={accessibilityLabel} style={styles.container}>
-    <View style={styles.serviceLogo}>
+    <View style={{ justifyContent: "center" }}>
       <IOSkeleton
         shape="square"
         size={IOVisualCostants.avatarSizeSmall}
@@ -55,8 +45,8 @@ export const ListItemMessageSkeleton = ({
       />
     </View>
     <View style={styles.textContainer}>
-      <View style={styles.titleContainer}>
-        <View style={styles.titleRow}>
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ flex: 1 }}>
           <IOSkeleton
             shape="rectangle"
             width="100%"

@@ -1,4 +1,5 @@
 import {
+  ContentWrapper,
   Divider,
   H3,
   HSpacer,
@@ -20,7 +21,6 @@ import {
   isError,
   isLoading
 } from "../../../../../common/model/RemoteValue";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -169,16 +169,13 @@ const CgnMerchantsListByCategory = () => {
         />
       )}
       {categorySpecs && (
-        <View
-          style={[
-            IOStyles.horizontalContentPadding,
-            {
-              backgroundColor: categorySpecs.colors,
-              paddingBottom: 24
-            }
-          ]}
+        <ContentWrapper
+          style={{
+            backgroundColor: categorySpecs.colors,
+            paddingBottom: 24
+          }}
         >
-          <View style={[IOStyles.row, { alignItems: "center" }]}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
               style={{
                 justifyContent: "center",
@@ -202,7 +199,7 @@ const CgnMerchantsListByCategory = () => {
               </H3>
             </View>
           </View>
-        </View>
+        </ContentWrapper>
       )}
     </>
   );

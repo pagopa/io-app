@@ -1,7 +1,7 @@
 import {
+  ContentWrapper,
   Divider,
   IOSpacingScale,
-  IOStyles,
   SearchInput,
   SearchInputRef,
   VSpacer
@@ -11,7 +11,6 @@ import {
   FlatList,
   ListRenderItemInfo,
   Platform,
-  View,
   ViewStyle
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
@@ -43,7 +42,6 @@ export const MessagesSearchScreen = () => {
 
   const containerStyle: ViewStyle = useMemo(
     () => ({
-      ...IOStyles.horizontalContentPadding,
       marginTop: insets.top,
       paddingVertical: INPUT_PADDING
     }),
@@ -100,7 +98,7 @@ export const MessagesSearchScreen = () => {
 
   return (
     <>
-      <View style={containerStyle}>
+      <ContentWrapper style={containerStyle}>
         <SearchInput
           accessibilityLabel={I18n.t("messages.search.input.placeholderShort")}
           autoFocus={true}
@@ -113,7 +111,7 @@ export const MessagesSearchScreen = () => {
           ref={searchInputRef}
           value={query}
         />
-      </View>
+      </ContentWrapper>
       <FlatList
         ItemSeparatorComponent={() => <Divider />}
         data={filteredMessages}

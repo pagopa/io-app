@@ -1,4 +1,3 @@
-import { IOStyles } from "@pagopa/io-app-design-system";
 import { useRef, useEffect, useLayoutEffect } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
@@ -28,18 +27,18 @@ const WalletPaymentMakeScreen = () => {
 
   return (
     <PagerView
-      style={IOStyles.flex}
+      style={{ flex: 1 }}
       initialPage={0}
       ref={ref}
       scrollEnabled={false}
     >
-      <View key="1" style={IOStyles.flex}>
+      <View key="1" style={{ flex: 1 }}>
         <WalletPaymentPickMethodScreen />
       </View>
-      <View key="2" style={IOStyles.flex}>
+      <View key="2" style={{ flex: 1 }}>
         <WalletPaymentPickPspScreen />
       </View>
-      <View key="3" style={IOStyles.flex}>
+      <View key="3" style={{ flex: 1 }}>
         <WalletPaymentConfirmScreen />
       </View>
       {/* This View is used by a11y purposes on Android in order to make the screen reader, read the correct total pages number. */}

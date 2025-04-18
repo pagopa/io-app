@@ -3,14 +3,13 @@ import {
   H6,
   IOColors,
   IOIcons,
-  IOStyles,
   Icon,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
@@ -106,10 +105,18 @@ type RequiredDataItemProps = {
 
 const RequiredDataItem = (props: RequiredDataItemProps) => {
   const theme = useIOTheme();
+
   return (
-    <View style={[IOStyles.row, styles.listItem]}>
+    <View
+      style={{
+        flexDirection: "row",
+        paddingVertical: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: IOColors[theme["divider-default"]]
+      }}
+    >
       {!!props.icon && (
-        <View style={styles.icon}>
+        <View style={{ marginEnd: 16 }}>
           <Icon
             name={props.icon}
             size={24}
@@ -118,20 +125,9 @@ const RequiredDataItem = (props: RequiredDataItemProps) => {
         </View>
       )}
       <View>
-        <H6 color="grey-850">{props.title}</H6>
+        <H6 color={theme["textBody-secondary"]}>{props.title}</H6>
         <BodySmall weight="Regular">{props.subTitle}</BodySmall>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  listItem: {
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: IOColors["grey-100"]
-  },
-  icon: {
-    marginRight: 16
-  }
-});

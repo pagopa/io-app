@@ -1,7 +1,6 @@
 import {
   Body,
   H2,
-  IOStyles,
   ListItemHeader,
   RadioGroup,
   RadioItemWithAmount,
@@ -210,7 +209,7 @@ const WalletPaymentPickPspScreen = () => {
     >
       <WalletPaymentPspBanner />
       <Animated.View
-        style={IOStyles.flex}
+        style={{ flex: 1 }}
         layout={LinearTransition.duration(200)}
       >
         <SelectPspHeadingContent />

@@ -2,7 +2,6 @@ import {
   Divider,
   HSpacer,
   IOSkeleton,
-  IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
@@ -23,9 +22,14 @@ type PspSkeletonProps = {
 
 export const PspSkeleton = ({ showFeatured }: PspSkeletonProps) => (
   <View
-    style={[IOStyles.flex, IOStyles.rowSpaceBetween, { marginVertical: 8 }]}
+    style={{
+      flex: 1,
+      marginVertical: 8,
+      justifyContent: "space-between",
+      flexDirection: "row"
+    }}
   >
-    <View style={IOStyles.flex}>
+    <View style={{ flex: 1 }}>
       <IOSkeleton shape="rectangle" height={16} width="50%" radius={4} />
       {showFeatured && (
         <>
@@ -34,7 +38,13 @@ export const PspSkeleton = ({ showFeatured }: PspSkeletonProps) => (
         </>
       )}
     </View>
-    <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+      }}
+    >
       <IOSkeleton shape="rectangle" height={16} width={26} radius={4} />
       <HSpacer size={8} />
       <IOSkeleton shape="rectangle" height={24} width={26} radius={20} />

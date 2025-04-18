@@ -1,16 +1,14 @@
 import {
   Body,
   CodeInput,
+  ContentWrapper,
   H4,
-  IOStyles,
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { RefObject, memo } from "react";
-import { Dimensions, View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { useDetectSmallScreen } from "../../../../hooks/useDetectSmallScreen";
-
-const { width } = Dimensions.get("screen");
 
 export type PinCaouselItemProps = WithTestID<{
   title: string;
@@ -34,18 +32,16 @@ export const PinCarouselItem = memo(
     onValueChange
   }: PinCaouselItemProps) => {
     const { isDeviceScreenSmall } = useDetectSmallScreen();
+    const { width: screenWidth } = useWindowDimensions();
 
     return (
-      <View
-        style={[
-          IOStyles.horizontalContentPadding,
-          IOStyles.alignCenter,
-          {
-            flexGrow: 1,
-            justifyContent: "space-between",
-            width
-          }
-        ]}
+      <ContentWrapper
+        style={{
+          width: screenWidth,
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexGrow: 1
+        }}
         testID={testID}
       >
         <H4
@@ -77,7 +73,7 @@ export const PinCarouselItem = memo(
           variant="neutral"
           value={value}
         />
-      </View>
+      </ContentWrapper>
     );
   }
 );

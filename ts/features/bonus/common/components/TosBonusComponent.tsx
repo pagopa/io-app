@@ -4,6 +4,7 @@ import {
   FooterActions,
   H2,
   IconButton,
+  IOColors,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -17,7 +18,6 @@ import {
   View
 } from "react-native";
 import WebView from "react-native-webview";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import I18n from "../../../../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-
   errorButtonsContainer: {
     position: "absolute",
     bottom: 30,
@@ -51,6 +50,7 @@ const styles = StyleSheet.create({
 
 /**
  * Component to show the TOS for the bonus activation flow
+ * @deprecated This component is really old and should be removed/refactored
  */
 const TosBonusComponent: FunctionComponent<Props> = props => {
   const handleBackPressed = () => {
@@ -59,6 +59,7 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
   };
   const [isLoadEnd, setOnLoadEnd] = useState(false);
   const [hasError, setHasError] = useState(false);
+
   useEffect(() => {
     const subscription = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -102,10 +103,15 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
       </View>
     );
   };
+
+  // TODO: Remove HOC to use the theme
   const ContainerComponent = withLoadingSpinner(() => (
-    <SafeAreaView style={[IOStyles.flex, IOStyles.bgWhite]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: IOColors.white }}>
       <View
-        style={[IOStyles.horizontalContentPadding, { alignItems: "flex-end" }]}
+        style={{
+          paddingHorizontal: 16,
+          alignItems: "flex-end"
+        }}
       >
         <IconButton
           color="neutral"
@@ -141,6 +147,7 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
       )}
     </SafeAreaView>
   ));
+
   return <ContainerComponent isLoading={!isLoadEnd} />;
 };
 

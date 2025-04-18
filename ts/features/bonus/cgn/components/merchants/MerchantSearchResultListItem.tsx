@@ -1,9 +1,9 @@
 import {
   Badge,
   Body,
+  ContentWrapper,
   H6,
   IOColors,
-  IOStyles,
   ListItemNav
 } from "@pagopa/io-app-design-system";
 import { Keyboard, Text, View, StyleSheet } from "react-native";
@@ -35,7 +35,7 @@ export function MerchantSearchResultListItem({
 }) {
   const navigation = useIONavigation();
   return (
-    <View style={IOStyles.horizontalContentPadding}>
+    <ContentWrapper>
       <ListItemNav
         onPress={() => {
           navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
@@ -47,7 +47,9 @@ export function MerchantSearchResultListItem({
           Keyboard.dismiss();
         }}
         value={
-          <View style={IOStyles.rowSpaceBetween}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <View style={styles.listItemTextContainer}>
               <H6>{highlightText({ text: item.name, searchText })}</H6>
               <Body numberOfLines={2} ellipsizeMode="tail">
@@ -61,7 +63,13 @@ export function MerchantSearchResultListItem({
               </Body>
             </View>
             {item.newDiscounts && (
-              <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                }}
+              >
                 <Badge
                   variant="cgn"
                   text={I18n.t("bonus.cgn.merchantsList.news")}
@@ -72,7 +80,7 @@ export function MerchantSearchResultListItem({
         }
         accessibilityLabel={item.name}
       />
-    </View>
+    </ContentWrapper>
   );
 }
 

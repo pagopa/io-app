@@ -3,7 +3,6 @@ import {
   ContentWrapper,
   H2,
   IOPictograms,
-  IOStyles,
   IconButton,
   Pictogram,
   ToastNotification,
@@ -428,7 +427,7 @@ const IdentificationModal = () => {
                 </View>
               ) : (isDeviceScreenSmall || hugeFontEnabled) &&
                 isValidatingTask ? null : (
-                <View style={IOStyles.alignCenter}>
+                <View style={{ alignItems: "center" }}>
                   <Pictogram
                     pictogramStyle="light-content"
                     name={pictogramKey}
@@ -436,7 +435,7 @@ const IdentificationModal = () => {
                   />
                 </View>
               )}
-              <View accessible ref={headerRef} style={IOStyles.alignCenter}>
+              <View accessible ref={headerRef} style={{ alignItems: "center" }}>
                 <VSpacer size={8} />
                 <H2 color={"white"} style={{ textAlign: "center" }}>
                   {titleLabel}
@@ -452,7 +451,7 @@ const IdentificationModal = () => {
             <NumberPad />
             <View>
               <VSpacer size={isDeviceScreenSmall ? 16 : 32} />
-              <View style={IOStyles.selfCenter}>
+              <View style={{ alignSelf: "center" }}>
                 <ButtonLink
                   textAlign="center"
                   /* Don't limit number of lines

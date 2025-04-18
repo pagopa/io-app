@@ -9,7 +9,6 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { SectionList } from "react-native";
-import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useScreenEndMargin } from "../../hooks/useScreenEndMargin";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
@@ -130,13 +129,11 @@ export const DesignSystem = () => {
     <SectionList
       keyExtractor={(item, index) => `${item.route}-${index}`}
       stickySectionHeadersEnabled={false}
-      contentContainerStyle={[
-        IOStyles.horizontalContentPadding,
-        {
-          paddingTop: IOVisualCostants.appMarginDefault,
-          paddingBottom: screenEndMargin
-        }
-      ]}
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        paddingTop: IOVisualCostants.appMarginDefault,
+        paddingBottom: screenEndMargin
+      }}
       renderSectionHeader={renderDSSection}
       renderSectionFooter={renderDSSectionFooter}
       SectionSeparatorComponent={() => <VSpacer size={8} />}

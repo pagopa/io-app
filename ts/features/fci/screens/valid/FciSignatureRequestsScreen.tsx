@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { SectionList, ScrollView } from "react-native";
-import { H2, IOStyles } from "@pagopa/io-app-design-system";
+import { H2, IOVisualCostants } from "@pagopa/io-app-design-system";
 import SignatureRequestItem from "../../components/SignatureRequestItem";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";
@@ -88,7 +88,12 @@ const FciSignatureRequestsScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={dataItems === undefined}>
-      <ScrollView style={IOStyles.horizontalContentPadding}>
+      {/* TODO: Replace with `IOScrollView` component. */}
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+      >
         <H2>{I18n.t("features.fci.requests.title")}</H2>
         {renderSignatureRequests()}
       </ScrollView>

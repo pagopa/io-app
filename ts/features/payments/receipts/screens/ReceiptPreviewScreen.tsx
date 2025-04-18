@@ -2,7 +2,6 @@ import {
   FooterActions,
   FooterActionsMeasurements,
   IOColors,
-  IOStyles,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -93,12 +92,12 @@ const ReceiptPreviewScreen = () => {
     return (
       <View
         style={{
-          ...IOStyles.flex,
+          flex: 1,
           paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
         }}
       >
         <View
-          style={{ ...IOStyles.flex }}
+          style={{ flex: 1 }}
           accessibilityLabel={I18n.t(
             "features.payments.transactions.receipt.a11y.preview"
           )}

@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Platform, View, ViewStyle } from "react-native";
+import { Platform, ViewStyle } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import {
+  ContentWrapper,
   Divider,
   IOSpacingScale,
-  IOStyles,
   IOToast,
+  IOVisualCostants,
   ListItemHeader,
   SearchInput,
   SearchInputRef,
@@ -40,7 +41,6 @@ export const SearchScreen = () => {
 
   const containerStyle: ViewStyle = useMemo(
     () => ({
-      ...IOStyles.horizontalContentPadding,
       marginTop: insets.top,
       paddingVertical: INPUT_PADDING
     }),
@@ -188,7 +188,7 @@ export const SearchScreen = () => {
 
   return (
     <>
-      <View style={containerStyle}>
+      <ContentWrapper style={containerStyle}>
         <SearchInput
           accessibilityLabel={I18n.t("services.search.input.placeholderShort")}
           autoFocus={true}
@@ -201,13 +201,15 @@ export const SearchScreen = () => {
           ref={searchInputRef}
           value={query}
         />
-      </View>
+      </ContentWrapper>
       <FlashList
         ItemSeparatorComponent={Divider}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
         ListHeaderComponent={renderListHeaderComponent}
-        contentContainerStyle={IOStyles.horizontalContentPadding}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
         data={data?.institutions}
         estimatedItemSize={LIST_ITEM_HEIGHT}
         keyboardDismissMode={Platform.select({

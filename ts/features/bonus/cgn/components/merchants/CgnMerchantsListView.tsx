@@ -1,9 +1,14 @@
-import { Badge, H6, HSpacer, ListItemNav } from "@pagopa/io-app-design-system";
+import {
+  Badge,
+  ContentWrapper,
+  H6,
+  HSpacer,
+  ListItemNav
+} from "@pagopa/io-app-design-system";
 import { ListRenderItem, View } from "react-native";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 
@@ -26,15 +31,23 @@ export const CgnMerchantListViewRenderItem =
         : item.name) + getListItemAccessibilityLabelCount(props.count, index);
 
     return (
-      <View style={IOStyles.horizontalContentPadding}>
+      <ContentWrapper>
         <ListItemNav
           onPress={() => props.onItemPress(item.id)}
           value={
-            <View style={IOStyles.rowSpaceBetween}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
               <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{item.name}</H6>
               <HSpacer />
               {item.newDiscounts && (
-                <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                >
                   <Badge
                     accessible={false}
                     variant="cgn"
@@ -50,6 +63,6 @@ export const CgnMerchantListViewRenderItem =
           }
           accessibilityLabel={accessibilityLabel}
         />
-      </View>
+      </ContentWrapper>
     );
   };

@@ -8,7 +8,6 @@ import {
   ComposedBodyFromArray,
   H3,
   IOPictograms,
-  IOStyles,
   IOVisualCostants,
   Pictogram,
   VSpacer,
@@ -73,7 +72,7 @@ const OperationResultScreenContent = forwardRef<
         ]}
       >
         {pictogram && (
-          <View style={IOStyles.alignCenter}>
+          <View style={{ alignItems: "center" }}>
             <Pictogram name={pictogram} size={120} />
             <VSpacer size={24} />
           </View>
@@ -94,7 +93,7 @@ const OperationResultScreenContent = forwardRef<
           </>
         )}
         {action && (
-          <View style={IOStyles.alignCenter}>
+          <View style={{ alignItems: "center" }}>
             <VSpacer size={24} />
             <View>
               <ButtonSolid {...action} />
@@ -102,7 +101,7 @@ const OperationResultScreenContent = forwardRef<
           </View>
         )}
         {secondaryAction && (
-          <View style={IOStyles.alignCenter}>
+          <View style={{ alignItems: "center" }}>
             <VSpacer size={24} />
             <View>
               <ButtonLink {...secondaryAction} />

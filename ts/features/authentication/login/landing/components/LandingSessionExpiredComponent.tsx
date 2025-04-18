@@ -2,18 +2,18 @@
  * This component renders the card displayed in the landing page carousel
  */
 
-import { forwardRef } from "react";
-import { View, ScrollView, useWindowDimensions } from "react-native";
 import {
   Body,
   ButtonLink,
   ButtonLinkProps,
+  ContentWrapper,
   H3,
   IOPictograms,
-  IOStyles,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { forwardRef } from "react";
+import { ScrollView, useWindowDimensions, View } from "react-native";
 
 type Props = {
   pictogramName: IOPictograms;
@@ -33,30 +33,24 @@ type Props = {
   >;
 };
 
-const VERTICAL_SPACING = 16;
 const PICTOGRAM_VERTICAL_SPACING = 24;
 const CONTENT_VERTICAL_SPACING = 8;
 const BUTTON_VERTICAL_SPACING = 24;
 
 export const LandingSessionExpiredComponent = forwardRef<View, Props>(
-  (props, ref) => {
-    const screenDimension = useWindowDimensions();
-    const screenWidth = screenDimension.width;
-    const { pictogramName, title, content, buttonLink } = props;
+  ({ pictogramName, title, content, buttonLink }, ref) => {
+    const { width: screenWidth } = useWindowDimensions();
 
     return (
       <ScrollView
         accessible={false}
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
       >
-        <View
-          style={[
-            {
-              width: screenWidth
-            },
-            IOStyles.horizontalContentPadding,
-            IOStyles.alignCenter
-          ]}
+        <ContentWrapper
+          style={{
+            width: screenWidth,
+            alignItems: "center"
+          }}
         >
           <Pictogram size={180} name={pictogramName} />
           <VSpacer size={PICTOGRAM_VERTICAL_SPACING} />
@@ -68,13 +62,12 @@ export const LandingSessionExpiredComponent = forwardRef<View, Props>(
             {content}
           </Body>
           {buttonLink && (
-            <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
+            <View style={{ alignSelf: "center" }}>
               <VSpacer size={BUTTON_VERTICAL_SPACING} />
               <ButtonLink {...buttonLink} />
-              <VSpacer size={VERTICAL_SPACING} />
             </View>
           )}
-        </View>
+        </ContentWrapper>
       </ScrollView>
     );
   }

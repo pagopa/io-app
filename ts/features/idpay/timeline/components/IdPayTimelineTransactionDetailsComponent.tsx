@@ -14,7 +14,6 @@ import {
   TransactionDetailDTO,
   OperationTypeEnum as TransactionTypeEnum
 } from "../../../../../definitions/idpay/TransactionDetailDTO";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
@@ -62,7 +61,7 @@ const IdPayTimelineTransactionDetailsComponent = (props: Props) => {
   );
 
   return (
-    <View style={IOStyles.flex}>
+    <View style={{ flex: 1 }}>
       {reversalAlertComponent}
       <ListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}

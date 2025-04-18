@@ -1,12 +1,11 @@
 import { Body, FooterActions } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
 const ConfirmOptOut = () => (
   <View>
-    <View style={IOStyles.flex}>
+    <View style={{ flex: 1 }}>
       <Body>{I18n.t("profile.main.privacy.shareData.alert.body")}</Body>
     </View>
   </View>

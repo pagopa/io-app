@@ -33,7 +33,6 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
-import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { TestID } from "../../types/WithTestID";
 import { isScreenReaderEnabled } from "../accessibility";
@@ -223,7 +222,7 @@ export const useIOBottomSheetModal = ({
     >
       {screenReaderEnabled && Platform.OS === "android" ? (
         <Modal>
-          <View style={IOStyles.flex} accessible={true}>
+          <View style={{ flex: 1 }} accessible={true}>
             {bottomSheetProps.config.handleComponent}
             {bottomSheetProps.content}
           </View>

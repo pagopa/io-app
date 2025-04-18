@@ -1,6 +1,6 @@
 import {
   Body,
-  IOStyles,
+  ContentWrapper,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -9,12 +9,11 @@ import I18n from "../../../../i18n";
 import { FimsHistoryHeaderComponent } from "./FimsHistoryHeaderComponent";
 
 export const FimsHistoryEmptyContent = () => (
-  <View
-    style={[
-      IOStyles.flex,
-      IOStyles.alignCenter,
-      IOStyles.horizontalContentPadding
-    ]}
+  <ContentWrapper
+    style={{
+      flex: 1,
+      alignItems: "center"
+    }}
   >
     <FimsHistoryHeaderComponent />
     <View style={styles.pictogramContainer}>
@@ -24,13 +23,14 @@ export const FimsHistoryEmptyContent = () => (
         {I18n.t("FIMS.history.emptyBody")}
       </Body>
     </View>
-  </View>
+  </ContentWrapper>
 );
 
 const styles = StyleSheet.create({
   pictogramContainer: {
     alignItems: "center",
     justifyContent: "center",
+    // TODO: check if this is the correct value. Not 100% wrong, but I'm not sure about this approach.
     flexGrow: 0.75
   }
 });

@@ -10,7 +10,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { Fragment } from "react";
 import { View } from "react-native";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
@@ -110,7 +109,7 @@ const TimelineHeaderComponent = ({
 }: {
   onShowMorePress?: () => void;
 }) => (
-  <View style={[IOStyles.row, IOStyles.rowSpaceBetween]}>
+  <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
     <H6>
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"

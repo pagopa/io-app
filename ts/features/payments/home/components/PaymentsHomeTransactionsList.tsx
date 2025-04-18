@@ -1,7 +1,6 @@
 import {
   BannerErrorState,
   Divider,
-  IOStyles,
   ListItemHeader,
   ListItemTransaction
 } from "@pagopa/io-app-design-system";
@@ -153,10 +152,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   }
 
   return (
-    <Animated.View
-      style={IOStyles.flex}
-      layout={LinearTransition.duration(200)}
-    >
+    <Animated.View style={{ flex: 1 }} layout={LinearTransition.duration(200)}>
       <ListItemHeader
         label={I18n.t("features.payments.transactions.title")}
         accessibilityLabel={I18n.t("features.payments.transactions.title")}

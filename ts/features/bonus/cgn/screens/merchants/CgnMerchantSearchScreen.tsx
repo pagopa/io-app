@@ -1,9 +1,9 @@
 import {
   Body,
+  ContentWrapper,
   Divider,
   H6,
   IOSpacingScale,
-  IOStyles,
   IOVisualCostants,
   Pictogram,
   SearchInput,
@@ -57,7 +57,6 @@ export function CgnMerchantSearchScreen() {
 
   const containerStyle: ViewStyle = useMemo(
     () => ({
-      ...IOStyles.horizontalContentPadding,
       marginTop: insets.top,
       paddingVertical: INPUT_PADDING
     }),
@@ -116,7 +115,7 @@ export function CgnMerchantSearchScreen() {
 
   return (
     <>
-      <View style={containerStyle}>
+      <ContentWrapper style={containerStyle}>
         <SearchInput
           accessibilityLabel={I18n.t(
             "bonus.cgn.merchantSearch.input.placeholder"
@@ -134,7 +133,7 @@ export function CgnMerchantSearchScreen() {
           value={searchText}
           testID="cgnMerchantSearchInput"
         />
-      </View>
+      </ContentWrapper>
       <FlatList
         ItemSeparatorComponent={() => <Divider />}
         data={merchants?.length !== 0 ? merchants : undefined}
@@ -154,9 +153,6 @@ export function CgnMerchantSearchScreen() {
 const styles = StyleSheet.create({
   emptyListContainer: {
     marginHorizontal: IOVisualCostants.appMarginDefault
-  },
-  emptyListText: {
-    textAlign: "center"
   }
 });
 
@@ -167,11 +163,11 @@ function EmptyListShortQuery({
 }) {
   return (
     <View style={styles.emptyListContainer}>
-      <View style={IOStyles.alignCenter}>
+      <View style={{ alignItems: "center" }}>
         <Pictogram name="searchLens" size={120} />
         <VSpacer size={24} />
       </View>
-      <H6 style={styles.emptyListText}>
+      <H6 style={{ textAlign: "center" }}>
         {merchantCount === undefined
           ? I18n.t(
               "bonus.cgn.merchantSearch.emptyList.shortQuery.titleWithoutCount"
@@ -190,15 +186,15 @@ function EmptyListShortQuery({
 function EmptyListNoResults() {
   return (
     <View style={styles.emptyListContainer}>
-      <View style={IOStyles.alignCenter}>
+      <View style={{ alignItems: "center" }}>
         <Pictogram name="umbrella" size={120} />
         <VSpacer size={24} />
       </View>
-      <H6 style={styles.emptyListText}>
+      <H6 style={{ textAlign: "center" }}>
         {I18n.t("bonus.cgn.merchantSearch.emptyList.noResults.title")}
       </H6>
       <VSpacer size={8} />
-      <Body style={styles.emptyListText}>
+      <Body style={{ textAlign: "center" }}>
         {I18n.t("bonus.cgn.merchantSearch.emptyList.noResults.subtitle")}
       </Body>
     </View>

@@ -1,8 +1,8 @@
 import {
+  BodySmall,
   H6,
   HSpacer,
   IOColors,
-  BodySmall,
   VSpacer,
   hexToRgba
 } from "@pagopa/io-app-design-system";
@@ -18,7 +18,6 @@ import {
 } from "react-native";
 import walletCardBg from "../../../../../img/features/idpay/wallet_card.png";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
 type Props = {
@@ -77,8 +76,8 @@ const IDPayCardPreviewComponent = (props: Props) => {
           accessible={true}
           accessibilityRole={"button"}
         >
-          <View style={[IOStyles.flex, IOStyles.row]}>
-            <H6 style={IOStyles.flex} ellipsizeMode="tail" numberOfLines={1}>
+          <View style={{ flex: 1, flexDirection: "row" }}>
+            <H6 style={{ flex: 1 }} ellipsizeMode="tail" numberOfLines={1}>
               {initiativeName}
             </H6>
             <HSpacer size={8} />

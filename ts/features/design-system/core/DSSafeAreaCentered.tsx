@@ -1,22 +1,21 @@
-import { Text, View, SafeAreaView, Platform } from "react-native";
+import {
+  Body,
+  H4,
+  hexToRgba,
+  IOColors,
+  IOVisualCostants,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { Platform, SafeAreaView, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  IOColors,
-  hexToRgba,
-  VSpacer,
-  IOVisualCostants,
-  Body,
-  H4
-} from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 export const DSSafeAreaCentered = () => {
   const insets = useSafeAreaInsets();
   const fixedBottomBarHeight: number = 70;
 
   return (
-    <View style={IOStyles.flex}>
+    <View style={{ flex: 1 }}>
       <SafeAreaView
         style={{
           flexGrow: 1,

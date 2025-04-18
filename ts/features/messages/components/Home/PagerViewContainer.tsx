@@ -3,7 +3,6 @@ import { forwardRef, useCallback, useRef } from "react";
 import { FlatList, NativeSyntheticEvent } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import PagerView from "react-native-pager-view";
-import { IOStyles } from "@pagopa/io-app-design-system";
 import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/specs/PagerViewNativeComponent";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { setShownMessageCategoryAction } from "../../store/actions";
@@ -156,7 +155,7 @@ export const PagerViewContainer = forwardRef<PagerView>((_, ref) => {
         initialPage={initialPageIndex}
         onPageSelected={onPagerViewPageSelected}
         ref={ref}
-        style={IOStyles.flex}
+        style={{ flex: 1 }}
       >
         <MessageList
           category={"INBOX"}

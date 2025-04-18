@@ -4,7 +4,6 @@ import { createRef, FunctionComponent, useEffect } from "react";
 import { ActivityIndicator, SafeAreaView, View } from "react-native";
 import { WithTestID } from "../types/WithTestID";
 import { setAccessibilityFocus } from "../utils/accessibility";
-import { IOStyles } from "./core/variables/IOStyles";
 import { InfoScreenComponent } from "./infoScreen/InfoScreenComponent";
 import GenericErrorComponent from "./screens/GenericErrorComponent";
 
@@ -75,11 +74,11 @@ export const LoadingErrorComponent: FunctionComponent<
   }, [props.isLoading]);
 
   return props.isLoading ? (
-    <SafeAreaView style={IOStyles.flex} testID={props.testID}>
+    <SafeAreaView style={{ flex: 1 }} testID={props.testID}>
       {renderLoading(props.loadingCaption, props.loadingSubtitle)}
     </SafeAreaView>
   ) : (
-    <View style={IOStyles.flex} testID={props.testID}>
+    <View style={{ flex: 1 }} testID={props.testID}>
       {renderError(props)}
     </View>
   );

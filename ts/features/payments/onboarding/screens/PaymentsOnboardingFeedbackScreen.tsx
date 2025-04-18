@@ -5,7 +5,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useRef, useEffect } from "react";
 import { View } from "react-native";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import {
@@ -204,7 +203,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
   );
 
   return (
-    <View style={IOStyles.flex}>
+    <View style={{ flex: 1 }}>
       <OperationResultScreenContent
         title={I18n.t(`wallet.onboarding.outcome.${outcomeEnumKey}.title`)}
         subtitle={I18n.t(

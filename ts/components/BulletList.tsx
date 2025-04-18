@@ -4,7 +4,6 @@ import {
   ComposedBodyFromArray,
   HSpacer,
   IOSpacer,
-  IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { ComponentProps, memo, useCallback } from "react";
@@ -86,7 +85,7 @@ export const BulletList = memo(
     const renderListItems = useCallback(
       (list?: Array<BulletListItem>, count: number = 0) =>
         list?.map(({ id, value, textProps = {}, ...rest }) => (
-          <View key={id} style={IOStyles.row}>
+          <View key={id} style={{ flexDirection: "row" }}>
             <HSpacer size={spacing} />
             <Body>{BULLET_ITEM}</Body>
             <HSpacer size={spacing} />

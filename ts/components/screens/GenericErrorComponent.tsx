@@ -21,7 +21,6 @@ import {
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { IOStyles } from "../core/variables/IOStyles";
 
 type Props = WithTestID<
   Readonly<{
@@ -98,7 +97,7 @@ const GenericErrorComponent = (props: Props) => {
         testID={props.testID}
         contentContainerStyle={styles.contentContainerStyle}
       >
-        <View style={IOStyles.alignCenter}>
+        <View style={{ alignItems: "center" }}>
           <VSpacer size={40} />
           {props.image ? (
             <Image accessibilityIgnoresInvertColors source={props.image} />
@@ -106,7 +105,7 @@ const GenericErrorComponent = (props: Props) => {
             <Pictogram name="umbrella" />
           )}
           <VSpacer size={40} />
-          <View style={IOStyles.alignCenter}>
+          <View style={{ alignItems: "center" }}>
             <H4 ref={ref}>
               {props.text ? props.text : I18n.t("wallet.errors.GENERIC_ERROR")}
             </H4>
