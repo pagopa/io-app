@@ -1,11 +1,12 @@
 import {
   ButtonSolidProps,
+  ContentWrapper,
   FooterActions,
   H5,
   HSpacer,
   IconButton,
   IOColors,
-  IOStyles,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -43,10 +44,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: IOColors["grey-700"]
   },
-  header: {
-    alignItems: "center",
-    flexDirection: "row"
-  },
   headerTitle: {
     flex: 1,
     textAlign: "center"
@@ -62,6 +59,8 @@ const DocumentWithSignature = (props: Props) => {
   const { attrs, currentDoc } = props;
   const dispatch = useIODispatch();
   const onContinuePress = () => props.onClose();
+
+  const theme = useIOTheme();
 
   const continueButtonProps: ButtonSolidProps = {
     onPress: onContinuePress,
@@ -182,11 +181,14 @@ const DocumentWithSignature = (props: Props) => {
 
   return (
     <SafeAreaView
-      style={[IOStyles.flex, IOStyles.bgWhite]}
+      style={{
+        flex: 1,
+        backgroundColor: IOColors[theme["appBackground-primary"]]
+      }}
       testID={"FciDocumentsScreenTestID"}
       edges={["top", "left", "right"]}
     >
-      <View style={[IOStyles.horizontalContentPadding, styles.header]}>
+      <ContentWrapper style={{ alignItems: "center", flexDirection: "row" }}>
         <HSpacer />
         <H5 style={styles.headerTitle}>{I18n.t("messagePDFPreview.title")}</H5>
         <IconButton
@@ -196,7 +198,7 @@ const DocumentWithSignature = (props: Props) => {
           onPress={props.onClose}
           testID="FciDocumentWithSignatureTopRightButtonTestID"
         />
-      </View>
+      </ContentWrapper>
       <VSpacer />
       <DocumentsNavigationBar
         indicatorPosition={"right"}

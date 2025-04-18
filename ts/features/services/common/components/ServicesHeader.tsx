@@ -5,7 +5,6 @@ import {
   IOColors,
   IOSkeleton,
   IOSpacingScale,
-  IOStyles,
   IOVisualCostants,
   useIOTheme,
   VStack
@@ -54,7 +53,7 @@ export const ServicesHeader = ({
       >
         <Avatar logoUri={logoUri} size="medium" />
       </View>
-      <View style={IOStyles.flex}>
+      <View style={{ flex: 1 }}>
         <H3 accessibilityRole="header" color={theme["textHeading-secondary"]}>
           {title}
         </H3>

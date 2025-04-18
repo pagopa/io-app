@@ -7,7 +7,6 @@ import {
   HStack,
   IOColors,
   IOListItemStyles,
-  IOStyles,
   IOVisualCostants,
   Tag,
   useIOTheme,
@@ -55,7 +54,7 @@ const styles = StyleSheet.create({
     height: IOVisualCostants.avatarSizeSmall,
     width: IOVisualCostants.avatarSizeSmall
   },
-  textContainer: { ...IOStyles.flex, marginLeft: 8 }
+  textContainer: { flex: 1, marginLeft: 8 }
 });
 
 type ListItemMessageTag = {
@@ -204,7 +203,7 @@ export const ListItemMessage = ({
                 </BodySmall>
               </View>
               <View style={styles.serviceNameAndMessageTitleContainer}>
-                <BodySmall numberOfLines={2} style={IOStyles.flex}>
+                <BodySmall numberOfLines={2} style={{ flex: 1 }}>
                   <BodySmall weight="Semibold">{`${serviceName} · `}</BodySmall>
                   <BodySmall weight="Regular">{messageTitle}</BodySmall>
                 </BodySmall>

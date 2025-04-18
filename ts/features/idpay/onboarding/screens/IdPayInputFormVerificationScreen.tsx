@@ -1,4 +1,4 @@
-import { H6, IOStyles, TextInput, VSpacer } from "@pagopa/io-app-design-system";
+import { H6, TextInput, VSpacer } from "@pagopa/io-app-design-system";
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationTextDTO } from "../../../../../definitions/idpay/SelfDeclarationTextDTO";
@@ -28,7 +28,7 @@ const IdPayInputFormVerificationScreen = () => {
     <PagerView
       ref={pagerRef}
       scrollEnabled={false}
-      style={IOStyles.flex}
+      style={{ flex: 1 }}
       initialPage={0}
     >
       {selfCriteriaText.map((criteria, index) => (

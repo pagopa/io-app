@@ -1,10 +1,4 @@
-import {
-  Badge,
-  H6,
-  HSpacer,
-  IOStyles,
-  ListItemNav
-} from "@pagopa/io-app-design-system";
+import { Badge, H6, HSpacer, ListItemNav } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
@@ -19,6 +13,8 @@ import {
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnOfflineMerchants,
@@ -29,8 +25,6 @@ import {
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
 import { mixAndSortMerchants } from "../../utils/merchants";
-import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
-import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 
 export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 
@@ -83,11 +77,19 @@ export const CgnMerchantsListScreen = () => {
         onPress={() => onItemPress(item.id)}
         accessibilityLabel={accessibilityLabel}
         value={
-          <View style={IOStyles.rowSpaceBetween}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{item.name}</H6>
             <HSpacer />
             {item.newDiscounts && (
-              <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                }}
+              >
                 <Badge
                   accessible={false}
                   variant="cgn"

@@ -5,7 +5,6 @@ import {
   HeaderSecondLevel,
   HStack,
   Icon,
-  IOStyles,
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -160,7 +159,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
     >
       <ContentWrapper>
         <VStack space={24} style={{ flexGrow: 1 }}>
-          <HStack space={8} style={IOStyles.alignCenter}>
+          <HStack space={8} style={{ alignItems: "center" }}>
             <Icon name="legalValue" color={theme["interactiveElem-default"]} />
             <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
           </HStack>
