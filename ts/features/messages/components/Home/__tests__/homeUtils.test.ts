@@ -36,59 +36,18 @@ import {
   ArchivingStatus,
   INITIAL_STATE
 } from "../../../store/reducers/archiving";
-
-const resolveKey = (key: string) => {
-  switch (key) {
-    case "messages.accessibility.message.archive":
-      return "archive";
-    case "messages.accessibility.message.description":
-      return "{{newMessage}} {{selected}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}";
-    case "messages.accessibility.message.deselectInstructions":
-      return "Press and hold to deselect";
-    case "messages.accessibility.message.read":
-      return "Message";
-    case "messages.accessibility.message.received_at":
-      return "received at";
-    case "messages.accessibility.message.received_on":
-      return "received on";
-    case "messages.accessibility.message.selectInstructions":
-      return "Press and hold to select and later";
-    case "messages.accessibility.message.selected":
-      return "selected";
-    case "messages.accessibility.message.unarchive":
-      return "unarchive";
-    case "messages.accessibility.message.unread":
-      return "Unread message";
-    case "global.accessibility.dateFormat":
-      return "MMMM Do YYYY";
-    default:
-      return key;
-  }
-};
-
-const applyParameters = (
-  template: string,
-  params?: Record<string, string | number | undefined>
-): string =>
-  // Use a regular expression to find all {{paramName}} placeholders
-  params != null
-    ? template.replace(/\{\{(\w+)\}\}/g, (_match, paramName) => {
-        const value = params[paramName];
-        return value !== undefined ? String(value) : `{{${paramName}}}`;
-      })
-    : template;
+import { mockI18nApplyParameters } from "../../../../../__tests__/testUtilities.test";
+import { mockI18nResolveKeyMessages } from "../../../__tests__/messagesTestUtilities.test";
 
 jest.mock("../../../../../i18n", () => ({
-  currentLocale: () => "en",
+  currentLocale: () => "it",
   localeToPreferredLanguageMapping: new Map([
     ["it", "it_IT"],
     ["en", "en_GB"],
     ["de", "de_DE"]
   ]),
-  t: jest.fn(
-    (key: string, params?: Record<string, string | number | undefined>) =>
-      applyParameters(resolveKey(key), params)
-  )
+  t: (key: string, params?: Record<string, string | number | undefined>) =>
+    mockI18nApplyParameters(mockI18nResolveKeyMessages(key), params)
 }));
 
 const createGlobalState = (
@@ -276,7 +235,7 @@ describe("accessibilityLabelForMessageItem", () => {
       undefined
     );
     expect(result).toBe(
-      "Unread message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to select and later unarchive"
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito disarchiviare"
     );
   });
   it("should match expected output for unread message, in archive, selected is false", () => {
@@ -286,7 +245,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "ARCHIVE", false);
     expect(result).toBe(
-      "Unread message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to select and later unarchive"
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito disarchiviare"
     );
   });
   it("should match expected output for unread message, in archive, selected is true", () => {
@@ -296,7 +255,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "ARCHIVE", true);
     expect(result).toBe(
-      "Unread message selected, received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to deselect"
+      "Messaggio non letto selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per deselezionare"
     );
   });
   it("should match expected output for unread message, in inbox  , selected is undefined", () => {
@@ -310,7 +269,7 @@ describe("accessibilityLabelForMessageItem", () => {
       undefined
     );
     expect(result).toBe(
-      "Unread message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to select and later archive"
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito archiviare"
     );
   });
   it("should match expected output for unread message, in inbox  , selected is false", () => {
@@ -320,7 +279,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "INBOX", false);
     expect(result).toBe(
-      "Unread message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to select and later archive"
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito archiviare"
     );
   });
   it("should match expected output for unread message, in inbox  , selected is true", () => {
@@ -330,7 +289,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "INBOX", true);
     expect(result).toBe(
-      "Unread message selected, received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to deselect"
+      "Messaggio non letto selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per deselezionare"
     );
   });
   it("should match expected output for unread message, in search , selected is undefined", () => {
@@ -344,7 +303,7 @@ describe("accessibilityLabelForMessageItem", () => {
       undefined
     );
     expect(result).toBe(
-      "Unread message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . "
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
     );
   });
   it("should match expected output for unread message, in search , selected is false", () => {
@@ -354,7 +313,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "SEARCH", false);
     expect(result).toBe(
-      "Unread message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . "
+      "Messaggio non letto , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
     );
   });
   it("should match expected output for unread message, in search , selected is true", () => {
@@ -364,7 +323,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "SEARCH", true);
     expect(result).toBe(
-      "Unread message selected, received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . "
+      "Messaggio non letto selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
     );
   });
   it("should match expected output for read message  , in archive, selected is undefined", () => {
@@ -378,7 +337,7 @@ describe("accessibilityLabelForMessageItem", () => {
       undefined
     );
     expect(result).toBe(
-      "Message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to select and later unarchive"
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito disarchiviare"
     );
   });
   it("should match expected output for read message  , in archive, selected is false", () => {
@@ -388,7 +347,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "ARCHIVE", false);
     expect(result).toBe(
-      "Message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to select and later unarchive"
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito disarchiviare"
     );
   });
   it("should match expected output for read message  , in archive, selected is true", () => {
@@ -398,7 +357,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "ARCHIVE", true);
     expect(result).toBe(
-      "Message selected, received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to deselect"
+      "Messaggio selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per deselezionare"
     );
   });
   it("should match expected output for read message  , in inbox  , selected is undefined", () => {
@@ -412,7 +371,7 @@ describe("accessibilityLabelForMessageItem", () => {
       undefined
     );
     expect(result).toBe(
-      "Message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to select and later archive"
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito archiviare"
     );
   });
   it("should match expected output for read message  , in inbox  , selected is false", () => {
@@ -422,7 +381,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "INBOX", false);
     expect(result).toBe(
-      "Message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to select and later archive"
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per selezionare e in seguito archiviare"
     );
   });
   it("should match expected output for read message  , in inbox  , selected is true", () => {
@@ -432,7 +391,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "INBOX", true);
     expect(result).toBe(
-      "Message selected, received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . Press and hold to deselect"
+      "Messaggio selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . Tieni premuto per deselezionare"
     );
   });
   it("should match expected output for read message  , in search , selected is undefined", () => {
@@ -446,7 +405,7 @@ describe("accessibilityLabelForMessageItem", () => {
       undefined
     );
     expect(result).toBe(
-      "Message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . "
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
     );
   });
   it("should match expected output for read message  , in search , selected is false", () => {
@@ -456,7 +415,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "SEARCH", false);
     expect(result).toBe(
-      "Message , received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . "
+      "Messaggio , ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
     );
   });
   it("should match expected output for read message  , in search , selected is true", () => {
@@ -466,7 +425,7 @@ describe("accessibilityLabelForMessageItem", () => {
     };
     const result = accessibilityLabelForMessageItem(message, "SEARCH", true);
     expect(result).toBe(
-      "Message selected, received by Organization A, Service A. Message Title. \n    received on June 15th 2023\n  . "
+      "Messaggio selezionato, ricevuto da Organization A, Service A. Message Title. \n    ricevuto il 15 giugno 2023\n  . "
     );
   });
 });
@@ -827,22 +786,26 @@ describe("archiveUnarchiveAccessibilityInstructions", () => {
 
   it("should return deselect instructions when isSelected is true and source is INBOX", () => {
     const result = archiveUnarchiveAccessibilityInstructions("INBOX", true);
-    expect(result).toBe("Press and hold to deselect");
+    expect(result).toBe("Tieni premuto per deselezionare");
   });
 
   it("should return deselect instructions when isSelected is true and source is ARCHIVE", () => {
     const result = archiveUnarchiveAccessibilityInstructions("ARCHIVE", true);
-    expect(result).toBe("Press and hold to deselect");
+    expect(result).toBe("Tieni premuto per deselezionare");
   });
 
   it("should return archive instructions when source is INBOX and isSelected is false", () => {
     const result = archiveUnarchiveAccessibilityInstructions("INBOX", false);
-    expect(result).toBe("Press and hold to select and later archive");
+    expect(result).toBe(
+      "Tieni premuto per selezionare e in seguito archiviare"
+    );
   });
 
   it("should return unarchive instructions when source is ARCHIVE and isSelected is false", () => {
     const result = archiveUnarchiveAccessibilityInstructions("ARCHIVE", false);
-    expect(result).toBe("Press and hold to select and later unarchive");
+    expect(result).toBe(
+      "Tieni premuto per selezionare e in seguito disarchiviare"
+    );
   });
 
   it("should return archive instructions when source is INBOX and isSelected is undefined", () => {
@@ -850,7 +813,9 @@ describe("archiveUnarchiveAccessibilityInstructions", () => {
       "INBOX",
       undefined
     );
-    expect(result).toBe("Press and hold to select and later archive");
+    expect(result).toBe(
+      "Tieni premuto per selezionare e in seguito archiviare"
+    );
   });
 
   it("should return unarchive instructions when source is ARCHIVE and isSelected is undefined", () => {
@@ -858,6 +823,8 @@ describe("archiveUnarchiveAccessibilityInstructions", () => {
       "ARCHIVE",
       undefined
     );
-    expect(result).toBe("Press and hold to select and later unarchive");
+    expect(result).toBe(
+      "Tieni premuto per selezionare e in seguito disarchiviare"
+    );
   });
 });

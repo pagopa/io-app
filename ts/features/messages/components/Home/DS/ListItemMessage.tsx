@@ -63,15 +63,12 @@ type ListItemMessageTag = {
   variant: Extract<Tag["variant"], "legalMessage" | "success">;
 };
 
-export type ListItemMessage = WithTestID<{
-  accessibilityLabel: string;
+export type ListItemMessageProps = WithTestID<{
   tag?: ListItemMessageTag;
   avatarDouble?: boolean;
   formattedDate: string;
   isRead: boolean;
   messageTitle: string;
-  onLongPress: () => void;
-  onPress: () => void;
   organizationName: string;
   selected?: boolean;
   serviceLogos?: ImageSourcePropType;
@@ -79,12 +76,7 @@ export type ListItemMessage = WithTestID<{
 }> &
   Pick<
     ComponentProps<typeof Pressable>,
-    | "onPress"
-    | "onLongPress"
-    | "accessibilityLabel"
-    | "accessibilityHint"
-    | "accessibilityState"
-    | "accessibilityRole"
+    "onPress" | "onLongPress" | "accessibilityLabel" | "accessibilityRole"
   >;
 
 type UnreadBadgeProps = {
@@ -113,7 +105,7 @@ export const ListItemMessage = ({
   selected,
   serviceLogos,
   testID
-}: ListItemMessage) => {
+}: ListItemMessageProps) => {
   const theme = useIOTheme();
   const { themeType } = useIOThemeContext();
 
