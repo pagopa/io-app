@@ -6,6 +6,7 @@ import { assert } from "../../../../utils/assert";
 import { getNetworkError } from "../../../../utils/errors";
 import {
   trackItwStatusWalletAttestationFailure,
+  trackItwWalletBadState,
   trackItwWalletInstanceRevocation
 } from "../../analytics";
 import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils";
@@ -76,6 +77,7 @@ export function* checkWalletInstanceInconsistencySaga(): Generator<
 
   if (O.isSome(eid) && O.isNone(integrityKeyTag)) {
     yield* call(handleWalletInstanceResetSaga);
+    trackItwWalletBadState();
     return false;
   }
 
