@@ -469,7 +469,9 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                         ItemSeparatorComponent={[Function]}
                         ListHeaderComponent={
                           <View>
-                            <ForwardRef>
+                            <ForwardRef
+                              accessibilityRole="header"
+                            >
                               Enable push notifications not to miss important messages!
                             </ForwardRef>
                             <VSpacer
@@ -541,6 +543,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                           >
                             <View>
                               <Text
+                                accessibilityRole="header"
                                 allowFontScaling={true}
                                 dynamicTypeRamp="title1"
                                 maxFontSizeMultiplier={1.5}
