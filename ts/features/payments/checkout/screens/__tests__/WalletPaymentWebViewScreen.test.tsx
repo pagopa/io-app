@@ -19,7 +19,7 @@ const mockNavigate = {
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
-  useNavigation: () => mockNavigate
+  useIONavigation: () => mockNavigate
 }));
 
 describe("WalletPaymentWebViewScreen", () => {

@@ -534,7 +534,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={false}
+                                      accessible={true}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -1500,7 +1500,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={false}
+                                      accessible={true}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -2635,7 +2635,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={false}
+                                      accessible={true}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -3625,7 +3625,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={false}
+                                      accessible={true}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -4670,7 +4670,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={false}
+                                      accessible={true}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -5522,7 +5522,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={false}
+                                      accessible={true}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -6315,7 +6315,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={false}
+                                      accessible={true}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -7053,7 +7053,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={false}
+                                      accessible={true}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
