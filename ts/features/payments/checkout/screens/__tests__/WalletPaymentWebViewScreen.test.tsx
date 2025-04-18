@@ -1,13 +1,14 @@
-import { render } from "@testing-library/react-native";
+import { RenderAPI } from "@testing-library/react-native";
 import { WebView } from "react-native-webview";
-import { Provider } from "react-redux";
-import configureMockStore from "redux-mock-store";
+import { createStore } from "redux";
 import I18n from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../../common/utils/const";
 import WalletPaymentWebViewScreen from "../WalletPaymentWebViewScreen";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { PaymentsCheckoutRoutes } from "../../navigation/routes";
 
 const mockSetOptions = jest.fn();
 const mockNavigate = {
@@ -19,12 +20,11 @@ const mockNavigate = {
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
-  useNavigation: () => mockNavigate
+  useIONavigation: jest.fn().mockReturnValue(mockNavigate)
 }));
 
 describe("WalletPaymentWebViewScreen", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const mockStore = configureMockStore<GlobalState>();
 
   it("snapshot for component", () => {
     const enrichedState = {
@@ -44,13 +44,9 @@ describe("WalletPaymentWebViewScreen", () => {
       }
     };
 
-    const enrichedStore: ReturnType<typeof mockStore> =
-      mockStore(enrichedState);
-
-    const component = render(
-      <Provider store={enrichedStore}>
-        <WalletPaymentWebViewScreen />
-      </Provider>
+    const component = renderComponent(
+      <WalletPaymentWebViewScreen />,
+      enrichedState
     );
     expect(component).toMatchSnapshot();
   });
@@ -75,13 +71,9 @@ describe("WalletPaymentWebViewScreen", () => {
       }
     };
 
-    const enrichedStore: ReturnType<typeof mockStore> =
-      mockStore(enrichedState);
-
-    const { UNSAFE_getByType } = render(
-      <Provider store={enrichedStore}>
-        <WalletPaymentWebViewScreen />
-      </Provider>
+    const { UNSAFE_getByType } = renderComponent(
+      <WalletPaymentWebViewScreen />,
+      enrichedState
     );
     // with UNSAFE_getByType we can get the WebView component and its props
     const webView = UNSAFE_getByType(WebView);
@@ -110,13 +102,24 @@ describe("WalletPaymentWebViewScreen", () => {
   });
 
   it("should render the spinner on no url", () => {
-    const enrichedStore: ReturnType<typeof mockStore> = mockStore(globalState);
-    const { getByText } = render(
-      <Provider store={enrichedStore}>
-        <WalletPaymentWebViewScreen />
-      </Provider>
+    const { getByText } = renderComponent(
+      <WalletPaymentWebViewScreen />,
+      globalState
     );
     const loadingSpinnerText = getByText(I18n.t("global.remoteStates.wait"));
     expect(loadingSpinnerText).toBeTruthy();
   });
 });
+
+const renderComponent = (
+  Component = <></>,
+  enrichedState: GlobalState
+): RenderAPI => {
+  const store = createStore(appReducer, enrichedState as any);
+  return renderScreenWithNavigationStoreContext(
+    () => Component,
+    PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_WEB_VIEW,
+    {},
+    store
+  );
+};
