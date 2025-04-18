@@ -1,18 +1,18 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useCallback, useEffect } from "react";
-import { View, Modal, StyleSheet, SafeAreaView } from "react-native";
+import { View, Modal, SafeAreaView } from "react-native";
 import {
   ContentWrapper,
   H4,
   BodySmall,
   Pictogram,
-  VSpacer
+  VSpacer,
+  IOColors,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";
 import { useIODispatch } from "../../store/hooks";
 import { identificationHideLockModal } from "../../store/actions/identification";
-import { IOStyleVariables } from "../../components/core/variables/IOStyleVariables";
 import {
   CountdownProvider,
   useCountdown
@@ -54,7 +54,7 @@ const Countdown = (props: CountdownProps) => {
     <>
       <ProgressIndicator progress={loaderValue} />
       <VSpacer size={8} />
-      <View style={IOStyles.row}>
+      <View style={{ flexDirection: "row" }}>
         <BodySmall color="black" weight="Regular">
           {waitMessageText}
         </BodySmall>
@@ -71,6 +71,7 @@ const Countdown = (props: CountdownProps) => {
   A countdown is displayed indicating how long it is to unlock the application.
 */
 export const IdentificationLockModal = (props: Props) => {
+  const theme = useIOTheme();
   const { countdownInMs, timeSpanInSeconds } = props;
   const timerTiming = Math.round((countdownInMs as number) / 1000);
 
@@ -81,13 +82,19 @@ export const IdentificationLockModal = (props: Props) => {
 
   return (
     <Modal>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          backgroundColor: IOColors[theme["appBackground-primary"]]
+        }}
+      >
         <ContentWrapper>
-          <View style={styles.content}>
+          <View style={{ alignItems: "center" }}>
             <Pictogram name="accessDenied" />
             <VSpacer size={24} />
             <H4
-              style={styles.contentTitle}
+              style={{ textAlign: "center" }}
               accessibilityLabel={tooManyAttemptsText}
             >
               {tooManyAttemptsText}
@@ -108,17 +115,3 @@ export const IdentificationLockModal = (props: Props) => {
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    ...IOStyles.bgWhite,
-    ...IOStyles.centerJustified,
-    ...IOStyles.flex
-  },
-  contentTitle: {
-    textAlign: "center"
-  },
-  content: {
-    alignItems: "center"
-  }
-});
