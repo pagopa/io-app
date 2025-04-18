@@ -38,7 +38,8 @@ import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 export enum Identifier {
   SPID = "SPID",
   CIE = "CIE",
-  CIE_ID = "CIE_ID"
+  CIE_ID = "CIE_ID",
+  TEST = "TEST"
 }
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt_in.contextualHelpTitle",
@@ -47,7 +48,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 export type ChosenIdentifier =
   | {
-      identifier: Identifier.SPID | Identifier.CIE;
+      identifier: Identifier.SPID | Identifier.CIE | Identifier.TEST;
     }
   | {
       identifier: Identifier.CIE_ID;
@@ -59,7 +60,8 @@ export const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 820;
 const authScreensMap = {
   CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
   SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
-  CIE_ID: AUTHENTICATION_ROUTES.CIE_ID_LOGIN
+  CIE_ID: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
+  TEST: AUTHENTICATION_ROUTES.IDP_TEST
 };
 
 const OptInScreen = () => {

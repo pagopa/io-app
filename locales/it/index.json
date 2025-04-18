@@ -807,6 +807,14 @@
           "hint": "Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto"
         }
       },
+      "useful_resources": {
+        "bottomSheet": {
+          "title": "Risorse utili",
+          "privacy_policy": "Informativa Privacy",
+          "manage_access": "Gestisci i tuoi accessi",
+          "io_more_informations": "Cosa puoi fare con l’app IO"
+        }
+      },
       "session_expired": {
         "title": "Accedi di nuovo",
         "body": "Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità",
