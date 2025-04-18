@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
-import configureMockStore from "redux-mock-store";
+import configureMockStore, { MockStoreEnhanced } from "redux-mock-store";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import _ from "lodash";
 import { IdentificationModal } from "../IdentificationModal";
@@ -45,11 +45,7 @@ describe("IdentificationModal", () => {
   );
 
   it("should render the modal when identification is started", () => {
-    const { getByText, getByTestId } = render(
-      <Provider store={store}>
-        <IdentificationModal />
-      </Provider>
-    );
+    const { getByText, getByTestId } = renderComponent(store);
 
     expect(getByTestId("identification-modal")).toBeTruthy();
     expect(getByText("Hi!")).toBeTruthy();
@@ -64,11 +60,7 @@ describe("IdentificationModal", () => {
       } as GlobalState)
     );
 
-    const { queryByText, queryByTestId } = render(
-      <Provider store={newStore}>
-        <IdentificationModal />
-      </Provider>
-    );
+    const { queryByText, queryByTestId } = renderComponent(newStore);
 
     expect(queryByTestId("identification-modal")).toBeNull();
     expect(queryByText("Hi!")).toBeNull();
@@ -90,11 +82,7 @@ describe("IdentificationModal", () => {
       } as GlobalState)
     );
 
-    const { getByTestId } = render(
-      <Provider store={newStore}>
-        <IdentificationModal />
-      </Provider>
-    );
+    const { getByTestId } = renderComponent(newStore);
 
     expect(getByTestId("identification-lock-modal")).toBeTruthy();
   });
@@ -114,11 +102,7 @@ describe("IdentificationModal", () => {
       } as GlobalState)
     );
 
-    const { getByText } = render(
-      <Provider store={newStore}>
-        <IdentificationModal />
-      </Provider>
-    );
+    const { getByText } = renderComponent(newStore);
 
     expect(getByText(/You have 2 attempts left/i)).toBeTruthy();
   });
@@ -133,11 +117,7 @@ describe("IdentificationModal", () => {
       } as GlobalState)
     );
 
-    const { getByText } = render(
-      <Provider store={newStore}>
-        <IdentificationModal />
-      </Provider>
-    );
+    const { getByText } = renderComponent(newStore);
 
     const forgotCodeButton = getByText(/Did you forget the/i);
     expect(forgotCodeButton).toBeTruthy();
@@ -153,11 +133,7 @@ describe("IdentificationModal", () => {
       } as GlobalState)
     );
 
-    const { getByLabelText } = render(
-      <Provider store={newStore}>
-        <IdentificationModal />
-      </Provider>
-    );
+    const { getByLabelText } = renderComponent(newStore);
 
     const closeButton = getByLabelText(/Close/i);
     expect(closeButton).toBeTruthy();
@@ -182,11 +158,7 @@ describe("IdentificationModal", () => {
       } as GlobalState)
     );
 
-    const { getByLabelText } = render(
-      <Provider store={newStore}>
-        <IdentificationModal />
-      </Provider>
-    );
+    const { getByLabelText } = renderComponent(newStore);
 
     const closeButton = getByLabelText(/Cancel operation/i);
     expect(closeButton).toBeTruthy();
@@ -194,3 +166,10 @@ describe("IdentificationModal", () => {
     expect(mockOnCancel).toHaveBeenCalledTimes(1);
   });
 });
+
+const renderComponent = (providerStore: MockStoreEnhanced) =>
+  render(
+    <Provider store={providerStore}>
+      <IdentificationModal />
+    </Provider>
+  );

@@ -1,4 +1,5 @@
 import { render, fireEvent } from "@testing-library/react-native";
+import { ComponentProps } from "react";
 import { IdentificationNumberPad } from "../IdentificationNumberPad";
 
 describe("IdentificationNumberPad", () => {
@@ -17,29 +18,22 @@ describe("IdentificationNumberPad", () => {
     onBiometricPress: jest.fn()
   };
 
+  const defaultProps: ComponentProps<typeof IdentificationNumberPad> = {
+    pin: "123456",
+    pinValidation: mockPinValidation,
+    numberPadVariant: "primary",
+    biometricsConfig: mockBiometricConfig
+  };
+
   it("should render the number pad and code input", () => {
-    const { getByTestId } = render(
-      <IdentificationNumberPad
-        pin="123456"
-        pinValidation={mockPinValidation}
-        numberPadVariant="primary"
-        biometricsConfig={mockBiometricConfig}
-      />
-    );
+    const { getByTestId } = renderComponent(defaultProps);
 
     expect(getByTestId("code-input")).toBeTruthy();
     expect(getByTestId("number-pad")).toBeTruthy();
   });
 
   it("should call biometric press handler", () => {
-    const { getByLabelText } = render(
-      <IdentificationNumberPad
-        pin="123456"
-        pinValidation={mockPinValidation}
-        numberPadVariant="primary"
-        biometricsConfig={mockBiometricConfig}
-      />
-    );
+    const { getByLabelText } = renderComponent(defaultProps);
 
     const biometricButton = getByLabelText("Use Face ID");
     fireEvent.press(biometricButton);
@@ -48,14 +42,7 @@ describe("IdentificationNumberPad", () => {
   });
 
   it("should render all number pad buttons", () => {
-    const { getByText, getByA11yLabel } = render(
-      <IdentificationNumberPad
-        pin="123456"
-        pinValidation={mockPinValidation}
-        numberPadVariant="primary"
-        biometricsConfig={mockBiometricConfig}
-      />
-    );
+    const { getByText, getByA11yLabel } = renderComponent(defaultProps);
 
     // Check for all number buttons
     // eslint-disable-next-line functional/no-let
@@ -68,14 +55,7 @@ describe("IdentificationNumberPad", () => {
   });
 
   it("should update successfully validate PIN if it's enter correctly", () => {
-    const { getByText } = render(
-      <IdentificationNumberPad
-        pin="123456"
-        pinValidation={mockPinValidation}
-        numberPadVariant="primary"
-        biometricsConfig={mockBiometricConfig}
-      />
-    );
+    const { getByText } = renderComponent(defaultProps);
 
     fireEvent.press(getByText("1"));
     fireEvent.press(getByText("2"));
@@ -88,14 +68,7 @@ describe("IdentificationNumberPad", () => {
   });
 
   it("should update successfully validate PIN if it's wrong", () => {
-    const { getByText } = render(
-      <IdentificationNumberPad
-        pin="123456"
-        pinValidation={mockPinValidation}
-        numberPadVariant="primary"
-        biometricsConfig={mockBiometricConfig}
-      />
-    );
+    const { getByText } = renderComponent(defaultProps);
 
     fireEvent.press(getByText("1"));
     fireEvent.press(getByText("2"));
@@ -107,3 +80,7 @@ describe("IdentificationNumberPad", () => {
     expect(mockPinValidation).toHaveBeenCalledWith(false);
   });
 });
+
+const renderComponent = (
+  props: ComponentProps<typeof IdentificationNumberPad>
+) => render(<IdentificationNumberPad {...props} />);
