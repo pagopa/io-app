@@ -2554,7 +2554,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             <View>
                               <View>
                                 <View
-                                  accessibilityLabel="Informativa Privacy"
+                                  accessibilityLabel="Privacy policy"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -2709,7 +2709,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Informativa Privacy
+                                          Privacy policy
                                         </Text>
                                       </View>
                                     </View>
@@ -2724,7 +2724,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   }
                                 />
                                 <View
-                                  accessibilityLabel="Gestisci i tuoi accessi"
+                                  accessibilityLabel="Manage access"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -2879,7 +2879,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Gestisci i tuoi accessi
+                                          Manage access
                                         </Text>
                                       </View>
                                     </View>
@@ -2894,7 +2894,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   }
                                 />
                                 <View
-                                  accessibilityLabel="Cosa puoi fare con l’app IO"
+                                  accessibilityLabel="What you can do with the IO app"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -3049,7 +3049,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Cosa puoi fare con l’app IO
+                                          What you can do with the IO app
                                         </Text>
                                       </View>
                                     </View>
@@ -3250,7 +3250,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Risorse utili"
+                                accessibilityLabel="Useful resources"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

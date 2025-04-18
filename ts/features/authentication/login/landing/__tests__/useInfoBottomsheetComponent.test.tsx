@@ -1,11 +1,17 @@
-import { render, fireEvent } from "@testing-library/react-native";
+import { fireEvent } from "@testing-library/react-native";
+import { createStore } from "redux";
 import * as urlUtils from "../../../../../utils/url";
 import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 
 jest.mock("../../../../../store/hooks", () => ({
-  useIOSelector: jest.fn()
+  useIOSelector: jest.fn(),
+  useIODispatch: () => jest.fn(),
+  useIOStore: jest.fn()
 }));
 
 jest.mock("../../../../../utils/url", () => ({
@@ -18,6 +24,14 @@ jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
     dismiss: mockDismiss,
     bottomSheet: <>{options.component}</>
   }))
+}));
+
+const mockNavigate = jest.fn();
+
+jest.mock("../../../../../navigation/params/AppParamsList", () => ({
+  useIONavigation: () => ({
+    navigate: mockNavigate
+  })
 }));
 
 const mockPresent = jest.fn();
@@ -36,7 +50,17 @@ describe("useInfoBottomsheetComponent", () => {
       const { infoBottomsheetComponent } = useInfoBottomsheetComponent();
       return <>{infoBottomsheetComponent}</>;
     };
-    return render(<WrapperComponent />);
+    const initialState = appReducer(
+      undefined,
+      applicationChangeState("active")
+    );
+    const store = createStore(appReducer, initialState as any);
+    return renderScreenWithNavigationStoreContext(
+      () => <WrapperComponent />,
+      "DUMMY",
+      {},
+      store
+    );
   };
 
   it("should render bottom sheet with all items", () => {
