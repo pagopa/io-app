@@ -22,12 +22,12 @@ import Reanimated, {
 
 type RightActionsProps = {
   showDeleteAlert: () => void;
-  accessibilityLabel?: string;
+  accessibilityLabel: string;
 };
 
 const RightActions = ({
   showDeleteAlert,
-  accessibilityLabel = ""
+  accessibilityLabel
 }: RightActionsProps) => (
   <View
     style={{
