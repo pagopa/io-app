@@ -19,7 +19,7 @@ describe("React Native Push Notifications iOS library integration", () => {
     expect(fileContentBuffer).not.toBeNull();
 
     const fileContent = fileContentBuffer!.toString();
-    expect(fileContent).toContain("#import RNCPushNotificationIOS");
+    expect(fileContent).toContain(`#import "RNCPushNotificationIOS.h"`);
   });
 
   it("AppDelegate.swift integrates react-native-push-notification-ios library", () => {
