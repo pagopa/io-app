@@ -1,8 +1,4 @@
-import {
-  BiometricsValidType,
-  Body,
-  IOStyles
-} from "@pagopa/io-app-design-system";
+import { BiometricsValidType, Body } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { TxtParagraphNode } from "@textlint/ast-node-types";
 import I18n from "../../i18n";
@@ -75,7 +71,7 @@ export const IdentificationInstructionsComponent = (props: {
       accessibilityLabel={I18n.t(
         "identification.instructions.useUnlockCodeA11y"
       )}
-      style={IOStyles.row}
+      style={{ flexDirection: "row" }}
     >
       <IOMarkdown
         content={I18n.t("identification.instructions.useUnlockCode")}
@@ -95,7 +91,7 @@ export const IdentificationInstructionsComponent = (props: {
         <View
           accessible
           accessibilityLabel={a11yInstruction}
-          style={IOStyles.row}
+          style={{ flexDirection: "row" }}
         >
           <IOMarkdown
             content={I18n.t(
@@ -110,7 +106,7 @@ export const IdentificationInstructionsComponent = (props: {
         <View
           accessible
           accessibilityLabel={a11yInstruction}
-          style={IOStyles.row}
+          style={{ flexDirection: "row" }}
         >
           <IOMarkdown
             content={I18n.t(

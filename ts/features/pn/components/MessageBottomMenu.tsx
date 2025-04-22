@@ -1,4 +1,8 @@
-import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOStyles,
+  IOVisualCostants
+} from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { ContactsListItem } from "../../messages/components/MessageDetail/ContactsListItem";
@@ -21,7 +25,7 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors["grey-50"],
     paddingBottom: "95%",
     marginBottom: "-95%",
-    paddingHorizontal: IOStyles.horizontalContentPadding.paddingHorizontal,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
     paddingTop: IOStyles.footer.paddingTop
   }
 });

@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import {
   Divider,
-  IOStyles,
+  IOVisualCostants,
   ListItemAction,
   ListItemHeader,
   ListItemInfo,
@@ -191,7 +191,9 @@ export const ServiceDetailsMetadata = ({
     <FlatList
       ListHeaderComponent={ListHeaderComponent}
       ItemSeparatorComponent={() => <Divider />}
-      contentContainerStyle={IOStyles.horizontalContentPadding}
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
       data={filteredMetadataListItems}
       keyExtractor={item => item.label}
       renderItem={renderItem}

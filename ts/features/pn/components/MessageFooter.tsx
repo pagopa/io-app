@@ -76,6 +76,7 @@ export const MessageFooter = ({
     return null;
   }
   const isLoading = buttonState === "visibleLoading";
+
   return (
     <View
       style={[
