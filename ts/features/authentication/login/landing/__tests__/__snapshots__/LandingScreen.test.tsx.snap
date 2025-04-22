@@ -199,6 +199,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             "flex": 1,
                           }
                         }
+                        testID="LandingScreen"
                       >
                         <RCTScrollView
                           horizontal={true}
@@ -1269,6 +1270,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                               "justifyContent": "center",
                             }
                           }
+                          testID="carousel-dots"
                         >
                           <View
                             collapsable={false}

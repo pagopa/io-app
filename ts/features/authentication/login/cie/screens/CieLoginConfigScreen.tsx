@@ -2,7 +2,7 @@ import { ContentWrapper, OTPInput } from "@pagopa/io-app-design-system";
 import { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import CieLoginConfigScreenContent from "./CieLoginConfigScreenContent";
+import CieLoginConfigScreenContent from "../components/CieLoginConfigScreenContent";
 
 const PIN_LENGTH = 6;
 
