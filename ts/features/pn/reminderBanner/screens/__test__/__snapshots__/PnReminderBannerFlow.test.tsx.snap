@@ -514,6 +514,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= ALREADY
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -1275,6 +1276,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -2036,6 +2038,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -2749,6 +2752,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= SUCCESS
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -3549,6 +3553,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
                               maxFontSizeMultiplier={1.5}
@@ -4663,6 +4668,7 @@ exports[`error screens should display an error screen in case of missing_sid err
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -5424,6 +5430,7 @@ exports[`error screens should display an error screen in case of preferences err
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -6185,6 +6192,7 @@ exports[`loading screens + error interop should render the correct loading scree
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}

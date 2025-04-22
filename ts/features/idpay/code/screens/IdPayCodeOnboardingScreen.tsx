@@ -10,7 +10,7 @@ import { idPayEnrollCode, idPayGenerateCode } from "../store/actions";
 import { isIdPayCodeOnboardedSelector } from "../store/selectors";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
 import I18n from "../../../../i18n";
-import { identificationRequest } from "../../../../store/actions/identification";
+import { identificationRequest } from "../../../identification/store/actions";
 import { shufflePinPadOnPayment } from "../../../../config";
 import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";

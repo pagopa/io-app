@@ -63,3 +63,9 @@ export const automaticSessionRefreshPersistor = persistReducer<
   AutomaticSessionRefreshState,
   Action
 >(persistConfig, AutomaticSessionRefreshReducer);
+
+export const testableAutomaticSessionRefreshReducer = isDevEnv
+  ? {
+      AutomaticSessionRefreshReducer
+    }
+  : undefined;

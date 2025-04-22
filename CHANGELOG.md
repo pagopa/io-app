@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0-rc.8](https://github.com/pagopa/io-app/compare/3.3.0-rc.7...3.3.0-rc.8) (2025-04-17)
+
+
+### Bug Fixes
+
+* [[IOCOM-2142](https://pagopa.atlassian.net/browse/IOCOM-2142)] Fix external keyboard focus on message logo ([#6894](https://github.com/pagopa/io-app/issues/6894)) ([086f516](https://github.com/pagopa/io-app/commit/086f5165be548f5ff5d2449f462dff001e476287))
+* [[IOCOM-2224](https://pagopa.atlassian.net/browse/IOCOM-2224)] Proper tracking of the push notification opening analytics event ([#6878](https://github.com/pagopa/io-app/issues/6878)) ([3481cd7](https://github.com/pagopa/io-app/commit/3481cd75c5dd5004281124928279dbc20633b2fa))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-228](https://pagopa.atlassian.net/browse/SIW-228)] Track wallet bad state ([#6905](https://github.com/pagopa/io-app/issues/6905)) ([b734a91](https://github.com/pagopa/io-app/commit/b734a9127f0667bad156afd38b84d12fb21bf85c))
+
+## [3.3.0-rc.7](https://github.com/pagopa/io-app/compare/3.3.0-rc.6...3.3.0-rc.7) (2025-04-16)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2207](https://pagopa.atlassian.net/browse/SIW-2207)] Remote presentation, inactive IT-Wallet failure screen ([#6900](https://github.com/pagopa/io-app/issues/6900)) ([e908a22](https://github.com/pagopa/io-app/commit/e908a22e83c01e9f116c8fd28b5d940670b0c0b1))
+* **IT Wallet:** [[SIW-2208](https://pagopa.atlassian.net/browse/SIW-2208)] Remote presentation, update copy eID expired screen ([#6901](https://github.com/pagopa/io-app/issues/6901)) ([c7aadaf](https://github.com/pagopa/io-app/commit/c7aadaf3782f2e00fe4ff25b2ac6e72c20e5cec7))
+
 ## [3.3.0-rc.6](https://github.com/pagopa/io-app/compare/3.3.0-rc.5...3.3.0-rc.6) (2025-04-15)
 
 

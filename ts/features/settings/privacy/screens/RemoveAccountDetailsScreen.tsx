@@ -25,7 +25,7 @@ import { shufflePinPadOnPayment } from "../../../../config";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
 import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
-import { identificationRequest } from "../../../../store/actions/identification";
+import { identificationRequest } from "../../../identification/store/actions";
 import {
   RemoveAccountMotivationEnum,
   removeAccountMotivation

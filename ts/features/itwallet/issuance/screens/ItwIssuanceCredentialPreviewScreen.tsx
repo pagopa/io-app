@@ -13,7 +13,7 @@ import LoadingScreenContent from "../../../../components/screens/LoadingScreenCo
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import { identificationRequest } from "../../../../store/actions/identification";
+import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
@@ -90,10 +90,11 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   useFocusEffect(() => {
     trackCredentialPreview(mixPanelCredential);
   });
-
-  const dismissDialog = useItwDismissalDialog(() => {
-    machineRef.send({ type: "close" });
-    trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+  const dismissDialog = useItwDismissalDialog({
+    handleDismiss: () => {
+      machineRef.send({ type: "close" });
+      trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+    }
   });
 
   const handleSaveToWallet = () => {
