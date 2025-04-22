@@ -15,9 +15,9 @@ jest.mock("react-native", () => ({
 
 describe("isScreenReaderEnabled", () => {
   it("should return true if screen reader is enabled", async () => {
-    (AccessibilityInfo.isScreenReaderEnabled as jest.Mock).mockImplementation(
-      () => Promise.resolve(true)
-    );
+    jest
+      .spyOn(AccessibilityInfo, "isScreenReaderEnabled")
+      .mockImplementation(() => Promise.resolve(true));
 
     const result = await isScreenReaderEnabled();
 
@@ -25,9 +25,9 @@ describe("isScreenReaderEnabled", () => {
   });
 
   it("should return false if screen reader is not enabled", async () => {
-    (AccessibilityInfo.isScreenReaderEnabled as jest.Mock).mockImplementation(
-      () => Promise.resolve(false)
-    );
+    jest
+      .spyOn(AccessibilityInfo, "isScreenReaderEnabled")
+      .mockImplementation(() => Promise.resolve(false));
 
     const result = await isScreenReaderEnabled();
 
@@ -35,9 +35,9 @@ describe("isScreenReaderEnabled", () => {
   });
 
   it("should return false if an error occurs", async () => {
-    (AccessibilityInfo.isScreenReaderEnabled as jest.Mock).mockImplementation(
-      () => Promise.reject(new Error("Error"))
-    );
+    jest
+      .spyOn(AccessibilityInfo, "isScreenReaderEnabled")
+      .mockImplementation(() => Promise.reject(new Error("Error")));
 
     const result = await isScreenReaderEnabled();
 
