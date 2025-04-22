@@ -42,7 +42,9 @@ export const IOScrollViewCentredContent = ({
       <Pictogram name={pictogram} size={180} />
       <View style={{ paddingHorizontal: 24 }}>
         <VStack space={8} style={{ alignItems: "center" }}>
-          <H3 style={{ textAlign: "center" }}>{title}</H3>
+          <H3 accessibilityRole="header" style={{ textAlign: "center" }}>
+            {title}
+          </H3>
           {description && (
             <>
               {typeof description === "string" ? (
