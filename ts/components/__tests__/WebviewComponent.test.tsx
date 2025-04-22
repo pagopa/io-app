@@ -44,7 +44,7 @@ describe("WebviewComponent tests", () => {
     expect(getByText(I18n.t("global.buttons.retry"))).toBeTruthy();
   });
 
-  it("should reload on retry", () => {
+  it("should reload on retry", async () => {
     const { getByText, getByTestId } = render(
       <Provider store={store}>
         <WebviewComponent source={{ uri: "https://google.com" }} />
@@ -55,7 +55,7 @@ describe("WebviewComponent tests", () => {
       nativeEvent: { description: "Network error" }
     });
     userEvent.setup();
-    userEvent.press(getByText(I18n.t("global.buttons.retry")));
+    await userEvent.press(getByText(I18n.t("global.buttons.retry")));
 
     expect(getByTestId("webview")).toBeTruthy();
   });
