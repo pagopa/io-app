@@ -84,7 +84,7 @@ describe("analytics", () => {
       const action = idpSelected({
         id: "An id",
         name: "A name",
-        logo: "",
+        logo: { light: { uri: "" } },
         profileUrl: ""
       });
 
