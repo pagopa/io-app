@@ -40,9 +40,7 @@ describe("Test SignatureFieldItem component", () => {
     expect(component).toBeTruthy();
     const listItemCheckbox = component.getByTestId("ListItemCheckbox");
     expect(listItemCheckbox).toBeTruthy();
-    const checkbox = component.getByTestId("AnimatedCheckboxInput", {
-      includeHiddenElements: true
-    });
+    const checkbox = component.getByTestId("AnimatedCheckboxInput");
     expect(checkbox).toBeTruthy();
     expect(checkbox).toBeEnabled();
   });
@@ -58,9 +56,7 @@ describe("Test SignatureFieldItem component", () => {
     expect(component).toBeTruthy();
     const listItemCheckbox = component.getByTestId("ListItemCheckbox");
     expect(listItemCheckbox).toBeTruthy();
-    const checkbox = component.getByTestId("AnimatedCheckboxInput", {
-      includeHiddenElements: true
-    });
+    const checkbox = component.getByTestId("AnimatedCheckboxInput");
     expect(checkbox).toBeTruthy();
     expect(checkbox).toBeDisabled();
   });

@@ -107,20 +107,12 @@ describe("AuthErrorComponent", () => {
         }
 
         if (expectRetryCalled) {
-          fireEvent.press(
-            getByLabelText(I18n.t("global.buttons.retry"), {
-              includeHiddenElements: true
-            })
-          );
+          fireEvent.press(getByLabelText(I18n.t("global.buttons.retry")));
           expect(onRetryMock).toHaveBeenCalled();
         }
 
         if (expectCancelCalled) {
-          fireEvent.press(
-            getByLabelText(I18n.t("global.buttons.close"), {
-              includeHiddenElements: true
-            })
-          );
+          fireEvent.press(getByLabelText(I18n.t("global.buttons.close")));
           expect(onCancelMock).toHaveBeenCalled();
         }
       });

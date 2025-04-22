@@ -40,14 +40,8 @@ describe("WebviewComponent tests", () => {
       nativeEvent: { description: "Network error" }
     });
 
-    expect(
-      getByText(
-        I18n.t("wallet.errors.GENERIC_ERROR", { includeHiddenElements: true })
-      )
-    ).toBeTruthy();
-    expect(
-      getByText(I18n.t("global.buttons.retry", { includeHiddenElements: true }))
-    ).toBeTruthy();
+    expect(getByText(I18n.t("wallet.errors.GENERIC_ERROR"))).toBeTruthy();
+    expect(getByText(I18n.t("global.buttons.retry"))).toBeTruthy();
   });
 
   it("should reload on retry", () => {
@@ -61,9 +55,7 @@ describe("WebviewComponent tests", () => {
       nativeEvent: { description: "Network error" }
     });
     userEvent.setup();
-    userEvent.press(
-      getByText(I18n.t("global.buttons.retry", { includeHiddenElements: true }))
-    );
+    userEvent.press(getByText(I18n.t("global.buttons.retry")));
 
     expect(getByTestId("webview")).toBeTruthy();
   });
