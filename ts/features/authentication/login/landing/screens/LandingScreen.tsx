@@ -335,7 +335,7 @@ export const LandingScreen = () => {
     );
 
     return (
-      <View style={IOStyles.flex}>
+      <View style={IOStyles.flex} testID="LandingScreen">
         {isSessionExpiredRef.current ? (
           <LandingSessionExpiredComponent
             ref={accessibilityFirstFocuseViewRef}
