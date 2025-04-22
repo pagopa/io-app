@@ -61,12 +61,14 @@ type ListItemSwipeActionProps = {
     confirmText: string;
     cancelText: string;
   };
+  accessibilityLabel?: string;
 };
 
 const ListItemSwipeAction = ({
   children,
   swipeAction,
-  alertProps
+  alertProps,
+  accessibilityLabel = ""
 }: ListItemSwipeActionProps) => {
   const translateX = useSharedValue(0);
   const { themeType } = useIOThemeContext();
@@ -142,7 +144,10 @@ const ListItemSwipeAction = ({
             backgroundStyle
           ]}
         />
-        <RightActions showDeleteAlert={showAlertAction} />
+        <RightActions
+          showDeleteAlert={showAlertAction}
+          accessibilityLabel={accessibilityLabel}
+        />
         <PanGestureHandler
           onGestureEvent={handleGestureEvent}
           onEnded={event =>
