@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0-rc.6](https://github.com/pagopa/io-app/compare/3.3.0-rc.5...3.3.0-rc.6) (2025-04-15)
+
+
+### Features
+
+* [[IOCOM-2219](https://pagopa.atlassian.net/browse/IOCOM-2219)] UI/UX for message CTA decoding failure ([#6887](https://github.com/pagopa/io-app/issues/6887)) ([be046c9](https://github.com/pagopa/io-app/commit/be046c9867ad1fd67d175eb3ff79e89fe9318907))
+
+## [3.3.0-rc.5](https://github.com/pagopa/io-app/compare/3.3.0-rc.4...3.3.0-rc.5) (2025-04-14)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2250](https://pagopa.atlassian.net/browse/SIW-2250)] Track Wi revocation reason and attestation failure on Mixpanel ([#6893](https://github.com/pagopa/io-app/issues/6893)) ([d388fca](https://github.com/pagopa/io-app/commit/d388fca613ae37a692a7cb373019a673ff7ccc33))
+* [[IOBP-1577](https://pagopa.atlassian.net/browse/IOBP-1577)] Add remote feature flag to enable the payment webview flow ([#6895](https://github.com/pagopa/io-app/issues/6895)) ([a61c31b](https://github.com/pagopa/io-app/commit/a61c31bb2ae0e6f9b9e34107f378f8a8a4d29aab))
+
 ## [3.3.0-rc.4](https://github.com/pagopa/io-app/compare/3.3.0-rc.3...3.3.0-rc.4) (2025-04-11)
 
 

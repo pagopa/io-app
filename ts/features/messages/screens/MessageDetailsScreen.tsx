@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ContentWrapper, Icon, VSpacer } from "@pagopa/io-app-design-system";
-import { useFocusEffect, useLinkTo } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -34,8 +34,7 @@ import { MessageDetailsHeader } from "../components/MessageDetail/MessageDetails
 import I18n from "../../../i18n";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
-import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
-import { getMessageCTAs, removeCTAsFromMarkdown } from "../utils/ctas";
+import { getMessageCTAs } from "../utils/ctas";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
 import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
@@ -49,10 +48,7 @@ import {
   trackPNOptInMessageOpened
 } from "../../pn/analytics";
 import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
-import { setAccessibilityFocus } from "../../../utils/accessibility";
-import IOMarkdown from "../../../components/IOMarkdown";
-import { generateMessagesAndServicesRules } from "../../common/components/IOMarkdown/customRules";
-import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { MessageDetailsBody } from "../components/MessageDetail/MessageDetailsBody";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -76,14 +72,9 @@ type MessageDetailsScreenProps = IOStackNavigationRouteProps<
 export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   const { messageId, serviceId } = props.route.params;
 
-  const linkTo = useLinkTo();
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const scrollViewRef = useRef<ScrollView>(null);
-
-  const useIOMarkdown = useIOSelector(
-    isIOMarkdownEnabledForMessagesAndServicesSelector
-  );
 
   const message = pipe(
     useIOSelector(state => getPaginatedMessageById(state, messageId)),
@@ -115,10 +106,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
 
   const messageMarkdown =
     useIOSelector(state => messageMarkdownSelector(state, messageId)) ?? "";
-  const markdownWithNoCTA = useMemo(
-    () => removeCTAsFromMarkdown(messageMarkdown, serviceId),
-    [messageMarkdown, serviceId]
-  );
+
   const serviceMetadata = useIOSelector(state =>
     serviceMetadataByIdSelector(state, serviceId)
   );
@@ -214,22 +202,11 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               messageId={messageId}
               title={subject}
             />
-            {useIOMarkdown ? (
-              <IOMarkdown
-                content={markdownWithNoCTA}
-                rules={generateMessagesAndServicesRules(linkTo)}
-              />
-            ) : (
-              <MessageMarkdown
-                onLoadEnd={() => {
-                  setTimeout(() => {
-                    setAccessibilityFocus(scrollViewRef);
-                  }, 100);
-                }}
-              >
-                {markdownWithNoCTA}
-              </MessageMarkdown>
-            )}
+            <MessageDetailsBody
+              messageMarkdown={messageMarkdown}
+              scrollViewRef={scrollViewRef}
+              serviceId={serviceId}
+            />
             <MessageDetailsPayment
               messageId={messageId}
               serviceId={serviceId}

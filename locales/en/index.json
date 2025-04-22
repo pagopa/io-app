@@ -2777,7 +2777,12 @@
         "email": "Send email"
       }
     },
-    "markdownLinkUnsupported": "This link is not supported"
+    "markdownLinkUnsupported": "This link is not supported",
+    "markdown": {
+      "decodingErrorContent": "Message content cannot be displayed.",
+      "decodingErrorHide": "Hide content",
+      "decodingErrorShow": "Show anyway"
+    }
   },
   "messagePDFPreview": {
     "title": "PDF Preview",
