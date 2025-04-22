@@ -1,0 +1,68 @@
+import { fireEvent, render } from "@testing-library/react-native";
+import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import I18n from "../../../../../i18n";
+import { ReceiptListItemTransaction } from "../ReceiptListItemTransaction";
+
+const mockDispatch = jest.fn();
+
+jest.mock("../../../../../store/hooks", () => ({
+  useIODispatch: jest.fn(),
+  useIOStore: jest.fn(),
+  useIOSelector: mockDispatch
+}));
+
+const mockTransaction: NoticeListItem = {
+  eventId: "123",
+  isCart: false,
+  payeeName: "Test Payee",
+  amount: "1000",
+  noticeDate: "2023-01-01T10:00:00Z",
+  isDebtor: false,
+  isPayer: false,
+  payeeTaxCode: "ABCDEF12G"
+};
+
+const mockCartTransaction: NoticeListItem = {
+  eventId: "456",
+  isCart: true,
+  amount: "2000",
+  noticeDate: "2023-01-02T12:00:00Z",
+  isDebtor: false,
+  isPayer: false,
+  payeeTaxCode: "XYZ12345"
+};
+
+describe("ReceiptListItemTransaction", () => {
+  it("renders correctly with a single transaction", () => {
+    const { getByText } = render(
+      <ReceiptListItemTransaction transaction={mockTransaction} />
+    );
+
+    expect(getByText("Test Payee")).toBeTruthy();
+    expect(getByText("01 Jan 2023, 10:00")).toBeTruthy();
+  });
+
+  it("renders correctly with a cart transaction", () => {
+    const { getByText } = render(
+      <ReceiptListItemTransaction transaction={mockCartTransaction} />
+    );
+
+    expect(
+      getByText(I18n.t("features.payments.transactions.multiplePayment"))
+    ).toBeTruthy();
+    expect(getByText("02 Jan 2023, 12:00")).toBeTruthy();
+  });
+
+  it("calls onPress when the item is pressed", () => {
+    const mockOnPress = jest.fn();
+    const { getByText } = render(
+      <ReceiptListItemTransaction
+        transaction={mockTransaction}
+        onPress={mockOnPress}
+      />
+    );
+
+    fireEvent.press(getByText("Test Payee"));
+    expect(mockOnPress).toHaveBeenCalled();
+  });
+});

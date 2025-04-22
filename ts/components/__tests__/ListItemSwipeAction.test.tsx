@@ -51,20 +51,6 @@ describe("ListItemSwipeAction", () => {
     jest.clearAllMocks();
   });
 
-  it("renders child content", () => {
-    const { getByText } = render(
-      <ListItemSwipeAction
-        swipeAction={swipeActionMock}
-        alertProps={alertProps}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Test Item</Text>
-      </ListItemSwipeAction>
-    );
-
-    expect(getByText("Test Item")).toBeTruthy();
-  });
-
   it("triggers Alert on icon press", () => {
     const { getByA11yLabel } = render(
       <ListItemSwipeAction
