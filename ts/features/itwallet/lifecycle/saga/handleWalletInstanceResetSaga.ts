@@ -12,6 +12,7 @@ import { itwCredentialsSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../store/actions";
 import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
+import { itwSendExceptionToSentry } from "../../common/utils/itwSentryUtils.ts";
 
 const getKeyTag = (credential: O.Option<StoredCredential>) =>
   pipe(
@@ -23,23 +24,26 @@ export function* handleWalletInstanceResetSaga() {
   const state: GlobalState = yield* select();
   const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
   const { eid, credentials } = yield* select(itwCredentialsSelector);
+  try {
+    yield* put(itwLifecycleStoresReset());
+    yield* put(walletRemoveCardsByCategory("itw"));
+    // Set the remote wallet instance as inactive since it has been revoked on the server.
+    yield* put(itwSetWalletInstanceRemotelyActive(false));
 
-  yield* put(itwLifecycleStoresReset());
-  yield* put(walletRemoveCardsByCategory("itw"));
-  // Set the remote wallet instance as inactive since it has been revoked on the server.
-  yield* put(itwSetWalletInstanceRemotelyActive(false));
-
-  // Remove all keys within the wallet.
-  // On iOS skip the integrity key tag as it is managed by the App Attest service.
-  const itwKeyTags = pipe(
-    [
-      isIos ? O.none : integrityKeyTag,
-      getKeyTag(eid),
-      ...credentials.map(getKeyTag)
-    ],
-    RA.filterMap(identity)
-  );
-  yield* all(itwKeyTags.map(deleteKey));
-  // Update every mixpanel property related to the wallet instance and its credentials.
-  void updatePropertiesWalletRevoked(state);
+    // Remove all keys within the wallet.
+    // On iOS skip the integrity key tag as it is managed by the App Attest service.
+    const itwKeyTags = pipe(
+      [
+        isIos ? O.none : integrityKeyTag,
+        getKeyTag(eid),
+        ...credentials.map(getKeyTag)
+      ],
+      RA.filterMap(identity)
+    );
+    yield* all(itwKeyTags.map(deleteKey));
+    // Update every mixpanel property related to the wallet instance and its credentials.
+    void updatePropertiesWalletRevoked(state);
+  } catch (e) {
+    itwSendExceptionToSentry(e, "Error while resetting wallet instance");
+  }
 }

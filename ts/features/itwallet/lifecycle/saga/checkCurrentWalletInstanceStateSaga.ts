@@ -5,6 +5,7 @@ import { assert } from "../../../../utils/assert";
 import { getCurrentWalletInstanceStatus } from "../../common/utils/itwAttestationUtils.ts";
 import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
+import { itwSendExceptionToSentry } from "../../common/utils/itwSentryUtils.ts";
 
 export function* getCurrentStatusWalletInstance() {
   const sessionToken = yield* select(sessionTokenSelector);
@@ -13,6 +14,10 @@ export function* getCurrentStatusWalletInstance() {
   try {
     return yield* call(getCurrentWalletInstanceStatus, sessionToken);
   } catch (e) {
+    itwSendExceptionToSentry(
+      e,
+      "Error while getting current wallet instance status"
+    );
     return undefined;
   }
 }
