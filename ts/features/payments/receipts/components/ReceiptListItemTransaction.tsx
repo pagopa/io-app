@@ -2,15 +2,15 @@ import { Avatar, ListItemTransaction } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { memo, useMemo } from "react";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import ListItemSwipeAction from "../../../../components/ListItemSwipeAction";
+import I18n from "../../../../i18n";
+import { useIODispatch } from "../../../../store/hooks";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { format } from "../../../../utils/dates";
 import { getTransactionLogo } from "../../common/utils";
-import { formatAmountText } from "../utils";
-import I18n from "../../../../i18n";
-import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { hidePaymentsReceiptAction } from "../store/actions";
-import { useIODispatch } from "../../../../store/hooks";
-import { withSwipeAction } from "../../../../components/ListItemSwipeAction";
+import { formatAmountText } from "../utils";
 
 type Props = {
   transaction: NoticeListItem;
@@ -84,40 +84,41 @@ const ReceiptListItemTransaction = memo(
       }
     };
 
-    const SwipableListItemTransaction = withSwipeAction(ListItemTransaction);
-
     if (transaction.isCart) {
       return (
-        <SwipableListItemTransaction
-          {...swipeActionProps}
-          paymentLogoIcon={TransactionEmptyIcon}
+        <ListItemSwipeAction {...swipeActionProps}>
+          <ListItemTransaction
+            {...swipeActionProps}
+            paymentLogoIcon={TransactionEmptyIcon}
+            onPress={onPress}
+            accessible
+            accessibilityLabel={accessibilityLabel}
+            title={I18n.t("features.payments.transactions.multiplePayment")}
+            subtitle={datetime}
+            transaction={{
+              amount: amountText,
+              amountAccessibilityLabel: accessibleAmountText
+            }}
+          />
+        </ListItemSwipeAction>
+      );
+    }
+
+    return (
+      <ListItemSwipeAction {...swipeActionProps}>
+        <ListItemTransaction
+          paymentLogoIcon={transactionLogo}
           onPress={onPress}
+          title={recipient}
           accessible
           accessibilityLabel={accessibilityLabel}
-          title={I18n.t("features.payments.transactions.multiplePayment")}
           subtitle={datetime}
           transaction={{
             amount: amountText,
             amountAccessibilityLabel: accessibleAmountText
           }}
         />
-      );
-    }
-
-    return (
-      <SwipableListItemTransaction
-        {...swipeActionProps}
-        paymentLogoIcon={transactionLogo}
-        onPress={onPress}
-        title={recipient}
-        accessible
-        accessibilityLabel={accessibilityLabel}
-        subtitle={datetime}
-        transaction={{
-          amount: amountText,
-          amountAccessibilityLabel: accessibleAmountText
-        }}
-      />
+      </ListItemSwipeAction>
     );
   },
   (prevProps, nextProps) => prevProps.transaction === nextProps.transaction
