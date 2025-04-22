@@ -30,7 +30,7 @@ import { startupLoadSuccess } from "../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../store/reducers/startup";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { itwLifecycleIsOperationalOrValid } from "../../itwallet/lifecycle/store/selectors";
-import { identificationRequest } from "../../../store/actions/identification";
+import { identificationRequest } from "../../identification/store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;

@@ -21,7 +21,7 @@ import { mixpanelTrack } from "../../mixpanel";
 import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus/backendInfo";
 import { startupTransientErrorSelector } from "../../store/reducers/startup";
 import { GlobalState } from "../../store/reducers/types";
-import IdentificationModal from "./IdentificationModal";
+import { IdentificationModal } from "../../features/identification/screens/IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
 

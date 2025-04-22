@@ -16,7 +16,6 @@ import {
 } from "../../../features/authentication/common/store/actions";
 import { cieAuthenticationError } from "../../../features/authentication/login/cie/store/actions";
 import { loadAvailableBonuses } from "../../../features/bonus/common/store/actions/availableBonusesTypes";
-import { PinString } from "../../../types/PinString";
 import { SessionToken } from "../../../types/SessionToken";
 import {
   analyticsAuthenticationCompleted,
@@ -24,15 +23,6 @@ import {
 } from "../../actions/analytics";
 import { applicationChangeState } from "../../actions/application";
 import { contentMunicipalityLoad } from "../../actions/content";
-import {
-  identificationCancel,
-  identificationFailure,
-  identificationForceLogout,
-  identificationPinReset,
-  identificationRequest,
-  identificationStart,
-  identificationSuccess
-} from "../../actions/identification";
 import {
   profileFirstLogin,
   profileLoadFailure,
@@ -350,67 +340,6 @@ describe("analytics", () => {
       expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
     });
 
-    it("should call 'mixpanelTrack' for 'identificationRequest' with proper parameters", () => {
-      const action = identificationRequest();
-
-      testable!.trackAction(action);
-
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
-    });
-
-    it("should call 'mixpanelTrack' for 'identificationStart' with proper parameters", () => {
-      const action = identificationStart("" as PinString, true, false);
-
-      testable!.trackAction(action);
-
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
-      expect(mockMixpanelTrack.mock.calls[0][1]).toBeUndefined();
-    });
-
-    it("should call 'mixpanelTrack' for 'identificationCancel' with proper parameters", () => {
-      const action = identificationCancel();
-
-      testable!.trackAction(action);
-
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
-    });
-
-    it("should call 'mixpanelTrack' for 'identificationFailure' with proper parameters", () => {
-      const action = identificationFailure();
-
-      testable!.trackAction(action);
-
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
-    });
-
-    it("should call 'mixpanelTrack' for 'identificationPinReset' with proper parameters", () => {
-      const action = identificationPinReset();
-
-      testable!.trackAction(action);
-
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
-    });
-
-    it("should call 'mixpanelTrack' for 'identificationForceLogout' with proper parameters", () => {
-      const action = identificationForceLogout();
-
-      testable!.trackAction(action);
-
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
-    });
-
     it("should call 'mixpanelTrack' for 'profileUpsert.success' with proper parameters", () => {
       const action = profileUpsert.success({
         value: {} as InitializedProfile,
@@ -535,22 +464,6 @@ describe("analytics", () => {
       expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
         choice: "DOWNLOAD",
         reason: "A reason"
-      });
-    });
-
-    it("should call 'mixpanelTrack' for 'identificationSuccess' with proper parameters", () => {
-      const action = identificationSuccess({ isBiometric: true });
-
-      testable!.trackAction(action);
-
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
-      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "UX",
-        event_type: "confirm",
-        flow: undefined,
-        identification_method: "bio"
       });
     });
   });
