@@ -1,5 +1,9 @@
 /* eslint-disable functional/immutable-data */
-import { IconButton, IOColors } from "@pagopa/io-app-design-system";
+import {
+  IconButton,
+  IOColors,
+  useIOThemeContext
+} from "@pagopa/io-app-design-system";
 import { Alert, StyleSheet, View } from "react-native";
 import {
   GestureEvent,
@@ -50,8 +54,10 @@ const ListItemSwipeAction = ({
   onDelete
 }: ListItemSwipeActionProps) => {
   const translateX = useSharedValue(0);
+  const { themeType } = useIOThemeContext();
+  const isDark = themeType === "dark";
+  const defaultBackgroundColor = isDark ? IOColors.black : IOColors.white;
 
-  // Function to show the delete confirmation alert
   const showDeleteAlert = () => {
     Alert.alert(
       "Conferma eliminazione",
@@ -83,7 +89,7 @@ const ListItemSwipeAction = ({
     backgroundColor: interpolateColor(
       translateX.value,
       [-500, -100, 0],
-      [IOColors["blueIO-500"], IOColors["blueIO-500"], IOColors.white]
+      [IOColors["blueIO-500"], IOColors["blueIO-500"], defaultBackgroundColor]
     )
   }));
 
@@ -130,7 +136,7 @@ const ListItemSwipeAction = ({
           style={[
             {
               ...StyleSheet.absoluteFillObject,
-              backgroundColor: IOColors.white
+              backgroundColor: defaultBackgroundColor
             },
             backgroundStyle
           ]}
@@ -148,7 +154,7 @@ const ListItemSwipeAction = ({
             style={[
               {
                 flex: 1,
-                backgroundColor: IOColors.white // Ensure the content remains white
+                backgroundColor: defaultBackgroundColor
               },
               animatedStyle
             ]}
