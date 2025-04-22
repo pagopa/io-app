@@ -241,6 +241,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "userWallets": {
         "kind": "PotNone",
       },
+      "webViewPayload": undefined,
     },
     "details": {
       "isWalletPayPalBannerClosed": false,

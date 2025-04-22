@@ -513,6 +513,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -1094,6 +1095,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -2468,6 +2470,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -3395,6 +3398,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -4322,6 +4326,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -5249,6 +5254,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -6176,6 +6182,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -6757,6 +6764,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -8131,6 +8139,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -9058,6 +9067,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -9985,6 +9995,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -10912,6 +10923,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}

@@ -33,7 +33,9 @@ const MessageDetailsHeaderContent = ({
   createdAt
 }: Pick<MessageDetailsHeaderProps, "createdAt" | "subject">) => (
   <>
-    <H3 testID="message-header-subject">{subject}</H3>
+    <H3 accessibilityRole="header" testID="message-header-subject">
+      {subject}
+    </H3>
     <VSpacer size={8} />
     <BodySmall weight="Regular" color="grey-700">
       {localeDateFormat(

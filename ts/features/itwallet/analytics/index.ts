@@ -732,6 +732,13 @@ export const trackItwWalletInstanceRevocation = (
   );
 };
 
+export const trackItwWalletBadState = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_BAD_STATE_WALLET_DEACTIVATED,
+    buildEventProperties("KO", "error")
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
