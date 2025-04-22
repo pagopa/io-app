@@ -9,6 +9,8 @@ import { formatAmountText } from "../utils";
 import I18n from "../../../../i18n";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import ListItemSwipeAction from "../../../../components/ListItemSwipeAction";
+import { hidePaymentsReceiptAction } from "../store/actions";
+import { useIODispatch } from "../../../../store/hooks";
 
 type Props = {
   transaction: NoticeListItem;
@@ -55,9 +57,33 @@ const ReceiptListItemTransaction = memo(
       O.getOrElseW(() => TransactionEmptyIcon)
     );
 
+    const dispatch = useIODispatch();
+
+    const swipeActionProps = {
+      swipeAction: () => {
+        dispatch(
+          hidePaymentsReceiptAction.request({
+            transactionId: transaction.eventId
+          })
+        );
+      },
+      alertProps: {
+        title: I18n.t(
+          "features.payments.transactions.receipt.hideBanner.title"
+        ),
+        message: I18n.t(
+          "features.payments.transactions.receipt.hideBanner.content"
+        ),
+        confirmText: I18n.t(
+          "features.payments.transactions.receipt.hideBanner.accept"
+        ),
+        cancelText: I18n.t("global.buttons.cancel")
+      }
+    };
+
     if (transaction.isCart) {
       return (
-        <ListItemSwipeAction>
+        <ListItemSwipeAction {...swipeActionProps}>
           <ListItemTransaction
             paymentLogoIcon={TransactionEmptyIcon}
             onPress={onPress}
@@ -75,7 +101,7 @@ const ReceiptListItemTransaction = memo(
     }
 
     return (
-      <ListItemSwipeAction>
+      <ListItemSwipeAction {...swipeActionProps}>
         <ListItemTransaction
           paymentLogoIcon={transactionLogo}
           onPress={onPress}

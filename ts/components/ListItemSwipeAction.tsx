@@ -20,7 +20,15 @@ import Reanimated, {
   withTiming
 } from "react-native-reanimated";
 
-const RightActions = ({ showDeleteAlert }: { showDeleteAlert: () => void }) => (
+type RightActionsProps = {
+  showDeleteAlert: () => void;
+  accessibilityLabel?: string;
+};
+
+const RightActions = ({
+  showDeleteAlert,
+  accessibilityLabel = "Hide item"
+}: RightActionsProps) => (
   <View
     style={{
       backgroundColor: IOColors["blueIO-500"],
@@ -36,7 +44,7 @@ const RightActions = ({ showDeleteAlert }: { showDeleteAlert: () => void }) => (
     }}
   >
     <IconButton
-      accessibilityLabel="Delete item"
+      accessibilityLabel={accessibilityLabel}
       icon="eyeHide"
       color="contrast"
       onPress={showDeleteAlert}
@@ -46,45 +54,44 @@ const RightActions = ({ showDeleteAlert }: { showDeleteAlert: () => void }) => (
 
 type ListItemSwipeActionProps = {
   children: React.ReactNode;
-  onDelete?: () => void;
+  swipeAction: () => void;
+  alertProps: {
+    title: string;
+    message: string;
+    confirmText: string;
+    cancelText: string;
+  };
 };
 
 const ListItemSwipeAction = ({
   children,
-  onDelete
+  swipeAction,
+  alertProps
 }: ListItemSwipeActionProps) => {
   const translateX = useSharedValue(0);
   const { themeType } = useIOThemeContext();
   const isDark = themeType === "dark";
   const defaultBackgroundColor = isDark ? IOColors.black : IOColors.white;
 
-  const showDeleteAlert = () => {
-    Alert.alert(
-      "Conferma eliminazione",
-      "Sei sicuro di voler eliminare questo elemento?",
-      [
-        {
-          text: "No",
-          onPress: () => {
-            translateX.value = withSpring(0);
-          },
-          style: "cancel"
+  const showAlertAction = () =>
+    Alert.alert(alertProps.title, alertProps.message, [
+      {
+        text: alertProps.cancelText,
+        onPress: () => {
+          translateX.value = withSpring(0);
         },
-        {
-          text: "Yes",
-          onPress: () => {
-            translateX.value = withTiming(-500, { duration: 300 }, () => {
-              if (onDelete) {
-                onDelete();
-              }
-            });
-          }
+        style: "cancel"
+      },
+      {
+        text: alertProps.confirmText,
+        style: "destructive",
+        onPress: () => {
+          translateX.value = withTiming(-500, { duration: 300 });
+          swipeAction();
         }
-      ]
-    );
-  };
+      }
+    ]);
 
-  // Animated style for the background
   const backgroundStyle = useAnimatedStyle(() => ({
     backgroundColor: interpolateColor(
       translateX.value,
@@ -93,7 +100,6 @@ const ListItemSwipeAction = ({
     )
   }));
 
-  // Animated style for the content
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }]
   }));
@@ -113,14 +119,9 @@ const ListItemSwipeAction = ({
     const { translationX, velocityX } = event.nativeEvent;
 
     if (translationX < -200 || velocityX < -800) {
-      // Show delete confirmation alert
-      showDeleteAlert();
-    } else if (translationX < -50) {
-      // Partial swipe
-      translateX.value = withSpring(-60);
+      showAlertAction();
     } else {
-      // Reset swipe
-      translateX.value = withSpring(0);
+      translateX.value = withSpring(translationX < -50 ? -60 : 0);
     }
   };
 
@@ -141,7 +142,7 @@ const ListItemSwipeAction = ({
             backgroundStyle
           ]}
         />
-        <RightActions showDeleteAlert={showDeleteAlert} />
+        <RightActions showDeleteAlert={showAlertAction} />
         <PanGestureHandler
           onGestureEvent={handleGestureEvent}
           onEnded={event =>
