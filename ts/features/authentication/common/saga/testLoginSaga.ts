@@ -20,7 +20,7 @@ import { lollipopPublicKeySelector } from "../../../lollipop/store/reducers/loll
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../../../lollipop/utils/login";
 
 // Started by redux action
-function* handleTestLogin({
+export function* handleTestLogin({
   payload
 }: ActionType<typeof testLoginRequest>): Generator<
   ReduxSagaEffect,
