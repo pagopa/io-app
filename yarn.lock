@@ -3778,7 +3778,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 4570611a6be4a1b6b1dcc1bfbd8d124c257fb082e37d8292c78b97a191e2d9fb04afb78b92d9b9301e7af9836f98c4455748326892516dd2d2aecf841ccc4b66
+  checksum: f389d7e711c8a4f4b5f0058ff14bb03c07f5f3a6ec64e722c2a4ae7fd5178f2aea765e7e4cca2b745f26b0be7efee4cdc2a21018530f51c31ca499df6d99a561
   languageName: node
   linkType: hard
 
