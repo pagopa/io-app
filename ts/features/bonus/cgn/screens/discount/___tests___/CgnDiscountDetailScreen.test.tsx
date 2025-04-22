@@ -1,5 +1,5 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { fireEvent, userEvent } from "@testing-library/react-native";
+import { act, fireEvent, userEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { DiscountCodeTypeEnum } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
@@ -91,12 +91,14 @@ describe("CgnDiscountDetailScreen", () => {
 
     const { component, store } = renderComponent(initialState);
 
-    store.dispatch(setMerchantDiscountCode("12345"));
+    act(() => {
+      store.dispatch(setMerchantDiscountCode("12345"));
+    });
     const navigationButton = component.getByTestId("discount-code-button");
     expect(navigationButton).toBeTruthy();
 
     userEvent.setup();
-    userEvent.press(navigationButton);
+    await userEvent.press(navigationButton);
 
     expect(mockNavigate).toHaveBeenCalledWith(
       CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE

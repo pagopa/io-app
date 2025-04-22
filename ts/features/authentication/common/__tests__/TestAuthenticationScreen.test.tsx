@@ -1,6 +1,6 @@
 import { Text } from "react-native";
 import { createStore } from "redux";
-import { RenderAPI } from "@testing-library/react-native";
+import { act, RenderAPI } from "@testing-library/react-native";
 import TestAuthenticationScreen from "../screens/TestAuthenticationScreen";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
@@ -55,12 +55,14 @@ describe("Test TestAuthenticationScreen", () => {
     expect(confirmButton).not.toBeNull();
     expect(confirmButton).toBeDisabled();
 
-    store.dispatch(
-      testLoginRequest({
-        username: "username",
-        password: "password"
-      } as PasswordLogin)
-    );
+    act(() => {
+      store.dispatch(
+        testLoginRequest({
+          username: "username",
+          password: "password"
+        } as PasswordLogin)
+      );
+    });
 
     checkInput(component, "usernameInput", false);
     checkInput(component, "passwordInput", false);
@@ -68,34 +70,43 @@ describe("Test TestAuthenticationScreen", () => {
     expect(component.queryByTestId("activityIndicator")).not.toBeNull();
 
     const errorMessage = "500 - Internal Server Error";
-    store.dispatch(
-      loginFailure({
-        idp: "test",
-        error: new Error(errorMessage)
-      })
-    );
+    act(() => {
+      store.dispatch(
+        loginFailure({
+          idp: "test",
+          error: new Error(errorMessage)
+        })
+      );
+    });
 
     checkInput(component, "usernameInput", true);
     checkInput(component, "passwordInput", true);
     expect(component.queryByTestId("activityIndicator")).toBeNull();
     checkErrorView(component, errorMessage);
 
-    store.dispatch(testLoginCleanUp());
+    act(() => {
+      store.dispatch(testLoginCleanUp());
+    });
+
     expect(component.queryByTestId("errorView")).toBeNull();
 
-    store.dispatch(
-      loginSuccess({
-        token: "token" as SessionToken,
-        idp: "test"
-      })
-    );
+    act(() => {
+      store.dispatch(
+        loginSuccess({
+          token: "token" as SessionToken,
+          idp: "test"
+        })
+      );
+    });
 
     checkInput(component, "usernameInput", true);
     checkInput(component, "passwordInput", true);
     expect(component.queryByTestId("activityIndicator")).toBeNull();
     checkSuccessView(component);
 
-    store.dispatch(testLoginCleanUp());
+    act(() => {
+      store.dispatch(testLoginCleanUp());
+    });
     expect(component.queryByTestId("successView")).toBeNull();
   });
 

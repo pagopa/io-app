@@ -1,4 +1,4 @@
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import ROUTES from "../../../../navigation/routes";
@@ -43,7 +43,9 @@ describe("the ZendeskSupportComponent", () => {
   it("should render the open ticket button and the show tickets button", () => {
     const store = createStore(appReducer, globalState as any);
     const component = renderComponent(store, false);
-    store.dispatch(zendeskRequestTicketNumber.success(3));
+    act(() => {
+      store.dispatch(zendeskRequestTicketNumber.success(3));
+    });
     expect(component.getByTestId("contactSupportButton")).toBeDefined();
     expect(component.getByTestId("showTicketsButton")).toBeDefined();
   });
@@ -56,7 +58,9 @@ describe("the ZendeskSupportComponent", () => {
       it("if the assistanceForPayment is true should navigate to the ZendeskAskPermissions screen", () => {
         const store = createStore(appReducer, globalState as any);
         const component = renderComponent(store, true);
-        store.dispatch(zendeskRequestTicketNumber.success(3));
+        act(() => {
+          store.dispatch(zendeskRequestTicketNumber.success(3));
+        });
         const zendeskButton = component.getByTestId("contactSupportButton");
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
@@ -75,7 +79,9 @@ describe("the ZendeskSupportComponent", () => {
       it("if the zendeskRemoteConfig is not remoteReady should navigate to the ZendeskAskPermissions screen", () => {
         const store = createStore(appReducer, globalState as any);
         const component = renderComponent(store, false);
-        store.dispatch(zendeskRequestTicketNumber.success(3));
+        act(() => {
+          store.dispatch(zendeskRequestTicketNumber.success(3));
+        });
         const zendeskButton = component.getByTestId("contactSupportButton");
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
@@ -90,7 +96,9 @@ describe("the ZendeskSupportComponent", () => {
           },
           screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
-        store.dispatch(getZendeskConfig.request());
+        act(() => {
+          store.dispatch(getZendeskConfig.request());
+        });
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(2);
         expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
@@ -104,9 +112,11 @@ describe("the ZendeskSupportComponent", () => {
           },
           screen: ZENDESK_ROUTES.ASK_PERMISSIONS
         });
-        store.dispatch(
-          getZendeskConfig.failure(getNetworkError("mockedError"))
-        );
+        act(() => {
+          store.dispatch(
+            getZendeskConfig.failure(getNetworkError("mockedError"))
+          );
+        });
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(3);
         expect(mockedNavigation).toHaveBeenCalledWith(ZENDESK_ROUTES.MAIN, {
@@ -148,8 +158,10 @@ describe("the ZendeskSupportComponent", () => {
       it("if the assistanceForPayment is false and the zendeskRemoteConfig is remoteReady should navigate to the navigateToZendeskChooseCategory screen", () => {
         const store = createStore(appReducer, globalState as any);
         const component = renderComponent(store, false);
-        store.dispatch(zendeskRequestTicketNumber.success(3));
-        store.dispatch(getZendeskConfig.success(mockZendeskConfig));
+        act(() => {
+          store.dispatch(zendeskRequestTicketNumber.success(3));
+          store.dispatch(getZendeskConfig.success(mockZendeskConfig));
+        });
         const zendeskButton = component.getByTestId("contactSupportButton");
         fireEvent(zendeskButton, "onPress");
         expect(mockedNavigation).toHaveBeenCalledTimes(1);
@@ -170,8 +182,10 @@ describe("the ZendeskSupportComponent", () => {
     it("if panic mode is true, should navigate to the ZendeskAskPermissions screen", () => {
       const store = createStore(appReducer, globalState as any);
       const component = renderComponent(store, false);
-      store.dispatch(zendeskRequestTicketNumber.success(3));
-      store.dispatch(getZendeskConfig.success(mockZendeskPanicModeConfig));
+      act(() => {
+        store.dispatch(zendeskRequestTicketNumber.success(3));
+        store.dispatch(getZendeskConfig.success(mockZendeskPanicModeConfig));
+      });
       const zendeskButton = component.getByTestId("contactSupportButton");
       fireEvent(zendeskButton, "onPress");
       expect(mockedNavigation).toHaveBeenCalledTimes(1);

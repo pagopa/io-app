@@ -1,4 +1,4 @@
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { View } from "react-native";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
@@ -91,52 +91,47 @@ describe("WalletPaymentPickPspScreen", () => {
   it("renders the main content with the list content if psp list is available", () => {
     const { getAllByText, store } = renderComponent();
 
-    store.dispatch(
-      paymentsCalculatePaymentFeesAction.success({
-        bundles: MOCKED_PSP_LIST,
-        asset: "MOCK",
-        paymentMethodDescription: "MOCK",
-        paymentMethodName: "MOCK",
-        paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
-      })
-    );
+    dispatchSuccesMock(store);
 
     expect(getAllByText("BANCO di NAPOLI")).toBeTruthy();
   });
 
   it("shows the featured reason if there is a psp with the onUs flag", () => {
     const { getByText, store } = renderComponent();
-    store.dispatch(
-      paymentsCalculatePaymentFeesAction.success({
-        bundles: MOCKED_PSP_LIST,
-        asset: "MOCK",
-        paymentMethodDescription: "MOCK",
-        paymentMethodName: "MOCK",
-        paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
-      })
-    );
+    dispatchSuccesMock(store);
     expect(getByText(I18n.t("wallet.payment.psp.featuredReason"))).toBeTruthy();
   });
 
   it("doesn't show the featured reason if there is not a psp with the onUs flag", () => {
     const { queryByText, store } = renderComponent();
-    store.dispatch(
-      paymentsCalculatePaymentFeesAction.success({
-        bundles: MOCKED_PSP_LIST.map(psp => {
-          const { onUs, ...rest } = psp;
-          return rest;
-        }),
-        asset: "MOCK",
-        paymentMethodDescription: "MOCK",
-        paymentMethodName: "MOCK",
-        paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
-      })
-    );
+    act(() => {
+      store.dispatch(
+        paymentsCalculatePaymentFeesAction.success({
+          bundles: MOCKED_PSP_LIST.map(psp => {
+            const { onUs, ...rest } = psp;
+            return rest;
+          }),
+          asset: "MOCK",
+          paymentMethodDescription: "MOCK",
+          paymentMethodName: "MOCK",
+          paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
+        })
+      );
+    });
     expect(queryByText(I18n.t("wallet.payment.psp.featuredReason"))).toBeNull();
   });
 
   it("presents bottom sheet press the sort button", () => {
     const { getByTestId, store } = renderComponent();
+    dispatchSuccesMock(store);
+    const sortButton = getByTestId("wallet-payment-pick-psp-sort-button");
+    fireEvent.press(sortButton);
+    expect(mockModal.present).toHaveBeenCalled();
+  });
+});
+
+const dispatchSuccesMock = (store: any) => {
+  act(() => {
     store.dispatch(
       paymentsCalculatePaymentFeesAction.success({
         bundles: MOCKED_PSP_LIST,
@@ -146,8 +141,5 @@ describe("WalletPaymentPickPspScreen", () => {
         paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
       })
     );
-    const sortButton = getByTestId("wallet-payment-pick-psp-sort-button");
-    fireEvent.press(sortButton);
-    expect(mockModal.present).toHaveBeenCalled();
   });
-});
+};

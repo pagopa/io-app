@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { PreloadedState, createStore } from "redux";
 import I18n from "../../../../../i18n";
@@ -108,7 +108,9 @@ describe("Test ProfileDataScreen", () => {
   });
   it("Should not navigate since profile has no email", () => {
     const { component, store } = renderComponent();
-    store.dispatch(profileLoadSuccess(profileWithoutEmail));
+    act(() => {
+      store.dispatch(profileLoadSuccess(profileWithoutEmail));
+    });
     const { getByTestId } = component;
     const editEmailButton = getByTestId(/insert-or-edit-email-cta/);
 
@@ -118,12 +120,14 @@ describe("Test ProfileDataScreen", () => {
   });
   it("Should navigate to the Insert Email Screen", () => {
     const { component, store } = renderComponent();
-    store.dispatch(
-      profileLoadSuccess({
-        ...profileWithoutEmail,
-        email: "this@email.it" as EmailAddress
-      })
-    );
+    act(() => {
+      store.dispatch(
+        profileLoadSuccess({
+          ...profileWithoutEmail,
+          email: "this@email.it" as EmailAddress
+        })
+      );
+    });
     const { getByTestId } = component;
     const editEmailButton = getByTestId(/insert-or-edit-email-cta/);
 
