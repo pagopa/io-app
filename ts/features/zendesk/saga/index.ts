@@ -16,7 +16,7 @@ import {
 } from "../store/actions";
 import { ContentClient } from "../../../api/content";
 import { dismissSupport } from "../../../utils/supportAssistance";
-import { identificationRequest } from "../../../store/actions/identification";
+import { identificationRequest } from "../../identification/store/actions";
 import { zendeskGetSessionPollingRunningSelector } from "../store/reducers";
 import { startTimer } from "../../../utils/timer";
 import { checkSession } from "../../../features/authentication/common/saga/watchCheckSessionSaga";
