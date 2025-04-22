@@ -1947,7 +1947,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             />
                           </View>
                           <Modal
-                            accessibilityPositionChangeAnnouncement=""
                             accessible={false}
                             backdropComponent={[Function]}
                             backgroundStyle={
@@ -1956,15 +1955,12 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                               }
                             }
                             enableDismissOnClose={true}
+                            enableDynamicSizing={false}
                             footerComponent={[Function]}
                             handleComponent={[Function]}
-                            handleComponentAccessibility={
-                              {
-                                "accessible": false,
-                              }
-                            }
                             hardwareAccelerated={false}
                             importantForAccessibility="yes"
+                            maxDynamicContentSize={1334}
                             onDismiss={[Function]}
                             snapPoints={
                               [
@@ -1982,9 +1978,9 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             visible={true}
                           >
                             <RCTScrollView
+                              overScrollMode="never"
                               style={
                                 {
-                                  "flex": 1,
                                   "paddingHorizontal": 24,
                                 }
                               }
@@ -2696,6 +2692,13 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     }
                                   />
                                 </View>
+                                <View
+                                  style={
+                                    {
+                                      "height": 0,
+                                    }
+                                  }
+                                />
                               </View>
                             </RCTScrollView>
                           </Modal>
