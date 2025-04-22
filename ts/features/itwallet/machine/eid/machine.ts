@@ -309,6 +309,16 @@ export const itwEidIssuanceMachine = setup({
                   }
                 })),
                 target: "CieID"
+              },
+              {
+                guard: ({ event }) => event.mode === "cieIdL3",
+                actions: assign(() => ({
+                  identification: {
+                    mode: "cieIdL3",
+                    level: "L3"
+                  }
+                })),
+                target: "CieID"
               }
             ],
             back: [

@@ -1,7 +1,7 @@
 import { ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 
-export type IdentificationMode = "spid" | "ciePin" | "cieId";
+export type IdentificationMode = "spid" | "ciePin" | "cieId" | "cieIdL3";
 
 export type Start = {
   type: "start";
