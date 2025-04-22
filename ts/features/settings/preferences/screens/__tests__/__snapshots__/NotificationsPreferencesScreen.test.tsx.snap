@@ -217,7 +217,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -1504,7 +1503,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -2791,7 +2789,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -4078,7 +4075,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -5365,7 +5361,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -6652,7 +6647,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -7939,7 +7933,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -9226,7 +9219,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -10513,7 +10505,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -11800,7 +11791,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -13087,7 +13077,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -14374,7 +14363,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -15661,7 +15649,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -16948,7 +16935,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -18235,7 +18221,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -19522,7 +19507,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -20809,7 +20793,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -22096,7 +22079,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                       >
                         <View>
                           <View
-                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,

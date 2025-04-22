@@ -196,7 +196,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                       <RCTScrollView
                         contentContainerStyle={
                           {
-                            "paddingBottom": 16,
+                            "paddingBottom": 0,
                           }
                         }
                       >
@@ -1199,7 +1199,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 "marginBottom": "-95%",
                                 "paddingBottom": "95%",
                                 "paddingHorizontal": 24,
-                                "paddingTop": 16,
+                                "paddingTop": 24,
                               }
                             }
                           >

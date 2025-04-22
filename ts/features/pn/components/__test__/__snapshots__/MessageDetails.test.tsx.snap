@@ -337,7 +337,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                       <RCTScrollView
                         contentContainerStyle={
                           {
-                            "paddingBottom": 16,
+                            "paddingBottom": 0,
                           }
                         }
                       >
@@ -700,7 +700,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                 "marginBottom": "-95%",
                                 "paddingBottom": "95%",
                                 "paddingHorizontal": 24,
-                                "paddingTop": 16,
+                                "paddingTop": 24,
                               }
                             }
                           >

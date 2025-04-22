@@ -26,7 +26,6 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
-        onLayout={[Function]}
         style={
           {
             "paddingHorizontal": 24,
@@ -623,7 +622,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
-        onLayout={[Function]}
         style={
           {
             "paddingHorizontal": 24,
@@ -870,14 +868,10 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   accessibilityRole="list"
                   accessible={true}
                   style={
-                    [
-                      {
-                        "flex": 1,
-                      },
-                      {
-                        "flexGrow": 1,
-                      },
-                    ]
+                    {
+                      "flex": 1,
+                      "flexGrow": 1,
+                    }
                   }
                 >
                   <View
@@ -918,14 +912,10 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     <View
                       accessible={false}
                       style={
-                        [
-                          {
-                            "flex": 1,
-                          },
-                          {
-                            "flexShrink": 1,
-                          },
-                        ]
+                        {
+                          "flex": 1,
+                          "flexShrink": 1,
+                        }
                       }
                     >
                       <Text
@@ -988,14 +978,10 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     <View
                       accessible={false}
                       style={
-                        [
-                          {
-                            "flex": 1,
-                          },
-                          {
-                            "flexShrink": 1,
-                          },
-                        ]
+                        {
+                          "flex": 1,
+                          "flexShrink": 1,
+                        }
                       }
                     >
                       <Text
@@ -1568,7 +1554,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
-        onLayout={[Function]}
         style={
           {
             "paddingHorizontal": 24,
@@ -2496,7 +2481,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
-        onLayout={[Function]}
         style={
           {
             "paddingHorizontal": 24,
