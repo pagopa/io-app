@@ -2,10 +2,6 @@ import { People } from "mixpanel-react-native";
 import { PaymentAnalyticsProps, trackPaymentOutcomeSuccess } from "..";
 import * as MIXPANEL from "../../../../../mixpanel";
 
-jest.mock("react-native-i18n", () => ({
-  t: (key: string) => key
-}));
-
 describe("index", () => {
   beforeEach(() => {
     jest.restoreAllMocks();
