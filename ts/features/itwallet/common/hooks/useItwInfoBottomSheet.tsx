@@ -23,7 +23,6 @@ type ItwInfoFlowProps = {
  * A hook that returns a function to present an info bottom sheet.
  * @param title - the title of the bottom sheet.
  * @param content - the content of the bottom sheet. Consists of an array of objects with a title and a body.
- * @param imageSrc - the source of the image to be displayed in the bottom sheet.
  */
 export const useItwInfoBottomSheet = ({ title, content }: ItwInfoFlowProps) => {
   const BottomSheetBody = () => (
