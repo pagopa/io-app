@@ -35,22 +35,20 @@ describe("IdpSelectionScreen", () => {
 
   jest.spyOn(idpsRemoteValue, "idpsRemoteValueSelector").mockReturnValue({
     kind: "ready",
-    value: {
-      items: [
-        {
-          id: "testidp1",
-          name: "testidp1",
-          logo: "",
-          profileUrl: ""
-        },
-        {
-          id: "testidp2",
-          name: "testidp2",
-          logo: "",
-          profileUrl: ""
-        }
-      ]
-    }
+    value: [
+      {
+        id: "testidp1",
+        name: "testidp1",
+        logo: { light: { uri: "" } },
+        profileUrl: ""
+      },
+      {
+        id: "testidp2",
+        name: "testidp2",
+        logo: { light: { uri: "" } },
+        profileUrl: ""
+      }
+    ]
   });
 
   it("should match snapshots", () => {
@@ -83,7 +81,7 @@ describe("IdpSelectionScreen", () => {
     const selectedIdpMock = {
       id: "testidp2",
       name: "testidp2",
-      logo: "",
+      logo: { light: { uri: "" } },
       profileUrl: ""
     };
 

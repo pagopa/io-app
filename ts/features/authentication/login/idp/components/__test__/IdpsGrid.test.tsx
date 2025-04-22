@@ -1,19 +1,19 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 import IdpsGrid from "../../components/IdpsGrid";
-import { SpidIdp } from "../../../../../../../definitions/content/SpidIdp";
+import { SpidIdp } from "../../../../../../utils/idps";
 
 describe("IdpsGrid", () => {
   const mockIdps: Array<SpidIdp> = [
     {
       id: "idp1",
-      logo: "https://example.com/logo1.png",
+      logo: { light: { uri: "https://example.com/logo1.png" } },
       name: "IDP One",
       profileUrl: "https://example.com/logo1.png"
     },
     {
       id: "idp2",
-      logo: "https://example.com/logo2.png",
+      logo: { light: { uri: "https://example.com/logo2.png" } },
       name: "IDP Two",
       profileUrl: "https://example.com/logo2.png"
     }

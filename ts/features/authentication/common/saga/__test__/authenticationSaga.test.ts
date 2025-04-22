@@ -83,7 +83,7 @@ describe("authenticationSaga 2", () => {
       O.some({
         id: idpMock,
         name: "Fake IDP",
-        logo: "https://fake.logo",
+        logo: { light: { uri: "https://fake.logo" } },
         profileUrl: "https://fake.url"
       })
     );
