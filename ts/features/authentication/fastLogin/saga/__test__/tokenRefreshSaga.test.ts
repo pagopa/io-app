@@ -11,11 +11,7 @@ import {
   refreshTokenNoPinError,
   testable
 } from "../../store/actions/tokenRefreshActions";
-import {
-  identificationFailure,
-  identificationRequest,
-  identificationSuccess
-} from "../../../../../store/actions/identification";
+
 import { getPin } from "../../../../../utils/keychain";
 import { logoutRequest } from "../../../common/store/actions";
 import { dismissSupport } from "../../../../../utils/supportAssistance";
@@ -23,6 +19,11 @@ import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import { fastLoginMaxRetries } from "../../../../../config";
+import {
+  identificationFailure,
+  identificationRequest,
+  identificationSuccess
+} from "../../../../identification/store/actions";
 
 jest.mock("../../../../../navigation/NavigationService", () => ({
   navigate: jest.fn()
