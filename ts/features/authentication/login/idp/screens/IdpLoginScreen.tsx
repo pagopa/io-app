@@ -257,7 +257,7 @@ const IdpLoginScreen = () => {
     if (pot.isLoading(requestState) || pot.isError(requestState)) {
       return (
         <View style={styles.refreshIndicatorContainer}>
-          <LoadingIndicator />
+          <LoadingIndicator testID="loading-indicator" />
         </View>
       );
     }
@@ -319,6 +319,7 @@ const IdpLoginScreen = () => {
   const content = useMemo(
     () => (
       <WebView
+        testID="webview-idp-login-screen"
         cacheEnabled={false}
         androidCameraAccessDisabled
         androidMicrophoneAccessDisabled
