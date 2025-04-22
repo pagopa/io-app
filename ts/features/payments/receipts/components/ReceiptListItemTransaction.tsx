@@ -8,6 +8,7 @@ import { getTransactionLogo } from "../../common/utils";
 import { formatAmountText } from "../utils";
 import I18n from "../../../../i18n";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import ListItemSwipeAction from "../../../../components/ListItemSwipeAction";
 
 type Props = {
   transaction: NoticeListItem;
@@ -56,34 +57,38 @@ const ReceiptListItemTransaction = memo(
 
     if (transaction.isCart) {
       return (
+        <ListItemSwipeAction>
+          <ListItemTransaction
+            paymentLogoIcon={TransactionEmptyIcon}
+            onPress={onPress}
+            accessible
+            accessibilityLabel={accessibilityLabel}
+            title={I18n.t("features.payments.transactions.multiplePayment")}
+            subtitle={datetime}
+            transaction={{
+              amount: amountText,
+              amountAccessibilityLabel: accessibleAmountText
+            }}
+          />
+        </ListItemSwipeAction>
+      );
+    }
+
+    return (
+      <ListItemSwipeAction>
         <ListItemTransaction
-          paymentLogoIcon={TransactionEmptyIcon}
+          paymentLogoIcon={transactionLogo}
           onPress={onPress}
+          title={recipient}
           accessible
           accessibilityLabel={accessibilityLabel}
-          title={I18n.t("features.payments.transactions.multiplePayment")}
           subtitle={datetime}
           transaction={{
             amount: amountText,
             amountAccessibilityLabel: accessibleAmountText
           }}
         />
-      );
-    }
-
-    return (
-      <ListItemTransaction
-        paymentLogoIcon={transactionLogo}
-        onPress={onPress}
-        title={recipient}
-        accessible
-        accessibilityLabel={accessibilityLabel}
-        subtitle={datetime}
-        transaction={{
-          amount: amountText,
-          amountAccessibilityLabel: accessibleAmountText
-        }}
-      />
+      </ListItemSwipeAction>
     );
   },
   (prevProps, nextProps) => prevProps.transaction === nextProps.transaction
