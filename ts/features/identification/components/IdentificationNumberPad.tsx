@@ -73,7 +73,7 @@ export const IdentificationNumberPad = (
 
   return (
     <>
-      <View style={{ alignItems: "center" }}>
+      <View testID="code-input" style={{ alignItems: "center" }}>
         <CodeInput
           value={value}
           length={PIN_LENGTH}
@@ -105,7 +105,7 @@ export const IdentificationNumberPad = (
         </View>
       )}
       <VSpacer size={48} />
-      <View>
+      <View testID="number-pad">
         <NumberPad
           deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
           onDeletePress={onDeletePress}

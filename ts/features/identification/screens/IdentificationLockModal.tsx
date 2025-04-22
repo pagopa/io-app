@@ -1,24 +1,24 @@
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { useCallback, useEffect } from "react";
-import { View, Modal, SafeAreaView } from "react-native";
 import {
+  BodySmall,
   ContentWrapper,
   H4,
-  BodySmall,
-  Pictogram,
-  VSpacer,
   IOColors,
-  useIOTheme
+  Pictogram,
+  useIOTheme,
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "../../i18n";
-import { useIODispatch } from "../../store/hooks";
-import { identificationHideLockModal } from "../../store/actions/identification";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { useCallback, useEffect } from "react";
+import { Modal, SafeAreaView, View } from "react-native";
 import {
   CountdownProvider,
   useCountdown
-} from "../../components/countdown/CountdownProvider";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { ProgressIndicator } from "../../components/ui/ProgressIndicator";
+} from "../../../components/countdown/CountdownProvider";
+import { ProgressIndicator } from "../../../components/ui/ProgressIndicator";
+import I18n from "../../../i18n";
+import { useIODispatch } from "../../../store/hooks";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { identificationHideLockModal } from "../store/actions";
 
 type Props = {
   countdownInMs: Millisecond;
@@ -81,7 +81,7 @@ export const IdentificationLockModal = (props: Props) => {
   }, [dispatch]);
 
   return (
-    <Modal>
+    <Modal testID="identification-lock-modal">
       <SafeAreaView
         style={{
           flex: 1,

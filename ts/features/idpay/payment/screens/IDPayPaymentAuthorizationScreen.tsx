@@ -15,7 +15,7 @@ import { View } from "react-native";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
-import { identificationRequest } from "../../../../store/actions/identification";
+import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";

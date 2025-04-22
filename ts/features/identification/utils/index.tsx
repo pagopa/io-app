@@ -1,10 +1,10 @@
 import { BiometricsValidType, Body } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { TxtParagraphNode } from "@textlint/ast-node-types";
-import I18n from "../../i18n";
-import IOMarkdown from "../../components/IOMarkdown";
-import { Renderer } from "../../components/IOMarkdown/types";
-import { getTxtNodeKey } from "../../components/IOMarkdown/renderRules";
+import I18n from "../../../i18n";
+import IOMarkdown from "../../../components/IOMarkdown";
+import { Renderer } from "../../../components/IOMarkdown/types";
+import { getTxtNodeKey } from "../../../components/IOMarkdown/renderRules";
 
 export const FAIL_ATTEMPTS_TO_SHOW_ALERT = 4;
 
