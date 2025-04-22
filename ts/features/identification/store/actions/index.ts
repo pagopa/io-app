@@ -4,12 +4,12 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { PinString } from "../../types/PinString";
+import { PinString } from "../../../../types/PinString";
 import {
   IdentificationCancelData,
   IdentificationGenericData,
   IdentificationSuccessData
-} from "../reducers/identification";
+} from "../reducers";
 
 /**
  * An action dispatched by the screen.
