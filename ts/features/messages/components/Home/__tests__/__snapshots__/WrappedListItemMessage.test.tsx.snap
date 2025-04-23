@@ -367,16 +367,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -781,16 +781,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -1195,16 +1195,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -1609,16 +1609,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -2023,16 +2023,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -2437,16 +2437,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -2851,16 +2851,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -3265,16 +3265,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -3679,16 +3679,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -4093,16 +4093,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -4507,16 +4507,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -4921,16 +4921,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -5335,16 +5335,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -5749,16 +5749,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -6163,16 +6163,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -6577,16 +6577,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -6991,16 +6991,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -7405,16 +7405,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -7819,16 +7819,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -8233,16 +8233,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -8647,16 +8647,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -9061,16 +9061,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -9475,16 +9475,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -9889,16 +9889,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -10303,16 +10303,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -10717,16 +10717,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -11131,16 +11131,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -11545,16 +11545,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -11959,16 +11959,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -12373,16 +12373,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -12787,16 +12787,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -13201,16 +13201,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -13615,16 +13615,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -13643,7 +13643,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -14029,16 +14029,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -14057,7 +14057,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -14443,16 +14443,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -14471,7 +14471,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -14857,16 +14857,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -14885,7 +14885,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -15271,16 +15271,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -15299,7 +15299,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -15685,16 +15685,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -15713,7 +15713,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -16099,16 +16099,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -16127,7 +16127,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -16513,16 +16513,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -16541,7 +16541,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -16927,16 +16927,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -16955,7 +16955,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -17341,16 +17341,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -17369,7 +17369,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -17755,16 +17755,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -17783,7 +17783,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -18169,16 +18169,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -18197,7 +18197,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -18583,16 +18583,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -18611,7 +18611,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -18997,16 +18997,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito disarchiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later unarchive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -19025,7 +19025,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -19411,16 +19411,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -19439,7 +19439,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -19825,16 +19825,16 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -19853,7 +19853,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -20239,16 +20239,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -20653,16 +20653,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -21067,16 +21067,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -21481,16 +21481,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -21895,16 +21895,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -22309,16 +22309,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -22723,16 +22723,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -23137,16 +23137,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -23551,16 +23551,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -23965,16 +23965,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -24379,16 +24379,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -24793,16 +24793,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -25207,16 +25207,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -25621,16 +25621,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -26035,16 +26035,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -26449,16 +26449,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -26863,16 +26863,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -27277,16 +27277,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -27691,16 +27691,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -28105,16 +28105,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -28519,16 +28519,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -28933,16 +28933,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -29347,16 +29347,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -29761,16 +29761,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -30175,16 +30175,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -30589,16 +30589,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -31003,16 +31003,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -31417,16 +31417,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -31831,16 +31831,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -32245,16 +32245,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -32659,16 +32659,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -33073,16 +33073,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -33487,16 +33487,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -33515,7 +33515,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -33901,16 +33901,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -33929,7 +33929,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -34315,16 +34315,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -34343,7 +34343,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -34729,16 +34729,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -34757,7 +34757,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -35143,16 +35143,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -35171,7 +35171,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -35557,16 +35557,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -35585,7 +35585,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -35971,16 +35971,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -35999,7 +35999,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -36385,16 +36385,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -36413,7 +36413,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -36799,16 +36799,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -36827,7 +36827,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -37213,16 +37213,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -37241,7 +37241,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -37627,16 +37627,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -37655,7 +37655,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -38041,16 +38041,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -38069,7 +38069,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -38455,16 +38455,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -38483,7 +38483,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -38869,16 +38869,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per selezionare e in seguito archiviare
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to select and later archive
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -38897,7 +38897,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -39283,16 +39283,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -39311,7 +39311,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -39697,16 +39697,16 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
-  . Tieni premuto per deselezionare
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
+  . Press and hold to deselect
                         </Text>
                         <Text />
                         <Text>
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -39725,7 +39725,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -40111,8 +40111,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -40120,7 +40120,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -40525,8 +40525,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -40534,7 +40534,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -40939,8 +40939,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -40948,7 +40948,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -41353,8 +41353,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -41362,7 +41362,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -41767,8 +41767,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -41776,7 +41776,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -42181,8 +42181,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -42190,7 +42190,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -42595,8 +42595,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -42604,7 +42604,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -43009,8 +43009,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -43018,7 +43018,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -43423,8 +43423,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -43432,7 +43432,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -43837,8 +43837,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -43846,7 +43846,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -44251,8 +44251,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -44260,7 +44260,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -44665,8 +44665,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -44674,7 +44674,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -45079,8 +45079,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -45088,7 +45088,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -45493,8 +45493,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -45502,7 +45502,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -45907,8 +45907,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -45916,7 +45916,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -46321,8 +46321,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -46330,7 +46330,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -46735,8 +46735,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -46744,7 +46744,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -47149,8 +47149,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -47158,7 +47158,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -47563,8 +47563,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -47572,7 +47572,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -47977,8 +47977,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -47986,7 +47986,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -48391,8 +48391,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -48400,7 +48400,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -48805,8 +48805,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -48814,7 +48814,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -49219,8 +49219,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -49228,7 +49228,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -49633,8 +49633,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -49642,7 +49642,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -50047,8 +50047,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -50056,7 +50056,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -50461,8 +50461,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -50470,7 +50470,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -50875,8 +50875,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -50884,7 +50884,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -51289,8 +51289,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -51298,7 +51298,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -51703,8 +51703,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -51712,7 +51712,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -52117,8 +52117,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -52126,7 +52126,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -52531,8 +52531,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -52540,7 +52540,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -52945,8 +52945,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -52954,7 +52954,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -53359,8 +53359,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -53368,7 +53368,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -53387,7 +53387,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -53773,8 +53773,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -53782,7 +53782,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -53801,7 +53801,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -54187,8 +54187,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -54196,7 +54196,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -54215,7 +54215,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -54601,8 +54601,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -54610,7 +54610,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -54629,7 +54629,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -55015,8 +55015,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -55024,7 +55024,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -55043,7 +55043,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -55429,8 +55429,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -55438,7 +55438,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -55457,7 +55457,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -55843,8 +55843,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -55852,7 +55852,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -55871,7 +55871,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -56257,8 +56257,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -56266,7 +56266,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           true
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -56285,7 +56285,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"success","text":"Pagato"}
+                          {"variant":"success","text":"Paid"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -56671,8 +56671,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -56680,7 +56680,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -56699,7 +56699,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -57085,8 +57085,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -57094,7 +57094,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -57113,7 +57113,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -57499,8 +57499,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -57508,7 +57508,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -57527,7 +57527,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -57913,8 +57913,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio non letto selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Unread message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -57922,7 +57922,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -57941,7 +57941,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -58327,8 +58327,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -58336,7 +58336,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -58355,7 +58355,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -58741,8 +58741,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio , ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message , received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -58750,7 +58750,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -58769,7 +58769,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"
@@ -59155,8 +59155,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_0"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -59164,7 +59164,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -59183,7 +59183,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_0"
@@ -59569,8 +59569,8 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                         testID="wrapped_message_list_item_1"
                       >
                         <Text>
-                          Messaggio selezionato, ricevuto da Organization name, Service name. Message title. 
-    ricevuto il 02 gennaio 1990
+                          Message selected, received by Organization name, Service name. Message title. 
+    received on January 2nd 1990
   . 
                         </Text>
                         <Text />
@@ -59578,7 +59578,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           false
                         </Text>
                         <Text>
-                          02/01/90
+                          01/02/90
                         </Text>
                         <Text />
                         <Text>
@@ -59597,7 +59597,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
                           Service name
                         </Text>
                         <Text>
-                          {"variant":"legalMessage","text":"Valore legale"}
+                          {"variant":"legalMessage","text":"Legal value"}
                         </Text>
                         <Text>
                           "wrapped_message_list_item_1"

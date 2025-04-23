@@ -1,7 +1,5 @@
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
-import { mockI18nApplyParameters } from "../../../../../__tests__/testUtilities.test";
-import { mockI18nResolveKeyMessages } from "../../../__tests__/messagesTestUtilities.test";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
@@ -18,17 +16,6 @@ import { MessageCategory } from "../../../../../../definitions/backend/MessageCa
 
 jest.mock("rn-qr-generator", () => ({}));
 jest.mock("react-native-screenshot-prevent", () => ({}));
-
-jest.mock("../../../../../i18n", () => ({
-  currentLocale: () => "it",
-  localeToPreferredLanguageMapping: new Map([
-    ["it", "it_IT"],
-    ["en", "en_GB"],
-    ["de", "de_DE"]
-  ]),
-  t: (key: string, params?: Record<string, string | number | undefined>) =>
-    mockI18nApplyParameters(mockI18nResolveKeyMessages(key), params)
-}));
 
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
