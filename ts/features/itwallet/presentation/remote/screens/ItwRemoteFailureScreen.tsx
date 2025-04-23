@@ -16,6 +16,14 @@ import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUt
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
+import {
+  useItwFailureSupportModal,
+  ZendeskSubcategoryValue
+} from "../../../common/hooks/useItwFailureSupportModal.tsx";
+
+const zendeskAssistanceErrors = [
+  RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE
+];
 
 export const ItwRemoteFailureScreen = () => {
   const failureOption =
@@ -45,6 +53,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
     customBodyMessage: I18n.t(
       "features.itWallet.presentation.remote.walletInactiveScreen.alert.body"
     )
+  });
+
+  const { bottomSheet, present } = useItwFailureSupportModal({
+    failure,
+    supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
+    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA
   });
 
   const getOperationResultScreenContentProps =
@@ -135,6 +149,52 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
+        case RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.subtitle"
+            ),
+            pictogram: "stopSecurity",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.secondaryAction"
+              ),
+              onPress: present
+            }
+          };
+        }
+        case RemoteFailureType.RELYING_PARTY_GENERIC: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.genericError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.genericError.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.genericError.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "go-to-barcode-scan" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.genericError.secondaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
+        }
       }
     };
 
@@ -146,6 +206,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
         {...resultScreenProps}
         subtitleProps={{ textBreakStrategy: "simple" }}
       />
+      {bottomSheet}
     </>
   );
 };

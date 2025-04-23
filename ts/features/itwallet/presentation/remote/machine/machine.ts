@@ -28,6 +28,7 @@ export const itwRemoteMachine = setup({
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToAuthResponseScreen: notImplemented,
+    navigateToBarcodeScanScreen: notImplemented,
     closePresentation: notImplemented
   },
   actors: {
@@ -200,6 +201,9 @@ export const itwRemoteMachine = setup({
         },
         "go-to-identification-mode": {
           actions: "navigateToIdentificationModeScreen"
+        },
+        "go-to-barcode-scan": {
+          actions: "navigateToBarcodeScanScreen"
         },
         close: {
           actions: "closePresentation"

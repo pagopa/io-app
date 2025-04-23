@@ -4646,6 +4646,20 @@
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           },
+          "relyingParty": {
+            "genericError": {
+              "title": "Comunicazione interrotta",
+              "subtitle": "Si è verificato un problema che ha impedito la comunicazione con l’ente.\n\nGenera un nuovo QR Code e riprova.",
+              "primaryAction": "Riprova",
+              "secondaryAction": "Chiudi"
+            },
+            "invalidAuthResponse": {
+              "title": "Non è possibile continuare",
+              "subtitle": "Verifica di essere in possesso dei requisiti necessari per accedere ai servizi.",
+              "primaryAction": "Ho capito",
+              "secondaryAction": "Maggiori dettagli"
+            }
+          },
           "purpose": "Finalità: {{purpose}}",
           "success": {
             "title": "Fatto!",
