@@ -14,7 +14,7 @@ import {
   appReviewPositiveFeedback,
   TopicKeys
 } from "../store/actions";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 
 export const useAppReviewRequest = (topic: TopicKeys = "general") => {
   const dispatch = useIODispatch();
@@ -63,36 +63,33 @@ const useAppFeedbackBottomSheet = (topic: TopicKeys = "general") => {
   const surveyUrl = useIOSelector(appFeedbackUriConfigSelector(topic));
   const { show } = useIOToast();
 
-  const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t("appFeedback.bottomSheet.title"),
-      component: <Body>{I18n.t("appFeedback.bottomSheet.description")}</Body>,
-      footer: (
-        <FooterActions
-          actions={{
-            type: "TwoButtons",
-            primary: {
-              label: I18n.t("appFeedback.bottomSheet.continue"),
-              onPress: () => {
-                if (surveyUrl) {
-                  void openAuthenticationSession(surveyUrl, "");
-                }
-                dismiss();
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
+    title: I18n.t("appFeedback.bottomSheet.title"),
+    component: <Body>{I18n.t("appFeedback.bottomSheet.description")}</Body>,
+    footer: (
+      <FooterActions
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t("appFeedback.bottomSheet.continue"),
+            onPress: () => {
+              if (surveyUrl) {
+                void openAuthenticationSession(surveyUrl, "");
               }
-            },
-            secondary: {
-              label: I18n.t("appFeedback.bottomSheet.discard"),
-              onPress: () => {
-                show(I18n.t("appFeedback.toast.negativeFeedback"));
-                dismiss();
-              }
+              dismiss();
             }
-          }}
-        />
-      )
-    },
-    220
-  );
+          },
+          secondary: {
+            label: I18n.t("appFeedback.bottomSheet.discard"),
+            onPress: () => {
+              show(I18n.t("appFeedback.toast.negativeFeedback"));
+              dismiss();
+            }
+          }
+        }}
+      />
+    )
+  });
 
   return { present, dismiss, bottomSheet };
 };

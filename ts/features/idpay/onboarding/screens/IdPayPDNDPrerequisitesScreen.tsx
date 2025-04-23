@@ -13,7 +13,7 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../machine/selectors";
@@ -40,37 +40,34 @@ export const IdPayPDNDPrerequisitesScreen = () => {
   const continueOnPress = () => machine.send({ type: "next" });
   const goBackOnPress = () => machine.send({ type: "back" });
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t(
-        "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
-      ),
-      component: (
-        <IOMarkdown
-          content={I18n.t(
-            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
-            {
-              provider: authority
-            }
-          )}
-        />
-      ),
-      footer: (
-        <FooterActions
-          actions={{
-            primary: {
-              label: I18n.t(
-                "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
-              ),
-              onPress: () => dismiss()
-            },
-            type: "SingleButton"
-          }}
-        />
-      )
-    },
-    162
-  );
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
+    title: I18n.t(
+      "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
+    ),
+    component: (
+      <IOMarkdown
+        content={I18n.t(
+          "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
+          {
+            provider: authority
+          }
+        )}
+      />
+    ),
+    footer: (
+      <FooterActions
+        actions={{
+          primary: {
+            label: I18n.t(
+              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
+            ),
+            onPress: () => dismiss()
+          },
+          type: "SingleButton"
+        }}
+      />
+    )
+  });
 
   const pdndCriteria = useSelector(pdndCriteriaSelector);
 
