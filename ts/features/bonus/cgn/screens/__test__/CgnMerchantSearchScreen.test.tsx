@@ -84,7 +84,6 @@ test("searching existing shows results", async () => {
   const { screen } = renderScreen();
   const searchInput = await screen.findByTestId("cgnMerchantSearchInput");
   fireEvent.changeText(searchInput, "merchant ");
-  screen.debug();
   await screen.findByText(" one");
   await screen.findByText(" two");
   await screen.findByText(" three");

@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React from "react";
 import { createStore } from "redux";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -7,7 +6,6 @@ import { useIODispatch } from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { NetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
 import {
   ServicePreferenceResponse,

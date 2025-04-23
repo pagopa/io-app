@@ -90,7 +90,6 @@ describe("WalletPaymentDetailScreen", () => {
 
   it("tracks the start payment flow and store the new attempt 'Go to payment' button press", () => {
     const { getByTestId, store } = renderComponent();
-    const rptId = "1234567890";
     dispatchTestSuccess(store);
     const button = getByTestId("wallet-payment-detail-make-payment-button");
     fireEvent.press(button);

@@ -73,7 +73,7 @@ const ProfileMainScreenFC = () => {
     itwLifecycleIsOperationalOrValid
   );
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
-  const idResetTap = useRef<NodeJS.Timeout>();
+  const idResetTap = useRef<number>();
 
   const handleContinue = useCallback(() => {
     navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -112,7 +112,7 @@ const ProfileMainScreenFC = () => {
 
   const resetAppTapCounter = useCallback(() => {
     setTapsOnAppVersion(0);
-    clearInterval(idResetTap.current as NodeJS.Timeout);
+    clearInterval(idResetTap.current);
   }, []);
 
   // When tapped 5 times activate the debug mode of the application.

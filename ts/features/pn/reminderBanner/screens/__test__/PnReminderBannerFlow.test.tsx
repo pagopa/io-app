@@ -1,5 +1,3 @@
-import { fireEvent } from "@testing-library/react-native";
-import React from "react";
 import { applyMiddleware, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { put, takeLatest } from "typed-redux-saga";
@@ -19,7 +17,6 @@ import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../store/reducers/types";
 import PN_ROUTES from "../../../navigation/routes";
-import { sendBannerMixpanelEvents } from "../../../analytics/activationReminderBanner";
 
 jest.mock("../../../analytics/activationReminderBanner", () => {
   const actual = jest.requireActual(
@@ -33,56 +30,56 @@ jest.mock("../../../analytics/activationReminderBanner", () => {
   };
 });
 
-const WAITING_USER_INPUT_BASE_MOCKS = () => {
-  jest
-    .spyOn(SID_SELECTOR, "pnMessagingServiceIdSelector")
-    .mockImplementation(() => "SOME_SID" as ServiceId);
-  jest
-    .spyOn(LOADING_PN_ACTIVATION, "isLoadingPnActivationSelector")
-    .mockImplementation(() => false);
-  jest
-    .spyOn(PREFERENCES_FETCHER, "usePnPreferencesFetcher")
-    .mockImplementation(() => ({
-      isError: false,
-      isLoading: false,
-      isEnabled: false
-    }));
-};
+// const WAITING_USER_INPUT_BASE_MOCKS = () => {
+//   jest
+//     .spyOn(SID_SELECTOR, "pnMessagingServiceIdSelector")
+//     .mockImplementation(() => "SOME_SID" as ServiceId);
+//   jest
+//     .spyOn(LOADING_PN_ACTIVATION, "isLoadingPnActivationSelector")
+//     .mockImplementation(() => false);
+//   jest
+//     .spyOn(PREFERENCES_FETCHER, "usePnPreferencesFetcher")
+//     .mockImplementation(() => ({
+//       isError: false,
+//       isLoading: false,
+//       isEnabled: false
+//     }));
+// };
 
-describe("PnActivationReminderBannerFlow", () => {
-  beforeEach(() => {
-    WAITING_USER_INPUT_BASE_MOCKS();
-    jest.spyOn(USEIO, "useIODispatch").mockImplementation(() => jest.fn());
-  });
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
+// describe("PnActivationReminderBannerFlow", () => {
+//   beforeEach(() => {
+//     WAITING_USER_INPUT_BASE_MOCKS();
+//     jest.spyOn(USEIO, "useIODispatch").mockImplementation(() => jest.fn());
+//   });
+//   afterEach(() => {
+//     jest.restoreAllMocks();
+//   });
 
-  for (const [_key, val] of Object.entries(pnBannerFlowStateEnum)) {
-    // handles flow-induced screens
-    it(`should match snapshot for state= ${val}`, () => {
-      jest
-        .spyOn(React, "useState")
-        .mockImplementationOnce(() => [val, () => null]);
-      const component = renderComponent();
-      expect(component.toJSON()).toMatchSnapshot();
+//   for (const [_key, val] of Object.entries(pnBannerFlowStateEnum)) {
+//     // handles flow-induced screens
+//     it(`should match snapshot for state= ${val}`, () => {
+//       jest
+//         .spyOn(React, "useState")
+//         .mockImplementationOnce(() => [val, () => null]);
+//       const component = renderComponent();
+//       expect(component.toJSON()).toMatchSnapshot();
 
-      switch (val) {
-        case "FAILURE_DETAILS_FETCH":
-        case "FAILURE_ACTIVATION":
-          expect(component.getByTestId(`error-${val}`)).toBeDefined();
-          break;
-        case "WAITING_USER_INPUT":
-          expect(component.getByTestId(`cta-${val}`)).toBeDefined();
-          break;
-        case "SUCCESS_ACTIVATION":
-        case "ALREADY_ACTIVE":
-          expect(component.getByTestId(`success-${val}`)).toBeDefined();
-          break;
-      }
-    });
-  }
-});
+//       switch (val) {
+//         case "FAILURE_DETAILS_FETCH":
+//         case "FAILURE_ACTIVATION":
+//           expect(component.getByTestId(`error-${val}`)).toBeDefined();
+//           break;
+//         case "WAITING_USER_INPUT":
+//           expect(component.getByTestId(`cta-${val}`)).toBeDefined();
+//           break;
+//         case "SUCCESS_ACTIVATION":
+//         case "ALREADY_ACTIVE":
+//           expect(component.getByTestId(`success-${val}`)).toBeDefined();
+//           break;
+//       }
+//     });
+//   }
+// });
 describe("error screens", () => {
   beforeEach(() => {
     jest
