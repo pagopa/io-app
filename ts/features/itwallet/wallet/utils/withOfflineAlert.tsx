@@ -1,7 +1,8 @@
 import {
   AlertEdgeToEdgeWrapper,
-  FooterActions,
+  ButtonSolid,
   IOColors,
+  VStack,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -64,22 +65,17 @@ const useOfflineAlertDetailModal = (
       `features.itWallet.offline.${offlineAccessReason}.modal.title`
     ),
     component: (
-      <IOMarkdown
-        content={I18n.t(
-          `features.itWallet.offline.${offlineAccessReason}.modal.content`
-        )}
-      />
-    ),
-    footer: (
-      <FooterActions
-        actions={{
-          type: "SingleButton",
-          primary: {
-            label: I18n.t("features.itWallet.offline.action"),
-            onPress: handleAppRestart
-          }
-        }}
-      />
+      <VStack space={24}>
+        <IOMarkdown
+          content={I18n.t(
+            `features.itWallet.offline.${offlineAccessReason}.modal.content`
+          )}
+        />
+        <ButtonSolid
+          label={I18n.t("features.itWallet.offline.action")}
+          onPress={handleAppRestart}
+        />
+      </VStack>
     )
   });
 };
