@@ -9,7 +9,6 @@ import {
 } from "@gorhom/bottom-sheet";
 import {
   IOBottomSheetHeaderRadius,
-  IOColors,
   VSpacer,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
@@ -164,11 +163,7 @@ export const useIOBottomSheetModal = ({
         footer ? (
           <BottomSheetFooter
             {...props}
-            // bottomInset={insets.bottom}
-            style={{
-              paddingBottom: insets.bottom,
-              backgroundColor: IOColors.white
-            }}
+            style={{ paddingBottom: insets.bottom }}
           >
             {footer}
           </BottomSheetFooter>
