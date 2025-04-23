@@ -381,7 +381,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
                             textInteractionEnabled={true}
                             useSharedProcessPool={true}
                           >
-                            Mock Message Markdown
+                            A markdown content
                           </RNCWebView>
                         </View>
                         <View

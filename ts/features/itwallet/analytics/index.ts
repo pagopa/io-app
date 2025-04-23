@@ -5,7 +5,10 @@ import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
-import { ItwCredentialStatus } from "../common/utils/itwTypesUtils";
+import {
+  ItwCredentialStatus,
+  WalletInstanceRevocationReason
+} from "../common/utils/itwTypesUtils";
 import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
 import { OfflineAccessReasonEnum } from "../../ingress/store/reducer";
 import {
@@ -759,6 +762,22 @@ export const trackItwTrustmarkRenewFailure = (
 export const trackItwOfflineReloadFailure = () => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_OFFLINE_RELOAD_FAILURE,
+    buildEventProperties("KO", "error")
+  );
+};
+
+export const trackItwWalletInstanceRevocation = (
+  reason: WalletInstanceRevocationReason
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_INSTANCE_REVOKED,
+    buildEventProperties("KO", "error", { reason })
+  );
+};
+
+export const trackItwWalletBadState = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_BAD_STATE_WALLET_DEACTIVATED,
     buildEventProperties("KO", "error")
   );
 };

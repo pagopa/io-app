@@ -44,6 +44,12 @@ import { cieReducer } from "../../features/authentication/login/cie/store/reduce
 import profileReducer from "../../features/settings/common/store/reducers";
 import userDataProcessingReducer from "../../features/settings/common/store/reducers/userDataProcessing";
 import emailValidationReducer from "../../features/mailCheck/store/reducers/emailValidation";
+import {
+  IdentificationState,
+  fillShowLockModal,
+  INITIAL_STATE as identificationInitialState,
+  identificationReducer
+} from "../../features/identification/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import contentReducer, {
@@ -55,11 +61,6 @@ import entitiesReducer, {
   entitiesPersistConfig,
   EntitiesState
 } from "./entities";
-import identificationReducer, {
-  IdentificationState,
-  fillShowLockModal,
-  INITIAL_STATE as identificationInitialState
-} from "./identification";
 import installationReducer from "./installation";
 import { navigationReducer } from "./navigation";
 import onboardingReducer from "./onboarding";
@@ -202,6 +203,10 @@ export function createRootReducer(
 
               _persist: state.authentication._persist
             },
+            // cie status must be kept
+            cie: {
+              ...state.cie
+            },
             // backend status must be kept
             backendInfo: state.backendInfo,
             remoteConfig: state.remoteConfig,
@@ -222,6 +227,10 @@ export function createRootReducer(
               _persist: state.entities._persist
             },
             features: {
+              // connectivityStatus must be kept
+              connectivityStatus: {
+                ...state.features.connectivityStatus
+              },
               appFeedback: {
                 ...appFeedbackInitialState,
                 _persist: state.features.appFeedback._persist

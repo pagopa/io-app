@@ -1,14 +1,8 @@
-import { identity, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { call, put, select } from "typed-redux-saga/macro";
 import { areNotificationPermissionsEnabled } from "../store/reducers/environment";
 import { updateSystemNotificationsEnabled } from "../store/actions/environment";
 import { checkNotificationPermissions } from "../utils";
-import {
-  PendingMessageState,
-  pendingMessageStateSelector
-} from "../store/reducers/pendingMessage";
+import { pendingMessageStateSelector } from "../store/reducers/pendingMessage";
 import { clearNotificationPendingMessage } from "../store/actions/pendingMessage";
 import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
 import { isArchivingDisabledSelector } from "../../messages/store/reducers/archiving";
@@ -16,7 +10,6 @@ import { resetMessageArchivingAction } from "../../messages/store/actions/archiv
 import NavigationService from "../../../navigation/NavigationService";
 import { navigateToMessageRouterAction } from "../utils/navigation";
 import { UIMessageId } from "../../messages/types";
-import { trackMessageNotificationTap } from "../../messages/analytics";
 import { trackNotificationPermissionsStatus } from "../analytics";
 
 export function* checkAndUpdateNotificationPermissionsIfNeeded(
@@ -63,10 +56,6 @@ export function* handlePendingMessageStateIfAllowed(
 ) {
   // Check if we have a pending notification message
   const pendingMessageState = yield* select(pendingMessageStateSelector);
-  // It may be needed to track the push notification tap event (since mixpanel
-  // was not initialized at the moment where the notification came - e.g., when
-  // the application was killed and the push notification is tapped)
-  yield* call(trackMessageNotificationTapIfNeeded, pendingMessageState);
 
   if (pendingMessageState) {
     // We have a pending notification message to handle
@@ -99,23 +88,4 @@ export function* handlePendingMessageStateIfAllowed(
       })
     );
   }
-}
-
-export function trackMessageNotificationTapIfNeeded(
-  pendingMessageStateOpt?: PendingMessageState
-) {
-  pipe(
-    pendingMessageStateOpt,
-    O.fromNullable,
-    O.chain(pendingMessageState =>
-      pipe(
-        pendingMessageState.trackEvent,
-        O.fromNullable,
-        O.filter(identity),
-        O.map(_ =>
-          trackMessageNotificationTap(pendingMessageState.id as NonEmptyString)
-        )
-      )
-    )
-  );
 }

@@ -1,5 +1,4 @@
 import { ComponentProps } from "react";
-
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
@@ -17,7 +16,7 @@ import { MESSAGES_ROUTES } from "../../../navigation/routes";
 const mockPresentBottomSheet = jest.fn();
 
 jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
-  useIOBottomSheetAutoresizableModal: () => ({
+  useIOBottomSheetModal: () => ({
     present: mockPresentBottomSheet
   })
 }));

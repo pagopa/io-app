@@ -1,5 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { mixpanel } from "../mixpanel";
+import { getPeople, isMixpanelInstanceInitialized } from "../mixpanel.ts";
 import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { BiometricsType, getBiometricsType } from "../utils/biometrics";
@@ -56,7 +56,7 @@ type ProfileProperties = {
   ITW_PG_V2: ItwPg;
   ITW_TS_V2: ItwTs;
   ITW_CED_V2: ItwCed;
-  SAVED_PAYMENT_METHOD?: number;
+  SAVED_PAYMENT_METHOD: number;
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
   FONT_PREFERENCE: string;
@@ -66,7 +66,7 @@ export const updateMixpanelProfileProperties = async (
   state: GlobalState,
   forceUpdateFor?: PropertyToUpdate<ProfileProperties>
 ) => {
-  if (!mixpanel) {
+  if (!isMixpanelInstanceInitialized()) {
     return;
   }
   const LOGIN_SESSION = loginSessionConfigHandler(state);
@@ -117,7 +117,7 @@ export const updateMixpanelProfileProperties = async (
     );
   }
 
-  mixpanel.getPeople().set(profilePropertiesObject);
+  getPeople()?.set(profilePropertiesObject);
 };
 
 const forceUpdate = <T extends keyof ProfileProperties>(

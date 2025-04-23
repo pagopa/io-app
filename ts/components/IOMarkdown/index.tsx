@@ -13,9 +13,9 @@ import {
 } from "./markdownRenderer";
 import { DEFAULT_RULES } from "./renderRules";
 
-type UnsafeProps = Omit<Props, "onError">;
+type UnsafeProps = Omit<IOMarkdownProps, "onError">;
 
-type Props = {
+export type IOMarkdownProps = {
   /**
    * The `markdown` string to render.
    */
@@ -53,7 +53,7 @@ const UnsafeIOMarkdown = ({ content, rules }: UnsafeProps) => {
   return <View>{parsedContent.map(renderMarkdown)}</View>;
 };
 
-const IOMarkdown = ({ content, rules, onError }: Props) => (
+const IOMarkdown = ({ content, rules, onError }: IOMarkdownProps) => (
   <Sentry.ErrorBoundary
     fallback={
       <View>

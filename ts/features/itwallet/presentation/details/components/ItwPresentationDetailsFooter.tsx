@@ -19,9 +19,14 @@ import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/re
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsRemove } from "../../../credentials/store/actions";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
+import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
+};
+
+type IPatenteListItemActionProps = {
+  docNumber?: string;
 };
 
 const ItwPresentationDetailsFooter = ({
@@ -81,8 +86,8 @@ const ItwPresentationDetailsFooter = ({
   };
 
   const credentialActions = useMemo(
-    () => getCredentialActions(credential.credentialType),
-    [credential.credentialType]
+    () => getCredentialActions(credential),
+    [credential]
   );
 
   return (
@@ -119,17 +124,23 @@ const ItwPresentationDetailsFooter = ({
 /**
  * Returns custom CTAs for a credential
  */
-const getCredentialActions = (credentialType: string): ReactNode =>
-  ({
-    MDL: [<IPatenteListItemAction key="iPatenteActionMdl" />],
+const getCredentialActions = (credential: StoredCredential): ReactNode => {
+  const { credentialType, parsedCredential } = credential;
+  const docNumber = getCredentialDocumentNumber(parsedCredential);
+
+  return {
+    MDL: [
+      <IPatenteListItemAction key="iPatenteActionMdl" docNumber={docNumber} />
+    ],
     EuropeanHealthInsuranceCard: [],
     EuropeanDisabilityCard: []
-  }[credentialType]);
+  }[credentialType];
+};
 
 /**
  * Renders the IPatente service action item
  */
-const IPatenteListItemAction = () => {
+const IPatenteListItemAction = ({ docNumber }: IPatenteListItemActionProps) => {
   const { startFIMSAuthenticationFlow } =
     useFIMSRemoteServiceConfiguration("iPatente");
   const ctaConfig = useIOSelector(itwIPatenteCtaConfigSelector);
@@ -142,13 +153,17 @@ const IPatenteListItemAction = () => {
     "features.itWallet.presentation.credentialDetails.actions.openIPatente"
   );
 
+  const iPatenteUrl = docNumber
+    ? `${ctaConfig.url}/${docNumber}`
+    : ctaConfig.url;
+
   return (
     <ListItemAction
       testID="openIPatenteActionTestID"
       variant="primary"
       icon="externalLink"
       label={label}
-      onPress={() => startFIMSAuthenticationFlow(label, ctaConfig.url)}
+      onPress={() => startFIMSAuthenticationFlow(label, iPatenteUrl)}
     />
   );
 };
