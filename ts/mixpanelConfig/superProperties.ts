@@ -32,6 +32,8 @@ import {
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
+import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
+import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -62,6 +64,7 @@ type SuperProperties = {
   SAVED_PAYMENT_METHOD?: number;
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
+  OFFLINE_ACCESS_REASON: string;
 };
 
 export const updateMixpanelSuperProperties = async (
@@ -87,6 +90,7 @@ export const updateMixpanelSuperProperties = async (
   const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
   const CGN_STATUS = cgnStatusHandler(state);
   const WELFARE_STATUS = welfareStatusHandler(state);
+  const OFFLINE_ACCESS_REASON = offlineReasonHandler(state);
 
   const superPropertiesObject: SuperProperties = {
     isScreenReaderEnabled: screenReaderEnabled,
@@ -107,7 +111,8 @@ export const updateMixpanelSuperProperties = async (
     ITW_CED_V2,
     SAVED_PAYMENT_METHOD,
     CGN_STATUS,
-    WELFARE_STATUS
+    WELFARE_STATUS,
+    OFFLINE_ACCESS_REASON
   };
 
   if (forceUpdateFor) {
@@ -147,4 +152,11 @@ const tsStatusHandler = (state: GlobalState): ItwTs => {
 const cedStatusHandler = (state: GlobalState): ItwCed => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
   return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
+};
+
+const offlineReasonHandler = (
+  state: GlobalState
+): OfflineAccessReasonEnum | "not_available" => {
+  const offlineAccessReason = offlineAccessReasonSelector(state);
+  return offlineAccessReason ? offlineAccessReason : "not_available";
 };

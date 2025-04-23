@@ -4687,7 +4687,7 @@
         }
       },
       "offline": {
-        "DEVICE_OFFLINE": {
+        "device_offline": {
           "alert": {
             "content": "Nessuna connessione.",
             "action": "Cosa posso fare?"
@@ -4697,7 +4697,7 @@
             "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO."
           }
         },
-        "SESSION_EXPIRED": {
+        "session_expired": {
           "alert": {
             "content": "Accedi di nuovo.",
             "action": "Perché?"
@@ -4707,7 +4707,7 @@
             "content": "###### Cosa posso fare?\n\nQuando la tua sessione di accesso all’app scade, alcuni servizi dell’app potrebbero essere limitati per motivi di sicurezza.\n\nAccedi di nuovo con SPID o CIE per continuare ad usare tutti i servizi di IO."
           }
         },
-        "SESSION_REFRESH": {
+        "session_refresh": {
           "alert": {
             "content": "Alcuni servizi dell’app sono limitati in questo momento.",
             "action": "Cosa posso fare?"

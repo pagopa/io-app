@@ -7,7 +7,8 @@ import { selectIsLoading } from "../../machine/eid/selectors";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { useOfflineGuard } from "../../../../hooks/useOfflineGuard";
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
+import { withOfflineFailureScreen } from "../../wallet/utils/withOfflineFailureScreen.tsx";
 
 const RevocationLoadingScreen = () => {
   useItwDisableGestureNavigation();
@@ -28,13 +29,12 @@ const RevocationLoadingScreen = () => {
   );
 };
 
-export const ItwLifecycleWalletRevocationScreen = () => {
+const ItwLifecycleWalletRevocationComponent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
-  const handleRevokeWalletInstance = useOfflineGuard(
-    () => machineRef.send({ type: "revoke-wallet-instance" }),
-    { type: "toast" }
+  const handleRevokeWalletInstance = useOfflineToastGuard(() =>
+    machineRef.send({ type: "revoke-wallet-instance" })
   );
 
   if (isLoading) {
@@ -65,3 +65,8 @@ export const ItwLifecycleWalletRevocationScreen = () => {
     />
   );
 };
+
+// Offline failure screen HOC
+export const ItwLifecycleWalletRevocationScreen = withOfflineFailureScreen(
+  ItwLifecycleWalletRevocationComponent
+);

@@ -9,8 +9,8 @@ import {
   H6,
   HeaderSecondLevel,
   IOToast,
-  VSpacer,
-  useIOTheme
+  useIOTheme,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -64,10 +64,10 @@ import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSigna
 import { ZendeskParamsList } from "../navigation/params";
 import ZENDESK_ROUTES from "../navigation/routes";
 import {
-  ZendeskStartPayload,
   getZendeskConfig,
   getZendeskPaymentConfig,
   getZendeskToken,
+  ZendeskStartPayload,
   zendeskSupportCancel
 } from "../store/actions";
 import {
@@ -78,6 +78,7 @@ import {
 import { handleContactSupport } from "../utils";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { isLoggedIn } from "../../authentication/common/store/utils/guards";
+import { withOfflineFailureScreen } from "../../itwallet/wallet/utils/withOfflineFailureScreen.tsx";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -196,7 +197,7 @@ const FaqManager = (props: FaqManagerProps) => {
  * the user can choose to open a new ticket, follow previous conversations or read the faqs
  * @constructor
  */
-const ZendeskSupportHelpCenter = () => {
+const ZendeskSupportHelpCenterComponent = () => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   const dispatch = useIODispatch();
@@ -412,5 +413,9 @@ const ZendeskSupportHelpCenter = () => {
     </IOScrollView>
   );
 };
+
+const ZendeskSupportHelpCenter = withOfflineFailureScreen(
+  ZendeskSupportHelpCenterComponent
+);
 
 export default ZendeskSupportHelpCenter;

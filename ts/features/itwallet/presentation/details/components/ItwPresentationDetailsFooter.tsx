@@ -18,8 +18,7 @@ import {
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsRemove } from "../../../credentials/store/actions";
-import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks/index.tsx";
-import { useOfflineGuard } from "../../../../../hooks/useOfflineGuard.ts";
+import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -76,10 +75,10 @@ const ItwPresentationDetailsFooter = ({
     );
   };
 
-  const startAndTrackSupportRequest = useOfflineGuard(() => {
+  const startAndTrackSupportRequest = () => {
     trackWalletCredentialSupport(CREDENTIALS_MAP[credential.credentialType]);
     startSupportRequest();
-  });
+  };
 
   const credentialActions = useMemo(
     () => getCredentialActions(credential.credentialType),

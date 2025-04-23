@@ -2,7 +2,7 @@ import { createStore } from "redux";
 import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
-import { OfflineGuardType, useOfflineGuard } from "../useOfflineGuard";
+import { OfflineGuardType, useOfflineGuard } from "../useOfflineToastGuard.ts";
 import ROUTES from "../../navigation/routes";
 import * as ingressSelectors from "../../features/ingress/store/selectors";
 import I18n from "../../i18n";
