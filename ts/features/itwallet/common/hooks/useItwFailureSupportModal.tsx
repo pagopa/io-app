@@ -17,7 +17,7 @@ import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfi
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   assistanceToolRemoteConfig,
   resetCustomFields,
@@ -228,7 +228,7 @@ export const useItwFailureSupportModal = ({
   const contactMethods = getContactMethods();
   const hasContactMethods = contactMethods.length > 0;
 
-  const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal({
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
     title: "",
     component: (
       <VStack space={16}>

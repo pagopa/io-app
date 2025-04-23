@@ -5,7 +5,7 @@ import { SpidIdp } from "../../../../../../../definitions/content/SpidIdp";
 import { ErrorType, StandardLoginRequestInfo } from "../../store/types";
 
 jest.mock("../../../../../../utils/hooks/bottomSheet", () => ({
-  useIOBottomSheetAutoresizableModal: jest.fn(() => ({
+  useIOBottomSheetModal: jest.fn(() => ({
     present: mockPresent,
     bottomSheet: <></>
   }))
