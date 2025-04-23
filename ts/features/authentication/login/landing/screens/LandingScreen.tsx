@@ -9,7 +9,8 @@ import {
   ModuleNavigation,
   VSpacer,
   Tooltip,
-  useIOToast
+  useIOToast,
+  ButtonLink
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
@@ -71,6 +72,12 @@ import {
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
+import { setOfflineAccessReason } from "../../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
+import { identificationRequest } from "../../../../identification/store/actions";
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
+import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
@@ -87,6 +94,9 @@ export const LandingScreen = () => {
   const insets = useSafeAreaInsets();
   const isCieIDTourGuideEnabled = useIOSelector(
     isCieIDTourGuideEnabledSelector
+  );
+  const itwOfflineAccessAvailable = useIOSelector(
+    itwOfflineAccessAvailableSelector
   );
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
@@ -334,6 +344,20 @@ export const LandingScreen = () => {
       []
     );
 
+    const navigateToWallet = () => {
+      dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.SESSION_EXPIRED));
+      dispatch(
+        identificationRequest(false, false, undefined, undefined, {
+          onSuccess: () => {
+            // This dispatch mounts the new offline navigator.
+            // It must be initialized **after** the user completes
+            // biometric authentication to prevent graphical glitches.
+            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
+          }
+        })
+      );
+    };
+
     return (
       <View style={IOStyles.flex} testID="LandingScreen">
         {isSessionExpiredRef.current ? (
@@ -404,18 +428,20 @@ export const LandingScreen = () => {
             }}
           />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-          {/* This code has not been removed because an equal link will have to
-          be reinstated when this story will be implemented: https://pagopa.atlassian.net/browse/IOPID-2689 */}
-          {/* <View style={IOStyles.selfCenter}>
-            <ButtonLink
-              accessibilityRole="link"
-              accessibilityLabel={I18n.t("authentication.landing.privacyLink")}
-              color="primary"
-              label={I18n.t("authentication.landing.privacyLink")}
-              onPress={navigateToPrivacyUrl}
-            />
-            <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-          </View> */}
+          {itwOfflineAccessAvailable && (
+            <View style={IOStyles.selfCenter}>
+              <ButtonLink
+                accessibilityRole="link"
+                accessibilityLabel={I18n.t(
+                  "authentication.landing.show_wallet"
+                )}
+                color="primary"
+                label={I18n.t("authentication.landing.show_wallet")}
+                onPress={navigateToWallet}
+              />
+              <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
+            </View>
+          )}
           {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
           {bottomSheet}
           {infoBottomsheetComponent}

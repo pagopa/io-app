@@ -61,6 +61,18 @@ const useOfflineAlertDetailModal = (
     }
   }, [dispatch, isConnected, toast]);
 
+  const navigateOnAuthPage = useCallback(() => {
+    dispatch(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
+  }, [dispatch]);
+
+  const handlePressModalAction = useCallback(() => {
+    if (offlineAccessReason === OfflineAccessReasonEnum.SESSION_EXPIRED) {
+      navigateOnAuthPage();
+    } else {
+      handleAppRestart();
+    }
+  }, [handleAppRestart, navigateOnAuthPage, offlineAccessReason]);
+
   return useIOBottomSheetAutoresizableModal(
     {
       title: I18n.t(
@@ -78,8 +90,10 @@ const useOfflineAlertDetailModal = (
           actions={{
             type: "SingleButton",
             primary: {
-              label: I18n.t("features.itWallet.offline.action"),
-              onPress: handleAppRestart
+              label: I18n.t(
+                `features.itWallet.offline.${offlineAccessReason}.modal.footerAction`
+              ),
+              onPress: handlePressModalAction
             }
           }}
         />

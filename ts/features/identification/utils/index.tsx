@@ -61,7 +61,7 @@ export const IdentificationInstructionsComponent = (props: {
         <Body
           key={getTxtNodeKey(paragraph)}
           color="white"
-          textStyle={{ textAlign: "center" }}
+          style={{ textAlign: "center" }}
         >
           {paragraph.children.map(render)}
         </Body>
