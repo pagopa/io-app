@@ -358,6 +358,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                       >
                         <View>
                           <View
+                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,

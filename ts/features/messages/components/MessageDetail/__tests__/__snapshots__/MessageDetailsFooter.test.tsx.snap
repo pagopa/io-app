@@ -337,6 +337,9 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                       <View
                         style={
                           {
+                            "backgroundColor": "#F4F5F8",
+                            "marginBottom": "-75%",
+                            "paddingBottom": "75%",
                             "paddingHorizontal": 24,
                           }
                         }
@@ -862,6 +865,9 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                       <View
                         style={
                           {
+                            "backgroundColor": "#F4F5F8",
+                            "marginBottom": "-75%",
+                            "paddingBottom": "75%",
                             "paddingHorizontal": 24,
                           }
                         }
@@ -1387,6 +1393,9 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                       <View
                         style={
                           {
+                            "backgroundColor": "#F4F5F8",
+                            "marginBottom": "-75%",
+                            "paddingBottom": "75%",
                             "paddingHorizontal": 24,
                           }
                         }
@@ -1912,6 +1921,9 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                       <View
                         style={
                           {
+                            "backgroundColor": "#F4F5F8",
+                            "marginBottom": "-75%",
+                            "paddingBottom": "75%",
                             "paddingHorizontal": 24,
                           }
                         }
@@ -2437,6 +2449,9 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                       <View
                         style={
                           {
+                            "backgroundColor": "#F4F5F8",
+                            "marginBottom": "-75%",
+                            "paddingBottom": "75%",
                             "paddingHorizontal": 24,
                           }
                         }
@@ -3125,6 +3140,9 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                       <View
                         style={
                           {
+                            "backgroundColor": "#F4F5F8",
+                            "marginBottom": "-75%",
+                            "paddingBottom": "75%",
                             "paddingHorizontal": 24,
                           }
                         }
@@ -3813,6 +3831,9 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                       <View
                         style={
                           {
+                            "backgroundColor": "#F4F5F8",
+                            "marginBottom": "-75%",
+                            "paddingBottom": "75%",
                             "paddingHorizontal": 24,
                           }
                         }
@@ -4501,6 +4522,9 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                       <View
                         style={
                           {
+                            "backgroundColor": "#F4F5F8",
+                            "marginBottom": "-75%",
+                            "paddingBottom": "75%",
                             "paddingHorizontal": 24,
                           }
                         }

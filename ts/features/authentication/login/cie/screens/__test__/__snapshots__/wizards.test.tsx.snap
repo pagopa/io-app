@@ -26,6 +26,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
+        onLayout={[Function]}
         style={
           {
             "paddingHorizontal": 24,
@@ -622,6 +623,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
+        onLayout={[Function]}
         style={
           {
             "paddingHorizontal": 24,
@@ -1561,6 +1563,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
+        onLayout={[Function]}
         style={
           {
             "paddingHorizontal": 24,
@@ -2488,6 +2491,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
   >
     <View>
       <View
+        onLayout={[Function]}
         style={
           {
             "paddingHorizontal": 24,

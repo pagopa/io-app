@@ -358,6 +358,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                       >
                         <View>
                           <View
+                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,

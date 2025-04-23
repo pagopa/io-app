@@ -337,6 +337,8 @@ exports[`fimsHistoryEmptyContent should match snapshot 1`] = `
                       <View
                         style={
                           {
+                            "alignItems": "center",
+                            "flex": 1,
                             "paddingHorizontal": 24,
                           }
                         }

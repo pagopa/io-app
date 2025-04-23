@@ -221,9 +221,13 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             >
                               <View>
                                 <View
+                                  accessibilityHint="Carousel that contains an introduction guide to IO functionalities. Select to know the content."
+                                  accessibilityLabel="IO presentation. Welcome to IO!. Select the previous item to open a chat with the IO team if something is not working as it should."
+                                  accessible={true}
                                   style={
                                     {
                                       "paddingHorizontal": 24,
+                                      "width": 750,
                                     }
                                   }
                                 >
@@ -432,9 +436,12 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             >
                               <View>
                                 <View
+                                  accessibilityLabel="Keep your personal documents safe. With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips"
+                                  accessible={true}
                                   style={
                                     {
                                       "paddingHorizontal": 24,
+                                      "width": 750,
                                     }
                                   }
                                 >
@@ -696,9 +703,12 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             >
                               <View>
                                 <View
+                                  accessibilityLabel="Receive communications, also with legal value. Read incoming communications from organisations: by activating the SEND service, you will also receive communications with legal value and save on notification costs."
+                                  accessible={true}
                                   style={
                                     {
                                       "paddingHorizontal": 24,
+                                      "width": 750,
                                     }
                                   }
                                 >
@@ -951,9 +961,12 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             >
                               <View>
                                 <View
+                                  accessibilityLabel="Pay pagoPA notice by the method you prefer. On IO, you can view and download receipts for your pagoPA payments, even if you have not paid in the app"
+                                  accessible={true}
                                   style={
                                     {
                                       "paddingHorizontal": 24,
+                                      "width": 750,
                                     }
                                   }
                                 >
@@ -1111,9 +1124,12 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             >
                               <View>
                                 <View
+                                  accessibilityLabel="Access to the services you are most interested in. Direct access to government services related to health, education, mobility, work and more"
+                                  accessible={true}
                                   style={
                                     {
                                       "paddingHorizontal": 24,
+                                      "width": 750,
                                     }
                                   }
                                 >
@@ -3006,18 +3022,12 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                 >
                                   <View
                                     style={
-                                      [
-                                        {
-                                          "alignSelf": "flex-start",
-                                          "paddingVertical": 20,
-                                        },
-                                        {
-                                          "flexDirection": "row",
-                                        },
-                                        {
-                                          "alignItems": "center",
-                                        },
-                                      ]
+                                      {
+                                        "alignItems": "center",
+                                        "alignSelf": "flex-start",
+                                        "flexDirection": "row",
+                                        "paddingVertical": 20,
+                                      }
                                     }
                                   >
                                     <Text
@@ -3029,7 +3039,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         [
                                           {},
                                           {
-                                            "color": "#636B82",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",

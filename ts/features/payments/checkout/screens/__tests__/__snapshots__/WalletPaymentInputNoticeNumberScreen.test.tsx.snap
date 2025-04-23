@@ -358,6 +358,7 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                       >
                         <View>
                           <View
+                            onLayout={[Function]}
                             style={
                               {
                                 "paddingHorizontal": 24,

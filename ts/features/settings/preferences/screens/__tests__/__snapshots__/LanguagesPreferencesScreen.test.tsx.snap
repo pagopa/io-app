@@ -237,6 +237,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                           >
                             <View>
                               <View
+                                onLayout={[Function]}
                                 style={
                                   {
                                     "paddingHorizontal": 24,
