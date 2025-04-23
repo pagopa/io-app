@@ -9,8 +9,10 @@ import {
 } from "@gorhom/bottom-sheet";
 import {
   IOBottomSheetHeaderRadius,
+  IOColors,
   VSpacer,
-  IOVisualCostants
+  IOVisualCostants,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import {
@@ -85,6 +87,7 @@ export const useIOBottomSheetModal = ({
   onDismiss
 }: BottomSheetOptions): IOBottomSheetModal => {
   const insets = useSafeAreaInsets();
+  const theme = useIOTheme();
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const { onOpen, onClose } = useHardwareBackButtonToDismiss(dismissAll);
@@ -163,7 +166,11 @@ export const useIOBottomSheetModal = ({
         footer ? (
           <BottomSheetFooter
             {...props}
-            style={{ paddingBottom: insets.bottom }}
+            // bottomInset={insets.bottom}
+            style={{
+              paddingBottom: insets.bottom,
+              backgroundColor: IOColors[theme["appBackground-primary"]]
+            }}
           >
             {footer}
           </BottomSheetFooter>
