@@ -44,6 +44,6 @@ export function* handleWalletInstanceResetSaga() {
     // Update every mixpanel property related to the wallet instance and its credentials.
     void updatePropertiesWalletRevoked(state);
   } catch (e) {
-    itwSendExceptionToSentry(e, "Error while resetting wallet instance");
+    itwSendExceptionToSentry(e, "handleWalletInstanceResetSaga");
   }
 }

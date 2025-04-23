@@ -14,10 +14,7 @@ export function* getCurrentStatusWalletInstance() {
   try {
     return yield* call(getCurrentWalletInstanceStatus, sessionToken);
   } catch (e) {
-    itwSendExceptionToSentry(
-      e,
-      "Error while getting current wallet instance status"
-    );
+    itwSendExceptionToSentry(e, "getCurrentStatusWalletInstance");
     return undefined;
   }
 }

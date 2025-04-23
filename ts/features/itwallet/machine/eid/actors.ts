@@ -155,7 +155,7 @@ export const createEidIssuanceActorsImplementation = (
     try {
       await revokeCurrentWalletInstance(sessionToken, integrityKeyTag.value);
     } catch (e) {
-      itwSendExceptionToSentry(e, "Error revoking wallet instance");
+      itwSendExceptionToSentry(e, "revokeWalletInstance");
     }
   })
 });

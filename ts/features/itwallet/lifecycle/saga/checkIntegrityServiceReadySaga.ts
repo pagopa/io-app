@@ -62,6 +62,6 @@ export function* warmUpIntegrityServiceSaga(): Generator<
     yield* put(itwSetIntegrityServiceStatus(isReady ? "ready" : "unavailable"));
   } catch (e) {
     yield* put(itwSetIntegrityServiceStatus("error"));
-    itwSendExceptionToSentry(e, "Error while warming up integrity service");
+    itwSendExceptionToSentry(e, "warmUpIntegrityServiceSaga");
   }
 }

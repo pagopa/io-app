@@ -34,12 +34,34 @@ const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
   return event;
 };
 
+/**
+ * Processes events before sending them to Sentry.
+ * Removes user data from all events and applies sampling logic.
+ * @param event - The Sentry event (exception)  to process
+ * @returns The processed event if it should be sent, or null to drop it
+ */
+const beforeSendHandler = <T extends ErrorEvent | TransactionEvent>(
+  event: T
+): T | null => {
+  const safeEvent = removeUserFromEvent(event);
+  const isSendRequired = event.contexts?.send?.isSendRequired;
+
+  // Always send events marked as required
+  if (isSendRequired) {
+    return safeEvent;
+  }
+
+  // Apply sampling for non-required events (20% sampling rate)
+  const sampleRate = 0.2;
+  return Math.random() <= sampleRate ? safeEvent : null;
+};
+
 Sentry.setUser(null);
 
 Sentry.init({
   dsn: sentryDsn,
   beforeSend(event) {
-    return removeUserFromEvent(event);
+    return beforeSendHandler(event);
   },
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
@@ -53,7 +75,7 @@ Sentry.init({
   // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-message-in-my-error-being-truncated
   maxValueLength: 3000,
   tracesSampleRate: 0.2,
-  sampleRate: 0.3
+  sampleRate: 1
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export
