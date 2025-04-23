@@ -1,7 +1,8 @@
 import {
   AlertEdgeToEdgeWrapper,
-  FooterActions,
+  ButtonSolid,
   IOColors,
+  VStack,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -14,13 +15,11 @@ import { startApplicationInitialization } from "../../../../store/actions/applic
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { resetOfflineAccessReason } from "../../../ingress/store/actions";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
-
-const MODAL_BOTTOM_PADDING = 175;
 
 /**
  * Hook that creates and manages a bottom sheet modal to display detailed information
@@ -61,32 +60,24 @@ const useOfflineAlertDetailModal = (
     }
   }, [dispatch, isConnected, toast]);
 
-  return useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t(
-        `features.itWallet.offline.${offlineAccessReason}.modal.title`
-      ),
-      component: (
+  return useIOBottomSheetModal({
+    title: I18n.t(
+      `features.itWallet.offline.${offlineAccessReason}.modal.title`
+    ),
+    component: (
+      <VStack space={24}>
         <IOMarkdown
           content={I18n.t(
             `features.itWallet.offline.${offlineAccessReason}.modal.content`
           )}
         />
-      ),
-      footer: (
-        <FooterActions
-          actions={{
-            type: "SingleButton",
-            primary: {
-              label: I18n.t("features.itWallet.offline.action"),
-              onPress: handleAppRestart
-            }
-          }}
+        <ButtonSolid
+          label={I18n.t("features.itWallet.offline.action")}
+          onPress={handleAppRestart}
         />
-      )
-    },
-    MODAL_BOTTOM_PADDING
-  );
+      </VStack>
+    )
+  });
 };
 
 type OfflineAlertWrapperProps = {
