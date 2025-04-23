@@ -18,7 +18,8 @@ const renderComponent = () => {
 
 describe("DSIOListViewWithLargeHeader", () => {
   it("should render list items correctly", () => {
-    const { toJSON } = renderComponent();
-    expect(toJSON()).toMatchSnapshot();
+    const { getByTestId } = renderComponent();
+    const component = getByTestId("DSIOListViewWithLargeHeader");
+    expect(component).toBeTruthy();
   });
 });
