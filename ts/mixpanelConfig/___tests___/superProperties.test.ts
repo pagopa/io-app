@@ -1,4 +1,5 @@
 import * as O from "fp-ts/lib/Option";
+import { MixpanelProperties } from "mixpanel-react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { GlobalState } from "../../store/reducers/types";
 import * as BIOMETRICS from "../../utils/biometrics";
@@ -19,13 +20,13 @@ jest.mock("react-native", () => ({
   }
 }));
 
+// eslint-disable-next-line functional/no-let
+let mockIsMixpanelInitialized = true;
 const mockedRegisterSuperProperties = jest.fn();
 jest.mock("../../mixpanel", () => ({
-  get mixpanel() {
-    return {
-      registerSuperProperties: mockedRegisterSuperProperties
-    };
-  }
+  isMixpanelInstanceInitialized: () => mockIsMixpanelInitialized,
+  registerSuperProperties: (properties: MixpanelProperties) =>
+    mockedRegisterSuperProperties(properties)
 }));
 
 describe("superProperties", () => {
@@ -64,7 +65,8 @@ describe("superProperties", () => {
       [
         [false, "disabled"],
         [true, "enabled"]
-      ].forEach(notificationPermissionTuple =>
+      ].forEach(notificationPermissionTuple => {
+        mockIsMixpanelInitialized = true;
         it(`should call 'mixpanel.getPeople().set' with proper parameter's value for input
 ({
     notificationPermission: ${notificationPermissionTuple[0]}
@@ -96,7 +98,9 @@ describe("superProperties", () => {
           jest
             .spyOn(ACCESSIBILITY, "isScreenReaderEnabled")
             .mockImplementation(() => Promise.resolve(true));
+
           await updateMixpanelSuperProperties(state);
+
           expect(mockedRegisterSuperProperties.mock.calls.length).toBe(1);
           expect(mockedRegisterSuperProperties.mock.calls[0].length).toBe(1);
           expect(mockedRegisterSuperProperties.mock.calls[0][0]).toEqual({
@@ -115,13 +119,21 @@ describe("superProperties", () => {
             LOGIN_SESSION: "365",
             NOTIFICATION_CONFIGURATION: pushContentReminderTuple[2],
             NOTIFICATION_PERMISSION: notificationPermissionTuple[1],
-            SAVED_PAYMENT_METHOD: undefined,
+            SAVED_PAYMENT_METHOD: 0,
             SERVICE_CONFIGURATION: "AUTO",
             WELFARE_STATUS: []
           });
-        })
-      )
+        });
+      })
     );
+  });
+  it("should do nothing if 'isMixpanelInstanceInitialized' returns 'false'", async () => {
+    mockIsMixpanelInitialized = false;
+    const state = {} as GlobalState;
+
+    await updateMixpanelSuperProperties(state);
+
+    expect(mockedRegisterSuperProperties.mock.calls.length).toBe(0);
   });
 });
 
@@ -157,7 +169,10 @@ const generateMockedGlobalState = (
         }
       },
       wallet: {
-        cards: {}
+        cards: {},
+        placeholders: {
+          items: {}
+        }
       }
     },
     persistedPreferences: {

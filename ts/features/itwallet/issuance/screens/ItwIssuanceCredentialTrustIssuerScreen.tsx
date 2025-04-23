@@ -107,12 +107,14 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     machineRef.send({ type: "confirm-trust-data" });
   };
 
-  const dismissDialog = useItwDismissalDialog(() => {
-    machineRef.send({ type: "close" });
-    trackItwExit({
-      exit_page: route.name,
-      credential: CREDENTIALS_MAP[credentialType]
-    });
+  const dismissDialog = useItwDismissalDialog({
+    handleDismiss: () => {
+      machineRef.send({ type: "close" });
+      trackItwExit({
+        exit_page: route.name,
+        credential: CREDENTIALS_MAP[credentialType]
+      });
+    }
   });
 
   useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });

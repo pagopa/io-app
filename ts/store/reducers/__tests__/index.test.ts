@@ -25,8 +25,7 @@ describe("index", () => {
       },
       pendingMessage: {
         foreground: false,
-        id: "951753",
-        trackEvent: true
+        id: "951753"
       },
       userBehaviour: {
         pushNotificationBannerDismissalCount: 2,

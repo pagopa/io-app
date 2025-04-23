@@ -175,13 +175,20 @@ export const isPremiumMessagesOptInOutEnabledSelector = createSelector(
  * if there is no data or the local Feature Flag is disabled,
  * false is the default value -> (CDC disabled)
  */
-export const isCdcEnabledSelector = createSelector(
+export const isCdcAppVersionSupportedSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): boolean =>
     cdcEnabled &&
     pipe(
       remoteConfig,
-      O.map(config => config.cdc.enabled),
+      O.map(config =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? config.cdcV2.min_app_version.ios
+            : config.cdcV2.min_app_version.android,
+          getAppVersion()
+        )
+      ),
       O.getOrElse(() => false)
     )
 );
@@ -389,6 +396,24 @@ export const isPaymentsFeedbackBannerEnabledSelector = createSelector(
           Platform.OS === "ios"
             ? config.newPaymentSection.feedbackBanner?.min_app_version.ios
             : config.newPaymentSection.feedbackBanner?.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
+export const isPaymentsWebViewFlowEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? config.newPaymentSection.webViewPaymentFlow?.min_app_version.ios
+            : config.newPaymentSection.webViewPaymentFlow?.min_app_version
+                .android,
           getAppVersion()
         )
       ),

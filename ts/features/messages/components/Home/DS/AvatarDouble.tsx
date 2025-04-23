@@ -9,7 +9,7 @@ import {
 import { useCallback, useRef, useState } from "react";
 import {
   Image,
-  ImageRequireSource,
+  ImageSourcePropType,
   ImageURISource,
   StyleSheet,
   View
@@ -17,10 +17,7 @@ import {
 import { addCacheTimestampToUri } from "../../../../../utils/image";
 
 type AvatarDoubleProps = {
-  backgroundLogoUri?:
-    | ImageRequireSource
-    | ImageURISource
-    | ReadonlyArray<ImageURISource>;
+  backgroundLogoUri?: ImageSourcePropType;
 };
 
 const avatarContainerSize = 30;
@@ -53,12 +50,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const getImageState = (
-  backgroundLogoUri?:
-    | ImageRequireSource
-    | ImageURISource
-    | ReadonlyArray<ImageURISource>
-) => {
+const getImageState = (backgroundLogoUri?: ImageSourcePropType) => {
   switch (typeof backgroundLogoUri) {
     case "number":
       return backgroundLogoUri;

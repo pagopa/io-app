@@ -1,10 +1,13 @@
 import * as t from "io-ts";
 import * as S from "fp-ts/lib/string";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
-import { mixpanelTrack } from "../../../mixpanel";
+import {
+  enqueueMixpanelEvent,
+  isMixpanelInstanceInitialized,
+  mixpanelTrack
+} from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { UIMessageId } from "../types";
 import {
@@ -90,20 +93,35 @@ export const trackCTAFrontMatterDecodingError = (
   void mixpanelTrack(eventName, props);
 };
 
-export const trackMessageNotificationTap = (messageId: NonEmptyString) => {
+export const trackMessageNotificationParsingFailure = (
+  id: string,
+  reason: t.Errors | string,
+  userOptedIn: boolean
+) => {
+  const eventName = "NOTIFICATION_PARSING_FAILURE";
+  const props = buildEventProperties("KO", undefined, {
+    reason: typeof reason !== "string" ? readablePrivacyReport(reason) : reason
+  });
+  if (isMixpanelInstanceInitialized()) {
+    mixpanelTrack(eventName, props);
+  } else if (userOptedIn) {
+    enqueueMixpanelEvent(eventName, id, props);
+  }
+};
+
+export const trackMessageNotificationTap = (
+  messageId: string,
+  userOptedIn: boolean
+) => {
   const eventName = "NOTIFICATIONS_MESSAGE_TAP";
   const props = buildEventProperties("UX", "action", {
     messageId
   });
-  return mixpanelTrack(eventName, props);
-};
-
-export const trackMessageNotificationParsingFailure = (errors: t.Errors) => {
-  const eventName = "NOTIFICATION_PARSING_FAILURE";
-  const props = buildEventProperties("KO", undefined, {
-    reason: readablePrivacyReport(errors)
-  });
-  void mixpanelTrack(eventName, props);
+  if (isMixpanelInstanceInitialized()) {
+    mixpanelTrack(eventName, props);
+  } else if (userOptedIn) {
+    enqueueMixpanelEvent(eventName, messageId, props);
+  }
 };
 
 export const trackThirdPartyMessageAttachmentCount = (

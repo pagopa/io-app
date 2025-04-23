@@ -174,9 +174,9 @@ export const ItwCieCardReaderScreen = () => {
   const blueColorName = useInteractiveElementDefaultColorName();
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
-  const dismissalDialog = useItwDismissalDialog(() =>
-    machineRef.send({ type: "close" })
-  );
+  const dismissalDialog = useItwDismissalDialog({
+    handleDismiss: () => machineRef.send({ type: "close" })
+  });
 
   const handleAccessibilityAnnouncement = (
     event: Cie.CieEvent | Cie.CieError

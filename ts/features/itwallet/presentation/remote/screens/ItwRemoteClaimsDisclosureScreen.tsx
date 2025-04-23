@@ -18,7 +18,7 @@ import {
   selectRelyingPartyData
 } from "../machine/selectors.ts";
 import { useIODispatch } from "../../../../../store/hooks.ts";
-import { identificationRequest } from "../../../../../store/actions/identification.ts";
+import { identificationRequest } from "../../../../identification/store/actions";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
 import { ItwRemotePresentationDetails } from "../components/ItwRemotePresentationDetails.tsx";
 
