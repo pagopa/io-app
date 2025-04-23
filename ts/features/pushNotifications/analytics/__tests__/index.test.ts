@@ -26,10 +26,6 @@ import * as Mixpanel from "../../../../mixpanel";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 
-jest.mock("react-native-i18n", () => ({
-  t: (key: string) => key
-}));
-
 describe("pushNotifications analytics", () => {
   beforeEach(() => {
     jest.clearAllMocks();

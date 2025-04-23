@@ -16,10 +16,6 @@ jest.mock("redux-saga", () => {
   return () => fn;
 });
 
-jest.mock("react-native-i18n", () => ({
-  t: (key: string) => key
-}));
-
 describe("configureStoreAndPersistor", () => {
   describe("CURRENT_REDUX_STORE_VERSION", () => {
     it("should match expected value", () => {
