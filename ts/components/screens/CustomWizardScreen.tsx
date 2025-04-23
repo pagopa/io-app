@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   wizardContent: {
     flex: 1,
     paddingHorizontal: IOVisualCostants.appMarginDefault,
-    alignItems: "center"
+    justifyContent: "center"
   }
 });
 
