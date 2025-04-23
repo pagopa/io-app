@@ -66,7 +66,7 @@
     "@pagopa/io-react-native-jwt": "^2.1.0",
     "@pagopa/io-react-native-login-utils": "^1.0.8",
     "@pagopa/io-react-native-secure-storage": "^0.2.0",
-    "@pagopa/io-react-native-wallet": "^0.28.2",
+    "@pagopa/io-react-native-wallet": "^0.29.0",
     "@pagopa/io-react-native-zendesk": "^0.3.30",
     "@pagopa/react-native-cie": "^1.4.2",
     "@pagopa/ts-commons": "^10.15.0",
