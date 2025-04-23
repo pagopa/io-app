@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0-rc.0](https://github.com/pagopa/io-app/compare/3.3.0-rc.8...3.4.0-rc.0) (2025-04-23)
+
+
+### Features
+
+*  [[IOPID-2814](https://pagopa.atlassian.net/browse/IOPID-2814),[IOPID-2759](https://pagopa.atlassian.net/browse/IOPID-2759)] add helpful resources bottomsheet on LandingScreen and refactor test login  ([#6904](https://github.com/pagopa/io-app/issues/6904)) ([84c86aa](https://github.com/pagopa/io-app/commit/84c86aac0951490de884733cdc6ceea6a2566722))
+* [[IOBP-1578](https://pagopa.atlassian.net/browse/IOBP-1578)] Payment webview flow ([#6899](https://github.com/pagopa/io-app/issues/6899)) ([f9538a5](https://github.com/pagopa/io-app/commit/f9538a5f8c7771645f6ea019338aabc662a55a56))
+* [[IOBP-1593](https://pagopa.atlassian.net/browse/IOBP-1593)] Add header payment webview ([#6906](https://github.com/pagopa/io-app/issues/6906)) ([907c8a0](https://github.com/pagopa/io-app/commit/907c8a011f08630aa22587ace2fa671d8ffd41ae))
+
+
+### Bug Fixes
+
+* [[IOCOM-2296](https://pagopa.atlassian.net/browse/IOCOM-2296)] Accessibility header role for IO-COM sections ([#6897](https://github.com/pagopa/io-app/issues/6897)) ([03ad593](https://github.com/pagopa/io-app/commit/03ad59309767675ddfcd40339f8e2b0278692386))
+* [[IOCOM-2327](https://pagopa.atlassian.net/browse/IOCOM-2327)] Global mock for I18n ([#6909](https://github.com/pagopa/io-app/issues/6909)) ([940773c](https://github.com/pagopa/io-app/commit/940773c526fe3ecfbb59743bead02a9112185247))
+* [[IOPID-2949](https://pagopa.atlassian.net/browse/IOPID-2949)] keep `cie` and `connectivityStatus` after logout ([#6912](https://github.com/pagopa/io-app/issues/6912)) ([b0d9851](https://github.com/pagopa/io-app/commit/b0d9851790509ef3bd5cc132afbd71c0501ae5a9))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2055](https://pagopa.atlassian.net/browse/SIW-2055)] Update iPatente cta url with saved driving license number ([#6886](https://github.com/pagopa/io-app/issues/6886)) ([4aee01e](https://github.com/pagopa/io-app/commit/4aee01e5ac8f9ba81832316c2e068dd39b6faee1))
+
 ## [3.3.0-rc.8](https://github.com/pagopa/io-app/compare/3.3.0-rc.7...3.3.0-rc.8) (2025-04-17)
 
 
