@@ -12,7 +12,9 @@ import { itwCredentialsSelector } from "../../../credentials/store/selectors";
 import { enrichPresentationDetails } from "../utils/itwRemotePresentationUtils";
 import { assert } from "../../../../../utils/assert";
 
-export type EvaluateRelyingPartyTrustInput = Partial<{ clientId: string }>;
+export type EvaluateRelyingPartyTrustInput = Partial<{
+  qrCodePayload: ItwRemoteRequestPayload;
+}>;
 export type EvaluateRelyingPartyTrustOutput = {
   rpConf: RelyingPartyConfiguration;
   rpSubject: string;
@@ -35,7 +37,7 @@ export type SendAuthorizationResponseInput = {
   rpConf?: RelyingPartyConfiguration;
 };
 export type SendAuthorizationResponseOutput = {
-  redirectUri: string;
+  redirectUri?: string; // Optional in cross-device presentation
 };
 
 export const createRemoteActorsImplementation = (
@@ -45,10 +47,13 @@ export const createRemoteActorsImplementation = (
     EvaluateRelyingPartyTrustOutput,
     EvaluateRelyingPartyTrustInput
   >(async ({ input }) => {
-    assert(input.clientId, "Missing required client ID");
+    const { qrCodePayload } = input;
+    assert(qrCodePayload?.client_id, "Missing required client ID");
 
     const { rpConf, subject } =
-      await Credential.Presentation.evaluateRelyingPartyTrust(input.clientId);
+      await Credential.Presentation.evaluateRelyingPartyTrust(
+        qrCodePayload.client_id
+      );
 
     // TODO: add trust chain validation
 
@@ -152,7 +157,7 @@ export const createRemoteActorsImplementation = (
       );
 
     return {
-      redirectUri: authResponse.redirect_uri!
+      redirectUri: authResponse.redirect_uri
     };
   });
 
