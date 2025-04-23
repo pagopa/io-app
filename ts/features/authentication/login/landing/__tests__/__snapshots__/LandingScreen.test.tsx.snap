@@ -1829,9 +1829,9 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                             }
                           />
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
-                                "flex": 1,
                                 "paddingHorizontal": 24,
                               }
                             }
@@ -2543,12 +2543,19 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   }
                                 />
                               </View>
+                              <View
+                                style={
+                                  {
+                                    "height": 0,
+                                  }
+                                }
+                              />
                             </View>
                           </RCTScrollView>
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
-                                "flex": 1,
                                 "paddingHorizontal": 24,
                               }
                             }
@@ -3138,6 +3145,13 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   </View>
                                 </View>
                               </View>
+                              <View
+                                style={
+                                  {
+                                    "height": 0,
+                                  }
+                                }
+                              />
                             </View>
                           </RCTScrollView>
                         </View>
