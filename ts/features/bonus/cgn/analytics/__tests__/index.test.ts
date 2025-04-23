@@ -30,10 +30,6 @@ import { CgnActivationProgressEnum } from "../../store/reducers/activation";
 import { StatusEnum } from "../../../../../../definitions/cgn/CardPending";
 import { OtpCode } from "../../../../../../definitions/cgn/OtpCode";
 
-jest.mock("react-native-i18n", () => ({
-  t: (key: string) => key
-}));
-
 describe("index", () => {
   beforeEach(() => {
     jest.restoreAllMocks();
