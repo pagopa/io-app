@@ -19,7 +19,7 @@ jest.mock("../../../../../../store/hooks", () => ({
 }));
 const mockPresent = jest.fn();
 jest.mock("../../../../../../utils/hooks/bottomSheet", () => ({
-  useIOBottomSheetAutoresizableModal: jest.fn(() => ({
+  useIOBottomSheetModal: jest.fn(() => ({
     present: mockPresent,
     bottomSheet: <></>
   }))
