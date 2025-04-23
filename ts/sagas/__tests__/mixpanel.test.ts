@@ -27,10 +27,6 @@ import ROUTES from "../../navigation/routes";
 import { updateMixpanelProfileProperties } from "../../mixpanelConfig/profileProperties";
 import { setIsMixpanelInitialized } from "../../features/mixpanel/store/actions";
 
-jest.mock("react-native-i18n", () => ({
-  t: (key: string) => key
-}));
-
 describe("mixpanel", () => {
   describe("watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel", () => {
     it("should follow expected flow", () => {

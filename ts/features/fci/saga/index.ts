@@ -14,7 +14,7 @@ import {
   identificationPinReset,
   identificationRequest,
   identificationSuccess
-} from "../../../store/actions/identification";
+} from "../../identification/store/actions";
 import I18n from "../../../i18n";
 import {
   fciSignatureRequestSelector,

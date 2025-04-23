@@ -11,6 +11,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { applicationInitialized } from "../../../../store/actions/application";
 import { clearPendingAction } from "../store/actions/tokenRefreshActions";
 import { fastLoginPendingActionsSelector } from "../store/selectors";
+import { isDevEnv } from "../../../../utils/environment";
 
 const ACTION_TO_WAIT_FOR_TIMEOUT = 3000 as Millisecond;
 
@@ -47,3 +48,9 @@ function* handleApplicationInitialized(
   }
   yield* put(clearPendingAction());
 }
+
+export const testableHandleApplicationInitialized = isDevEnv
+  ? {
+      handleApplicationInitialized
+    }
+  : undefined;

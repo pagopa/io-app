@@ -15,6 +15,7 @@ import {
   refreshSessionToken,
   savePendingAction
 } from "../../store/actions/tokenRefreshActions";
+import { isDevEnv } from "../../../../../utils/environment";
 
 const ACTION_TO_WAIT_FOR_TIMEOUT = 3000 as Millisecond;
 
@@ -227,3 +228,9 @@ export class ThirdPartyTokenError extends Error {
     this.type = type;
   }
 }
+export const utilsExport = isDevEnv
+  ? {
+      isReduxAction,
+      waitForTheTokenRefreshToBeStarted
+    }
+  : undefined;
