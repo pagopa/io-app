@@ -4633,7 +4633,7 @@
               "one": "Manca un documento per continuare",
               "other": "Mancano alcuni documenti per continuare"
             },
-            "subtitle": "Aggiungi {{credentialNames}} prima di continuare e poi riprova.",
+            "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
             "primaryAction": {
               "one": "Aggiungi documento al Portafoglio",
               "other": "Aggiungi documenti al Portafoglio"
