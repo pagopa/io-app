@@ -13,7 +13,7 @@ import {
 import { StyleSheet, View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 type Props = {
   content: string;
@@ -23,26 +23,23 @@ const IdPayInitiativeRulesInfoBox = (props: Props) => {
   const { content } = props;
   const theme = useIOTheme();
 
-  const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal(
-    {
-      component: <IOMarkdown content={content} />,
-      title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
-      footer: (
-        <FooterActions
-          actions={{
-            type: "SingleButton",
-            primary: {
-              label: I18n.t(
-                "idpay.initiative.beneficiaryDetails.infoModal.button"
-              ),
-              onPress: () => dismiss()
-            }
-          }}
-        />
-      )
-    },
-    170
-  );
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
+    component: <IOMarkdown content={content} />,
+    title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
+    footer: (
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t(
+              "idpay.initiative.beneficiaryDetails.infoModal.button"
+            ),
+            onPress: () => dismiss()
+          }
+        }}
+      />
+    )
+  });
 
   return (
     <>

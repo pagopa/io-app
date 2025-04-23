@@ -25,7 +25,7 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
@@ -70,7 +70,7 @@ export const ItwCiePinScreen = () => {
   const headerHeight = useHeaderHeight();
   const isFocused = useIsFocused();
 
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
+  const { present, bottomSheet } = useIOBottomSheetModal({
     component: <ForgottenPin />,
     title: I18n.t("bottomSheets.ciePin.title")
   });
