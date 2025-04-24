@@ -4661,6 +4661,11 @@
               "subtitle": "Verifica di essere in possesso dei requisiti necessari per accedere ai servizi.",
               "primaryAction": "Ho capito",
               "secondaryAction": "Maggiori dettagli"
+            },
+            "malformedRequestObject": {
+              "title": "Non puoi continuare con la richiesta",
+              "subtitle": "L’ente che richiede la verifica non sta comunicando i dati necessari per continuare. Riprova più tardi.",
+              "primaryAction": "Ho capito"
             }
           },
           "purpose": "Finalità: {{purpose}}",

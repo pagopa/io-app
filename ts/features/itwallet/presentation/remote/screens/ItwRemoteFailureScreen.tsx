@@ -195,6 +195,23 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
+        case RemoteFailureType.MALFORMED_REQUEST_OBJECT: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.malformedRequestObject.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.malformedRequestObject.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.malformedRequestObject.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
+        }
       }
     };
 
