@@ -22,10 +22,6 @@ import {
 } from "../../../messages/store/actions";
 import { updateNotificationsPendingMessage } from "../../store/actions/pendingMessage";
 
-jest.mock("react-native-i18n", () => ({
-  t: (key: string) => key
-}));
-
 jest.mock("@react-native-community/push-notification-ios", () => ({
   FetchResult: {
     NoData: "UIBackgroundFetchResultNoData"

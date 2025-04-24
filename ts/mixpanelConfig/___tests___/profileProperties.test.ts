@@ -8,10 +8,6 @@ import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/P
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { StoredCredential } from "../../features/itwallet/common/utils/itwTypesUtils";
 
-jest.mock("react-native-i18n", () => ({
-  t: (key: string) => key
-}));
-
 // eslint-disable-next-line functional/no-let
 let mockIsMixpanelInitialized = true;
 const mockedSet = jest.fn();

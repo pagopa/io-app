@@ -7,10 +7,6 @@ import {
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import * as MIXPANEL from "../../../../mixpanel";
 
-jest.mock("react-native-i18n", () => ({
-  t: (key: string) => key
-}));
-
 describe("index", () => {
   afterEach(() => {
     jest.restoreAllMocks();

@@ -49,10 +49,6 @@ import * as FCIREDUCERS from "../../../features/fci/store/reducers/fciEnvironmen
 import { Action, MiddlewareAPI } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
 
-jest.mock("react-native-i18n", () => ({
-  t: (key: string) => key
-}));
-
 // eslint-disable-next-line functional/no-let
 let mockIsMixpanelInitialized = true;
 const mockMixpanelTrack = jest.fn();

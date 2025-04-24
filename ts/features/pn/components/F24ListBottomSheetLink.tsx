@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { ButtonLink } from "@pagopa/io-app-design-system";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import I18n from "../../../i18n";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
 import { UIMessageId } from "../../messages/types";
@@ -29,30 +29,26 @@ export const F24ListBottomSheetLink = ({
   // its bottom space when the bottom sheet opens filling the entire view. Without it, the
   // scroll bottom stops at the device bottom border, not respecting any safe area margins
   const dispatch = useIODispatch();
-  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
-    {
-      component: (
-        <>
-          {f24List.map((f24Attachment, index) => (
-            <MessageDetailsAttachmentItem
-              attachment={f24Attachment}
-              bottomSpacer={index + 1 < f24List.length}
-              isPN
-              key={`MessageF24_${index}`}
-              messageId={messageId}
-              onPreNavigate={() => {
-                dismiss();
-              }}
-            />
-          ))}
-        </>
-      ),
-      title: I18n.t("features.pn.details.f24Section.bottomSheet.title"),
-      footer: <View />,
-      onDismiss: () => dispatch(cancelPreviousAttachmentDownload())
-    },
-    100
-  );
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
+    component: (
+      <>
+        {f24List.map((f24Attachment, index) => (
+          <MessageDetailsAttachmentItem
+            attachment={f24Attachment}
+            bottomSpacer={index + 1 < f24List.length}
+            isPN
+            key={`MessageF24_${index}`}
+            messageId={messageId}
+            onPreNavigate={() => {
+              dismiss();
+            }}
+          />
+        ))}
+      </>
+    ),
+    title: I18n.t("features.pn.details.f24Section.bottomSheet.title"),
+    onDismiss: () => dispatch(cancelPreviousAttachmentDownload())
+  });
   return (
     <View style={styles.buttonLinkContainer}>
       <ButtonLink
