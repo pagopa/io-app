@@ -51,15 +51,10 @@ export const ItwIdentificationModeSelectionScreen = (params: ScreenProps) => {
     trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
   }, [machineRef]);
 
-  const handleCieIdL3Press = useCallback(() => {
-    machineRef.send({ type: "select-identification-mode", mode: "cieIdL3" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
-  }, [machineRef]);
-
   return isL3Enabled ? (
     <L3IdentificationView
       handleCiePinPress={handleCiePinPress}
-      handleCieIdPress={handleCieIdL3Press}
+      handleCieIdPress={handleCieIdPress}
     />
   ) : (
     <DefaultIdentificationView

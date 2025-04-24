@@ -6,8 +6,7 @@ import { type StoredCredential } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
 
 export type IdentificationContext =
-  | { mode: "cieId"; level: "L2" }
-  | { mode: "cieIdL3"; level: "L3" }
+  | { mode: "cieId"; level: "L2" | "L3" }
   | { mode: "ciePin"; level: "L3"; pin: string }
   | { mode: "spid"; level: "L2"; idpId: string };
 
