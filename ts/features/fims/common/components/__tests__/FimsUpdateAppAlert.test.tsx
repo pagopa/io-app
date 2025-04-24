@@ -56,7 +56,7 @@ describe("FimsUpdateAppAlert", () => {
     fireEvent(primaryAction, "onPress");
 
     expect(mockGoBack.mock.calls.length).toBe(1);
-    expect(mockGoBack.mock.calls[0].length).toBe(0);
+    expect(mockGoBack.mock.calls[0].length).toBe(1);
   });
   it("should set the navigation header to include the support request feature", () => {
     const mockStartSupportRequest = jest.fn();
