@@ -13,6 +13,7 @@ import I18n from "../i18n";
 import { FAQsCategoriesType } from "../utils/faq";
 import { useStartSupportRequest } from "./useStartSupportRequest";
 import { useStatusAlertProps } from "./useStatusAlertProps";
+import { useOfflineToastGuard } from "./useOfflineToastGuard.ts";
 
 type SpecificHookProps = {
   canGoBack?: boolean;
@@ -109,11 +110,13 @@ export const useHeaderSecondLevel = ({
   animatedRef
 }: HeaderSecondLevelHookProps) => {
   const alertProps = useStatusAlertProps();
-  const startSupportRequest = useStartSupportRequest({
-    faqCategories,
-    contextualHelpMarkdown,
-    contextualHelp
-  });
+  const startSupportRequest = useOfflineToastGuard(
+    useStartSupportRequest({
+      faqCategories,
+      contextualHelpMarkdown,
+      contextualHelp
+    })
+  );
 
   const navigation = useNavigation();
 

@@ -20,6 +20,7 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsRemove } from "../../../credentials/store/actions";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
+import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -38,9 +39,11 @@ const ItwPresentationDetailsFooter = ({
   const navigation = useIONavigation();
   const toast = useIOToast();
 
-  const startSupportRequest = useStartSupportRequest({
-    faqCategories: []
-  });
+  const startSupportRequest = useOfflineToastGuard(
+    useStartSupportRequest({
+      faqCategories: []
+    })
+  );
 
   const handleRemoveCredential = () => {
     dispatch(itwCredentialsRemove(credential));
