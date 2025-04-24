@@ -50,10 +50,10 @@ describe("CgnMerchantsCategoriesSelectionScreen", () => {
     jest.clearAllMocks();
   });
 
-  // it("should render correctly", () => {
-  //   const { toJSON } = renderComponent(defaultState);
-  //   expect(toJSON()).toMatchSnapshot();
-  // });
+  it("should render correctly", () => {
+    const { toJSON } = renderComponent(defaultState);
+    expect(toJSON()).toMatchSnapshot();
+  });
 
   it("should render the tab navigation with categories and merchants tabs", () => {
     const { getByTestId } = renderComponent(defaultState);

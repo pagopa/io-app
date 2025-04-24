@@ -80,7 +80,6 @@ export const DSIOListViewWithLargeHeader = () => {
 
   return (
     <IOListViewWithLargeHeader
-      testID="DSIOListViewWithLargeHeader"
       data={renderItems}
       title={{
         label: I18n.t("authentication.cie.nfc.title")

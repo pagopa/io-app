@@ -270,6 +270,7 @@
     "node": ">=18"
   },
   "resolutions": {
+    "pretty-format/react-is": "19.0.0",
     "@types/react": "^18.0.24",
     "@babel/preset-typescript": "^7.23.3",
     "@babel/plugin-transform-typescript": "^7.23.6",
