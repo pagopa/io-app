@@ -4,6 +4,7 @@ import {
   IOColors,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
+import { useRef } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import {
   GestureEvent,
@@ -12,6 +13,7 @@ import {
   PanGestureHandler,
   PanGestureHandlerEventPayload
 } from "react-native-gesture-handler";
+import HapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -109,12 +111,21 @@ const ListItemSwipeAction = ({
     transform: [{ translateX: translateX.value }]
   }));
 
+  const hapticTriggered = useRef(false);
+
   const handleGestureEvent = (
     event: GestureEvent<PanGestureHandlerEventPayload>
   ) => {
     const { translationX } = event.nativeEvent;
     if (translationX < 0) {
       translateX.value = translationX;
+    }
+
+    if (translationX < -200 && !hapticTriggered.current) {
+      HapticFeedback.trigger("impactLight");
+      hapticTriggered.current = true;
+    } else if (translationX >= -200) {
+      hapticTriggered.current = false;
     }
   };
 
@@ -139,13 +150,7 @@ const ListItemSwipeAction = ({
         }}
       >
         <Animated.View
-          style={[
-            {
-              ...StyleSheet.absoluteFillObject,
-              backgroundColor
-            },
-            backgroundStyle
-          ]}
+          style={[StyleSheet.absoluteFillObject, backgroundStyle]}
         />
         <RightActions
           showDeleteAlert={showAlertAction}
