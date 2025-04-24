@@ -5,6 +5,7 @@ exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
   accessible={false}
   style={
     {
+      "backgroundColor": "#0B3EE3",
       "borderRadius": 16,
       "display": "flex",
       "elevation": 5,
@@ -321,6 +322,7 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
     style={
       [
         {
+          "backgroundColor": "#0B3EE3",
           "borderRadius": 16,
           "display": "flex",
           "elevation": 5,
