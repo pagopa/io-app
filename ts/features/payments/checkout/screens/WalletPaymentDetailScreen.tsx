@@ -36,7 +36,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import {
@@ -238,7 +238,7 @@ const WalletPaymentDetailContent = ({
     );
   };
 
-  const amountInfoBottomSheet = useIOBottomSheetAutoresizableModal({
+  const amountInfoBottomSheet = useIOBottomSheetModal({
     title: I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
     component: (
       <SafeAreaView>

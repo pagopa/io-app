@@ -19,7 +19,7 @@ import {
 import { useIOSelector } from "../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
 import { PaymentsCheckoutRoutes } from "../../payments/checkout/navigation/routes";
 import * as analytics from "../analytics";
@@ -217,7 +217,7 @@ const BarcodeScanScreen = () => {
     </View>
   );
 
-  const manualInputModal = useIOBottomSheetAutoresizableModal({
+  const manualInputModal = useIOBottomSheetModal({
     component: manualInputModalComponent,
     title: ""
   });
