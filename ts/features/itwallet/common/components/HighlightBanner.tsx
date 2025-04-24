@@ -18,12 +18,17 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { TxtParagraphNode, TxtStrongNode } from "@textlint/ast-node-types";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { AccessibilityRole, Pressable, StyleSheet, View } from "react-native";
 import Animated, {
   Extrapolation,
   interpolate,
-  useAnimatedStyle
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+  Easing,
+  useDerivedValue
 } from "react-native-reanimated";
 import HighlightImage from "../../../../../img/features/itWallet/l3/highlight.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -98,6 +103,49 @@ export const HighlightBanner = (props: WithTestID<HighlightBannerProps>) => {
 const BannerGradient = () => {
   const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
 
+  // Animation setup
+  const progress = useSharedValue(0);
+
+  useEffect(() => {
+    // Start the animation only when width is known and animation isn't already running
+    if (width > 0) {
+      // eslint-disable-next-line functional/immutable-data
+      progress.value = withRepeat(
+        withTiming(1, { duration: 5000, easing: Easing.inOut(Easing.ease) }),
+        -1, // Infinite repeat
+        true // Reverse direction
+      );
+    }
+  }, [width, progress]); // Depend on all three
+
+  const animatedStart = useDerivedValue(() => {
+    // Ensure width and height are valid before calculating
+    if (width <= 0 || height <= 0) {
+      return vec(0, 0); // Default or initial vec
+    }
+    const startX = interpolate(
+      progress.value,
+      [0, 1],
+      [-width * 0.1, width * 0.3], // Range of motion for start point X
+      Extrapolation.CLAMP
+    );
+    return vec(startX, height); // Keep Y fixed
+  }, [width, height]); // Derived value depends on layout dimensions
+
+  const animatedEnd = useDerivedValue(() => {
+    // Ensure width and height are valid before calculating
+    if (width <= 0 || height <= 0) {
+      return vec(width, 0); // Default or initial vec
+    }
+    const endX = interpolate(
+      progress.value,
+      [0, 1],
+      [width * 0.9, width * 1.3], // Range of motion for end point X
+      Extrapolation.CLAMP
+    );
+    return vec(endX, 0); // Keep Y fixed
+  }, [width, height]); // Derived value depends on layout dimensions
+
   return (
     <Canvas
       style={styles.gradient}
@@ -110,8 +158,11 @@ const BannerGradient = () => {
     >
       <RoundedRect x={0} y={0} width={width} height={height} r={16}>
         <LinearGradient
-          start={vec(0, height / 1.5)}
-          end={vec(width, 0)}
+          // start={vec(0, height)}
+          // end={vec(width, 0)}
+          start={animatedStart}
+          end={animatedEnd}
+          mode="repeat"
           colors={[
             "#0B3EE3",
             "#436FFF",
