@@ -1,13 +1,6 @@
-import {
-  ReactElement,
-  createRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import { ReactElement, createRef, useCallback, useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Platform, Pressable, View } from "react-native";
+import { Platform, View } from "react-native";
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import _ from "lodash";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
@@ -24,7 +17,6 @@ import {
 } from "../../../../../utils/supportAssistance";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
-import { IdpData } from "../../../../../../definitions/content/IdpData";
 import { nativeLoginSelector } from "../../../nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../../nativeLogin/store/selectors";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
@@ -40,16 +32,6 @@ import { isReady } from "../../../../../common/model/RemoteValue";
 import { trackSpidLoginIdpSelection } from "../../../common/analytics";
 import { trackLoginSpidIdpSelected } from "../../../common/analytics/spidAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-
-const TestIdp: SpidIdp = {
-  id: "test" as keyof IdpData,
-  name: "Test Idp",
-  logo: "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/spid/idps/spid.png",
-  profileUrl: "",
-  isTestIdp: true
-};
-
-const TAPS_TO_OPEN_TESTIDP = 5;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.idp_selection.contextualHelpTitle",
@@ -77,7 +59,6 @@ const IdpSelectionScreen = (): ReactElement => {
         "AUTHENTICATION_IDP_SELECTION"
       >
     >();
-  const [counter, setCounter] = useState(0);
   const idps = useIOSelector(idpsRemoteValueSelector);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const nativeLoginFeature = useIOSelector(nativeLoginSelector);
@@ -130,6 +111,7 @@ const IdpSelectionScreen = (): ReactElement => {
       (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 13)) &&
     nativeLoginFeature.enabled &&
     isNativeLoginFeatureFlagEnabled;
+
   const onIdpSelected = (idp: SpidIdp) => {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
@@ -145,13 +127,6 @@ const IdpSelectionScreen = (): ReactElement => {
     }
   };
 
-  const evokeLoginScreenCounter = () => {
-    if (counter < TAPS_TO_OPEN_TESTIDP) {
-      const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
-      setCounter(newValue);
-    }
-  };
-
   useOnFirstRender(() => {
     trackSpidLoginIdpSelection();
   });
@@ -160,37 +135,21 @@ const IdpSelectionScreen = (): ReactElement => {
     requestIdps();
   }, [requestIdps]);
 
-  useEffect(() => {
-    if (counter === TAPS_TO_OPEN_TESTIDP) {
-      setCounter(0);
-      setSelectedIdp(TestIdp);
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.IDP_TEST
-      });
-    }
-  }, [counter, setSelectedIdp, navigation]);
-
   const headerComponent = () => {
     const viewRef = createRef<View>();
 
     return (
       <>
-        {/* Secret login for App Store reviewers */}
-        <Pressable accessible={false} onPress={evokeLoginScreenCounter}>
-          {/* Add `accessible=false` 'cause it useful only
-            for debug mode (stores reviewers).
-            Original issue: https://www.pivotaltracker.com/story/show/172082895 */}
-          <Banner
-            viewRef={viewRef}
-            color="neutral"
-            content={
-              isFastLoginFeatureFlagEnabled
-                ? I18n.t("login.expiration_info_FL")
-                : I18n.t("login.expiration_info")
-            }
-            pictogramName="passcode"
-          />
-        </Pressable>
+        <Banner
+          viewRef={viewRef}
+          color="neutral"
+          content={
+            isFastLoginFeatureFlagEnabled
+              ? I18n.t("login.expiration_info_FL")
+              : I18n.t("login.expiration_info")
+          }
+          pictogramName="passcode"
+        />
         <VSpacer size={8} />
       </>
     );

@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import IOMarkdown from "../../../../../../components/IOMarkdown";
 import I18n from "../../../../../../i18n";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../utils/url";
 import { TrackingInfo } from "../../../../common/analytics/mixpanel/mixpanelAnalytics";
 import { useIOSelector } from "../../../../../../store/hooks";
@@ -52,7 +52,7 @@ const MarkdownBody = () => {
 
 const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
   const bodyRef = useRef<View>(null);
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
+  const { present, bottomSheet } = useIOBottomSheetModal({
     title: I18n.t("profile.main.privacy.shareData.whyBottomSheet.title"),
     component: <MarkdownBody />,
     onDismiss: () => {

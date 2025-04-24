@@ -1,5 +1,5 @@
 import { MutableRefObject } from "react";
-import { Dimensions, View } from "react-native";
+import { Dimensions } from "react-native";
 import I18n from "../../../i18n";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIODispatch } from "../../../store/hooks";
@@ -50,7 +50,6 @@ export const MessagePaymentBottomSheet = ({
     ),
     title: I18n.t("features.pn.details.paymentSection.bottomSheetTitle"),
     snapPoint: [snapPoint],
-    footer: <View />,
     onDismiss: () => dispatch(cancelQueuedPaymentUpdates())
   });
   // eslint-disable-next-line functional/immutable-data

@@ -1244,7 +1244,7 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
                                     ]
                                   }
                                 >
-                                  messageDetails.markdown.decodingErrorContent
+                                  Message content cannot be displayed.
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -1265,7 +1265,7 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
                                     ]
                                   }
                                 >
-                                  messageDetails.markdown.decodingErrorShow
+                                  Show anyway
                                 </Text>
                               </View>
                             </View>
