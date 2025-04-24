@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0-rc.2](https://github.com/pagopa/io-app/compare/3.4.0-rc.1...3.4.0-rc.2) (2025-04-24)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2290](https://pagopa.atlassian.net/browse/SIW-2290)] Disable wallet offline access when no credentials are stored ([#6910](https://github.com/pagopa/io-app/issues/6910)) ([79d3c83](https://github.com/pagopa/io-app/commit/79d3c83a2d730cc721b5abece3d225cd22e0fcd8))
+
 ## [3.4.0-rc.1](https://github.com/pagopa/io-app/compare/3.4.0-rc.0...3.4.0-rc.1) (2025-04-23)
 
 
