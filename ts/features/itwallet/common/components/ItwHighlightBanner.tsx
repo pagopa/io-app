@@ -105,25 +105,18 @@ const BackgroundGradient = () => {
 
   // Animation setup
   const progress = useSharedValue(0);
-  const animationRange = useMemo(() => width * 0.2, [width]);
+  const animationRange = useMemo(() => width * 2, [width]);
 
   useEffect(() => {
-    // Start the animation only when width is known
-    if (width > 0) {
-      // eslint-disable-next-line functional/immutable-data
-      progress.value = withRepeat(
-        withTiming(1, { duration: 5000, easing: Easing.inOut(Easing.ease) }),
-        -1, // Infinite repeat
-        true // Reverse direction
-      );
-    }
-  }, [width, progress]); // Depend on all three
+    // eslint-disable-next-line functional/immutable-data
+    progress.value = withRepeat(
+      withTiming(1, { duration: 30000, easing: Easing.inOut(Easing.ease) }),
+      -1, // Infinite repeat
+      true // Reverse direction
+    );
+  }, [progress]); // Depend on all three
 
   const animatedStart = useDerivedValue(() => {
-    // Ensure width and height are valid before calculating
-    if (width <= 0 || height <= 0) {
-      return vec(0, 0); // Default or initial vec
-    }
     const startX = interpolate(
       progress.value,
       [0, 1],
@@ -134,10 +127,6 @@ const BackgroundGradient = () => {
   }, [width, height]); // Derived value depends on layout dimensions
 
   const animatedEnd = useDerivedValue(() => {
-    // Ensure width and height are valid before calculating
-    if (width <= 0 || height <= 0) {
-      return vec(width, 0); // Default or initial vec
-    }
     const endX = interpolate(
       progress.value,
       [0, 1],
@@ -163,7 +152,7 @@ const BackgroundGradient = () => {
           // end={vec(width, 0)}
           start={animatedStart}
           end={animatedEnd}
-          mode="clamp"
+          mode="repeat"
           colors={[
             "#0B3EE3",
             "#436FFF",
@@ -279,6 +268,7 @@ const StaticContent = (props: Props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: IOColors["blueIO-500"],
     display: "flex",
     padding: 16,
     borderRadius: 16,
