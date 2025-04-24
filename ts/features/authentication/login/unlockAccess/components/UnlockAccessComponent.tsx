@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Text, View } from "react-native";
 import I18n from "../../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { CustomWizardScreen } from "../../../../../components/screens/CustomWizardScreen";
@@ -77,14 +77,10 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
   const {
     present: presentVeryLongAutoresizableBottomSheetWithFooter,
     bottomSheet: veryLongAutoResizableBottomSheetWithFooter
-  } = useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t("authentication.unlockmodal.title"),
-      component: <ModalContent />,
-      fullScreen: true
-    },
-    100
-  );
+  } = useIOBottomSheetModal({
+    title: I18n.t("authentication.unlockmodal.title"),
+    component: <ModalContent />
+  });
 
   const onPressActionButton = () => {
     if (authLevel === "L2") {

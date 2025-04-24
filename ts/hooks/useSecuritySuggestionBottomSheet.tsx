@@ -6,12 +6,12 @@ import {
 } from "../features/authentication/fastLogin/store/selectors";
 import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
-import { useIOBottomSheetAutoresizableModal } from "../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
 import SecuritySuggestions from "../features/authentication/fastLogin/components/SecuritySuggestions";
 
 /**
  * @param useManualBottomsheetOpening if true the caller must use the methods exported by
- * useIOBottomSheetAutoresizableModal whitout automation on bottomsheet opening.
+ * useIOBottomSheetModal whitout automation on bottomsheet opening.
  */
 
 export const useSecuritySuggestionsBottomSheet = (
@@ -28,10 +28,9 @@ export const useSecuritySuggestionsBottomSheet = (
   const {
     present: presentSecuritySuggestionBottomSheet,
     bottomSheet: securitySuggestionBottomSheet
-  } = useIOBottomSheetAutoresizableModal({
+  } = useIOBottomSheetModal({
     title: I18n.t("authentication.opt_in.security_suggests"),
-    component: <SecuritySuggestions />,
-    fullScreen: true
+    component: <SecuritySuggestions />
   });
 
   const showSecuritySuggestionModal = useCallback(() => {

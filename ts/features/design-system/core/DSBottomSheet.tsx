@@ -10,11 +10,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView, View } from "react-native";
-import {
-  useIOBottomSheetAutoresizableModal,
-  useIOBottomSheetModal,
-  useLegacyIOBottomSheetModal
-} from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
@@ -28,8 +24,6 @@ export const DSBottomSheet = () => {
     dismissAutoresizableBottomSheetWithFooter();
     dismissVeryLongAutoresizableBottomSheetWithFooter();
     dismissVeryLongAutoresizableBottomSheetWithFooterFullScreen();
-    dismissLegacyBottomSheet();
-    dismissLegacyBottomSheetWithFooter();
   };
 
   const defaultFooter = (
@@ -41,7 +35,6 @@ export const DSBottomSheet = () => {
         label={"Dismiss bottom sheet"}
         onPress={handlePressDismiss}
       />
-      <VSpacer size={16} />
     </ContentWrapper>
   );
 
@@ -93,7 +86,7 @@ export const DSBottomSheet = () => {
     present: presentAutoresizableBottomSheet,
     bottomSheet: autoResizableBottomSheet,
     dismiss: dismissAutoresizableBottomSheet
-  } = useIOBottomSheetAutoresizableModal({
+  } = useIOBottomSheetModal({
     title: "Autoresizable Bottom Sheet",
     component: <BottomSheetLongContentBody />
   });
@@ -103,14 +96,11 @@ export const DSBottomSheet = () => {
     present: presentAutoresizableBottomSheetWithFooter,
     bottomSheet: autoResizableBottomSheetWithFooter,
     dismiss: dismissAutoresizableBottomSheetWithFooter
-  } = useIOBottomSheetAutoresizableModal(
-    {
-      title: "Autoresizable Bottom Sheet",
-      component: <BottomSheetLongContentBody />,
-      footer: defaultFooter
-    },
-    150
-  );
+  } = useIOBottomSheetModal({
+    title: "Autoresizable Bottom Sheet",
+    component: <BottomSheetLongContentBody />,
+    footer: defaultFooter
+  });
 
   // Static bottom sheet hook
   const {
@@ -140,53 +130,25 @@ export const DSBottomSheet = () => {
     present: presentVeryLongAutoresizableBottomSheetWithFooter,
     bottomSheet: veryLongAutoResizableBottomSheetWithFooter,
     dismiss: dismissVeryLongAutoresizableBottomSheetWithFooter
-  } = useIOBottomSheetAutoresizableModal(
-    {
-      title: "Autoresizable Bottom Sheet",
-      component: <BottomSheetVeryLongContentBody />,
-      footer: defaultFooter
-    },
-    80
-  );
+  } = useIOBottomSheetModal({
+    title: "Autoresizable Bottom Sheet",
+    component: <BottomSheetVeryLongContentBody />,
+    footer: defaultFooter
+  });
 
   const {
     present: presentVeryLongAutoresizableBottomSheetWithFooterFullScreen,
     bottomSheet: veryLongAutoResizableBottomSheetWithFooterFullScreen,
     dismiss: dismissVeryLongAutoresizableBottomSheetWithFooterFullScreen
-  } = useIOBottomSheetAutoresizableModal(
-    {
-      title: "Autoresizable Bottom Sheet, Full Screen",
-      component: (
-        <SafeAreaView>
-          <BottomSheetVeryLongContentBody />
-        </SafeAreaView>
-      ),
-      footer: defaultFooter,
-      fullScreen: true
-    },
-    80
-  );
-
-  const {
-    present: presentLegacyBottomSheet,
-    bottomSheet: legacyBottomSheet,
-    dismiss: dismissLegacyBottomSheet
-  } = useLegacyIOBottomSheetModal(
-    <BottomSheetContentBody />,
-    "Legacy Bottom Sheet",
-    250
-  );
-
-  const {
-    present: presentLegacyBottomSheetWithFooter,
-    bottomSheet: legacyBottomSheetWithFooter,
-    dismiss: dismissLegacyBottomSheetWithFooter
-  } = useLegacyIOBottomSheetModal(
-    <BottomSheetContentBody />,
-    "Legacy Bottom Sheet with footer",
-    400,
-    defaultFooter
-  );
+  } = useIOBottomSheetModal({
+    title: "Autoresizable Bottom Sheet, Full Screen",
+    component: (
+      <SafeAreaView>
+        <BottomSheetVeryLongContentBody />
+      </SafeAreaView>
+    ),
+    footer: defaultFooter
+  });
 
   const sectionTitleMargin = 16;
   const blockMargin = 48;
@@ -244,32 +206,12 @@ export const DSBottomSheet = () => {
             />
           </View>
         </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Legacy</H4>
-
-          <View>
-            <ListItemNav
-              value="Legacy bottom sheet"
-              accessibilityLabel="Legacy bottom sheet"
-              onPress={presentLegacyBottomSheet}
-            />
-            <Divider />
-            <ListItemNav
-              value="Legacy bottom sheet with footer"
-              accessibilityLabel="Legacy bottom sheet with footer"
-              onPress={presentLegacyBottomSheetWithFooter}
-            />
-          </View>
-        </VStack>
         {staticBottomSheet}
         {staticBottomSheetWithFooter}
         {autoResizableBottomSheet}
         {autoResizableBottomSheetWithFooter}
         {veryLongAutoResizableBottomSheetWithFooter}
         {veryLongAutoResizableBottomSheetWithFooterFullScreen}
-        {legacyBottomSheet}
-        {legacyBottomSheetWithFooter}
       </VStack>
     </DesignSystemScreen>
   );

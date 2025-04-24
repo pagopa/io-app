@@ -8,7 +8,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idPayGenerateBarcode } from "../../barcode/store/actions";
 import { IdPayPaymentRoutes } from "../../payment/navigation/routes";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store";
 import { IdPayBarcodeRoutes } from "../../barcode/navigation/routes";
 
@@ -66,7 +66,7 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
     </>
   );
 
-  const bottomSheet = useIOBottomSheetAutoresizableModal({
+  const bottomSheet = useIOBottomSheetModal({
     component: <DiscountInitiativeBottomSheetContent />,
     title: null
   });
