@@ -1,11 +1,11 @@
 import { memo, Fragment, useEffect } from "react";
 import { View } from "react-native";
 import {
-  ButtonSolid,
   Divider,
   H4,
   HStack,
   Icon,
+  IOButton,
   IOStyles,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -102,10 +102,11 @@ const ItwEidInfoBottomSheetContent = ({
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"
           )}
         />
-        <ButtonSolid
-          label={I18n.t("features.itWallet.walletRevocation.cta")}
+        <IOButton
           fullWidth
+          variant="solid"
           color="danger"
+          label={I18n.t("features.itWallet.walletRevocation.cta")}
           onPress={navigateToWalletRevocationScreen}
         />
       </VStack>

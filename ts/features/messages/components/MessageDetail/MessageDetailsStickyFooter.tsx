@@ -2,9 +2,7 @@ import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useLinkTo } from "@react-navigation/native";
 import {
-  ButtonLink,
-  ButtonOutline,
-  ButtonSolid,
+  IOButton,
   IOStyles,
   VSpacer,
   buttonSolidHeight
@@ -174,16 +172,15 @@ const renderPaymentWithDoubleCTA = (
       isLoading={isLoadingPayment}
     />
     <VSpacer size={8} />
-    <ButtonOutline
-      accessibilityLabel={cta1.text}
-      fullWidth
+    <IOButton
+      variant="outline"
       label={cta1.text}
       onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
     />
     <VSpacer size={8} />
     <View style={styles.buttonLinkInFooter}>
-      <ButtonLink
-        accessibilityLabel={cta2.text}
+      <IOButton
+        variant="link"
         label={cta2.text}
         onPress={() => onCTAPress(false, cta2, cta2IsPNOptInMessage)}
       />
@@ -208,8 +205,8 @@ const renderPaymentWithCTA = (
     />
     <VSpacer size={8} />
     <View style={styles.buttonLinkInFooter}>
-      <ButtonLink
-        accessibilityLabel={cta1.text}
+      <IOButton
+        variant="link"
         label={cta1.text}
         onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
       />
@@ -224,16 +221,16 @@ const renderDoubleCTA = (
   onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
 ) => (
   <>
-    <ButtonSolid
-      accessibilityLabel={cta1.text}
+    <IOButton
       fullWidth
+      variant="solid"
       label={cta1.text}
       onPress={() => onCTAPress(true, cta1, cta1IsPNOptInMessage)}
     />
     <VSpacer size={8} />
     <View style={styles.buttonLinkInFooter}>
-      <ButtonLink
-        accessibilityLabel={cta2.text}
+      <IOButton
+        variant="link"
         label={cta2.text}
         onPress={() => onCTAPress(false, cta2, cta2IsPNOptInMessage)}
       />
@@ -258,9 +255,9 @@ const renderCTA = (
   isPNOptInMessage: boolean,
   onCTAPress: (isFirstCTA: boolean, cta: CTA, isPNOptInMessage: boolean) => void
 ) => (
-  <ButtonSolid
-    accessibilityLabel={cta.text}
+  <IOButton
     fullWidth
+    variant="solid"
     label={cta.text}
     onPress={() => onCTAPress(true, cta, isPNOptInMessage)}
   />
