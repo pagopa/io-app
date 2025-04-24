@@ -1,10 +1,6 @@
 import { MutableRefObject, useCallback } from "react";
 import { View } from "react-native";
-import {
-  ButtonSolid,
-  IOStyles,
-  useIOToast
-} from "@pagopa/io-app-design-system";
+import { IOButton, IOStyles, useIOToast } from "@pagopa/io-app-design-system";
 import { useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../i18n";
@@ -83,13 +79,13 @@ export const MessageFooter = ({
         { paddingBottom: safeAreaInsets.bottom + IOStyles.footer.paddingBottom }
       ]}
     >
-      <ButtonSolid
-        disabled={isLoading}
-        label={I18n.t("wallet.continue")}
-        accessibilityLabel={I18n.t("wallet.continue")}
-        onPress={onFooterPressCallback}
+      <IOButton
         fullWidth
+        variant="solid"
+        disabled={isLoading}
         loading={isLoading}
+        label={I18n.t("wallet.continue")}
+        onPress={onFooterPressCallback}
       />
     </View>
   );

@@ -14,11 +14,9 @@ import {
   Body,
   IOStyles,
   H3,
-  ButtonOutline,
-  ButtonSolid,
-  ButtonLink,
   IOToast,
-  ContentWrapper
+  ContentWrapper,
+  IOButton
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
@@ -285,9 +283,9 @@ const EmailValidationSendEmailScreen = () => {
           <VSpacer size={24} />
           {!isEmailValidated && (
             <View style={IOStyles.selfCenter}>
-              <ButtonLink
+              <IOButton
+                variant="link"
                 label={I18n.t("email.newvalidate.link")}
-                accessibilityLabel={I18n.t("email.newvalidate.link")}
                 onPress={navigateBackToInsertEmail}
                 testID="link-test"
               />
@@ -307,20 +305,18 @@ const EmailValidationSendEmailScreen = () => {
           </CountdownProvider>
           {isEmailValidated ? (
             <View style={IOStyles.selfCenter}>
-              <ButtonSolid
+              <IOButton
+                variant="solid"
                 label={I18n.t("global.buttons.continue")}
-                accessibilityLabel={I18n.t("global.buttons.continue")}
                 onPress={handleContinue}
               />
             </View>
           ) : (
             !showCountdown && (
               <View style={IOStyles.selfCenter}>
-                <ButtonOutline
+                <IOButton
+                  variant="outline"
                   label={I18n.t("email.newvalidate.buttonlabelsentagain")}
-                  accessibilityLabel={I18n.t(
-                    "email.newvalidate.buttonlabelsentagain"
-                  )}
                   onPress={handleResendEmail}
                 />
               </View>

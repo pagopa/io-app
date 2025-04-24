@@ -4,9 +4,9 @@
  */
 import {
   Body,
-  ButtonSolid,
   ContentWrapper,
   H1,
+  IOButton,
   IOToast,
   TextInputValidation,
   VSpacer
@@ -483,11 +483,11 @@ const EmailInsertScreen = () => {
           })}
         >
           <ContentWrapper>
-            <ButtonSolid
+            <IOButton
+              fullWidth
+              variant="solid"
               label={I18n.t("global.buttons.continue")}
-              accessibilityLabel={I18n.t("global.buttons.continue")}
               onPress={continueOnPress}
-              fullWidth={true}
             />
             <VSpacer size={16} />
           </ContentWrapper>

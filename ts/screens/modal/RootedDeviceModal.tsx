@@ -1,11 +1,10 @@
 import {
   BodySmall,
-  ButtonLink,
   ContentWrapper,
   H3,
+  IOButton,
   Pictogram,
-  VSpacer,
-  ButtonSolid
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
 import { Platform, StyleSheet, View } from "react-native";
@@ -67,18 +66,18 @@ const RootedDeviceModal = () => {
           </View>
           <VSpacer size={24} />
           <View style={IOStyles.selfCenter}>
-            <ButtonLink
+            <IOButton
+              variant="link"
               label={I18n.t("rooted.learnMoreButton.title")}
-              accessibilityLabel={I18n.t("rooted.learnMoreButton.title")}
               onPress={presentLearnMoreBottomSheet}
             />
           </View>
           <VSpacer size={24} />
           <View style={IOStyles.selfCenter}>
-            <ButtonSolid
+            <IOButton
+              variant="solid"
               color="danger"
               label={I18n.t("global.buttons.continue")}
-              accessibilityLabel={I18n.t("global.buttons.continue")}
               onPress={handleContinueWithRootOrJailbreak}
             />
           </View>

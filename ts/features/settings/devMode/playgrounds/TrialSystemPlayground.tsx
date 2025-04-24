@@ -1,8 +1,8 @@
 import {
   Body,
-  ButtonSolid,
   ContentWrapper,
   H3,
+  IOButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView, StyleSheet, View } from "react-native";
@@ -71,17 +71,19 @@ const TrialSystemPlayground = () => {
           <>
             {trialStatus === undefined ||
             trialStatus === SubscriptionStateEnum.UNSUBSCRIBED ? (
-              <ButtonSolid
-                loading={isTrialStatusUpdating}
+              <IOButton
                 fullWidth
+                variant="solid"
+                loading={isTrialStatusUpdating}
                 label={I18n.t("profile.main.trial.titleSection")}
                 onPress={() =>
                   dispatch(trialSystemActivationStatusUpsert.request(TRIAL_ID))
                 }
               />
             ) : (
-              <ButtonSolid
+              <IOButton
                 fullWidth
+                variant="solid"
                 color="danger"
                 label={"Disiscriviti"}
                 onPress={constNull}
