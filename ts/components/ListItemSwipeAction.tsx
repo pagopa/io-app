@@ -12,7 +12,7 @@ import {
   PanGestureHandler,
   PanGestureHandlerEventPayload
 } from "react-native-gesture-handler";
-import Reanimated, {
+import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
@@ -135,7 +135,7 @@ const ListItemSwipeAction = ({
           position: "relative"
         }}
       >
-        <Reanimated.View
+        <Animated.View
           style={[
             {
               ...StyleSheet.absoluteFillObject,
@@ -156,7 +156,7 @@ const ListItemSwipeAction = ({
             )
           }
         >
-          <Reanimated.View
+          <Animated.View
             style={[
               {
                 flex: 1,
@@ -166,7 +166,7 @@ const ListItemSwipeAction = ({
             ]}
           >
             {children}
-          </Reanimated.View>
+          </Animated.View>
         </PanGestureHandler>
       </View>
     </GestureHandlerRootView>
