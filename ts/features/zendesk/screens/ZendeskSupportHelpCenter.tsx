@@ -78,7 +78,6 @@ import {
 import { handleContactSupport } from "../utils";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { isLoggedIn } from "../../authentication/common/store/utils/guards";
-import { withOfflineFailureScreen } from "../../itwallet/wallet/utils/withOfflineFailureScreen.tsx";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -197,7 +196,7 @@ const FaqManager = (props: FaqManagerProps) => {
  * the user can choose to open a new ticket, follow previous conversations or read the faqs
  * @constructor
  */
-const ZendeskSupportHelpCenterComponent = () => {
+const ZendeskSupportHelpCenter = () => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   const dispatch = useIODispatch();
@@ -302,7 +301,7 @@ const ZendeskSupportHelpCenterComponent = () => {
 
   /**
    * as first step request the config (categories + panicmode) that could
-     be used in the next steps (possible network error are handled in {@link ZendeskAskPermissions})
+   be used in the next steps (possible network error are handled in {@link ZendeskAskPermissions})
    */
   useEffect(() => {
     dispatch(getZendeskConfig.request());
@@ -413,9 +412,5 @@ const ZendeskSupportHelpCenterComponent = () => {
     </IOScrollView>
   );
 };
-
-const ZendeskSupportHelpCenter = withOfflineFailureScreen(
-  ZendeskSupportHelpCenterComponent
-);
 
 export default ZendeskSupportHelpCenter;
