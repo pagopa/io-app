@@ -8,8 +8,21 @@ import WalletPaymentWebView from "../WalletPaymentWebView";
 jest.mock("react-native-webview", () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { View } = require("react-native");
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const React = require("react");
 
-  const WebView = (props: any) => <View {...props} />;
+  const WebView = React.forwardRef((props: any, ref: any) => {
+    React.useImperativeHandle(
+      ref,
+      () => ({
+        goBack: jest.fn(),
+        reload: jest.fn(),
+        stopLoading: jest.fn()
+      }),
+      []
+    );
+    return <View {...props} />;
+  });
 
   return {
     WebView,
