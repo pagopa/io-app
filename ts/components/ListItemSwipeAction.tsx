@@ -71,9 +71,8 @@ const ListItemSwipeAction = ({
   accessibilityLabel = ""
 }: ListItemSwipeActionProps) => {
   const translateX = useSharedValue(0);
-  const { themeType } = useIOThemeContext();
-  const isDark = themeType === "dark";
-  const defaultBackgroundColor = isDark ? IOColors.black : IOColors.white;
+  const { theme } = useIOThemeContext();
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
 
   const showAlertAction = () =>
     Alert.alert(alertProps.title, alertProps.message, [
@@ -98,7 +97,7 @@ const ListItemSwipeAction = ({
     backgroundColor: interpolateColor(
       translateX.value,
       [-500, -100, 0],
-      [IOColors["blueIO-500"], IOColors["blueIO-500"], defaultBackgroundColor]
+      [IOColors["blueIO-500"], IOColors["blueIO-500"], backgroundColor]
     )
   }));
 
@@ -139,7 +138,7 @@ const ListItemSwipeAction = ({
           style={[
             {
               ...StyleSheet.absoluteFillObject,
-              backgroundColor: defaultBackgroundColor
+              backgroundColor
             },
             backgroundStyle
           ]}
@@ -160,7 +159,7 @@ const ListItemSwipeAction = ({
             style={[
               {
                 flex: 1,
-                backgroundColor: defaultBackgroundColor
+                backgroundColor
               },
               animatedStyle
             ]}
