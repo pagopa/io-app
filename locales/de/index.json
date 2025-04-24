@@ -312,8 +312,6 @@
     }
   },
   "login": {
-    "expiration_info": "Aus Sicherheitsgründen musst du dich alle 30 Tage mit SPID oder CIE anmelden.",
-    "expiration_info_FL": "Aus Sicherheitsgründen musst du dich einmal im Jahr mit SPID oder CIE anmelden.",
     "biometric_info": "Um dich anzumelden, gib einfach den Entsperrcode ein oder verwende, falls aktiviert, deinen Fingerabdruck oder dein Gesicht."
   },
   "inbox": {
