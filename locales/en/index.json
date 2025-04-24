@@ -4723,7 +4723,7 @@
           "modal": {
             "title": "Il tuo accesso all’app è scaduto",
             "content": "###### Cosa posso fare?\n\nQuando la tua sessione di accesso all’app scade, alcuni servizi dell’app potrebbero essere limitati per motivi di sicurezza.\n\nAccedi di nuovo con SPID o CIE per continuare ad usare tutti i servizi di IO.",
-            "footerAction": "Accedi di nuovo"
+            "footerAction": "Log in again"
           }
         },
         "SESSION_REFRESH": {
