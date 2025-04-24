@@ -1,11 +1,11 @@
 import {
   Alert,
-  ButtonLink,
   ClaimsSelector,
   ContentWrapper,
   FeatureInfo,
   ForceScrollDownView,
   H2,
+  IOButton,
   ListItemHeader,
   useIOTheme,
   VStack
@@ -88,7 +88,8 @@ const ContentView = () => {
           iconColor={theme["icon-default"]}
         />
         <View style={{ alignSelf: "flex-end" }}>
-          <ButtonLink
+          <IOButton
+            variant="link"
             label={I18n.t(
               `global.buttons.${
                 allOptionalClaimsSelected ? "deselectAll" : "selectAll"

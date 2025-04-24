@@ -6,9 +6,9 @@ import { forwardRef } from "react";
 import { View, ScrollView, useWindowDimensions } from "react-native";
 import {
   Body,
-  ButtonLink,
-  ButtonLinkProps,
   H3,
+  IOButton,
+  IOButtonLinkSpecificProps,
   IOPictograms,
   IOStyles,
   Pictogram,
@@ -22,7 +22,7 @@ type Props = {
   accessibilityLabel?: string;
   accessibilityHint?: string;
   buttonLink?: Pick<
-    ButtonLinkProps,
+    IOButtonLinkSpecificProps,
     | "color"
     | "testID"
     | "label"
@@ -70,7 +70,7 @@ export const LandingSessionExpiredComponent = forwardRef<View, Props>(
           {buttonLink && (
             <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
               <VSpacer size={BUTTON_VERTICAL_SPACING} />
-              <ButtonLink {...buttonLink} />
+              <IOButton variant="link" {...buttonLink} />
               <VSpacer size={VERTICAL_SPACING} />
             </View>
           )}

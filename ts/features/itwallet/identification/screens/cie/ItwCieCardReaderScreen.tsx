@@ -1,8 +1,8 @@
 import {
   Body,
-  ButtonLink,
   ContentWrapper,
   H3,
+  IOButton,
   IOColors,
   IOPictograms,
   IOStyles,
@@ -259,7 +259,8 @@ export const ItwCieCardReaderScreen = () => {
   const renderCardReaderFooter = () => (
     <View style={IOStyles.alignCenter}>
       <View>
-        <ButtonLink
+        <IOButton
+          variant="link"
           label={I18n.t("global.buttons.close")}
           onPress={dismissalDialog.show}
         />

@@ -1,7 +1,7 @@
 import {
-  ButtonLink,
   Divider,
   HeaderActionProps,
+  IOButton,
   IOStyles,
   IOToast,
   ListItemHeader,
@@ -120,7 +120,8 @@ export const ServicesHomeScreen = () => {
         <>
           <VSpacer size={16} />
           <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
-            <ButtonLink
+            <IOButton
+              variant="link"
               label={I18n.t("services.home.searchLink")}
               onPress={() => {
                 analytics.trackSearchStart({ source: "bottom_link" });
