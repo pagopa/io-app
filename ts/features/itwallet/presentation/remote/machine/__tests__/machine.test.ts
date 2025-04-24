@@ -300,9 +300,24 @@ describe("itwRemoteMachine", () => {
     });
 
     /**
-     * The user gives consent to share the credentials with the RP
+     * The user selects optional credentials and gives consent to share the credentials with the RP
      */
     await waitFor(actor, snapshot => snapshot.matches("ClaimsDisclosure"));
+    actor.send({
+      type: "toggle-credential",
+      credentialIds: ["cred01", "cred02", "cred03"]
+    });
+    // Test the toggle logic, cred03 should not be present
+    actor.send({ type: "toggle-credential", credentialIds: ["cred03"] });
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      ...InitialContext,
+      payload: qrCodePayload,
+      rpConf,
+      rpSubject: T_CLIENT_ID,
+      requestObject,
+      presentationDetails,
+      selectedOptionalCredentials: new Set(["cred01", "cred02"])
+    });
     actor.send({ type: "holder-consent" });
 
     /**
@@ -320,9 +335,16 @@ describe("itwRemoteMachine", () => {
       rpSubject: T_CLIENT_ID,
       requestObject,
       presentationDetails,
+      selectedOptionalCredentials: new Set(["cred01", "cred02"]),
       redirectUri: T_REDIRECT_URI
     });
 
     await waitFor(actor, snapshot => snapshot.matches("Success"));
+
+    /**
+     * The user closes the presentation flow
+     */
+    actor.send({ type: "close" });
+    expect(closePresentation).toHaveBeenCalledTimes(1);
   });
 });
