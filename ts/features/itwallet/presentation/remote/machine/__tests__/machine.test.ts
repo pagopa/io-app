@@ -347,4 +347,52 @@ describe("itwRemoteMachine", () => {
     actor.send({ type: "close" });
     expect(closePresentation).toHaveBeenCalledTimes(1);
   });
+
+  it("should transition to failure when an error occurs in GettingPresentationDetails", async () => {
+    isWalletActive.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+    evaluateRelyingPartyTrust.mockResolvedValue({});
+    getPresentationDetails.mockRejectedValue({ message: "ERROR" });
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: {
+        client_id: T_CLIENT_ID,
+        request_uri: T_REQUEST_URI,
+        state: T_STATE,
+        request_uri_method: "get"
+      }
+    });
+
+    await waitFor(actor, snapshot =>
+      snapshot.matches("GettingPresentationDetails")
+    );
+
+    expect(getPresentationDetails).toHaveBeenCalledTimes(1);
+    await waitFor(actor, snapshot => snapshot.matches("Failure"));
+  });
+
+  it("should transition to failure when an error occurs in SendingAuthorizationResponse", async () => {
+    sendAuthorizationResponse.mockRejectedValue({ message: "ERROR" });
+
+    const initialSnapshot = createActor(itwRemoteMachine).getSnapshot();
+    const actor = createActor(mockedMachine, {
+      snapshot: _.merge(undefined, initialSnapshot, {
+        // Start in the previous state to invoke the actor when transitioning to SendingAuthorizationResponse
+        value: "ClaimsDisclosure"
+      })
+    });
+    actor.start();
+
+    actor.send({ type: "holder-consent" });
+    await waitFor(actor, snapshot =>
+      snapshot.matches("SendingAuthorizationResponse")
+    );
+
+    expect(sendAuthorizationResponse).toHaveBeenCalledTimes(1);
+    await waitFor(actor, snapshot => snapshot.matches("Failure"));
+  });
 });
