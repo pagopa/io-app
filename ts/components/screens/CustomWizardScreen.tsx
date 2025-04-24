@@ -1,13 +1,11 @@
 import {
   Body,
   BodyProps,
-  ButtonLink,
-  ButtonLinkProps,
-  ButtonSolid,
-  ButtonSolidProps,
   ComposedBodyFromArray,
   ContentWrapper,
   H3,
+  IOButton,
+  IOButtonProps,
   IOPictograms,
   IOStyles,
   Pictogram,
@@ -16,22 +14,18 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, View } from "react-native";
 
+type ButtonProps = Pick<
+  IOButtonProps,
+  "label" | "accessibilityLabel" | "onPress" | "testID"
+>;
+
 export type CustomWizardScreenProps = {
   title: string;
   description?: string | Array<BodyProps>;
   pictogram: IOPictograms;
-  primaryButton: Pick<
-    ButtonSolidProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
-  >;
-  actionButton?: Pick<
-    ButtonLinkProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
-  >;
-  buttonLink?: Pick<
-    ButtonLinkProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
-  >;
+  primaryButton: ButtonProps;
+  actionButton?: ButtonProps;
+  buttonLink?: ButtonProps;
 };
 
 /**
@@ -54,12 +48,12 @@ const CustomWizardScreen = ({
       buttonLink={buttonLink}
     />
     <ContentWrapper>
-      <ButtonSolid {...primaryButton} fullWidth={true} />
+      <IOButton variant="solid" fullWidth {...primaryButton} />
       {actionButton && (
         <>
           <VSpacer size={24} />
           <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
-            <ButtonLink {...actionButton} />
+            <IOButton variant="link" {...actionButton} />
           </View>
           <VSpacer size={16} />
         </>
@@ -73,7 +67,7 @@ type CustomWizardBodyProps = {
   description?: string | Array<BodyProps>;
   pictogram: IOPictograms;
   buttonLink?: Pick<
-    ButtonLinkProps,
+    IOButtonProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
 };
@@ -104,7 +98,7 @@ const WizardBody = ({
       {buttonLink && (
         <View style={IOStyles.selfCenter}>
           <VSpacer size={16} />
-          <ButtonLink {...buttonLink} />
+          <IOButton variant="link" {...buttonLink} />
         </View>
       )}
     </View>

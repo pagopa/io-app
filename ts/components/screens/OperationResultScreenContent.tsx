@@ -1,12 +1,10 @@
 import {
   Body,
   BodyProps,
-  ButtonLink,
-  ButtonLinkProps,
-  ButtonSolid,
-  ButtonSolidProps,
   ComposedBodyFromArray,
   H3,
+  IOButton,
+  IOButtonProps,
   IOPictograms,
   IOStyles,
   IOVisualCostants,
@@ -24,19 +22,18 @@ import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+type ButtonProps = Pick<
+  IOButtonProps,
+  "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
+>;
+
 type OperationResultScreenContentProps = WithTestID<{
   pictogram?: IOPictograms;
   title: string;
   subtitle?: string | Array<BodyProps>;
   subtitleProps?: Pick<BodyProps, "textBreakStrategy" | "lineBreakStrategyIOS">;
-  action?: Pick<
-    ButtonSolidProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
-  >;
-  secondaryAction?: Pick<
-    ButtonLinkProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
-  >;
+  action?: ButtonProps;
+  secondaryAction?: ButtonProps;
   isHeaderVisible?: boolean;
 }>;
 
@@ -97,7 +94,7 @@ const OperationResultScreenContent = forwardRef<
           <View style={IOStyles.alignCenter}>
             <VSpacer size={24} />
             <View>
-              <ButtonSolid {...action} />
+              <IOButton variant="solid" {...action} />
             </View>
           </View>
         )}
@@ -105,7 +102,7 @@ const OperationResultScreenContent = forwardRef<
           <View style={IOStyles.alignCenter}>
             <VSpacer size={24} />
             <View>
-              <ButtonLink {...secondaryAction} />
+              <IOButton variant="link" {...secondaryAction} />
             </View>
           </View>
         )}
