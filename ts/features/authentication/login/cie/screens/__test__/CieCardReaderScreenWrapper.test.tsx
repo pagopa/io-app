@@ -14,6 +14,8 @@ jest.mock("react-native/Libraries/Utilities/Platform", () => ({
   select: (objs: { default: any }) => objs.default
 }));
 
+jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter");
+
 // Mock a React Navigation route
 jest.mock("@react-navigation/native", () => {
   const actual = jest.requireActual("@react-navigation/native");
