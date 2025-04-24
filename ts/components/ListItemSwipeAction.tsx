@@ -97,7 +97,11 @@ const ListItemSwipeAction = ({
     backgroundColor: interpolateColor(
       translateX.value,
       [-500, -100, 0],
-      [IOColors["blueIO-500"], IOColors["blueIO-500"], backgroundColor]
+      [
+        IOColors[theme["interactiveElem-default"]],
+        IOColors[theme["interactiveElem-default"]],
+        backgroundColor
+      ]
     )
   }));
 
