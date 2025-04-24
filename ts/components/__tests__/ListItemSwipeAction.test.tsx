@@ -5,12 +5,6 @@ import ListItemSwipeAction from "../ListItemSwipeAction";
 // Mock Alert
 jest.spyOn(Alert, "alert");
 
-// Mock useIOThemeContext
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
-  useIOThemeContext: () => ({ themeType: "light" })
-}));
-
 // Mock react-native-reanimated
 jest.mock("react-native-reanimated", () => {
   const Reanimated = jest.requireActual("react-native-reanimated");
