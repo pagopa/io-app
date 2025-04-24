@@ -1,6 +1,5 @@
 import {
   ButtonOutline,
-  ButtonSolidProps,
   FooterActions,
   H2,
   IconButton,
@@ -67,11 +66,6 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
     return () => subscription.remove();
   });
 
-  const closeButtonProps: ButtonSolidProps = {
-    onPress: props.onClose,
-    label: I18n.t("global.buttons.close")
-  };
-
   const handleLoadEnd = () => setOnLoadEnd(true);
 
   const handleError = () => {
@@ -135,7 +129,10 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
         <FooterActions
           actions={{
             type: "SingleButton",
-            primary: closeButtonProps
+            primary: {
+              onPress: props.onClose,
+              label: I18n.t("global.buttons.close")
+            }
           }}
         />
       )}

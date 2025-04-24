@@ -107,12 +107,12 @@ const gradientOpacityScrollTrigger = 0.85;
 const gradientSafeAreaHeight: IOSpacingScale = 96;
 /* End content margin before the actions */
 const contentEndMargin: IOSpacingScale = 32;
-/* Margin between ButtonSolid and ButtonOutline */
+/* Margin between solid variant and outline variant */
 const spaceBetweenActions: IOSpacer = 16;
-/* Margin between ButtonSolid and ButtonLink */
+/* Margin between solid variant and link variant */
 const spaceBetweenActionAndLink: IOSpacer = 16;
 /* Extra bottom margin for iPhone bottom handle because
-   ButtonLink doesn't have a fixed height */
+   Link variant doesn't have a fixed height */
 const extraSafeAreaMargin: IOSpacingScale = 8;
 
 const styles = StyleSheet.create({

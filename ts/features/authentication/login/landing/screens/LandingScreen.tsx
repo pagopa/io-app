@@ -4,12 +4,12 @@
  */
 import {
   Banner,
-  ButtonSolid,
   ContentWrapper,
   ModuleNavigation,
   VSpacer,
   Tooltip,
-  useIOToast
+  useIOToast,
+  IOButton
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
@@ -377,21 +377,20 @@ export const LandingScreen = () => {
             title={I18n.t("authentication.landing.tour_guide.title")}
             content={I18n.t("authentication.landing.tour_guide.content")}
           >
-            <ButtonSolid
-              testID="landing-button-login-cie"
-              accessibilityLabel={I18n.t("authentication.landing.loginCie")}
+            <IOButton
               fullWidth
+              variant="solid"
               color={isCieUatEnabled ? "danger" : "primary"}
               label={I18n.t("authentication.landing.loginCie")}
               icon="cieLetter"
               onPress={navigateToCiePinScreen}
+              testID="landing-button-login-cie"
             />
           </Tooltip>
           <VSpacer size={SPACE_BETWEEN_BUTTONS} />
-          <ButtonSolid
-            testID="landing-button-login-spid"
+          <IOButton
             fullWidth
-            accessibilityLabel={I18n.t("authentication.landing.loginSpid")}
+            variant="solid"
             color="primary"
             // if CIE is not supported, since the new DS has not a
             // "semi-enabled" state, we leave the button enabled
@@ -402,15 +401,15 @@ export const LandingScreen = () => {
               void trackSpidLoginSelected();
               navigateToIdpSelection();
             }}
+            testID="landing-button-login-spid"
           />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
           {/* This code has not been removed because an equal link will have to
           be reinstated when this story will be implemented: https://pagopa.atlassian.net/browse/IOPID-2689 */}
           {/* <View style={IOStyles.selfCenter}>
-            <ButtonLink
+            <IOButton
+              variant="link"
               accessibilityRole="link"
-              accessibilityLabel={I18n.t("authentication.landing.privacyLink")}
-              color="primary"
               label={I18n.t("authentication.landing.privacyLink")}
               onPress={navigateToPrivacyUrl}
             />

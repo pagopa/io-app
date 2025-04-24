@@ -5,10 +5,9 @@
  */
 import {
   Body,
-  ButtonLink,
-  ButtonSolid,
   ContentWrapper,
   H3,
+  IOButton,
   IOColors,
   IOPictograms,
   IOStyles,
@@ -38,19 +37,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
-import CieCardReadingAnimation, {
-  ReadingState
-} from "../components/CieCardReadingAnimation";
-import { isCieLoginUatEnabledSelector } from "../store/selectors";
-import { getCieUatEndpoint } from "../utils/endpoints";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
-import {
-  CieAuthenticationErrorPayload,
-  CieAuthenticationErrorReason,
-  cieAuthenticationError
-} from "../store/actions";
 import { ReduxProps } from "../../../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -68,7 +56,18 @@ import {
   trackLoginCieCardReadingError,
   trackLoginCieCardReadingSuccess
 } from "../../../common/analytics/cieAnalytics";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import CieCardReadingAnimation, {
+  ReadingState
+} from "../components/CieCardReadingAnimation";
+import {
+  CieAuthenticationErrorPayload,
+  CieAuthenticationErrorReason,
+  cieAuthenticationError
+} from "../store/actions";
+import { isCieLoginUatEnabledSelector } from "../store/selectors";
+import { getCieUatEndpoint } from "../utils/endpoints";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -538,7 +537,8 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       default: (
         <View style={IOStyles.alignCenter}>
           <View>
-            <ButtonLink
+            <IOButton
+              variant="link"
               label={I18n.t("global.buttons.close")}
               onPress={this.handleCancel}
             />
@@ -548,14 +548,16 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       ios: (
         <View style={IOStyles.alignCenter}>
           <View>
-            <ButtonSolid
+            <IOButton
+              variant="solid"
               label={I18n.t("authentication.cie.nfc.retry")}
               onPress={() => this.startCieiOS(this.props.isCieUatEnabled)}
             />
           </View>
           <VSpacer size={24} />
           <View>
-            <ButtonLink
+            <IOButton
+              variant="link"
               label={I18n.t("global.buttons.close")}
               onPress={this.handleCancel}
             />
