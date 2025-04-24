@@ -428,7 +428,7 @@ export const LandingScreen = () => {
             }}
           />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-          {itwOfflineAccessAvailable && (
+          {itwOfflineAccessAvailable && isSessionExpiredRef.current && (
             <View style={IOStyles.selfCenter}>
               <ButtonLink
                 accessibilityRole="link"
