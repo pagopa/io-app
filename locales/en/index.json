@@ -356,7 +356,7 @@
     }
   },
   "login": {
-    "help_banner_title": "Come si accede?",
+    "help_banner_title": "Need help logging in?",
     "help_banner_content": "Abbiamo preparato una guida per aiutarti passo passo.",
     "help_banner_action": "Leggi come fare",
     "biometric_info": "To sign in, you'll only need to enter your unlock code or, if enabled, use your fingerprint or face."
