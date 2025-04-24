@@ -1,5 +1,4 @@
 import {
-  ButtonSolidProps,
   FooterActions,
   IOStyles,
   Pictogram
@@ -40,29 +39,25 @@ const FciThankyouScreen = () => {
     />
   );
 
-  const SuccessComponent = () => {
-    const continueButtonProps: ButtonSolidProps = {
-      onPress: () => dispatch(fciEndRequest()),
-      label: I18n.t("features.fci.thankYouPage.cta"),
-      testID: "FciTypCloseButton"
-    };
-
-    return (
-      <View style={IOStyles.flex} testID={"FciTypSuccessTestID"}>
-        <InfoScreenComponent
-          image={<Pictogram name={"success"} />}
-          title={I18n.t("features.fci.thankYouPage.title")}
-          body={I18n.t("features.fci.thankYouPage.content")}
-        />
-        <FooterActions
-          actions={{
-            type: "SingleButton",
-            primary: continueButtonProps
-          }}
-        />
-      </View>
-    );
-  };
+  const SuccessComponent = () => (
+    <View style={IOStyles.flex} testID={"FciTypSuccessTestID"}>
+      <InfoScreenComponent
+        image={<Pictogram name={"success"} />}
+        title={I18n.t("features.fci.thankYouPage.title")}
+        body={I18n.t("features.fci.thankYouPage.content")}
+      />
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
+            onPress: () => dispatch(fciEndRequest()),
+            label: I18n.t("features.fci.thankYouPage.cta"),
+            testID: "FciTypCloseButton"
+          }
+        }}
+      />
+    </View>
+  );
 
   return pot.fold(
     fciCreateSignatureSelector,

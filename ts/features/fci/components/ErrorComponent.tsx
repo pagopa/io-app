@@ -1,6 +1,6 @@
 import {
-  ButtonOutline,
-  ButtonSolid,
+  IOButton,
+  IOButtonBlockSpecificProps,
   IOPictograms,
   IOSpacingScale,
   IOStyles,
@@ -75,28 +75,25 @@ const ErrorComponent = (props: Props) => {
     }
   };
 
-  const retryButtonProps: ButtonOutline = {
+  const retryButtonProps: Omit<IOButtonBlockSpecificProps, "variant"> = {
     testID: "FciRetryButtonTestID",
     onPress: props.onPress,
     fullWidth: true,
-    label: I18n.t("features.fci.errors.buttons.retry"),
-    accessibilityLabel: I18n.t("features.fci.errors.buttons.retry")
+    label: I18n.t("features.fci.errors.buttons.retry")
   };
 
-  const closeButtonProps: ButtonOutline = {
+  const closeButtonProps: Omit<IOButtonBlockSpecificProps, "variant"> = {
     testID: "FciCloseButtonTestID",
     onPress: props.onPress,
     fullWidth: true,
-    label: I18n.t("features.fci.errors.buttons.close"),
-    accessibilityLabel: I18n.t("features.fci.errors.buttons.close")
+    label: I18n.t("features.fci.errors.buttons.close")
   };
 
-  const assistanceButtonProps: ButtonOutline = {
+  const assistanceButtonProps: Omit<IOButtonBlockSpecificProps, "variant"> = {
     testID: "FciAssistanceButtonTestID",
     fullWidth: true,
     onPress: handleAskAssistance,
-    label: I18n.t("features.fci.errors.buttons.assistance"),
-    accessibilityLabel: I18n.t("features.fci.errors.buttons.assistance")
+    label: I18n.t("features.fci.errors.buttons.assistance")
   };
 
   /**
@@ -107,37 +104,37 @@ const ErrorComponent = (props: Props) => {
     if (props.retry && props.assistance) {
       return (
         <>
-          <ButtonSolid {...retryButtonProps} />
+          <IOButton variant="solid" {...retryButtonProps} />
           <VSpacer size={8} />
-          <ButtonOutline {...assistanceButtonProps} />
+          <IOButton variant="outline" {...assistanceButtonProps} />
         </>
       );
     }
     if (props.retry) {
       return (
         <>
-          <ButtonSolid {...retryButtonProps} />
+          <IOButton variant="solid" {...retryButtonProps} />
           <VSpacer size={8} />
-          <ButtonOutline {...closeButtonProps} />
+          <IOButton variant="outline" {...closeButtonProps} />
         </>
       );
     }
     if (props.assistance) {
       return (
         <>
-          <ButtonSolid
+          <IOButton
+            variant="solid"
             {...{
               ...closeButtonProps,
-              label: I18n.t("features.fci.errors.buttons.back"),
-              accessibilityLabel: I18n.t("features.fci.errors.buttons.back")
+              label: I18n.t("features.fci.errors.buttons.back")
             }}
           />
           <VSpacer size={8} />
-          <ButtonOutline {...assistanceButtonProps} />
+          <IOButton variant="outline" {...assistanceButtonProps} />
         </>
       );
     }
-    return <ButtonOutline {...closeButtonProps} />;
+    return <IOButton variant="outline" {...closeButtonProps} />;
   };
 
   return (
