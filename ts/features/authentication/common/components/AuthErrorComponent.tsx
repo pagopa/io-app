@@ -25,7 +25,7 @@ export enum AUTH_ERRORS {
   GENERIC_ERROR = "GENERIC_ERROR"
 }
 
-type Props = {
+export type AuthErrorComponentProps = {
   errorCodeOrMessage?: string;
   onRetry: () => void;
   onCancel: () => void;
@@ -36,12 +36,13 @@ const AuthErrorComponent = ({
   authLevel,
   onRetry,
   onCancel
-}: Props) => {
+}: AuthErrorComponentProps) => {
   const footerWithCloseButton = useMemo(
     () => ({
       action: {
         onPress: onCancel,
-        label: I18n.t("global.buttons.close")
+        label: I18n.t("global.buttons.close"),
+        testID: "single-cancel-button-test-id"
       }
     }),
     [onCancel]
@@ -50,11 +51,13 @@ const AuthErrorComponent = ({
     () => ({
       action: {
         onPress: onRetry,
-        label: I18n.t("global.buttons.retry")
+        label: I18n.t("global.buttons.retry"),
+        testID: "retry-button-test-id"
       },
       secondaryAction: {
         onPress: onCancel,
-        label: I18n.t("global.buttons.close")
+        label: I18n.t("global.buttons.close"),
+        testID: "cancel-button-test-id"
       }
     }),
     [onCancel, onRetry]

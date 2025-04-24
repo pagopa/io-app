@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { BulletList } from "../../../../components/BulletList";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 const BottomSheetContent = memo(() => {
   const { bottom } = useSafeAreaInsets();
@@ -33,7 +33,7 @@ const BottomSheetContent = memo(() => {
 });
 
 export default () =>
-  useIOBottomSheetAutoresizableModal({
+  useIOBottomSheetModal({
     title: I18n.t("onboarding.pin.policy.title"),
     component: <BottomSheetContent />
   });

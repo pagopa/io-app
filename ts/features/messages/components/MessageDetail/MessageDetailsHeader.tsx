@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { Divider, H3, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { localeDateFormat } from "../../../../utils/locale";
@@ -33,7 +33,9 @@ const MessageDetailsHeaderContent = ({
   createdAt
 }: Pick<MessageDetailsHeaderProps, "createdAt" | "subject">) => (
   <>
-    <H3 testID="message-header-subject">{subject}</H3>
+    <H3 accessibilityRole="header" testID="message-header-subject">
+      {subject}
+    </H3>
     <VSpacer size={8} />
     <BodySmall weight="Regular" color="grey-700">
       {localeDateFormat(
@@ -63,10 +65,10 @@ export const MessageDetailsHeader = ({
         <>
           <OrganizationHeader
             messageId={messageId}
-            logoUri={logosForService(service)}
-            organizationName={service.organization_name}
+            logoUri={logosForService(service) as ImageSourcePropType}
+            organizationName={service.organization.name}
             serviceId={serviceId}
-            serviceName={service.service_name}
+            serviceName={service.name}
           />
           <Divider />
         </>

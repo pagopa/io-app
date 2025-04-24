@@ -484,7 +484,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                           <View
                             accessibilityRole="progressbar"
                             accessible={true}
-                            importantForAccessibility="no-hide-descendants"
                             style={
                               {
                                 "height": 24,

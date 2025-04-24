@@ -543,6 +543,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}
@@ -1512,6 +1513,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}
@@ -2718,6 +2720,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}
@@ -3806,6 +3809,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}
@@ -4664,6 +4668,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}
@@ -5759,6 +5764,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}
@@ -6736,6 +6742,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}
@@ -7682,6 +7689,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}
@@ -8865,6 +8873,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}
@@ -9930,6 +9939,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}
@@ -10765,6 +10775,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}
@@ -11837,6 +11848,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
+                                  accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title2"
                                   maxFontSizeMultiplier={1.5}

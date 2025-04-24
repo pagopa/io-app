@@ -13,8 +13,8 @@ import { PaymentsCheckoutRoutes } from "../../navigation/routes";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { FaultCodeCategoryEnum } from "../../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { paymentsGetPaymentDetailsAction } from "../../store/actions/networking";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { Store } from "../../../../../store/actions/types";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
 jest.mock("../../analytics");
 jest.mock("../../../../../utils/hooks/bottomSheet");
@@ -39,9 +39,8 @@ const mockModal = {
   dismiss: jest.fn(),
   bottomSheet: <View testID="modal-view-test" />
 };
-const mockedUseIOBottomSheetAutoresizableModal =
-  useIOBottomSheetAutoresizableModal as jest.Mock;
-mockedUseIOBottomSheetAutoresizableModal.mockReturnValue(mockModal);
+const mockedUseIOBottomSheetModal = useIOBottomSheetModal as jest.Mock;
+mockedUseIOBottomSheetModal.mockReturnValue(mockModal);
 
 describe("WalletPaymentDetailScreen", () => {
   const renderComponent = () => {

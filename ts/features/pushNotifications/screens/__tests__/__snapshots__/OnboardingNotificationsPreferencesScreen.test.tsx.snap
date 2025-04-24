@@ -223,6 +223,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -842,14 +843,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
-                                  [
-                                    {
-                                      "flex": 1,
-                                    },
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                  ]
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
                                 }
                               >
                                 <Text
@@ -973,7 +971,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               backgroundStyle={
@@ -982,15 +979,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               }
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -1008,9 +1002,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -1036,6 +1030,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -1388,15 +1389,18 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     >
                                       <RNSVGPath
+                                        clipRule={0}
                                         d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
                                         fill={
                                           {
                                             "type": 2,
                                           }
                                         }
+                                        fillRule={0}
                                         propList={
                                           [
                                             "fill",
+                                            "fillRule",
                                           ]
                                         }
                                       />
@@ -1666,6 +1670,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -2285,14 +2290,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
-                                  [
-                                    {
-                                      "flex": 1,
-                                    },
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                  ]
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
                                 }
                               >
                                 <Text
@@ -2416,7 +2418,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               backgroundStyle={
@@ -2425,15 +2426,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               }
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -2451,9 +2449,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -2479,6 +2477,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -2832,15 +2837,18 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     >
                                       <RNSVGPath
+                                        clipRule={0}
                                         d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
                                         fill={
                                           {
                                             "type": 2,
                                           }
                                         }
+                                        fillRule={0}
                                         propList={
                                           [
                                             "fill",
+                                            "fillRule",
                                           ]
                                         }
                                       />
@@ -3110,6 +3118,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -3729,14 +3738,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
-                                  [
-                                    {
-                                      "flex": 1,
-                                    },
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                  ]
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
                                 }
                               >
                                 <Text
@@ -3860,7 +3866,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               backgroundStyle={
@@ -3869,15 +3874,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               }
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -3895,9 +3897,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -3923,6 +3925,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -4276,15 +4285,18 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     >
                                       <RNSVGPath
+                                        clipRule={0}
                                         d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
                                         fill={
                                           {
                                             "type": 2,
                                           }
                                         }
+                                        fillRule={0}
                                         propList={
                                           [
                                             "fill",
+                                            "fillRule",
                                           ]
                                         }
                                       />
@@ -4554,6 +4566,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -5173,14 +5186,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
-                                  [
-                                    {
-                                      "flex": 1,
-                                    },
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                  ]
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
                                 }
                               >
                                 <Text
@@ -5304,7 +5314,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               backgroundStyle={
@@ -5313,15 +5322,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               }
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -5339,9 +5345,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -5367,6 +5373,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -5720,15 +5733,18 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                     >
                                       <RNSVGPath
+                                        clipRule={0}
                                         d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
                                         fill={
                                           {
                                             "type": 2,
                                           }
                                         }
+                                        fillRule={0}
                                         propList={
                                           [
                                             "fill",
+                                            "fillRule",
                                           ]
                                         }
                                       />
@@ -5998,6 +6014,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -6338,7 +6355,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   <View
                                     accessibilityRole="progressbar"
                                     accessible={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "height": 24,
@@ -6675,7 +6691,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   <View
                                     accessibilityRole="progressbar"
                                     accessible={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     style={
                                       {
                                         "height": 24,
@@ -6909,14 +6924,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
-                                  [
-                                    {
-                                      "flex": 1,
-                                    },
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                  ]
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
                                 }
                               >
                                 <Text
@@ -7040,7 +7052,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               backgroundStyle={
@@ -7049,15 +7060,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 }
                               }
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -7075,9 +7083,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -7103,6 +7111,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -7215,7 +7230,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               <View
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 24,
@@ -7600,15 +7614,18 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       }
                                     >
                                       <RNSVGPath
+                                        clipRule={0}
                                         d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
                                         fill={
                                           {
                                             "type": 2,
                                           }
                                         }
+                                        fillRule={0}
                                         propList={
                                           [
                                             "fill",
+                                            "fillRule",
                                           ]
                                         }
                                       />

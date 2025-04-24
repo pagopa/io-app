@@ -594,6 +594,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               >
                                 <View>
                                   <Text
+                                    accessibilityRole="header"
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title1"
                                     maxFontSizeMultiplier={1.5}
@@ -1460,6 +1461,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               >
                                 <View>
                                   <Text
+                                    accessibilityRole="header"
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title1"
                                     maxFontSizeMultiplier={1.5}
@@ -1685,7 +1687,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                 <View
                                   accessibilityRole="progressbar"
                                   accessible={true}
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "height": 24,
@@ -2471,6 +2472,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               >
                                 <View>
                                   <Text
+                                    accessibilityRole="header"
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title1"
                                     maxFontSizeMultiplier={1.5}
@@ -3175,6 +3177,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               >
                                 <View>
                                   <Text
+                                    accessibilityRole="header"
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title1"
                                     maxFontSizeMultiplier={1.5}
@@ -3919,6 +3922,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               >
                                 <View>
                                   <Text
+                                    accessibilityRole="header"
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title1"
                                     maxFontSizeMultiplier={1.5}
@@ -4852,6 +4856,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               >
                                 <View>
                                   <Text
+                                    accessibilityRole="header"
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title1"
                                     maxFontSizeMultiplier={1.5}
@@ -5104,7 +5109,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                 <View
                                   accessibilityRole="progressbar"
                                   accessible={true}
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "height": 24,
@@ -5930,6 +5934,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               >
                                 <View>
                                   <Text
+                                    accessibilityRole="header"
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title1"
                                     maxFontSizeMultiplier={1.5}
@@ -6869,6 +6874,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               >
                                 <View>
                                   <Text
+                                    accessibilityRole="header"
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title1"
                                     maxFontSizeMultiplier={1.5}
@@ -7127,7 +7133,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                                 <View
                                   accessibilityRole="progressbar"
                                   accessible={true}
-                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
                                       "height": 24,

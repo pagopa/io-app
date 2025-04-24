@@ -587,6 +587,7 @@ exports[`error screens should display an error screen in case of missing_sid err
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -1373,6 +1374,7 @@ exports[`error screens should display an error screen in case of preferences err
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -2159,6 +2161,7 @@ exports[`loading screens + error interop should render the correct loading scree
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -2739,7 +2742,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -3368,7 +3370,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -3997,7 +3998,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -4626,7 +4626,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -5255,7 +5254,6 @@ exports[`loading screens + error interop should render the correct loading scree
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,

@@ -7,7 +7,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { identificationRequest } from "../../../../../store/actions/identification";
+import { identificationRequest } from "../../../../identification/store/actions";
 import { shufflePinPadOnPayment } from "../../../../../config";
 import * as fimsHistorySelectors from "../../../../fims/history/store/selectors";
 import { FIMS_ROUTES } from "../../../../fims/common/navigation";

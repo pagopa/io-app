@@ -4,7 +4,11 @@ import { sessionTokenSelector } from "../../../authentication/common/store/selec
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getNetworkError } from "../../../../utils/errors";
-import { trackItwStatusWalletAttestationFailure } from "../../analytics";
+import {
+  trackItwStatusWalletAttestationFailure,
+  trackItwWalletBadState,
+  trackItwWalletInstanceRevocation
+} from "../../analytics";
 import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
@@ -25,13 +29,14 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
     );
 
     if (walletInstanceStatus.is_revoked) {
+      trackItwWalletInstanceRevocation(walletInstanceStatus.revocation_reason);
       yield* call(handleWalletInstanceResetSaga);
-      trackItwStatusWalletAttestationFailure();
     }
 
     // Update wallet instance status
     yield* put(itwUpdateWalletInstanceStatus.success(walletInstanceStatus));
   } catch (e) {
+    trackItwStatusWalletAttestationFailure();
     yield* put(itwUpdateWalletInstanceStatus.failure(getNetworkError(e)));
   }
 }
@@ -72,6 +77,7 @@ export function* checkWalletInstanceInconsistencySaga(): Generator<
 
   if (O.isSome(eid) && O.isNone(integrityKeyTag)) {
     yield* call(handleWalletInstanceResetSaga);
+    trackItwWalletBadState();
     return false;
   }
 

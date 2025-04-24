@@ -1,11 +1,18 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IOToast, ListItemAction } from "@pagopa/io-app-design-system";
 import { Alert, Platform } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { paymentsDeleteMethodAction } from "../store/actions";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
+import { selectPaymentOnboardingMethods } from "../../onboarding/store/selectors";
 
 type PaymentsDetailsDeleteMethodButtonProps = {
   paymentMethod?: WalletInfo;
@@ -16,6 +23,10 @@ const PaymentsMethodDetailsDeleteButton = ({
 }: PaymentsDetailsDeleteMethodButtonProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const store = useIOStore();
+
+  const paymentMethodsPot = useIOSelector(selectPaymentOnboardingMethods);
+  const availablePaymentMethods = pot.toUndefined(paymentMethodsPot);
 
   const deleteWallet = (walletId: string) => {
     dispatch(
@@ -23,6 +34,10 @@ const PaymentsMethodDetailsDeleteButton = ({
         walletId,
         onSuccess: () => {
           IOToast.success(I18n.t("wallet.delete.successful"));
+          void updateMixpanelProfileProperties(store.getState(), {
+            property: "SAVED_PAYMENT_METHOD",
+            value: (availablePaymentMethods?.length ?? 1) - 1
+          });
           dispatch(getPaymentsWalletUserMethods.request());
         },
         onFailure: () => {

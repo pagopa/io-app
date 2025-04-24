@@ -414,7 +414,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,
@@ -1046,7 +1045,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,
@@ -1678,7 +1676,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,
@@ -2307,7 +2304,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 accessibilityLabel="Loading"
                                 accessibilityRole="progressbar"
                                 accessible={true}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
                                     "height": 48,

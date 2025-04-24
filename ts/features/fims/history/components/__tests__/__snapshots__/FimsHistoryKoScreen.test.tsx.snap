@@ -586,6 +586,7 @@ exports[`fimshistoryKoScreen should match snapshot 1`] = `
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}

@@ -421,6 +421,7 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
                               maxFontSizeMultiplier={1.5}
@@ -1560,6 +1561,7 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -2140,7 +2142,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -2769,7 +2770,6 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
                           accessibilityLabel="Loading"
                           accessibilityRole="progressbar"
                           accessible={true}
-                          importantForAccessibility="no-hide-descendants"
                           style={
                             {
                               "height": 48,
@@ -3556,6 +3556,7 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot, dispatch di
                               />
                             </View>
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}

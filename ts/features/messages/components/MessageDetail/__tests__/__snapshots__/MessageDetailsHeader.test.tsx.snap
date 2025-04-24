@@ -385,6 +385,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         }
                       />
                       <Text
+                        accessibilityRole="header"
                         allowFontScaling={true}
                         dynamicTypeRamp="title2"
                         maxFontSizeMultiplier={1.5}
@@ -554,9 +555,18 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 accessibilityIgnoresInvertColors={true}
                                 onError={[Function]}
                                 source={
-                                  {
-                                    "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
-                                  }
+                                  [
+                                    {
+                                      "height": 180,
+                                      "uri": "https://assets.cdn.io.pagopa.it/logos/services/service_one.png",
+                                      "width": 180,
+                                    },
+                                    {
+                                      "height": 180,
+                                      "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/FSCLCD.png",
+                                      "width": 180,
+                                    },
+                                  ]
                                 }
                                 style={
                                   {

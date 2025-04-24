@@ -367,9 +367,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                       }
                     >
                       <View
-                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
-    received on January 2nd 1990
-  . "
+                        accessibilityLabel="messages.accessibility.message.description"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -510,9 +508,18 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
+                                            },
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                              "width": 180,
+                                            },
+                                          ]
                                         }
                                         style={
                                           {
@@ -559,7 +566,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={true}
+                                      accessible={false}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -671,7 +678,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                       ]
                                     }
                                   >
-                                    01/02/90
+                                    globaml.2amteFor4amt0.2amy1stnt3/90
                                   </Text>
                                 </View>
                                 <View
@@ -878,7 +885,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           ]
                                         }
                                       >
-                                        Legal value
+                                        features.pn.details.badge.legalValue
                                       </Text>
                                     </View>
                                     <View
@@ -914,7 +921,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                       >
                                         <RNSVGSvgView
                                           accessibilityElementsHidden={false}
-                                          accessibilityLabel="Allegati"
+                                          accessibilityLabel="features.pn.details.attachmentsSection.title"
                                           accessible={true}
                                           align="xMidYMid"
                                           bbHeight={24}
@@ -1358,9 +1365,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
-    received on January 2nd 1990
-  . "
+                        accessibilityLabel="messages.accessibility.message.description"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -1501,9 +1506,18 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
+                                            },
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                              "width": 180,
+                                            },
+                                          ]
                                         }
                                         style={
                                           {
@@ -1550,7 +1564,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={true}
+                                      accessible={false}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -1662,7 +1676,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                       ]
                                     }
                                   >
-                                    01/02/90
+                                    globaml.2amteFor4amt0.2amy1stnt3/90
                                   </Text>
                                 </View>
                                 <View
@@ -1924,7 +1938,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           ]
                                         }
                                       >
-                                        Legal value
+                                        features.pn.details.badge.legalValue
                                       </Text>
                                     </View>
                                     <View
@@ -1960,7 +1974,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                       >
                                         <RNSVGSvgView
                                           accessibilityElementsHidden={false}
-                                          accessibilityLabel="Allegati"
+                                          accessibilityLabel="features.pn.details.attachmentsSection.title"
                                           accessible={true}
                                           align="xMidYMid"
                                           bbHeight={24}
@@ -2404,9 +2418,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                       }
                     >
                       <View
-                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
-    received on January 2nd 1990
-  . "
+                        accessibilityLabel="messages.accessibility.message.description"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -2559,7 +2571,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           onError={[Function]}
                                           source={
                                             {
+                                              "height": 180,
                                               "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
                                             }
                                           }
                                           style={
@@ -2717,7 +2731,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={true}
+                                      accessible={false}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -2829,7 +2843,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                       ]
                                     }
                                   >
-                                    01/02/90
+                                    globaml.2amteFor4amt0.2amy1stnt3/90
                                   </Text>
                                 </View>
                                 <View
@@ -3036,7 +3050,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           ]
                                         }
                                       >
-                                        Paid
+                                        messages.badge.paid
                                       </Text>
                                     </View>
                                   </View>
@@ -3426,9 +3440,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
-    received on January 2nd 1990
-  . "
+                        accessibilityLabel="messages.accessibility.message.description"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -3581,7 +3593,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           onError={[Function]}
                                           source={
                                             {
+                                              "height": 180,
                                               "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
                                             }
                                           }
                                           style={
@@ -3739,7 +3753,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={true}
+                                      accessible={false}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -3851,7 +3865,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                       ]
                                     }
                                   >
-                                    01/02/90
+                                    globaml.2amteFor4amt0.2amy1stnt3/90
                                   </Text>
                                 </View>
                                 <View
@@ -4113,7 +4127,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           ]
                                         }
                                       >
-                                        Paid
+                                        messages.badge.paid
                                       </Text>
                                     </View>
                                   </View>
@@ -4503,9 +4517,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                       }
                     >
                       <View
-                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
-    received on January 2nd 1990
-  . "
+                        accessibilityLabel="messages.accessibility.message.description"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -4658,7 +4670,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           onError={[Function]}
                                           source={
                                             {
+                                              "height": 180,
                                               "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
                                             }
                                           }
                                           style={
@@ -4816,7 +4830,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={true}
+                                      accessible={false}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -4928,7 +4942,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                       ]
                                     }
                                   >
-                                    01/02/90
+                                    globaml.2amteFor4amt0.2amy1stnt3/90
                                   </Text>
                                 </View>
                                 <View
@@ -5387,9 +5401,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
-    received on January 2nd 1990
-  . "
+                        accessibilityLabel="messages.accessibility.message.description"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -5542,7 +5554,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           onError={[Function]}
                                           source={
                                             {
+                                              "height": 180,
                                               "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
                                             }
                                           }
                                           style={
@@ -5700,7 +5714,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={true}
+                                      accessible={false}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -5812,7 +5826,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                       ]
                                     }
                                   >
-                                    01/02/90
+                                    globaml.2amteFor4amt0.2amy1stnt3/90
                                   </Text>
                                 </View>
                                 <View
@@ -6326,9 +6340,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                       }
                     >
                       <View
-                        accessibilityLabel="Message , received by Organization name, Service name. Message title. 
-    received on January 2nd 1990
-  . "
+                        accessibilityLabel="messages.accessibility.message.description"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -6469,9 +6481,18 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
+                                            },
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                              "width": 180,
+                                            },
+                                          ]
                                         }
                                         style={
                                           {
@@ -6518,7 +6539,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={true}
+                                      accessible={false}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -6630,7 +6651,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                       ]
                                     }
                                   >
-                                    01/02/90
+                                    globaml.2amteFor4amt0.2amy1stnt3/90
                                   </Text>
                                 </View>
                                 <View
@@ -7089,9 +7110,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                       }
                     >
                       <View
-                        accessibilityLabel="Unread message , received by Organization name, Service name. Message title. 
-    received on January 2nd 1990
-  . "
+                        accessibilityLabel="messages.accessibility.message.description"
                         accessibilityRole="button"
                         accessibilityState={
                           {
@@ -7232,9 +7251,18 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                         accessibilityIgnoresInvertColors={true}
                                         onError={[Function]}
                                         source={
-                                          {
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
-                                          }
+                                          [
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/services/01hyfjytxyhpjtnkp60mrcyrmv.png",
+                                              "width": 180,
+                                            },
+                                            {
+                                              "height": 180,
+                                              "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/RGNFSCCDO.png",
+                                              "width": 180,
+                                            },
+                                          ]
                                         }
                                         style={
                                           {
@@ -7281,7 +7309,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                           "text": undefined,
                                         }
                                       }
-                                      accessible={true}
+                                      accessible={false}
                                       collapsable={false}
                                       focusable={true}
                                       onBlur={[Function]}
@@ -7393,7 +7421,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                       ]
                                     }
                                   >
-                                    01/02/90
+                                    globaml.2amteFor4amt0.2amy1stnt3/90
                                   </Text>
                                 </View>
                                 <View
