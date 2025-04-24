@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 
 type ItwIdentificationContentType = {
@@ -104,14 +104,11 @@ export const useItwIdentificationBottomSheet = ({
     return undefined;
   };
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
-    {
-      title,
-      component: <BottomSheetBody />,
-      footer: getFooterActions()
-    },
-    200
-  );
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
+    title,
+    component: <BottomSheetBody />,
+    footer: getFooterActions()
+  });
 
   return {
     dismiss,
