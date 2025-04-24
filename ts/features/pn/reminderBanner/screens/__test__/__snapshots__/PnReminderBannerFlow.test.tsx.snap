@@ -628,21 +628,22 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= ALREADY
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -678,16 +679,21 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= ALREADY
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "700",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -1390,21 +1396,22 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -1440,16 +1447,21 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "700",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -2152,21 +2164,22 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -2202,16 +2215,21 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= FAILURE
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "700",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -2866,21 +2884,22 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= SUCCESS
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -2916,16 +2935,21 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= SUCCESS
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "700",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -3385,6 +3409,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                 }
                                 bbHeight={NaN}
                                 bbWidth={NaN}
+                                color="#0E0F13"
                                 focusable={false}
                                 height={NaN}
                                 importantForAccessibility="no-hide-descendants"
@@ -3392,22 +3417,16 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                 minX={0}
                                 minY={0}
                                 style={
-                                  [
-                                    {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "color": "#0E0F13",
-                                    },
-                                  ]
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderWidth": 0,
+                                  }
                                 }
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={NaN}
                               >
                                 <RNSVGGroup
-                                  color="#0E0F13"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -4021,22 +4040,21 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "height": 48,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
                                     "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
                                   },
                                   {},
                                   false,
@@ -4073,16 +4091,21 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                     [
                                       {},
                                       {
-                                        "color": "#FFFFFF",
+                                        "color": "#0E0F13",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "700",
-                                        "lineHeight": 20,
+                                        "lineHeight": undefined,
                                       },
-                                      {
-                                        "alignSelf": "center",
-                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -4782,21 +4805,22 @@ exports[`error screens should display an error screen in case of missing_sid err
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -4832,16 +4856,21 @@ exports[`error screens should display an error screen in case of missing_sid err
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -5544,21 +5573,22 @@ exports[`error screens should display an error screen in case of preferences err
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -5594,16 +5624,21 @@ exports[`error screens should display an error screen in case of preferences err
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -6306,21 +6341,22 @@ exports[`loading screens + error interop should render the correct loading scree
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -6356,16 +6392,21 @@ exports[`loading screens + error interop should render the correct loading scree
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >

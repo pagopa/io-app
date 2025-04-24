@@ -741,6 +741,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -754,9 +755,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -768,7 +766,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

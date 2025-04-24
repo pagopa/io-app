@@ -1507,22 +1507,21 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "borderRadius": 8,
                                       "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "paddingHorizontal": 24,
+                                      "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
                                     {
-                                      "height": 48,
+                                      "paddingHorizontal": 16,
                                     },
                                     {
                                       "backgroundColor": "#0B3EE3",
-                                      "overflow": "hidden",
-                                    },
-                                    {
-                                      "paddingHorizontal": 16,
+                                      "borderColor": "#FFFFFF",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": 48,
                                     },
                                     {},
                                     false,
@@ -1552,8 +1551,14 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
+                                    animatedProps={
+                                      {
+                                        "color": undefined,
+                                      }
+                                    }
                                     bbHeight={30}
                                     bbWidth={30}
+                                    color="#555C70"
                                     focusable={false}
                                     height={30}
                                     importantForAccessibility="no-hide-descendants"
@@ -1567,9 +1572,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#FFFFFF",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 30,
                                           "width": 30,
@@ -1581,7 +1583,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     width={30}
                                   >
                                     <RNSVGGroup
-                                      color="#FFFFFF"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1619,16 +1620,21 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                       [
                                         {},
                                         {
-                                          "color": "#FFFFFF",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 20,
+                                          "lineHeight": undefined,
                                         },
-                                        {
-                                          "alignSelf": "center",
-                                        },
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": undefined,
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -1691,22 +1697,21 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "height": 48,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
                                     "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
                                   },
                                   {},
                                   false,
@@ -1736,8 +1741,14 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
+                                  animatedProps={
+                                    {
+                                      "color": undefined,
+                                    }
+                                  }
                                   bbHeight={30}
                                   bbWidth={30}
+                                  color="#555C70"
                                   focusable={false}
                                   height={30}
                                   importantForAccessibility="no-hide-descendants"
@@ -1751,9 +1762,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#FFFFFF",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 30,
                                         "width": 30,
@@ -1765,7 +1773,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   width={30}
                                 >
                                   <RNSVGGroup
-                                    color="#FFFFFF"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1803,16 +1810,21 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     [
                                       {},
                                       {
-                                        "color": "#FFFFFF",
+                                        "color": "#0E0F13",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 20,
+                                        "lineHeight": undefined,
                                       },
-                                      {
-                                        "alignSelf": "center",
-                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -1983,6 +1995,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1996,9 +2009,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -2010,7 +2020,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2640,6 +2649,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         align="xMidYMid"
                                         bbHeight={36}
                                         bbWidth={36}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={36}
                                         importantForAccessibility="no-hide-descendants"
@@ -2653,9 +2663,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 36,
                                               "width": 36,
@@ -2667,7 +2674,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         width={36}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2810,6 +2816,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         align="xMidYMid"
                                         bbHeight={36}
                                         bbWidth={36}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={36}
                                         importantForAccessibility="no-hide-descendants"
@@ -2823,9 +2830,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 36,
                                               "width": 36,
@@ -2837,7 +2841,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         width={36}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2980,6 +2983,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         align="xMidYMid"
                                         bbHeight={36}
                                         bbWidth={36}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={36}
                                         importantForAccessibility="no-hide-descendants"
@@ -2993,9 +2997,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 36,
                                               "width": 36,
@@ -3007,7 +3008,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                         width={36}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -3328,6 +3328,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -3341,9 +3342,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -3355,7 +3353,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3446,6 +3443,7 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -3459,9 +3457,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -3473,7 +3468,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,

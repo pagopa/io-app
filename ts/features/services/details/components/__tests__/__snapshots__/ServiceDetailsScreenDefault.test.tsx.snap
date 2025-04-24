@@ -350,6 +350,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -363,9 +364,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -377,7 +375,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -521,6 +518,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -534,9 +532,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -548,7 +543,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1025,22 +1019,21 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "height": 48,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
                                     "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
                                   },
                                   {},
                                   false,
@@ -1077,16 +1070,21 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     [
                                       {},
                                       {
-                                        "color": "#FFFFFF",
+                                        "color": "#0E0F13",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 20,
+                                        "lineHeight": undefined,
                                       },
-                                      {
-                                        "alignSelf": "center",
-                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -1209,6 +1207,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -1222,9 +1221,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -1236,7 +1232,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1380,6 +1375,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1393,9 +1389,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1407,7 +1400,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1884,22 +1876,21 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "height": 48,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
                                     "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
                                   },
                                   {},
                                   false,
@@ -1936,16 +1927,21 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     [
                                       {},
                                       {
-                                        "color": "#FFFFFF",
+                                        "color": "#0E0F13",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 20,
+                                        "lineHeight": undefined,
                                       },
-                                      {
-                                        "alignSelf": "center",
-                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -1974,7 +1970,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               accessibilityRole="button"
                               accessibilityState={
                                 {
-                                  "busy": undefined,
+                                  "busy": false,
                                   "checked": undefined,
                                   "disabled": false,
                                   "expanded": undefined,
@@ -2009,7 +2005,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
-                              onTouchEnd={[Function]}
                               style={
                                 {
                                   "alignSelf": "flex-start",
@@ -2021,55 +2016,77 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   [
                                     {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
                                       "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                      "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
                                     {
-                                      "columnGap": 8,
+                                      "paddingHorizontal": 0,
+                                    },
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderColor": "#0B3EE3",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": undefined,
                                     },
                                     {},
-                                    {
-                                      "columnGap": 8,
-                                    },
                                     false,
+                                    {},
                                   ]
                                 }
                               >
-                                <Text
-                                  accessibilityElementsHidden={true}
-                                  accessible={false}
-                                  allowFontScaling={true}
-                                  ellipsizeMode="tail"
-                                  importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
+                                <View
                                   style={
                                     [
-                                      {},
                                       {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 20,
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
                                       },
-                                      [
-                                        {
-                                          "color": undefined,
-                                        },
-                                        {
-                                          "textAlign": "auto",
-                                        },
-                                      ],
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
                                     ]
                                   }
                                 >
-                                  CTA_2
-                                </Text>
+                                  <Text
+                                    accessibilityElementsHidden={true}
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    ellipsizeMode="tail"
+                                    importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 20,
+                                        },
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": undefined,
+                                          },
+                                        ],
+                                      ]
+                                    }
+                                  >
+                                    CTA_2
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -2187,6 +2204,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -2200,9 +2218,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -2214,7 +2229,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2358,6 +2372,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -2371,9 +2386,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -2385,7 +2397,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

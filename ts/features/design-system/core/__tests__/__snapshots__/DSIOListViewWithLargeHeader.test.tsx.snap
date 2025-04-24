@@ -1547,6 +1547,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -1560,9 +1561,6 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -1574,7 +1572,6 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1720,6 +1717,7 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1733,9 +1731,6 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1747,7 +1742,6 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
