@@ -745,7 +745,7 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                       }
                                     >
                                       <View
-                                        accessibilityLabel="Come si accede? Abbiamo preparato una guida per aiutarti passo passo. Leggi come fare"
+                                        accessibilityLabel="Need help logging in? Discover our step-by-step guide to get started easily. Read how"
                                         accessibilityRole="link"
                                         accessible={true}
                                         style={
@@ -774,7 +774,7 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Come si accede?
+                                          Need help logging in?
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -794,11 +794,11 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Abbiamo preparato una guida per aiutarti passo passo.
+                                          Discover our step-by-step guide to get started easily.
                                         </Text>
                                         <View
                                           accessibilityElementsHidden={true}
-                                          accessibilityLabel="Leggi come fare"
+                                          accessibilityLabel="Read how"
                                           accessibilityRole="button"
                                           accessibilityState={
                                             {
@@ -861,7 +861,7 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                               ]
                                             }
                                           >
-                                            Leggi come fare
+                                            Read how
                                           </Text>
                                         </View>
                                       </View>
