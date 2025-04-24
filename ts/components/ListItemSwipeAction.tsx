@@ -5,7 +5,7 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { useRef } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, useWindowDimensions, View } from "react-native";
 import {
   GestureEvent,
   GestureHandlerRootView,
@@ -72,8 +72,11 @@ const ListItemSwipeAction = ({
   alertProps,
   accessibilityLabel = ""
 }: ListItemSwipeActionProps) => {
+  const hapticTriggered = useRef(false);
   const translateX = useSharedValue(0);
   const { theme } = useIOThemeContext();
+  const { width } = useWindowDimensions();
+  const thresholds = [-width * 0.9, -width * 0.2, 0];
   const backgroundColor = IOColors[theme["appBackground-primary"]];
 
   const showAlertAction = () =>
@@ -96,22 +99,16 @@ const ListItemSwipeAction = ({
     ]);
 
   const backgroundStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(
-      translateX.value,
-      [-500, -100, 0],
-      [
-        IOColors[theme["interactiveElem-default"]],
-        IOColors[theme["interactiveElem-default"]],
-        backgroundColor
-      ]
-    )
+    backgroundColor: interpolateColor(translateX.value, thresholds, [
+      IOColors[theme["interactiveElem-default"]],
+      IOColors[theme["interactiveElem-default"]],
+      backgroundColor
+    ])
   }));
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }]
   }));
-
-  const hapticTriggered = useRef(false);
 
   const handleGestureEvent = (
     event: GestureEvent<PanGestureHandlerEventPayload>
