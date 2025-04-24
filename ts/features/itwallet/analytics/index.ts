@@ -869,7 +869,7 @@ export const updateITWStatusAndIDProperties = (state: GlobalState) => {
       value: "valid"
     });
   } catch (e) {
-    itwSendExceptionToSentry(e, "Error while updating properties");
+    itwSendExceptionToSentry(e, "updateITWStatusAndIDProperties");
   }
 };
 
@@ -898,7 +898,7 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
       value: "not_active"
     });
   } catch (error) {
-    itwSendExceptionToSentry(error, "Error while updating properties");
+    itwSendExceptionToSentry(error, "updatePropertiesWalletRevoked");
   }
 };
 

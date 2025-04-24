@@ -20,6 +20,7 @@ import {
   CREDENTIALS_MAP,
   trackItwStatusCredentialAttestationFailure
 } from "../../analytics";
+import { itwSendExceptionToSentry } from "../../common/utils/itwSentryUtils";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
@@ -76,34 +77,38 @@ export function* updateCredentialStatusAttestationSaga(
  * This saga is responsible to check the status attestation for each credential in the wallet.
  */
 export function* checkCredentialsStatusAttestation() {
-  const state: GlobalState = yield* select();
+  try {
+    const state: GlobalState = yield* select();
 
-  const isWalletValid = yield* select(itwLifecycleIsValidSelector);
+    const isWalletValid = yield* select(itwLifecycleIsValidSelector);
 
-  // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
-  if (!isWalletValid) {
-    return;
+    // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
+    if (!isWalletValid) {
+      return;
+    }
+
+    const { credentials } = yield* select(itwCredentialsSelector);
+
+    const credentialsToCheck = pipe(
+      credentials,
+      RA.filterMap(O.filter(shouldRequestStatusAttestation))
+    );
+
+    if (credentialsToCheck.length === 0) {
+      return;
+    }
+
+    const updatedCredentials = yield* all(
+      credentialsToCheck.map(credential =>
+        call(updateCredentialStatusAttestationSaga, credential)
+      )
+    );
+
+    yield* put(itwCredentialsStore(updatedCredentials));
+
+    void updateMixpanelProfileProperties(state);
+    void updateMixpanelSuperProperties(state);
+  } catch (e) {
+    itwSendExceptionToSentry(e, "checkCredentialsStatusAttestation");
   }
-
-  const { credentials } = yield* select(itwCredentialsSelector);
-
-  const credentialsToCheck = pipe(
-    credentials,
-    RA.filterMap(O.filter(shouldRequestStatusAttestation))
-  );
-
-  if (credentialsToCheck.length === 0) {
-    return;
-  }
-
-  const updatedCredentials = yield* all(
-    credentialsToCheck.map(credential =>
-      call(updateCredentialStatusAttestationSaga, credential)
-    )
-  );
-
-  yield* put(itwCredentialsStore(updatedCredentials));
-
-  void updateMixpanelProfileProperties(state);
-  void updateMixpanelSuperProperties(state);
 }

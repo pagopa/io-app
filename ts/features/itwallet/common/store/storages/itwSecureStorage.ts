@@ -8,7 +8,7 @@ export default function itwCreateSecureStorage(): Storage {
       try {
         return await SecureStorage.get(key);
       } catch (e) {
-        itwSendExceptionToSentry(e, "getItem", true);
+        itwSendExceptionToSentry(e, "itwSecureStorageGetItem", true);
         return undefined;
       }
     },
@@ -17,7 +17,7 @@ export default function itwCreateSecureStorage(): Storage {
       try {
         await SecureStorage.put(key, value);
       } catch (e) {
-        itwSendExceptionToSentry(e, "setItem", true);
+        itwSendExceptionToSentry(e, "itwSecureStorageSetItem", true);
       }
     },
 
@@ -25,7 +25,7 @@ export default function itwCreateSecureStorage(): Storage {
       try {
         await SecureStorage.remove(key);
       } catch (e) {
-        itwSendExceptionToSentry(e, "removeItem", true);
+        itwSendExceptionToSentry(e, "itwSecureStorageRemoveItem", true);
       }
     }
   };
