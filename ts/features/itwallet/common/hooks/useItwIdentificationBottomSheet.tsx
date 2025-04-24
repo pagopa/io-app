@@ -1,8 +1,10 @@
 import {
-  FooterActions,
+  ButtonLink,
+  ButtonSolid,
   H6,
   IOIcons,
   IOStyles,
+  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
@@ -41,35 +43,16 @@ export const useItwIdentificationBottomSheet = ({
   imageSrc,
   footerButtons = []
 }: ItwIdentificationBottomSheetProps) => {
-  const BottomSheetBody = () => (
-    <View style={IOStyles.flex}>
-      {content.map((item, index) => (
-        <VStack key={`${index}_${item.title}`} space={8}>
-          {item.title && <H6>{item.title}</H6>}
-          <IOMarkdown content={item.body} />
-          {imageSrc && <AnimatedImage source={imageSrc} style={styles.image} />}
-        </VStack>
-      ))}
-    </View>
-  );
-
   // Function to convert footerButtons array to FooterActions format
-  const getFooterActions = () => {
+  const Footer = () => {
     // If there's only one button
     if (footerButtons.length === 1) {
       const button = footerButtons[0];
       return (
-        <FooterActions
-          excludeSafeAreaMargins={true}
-          transparent={true}
-          actions={{
-            type: "SingleButton",
-            primary: {
-              label: button.label,
-              onPress: button.onPress,
-              icon: button.icon
-            }
-          }}
+        <ButtonSolid
+          label={button.label}
+          onPress={button.onPress}
+          icon={button.icon}
         />
       );
     }
@@ -81,33 +64,46 @@ export const useItwIdentificationBottomSheet = ({
       const secondaryButton = footerButtons[1];
 
       return (
-        <FooterActions
-          excludeSafeAreaMargins={true}
-          transparent={true}
-          actions={{
-            type: "TwoButtons",
-            primary: {
-              label: primaryButton.label,
-              onPress: primaryButton.onPress,
-              icon: primaryButton.icon
-            },
-            secondary: {
-              label: secondaryButton.label,
-              onPress: secondaryButton.onPress,
-              icon: secondaryButton.icon
-            }
-          }}
-        />
+        <>
+          <VStack space={8}>
+            <ButtonSolid
+              label={primaryButton.label}
+              onPress={primaryButton.onPress}
+              icon={primaryButton.icon}
+            />
+            <View style={{ alignSelf: "center" }}>
+              <ButtonLink
+                label={secondaryButton.label}
+                onPress={secondaryButton.onPress}
+                icon={secondaryButton.icon}
+              />
+            </View>
+          </VStack>
+        </>
       );
     }
 
     return undefined;
   };
 
+  const BottomSheetBody = () => (
+    <View style={IOStyles.flex}>
+      {content.map((item, index) => (
+        <VStack key={`${index}_${item.title}`} space={8}>
+          {item.title && <H6>{item.title}</H6>}
+          <IOMarkdown content={item.body} />
+          {imageSrc && <AnimatedImage source={imageSrc} style={styles.image} />}
+        </VStack>
+      ))}
+      <VSpacer size={24} />
+      <Footer />
+      <VSpacer size={12} />
+    </View>
+  );
+
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title,
-    component: <BottomSheetBody />,
-    footer: getFooterActions()
+    component: <BottomSheetBody />
   });
 
   return {
