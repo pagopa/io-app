@@ -2,11 +2,11 @@ import { createStore } from "redux";
 import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
-import { OfflineGuardType, useOfflineGuard } from "../useOfflineToastGuard.ts";
 import ROUTES from "../../navigation/routes";
 import * as ingressSelectors from "../../features/ingress/store/selectors";
 import I18n from "../../i18n";
 import { OfflineAccessReasonEnum } from "../../features/ingress/store/reducer";
+import { useOfflineToastGuard } from "../useOfflineToastGuard.ts";
 
 const mockNavigate = jest.fn();
 
@@ -35,11 +35,10 @@ jest.mock("@pagopa/io-app-design-system", () => ({
  */
 const renderWithConnectivityGuard = (
   fn: (...args: Array<any>) => any,
-  args: Array<any> = [],
-  type: OfflineGuardType = "screen"
+  args: Array<any> = []
 ) => {
   const TestComponent = () => {
-    const wrappedFunction = useOfflineGuard(fn, { type });
+    const wrappedFunction = useOfflineToastGuard(fn);
     // Call the wrapped function inside the component to ensure it's called with the hook's latest value
     void wrappedFunction(...args);
     return null;
@@ -73,20 +72,6 @@ describe("useConnectivityGuard", () => {
     expect(mockFn).toHaveBeenCalledWith("test", 123);
     // Navigation should not be called
     expect(mockNavigate).not.toHaveBeenCalled();
-  });
-
-  it("should navigate to NO_CONNECTION screen when not connected", () => {
-    jest
-      .spyOn(ingressSelectors, "offlineAccessReasonSelector")
-      .mockReturnValue(OfflineAccessReasonEnum.DEVICE_OFFLINE);
-
-    const mockFn = jest.fn();
-    renderWithConnectivityGuard(mockFn, ["test", 123]);
-
-    // Function should not be called
-    expect(mockFn).not.toHaveBeenCalled();
-    // Should navigate to NO_CONNECTIVITY screen
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.OFFLINE_FAILURE);
   });
 
   it("should handle async functions when connected", async () => {
@@ -126,12 +111,10 @@ describe("useConnectivityGuard", () => {
       .mockReturnValue(OfflineAccessReasonEnum.DEVICE_OFFLINE);
 
     const mockFn = jest.fn();
-    renderWithConnectivityGuard(mockFn, ["test", 123], "toast");
+    renderWithConnectivityGuard(mockFn, ["test", 123]);
 
     // Function should not be called
     expect(mockFn).not.toHaveBeenCalled();
-    // Should not navigate to NO_CONNECTIVITY screen
-    expect(mockNavigate).not.toHaveBeenCalledWith(ROUTES.OFFLINE_FAILURE);
     // Should show error toast
     expect(mockToast).toHaveBeenCalledWith(I18n.t("global.offline.toast"));
   });
