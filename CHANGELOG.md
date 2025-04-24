@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0-rc.1](https://github.com/pagopa/io-app/compare/3.4.0-rc.0...3.4.0-rc.1) (2025-04-23)
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-357](https://pagopa.atlassian.net/browse/IOAPPX-357)] Upgrade `@gorhom/bottom-sheet` library ([#6062](https://github.com/pagopa/io-app/issues/6062)) ([6c288f7](https://github.com/pagopa/io-app/commit/6c288f7e5e5c85a0fcbe0c1ad30b062b4f707fb3))
+
 ## [3.4.0-rc.0](https://github.com/pagopa/io-app/compare/3.3.0-rc.8...3.4.0-rc.0) (2025-04-23)
 
 
