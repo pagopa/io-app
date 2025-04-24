@@ -1,7 +1,7 @@
 import { IOToast, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import { View } from "react-native";
-import { HighlightBanner } from "../../common/components/HighlightBanner";
+import { ItwHighlightBanner } from "../../common/components/ItwHighlightBanner";
 
 export const ItwBannerSection = () => {
   const [remountKey, setRemountKey] = useState(0);
@@ -23,12 +23,12 @@ export const ItwBannerSection = () => {
         endElement={{
           type: "buttonLink",
           componentProps: {
-            label: "Reload",
+            label: "Remount",
             onPress: handleRemount
           }
         }}
       />
-      <HighlightBanner
+      <ItwHighlightBanner
         key={`large-${remountKey}`}
         title="IT-Wallet per i tuoi documenti"
         description="L'unico Wallet di Stato: **pubblico, sicuro e gratuito.** Garantito dallo Stato, accessibile solo a te."
@@ -36,7 +36,7 @@ export const ItwBannerSection = () => {
         onPress={() => IOToast.info("Pressed")}
       />
       <VSpacer size={16} />
-      <HighlightBanner
+      <ItwHighlightBanner
         key={`small-${remountKey}`}
         title="IT-Wallet per i tuoi documenti"
         description="L'unico Wallet di Stato: **pubblico, sicuro e gratuito.** Garantito dallo Stato, accessibile solo a te."

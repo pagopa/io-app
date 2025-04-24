@@ -35,7 +35,7 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
 
-type HighlightBannerProps = {
+type Props = {
   title: string;
   description: string;
   action: string;
@@ -48,7 +48,7 @@ type HighlightBannerProps = {
   size?: "small" | "large";
 };
 
-export const HighlightBanner = (props: WithTestID<HighlightBannerProps>) => {
+export const ItwHighlightBanner = (props: WithTestID<Props>) => {
   const { testID, onPress, size = "large" } = props;
 
   const { progress, onPressIn, onPressOut, scaleAnimatedStyle } =
@@ -80,8 +80,8 @@ export const HighlightBanner = (props: WithTestID<HighlightBannerProps>) => {
         <Animated.View
           style={[styles.container, scaleAnimatedStyle, shadowAnimatedStyle]}
         >
-          <BannerGradient />
-          <BannerContent {...props} />
+          <BackgroundGradient />
+          <StaticContent {...props} />
         </Animated.View>
       </Pressable>
     );
@@ -94,20 +94,21 @@ export const HighlightBanner = (props: WithTestID<HighlightBannerProps>) => {
       // A11y related props
       accessible={false}
     >
-      <BannerGradient />
-      <BannerContent {...props} />
+      <BackgroundGradient />
+      <StaticContent {...props} />
     </View>
   );
 };
 
-const BannerGradient = () => {
+const BackgroundGradient = () => {
   const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
 
   // Animation setup
   const progress = useSharedValue(0);
+  const animationRange = useMemo(() => width * 0.2, [width]);
 
   useEffect(() => {
-    // Start the animation only when width is known and animation isn't already running
+    // Start the animation only when width is known
     if (width > 0) {
       // eslint-disable-next-line functional/immutable-data
       progress.value = withRepeat(
@@ -126,7 +127,7 @@ const BannerGradient = () => {
     const startX = interpolate(
       progress.value,
       [0, 1],
-      [-width * 0.1, width * 0.3], // Range of motion for start point X
+      [-animationRange, animationRange], // Range of motion for start point X
       Extrapolation.CLAMP
     );
     return vec(startX, height); // Keep Y fixed
@@ -140,7 +141,7 @@ const BannerGradient = () => {
     const endX = interpolate(
       progress.value,
       [0, 1],
-      [width * 0.9, width * 1.3], // Range of motion for end point X
+      [width - animationRange, width + animationRange], // Range of motion for end point X
       Extrapolation.CLAMP
     );
     return vec(endX, 0); // Keep Y fixed
@@ -162,7 +163,7 @@ const BannerGradient = () => {
           // end={vec(width, 0)}
           start={animatedStart}
           end={animatedEnd}
-          mode="repeat"
+          mode="clamp"
           colors={[
             "#0B3EE3",
             "#436FFF",
@@ -177,7 +178,7 @@ const BannerGradient = () => {
   );
 };
 
-const BannerContent = (props: HighlightBannerProps) => {
+const StaticContent = (props: Props) => {
   const {
     title,
     description,
