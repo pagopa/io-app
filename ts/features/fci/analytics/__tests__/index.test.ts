@@ -15,10 +15,6 @@ import {
   fciPollFilledDocument
 } from "../../store/actions";
 
-jest.mock("react-native-i18n", () => ({
-  t: (key: string) => key
-}));
-
 describe("index", () => {
   describe("trackFciAction", () => {
     const environment = "test";

@@ -45,6 +45,7 @@ import { getPin } from "../../../../utils/keychain";
 import { dismissSupport } from "../../../../utils/supportAssistance";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
+import { isDevEnv } from "../../../../utils/environment";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
@@ -196,6 +197,7 @@ const handleRequestError = (
       () => ({
         description: "max retries reached"
       }),
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       response =>
         pipe(
           response,
@@ -237,3 +239,14 @@ type FastLoginTokenRefreshError = {
   status?: number;
   description: string;
 };
+
+export const testableTokenRefreshSaga = isDevEnv
+  ? {
+      handleRefreshSessionToken,
+      doRefreshTokenSaga,
+      handleRequestError,
+      types: {
+        RequestStateType: {} as RequestStateType
+      }
+    }
+  : undefined;

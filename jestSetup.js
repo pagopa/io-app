@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-/* globals jest, NativeModules, require, global */
+/* globals jest, require, global */
 /**
  * Set up of the testing environment
  */
@@ -14,6 +14,7 @@ import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 
+jest.mock("react-native-i18n");
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("@react-native-community/push-notification-ios", () => jest.fn());
@@ -26,7 +27,7 @@ jest.mock("react-native-reanimated", () => {
 
   // The mock misses the `addWhitelistedUIProps` implementation
   // So we override it with a no-op
-  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function, prettier/prettier
+  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function
   Reanimated.default.addWhitelistedUIProps = () => {};
 
   return {
