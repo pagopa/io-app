@@ -4,7 +4,7 @@
  */
 import {
   Divider,
-  IOStyles,
+  IOVisualCostants,
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -73,7 +73,9 @@ const WalletOnboardingPaymentMethodsList = ({
     <FlatList
       scrollEnabled={false}
       removeClippedSubviews={false}
-      contentContainerStyle={IOStyles.horizontalContentPadding}
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
       data={paymentMethods}
       keyExtractor={item => item.id}
       ListFooterComponent={<ListFooter />}

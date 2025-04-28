@@ -67,14 +67,12 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       style={
         [
           {
+            "alignItems": "center",
+            "justifyContent": "center",
+          },
+          {
             "height": 24,
             "width": 24,
-          },
-          {
-            "alignItems": "center",
-          },
-          {
-            "justifyContent": "center",
           },
           false,
         ]
@@ -92,6 +90,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         }
         bbHeight={36}
         bbWidth={36}
+        color="#0B3EE3"
         focusable={false}
         height={36}
         importantForAccessibility="no-hide-descendants"
@@ -105,9 +104,6 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
               "borderWidth": 0,
             },
             {
-              "color": "#0B3EE3",
-            },
-            {
               "flex": 0,
               "height": 36,
               "width": 36,
@@ -119,7 +115,6 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         width={36}
       >
         <RNSVGGroup
-          color="#0B3EE3"
           fill={
             {
               "payload": 4278190080,
@@ -206,14 +201,12 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       style={
         [
           {
+            "alignItems": "center",
+            "justifyContent": "center",
+          },
+          {
             "height": 24,
             "width": 24,
-          },
-          {
-            "alignItems": "center",
-          },
-          {
-            "justifyContent": "center",
           },
           false,
         ]
@@ -231,6 +224,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         }
         bbHeight={36}
         bbWidth={36}
+        color="#0B3EE3"
         focusable={false}
         height={36}
         importantForAccessibility="no-hide-descendants"
@@ -244,9 +238,6 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
               "borderWidth": 0,
             },
             {
-              "color": "#0B3EE3",
-            },
-            {
               "flex": 0,
               "height": 36,
               "width": 36,
@@ -258,7 +249,6 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         width={36}
       >
         <RNSVGGroup
-          color="#0B3EE3"
           fill={
             {
               "payload": 4278190080,
@@ -293,28 +283,33 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       }
     }
   />
-  <Text
-    allowFontScaling={true}
-    dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.5}
+  <View
     style={
-      [
-        {},
-        {
-          "color": "#0E0F13",
-          "fontFamily": "Titillio",
-          "fontSize": 16,
-          "fontStyle": "normal",
-          "fontWeight": "600",
-          "lineHeight": 24,
-        },
-        {
-          "paddingHorizontal": 24,
-        },
-      ]
+      {
+        "paddingHorizontal": 24,
+      }
     }
   >
-    Pagina 1 di 2
-  </Text>
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="headline"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+        ]
+      }
+    >
+      Pagina 1 di 2
+    </Text>
+  </View>
 </View>
 `;

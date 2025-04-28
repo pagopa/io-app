@@ -313,6 +313,7 @@ export const MessageDetailsStickyFooter = ({
       : 0);
 
   const isPaymentLoading = paymentButtonStatus === "loading";
+
   return (
     <View style={[IOStyles.footer, styles.container, { paddingBottom }]}>
       {foldFooterData(

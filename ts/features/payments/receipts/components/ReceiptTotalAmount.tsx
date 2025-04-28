@@ -1,10 +1,4 @@
-import {
-  H3,
-  H6,
-  IOSkeleton,
-  IOStyles,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+import { H3, H6, IOSkeleton, useIOTheme } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { formatAmountText } from "../utils";
@@ -19,7 +13,12 @@ export const ReceiptTotalAmount = ({ totalAmount, loading }: Props) => {
 
   return (
     <View
-      style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter, IOStyles.flex]}
+      style={{
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+      }}
     >
       <H6 color={theme["textBody-tertiary"]}>
         {I18n.t("transaction.details.totalAmount")}

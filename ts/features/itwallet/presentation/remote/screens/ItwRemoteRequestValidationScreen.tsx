@@ -1,7 +1,6 @@
-import { Body, IOStyles } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
-import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import I18n from "../../../../../i18n.ts";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
@@ -54,13 +53,13 @@ const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
         "features.itWallet.presentation.remote.loadingScreen.title"
       )}
     >
-      <View style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}>
+      <ContentWrapper style={{ alignItems: "center" }}>
         <Body>
           {I18n.t(
             "features.itWallet.presentation.remote.loadingScreen.subtitle"
           )}
         </Body>
-      </View>
+      </ContentWrapper>
     </LoadingScreenContent>
   );
 };

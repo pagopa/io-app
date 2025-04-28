@@ -3,7 +3,6 @@ import {
   HSpacer,
   IOColors,
   IOSpacingScale,
-  IOStyles,
   Icon,
   BodySmall,
   useIOTheme
@@ -85,7 +84,7 @@ export const NotificationPreviewSample = ({
     >
       <Icon size={24} name="productIOAppBlueBg" />
       <HSpacer />
-      <View style={IOStyles.flex}>
+      <View style={{ flex: 1 }}>
         <H6>{I18n.t(titleKey)}</H6>
         <BodySmall weight="Regular">{I18n.t(messageKey)}</BodySmall>
       </View>
