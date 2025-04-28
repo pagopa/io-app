@@ -1469,6 +1469,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     align="xMidYMid"
                                     bbHeight={30}
                                     bbWidth={30}
+                                    color="#FFFFFF"
                                     focusable={false}
                                     height={30}
                                     importantForAccessibility="no-hide-descendants"
@@ -1482,9 +1483,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#FFFFFF",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 30,
                                           "width": 30,
@@ -1496,7 +1494,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     width={30}
                                   >
                                     <RNSVGGroup
-                                      color="#FFFFFF"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1653,6 +1650,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                   align="xMidYMid"
                                   bbHeight={30}
                                   bbWidth={30}
+                                  color="#FFFFFF"
                                   focusable={false}
                                   height={30}
                                   importantForAccessibility="no-hide-descendants"
@@ -1666,9 +1664,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#FFFFFF",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 30,
                                         "width": 30,
@@ -1680,7 +1675,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                   width={30}
                                 >
                                   <RNSVGGroup
-                                    color="#FFFFFF"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1929,6 +1923,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           align="xMidYMid"
                                           bbHeight={24}
                                           bbWidth={24}
+                                          color="#0B3EE3"
                                           focusable={false}
                                           height={24}
                                           importantForAccessibility="no-hide-descendants"
@@ -1942,9 +1937,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 24,
                                                 "width": 24,
@@ -1956,7 +1948,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           width={24}
                                         >
                                           <RNSVGGroup
-                                            color="#0B3EE3"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -2618,6 +2609,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           align="xMidYMid"
                                           bbHeight={36}
                                           bbWidth={36}
+                                          color="#0B3EE3"
                                           focusable={false}
                                           height={36}
                                           importantForAccessibility="no-hide-descendants"
@@ -2631,9 +2623,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 36,
                                                 "width": 36,
@@ -2645,7 +2634,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           width={36}
                                         >
                                           <RNSVGGroup
-                                            color="#0B3EE3"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -2788,6 +2776,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           align="xMidYMid"
                                           bbHeight={36}
                                           bbWidth={36}
+                                          color="#0B3EE3"
                                           focusable={false}
                                           height={36}
                                           importantForAccessibility="no-hide-descendants"
@@ -2801,9 +2790,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 36,
                                                 "width": 36,
@@ -2815,7 +2801,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           width={36}
                                         >
                                           <RNSVGGroup
-                                            color="#0B3EE3"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -2958,6 +2943,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           align="xMidYMid"
                                           bbHeight={36}
                                           bbWidth={36}
+                                          color="#0B3EE3"
                                           focusable={false}
                                           height={36}
                                           importantForAccessibility="no-hide-descendants"
@@ -2971,9 +2957,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 36,
                                                 "width": 36,
@@ -2985,7 +2968,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           width={36}
                                         >
                                           <RNSVGGroup
-                                            color="#0B3EE3"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -3276,14 +3258,12 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -3301,6 +3281,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -3314,9 +3295,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -3328,7 +3306,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3394,14 +3371,12 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -3419,6 +3394,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -3432,9 +3408,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -3446,7 +3419,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,

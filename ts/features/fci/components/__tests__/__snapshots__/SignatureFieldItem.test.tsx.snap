@@ -87,15 +87,11 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         >
           <View
             style={
-              [
-                {
-                  "flexDirection": "row",
-                },
-                {
-                  "columnGap": 18,
-                  "flexShrink": 1,
-                },
-              ]
+              {
+                "columnGap": 18,
+                "flexDirection": "row",
+                "flexShrink": 1,
+              }
             }
           >
             <Text

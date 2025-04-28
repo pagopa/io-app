@@ -532,6 +532,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                 align="xMidYMid"
                                 bbHeight={36}
                                 bbWidth={36}
+                                color="#BBC2D6"
                                 focusable={false}
                                 height={36}
                                 importantForAccessibility="no-hide-descendants"
@@ -545,9 +546,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#BBC2D6",
-                                    },
-                                    {
                                       "flex": 0,
                                       "height": 36,
                                       "width": 36,
@@ -559,7 +557,6 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                 width={36}
                               >
                                 <RNSVGGroup
-                                  color="#BBC2D6"
                                   fill={
                                     {
                                       "payload": 4278190080,
