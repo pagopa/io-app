@@ -3,8 +3,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { View } from "react-native";
 import IOMarkdown from "../../../../../components/IOMarkdown";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { SpidIdp } from "../../../../../utils/idps";
 import { StandardLoginRequestInfo } from "../store/types";
 
@@ -68,7 +68,7 @@ export const usePosteIDApp2AppEducational = ({
     presentedRef.current = true;
   }, []);
 
-  const { bottomSheet, present } = useIOBottomSheetAutoresizableModal({
+  const { bottomSheet, present } = useIOBottomSheetModal({
     title: I18n.t("authentication.idp_login.poste_id.bottom_sheet.title"),
     component: bottomSheetContent,
     onDismiss: handleOnDismiss

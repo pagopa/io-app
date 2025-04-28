@@ -1,6 +1,7 @@
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import IdpSelectionScreen from "../IdpSelectionScreen";
+import I18n from "../../../../../../i18n";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
@@ -60,6 +61,13 @@ describe("IdpSelectionScreen", () => {
     const { getByTestId } = renderComponent();
     const test = getByTestId("idps-grid");
     expect(test).toBeTruthy();
+  });
+
+  it("should show banner content", () => {
+    const { getByText } = renderComponent();
+    expect(getByText(I18n.t("login.help_banner_title"))).toBeTruthy();
+    expect(getByText(I18n.t("login.help_banner_content"))).toBeTruthy();
+    expect(getByText(I18n.t("login.help_banner_action"))).toBeTruthy();
   });
 
   it("should dispatch loadIdps.request on mount", () => {

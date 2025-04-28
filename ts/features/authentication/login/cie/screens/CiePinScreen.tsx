@@ -36,13 +36,15 @@ import {
   LightModalContext
 } from "../../../../../components/ui/LightModal";
 import IOMarkdown from "../../../../../components/IOMarkdown";
-import { pinPukHelpUrl } from "../../../../../config";
+import {
+  helpCenterHowToLoginWithEicUrl,
+  pinPukHelpUrl
+} from "../../../../../config";
 import {
   isCieLoginUatEnabledSelector,
   isNfcEnabledSelector
 } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
-import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
@@ -52,7 +54,7 @@ import { nfcIsEnabled } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { getIdpLoginUri } from "../../../common/utils/login";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
@@ -108,7 +110,7 @@ const CiePinScreen = () => {
   );
   const isEnabled = useIOSelector(isNfcEnabledSelector);
   const isNfcEnabled = pot.getOrElse(isEnabled, false);
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
+  const { present, bottomSheet } = useIOBottomSheetModal({
     component: (
       <View>
         <IOMarkdown content={I18n.t("bottomSheets.ciePin.content")} />
@@ -190,9 +192,6 @@ const CiePinScreen = () => {
     }, [])
   );
 
-  const isFastLoginFeatureFlagEnabled = useIOSelector(
-    isFastLoginEnabledSelector
-  );
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
 
   useHeaderSecondLevel({
@@ -256,12 +255,12 @@ const CiePinScreen = () => {
               <Banner
                 viewRef={bannerRef}
                 color="neutral"
-                content={
-                  isFastLoginFeatureFlagEnabled
-                    ? I18n.t("login.expiration_info_FL")
-                    : I18n.t("login.expiration_info")
-                }
-                pictogramName="passcode"
+                title={I18n.t("login.help_banner_title")}
+                content={I18n.t("login.help_banner_content")}
+                accessibilityRole="link"
+                action={I18n.t("login.help_banner_action")}
+                onPress={() => openWebUrl(helpCenterHowToLoginWithEicUrl)}
+                pictogramName="help"
               />
             </View>
           </ContentWrapper>

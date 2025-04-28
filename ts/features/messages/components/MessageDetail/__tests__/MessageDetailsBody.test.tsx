@@ -17,9 +17,6 @@ jest.mock("../../../../../components/IOMarkdown");
 jest.mock("rn-qr-generator", () => ({}));
 jest.mock("react-native-screenshot-prevent", () => ({}));
 
-jest.mock("react-native-i18n", () => ({
-  t: (key: string) => key
-}));
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: () => "2.0.0.0",
   getVersion: () => "2.0.0.0"

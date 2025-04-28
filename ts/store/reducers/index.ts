@@ -203,6 +203,10 @@ export function createRootReducer(
 
               _persist: state.authentication._persist
             },
+            // cie status must be kept
+            cie: {
+              ...state.cie
+            },
             // backend status must be kept
             backendInfo: state.backendInfo,
             remoteConfig: state.remoteConfig,
@@ -223,6 +227,10 @@ export function createRootReducer(
               _persist: state.entities._persist
             },
             features: {
+              // connectivityStatus must be kept
+              connectivityStatus: {
+                ...state.features.connectivityStatus
+              },
               appFeedback: {
                 ...appFeedbackInitialState,
                 _persist: state.features.appFeedback._persist
