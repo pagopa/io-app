@@ -14,7 +14,7 @@ import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
 import IOMarkdown from "../components/IOMarkdown";
-import { useIOBottomSheetAutoresizableModal } from "../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
 import { usePrevious } from "../utils/hooks/usePrevious";
 
 const statusVariantMap: Record<LevelEnum, AlertEdgeToEdgeProps["variant"]> = {
@@ -32,8 +32,6 @@ type AlertActionProps =
       action?: never;
       onPress?: never;
     };
-const markdownContent =
-  "Quando il tuo dispositivo è offline, alcuni servizi dell’app potrebbero non funzionare. \n\n Documenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete. \n\n Collegati a internet e ricarica l’app per continuare ad usare tutti i servizi di IO.";
 
 type AlertProps = {
   alertProps?: AlertEdgeToEdgeProps;
@@ -45,9 +43,11 @@ export const useStatusAlertProps = (
   const [connectivityAlert, setConnectivityAlert] = useState<
     AlertEdgeToEdgeProps | undefined
   >(undefined);
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
-    title: "Nessuna connessione",
-    component: <IOMarkdown content={markdownContent} />
+  const { present, bottomSheet } = useIOBottomSheetModal({
+    title: I18n.t("global.offline.bottomSheet.title"),
+    component: (
+      <IOMarkdown content={I18n.t("global.offline.bottomSheet.content")} />
+    )
   });
 
   const currentStatusMessage = useIOSelector(
@@ -64,15 +64,15 @@ export const useStatusAlertProps = (
     if (isConnected === false) {
       setConnectivityAlert({
         variant: "info",
-        content: "Nessuna connessione.",
-        action: "Cosa posso fare?",
+        content: I18n.t("global.offline.statusMessage.message"),
+        action: I18n.t("global.offline.statusMessage.action"),
         onPress: present
       });
     }
     if (prevIsConnected === false && isConnected === true) {
       setConnectivityAlert({
-        variant: "warning",
-        content: "Connessione ripristinata."
+        variant: "success",
+        content: I18n.t("global.offline.connectionRestored")
       });
 
       setTimeout(() => {
