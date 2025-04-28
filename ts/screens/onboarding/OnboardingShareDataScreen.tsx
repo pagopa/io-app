@@ -1,13 +1,8 @@
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import { ReactElement, useCallback, useMemo } from "react";
-import { SafeAreaView, View } from "react-native";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import I18n from "../../i18n";
-import { setMixpanelEnabled } from "../../store/actions/mixpanel";
-import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../features/settings/common/store/selectors";
-import { getFlowType } from "../../utils/analytics";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { SafeAreaView } from "react-native";
+import { IOScrollViewActions } from "../../components/ui/IOScrollView";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { trackMixpanelScreen } from "../../features/settings/common/analytics";
 import {
   TrackingInfo,
@@ -15,11 +10,15 @@ import {
   trackMixpanelDeclined,
   trackMixpanelSetEnabled
 } from "../../features/settings/common/analytics/mixpanel/mixpanelAnalytics";
-import { useConfirmOptOutBottomSheet } from "../../features/settings/privacy/shared/hooks/useConfirmOptOutBottomSheet";
-import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
-import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
-import { IOScrollViewActions } from "../../components/ui/IOScrollView";
+import { isProfileFirstOnBoardingSelector } from "../../features/settings/common/store/selectors";
 import { ShareDataComponent } from "../../features/settings/privacy/shared/components/ShareDataComponent";
+import { useConfirmOptOutBottomSheet } from "../../features/settings/privacy/shared/hooks/useConfirmOptOutBottomSheet";
+import I18n from "../../i18n";
+import { setMixpanelEnabled } from "../../store/actions/mixpanel";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
+import { getFlowType } from "../../utils/analytics";
+import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 
 const OnboardingShareDataScreen = (): ReactElement => {
   const dispatch = useIODispatch();
@@ -87,8 +86,8 @@ const OnboardingShareDataScreen = (): ReactElement => {
       description={I18n.t("profile.main.privacy.shareData.screen.description")}
       actions={actions}
     >
-      <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.horizontalContentPadding, { flexGrow: 1 }]}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <ContentWrapper style={{ flexGrow: 1 }}>
           <ShareDataComponent trackAction={handleTrackingAction} />
           <VSpacer size={32} />
           <Banner
@@ -101,7 +100,7 @@ const OnboardingShareDataScreen = (): ReactElement => {
             color="neutral"
             pictogramName="settings"
           />
-        </View>
+        </ContentWrapper>
         <VSpacer size={16} />
         {bottomSheet}
       </SafeAreaView>

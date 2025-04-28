@@ -1,4 +1,4 @@
-import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
+import { ListItemHeader } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
@@ -54,7 +54,7 @@ const WalletCardsContainer = () => {
       return <WalletEmptyScreenContent />;
     }
     return (
-      <View testID="walletCardsContainerTestID" style={IOStyles.flex}>
+      <View testID="walletCardsContainerTestID" style={{ flex: 1 }}>
         {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
         <OtherWalletCardsContainer />
       </View>
@@ -66,10 +66,7 @@ const WalletCardsContainer = () => {
   ]);
 
   return (
-    <Animated.View
-      style={IOStyles.flex}
-      layout={LinearTransition.duration(200)}
-    >
+    <Animated.View style={{ flex: 1 }} layout={LinearTransition.duration(200)}>
       <ItwOfflineWalletBanner />
       <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />

@@ -6,10 +6,9 @@ import {
   clearTokenRefreshError
 } from "../store/actions/tokenRefreshActions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwLifecycleIsOperationalOrValid } from "../../../itwallet/lifecycle/store/selectors";
-import { isItwOfflineAccessEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { setOfflineAccessReason } from "../../../ingress/store/actions";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
+import { itwOfflineAccessAvailableSelector } from "../../../itwallet/common/store/selectors";
 import RefreshTokenLoadingScreen from "./RefreshTokenLoadingScreen";
 import AskUserInteractionScreen from "./AskUserInteractionScreen";
 
@@ -18,11 +17,8 @@ const FastLoginModals = (
   isFastLoginUserInteractionNeeded: boolean
 ) => {
   const dispatch = useIODispatch();
-  const selectItwLifecycleIsOperationalOrValid = useIOSelector(
-    itwLifecycleIsOperationalOrValid
-  );
-  const isOfflineAccessEnabled = useIOSelector(
-    isItwOfflineAccessEnabledSelector
+  const isOfflineAccessAvailable = useIOSelector(
+    itwOfflineAccessAvailableSelector
   );
 
   if (tokenRefreshing.kind === "no-pin-error") {
@@ -50,7 +46,7 @@ const FastLoginModals = (
   }
 
   if (tokenRefreshing.kind === "transient-error") {
-    if (selectItwLifecycleIsOperationalOrValid && isOfflineAccessEnabled) {
+    if (isOfflineAccessAvailable) {
       dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.SESSION_REFRESH));
       return undefined;
     }
