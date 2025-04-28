@@ -19,7 +19,7 @@ import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverl
 import { trackLoginCieDataSharingError } from "../../../common/analytics/cieAnalytics";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useOnboardingAbortAlert } from "../../../../../utils/hooks/useOnboardingAbortAlert";
+import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 

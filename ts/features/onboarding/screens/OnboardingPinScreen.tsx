@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStyles } from "@pagopa/io-app-design-system";
-import { PinCreation } from "../../features/settings/security/shared/components/PinCreation";
+import { PinCreation } from "../../settings/security/shared/components/PinCreation";
 
 /**
  * A screen that allows the user to set the unlock code.

@@ -14,26 +14,26 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, View } from "react-native";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import TosWebviewComponent from "../../features/settings/privacy/shared/components/TosWebviewComponent";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { tosConfigSelector } from "../../features/tos/store/selectors";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import I18n from "../../i18n";
-import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
-import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import TosWebviewComponent from "../../settings/privacy/shared/components/TosWebviewComponent";
+import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
+import { tosConfigSelector } from "../../tos/store/selectors";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../i18n";
+import { abortOnboarding, tosAccepted } from "../store/actions";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   isProfileFirstOnBoardingSelector,
   profileSelector
-} from "../../features/settings/common/store/selectors";
-import { isProfileFirstOnBoarding } from "../../features/settings/common/store/utils/guards";
-import { getFlowType } from "../../utils/analytics";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { trackTosUserExit } from "../../features/authentication/common/analytics";
+} from "../../settings/common/store/selectors";
+import { isProfileFirstOnBoarding } from "../../settings/common/store/utils/guards";
+import { getFlowType } from "../../../utils/analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { trackTosUserExit } from "../../authentication/common/analytics";
 import {
   trackTosAccepted,
   trackTosScreen
-} from "../../features/settings/privacy/shared/components/analytics";
+} from "../../settings/privacy/shared/components/analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",

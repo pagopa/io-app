@@ -1,25 +1,25 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { ReactElement, useCallback, useMemo } from "react";
 import { SafeAreaView, View } from "react-native";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import I18n from "../../i18n";
-import { setMixpanelEnabled } from "../../store/actions/mixpanel";
-import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../features/settings/common/store/selectors";
-import { getFlowType } from "../../utils/analytics";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { trackMixpanelScreen } from "../../features/settings/common/analytics";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import I18n from "../../../i18n";
+import { setMixpanelEnabled } from "../../../store/actions/mixpanel";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/selectors";
+import { getFlowType } from "../../../utils/analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { trackMixpanelScreen } from "../../settings/common/analytics";
 import {
   TrackingInfo,
   trackMixPanelTrackingInfo,
   trackMixpanelDeclined,
   trackMixpanelSetEnabled
-} from "../../features/settings/common/analytics/mixpanel/mixpanelAnalytics";
-import { useConfirmOptOutBottomSheet } from "../../features/settings/privacy/shared/hooks/useConfirmOptOutBottomSheet";
-import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
-import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
-import { IOScrollViewActions } from "../../components/ui/IOScrollView";
-import { ShareDataComponent } from "../../features/settings/privacy/shared/components/ShareDataComponent";
+} from "../../settings/common/analytics/mixpanel/mixpanelAnalytics";
+import { useConfirmOptOutBottomSheet } from "../../settings/privacy/shared/hooks/useConfirmOptOutBottomSheet";
+import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
+import { useOnboardingAbortAlert } from "../hooks/useOnboardingAbortAlert";
+import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
+import { ShareDataComponent } from "../../settings/privacy/shared/components/ShareDataComponent";
 
 const OnboardingShareDataScreen = (): ReactElement => {
   const dispatch = useIODispatch();
