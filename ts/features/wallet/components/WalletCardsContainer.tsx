@@ -18,6 +18,7 @@ import {
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
+import { ItwOfflineWalletBanner } from "../../itwallet/common/components/ItwOfflineWalletBanner.tsx";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -69,6 +70,7 @@ const WalletCardsContainer = () => {
       style={IOStyles.flex}
       layout={LinearTransition.duration(200)}
     >
+      <ItwOfflineWalletBanner />
       <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
       {walletContent}

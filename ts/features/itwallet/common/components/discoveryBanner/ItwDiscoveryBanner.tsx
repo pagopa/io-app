@@ -11,9 +11,10 @@ import {
   trackITWalletBannerVisualized
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { useIODispatch } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { itwCloseDiscoveryBanner } from "../../store/actions/preferences";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
+import { isItwOfflineAccessEnabledSelector } from "../../../../../store/reducers/persistedPreferences.ts";
 
 /**
  * to use in flows where we want to handle the banner's visibility logic externally
@@ -38,6 +39,9 @@ export const ItwDiscoveryBanner = ({
   const navigation = useIONavigation();
   const route = useRoute();
   const bannerType = useItwDiscoveryBannerType();
+  const isOfflineAccessEnabled = useIOSelector(
+    isItwOfflineAccessEnabledSelector
+  );
 
   const trackBannerProperties = useMemo(
     () => ({
@@ -67,11 +71,24 @@ export const ItwDiscoveryBanner = ({
   };
 
   const bannerConfig = {
-    onboarding: {
-      content: I18n.t("features.itWallet.discovery.banner.home.content"),
-      title: I18n.t("features.itWallet.discovery.banner.home.title"),
-      action: I18n.t("features.itWallet.discovery.banner.home.action")
-    },
+    // TODO: Once offline access is fully integrated, the "homeWithOffline" copy can be merged into "home" and this dynamic logic can be removed.
+    onboarding: isOfflineAccessEnabled
+      ? {
+          content: I18n.t(
+            "features.itWallet.discovery.banner.homeWithOffline.content"
+          ),
+          title: I18n.t(
+            "features.itWallet.discovery.banner.homeWithOffline.title"
+          ),
+          action: I18n.t(
+            "features.itWallet.discovery.banner.homeWithOffline.action"
+          )
+        }
+      : {
+          content: I18n.t("features.itWallet.discovery.banner.home.content"),
+          title: I18n.t("features.itWallet.discovery.banner.home.title"),
+          action: I18n.t("features.itWallet.discovery.banner.home.action")
+        },
     reactivating: {
       content: I18n.t("features.itWallet.discovery.banner.homeActive.content"),
       title: I18n.t("features.itWallet.discovery.banner.homeActive.title"),

@@ -4293,6 +4293,11 @@
             "content": "Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!",
             "action": "Inizia"
           },
+          "homeWithOffline": {
+            "title": "Novità: Documenti su IO, anche offline",
+            "content": "Da oggi puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.",
+            "action": "Attiva Documenti su IO"
+          },
           "homeActive": {
             "title": "Riattiva Documenti su IO",
             "content": "Per ragioni di sicurezza, quando cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
@@ -4319,6 +4324,11 @@
           "title": "Documenti su IO è già attiva",
           "content": "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio.",
           "action": "Vai al Portafoglio"
+        },
+        "offlineBanner": {
+          "title": "Novità: i tuoi documenti anche offline",
+          "content": "Da oggi puoi usare i tuoi documenti su IO anche senza connessione a internet.",
+          "action": "Scopri di più"
         }
       },
       "identification": {

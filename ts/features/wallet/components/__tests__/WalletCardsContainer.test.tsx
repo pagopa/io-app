@@ -30,6 +30,7 @@ import {
 } from "../WalletCardsContainer";
 import I18n from "../../../../i18n";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
+import * as persistedSelectors from "../../../../store/reducers/persistedPreferences.ts";
 
 jest.spyOn(Alert, "alert");
 jest.mock("react-native-reanimated", () => ({
@@ -509,6 +510,32 @@ describe("OtherWalletCardsContainer", () => {
 
     expect(AppReview.requestReview).toHaveBeenCalledTimes(1);
   });
+
+  it.each`
+    isWalletValid | isOfflineEnabled | shouldRenderBanner
+    ${true}       | ${true}          | ${true}
+    ${false}      | ${true}          | ${false}
+    ${true}       | ${false}         | ${false}
+  `(
+    "should render banner: $shouldRenderBanner when wallet valid: $isWalletValid and offline enabled: $isOfflineEnabled",
+    ({ isWalletValid, isOfflineEnabled, shouldRenderBanner }) => {
+      jest
+        .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockImplementation(() => isWalletValid);
+
+      jest
+        .spyOn(persistedSelectors, "isItwOfflineAccessEnabledSelector")
+        .mockImplementation(() => isOfflineEnabled);
+
+      const { queryByTestId } = renderComponent(WalletCardsContainer);
+
+      if (shouldRenderBanner) {
+        expect(queryByTestId(`itwOfflineWalletBannerTestID`)).not.toBeNull();
+      } else {
+        expect(queryByTestId(`itwOfflineWalletBannerTestID`)).toBeNull();
+      }
+    }
+  );
 });
 
 const renderComponent = (component: ComponentType<any>) => {
