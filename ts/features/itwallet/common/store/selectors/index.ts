@@ -66,7 +66,6 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
   itwIsWalletEmptySelector(state);
 
-// TODO: delete after merge this PR https://github.com/pagopa/io-app/pull/6910
 /**
  * Selectors that returns if the wallet is available for offline access. It joins three
  * selectors:
