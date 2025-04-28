@@ -19,7 +19,7 @@ import LoadingScreenContent from "../../../../components/screens/LoadingScreenCo
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { identificationRequest } from "../../../../store/actions/identification";
+import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
@@ -95,9 +95,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
     parsedCredential: eid.parsedCredential
   });
 
-  const dismissDialog = useItwDismissalDialog(() => {
-    machineRef.send({ type: "close" });
-    trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+  const dismissDialog = useItwDismissalDialog({
+    handleDismiss: () => {
+      machineRef.send({ type: "close" });
+      trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+    }
   });
 
   const handleSaveToWallet = () => {

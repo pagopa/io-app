@@ -1,6 +1,6 @@
 import { VSpacer, Body } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 type PaymentsMethodPspDetailsBottomSheetProps = {
   pspBusinessName: string;
@@ -26,7 +26,7 @@ const PaymentsMethodPspDetailsBottomSheet = ({
 export const usePaymentsMethodPspDetailsBottomSheet = (
   pspBusinessName: string
 ) =>
-  useIOBottomSheetAutoresizableModal({
+  useIOBottomSheetModal({
     component: (
       <PaymentsMethodPspDetailsBottomSheet pspBusinessName={pspBusinessName} />
     ),

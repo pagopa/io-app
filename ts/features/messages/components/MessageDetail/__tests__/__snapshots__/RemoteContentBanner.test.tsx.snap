@@ -401,14 +401,11 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                             accessibilityRole="button"
                             accessible={true}
                             style={
-                              [
-                                {
-                                  "flex": 1,
-                                },
-                                {
-                                  "alignSelf": "center",
-                                },
-                              ]
+                              {
+                                "alignSelf": "center",
+                                "flex": 1,
+                                "gap": 4,
+                              }
                             }
                           >
                             <Text
@@ -431,13 +428,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                             >
                               This is a dynamic message: its content may change over time to give you up-to-date information.
                             </Text>
-                            <View
-                              style={
-                                {
-                                  "height": 8,
-                                }
-                              }
-                            />
                             <View
                               accessibilityElementsHidden={true}
                               accessibilityLabel="Learn more"
@@ -477,7 +467,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               <View
                                 style={
                                   {
-                                    "height": 4,
+                                    "height": 8,
                                   }
                                 }
                               />
@@ -699,7 +689,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                         </View>
                       </View>
                       <Modal
-                        accessibilityPositionChangeAnnouncement=""
                         accessible={false}
                         backdropComponent={[Function]}
                         backgroundStyle={
@@ -708,21 +697,13 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                           }
                         }
                         enableDismissOnClose={true}
+                        enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        handleComponentAccessibility={
-                          {
-                            "accessible": false,
-                          }
-                        }
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
-                        snapPoints={
-                          [
-                            10,
-                          ]
-                        }
                         style={
                           {
                             "borderCurve": "continuous",
@@ -734,16 +715,34 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
                         >
                           <View>
-                            <View
-                              onLayout={[Function]}
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 24,
+                                  },
+                                  {
+                                    "textAlign": "left",
+                                  },
+                                ]
+                              }
                             >
                               <Text
                                 allowFontScaling={true}
@@ -760,118 +759,103 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                       "fontWeight": "400",
                                       "lineHeight": 24,
                                     },
+                                  ]
+                                }
+                              >
+                                It's a message that the sender can edit 
+                              </Text>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
                                     {
-                                      "textAlign": "left",
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  It's a message that the sender can edit 
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  after you've received it
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  . This way, the information it includes will always be up-to-date.
+                                after you've received it
+                              </Text>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                . This way, the information it includes will always be up-to-date.
 
 The sender can edit the information in a dynamic message only 
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  specific cases
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  . For example, to change outdated information or replace an attachment that is no longer valid.
+                              </Text>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                specific cases
+                              </Text>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                . For example, to change outdated information or replace an attachment that is no longer valid.
 
 If the sender needs to share new information or important updates with you, you'll receive a new message.
-                                </Text>
                               </Text>
-                            </View>
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 0,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>

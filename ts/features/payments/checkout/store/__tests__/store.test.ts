@@ -18,7 +18,8 @@ const INITIAL_STATE: PaymentsCheckoutState = {
   selectedPsp: O.none,
   transaction: pot.none,
   authorizationUrl: pot.none,
-  pspBannerClosed: new Set()
+  pspBannerClosed: new Set(),
+  webViewPayload: undefined
 };
 
 describe("Test Payment reducer", () => {

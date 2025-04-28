@@ -3,11 +3,9 @@ import {
   PendingMessageState,
   pendingMessageStateSelector
 } from "../../store/reducers/pendingMessage";
-import * as Analytics from "../../../messages/analytics";
 import {
   checkAndUpdateNotificationPermissionsIfNeeded,
   handlePendingMessageStateIfAllowed,
-  trackMessageNotificationTapIfNeeded,
   updateNotificationPermissionsIfNeeded
 } from "../common";
 import { navigateToMessageRouterAction } from "../../utils/navigation";
@@ -25,8 +23,7 @@ import { trackNotificationPermissionsStatus } from "../../analytics";
 describe("handlePendingMessageStateIfAllowed", () => {
   const mockedPendingMessageState: PendingMessageState = {
     id: "M01",
-    foreground: true,
-    trackEvent: false
+    foreground: true
   };
 
   it("make the app navigate to the message detail when the user press on a notification", () => {
@@ -39,8 +36,6 @@ describe("handlePendingMessageStateIfAllowed", () => {
       .next()
       .select(pendingMessageStateSelector)
       .next(mockedPendingMessageState)
-      .call(trackMessageNotificationTapIfNeeded, mockedPendingMessageState)
-      .next()
       .put(clearNotificationPendingMessage())
       .next()
       .select(isArchivingDisabledSelector)
@@ -63,8 +58,6 @@ describe("handlePendingMessageStateIfAllowed", () => {
       .next()
       .select(pendingMessageStateSelector)
       .next(mockedPendingMessageState)
-      .call(trackMessageNotificationTapIfNeeded, mockedPendingMessageState)
-      .next()
       .put(clearNotificationPendingMessage())
       .next()
       .call(navigateToMainNavigatorAction)
@@ -89,8 +82,6 @@ describe("handlePendingMessageStateIfAllowed", () => {
       .next()
       .select(pendingMessageStateSelector)
       .next(mockedPendingMessageState)
-      .call(trackMessageNotificationTapIfNeeded, mockedPendingMessageState)
-      .next()
       .put(clearNotificationPendingMessage())
       .next()
       .select(isArchivingDisabledSelector)
@@ -112,54 +103,6 @@ describe("handlePendingMessageStateIfAllowed", () => {
       .next(null)
       .next()
       .isDone();
-  });
-});
-
-describe("trackMessageNotificationTapIfNeeded", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-  it("should call trackMessageNotificationTap when there is a PendingMessageState that requires tracking", () => {
-    const spiedTrackMessageNotificationTap = jest
-      .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(jest.fn());
-    const mockPendingMessageState = {
-      id: "001",
-      foreground: true,
-      trackEvent: true
-    } as PendingMessageState;
-    trackMessageNotificationTapIfNeeded(mockPendingMessageState);
-    expect(spiedTrackMessageNotificationTap).toBeCalledWith("001");
-  });
-  it("should not call trackMessageNotificationTap when there is a PendingMessageState that does not require tracking", () => {
-    const spiedTrackMessageNotificationTap = jest
-      .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(jest.fn());
-    const mockPendingMessageState = {
-      id: "001",
-      foreground: true,
-      trackEvent: false
-    } as PendingMessageState;
-    trackMessageNotificationTapIfNeeded(mockPendingMessageState);
-    expect(spiedTrackMessageNotificationTap).not.toHaveBeenCalled();
-  });
-  it("should not call trackMessageNotificationTap when there is a PendingMessageState that does not have a tracking information", () => {
-    const spiedTrackMessageNotificationTap = jest
-      .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(jest.fn());
-    const mockPendingMessageState = {
-      id: "001",
-      foreground: true
-    } as PendingMessageState;
-    trackMessageNotificationTapIfNeeded(mockPendingMessageState);
-    expect(spiedTrackMessageNotificationTap).not.toHaveBeenCalled();
-  });
-  it("should not call trackMessageNotificationTap when there is not a PendingMessageState", () => {
-    const spiedTrackMessageNotificationTap = jest
-      .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(jest.fn());
-    trackMessageNotificationTapIfNeeded();
-    expect(spiedTrackMessageNotificationTap).not.toHaveBeenCalled();
   });
 });
 

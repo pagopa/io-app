@@ -356,8 +356,9 @@
     }
   },
   "login": {
-    "expiration_info": "Per ragioni di sicurezza, dovrai entrare con SPID o CIE ogni 30 giorni.",
-    "expiration_info_FL": "Per ragioni di sicurezza, dovrai entrare con SPID o CIE una volta all’anno.",
+    "help_banner_title": "Come si accede?",
+    "help_banner_content": "Abbiamo preparato una guida per aiutarti passo passo.",
+    "help_banner_action": "Leggi come fare",
     "biometric_info": "Per accedere, ti basterà poi inserire il codice di sblocco o, se abilitati, usare l'impronta o il volto."
   },
   "inbox": {
@@ -805,6 +806,14 @@
         "carousel": {
           "label": "Presentazione di IO",
           "hint": "Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto"
+        }
+      },
+      "useful_resources": {
+        "bottomSheet": {
+          "title": "Risorse utili",
+          "privacy_policy": "Informativa Privacy",
+          "manage_access": "Gestisci i tuoi accessi",
+          "io_more_informations": "Cosa puoi fare con l’app IO"
         }
       },
       "session_expired": {
@@ -2777,7 +2786,12 @@
         "email": "Scrivi un'email"
       }
     },
-    "markdownLinkUnsupported": "Questo link non è supportato"
+    "markdownLinkUnsupported": "Questo link non è supportato",
+    "markdown": {
+      "decodingErrorContent": "Il contenuto del messaggio non può essere mostrato correttamente.",
+      "decodingErrorHide": "Nascondi contenuto",
+      "decodingErrorShow": "Mostra comunque"
+    }
   },
   "messagePDFPreview": {
     "title": "Anteprima PDF",
@@ -4282,7 +4296,7 @@
           },
           "homeActive": {
             "title": "Riattiva Documenti su IO",
-            "content": "Per ragioni di sicurezza, quando cambi dispositivo, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
+            "content": "Per ragioni di sicurezza, quando cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
             "action": "Inizia"
           },
           "onboarding": {
@@ -4606,10 +4620,13 @@
             "subtitle": "Attendi qualche secondo"
           },
           "walletInactiveScreen": {
-            "title": "Attiva Documenti su IO per continuare",
-            "subtitle": "Per accedere con IT Wallet ai servizi online è necessario prima attivare la funzionalità Documenti su IO.",
-            "primaryAction": "Inizia",
-            "secondaryAction": "Non ora"
+            "title": "Ottieni IT-Wallet per \ncontinuare",
+            "subtitle": "Per accedere ai servizi online è necessario attivare IT-Wallet utilizzando la tua Carta di Identità Elettronica (CIE) e il PIN.",
+            "primaryAction": "Ottieni IT-Wallet",
+            "secondaryAction": "Non ora",
+            "alert": {
+              "body": "Non potrai completare l'accesso ai servizi online."
+            }
           },
           "missingCredentialsScreen": {
             "title": "Mancano i dati contenuti in {{credentialName}}",
@@ -4625,7 +4642,7 @@
           },
           "eidExpiredScreen": {
             "title": "Verifica la tua identità",
-            "subtitle": "È un passaggio di verifica necessario per continuare ad usare Documenti su IO per autenticarti.",
+            "subtitle": "È un passaggio di verifica necessario per continuare ad usare IT-Wallet e per autenticarti.",
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           }

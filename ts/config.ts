@@ -113,6 +113,16 @@ export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
  */
 export const helpCenterHowToDoWhenSessionIsExpiredUrl =
   "https://assistenza.ioapp.it/hc/it/articles/32616176301713" as NonEmptyString;
+/**
+ * Help Center URL for the "How to login with SPID" article
+ */
+export const helpCenterHowToLoginWithSpidUrl =
+  "https://assistenza.ioapp.it/hc/it/sections/30616637679505" as NonEmptyString;
+/**
+ * Help Center URL for the "How to login with EIC" article
+ */
+export const helpCenterHowToLoginWithEicUrl =
+  "https://assistenza.ioapp.it/hc/it/articles/30724124984593#h_01JF0DQRRPJWY61RAFNG2AKF3R" as NonEmptyString;
 
 // #endregion
 

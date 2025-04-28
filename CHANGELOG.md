@@ -2,6 +2,99 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0-rc.3](https://github.com/pagopa/io-app/compare/3.4.0-rc.2...3.4.0-rc.3) (2025-04-25)
+
+## [3.4.0-rc.2](https://github.com/pagopa/io-app/compare/3.4.0-rc.1...3.4.0-rc.2) (2025-04-24)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2290](https://pagopa.atlassian.net/browse/SIW-2290)] Disable wallet offline access when no credentials are stored ([#6910](https://github.com/pagopa/io-app/issues/6910)) ([79d3c83](https://github.com/pagopa/io-app/commit/79d3c83a2d730cc721b5abece3d225cd22e0fcd8))
+
+## [3.4.0-rc.1](https://github.com/pagopa/io-app/compare/3.4.0-rc.0...3.4.0-rc.1) (2025-04-23)
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-357](https://pagopa.atlassian.net/browse/IOAPPX-357)] Upgrade `@gorhom/bottom-sheet` library ([#6062](https://github.com/pagopa/io-app/issues/6062)) ([6c288f7](https://github.com/pagopa/io-app/commit/6c288f7e5e5c85a0fcbe0c1ad30b062b4f707fb3))
+
+## [3.4.0-rc.0](https://github.com/pagopa/io-app/compare/3.3.0-rc.8...3.4.0-rc.0) (2025-04-23)
+
+
+### Features
+
+*  [[IOPID-2814](https://pagopa.atlassian.net/browse/IOPID-2814),[IOPID-2759](https://pagopa.atlassian.net/browse/IOPID-2759)] add helpful resources bottomsheet on LandingScreen and refactor test login  ([#6904](https://github.com/pagopa/io-app/issues/6904)) ([84c86aa](https://github.com/pagopa/io-app/commit/84c86aac0951490de884733cdc6ceea6a2566722))
+* [[IOBP-1578](https://pagopa.atlassian.net/browse/IOBP-1578)] Payment webview flow ([#6899](https://github.com/pagopa/io-app/issues/6899)) ([f9538a5](https://github.com/pagopa/io-app/commit/f9538a5f8c7771645f6ea019338aabc662a55a56))
+* [[IOBP-1593](https://pagopa.atlassian.net/browse/IOBP-1593)] Add header payment webview ([#6906](https://github.com/pagopa/io-app/issues/6906)) ([907c8a0](https://github.com/pagopa/io-app/commit/907c8a011f08630aa22587ace2fa671d8ffd41ae))
+
+
+### Bug Fixes
+
+* [[IOCOM-2296](https://pagopa.atlassian.net/browse/IOCOM-2296)] Accessibility header role for IO-COM sections ([#6897](https://github.com/pagopa/io-app/issues/6897)) ([03ad593](https://github.com/pagopa/io-app/commit/03ad59309767675ddfcd40339f8e2b0278692386))
+* [[IOCOM-2327](https://pagopa.atlassian.net/browse/IOCOM-2327)] Global mock for I18n ([#6909](https://github.com/pagopa/io-app/issues/6909)) ([940773c](https://github.com/pagopa/io-app/commit/940773c526fe3ecfbb59743bead02a9112185247))
+* [[IOPID-2949](https://pagopa.atlassian.net/browse/IOPID-2949)] keep `cie` and `connectivityStatus` after logout ([#6912](https://github.com/pagopa/io-app/issues/6912)) ([b0d9851](https://github.com/pagopa/io-app/commit/b0d9851790509ef3bd5cc132afbd71c0501ae5a9))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2055](https://pagopa.atlassian.net/browse/SIW-2055)] Update iPatente cta url with saved driving license number ([#6886](https://github.com/pagopa/io-app/issues/6886)) ([4aee01e](https://github.com/pagopa/io-app/commit/4aee01e5ac8f9ba81832316c2e068dd39b6faee1))
+
+## [3.3.0-rc.8](https://github.com/pagopa/io-app/compare/3.3.0-rc.7...3.3.0-rc.8) (2025-04-17)
+
+
+### Bug Fixes
+
+* [[IOCOM-2142](https://pagopa.atlassian.net/browse/IOCOM-2142)] Fix external keyboard focus on message logo ([#6894](https://github.com/pagopa/io-app/issues/6894)) ([086f516](https://github.com/pagopa/io-app/commit/086f5165be548f5ff5d2449f462dff001e476287))
+* [[IOCOM-2224](https://pagopa.atlassian.net/browse/IOCOM-2224)] Proper tracking of the push notification opening analytics event ([#6878](https://github.com/pagopa/io-app/issues/6878)) ([3481cd7](https://github.com/pagopa/io-app/commit/3481cd75c5dd5004281124928279dbc20633b2fa))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-228](https://pagopa.atlassian.net/browse/SIW-228)] Track wallet bad state ([#6905](https://github.com/pagopa/io-app/issues/6905)) ([b734a91](https://github.com/pagopa/io-app/commit/b734a9127f0667bad156afd38b84d12fb21bf85c))
+
+## [3.3.0-rc.7](https://github.com/pagopa/io-app/compare/3.3.0-rc.6...3.3.0-rc.7) (2025-04-16)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2207](https://pagopa.atlassian.net/browse/SIW-2207)] Remote presentation, inactive IT-Wallet failure screen ([#6900](https://github.com/pagopa/io-app/issues/6900)) ([e908a22](https://github.com/pagopa/io-app/commit/e908a22e83c01e9f116c8fd28b5d940670b0c0b1))
+* **IT Wallet:** [[SIW-2208](https://pagopa.atlassian.net/browse/SIW-2208)] Remote presentation, update copy eID expired screen ([#6901](https://github.com/pagopa/io-app/issues/6901)) ([c7aadaf](https://github.com/pagopa/io-app/commit/c7aadaf3782f2e00fe4ff25b2ac6e72c20e5cec7))
+
+## [3.3.0-rc.6](https://github.com/pagopa/io-app/compare/3.3.0-rc.5...3.3.0-rc.6) (2025-04-15)
+
+
+### Features
+
+* [[IOCOM-2219](https://pagopa.atlassian.net/browse/IOCOM-2219)] UI/UX for message CTA decoding failure ([#6887](https://github.com/pagopa/io-app/issues/6887)) ([be046c9](https://github.com/pagopa/io-app/commit/be046c9867ad1fd67d175eb3ff79e89fe9318907))
+
+## [3.3.0-rc.5](https://github.com/pagopa/io-app/compare/3.3.0-rc.4...3.3.0-rc.5) (2025-04-14)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2250](https://pagopa.atlassian.net/browse/SIW-2250)] Track Wi revocation reason and attestation failure on Mixpanel ([#6893](https://github.com/pagopa/io-app/issues/6893)) ([d388fca](https://github.com/pagopa/io-app/commit/d388fca613ae37a692a7cb373019a673ff7ccc33))
+* [[IOBP-1577](https://pagopa.atlassian.net/browse/IOBP-1577)] Add remote feature flag to enable the payment webview flow ([#6895](https://github.com/pagopa/io-app/issues/6895)) ([a61c31b](https://github.com/pagopa/io-app/commit/a61c31bb2ae0e6f9b9e34107f378f8a8a4d29aab))
+
+## [3.3.0-rc.4](https://github.com/pagopa/io-app/compare/3.3.0-rc.3...3.3.0-rc.4) (2025-04-11)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2048](https://pagopa.atlassian.net/browse/SIW-2048),[SIW-2192](https://pagopa.atlassian.net/browse/SIW-2192)] Implement reactivation banner  ([#6889](https://github.com/pagopa/io-app/issues/6889)) ([d709777](https://github.com/pagopa/io-app/commit/d7097770a52e73415b7df520d4b7eeaf64b6621c))
+
+
+### Bug Fixes
+
+* [[IOBP-1552](https://pagopa.atlassian.net/browse/IOBP-1552)] Saved payment methods profile property with right value ([#6890](https://github.com/pagopa/io-app/issues/6890)) ([c37d5f5](https://github.com/pagopa/io-app/commit/c37d5f5352bc196b4dfc85bd05d35891e439f35f))
+
+
+### Chores
+
+* [[IOPLT-1048](https://pagopa.atlassian.net/browse/IOPLT-1048)] Remove local `BannerErrorState` + Update types used to render `Avatar` ([#6856](https://github.com/pagopa/io-app/issues/6856)) ([807552b](https://github.com/pagopa/io-app/commit/807552b2d848983b5204a0ba57a5cc173f9c9630))
+* [[IOPLT-1073](https://pagopa.atlassian.net/browse/IOPLT-1073)] Add dark mode support for featured service cards ([#6865](https://github.com/pagopa/io-app/issues/6865)) ([574eb51](https://github.com/pagopa/io-app/commit/574eb515061e4ba347c1d5c2532311229f2bced8))
+* [[IOPLT-1076](https://pagopa.atlassian.net/browse/IOPLT-1076)] Add dark mode support for CGN screens and modules ([#6874](https://github.com/pagopa/io-app/issues/6874)) ([dc1d00e](https://github.com/pagopa/io-app/commit/dc1d00e98a2e1c94954c6a30ea9e212befcd856d))
+* [[IOPLT-1078](https://pagopa.atlassian.net/browse/IOPLT-1078)] Add dark mode support for `ListItemMessage` ([#6885](https://github.com/pagopa/io-app/issues/6885)) ([5ef1245](https://github.com/pagopa/io-app/commit/5ef124505e4765c6ffb211f2d893fd8e65c10eb0))
+
 ## [3.3.0-rc.3](https://github.com/pagopa/io-app/compare/3.3.0-rc.2...3.3.0-rc.3) (2025-04-10)
 
 
