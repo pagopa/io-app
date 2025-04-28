@@ -58,6 +58,7 @@ class RootContainer extends PureComponent<Props> {
     });
 
   public componentDidMount() {
+    console.log("RootContainer mounted");
     // boot: send the status of the application
     this.handleApplicationActivity(AppState.currentState);
     // eslint-disable-next-line functional/immutable-data
@@ -75,8 +76,9 @@ class RootContainer extends PureComponent<Props> {
       .catch(() => undefined);
 
     this.updateLocale();
+    console.log("ok");
     // Hide splash screen
-    SplashScreen.hide();
+    // SplashScreen.hide();
   }
 
   /**
