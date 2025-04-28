@@ -13,6 +13,7 @@ import {
   ListItemSwitch,
   VSpacer,
   VStack,
+  hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Fragment, useState } from "react";
@@ -23,6 +24,13 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 const styles = StyleSheet.create({
   primaryBlock: {
     backgroundColor: IOColors["blueIO-500"],
+    padding: 16,
+    borderRadius: 16
+  },
+  neutralBlock: {
+    borderWidth: 1,
+    borderColor: hexToRgba(IOColors.black, 0.1),
+    backgroundColor: IOColors.white,
     padding: 16,
     borderRadius: 16
   }
@@ -429,6 +437,40 @@ const renderIconButton = () => (
         </HStack>
       </DSComponentViewerBox>
     </View>
+
+    <DSComponentViewerBox name="IconButton · Neutral variant, persistent color mode">
+      <View style={styles.neutralBlock}>
+        <HStack space={buttonBlockInnerSpacing}>
+          <IconButton
+            persistentColorMode
+            color="neutral"
+            accessibilityLabel="Search"
+            accessibilityHint="Tap to trigger test alert"
+            icon="search"
+            onPress={onButtonPress}
+          />
+
+          <IconButton
+            persistentColorMode
+            color="neutral"
+            accessibilityLabel="Help"
+            accessibilityHint="Tap to trigger test alert"
+            icon="help"
+            onPress={onButtonPress}
+          />
+
+          <IconButton
+            persistentColorMode
+            color="neutral"
+            accessibilityLabel="Help"
+            accessibilityHint="Tap to trigger test alert"
+            icon="help"
+            disabled
+            onPress={onButtonPress}
+          />
+        </HStack>
+      </View>
+    </DSComponentViewerBox>
   </VStack>
 );
 
