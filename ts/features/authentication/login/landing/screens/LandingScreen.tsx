@@ -38,10 +38,7 @@ import {
 import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import {
-  resetAuthenticationState,
-  sessionExpired
-} from "../../../common/store/actions";
+import { sessionExpired } from "../../../common/store/actions";
 import {
   useIODispatch,
   useIOSelector,
@@ -219,7 +216,6 @@ export const LandingScreen = () => {
     if (isSessionExpired) {
       // eslint-disable-next-line functional/immutable-data
       isSessionExpiredRef.current = isSessionExpired;
-      dispatch(resetAuthenticationState());
     }
   });
 
@@ -428,7 +424,7 @@ export const LandingScreen = () => {
             }}
           />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-          {itwOfflineAccessAvailable && isSessionExpiredRef.current && (
+          {itwOfflineAccessAvailable && isSessionExpired && (
             <View style={IOStyles.selfCenter}>
               <ButtonLink
                 accessibilityRole="link"
