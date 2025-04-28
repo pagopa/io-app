@@ -1,33 +1,26 @@
+import { pipe } from "fp-ts/lib/function";
 import {
   isItwDiscoveryBannerRenderableSelector,
+  itwOfflineAccessAvailableSelector,
   itwShouldRenderFeedbackBannerSelector
 } from "..";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwIsWalletEmptySelector } from "../../../../credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../../../lifecycle/store/selectors";
-import { itwIsFeedbackBannerHiddenSelector } from "../preferences";
-import {
-  isItwEnabledSelector,
-  isItwFeedbackBannerEnabledSelector
-} from "../remoteConfig";
+import { itwStoreIntegrityKeyTag } from "../../../../issuance/store/actions";
+import { itwCredentialsStore } from "../../../../credentials/store/actions";
+import { CredentialType } from "../../../utils/itwMocksUtils";
+import { StoredCredential } from "../../../utils/itwTypesUtils";
+import { setItwOfflineAccessEnabled } from "../../../../../../store/actions/persistedPreferences";
+import { appReducer } from "../../../../../../store/reducers";
+import { Action } from "../../../../../../store/actions/types";
+import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
+import * as credentialsSelectors from "../../../../credentials/store/selectors";
+import * as preferencesSelectors from "../preferences";
+import * as remoteConfigSelectors from "../remoteConfig";
 
-type JestMock = ReturnType<typeof jest.fn>;
-
-jest.mock("../../../../lifecycle/store/selectors", () => ({
-  itwLifecycleIsValidSelector: jest.fn()
-}));
-jest.mock("../../../../credentials/store/selectors", () => ({
-  itwIsWalletEmptySelector: jest.fn()
-}));
-
-jest.mock("../preferences", () => ({
-  itwIsFeedbackBannerHiddenSelector: jest.fn()
-}));
-
-jest.mock("../remoteConfig", () => ({
-  isItwEnabledSelector: jest.fn(),
-  isItwFeedbackBannerEnabledSelector: jest.fn()
-}));
+const curriedAppReducer =
+  (action: Action) => (state: GlobalState | undefined) =>
+    appReducer(state, action);
 
 describe("itwDiscoveryBannerSelector", () => {
   beforeEach(() => {
@@ -44,10 +37,13 @@ describe("itwDiscoveryBannerSelector", () => {
   `(
     "should return $expected when isItwEnabled is $itwEnabled, and lifecycleValid is $lifecycleValid",
     ({ itwEnabled, lifecycleValid, expected }) => {
-      (isItwEnabledSelector as unknown as JestMock).mockReturnValue(itwEnabled);
-      (itwLifecycleIsValidSelector as unknown as JestMock).mockReturnValue(
-        lifecycleValid
-      );
+      jest
+        .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
+        .mockReturnValue(itwEnabled);
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(lifecycleValid);
+
       expect(
         isItwDiscoveryBannerRenderableSelector({} as unknown as GlobalState)
       ).toBe(expected);
@@ -87,22 +83,66 @@ describe("itwShouldRenderFeedbackBannerSelector", () => {
       expected,
       remotelyEnabled
     }) => {
-      (
-        isItwFeedbackBannerEnabledSelector as unknown as JestMock
-      ).mockReturnValue(remotelyEnabled);
-      (itwLifecycleIsValidSelector as unknown as JestMock).mockReturnValue(
-        hasValidWallet
-      );
-      (itwIsWalletEmptySelector as unknown as JestMock).mockReturnValue(
-        walletIsEmpty
-      );
-      (
-        itwIsFeedbackBannerHiddenSelector as unknown as JestMock
-      ).mockReturnValue(bannerIsHidden);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwFeedbackBannerEnabledSelector")
+        .mockReturnValue(remotelyEnabled);
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(hasValidWallet);
+      jest
+        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
+        .mockReturnValue(walletIsEmpty);
+      jest
+        .spyOn(preferencesSelectors, "itwIsFeedbackBannerHiddenSelector")
+        .mockReturnValue(bannerIsHidden);
 
       expect(
         itwShouldRenderFeedbackBannerSelector({} as unknown as GlobalState)
       ).toBe(expected);
     }
   );
+});
+
+describe("itwOfflineAccessAvailableSelector", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it("Returns true when the wallet is available for offline access", () => {
+    const globalState = pipe(
+      undefined,
+      curriedAppReducer(applicationChangeState("active")),
+      curriedAppReducer(
+        itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
+      ),
+      curriedAppReducer(
+        itwCredentialsStore([
+          { credentialType: CredentialType.PID },
+          { credentialType: CredentialType.DRIVING_LICENSE }
+        ] as Array<StoredCredential>)
+      ),
+      curriedAppReducer(setItwOfflineAccessEnabled(true))
+    );
+
+    expect(itwOfflineAccessAvailableSelector(globalState)).toEqual(true);
+  });
+
+  it("Returns false when the wallet does not have credentials", () => {
+    const globalState = pipe(
+      undefined,
+      curriedAppReducer(applicationChangeState("active")),
+      curriedAppReducer(
+        itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
+      ),
+      curriedAppReducer(
+        itwCredentialsStore([
+          { credentialType: CredentialType.PID }
+        ] as Array<StoredCredential>)
+      ),
+      curriedAppReducer(setItwOfflineAccessEnabled(true))
+    );
+
+    expect(itwOfflineAccessAvailableSelector(globalState)).toEqual(false);
+  });
 });
