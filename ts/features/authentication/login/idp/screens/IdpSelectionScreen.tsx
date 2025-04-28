@@ -19,7 +19,6 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { nativeLoginSelector } from "../../../nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../../nativeLogin/store/selectors";
-import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import IdpsGrid from "../components/IdpsGrid";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -32,6 +31,8 @@ import { isReady } from "../../../../../common/model/RemoteValue";
 import { trackSpidLoginIdpSelection } from "../../../common/analytics";
 import { trackLoginSpidIdpSelected } from "../../../common/analytics/spidAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { openWebUrl } from "../../../../../utils/url";
+import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.idp_selection.contextualHelpTitle",
@@ -62,9 +63,6 @@ const IdpSelectionScreen = (): ReactElement => {
   const idps = useIOSelector(idpsRemoteValueSelector);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const nativeLoginFeature = useIOSelector(nativeLoginSelector);
-  const isFastLoginFeatureFlagEnabled = useIOSelector(
-    isFastLoginEnabledSelector
-  );
   const isNativeLoginFeatureFlagEnabled = useIOSelector(
     isNativeLoginEnabledSelector
   );
@@ -143,12 +141,12 @@ const IdpSelectionScreen = (): ReactElement => {
         <Banner
           viewRef={viewRef}
           color="neutral"
-          content={
-            isFastLoginFeatureFlagEnabled
-              ? I18n.t("login.expiration_info_FL")
-              : I18n.t("login.expiration_info")
-          }
-          pictogramName="passcode"
+          title={I18n.t("login.help_banner_title")}
+          content={I18n.t("login.help_banner_content")}
+          accessibilityRole="link"
+          action={I18n.t("login.help_banner_action")}
+          onPress={() => openWebUrl(helpCenterHowToLoginWithSpidUrl)}
+          pictogramName="help"
         />
         <VSpacer size={8} />
       </>

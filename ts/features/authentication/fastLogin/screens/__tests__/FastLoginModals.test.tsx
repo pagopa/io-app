@@ -17,11 +17,8 @@ const renderComponent = (props: {
 }) => {
   jest.spyOn(hooks, "useIODispatch").mockReturnValue(dispatchMock);
   jest.spyOn(hooks, "useIOSelector").mockImplementation(selector => {
-    if (selector.name === "itwLifecycleIsOperationalOrValid") {
+    if (selector.name === "itwOfflineAccessAvailableSelector") {
       return props.lifecycleValid ?? false;
-    }
-    if (selector.name === "isItwOfflineAccessEnabledSelector") {
-      return props.offlineEnabled ?? false;
     }
     return false;
   });
@@ -73,10 +70,7 @@ describe("FastLoginModals", () => {
 
   it("dispatches setOfflineAccessReason and returns undefined for transient-error with offline enabled", () => {
     jest.spyOn(hooks, "useIOSelector").mockImplementation(selector => {
-      if (selector.name === "itwLifecycleIsOperationalOrValid") {
-        return true;
-      }
-      if (selector.name === "isItwOfflineAccessEnabledSelector") {
+      if (selector.name === "itwOfflineAccessAvailableSelector") {
         return true;
       }
       return false;

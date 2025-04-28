@@ -3,7 +3,6 @@ import {
   Body,
   ContentWrapper,
   H2,
-  IOStyles,
   OTPInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -26,43 +25,45 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IdpData } from "../../../../../../definitions/content/IdpData";
-import {
-  CieEntityIds,
-  CieRequestAuthenticationOverlay
-} from "../components/CieRequestAuthenticationOverlay";
+import IOMarkdown from "../../../../../components/IOMarkdown";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../../../components/ui/LightModal";
-import IOMarkdown from "../../../../../components/IOMarkdown";
-import { pinPukHelpUrl } from "../../../../../config";
 import {
-  isCieLoginUatEnabledSelector,
-  isNfcEnabledSelector
-} from "../store/selectors";
-import { cieFlowForDevServerEnabled } from "../utils";
-import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
+  helpCenterHowToLoginWithEicUrl,
+  pinPukHelpUrl
+} from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
-import { loginSuccess } from "../../../common/store/actions";
-import { nfcIsEnabled } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { getIdpLoginUri } from "../../../common/utils/login";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
 import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../../../common/analytics/cieAnalytics";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { loginSuccess } from "../../../common/store/actions";
+import { getIdpLoginUri } from "../../../common/utils/login";
+import {
+  CieEntityIds,
+  CieRequestAuthenticationOverlay
+} from "../components/CieRequestAuthenticationOverlay";
+import { nfcIsEnabled } from "../store/actions";
+import {
+  isCieLoginUatEnabledSelector,
+  isNfcEnabledSelector
+} from "../store/selectors";
+import { cieFlowForDevServerEnabled } from "../utils";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -190,9 +191,6 @@ const CiePinScreen = () => {
     }, [])
   );
 
-  const isFastLoginFeatureFlagEnabled = useIOSelector(
-    isFastLoginEnabledSelector
-  );
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
 
   useHeaderSecondLevel({
@@ -211,8 +209,8 @@ const CiePinScreen = () => {
           ios: "padding",
           android: undefined
         })}
-        contentContainerStyle={IOStyles.flex}
-        style={IOStyles.flex}
+        contentContainerStyle={{ flex: 1 }}
+        style={{ flex: 1 }}
         keyboardVerticalOffset={headerHeight}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -232,7 +230,7 @@ const CiePinScreen = () => {
               {I18n.t("authentication.cie.pin.subtitleCTA")}
             </Body>
             <VSpacer size={24} />
-            <View style={IOStyles.flex}>
+            <View style={{ flex: 1 }}>
               <OTPInput
                 ref={pinPadViewRef}
                 secret
@@ -256,12 +254,12 @@ const CiePinScreen = () => {
               <Banner
                 viewRef={bannerRef}
                 color="neutral"
-                content={
-                  isFastLoginFeatureFlagEnabled
-                    ? I18n.t("login.expiration_info_FL")
-                    : I18n.t("login.expiration_info")
-                }
-                pictogramName="passcode"
+                title={I18n.t("login.help_banner_title")}
+                content={I18n.t("login.help_banner_content")}
+                accessibilityRole="link"
+                action={I18n.t("login.help_banner_action")}
+                onPress={() => openWebUrl(helpCenterHowToLoginWithEicUrl)}
+                pictogramName="help"
               />
             </View>
           </ContentWrapper>

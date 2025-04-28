@@ -107,9 +107,11 @@ describe("CiePinScreen", () => {
     ).toBeTruthy();
   });
 
-  it("should show default banner content if FastLogin is disabled", () => {
+  it("should show banner content", () => {
     const { getByText } = renderComponent();
-    expect(getByText(I18n.t("login.expiration_info"))).toBeTruthy();
+    expect(getByText(I18n.t("login.help_banner_title"))).toBeTruthy();
+    expect(getByText(I18n.t("login.help_banner_content"))).toBeTruthy();
+    expect(getByText(I18n.t("login.help_banner_action"))).toBeTruthy();
   });
 
   it("should focus pinPadViewRef on focus", () => {
