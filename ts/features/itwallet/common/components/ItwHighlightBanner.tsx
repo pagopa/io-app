@@ -106,12 +106,12 @@ const BackgroundGradient = () => {
 
   // Animation setup
   const progress = useSharedValue(0);
-  const animationRange = useMemo(() => width * 2, [width]);
+  const animationRange = useMemo(() => width * 0.8, [width]);
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
     progress.value = withRepeat(
-      withTiming(1, { duration: 30000, easing: Easing.inOut(Easing.ease) }),
+      withTiming(1, { duration: 30000, easing: Easing.linear }),
       -1, // Infinite repeat
       true // Reverse direction
     );
@@ -156,10 +156,15 @@ const BackgroundGradient = () => {
           mode="repeat"
           colors={[
             "#0B3EE3",
+            "#234FFF",
             "#436FFF",
+            "#2F5EFF",
             "#1E53FF",
+            "#1848F0",
             "#0B3EE3",
+            "#1F4DFF",
             "#2A5CFF",
+            "#1943E8",
             "#0B3EE3"
           ]}
         />
