@@ -1,9 +1,13 @@
+import { isItwOfflineAccessEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   itwCredentialsEidStatusSelector,
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsOperationalOrValid,
+  itwLifecycleIsValidSelector
+} from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
   itwIsDiscoveryBannerHiddenSelector,
@@ -61,3 +65,15 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
   !itwIsWalletInstanceStatusFailureSelector(state) &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
   itwIsWalletEmptySelector(state);
+
+/**
+ * Selectors that returns if the wallet is available for offline access. It joins three
+ * selectors:
+ * - if the wallet is operation or valid
+ * - if the wallet contains at least one credential
+ * - if the offline access is enabled
+ */
+export const itwOfflineAccessAvailableSelector = (state: GlobalState) =>
+  isItwOfflineAccessEnabledSelector(state) &&
+  itwLifecycleIsOperationalOrValid(state) &&
+  state.features.itWallet.credentials.credentials.length > 0;
