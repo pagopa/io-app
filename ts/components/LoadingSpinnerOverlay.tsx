@@ -1,5 +1,5 @@
 import {
-  ButtonOutline,
+  IOButton,
   H3,
   IOColors,
   hexToRgba,
@@ -62,11 +62,11 @@ const LoadingSpinnerOverlay = ({
             action={
               onCancel && (
                 <View style={IOStyles.selfCenter}>
-                  <ButtonOutline
-                    accessibilityLabel={I18n.t("global.buttons.cancel")}
+                  <IOButton
+                    variant="outline"
+                    label={I18n.t("global.buttons.cancel")}
                     onPress={onCancel}
                     testID="loadingSpinnerOverlayCancelButton"
-                    label={I18n.t("global.buttons.cancel")}
                   />
                 </View>
               )

@@ -1,5 +1,5 @@
 import {
-  ButtonOutline,
+  IOButton,
   FooterActions,
   H2,
   IconButton,
@@ -83,14 +83,14 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
         <H2>{I18n.t("onboarding.tos.error")}</H2>
 
         <View style={styles.errorButtonsContainer}>
-          <ButtonOutline
+          <IOButton
+            fullWidth
+            variant="outline"
             label={I18n.t("global.buttons.retry")}
-            accessibilityLabel={I18n.t("global.buttons.retry")}
             onPress={() => {
               setOnLoadEnd(false);
               setHasError(false);
             }}
-            fullWidth
           />
         </View>
       </View>
