@@ -2,7 +2,6 @@ import { createStore } from "redux";
 import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
-import ROUTES from "../../navigation/routes";
 import * as ingressSelectors from "../../features/ingress/store/selectors";
 import I18n from "../../i18n";
 import { OfflineAccessReasonEnum } from "../../features/ingress/store/reducer";
@@ -86,7 +85,6 @@ describe("useConnectivityGuard", () => {
     expect(mockAsyncFn).toHaveBeenCalledWith("test");
     // Navigation should not be called
     expect(mockNavigate).not.toHaveBeenCalled();
-
     // Wait for any pending promises to resolve
     await Promise.resolve();
   });
@@ -101,8 +99,8 @@ describe("useConnectivityGuard", () => {
 
     // Function should not be called
     expect(mockAsyncFn).not.toHaveBeenCalled();
-    // Should navigate to NO_CONNECTIVITY screen
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.OFFLINE_FAILURE);
+    // Should show error toast
+    expect(mockToast).toHaveBeenCalledWith(I18n.t("global.offline.toast"));
   });
 
   it("should show error toast when not connected", () => {
