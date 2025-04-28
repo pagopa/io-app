@@ -64,7 +64,8 @@ export const ItwHighlightBanner = (props: WithTestID<Props>) => {
 
     return {
       shadowRadius: scale * 10,
-      elevation: scale * 5
+      elevation: scale * 5,
+      shadowOffset: { width: 0, height: scale * 4 }
     };
   });
 
