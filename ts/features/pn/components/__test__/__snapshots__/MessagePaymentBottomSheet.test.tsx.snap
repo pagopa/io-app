@@ -931,6 +931,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -944,9 +945,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -958,7 +956,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1183,6 +1180,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1196,9 +1194,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -1210,7 +1205,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1435,6 +1429,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1448,9 +1443,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -1462,7 +1454,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1687,6 +1678,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1700,9 +1692,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -1714,7 +1703,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1939,6 +1927,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1952,9 +1941,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -1966,7 +1952,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2191,6 +2176,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -2204,9 +2190,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -2218,7 +2201,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2443,6 +2425,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -2456,9 +2439,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 24,
                                               "width": 24,
@@ -2470,7 +2450,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         width={24}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,

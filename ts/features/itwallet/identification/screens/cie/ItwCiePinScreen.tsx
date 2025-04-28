@@ -2,7 +2,6 @@ import {
   Body,
   ContentWrapper,
   H2,
-  IOStyles,
   OTPInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -106,14 +105,14 @@ export const ItwCiePinScreen = () => {
   };
 
   return (
-    <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
+    <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
       <KeyboardAvoidingView
         behavior={Platform.select({
           ios: "padding",
           android: undefined
         })}
-        contentContainerStyle={IOStyles.flex}
-        style={IOStyles.flex}
+        contentContainerStyle={{ flex: 1 }}
+        style={{ flex: 1 }}
         keyboardVerticalOffset={headerHeight}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -131,7 +130,7 @@ export const ItwCiePinScreen = () => {
               {I18n.t("authentication.cie.pin.subtitleCTA")}
             </Body>
             <VSpacer size={24} />
-            <View style={IOStyles.flex}>
+            <View style={{ flex: 1 }}>
               <OTPInput
                 ref={pinPadViewRef}
                 secret
