@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import {
   VSpacer,
   ContentWrapper,
@@ -32,12 +32,6 @@ import {
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { ProfileNotificationSettings } from "../components/ProfileNotificationsSettings";
-
-const styles = StyleSheet.create({
-  scrollViewContainer: {
-    flexGrow: 1
-  }
-});
 
 export type OnboardingNotificationsPreferencesScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -116,7 +110,7 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
 
   return (
     <>
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <ContentWrapper>
           <H1 accessibilityRole="header">
             {I18n.t("profile.preferences.notifications.title")}

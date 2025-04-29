@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0-rc.4](https://github.com/pagopa/io-app/compare/3.4.0-rc.3...3.4.0-rc.4) (2025-04-28)
+
+
+### Chores
+
+* [[IOPLT-1102](https://pagopa.atlassian.net/browse/IOPLT-1102),[IOCOM-2328](https://pagopa.atlassian.net/browse/IOCOM-2328)] Remove `IOStyles` utility classes from the codebase. Fix `Alert` component flickering on message details ([#6907](https://github.com/pagopa/io-app/issues/6907)) ([0819bf5](https://github.com/pagopa/io-app/commit/0819bf5cd7577715193a5b3820f6a0aec45d1b3e))
+
 ## [3.4.0-rc.3](https://github.com/pagopa/io-app/compare/3.4.0-rc.2...3.4.0-rc.3) (2025-04-25)
 
 ## [3.4.0-rc.2](https://github.com/pagopa/io-app/compare/3.4.0-rc.1...3.4.0-rc.2) (2025-04-24)
