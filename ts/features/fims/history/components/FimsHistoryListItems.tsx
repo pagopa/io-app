@@ -5,11 +5,10 @@ import {
   HSpacer,
   Icon,
   IOListItemStyles,
-  IOStyles,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { Access } from "../../../../../definitions/fims_history/Access";
 import I18n from "../../../../i18n";
@@ -33,9 +32,10 @@ export const FimsHistorySuccessListItem = ({
   consent
 }: FimsHistorySuccessListItemProps) => {
   const theme = useIOTheme();
+
   return (
     <View style={defaultListItemStyles}>
-      <View style={IOStyles.row}>
+      <View style={{ flexDirection: "row" }}>
         <Icon size={16} name="calendar" />
         <HSpacer size={4} />
         <Caption color={theme["textBody-tertiary"]}>
@@ -49,6 +49,7 @@ export const FimsHistorySuccessListItem = ({
       <VSpacer size={8} />
 
       <H6>{serviceData.organization.name}</H6>
+      {/* TODO: Dark mode: Replace with theme values */}
       <BodySmall weight="Regular" color="grey-700">
         {consent.redirect?.display_name}
       </BodySmall>
@@ -62,7 +63,16 @@ export const FimsHistoryFailureListItem = ({
   const theme = useIOTheme();
 
   return (
-    <View style={[defaultListItemStyles, styles.errorSpaceBetween]}>
+    <View
+      style={[
+        defaultListItemStyles,
+        {
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center"
+        }
+      ]}
+    >
       <View
         style={{
           paddingVertical: 15
@@ -81,24 +91,18 @@ export const FimsHistoryFailureListItem = ({
           </Caption>
         </View>
         <VSpacer size={4} />
+        {/* TODO: Dark mode: Replace with theme values */}
         <BodySmall weight="Semibold" color="error-600">
           {I18n.t("FIMS.history.errorStates.dataUnavailable")}
         </BodySmall>
       </View>
+      {/* TODO: Dark mode: Replace with theme values */}
       <Icon name="errorFilled" color="error-600" />
     </View>
   );
 };
 
 // ------------ STYLES
-
-const styles = StyleSheet.create({
-  errorSpaceBetween: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  }
-});
 
 const defaultListItemStyles = [
   IOListItemStyles.listItem,

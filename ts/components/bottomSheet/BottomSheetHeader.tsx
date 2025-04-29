@@ -10,7 +10,6 @@ import {
 import { StyleSheet, View } from "react-native";
 import I18n from "../../i18n";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { IOStyles } from "../core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   bottomSheetHeader: {
@@ -44,7 +43,7 @@ export const BottomSheetHeader: FunctionComponent<Props> = ({
         title
       ) : (
         <View
-          style={IOStyles.flex}
+          style={{ flex: 1 }}
           accessible={true}
           accessibilityRole={"header"}
           accessibilityLabel={typeof title === "string" ? title : undefined}

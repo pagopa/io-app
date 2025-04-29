@@ -3360,14 +3360,12 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                               style={
                                 [
                                   {
+                                    "alignItems": "center",
+                                    "justifyContent": "center",
+                                  },
+                                  {
                                     "height": 24,
                                     "width": 24,
-                                  },
-                                  {
-                                    "alignItems": "center",
-                                  },
-                                  {
-                                    "justifyContent": "center",
                                   },
                                   false,
                                 ]
@@ -3385,6 +3383,7 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                 }
                                 bbHeight={NaN}
                                 bbWidth={NaN}
+                                color="#0E0F13"
                                 focusable={false}
                                 height={NaN}
                                 importantForAccessibility="no-hide-descendants"
@@ -3392,22 +3391,16 @@ exports[`PnActivationReminderBannerFlow should match snapshot for state= WAITING
                                 minX={0}
                                 minY={0}
                                 style={
-                                  [
-                                    {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "color": "#0E0F13",
-                                    },
-                                  ]
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderWidth": 0,
+                                  }
                                 }
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={NaN}
                               >
                                 <RNSVGGroup
-                                  color="#0E0F13"
                                   fill={
                                     {
                                       "payload": 4278190080,
