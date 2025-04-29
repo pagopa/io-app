@@ -1,5 +1,6 @@
 import {
   Alert,
+  ContentWrapper,
   Divider,
   IOColors,
   IOLogoPaymentType,
@@ -13,11 +14,10 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { capitalize } from "lodash";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 
 import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
@@ -30,18 +30,6 @@ type Props = {
   loading?: boolean;
   showUnavailableReceiptBanner?: boolean;
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    ...IOStyles.horizontalContentPadding
-  },
-  contentCard: {
-    ...IOStyles.horizontalContentPadding,
-    borderRadius: IORadiusScale["1"],
-    marginVertical: IOVisualCostants.appMarginDefault
-  }
-});
 
 /**
  * Component that shows the biz-events transaction info
@@ -59,8 +47,14 @@ const ReceiptInfoSection = ({
   return (
     <>
       <ReceiptDivider />
-      <View style={styles.container}>
-        <View style={[styles.contentCard, { backgroundColor }]}>
+      <ContentWrapper style={{ flexGrow: 1 }}>
+        <ContentWrapper
+          style={{
+            borderRadius: IORadiusScale["1"],
+            marginVertical: IOVisualCostants.appMarginDefault,
+            backgroundColor
+          }}
+        >
           <ListItemHeader
             label={I18n.t("transaction.details.info.title")}
             accessibilityLabel={I18n.t("transaction.details.info.title")}
@@ -181,7 +175,7 @@ const ReceiptInfoSection = ({
               )}
             </>
           )}
-        </View>
+        </ContentWrapper>
         {showUnavailableReceiptBanner && (
           <>
             <Alert
@@ -191,7 +185,7 @@ const ReceiptInfoSection = ({
             <VSpacer size={12} />
           </>
         )}
-      </View>
+      </ContentWrapper>
     </>
   );
 };
@@ -228,7 +222,7 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
 };
 
 const SkeletonItem = () => (
-  <View style={[IOStyles.flex, { paddingVertical: 12 }]} testID="skeleton-item">
+  <View style={{ flex: 1, paddingVertical: 12 }} testID="skeleton-item">
     <IOSkeleton shape="rectangle" height={16} width="80%" radius={4} />
     <VSpacer size={8} />
     <IOSkeleton shape="rectangle" height={16} width="25%" radius={4} />

@@ -1,8 +1,4 @@
-import {
-  IOColors,
-  IOStyles,
-  LoadingSpinner
-} from "@pagopa/io-app-design-system";
+import { IOColors, LoadingSpinner } from "@pagopa/io-app-design-system";
 import * as R from "fp-ts/ReadonlyRecord";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
@@ -317,7 +313,11 @@ export const useIOBarcodeCameraScanner = ({
 const LoadingMarkerComponent = () => (
   <Animated.View
     entering={FadeIn}
-    style={[IOStyles.flex, IOStyles.centerJustified, { marginTop: "15%" }]}
+    style={{
+      flex: 1,
+      justifyContent: "center",
+      marginTop: "15%"
+    }}
   >
     <LoadingSpinner size={76} color="white" />
   </Animated.View>

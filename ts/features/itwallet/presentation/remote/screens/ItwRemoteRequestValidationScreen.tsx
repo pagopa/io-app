@@ -1,6 +1,8 @@
+import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import * as E from "fp-ts/lib/Either";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import I18n from "../../../../../i18n.ts";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
@@ -9,7 +11,6 @@ import { validateItwPresentationQrCodeParams } from "../utils/itwRemotePresentat
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
 import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";
-import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload>;
@@ -46,11 +47,20 @@ const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
   );
 
   return (
-    <ItwRemoteLoadingScreen
-      title={I18n.t(
-        "features.itWallet.presentation.remote.loadingScreen.request"
+    <LoadingScreenContent
+      testID={"loader"}
+      contentTitle={I18n.t(
+        "features.itWallet.presentation.remote.loadingScreen.title"
       )}
-    />
+    >
+      <ContentWrapper style={{ alignItems: "center" }}>
+        <Body>
+          {I18n.t(
+            "features.itWallet.presentation.remote.loadingScreen.subtitle"
+          )}
+        </Body>
+      </ContentWrapper>
+    </LoadingScreenContent>
   );
 };
 

@@ -1,7 +1,7 @@
 import { ReactElement, createRef, useCallback, useEffect, useRef } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Platform, View } from "react-native";
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, useIOToast, VSpacer } from "@pagopa/io-app-design-system";
 import _ from "lodash";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
@@ -33,6 +33,7 @@ import { trackLoginSpidIdpSelected } from "../../../common/analytics/spidAnalyti
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { openWebUrl } from "../../../../../utils/url";
 import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
+import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.idp_selection.contextualHelpTitle",
@@ -66,6 +67,8 @@ const IdpSelectionScreen = (): ReactElement => {
   const isNativeLoginFeatureFlagEnabled = useIOSelector(
     isNativeLoginEnabledSelector
   );
+  const { error } = useIOToast();
+  const { name: routeName } = useRoute();
 
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
   const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
@@ -145,7 +148,16 @@ const IdpSelectionScreen = (): ReactElement => {
           content={I18n.t("login.help_banner_content")}
           accessibilityRole="link"
           action={I18n.t("login.help_banner_action")}
-          onPress={() => openWebUrl(helpCenterHowToLoginWithSpidUrl)}
+          onPress={() => {
+            trackHelpCenterCtaTapped(
+              "LOGIN_SPID_IDP_SELECTION",
+              helpCenterHowToLoginWithSpidUrl,
+              routeName
+            );
+            openWebUrl(helpCenterHowToLoginWithSpidUrl, () => {
+              error(I18n.t("global.jserror.title"));
+            });
+          }}
           pictogramName="help"
         />
         <VSpacer size={8} />
