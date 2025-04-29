@@ -400,15 +400,11 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                           >
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                    "justifyContent": "space-between",
-                                  },
-                                  {
-                                    "alignItems": "center",
-                                  },
-                                ]
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                }
                               }
                             >
                               <RNSVGSvgView

@@ -1,7 +1,6 @@
 import {
   Banner,
   ContentWrapper,
-  IOStyles,
   VSpacer,
   useIOToast
 } from "@pagopa/io-app-design-system";
@@ -193,7 +192,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
           }
         }}
       >
-        <SafeAreaView style={IOStyles.flex}>
+        <SafeAreaView style={{ flex: 1 }}>
           <ContentWrapper>
             <ServicesContactComponent
               mode={modeSelected}

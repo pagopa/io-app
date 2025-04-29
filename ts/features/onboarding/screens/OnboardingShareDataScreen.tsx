@@ -1,7 +1,6 @@
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import { ReactElement, useCallback, useMemo } from "react";
-import { SafeAreaView, View } from "react-native";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { SafeAreaView } from "react-native";
 import I18n from "../../../i18n";
 import { setMixpanelEnabled } from "../../../store/actions/mixpanel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
@@ -87,8 +86,8 @@ const OnboardingShareDataScreen = (): ReactElement => {
       description={I18n.t("profile.main.privacy.shareData.screen.description")}
       actions={actions}
     >
-      <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.horizontalContentPadding, { flexGrow: 1 }]}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <ContentWrapper style={{ flexGrow: 1 }}>
           <ShareDataComponent trackAction={handleTrackingAction} />
           <VSpacer size={32} />
           <Banner
@@ -101,7 +100,7 @@ const OnboardingShareDataScreen = (): ReactElement => {
             color="neutral"
             pictogramName="settings"
           />
-        </View>
+        </ContentWrapper>
         <VSpacer size={16} />
         {bottomSheet}
       </SafeAreaView>

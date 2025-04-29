@@ -3,7 +3,6 @@ import {
   ButtonLink,
   ButtonOutline,
   ContentWrapper,
-  IOStyles,
   NumberPad,
   Pictogram,
   VSpacer
@@ -228,14 +227,14 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   ];
 
   return (
-    <View testID="pin-creation-screen" style={IOStyles.flex}>
-      <View style={[IOStyles.flex, IOStyles.centerJustified]}>
+    <View testID="pin-creation-screen" style={{ flex: 1 }}>
+      <View style={{ flex: 1, justifyContent: "center" }}>
         {/*
           If the device height is less than MIN_HEIGHT_TO_SHOW_FULL_RENDER,
           then the pictogram will not be visible.
           */}
         {!isDeviceScreenSmall && (
-          <View style={IOStyles.selfCenter}>
+          <View style={{ alignSelf: "center" }}>
             <Pictogram name="key" size={64} />
             <VSpacer size={8} />
           </View>

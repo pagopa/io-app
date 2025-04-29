@@ -2,7 +2,6 @@ import {
   Avatar,
   Body,
   IOSpacingScale,
-  IOStyles,
   BodySmall
 } from "@pagopa/io-app-design-system";
 import { useCallback } from "react";
@@ -61,7 +60,7 @@ export const OrganizationHeader = ({
   );
   return (
     <View style={styles.item}>
-      <View style={IOStyles.flex}>
+      <View style={{ flex: 1 }}>
         <Body weight="Semibold" color="grey-700">
           {organizationName}
         </Body>

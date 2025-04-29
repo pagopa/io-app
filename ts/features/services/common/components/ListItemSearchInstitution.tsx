@@ -5,7 +5,6 @@ import {
   H6,
   IOListItemStyles,
   IOListItemVisualParams,
-  IOStyles,
   Icon,
   WithTestID,
   useIOTheme,
@@ -102,9 +101,7 @@ export const ListItemSearchInstitution = memo(
             <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
               <AvatarSearch {...avatar} />
             </View>
-            <View style={IOStyles.flex}>
-              {listItemSearchInstitutionContent}
-            </View>
+            <View style={{ flex: 1 }}>{listItemSearchInstitutionContent}</View>
             <Icon
               name="chevronRightListItem"
               color={theme["interactiveElem-default"]}

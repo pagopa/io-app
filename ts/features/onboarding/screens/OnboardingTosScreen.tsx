@@ -6,14 +6,14 @@
  */
 import {
   Alert as AlertDS,
+  ContentWrapper,
   H2,
-  IOStyles,
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert } from "react-native";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import TosWebviewComponent from "../../settings/privacy/shared/components/TosWebviewComponent";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
@@ -128,7 +128,7 @@ const OnboardingTosScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
-      <View style={IOStyles.horizontalContentPadding}>
+      <ContentWrapper>
         <H2
           accessible={true}
           accessibilityRole="header"
@@ -137,12 +137,9 @@ const OnboardingTosScreen = () => {
           {I18n.t("profile.main.privacy.privacyPolicy.title")}
         </H2>
         <VSpacer size={16} />
-      </View>
+      </ContentWrapper>
       {!hasAcceptedCurrentTos && (
-        <View
-          style={IOStyles.horizontalContentPadding}
-          testID={"currentToSNotAcceptedView"}
-        >
+        <ContentWrapper testID={"currentToSNotAcceptedView"}>
           <AlertDS
             testID="currentToSNotAcceptedText"
             variant="info"
@@ -152,7 +149,7 @@ const OnboardingTosScreen = () => {
                 : I18n.t("profile.main.privacy.privacyPolicy.infobox")
             }
           />
-        </View>
+        </ContentWrapper>
       )}
       <TosWebviewComponent
         flow={flow}
