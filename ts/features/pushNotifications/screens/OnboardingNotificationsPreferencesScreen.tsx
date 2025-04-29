@@ -14,7 +14,7 @@ import { PushNotificationsContentTypeEnum } from "../../../../definitions/backen
 import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStatus";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../../../navigation/params/OnboardingParamsList";
+import { OnboardingParamsList } from "../../onboarding/navigation/params/OnboardingParamsList";
 import { profileUpsert } from "../../settings/common/store/actions";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
