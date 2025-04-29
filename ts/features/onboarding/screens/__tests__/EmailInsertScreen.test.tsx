@@ -1,11 +1,11 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import ROUTES from "../../../navigation/routes";
-import { applicationChangeState } from "../../../store/actions/application";
-import { appReducer } from "../../../store/reducers";
-import I18n from "../../../i18n";
-import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import EmailInsertScreen from "../../../features/settings/userData/shared/screens/EmailInsertScreen";
+import ROUTES from "../../../../navigation/routes";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import I18n from "../../../../i18n";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import EmailInsertScreen from "../../../settings/userData/shared/screens/EmailInsertScreen";
 
 describe("EmailInsertScreen", () => {
   it("the components into the page should be render correctly", () => {

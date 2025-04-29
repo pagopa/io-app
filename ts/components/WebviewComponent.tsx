@@ -48,7 +48,9 @@ const WebviewComponent = ({ source }: Props) => {
     dispatch(
       setDebugData({
         cgnError: {
-          technicalLog: event.nativeEvent
+          technicalLog: event.nativeEvent,
+          uri: source.uri,
+          headers: source.headers
         }
       })
     );
