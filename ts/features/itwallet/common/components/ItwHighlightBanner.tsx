@@ -5,7 +5,6 @@ import {
   H4,
   HStack,
   IOColors,
-  IOStyles,
   LabelMini,
   VStack,
   WithTestID,
@@ -266,8 +265,8 @@ const StaticContent = (props: Props) => {
     >
       <HStack space={32}>
         <VStack space={8} style={{ flex: 1 }}>
-          <View style={IOStyles.row}>
-            <View style={IOStyles.selfCenter}>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ alignSelf: "center" }}>
               <Badge variant="highlight" text="Novità" />
             </View>
           </View>
