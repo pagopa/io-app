@@ -4,7 +4,8 @@ import * as O from "fp-ts/lib/Option";
 import {
   ItwRemoteRequestPayload,
   EnrichedPresentationDetails,
-  RelyingPartyConfiguration
+  RelyingPartyConfiguration,
+  DcqlQuery
 } from "../utils/itwRemoteTypeUtils";
 import { RequestObject } from "../../../common/utils/itwTypesUtils";
 import { useIOStore } from "../../../../../store/hooks";
@@ -100,7 +101,7 @@ export const createRemoteActorsImplementation = (
 
     const result = Credential.Presentation.evaluateDcqlQuery(
       credentialsSdJwt,
-      requestObject.dcql_query as any // TODO: fix type
+      requestObject.dcql_query as DcqlQuery
     );
 
     const credentialsByType = Object.fromEntries(
