@@ -39899,14 +39899,12 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -42127,14 +42125,12 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]

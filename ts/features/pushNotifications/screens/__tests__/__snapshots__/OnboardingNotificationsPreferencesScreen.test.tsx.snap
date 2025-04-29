@@ -1316,14 +1316,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -2741,14 +2739,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -4166,14 +4162,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -5591,14 +5585,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -7444,14 +7436,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]

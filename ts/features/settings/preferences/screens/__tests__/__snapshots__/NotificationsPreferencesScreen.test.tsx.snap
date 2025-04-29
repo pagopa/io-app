@@ -1003,14 +1003,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -1173,14 +1171,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -2284,14 +2280,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -2454,14 +2448,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -3565,14 +3557,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -3735,14 +3725,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -4846,14 +4834,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -5016,14 +5002,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -6127,14 +6111,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -6297,14 +6279,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -7408,14 +7388,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -7578,14 +7556,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -8689,14 +8665,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -8859,14 +8833,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -9970,14 +9942,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -10140,14 +10110,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -11251,14 +11219,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -11421,14 +11387,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -12532,14 +12496,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -12702,14 +12664,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -13813,14 +13773,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -13983,14 +13941,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -15094,14 +15050,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -15264,14 +15218,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -16375,14 +16327,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -16545,14 +16495,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -17656,14 +17604,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -17826,14 +17772,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -18937,14 +18881,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -19107,14 +19049,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -20218,14 +20158,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -20388,14 +20326,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -21499,14 +21435,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -21669,14 +21603,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -22780,14 +22712,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -22950,14 +22880,12 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]

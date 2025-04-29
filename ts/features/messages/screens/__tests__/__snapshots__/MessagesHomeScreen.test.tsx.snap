@@ -404,14 +404,12 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -519,14 +517,12 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -634,14 +630,12 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]

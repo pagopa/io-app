@@ -10,7 +10,6 @@ import {
   IOButton,
   IOColors,
   IOPictograms,
-  IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
@@ -535,7 +534,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
   private getFooter = () =>
     Platform.select({
       default: (
-        <View style={IOStyles.alignCenter}>
+        <View style={{ alignItems: "center" }}>
           <View>
             <IOButton
               variant="link"
@@ -546,7 +545,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         </View>
       ),
       ios: (
-        <View style={IOStyles.alignCenter}>
+        <View style={{ alignItems: "center" }}>
           <View>
             <IOButton
               variant="solid"
@@ -568,10 +567,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 
   public render(): ReactNode {
     return (
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID="cie-card-reader-screen-test-id"
-      >
+      <SafeAreaView style={{ flex: 1 }} testID="cie-card-reader-screen-test-id">
         <ScrollView
           centerContent={true}
           contentContainerStyle={styles.contentContainer}

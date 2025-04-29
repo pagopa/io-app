@@ -14,7 +14,6 @@ import {
   View
 } from "react-native";
 import WebviewComponent from "../../../../components/WebviewComponent";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const styles = StyleSheet.create({
@@ -44,12 +43,12 @@ const CgnLandingPlayground = () => {
   });
 
   return (
-    <SafeAreaView style={IOStyles.flex}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
-        contentContainerStyle={[
-          { paddingHorizontal: IOVisualCostants.appMarginDefault },
-          IOStyles.flex
-        ]}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault,
+          flexGrow: 1
+        }}
       >
         <View>
           <H6>{"Link alla landing"}</H6>
@@ -90,7 +89,7 @@ const CgnLandingPlayground = () => {
           />
         </View>
         <VSpacer size={16} />
-        <View style={IOStyles.flex}>
+        <View style={{ flex: 1 }}>
           {loadUri !== "" && (
             <WebviewComponent
               key={`${reloadKey}_webview`}

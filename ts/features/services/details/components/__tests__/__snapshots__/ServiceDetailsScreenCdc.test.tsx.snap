@@ -325,14 +325,12 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -493,14 +491,12 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -926,14 +922,12 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -1094,14 +1088,12 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]

@@ -353,14 +353,12 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             style={
               [
                 {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                {
                   "height": 24,
                   "width": 24,
-                },
-                {
-                  "alignItems": "center",
-                },
-                {
-                  "justifyContent": "center",
                 },
                 false,
               ]
@@ -577,12 +575,11 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
         </RNSVGSvgView>
         <View
           style={
-            [
-              false,
-              {
-                "flex": 1,
-              },
-            ]
+            {
+              "flex": 1,
+              "marginBottom": -6,
+              "marginTop": -6,
+            }
           }
         >
           <View
@@ -598,7 +595,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               allowFontScaling={true}
               dynamicTypeRamp="body"
               maxFontSizeMultiplier={1.5}
-              onTextLayout={[Function]}
               style={
                 [
                   {},

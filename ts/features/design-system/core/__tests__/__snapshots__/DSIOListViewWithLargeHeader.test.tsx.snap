@@ -1522,14 +1522,12 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -1692,14 +1690,12 @@ exports[`DSIOListViewWithLargeHeader should render list items correctly 1`] = `
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]

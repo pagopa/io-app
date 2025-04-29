@@ -6,60 +6,45 @@ import {
   Banner,
   ContentWrapper,
   ModuleNavigation,
-  VSpacer,
   Tooltip,
   useIOToast,
-  IOButton
+  IOButton,
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
 import {
-  useState,
+  ComponentProps,
+  useCallback,
   useEffect,
   useMemo,
-  useCallback,
   useRef,
-  ComponentProps
+  useState
 } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Alert, View } from "react-native";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
-import _isEqual from "lodash/isEqual";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
-import {
-  isCieIDTourGuideEnabledSelector,
-  isCieLoginUatEnabledSelector
-} from "../../cie/store/selectors";
+import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import {
-  resetAuthenticationState,
-  sessionExpired
-} from "../../../common/store/actions";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../../store/hooks";
-import { isSessionExpiredSelector } from "../../../common/store/selectors";
 import { continueWithRootOrJailbreakSelector } from "../../../../../store/reducers/persistedPreferences";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { openWebUrl } from "../../../../../utils/url";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
-import { cieIDDisableTourGuide } from "../../cie/store/actions";
-import { SpidLevel } from "../../cie/utils";
-import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 import { isTablet } from "../../../../../utils/device";
-import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { openWebUrl } from "../../../../../utils/url";
 import {
   loginCieWizardSelected,
   trackCieBottomSheetScreenView,
@@ -70,6 +55,19 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import {
+  resetAuthenticationState,
+  sessionExpired
+} from "../../../common/store/actions";
+import { isSessionExpiredSelector } from "../../../common/store/selectors";
+import { cieIDDisableTourGuide } from "../../cie/store/actions";
+import {
+  isCieIDTourGuideEnabledSelector,
+  isCieLoginUatEnabledSelector
+} from "../../cie/store/selectors";
+import { SpidLevel } from "../../cie/utils";
+import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
+import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -335,7 +333,7 @@ export const LandingScreen = () => {
     );
 
     return (
-      <View style={IOStyles.flex} testID="LandingScreen">
+      <View style={{ flex: 1 }} testID="LandingScreen">
         {isSessionExpiredRef.current ? (
           <LandingSessionExpiredComponent
             ref={accessibilityFirstFocuseViewRef}
@@ -406,7 +404,7 @@ export const LandingScreen = () => {
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
           {/* This code has not been removed because an equal link will have to
           be reinstated when this story will be implemented: https://pagopa.atlassian.net/browse/IOPID-2689 */}
-          {/* <View style={IOStyles.selfCenter}>
+          {/* <View style={{ alignSelf: "center" }}>
             <IOButton
               variant="link"
               accessibilityRole="link"

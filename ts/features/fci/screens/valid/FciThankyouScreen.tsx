@@ -1,8 +1,4 @@
-import {
-  FooterActions,
-  IOStyles,
-  Pictogram
-} from "@pagopa/io-app-design-system";
+import { FooterActions, Pictogram } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "react-native";
 import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
@@ -40,7 +36,7 @@ const FciThankyouScreen = () => {
   );
 
   const SuccessComponent = () => (
-    <View style={IOStyles.flex} testID={"FciTypSuccessTestID"}>
+    <View style={{ flex: 1 }} testID={"FciTypSuccessTestID"}>
       <InfoScreenComponent
         image={<Pictogram name={"success"} />}
         title={I18n.t("features.fci.thankYouPage.title")}

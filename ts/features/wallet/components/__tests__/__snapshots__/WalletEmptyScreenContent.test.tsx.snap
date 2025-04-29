@@ -634,7 +634,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                 }
                                 bbHeight={30}
                                 bbWidth={30}
-                                color="#555C70"
+                                color="#FFFFFF"
                                 focusable={false}
                                 height={30}
                                 importantForAccessibility="no-hide-descendants"

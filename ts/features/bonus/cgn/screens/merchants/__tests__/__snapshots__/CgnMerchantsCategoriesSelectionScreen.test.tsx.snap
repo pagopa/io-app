@@ -1002,14 +1002,12 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -1173,14 +1171,12 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -1288,14 +1284,12 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]

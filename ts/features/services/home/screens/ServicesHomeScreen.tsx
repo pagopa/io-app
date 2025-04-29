@@ -2,8 +2,8 @@ import {
   Divider,
   HeaderActionProps,
   IOButton,
-  IOStyles,
   IOToast,
+  IOVisualCostants,
   ListItemHeader,
   ListItemNav,
   SearchInput,
@@ -11,7 +11,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
-import { ListRenderItemInfo, StyleSheet, View } from "react-native";
+import { ListRenderItemInfo, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
@@ -31,12 +31,6 @@ import { FeaturedServiceList } from "../components/FeaturedServiceList";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { useServicesHomeBottomSheet } from "../hooks/useServicesHomeBottomSheet";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
-
-const styles = StyleSheet.create({
-  scrollContentContainer: {
-    flexGrow: 1
-  }
-});
 
 export const ServicesHomeScreen = () => {
   const dispatch = useIODispatch();
@@ -119,7 +113,7 @@ export const ServicesHomeScreen = () => {
       return (
         <>
           <VSpacer size={16} />
-          <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
+          <View style={{ alignItems: "center", alignSelf: "center" }}>
             <IOButton
               variant="link"
               label={I18n.t("services.home.searchLink")}
@@ -245,10 +239,10 @@ export const ServicesHomeScreen = () => {
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
         ListHeaderComponent={renderListHeaderComponent}
-        contentContainerStyle={[
-          styles.scrollContentContainer,
-          IOStyles.horizontalContentPadding
-        ]}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
         data={data?.institutions}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.1}

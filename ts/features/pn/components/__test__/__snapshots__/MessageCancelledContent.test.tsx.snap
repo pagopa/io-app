@@ -426,12 +426,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -447,7 +446,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -907,12 +905,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -928,7 +925,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -1388,12 +1384,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -1409,7 +1404,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -1869,12 +1863,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -1890,7 +1883,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -2350,12 +2342,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -2371,7 +2362,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -2831,12 +2821,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -2852,7 +2841,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -3312,12 +3300,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -3333,7 +3320,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -3793,12 +3779,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -3814,7 +3799,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -4274,12 +4258,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -4295,7 +4278,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},

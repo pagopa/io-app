@@ -1,14 +1,13 @@
 import {
   IOButton,
   IOButtonBlockSpecificProps,
+  ContentWrapper,
   IOPictograms,
   IOSpacingScale,
-  IOStyles,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
-import { View } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets
@@ -140,7 +139,7 @@ const ErrorComponent = (props: Props) => {
   return (
     <SafeAreaView
       edges={["top", "left", "right"]}
-      style={IOStyles.flex}
+      style={{ flex: 1 }}
       testID={props.testID}
     >
       <InfoScreenComponent
@@ -149,14 +148,14 @@ const ErrorComponent = (props: Props) => {
         body={props.subTitle}
         email={props.email}
       />
-      <View
-        style={[
-          IOStyles.horizontalContentPadding,
-          { paddingBottom: Math.max(insets.bottom, DEFAULT_BOTTOM_PADDING) }
-        ]}
+      <ContentWrapper
+        style={{
+          paddingBottom: Math.max(insets.bottom, DEFAULT_BOTTOM_PADDING)
+        }}
       >
+        {/* TODO: Add `FooterActions` component. Replace all the custom code here. */}
         {footerButtons()}
-      </View>
+      </ContentWrapper>
     </SafeAreaView>
   );
 };

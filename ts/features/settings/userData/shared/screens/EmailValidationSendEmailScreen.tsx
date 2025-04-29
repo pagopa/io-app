@@ -12,7 +12,6 @@ import {
   Pictogram,
   VSpacer,
   Body,
-  IOStyles,
   H3,
   IOToast,
   ContentWrapper,
@@ -245,7 +244,7 @@ const EmailValidationSendEmailScreen = () => {
       <ScrollView centerContent={true} contentContainerStyle={[styles.wrapper]}>
         <SectionStatusComponent sectionKey={"email_validation"} />
         <ContentWrapper>
-          <View style={IOStyles.selfCenter}>
+          <View style={{ alignSelf: "center" }}>
             <Pictogram
               name={isEmailValidated ? "emailDotCheck" : "emailDotNotif"}
               size={VALIDATION_ILLUSTRATION_WIDTH}
@@ -253,7 +252,7 @@ const EmailValidationSendEmailScreen = () => {
           </View>
           <VSpacer size={24} />
           <View
-            style={IOStyles.alignCenter}
+            style={{ alignItems: "center" }}
             accessible={true}
             ref={accessibilityFirstFocuseViewRef}
           >
@@ -282,7 +281,7 @@ const EmailValidationSendEmailScreen = () => {
           </View>
           <VSpacer size={24} />
           {!isEmailValidated && (
-            <View style={IOStyles.selfCenter}>
+            <View style={{ alignSelf: "center" }}>
               <IOButton
                 variant="link"
                 label={I18n.t("email.newvalidate.link")}
@@ -304,7 +303,7 @@ const EmailValidationSendEmailScreen = () => {
             />
           </CountdownProvider>
           {isEmailValidated ? (
-            <View style={IOStyles.selfCenter}>
+            <View style={{ alignSelf: "center" }}>
               <IOButton
                 variant="solid"
                 label={I18n.t("global.buttons.continue")}
@@ -313,7 +312,7 @@ const EmailValidationSendEmailScreen = () => {
             </View>
           ) : (
             !showCountdown && (
-              <View style={IOStyles.selfCenter}>
+              <View style={{ alignSelf: "center" }}>
                 <IOButton
                   variant="outline"
                   label={I18n.t("email.newvalidate.buttonlabelsentagain")}

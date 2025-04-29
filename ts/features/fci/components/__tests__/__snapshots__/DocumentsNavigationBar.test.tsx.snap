@@ -67,14 +67,12 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       style={
         [
           {
+            "alignItems": "center",
+            "justifyContent": "center",
+          },
+          {
             "height": 24,
             "width": 24,
-          },
-          {
-            "alignItems": "center",
-          },
-          {
-            "justifyContent": "center",
           },
           false,
         ]
@@ -203,14 +201,12 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       style={
         [
           {
+            "alignItems": "center",
+            "justifyContent": "center",
+          },
+          {
             "height": 24,
             "width": 24,
-          },
-          {
-            "alignItems": "center",
-          },
-          {
-            "justifyContent": "center",
           },
           false,
         ]
@@ -287,28 +283,33 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       }
     }
   />
-  <Text
-    allowFontScaling={true}
-    dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.5}
+  <View
     style={
-      [
-        {},
-        {
-          "color": "#0E0F13",
-          "fontFamily": "Titillio",
-          "fontSize": 16,
-          "fontStyle": "normal",
-          "fontWeight": "600",
-          "lineHeight": 24,
-        },
-        {
-          "paddingHorizontal": 24,
-        },
-      ]
+      {
+        "paddingHorizontal": 24,
+      }
     }
   >
-    Pagina 1 di 2
-  </Text>
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="headline"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+        ]
+      }
+    >
+      Pagina 1 di 2
+    </Text>
+  </View>
 </View>
 `;

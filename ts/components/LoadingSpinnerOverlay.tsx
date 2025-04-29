@@ -9,7 +9,6 @@ import {
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../i18n";
-import { IOStyles } from "./core/variables/IOStyles";
 import BoxedRefreshIndicator from "./ui/BoxedRefreshIndicator";
 import { Overlay } from "./ui/Overlay";
 
@@ -61,7 +60,7 @@ const LoadingSpinnerOverlay = ({
             }
             action={
               onCancel && (
-                <View style={IOStyles.selfCenter}>
+                <View style={{ alignSelf: "center" }}>
                   <IOButton
                     variant="outline"
                     label={I18n.t("global.buttons.cancel")}

@@ -766,12 +766,11 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -787,7 +786,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -1286,12 +1284,11 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                             </RNSVGSvgView>
                             <View
                               style={
-                                [
-                                  false,
-                                  {
-                                    "flex": 1,
-                                  },
-                                ]
+                                {
+                                  "flex": 1,
+                                  "marginBottom": -6,
+                                  "marginTop": -6,
+                                }
                               }
                             >
                               <View
@@ -1307,7 +1304,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                   allowFontScaling={true}
                                   dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.5}
-                                  onTextLayout={[Function]}
                                   style={
                                     [
                                       {},

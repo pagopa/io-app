@@ -6,7 +6,6 @@ import {
   HStack,
   Icon,
   IOButton,
-  IOStyles,
   VStack
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -38,7 +37,7 @@ type ItwEidInfoBottomSheetTitleProps = {
 export const ItwEidInfoBottomSheetTitle = ({
   isExpired
 }: ItwEidInfoBottomSheetTitleProps) => (
-  <HStack space={8} style={IOStyles.alignCenter}>
+  <HStack space={8} style={{ alignItems: "center" }}>
     <Icon name="legalValue" color={isExpired ? "grey-300" : "blueIO-500"} />
     <H4>
       {I18n.t(
