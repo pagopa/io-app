@@ -14,7 +14,7 @@ const mockRNQRGenerator = {
   default: {
     detect: jest.fn().mockResolvedValue(null),
     generate: jest.fn().mockResolvedValue({
-      uri: 'mock-qr-uri'
+      uri: "mock-qr-uri"
     })
   }
 };
@@ -97,6 +97,8 @@ jest.mock("@gorhom/bottom-sheet", () => {
   };
 });
 
+jest.mock("@sentry/react-native");
+
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 
 jest.mock("react-native-pdf", () => jest.fn());
@@ -162,20 +164,23 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
   };
 });
 
-jest.mock("react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo", ()  => {
-  const accessibilityInfo = jest.requireActual(
-    "react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo"
-  );
+jest.mock(
+  "react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo",
+  () => {
+    const accessibilityInfo = jest.requireActual(
+      "react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo"
+    );
 
-  return {
-    ...accessibilityInfo,
-    addEventListener: () => ({
-      remove: jest.fn()
-    })
-  };
-});
+    return {
+      ...accessibilityInfo,
+      addEventListener: () => ({
+        remove: jest.fn()
+      })
+    };
+  }
+);
 
-jest.mock("react-native/Libraries/AppState/AppState", ()  => {
+jest.mock("react-native/Libraries/AppState/AppState", () => {
   const appState = jest.requireActual(
     "react-native/Libraries/AppState/AppState"
   );
