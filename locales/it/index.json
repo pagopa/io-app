@@ -4736,6 +4736,13 @@
         },
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
+      },
+      "upgrade": {
+        "banner": {
+          "title": "IT-Wallet per\ni tuoi documenti",
+          "description": "L’unico Wallet di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
+          "action": "Ottieni IT-Wallet"
+        }
       }
     }
   },
