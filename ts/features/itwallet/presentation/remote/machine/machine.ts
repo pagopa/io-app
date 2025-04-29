@@ -174,6 +174,9 @@ export const itwRemoteMachine = setup({
           optionalCredentials: context.selectedOptionalCredentials
         }),
         onDone: {
+          actions: assign(({ event }) => ({
+            redirectUri: event.output.redirectUri
+          })),
           target: "Success"
         },
         onError: {

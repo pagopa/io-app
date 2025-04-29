@@ -12,8 +12,8 @@ import {
   HSpacer,
   IOPictogramsBleed,
   IOSpacer,
-  IOStyles,
   IOToast,
+  IOVisualCostants,
   Nullable,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -45,14 +45,14 @@ import {
 } from "react";
 import { Dimensions, Image, Pressable, Text, View } from "react-native";
 import I18n from "../../i18n";
-import { openWebUrl } from "../../utils/url";
 import { isAndroid } from "../../utils/platform";
-import { IOMarkdownRenderRules, Renderer } from "./types";
+import { openWebUrl } from "../../utils/url";
 import {
   extractAllLinksFromRootNode,
   isParagraphNodeInHierarchy,
   LinkData
 } from "./markdownRenderer";
+import { IOMarkdownRenderRules, Renderer } from "./types";
 
 const BULLET_ITEM_FULL = "\u2022";
 const BULLET_ITEM_EMPTY = "\u25E6";
@@ -263,8 +263,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
       aspectRatio: 1
     });
     const screenWidth =
-      Dimensions.get("screen").width -
-      IOStyles.horizontalContentPadding.paddingHorizontal * 2;
+      Dimensions.get("screen").width - IOVisualCostants.appMarginDefault * 2;
 
     useLayoutEffect(() => {
       Image.getSize(image.url, (width, height) => {
@@ -319,10 +318,10 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
       <Fragment key={nodeKey}>
         <View>
           {isFirstList && <VSpacer size={8} />}
-          <View style={IOStyles.row}>
+          <View style={{ flexDirection: "row" }}>
             {isFirstList && <HSpacer size={12} />}
             <View
-              style={[IOStyles.flex, { flexGrow: 1 }]}
+              style={{ flex: 1, flexGrow: 1 }}
               accessible={true}
               accessibilityRole="list"
             >
@@ -330,7 +329,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
                 <View
                   accessible
                   key={`${child.type}_${i}`}
-                  style={IOStyles.row}
+                  style={{ flexDirection: "row" }}
                 >
                   {getLeftAdornment(i)}
                   <HSpacer size={8} />
@@ -359,7 +358,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     return (
       <View
         accessible={false}
-        style={[IOStyles.flex, { flexShrink: 1 }]}
+        style={{ flex: 1, flexShrink: 1 }}
         key={getTxtNodeKey(listItem)}
       >
         {listItem.children.map(render)}

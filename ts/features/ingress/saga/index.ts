@@ -1,37 +1,31 @@
 import { put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { setOfflineAccessReason } from "../store/actions";
-import { itwLifecycleIsOperationalOrValid } from "../../itwallet/lifecycle/store/selectors";
-import { isItwOfflineAccessEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { offlineAccessReasonSelector } from "../store/selectors";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import { startupLoadSuccess } from "../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../store/reducers/startup";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { setConnectionStatus } from "../../connectivity/store/actions";
+import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
 
 /**
  * Handles the transition to offline mode during startup.
  *
  * This saga checks whether:
- * - The user has a valid IT Wallet instance (`itwLifecycleIsOperationalOrValid`)
- * - Offline access is enabled (`isItwOfflineAccessEnabledSelector`)
+ * - The user has a valid IT Wallet instance with credentials and offline access is enabled (`itwOfflineAccessAvailableSelector`)
  * - The offline access reason is due to a session refresh (`OfflineAccessReasonEnum.SESSION_REFRESH`)
  *
  * If all conditions are met, it updates the startup status to `OFFLINE`.
  */
 export function* evaluateOfflineSessionRefreshSaga() {
-  const selectItwLifecycleIsOperationalOrValid = yield* select(
-    itwLifecycleIsOperationalOrValid
-  );
-  const isOfflineAccessEnabled = yield* select(
-    isItwOfflineAccessEnabledSelector
+  const itwOfflineAccessAvailable = yield* select(
+    itwOfflineAccessAvailableSelector
   );
   const offlineAccessReason = yield* select(offlineAccessReasonSelector);
 
   if (
-    selectItwLifecycleIsOperationalOrValid &&
-    isOfflineAccessEnabled &&
+    itwOfflineAccessAvailable &&
     offlineAccessReason === OfflineAccessReasonEnum.SESSION_REFRESH
   ) {
     yield* put(startupLoadSuccess(StartupStatusEnum.OFFLINE));
@@ -56,8 +50,7 @@ export function* watchSessionRefreshInOfflineSaga() {
  *
  * This saga checks whether:
  * - The device is offline (`isConnectedSelector` is `false`)
- * - The user has a valid IT Wallet instance (`itwLifecycleIsOperationalOrValid`)
- * - The local feature flag for offline access is enabled (`isItwOfflineAccessEnabledSelector`)
+ * - The user has a valid IT Wallet instance with credentials and offline access is enabled (`itwOfflineAccessAvailableSelector`)
  *
  * @returns {boolean} - Returns `true` if offline access is available and the device is offline, otherwise `false`.
  */
@@ -65,11 +58,8 @@ export function* isDeviceOfflineWithWalletSaga() {
   // eslint-disable-next-line functional/no-let
   let isConnected = yield* select(isConnectedSelector);
 
-  const selectItwLifecycleIsOperationalOrValid = yield* select(
-    itwLifecycleIsOperationalOrValid
-  );
-  const isItwOfflineAccessEnabled = yield* select(
-    isItwOfflineAccessEnabledSelector
+  const itwOfflineAccessAvailable = yield* select(
+    itwOfflineAccessAvailableSelector
   );
 
   if (isConnected === undefined) {
@@ -77,11 +67,7 @@ export function* isDeviceOfflineWithWalletSaga() {
     isConnected = connectionStatus.payload;
   }
 
-  if (
-    isConnected === false &&
-    selectItwLifecycleIsOperationalOrValid &&
-    isItwOfflineAccessEnabled
-  ) {
+  if (isConnected === false && itwOfflineAccessAvailable) {
     return true;
   }
   return false;

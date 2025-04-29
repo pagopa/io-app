@@ -12,7 +12,6 @@ import {
   Pictogram,
   VSpacer,
   Body,
-  IOStyles,
   H3,
   ButtonOutline,
   ButtonSolid,
@@ -39,7 +38,7 @@ import {
 } from "../../../common/store/selectors";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emailValidationSelector } from "../../../../mailCheck/store/selectors/emailValidation";
-import { emailAcknowledged } from "../../../../../store/actions/onboarding";
+import { emailAcknowledged } from "../../../../onboarding/store/actions";
 import { getFlowType } from "../../../../../utils/analytics";
 import {
   trackEmailValidation,
@@ -247,7 +246,7 @@ const EmailValidationSendEmailScreen = () => {
       <ScrollView centerContent={true} contentContainerStyle={[styles.wrapper]}>
         <SectionStatusComponent sectionKey={"email_validation"} />
         <ContentWrapper>
-          <View style={IOStyles.selfCenter}>
+          <View style={{ alignSelf: "center" }}>
             <Pictogram
               name={isEmailValidated ? "emailDotCheck" : "emailDotNotif"}
               size={VALIDATION_ILLUSTRATION_WIDTH}
@@ -255,7 +254,7 @@ const EmailValidationSendEmailScreen = () => {
           </View>
           <VSpacer size={24} />
           <View
-            style={IOStyles.alignCenter}
+            style={{ alignItems: "center" }}
             accessible={true}
             ref={accessibilityFirstFocuseViewRef}
           >
@@ -284,7 +283,7 @@ const EmailValidationSendEmailScreen = () => {
           </View>
           <VSpacer size={24} />
           {!isEmailValidated && (
-            <View style={IOStyles.selfCenter}>
+            <View style={{ alignSelf: "center" }}>
               <ButtonLink
                 label={I18n.t("email.newvalidate.link")}
                 accessibilityLabel={I18n.t("email.newvalidate.link")}
@@ -306,7 +305,7 @@ const EmailValidationSendEmailScreen = () => {
             />
           </CountdownProvider>
           {isEmailValidated ? (
-            <View style={IOStyles.selfCenter}>
+            <View style={{ alignSelf: "center" }}>
               <ButtonSolid
                 label={I18n.t("global.buttons.continue")}
                 accessibilityLabel={I18n.t("global.buttons.continue")}
@@ -315,7 +314,7 @@ const EmailValidationSendEmailScreen = () => {
             </View>
           ) : (
             !showCountdown && (
-              <View style={IOStyles.selfCenter}>
+              <View style={{ alignSelf: "center" }}>
                 <ButtonOutline
                   label={I18n.t("email.newvalidate.buttonlabelsentagain")}
                   accessibilityLabel={I18n.t(
