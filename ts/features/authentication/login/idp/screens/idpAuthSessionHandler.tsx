@@ -23,29 +23,16 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { IdpData } from "../../../../../../definitions/content/IdpData";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
-import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
-import { lollipopKeyTagSelector } from "../../../../lollipop/store/reducers/lollipop";
-import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../lollipop/utils/login";
-import { setNativeLoginRequestInfo } from "../store/actions";
-import { nativeLoginRequestInfoSelector } from "../store/selectors";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import {
-  disableNativeAuthentication,
-  loginFailure,
-  loginSuccess
-} from "../../../common/store/actions";
-import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../../store/hooks";
-import { selectedIdentityProviderSelector } from "../../../common/store/selectors";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
@@ -54,16 +41,28 @@ import { SessionToken } from "../../../../../types/SessionToken";
 import { trackLollipopIdpLoginFailure } from "../../../../../utils/analytics";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../../../../../utils/supportAssistance";
+import { lollipopKeyTagSelector } from "../../../../lollipop/store/reducers/lollipop";
+import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../lollipop/utils/login";
+import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import {
+  disableNativeAuthentication,
+  loginFailure,
+  loginSuccess
+} from "../../../common/store/actions";
+import { selectedIdentityProviderSelector } from "../../../common/store/selectors";
+import {
   extractLoginResult,
   getEitherLoginResult,
   getIdpLoginUri
 } from "../../../common/utils/login";
+import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
+import { setNativeLoginRequestInfo } from "../store/actions";
+import { nativeLoginRequestInfoSelector } from "../store/selectors";
 import { getSpidErrorCodeDescription } from "../utils/spidErrorCode";
-import {
-  assistanceToolRemoteConfig,
-  handleSendAssistanceLog
-} from "../../../../../utils/supportAssistance";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -396,7 +395,7 @@ export const AuthSessionPage = () => {
     return (
       <LoadingSpinnerOverlay isLoading={requestInfo.requestState === "LOADING"}>
         {requestInfo.requestState === "AUTHORIZING" && (
-          <SafeAreaView style={IOStyles.flex}>
+          <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.errorContainer}>
               <Pictogram name="timing" size={120} />
               <VSpacer size={16} />

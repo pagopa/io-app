@@ -491,14 +491,10 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                       onResponderTerminationRequest={[Function]}
                                       onStartShouldSetResponder={[Function]}
                                       style={
-                                        [
-                                          {
-                                            "flexDirection": "row",
-                                          },
-                                          {
-                                            "justifyContent": "space-around",
-                                          },
-                                        ]
+                                        {
+                                          "flexDirection": "row",
+                                          "justifyContent": "space-around",
+                                        }
                                       }
                                     >
                                       <TextInput
