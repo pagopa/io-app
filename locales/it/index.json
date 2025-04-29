@@ -55,10 +55,7 @@
       "nov",
       "dic"
     ],
-    "meridian": [
-      "am",
-      "pm"
-    ],
+    "meridian": ["am", "pm"],
     "time": {
       "minutes": {
         "zero": "0 minuti",
@@ -4662,7 +4659,7 @@
               "primaryAction": "Ho capito",
               "secondaryAction": "Maggiori dettagli"
             },
-            "malformedRequestObject": {
+            "invalidRequestObject": {
               "title": "Non puoi continuare con la richiesta",
               "subtitle": "L’ente che richiede la verifica non sta comunicando i dati necessari per continuare. Riprova più tardi.",
               "primaryAction": "Ho capito"

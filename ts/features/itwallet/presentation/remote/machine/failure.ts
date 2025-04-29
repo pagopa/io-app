@@ -7,25 +7,25 @@ export enum RemoteFailureType {
   EID_EXPIRED = "EID_EXPIRED",
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
   RELYING_PARTY_INVALID_AUTH_RESPONSE = "RELYING_PARTY_INVALID_AUTH_RESPONSE",
-  MALFORMED_REQUEST_OBJECT = "MALFORMED_REQUEST_OBJECT",
+  INVALID_REQUEST_OBJECT = "INVALID_REQUEST_OBJECT",
   UNEXPECTED = "UNEXPECTED"
 }
 const { isRelyingPartyResponseError, RelyingPartyResponseErrorCodes: Codes } =
   Errors;
 
 /**
- * Type that contains the possible error types thrown when the requested Request Object is malformed.
+ * Type that contains the possible error types thrown when the requested Request Object is invalid.
  */
-type MalformedRequestObjectError =
+type InvalidRequestObjectError =
   | Credential.Presentation.Errors.InvalidRequestObjectError
   | Credential.Presentation.Errors.DcqlError;
 
 /**
- * Guard used to check if the error is of type `MalformedRequestObjectError`
+ * Guard used to check if the error is of type `InvalidRequestObjectError`
  */
-const isRequestObjectMalformedError = (
+const isRequestObjectInvalidError = (
   error: unknown
-): error is MalformedRequestObjectError =>
+): error is InvalidRequestObjectError =>
   error instanceof Credential.Presentation.Errors.InvalidRequestObjectError ||
   error instanceof Credential.Presentation.Errors.DcqlError;
 
@@ -40,7 +40,7 @@ export type ReasonTypeByFailure = {
   [RemoteFailureType.EID_EXPIRED]: string;
   [RemoteFailureType.RELYING_PARTY_GENERIC]: Errors.RelyingPartyResponseError;
   [RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE]: Errors.RelyingPartyResponseError;
-  [RemoteFailureType.MALFORMED_REQUEST_OBJECT]: MalformedRequestObjectError;
+  [RemoteFailureType.INVALID_REQUEST_OBJECT]: InvalidRequestObjectError;
   [RemoteFailureType.UNEXPECTED]: unknown;
 };
 
@@ -80,9 +80,9 @@ export const mapEventToFailure = (event: RemoteEvents): RemoteFailure => {
       reason: error
     };
   }
-  if (isRequestObjectMalformedError(error)) {
+  if (isRequestObjectInvalidError(error)) {
     return {
-      type: RemoteFailureType.MALFORMED_REQUEST_OBJECT,
+      type: RemoteFailureType.INVALID_REQUEST_OBJECT,
       reason: error
     };
   }

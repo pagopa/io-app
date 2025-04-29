@@ -195,18 +195,18 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
-        case RemoteFailureType.MALFORMED_REQUEST_OBJECT: {
+        case RemoteFailureType.INVALID_REQUEST_OBJECT: {
           return {
             title: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.malformedRequestObject.title"
+              "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.title"
             ),
             subtitle: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.malformedRequestObject.subtitle"
+              "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.subtitle"
             ),
             pictogram: "umbrella",
             action: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.relyingParty.malformedRequestObject.primaryAction"
+                "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.primaryAction"
               ),
               onPress: () => machineRef.send({ type: "close" })
             }
