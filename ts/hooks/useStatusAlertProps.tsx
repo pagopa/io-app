@@ -16,6 +16,9 @@ import { isConnectedSelector } from "../features/connectivity/store/selectors";
 import IOMarkdown from "../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
 import { usePrevious } from "../utils/hooks/usePrevious";
+import { mixpanelTrack } from "../mixpanel";
+import { currentRouteSelector } from "../store/reducers/navigation";
+import { buildEventProperties } from "../utils/analytics";
 
 const statusVariantMap: Record<LevelEnum, AlertEdgeToEdgeProps["variant"]> = {
   [LevelEnum.normal]: "info",
@@ -54,6 +57,7 @@ export const useStatusAlertProps = (
     statusMessageByRouteSelector(routeName)
   );
 
+  const currentRoute = useIOSelector(currentRouteSelector);
   const isConnected = useIOSelector(isConnectedSelector);
   const prevIsConnected = usePrevious(isConnected);
 
@@ -66,7 +70,15 @@ export const useStatusAlertProps = (
         variant: "info",
         content: I18n.t("global.offline.statusMessage.message"),
         action: I18n.t("global.offline.statusMessage.action"),
-        onPress: present
+        onPress: () => {
+          present();
+          void mixpanelTrack(
+            "APP_OFFLINE_BOTTOM_SHEET",
+            buildEventProperties("UX", "screen_view", {
+              screen: currentRoute
+            })
+          );
+        }
       });
     }
     if (prevIsConnected === false && isConnected === true) {
@@ -74,6 +86,13 @@ export const useStatusAlertProps = (
         variant: "success",
         content: I18n.t("global.offline.connectionRestored")
       });
+
+      void mixpanelTrack(
+        "ONLINE_BANNER",
+        buildEventProperties("TECH", undefined, {
+          screen: currentRoute
+        })
+      );
 
       setTimeout(() => {
         setConnectivityAlert(undefined);
