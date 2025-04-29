@@ -1,7 +1,7 @@
 import { ReactElement, createRef, useCallback, useEffect, useRef } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Platform, View } from "react-native";
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, useIOToast, VSpacer } from "@pagopa/io-app-design-system";
 import _ from "lodash";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
@@ -19,7 +19,6 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { nativeLoginSelector } from "../../../nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../../nativeLogin/store/selectors";
-import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import IdpsGrid from "../components/IdpsGrid";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -32,6 +31,9 @@ import { isReady } from "../../../../../common/model/RemoteValue";
 import { trackSpidLoginIdpSelection } from "../../../common/analytics";
 import { trackLoginSpidIdpSelected } from "../../../common/analytics/spidAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { openWebUrl } from "../../../../../utils/url";
+import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
+import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.idp_selection.contextualHelpTitle",
@@ -62,12 +64,11 @@ const IdpSelectionScreen = (): ReactElement => {
   const idps = useIOSelector(idpsRemoteValueSelector);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const nativeLoginFeature = useIOSelector(nativeLoginSelector);
-  const isFastLoginFeatureFlagEnabled = useIOSelector(
-    isFastLoginEnabledSelector
-  );
   const isNativeLoginFeatureFlagEnabled = useIOSelector(
     isNativeLoginEnabledSelector
   );
+  const { error } = useIOToast();
+  const { name: routeName } = useRoute();
 
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
   const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
@@ -143,12 +144,21 @@ const IdpSelectionScreen = (): ReactElement => {
         <Banner
           viewRef={viewRef}
           color="neutral"
-          content={
-            isFastLoginFeatureFlagEnabled
-              ? I18n.t("login.expiration_info_FL")
-              : I18n.t("login.expiration_info")
-          }
-          pictogramName="passcode"
+          title={I18n.t("login.help_banner_title")}
+          content={I18n.t("login.help_banner_content")}
+          accessibilityRole="link"
+          action={I18n.t("login.help_banner_action")}
+          onPress={() => {
+            trackHelpCenterCtaTapped(
+              "LOGIN_SPID_IDP_SELECTION",
+              helpCenterHowToLoginWithSpidUrl,
+              routeName
+            );
+            openWebUrl(helpCenterHowToLoginWithSpidUrl, () => {
+              error(I18n.t("global.jserror.title"));
+            });
+          }}
+          pictogramName="help"
         />
         <VSpacer size={8} />
       </>

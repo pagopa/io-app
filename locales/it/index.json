@@ -356,8 +356,9 @@
     }
   },
   "login": {
-    "expiration_info": "Per ragioni di sicurezza, dovrai entrare con SPID o CIE ogni 30 giorni.",
-    "expiration_info_FL": "Per ragioni di sicurezza, dovrai entrare con SPID o CIE una volta all’anno.",
+    "help_banner_title": "Come si accede?",
+    "help_banner_content": "Abbiamo preparato una guida per aiutarti passo passo.",
+    "help_banner_action": "Leggi come fare",
     "biometric_info": "Per accedere, ti basterà poi inserire il codice di sblocco o, se abilitati, usare l'impronta o il volto."
   },
   "inbox": {

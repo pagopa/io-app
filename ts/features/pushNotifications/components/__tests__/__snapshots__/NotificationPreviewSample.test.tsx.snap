@@ -362,6 +362,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           align="xMidYMid"
                           bbHeight={24}
                           bbWidth={24}
+                          color="#555C70"
                           focusable={false}
                           height={24}
                           importantForAccessibility="no-hide-descendants"
@@ -375,9 +376,6 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 "borderWidth": 0,
                               },
                               {
-                                "color": "#555C70",
-                              },
-                              {
                                 "flex": 0,
                                 "height": 24,
                                 "width": 24,
@@ -389,7 +387,6 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#555C70"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -861,6 +858,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           align="xMidYMid"
                           bbHeight={24}
                           bbWidth={24}
+                          color="#555C70"
                           focusable={false}
                           height={24}
                           importantForAccessibility="no-hide-descendants"
@@ -874,9 +872,6 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 "borderWidth": 0,
                               },
                               {
-                                "color": "#555C70",
-                              },
-                              {
                                 "flex": 0,
                                 "height": 24,
                                 "width": 24,
@@ -888,7 +883,6 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#555C70"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -1360,6 +1354,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           align="xMidYMid"
                           bbHeight={24}
                           bbWidth={24}
+                          color="#555C70"
                           focusable={false}
                           height={24}
                           importantForAccessibility="no-hide-descendants"
@@ -1373,9 +1368,6 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 "borderWidth": 0,
                               },
                               {
-                                "color": "#555C70",
-                              },
-                              {
                                 "flex": 0,
                                 "height": 24,
                                 "width": 24,
@@ -1387,7 +1379,6 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#555C70"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -1859,6 +1850,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           align="xMidYMid"
                           bbHeight={24}
                           bbWidth={24}
+                          color="#555C70"
                           focusable={false}
                           height={24}
                           importantForAccessibility="no-hide-descendants"
@@ -1872,9 +1864,6 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 "borderWidth": 0,
                               },
                               {
-                                "color": "#555C70",
-                              },
-                              {
                                 "flex": 0,
                                 "height": 24,
                                 "width": 24,
@@ -1886,7 +1875,6 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#555C70"
                             fill={
                               {
                                 "payload": 4278190080,

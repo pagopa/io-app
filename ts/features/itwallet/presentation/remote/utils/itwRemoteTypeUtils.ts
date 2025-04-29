@@ -34,3 +34,9 @@ export type PresentationDetails = Awaited<
 export type EnrichedPresentationDetails = Array<
   PresentationDetails[number] & { claimsToDisplay: Array<ClaimDisplayFormat> }
 >;
+
+/**
+ * Type that defines a query conforming to the Digital Credentials Query Language
+ */
+export type DcqlQuery =
+  Parameters<Credential.Presentation.EvaluateDcqlQuery>[1];
