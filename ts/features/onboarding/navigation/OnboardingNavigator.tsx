@@ -1,20 +1,20 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
-import { OnboardingNotificationsInfoScreenConsent } from "../features/pushNotifications/screens/OnboardingNotificationsInfoScreenConsent";
-import { OnboardingNotificationsPreferencesScreen } from "../features/pushNotifications/screens/OnboardingNotificationsPreferencesScreen";
-import OnboardingPinScreen from "../screens/onboarding/OnboardingPinScreen";
-import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
-import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
-import OnboardingTosScreen from "../screens/onboarding/OnboardingTosScreen";
-import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
-import FingerprintScreen from "../screens/onboarding/biometric&securityChecks/FingerprintScreen";
-import MissingDeviceBiometricScreen from "../screens/onboarding/biometric&securityChecks/MissingDeviceBiometricScreen";
-import MissingDevicePinScreen from "../screens/onboarding/biometric&securityChecks/MissingDevicePinScreen";
-import { isGestureEnabled } from "../utils/navigation";
-import EmailValidationSendEmailScreen from "../features/settings/userData/shared/screens/EmailValidationSendEmailScreen";
-import EmailInsertScreen from "../features/settings/userData/shared/screens/EmailInsertScreen";
+import OnboardingCompletedScreen from "../screens/OnboardingCompletedScreen";
+import { OnboardingNotificationsInfoScreenConsent } from "../../pushNotifications/screens/OnboardingNotificationsInfoScreenConsent";
+import { OnboardingNotificationsPreferencesScreen } from "../../pushNotifications/screens/OnboardingNotificationsPreferencesScreen";
+import OnboardingPinScreen from "../screens/OnboardingPinScreen";
+import OnboardingServicesPreferenceScreen from "../screens/OnboardingServicesPreferenceScreen";
+import OnboardingShareDataScreen from "../screens/OnboardingShareDataScreen";
+import OnboardingTosScreen from "../screens/OnboardingTosScreen";
+import ServicePreferenceCompleteScreen from "../screens/ServicePreferenceCompleteScreen";
+import FingerprintScreen from "../screens/biometric&securityChecks/FingerprintScreen";
+import MissingDeviceBiometricScreen from "../screens/biometric&securityChecks/MissingDeviceBiometricScreen";
+import MissingDevicePinScreen from "../screens/biometric&securityChecks/MissingDevicePinScreen";
+import { isGestureEnabled } from "../../../utils/navigation";
+import EmailValidationSendEmailScreen from "../../settings/userData/shared/screens/EmailValidationSendEmailScreen";
+import EmailInsertScreen from "../../settings/userData/shared/screens/EmailInsertScreen";
+import ROUTES from "../../../navigation/routes";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
-import ROUTES from "./routes";
 
 const Stack = createStackNavigator<OnboardingParamsList>();
 /**
