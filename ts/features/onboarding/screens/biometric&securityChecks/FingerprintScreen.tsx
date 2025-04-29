@@ -1,24 +1,24 @@
 import { Banner, Body, H2, VSpacer } from "@pagopa/io-app-design-system";
 import { ComponentProps, useMemo } from "react";
-import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
-import I18n from "../../../i18n";
-import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../../features/settings/common/store/selectors";
-import { getFlowType } from "../../../utils/analytics";
+import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../i18n";
+import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
+import { getFlowType } from "../../../../utils/analytics";
 import {
   BiometriActivationUserType,
   mayUserActivateBiometric
-} from "../../../utils/biometrics";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { FAQsCategoriesType } from "../../../utils/faq";
-import { IOScrollView } from "../../../components/ui/IOScrollView";
-import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
+} from "../../../../utils/biometrics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { FAQsCategoriesType } from "../../../../utils/faq";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useOnboardingAbortAlert } from "../../hooks/useOnboardingAbortAlert";
 import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined
-} from "../../../features/settings/security/shared/analytics";
+} from "../../../settings/security/shared/analytics";
 import { trackBiometricActivationEducationalScreen } from "./analytics";
 
 type IOScrollViewActions = ComponentProps<typeof IOScrollView>["actions"];
