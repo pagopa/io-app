@@ -930,6 +930,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -943,9 +944,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -957,7 +955,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1183,6 +1180,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -1196,9 +1194,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -1210,7 +1205,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1436,6 +1430,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -1449,9 +1444,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -1463,7 +1455,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1689,6 +1680,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -1702,9 +1694,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -1716,7 +1705,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1942,6 +1930,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -1955,9 +1944,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -1969,7 +1955,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2195,6 +2180,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -2208,9 +2194,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -2222,7 +2205,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2448,6 +2430,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -2461,9 +2444,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -2475,7 +2455,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3103,6 +3082,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -3116,9 +3096,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -3130,7 +3107,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3356,6 +3332,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -3369,9 +3346,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -3383,7 +3357,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3609,6 +3582,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -3622,9 +3596,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -3636,7 +3607,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3862,6 +3832,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -3875,9 +3846,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -3889,7 +3857,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4115,6 +4082,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -4128,9 +4096,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -4142,7 +4107,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4368,6 +4332,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -4381,9 +4346,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -4395,7 +4357,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4621,6 +4582,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -4634,9 +4596,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -4648,7 +4607,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -5587,6 +5545,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -5600,9 +5559,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -5614,7 +5570,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -5839,6 +5794,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -5852,9 +5808,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -5866,7 +5819,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -6091,6 +6043,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -6104,9 +6057,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -6118,7 +6068,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -6343,6 +6292,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -6356,9 +6306,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -6370,7 +6317,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -6595,6 +6541,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -6608,9 +6555,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -6622,7 +6566,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7215,6 +7158,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -7228,9 +7172,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -7242,7 +7183,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7467,6 +7407,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -7480,9 +7421,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -7494,7 +7432,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7719,6 +7656,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -7732,9 +7670,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -7746,7 +7681,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7971,6 +7905,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -7984,9 +7919,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -7998,7 +7930,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -8223,6 +8154,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -8236,9 +8168,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -8250,7 +8179,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -8843,6 +8771,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -8856,9 +8785,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -8870,7 +8796,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -9095,6 +9020,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -9108,9 +9034,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -9122,7 +9045,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -9347,6 +9269,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -9360,9 +9283,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -9374,7 +9294,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -9599,6 +9518,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -9612,9 +9532,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -9626,7 +9543,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -9851,6 +9767,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -9864,9 +9781,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -9878,7 +9792,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -10596,6 +10509,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -10609,9 +10523,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -10623,7 +10534,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -10848,6 +10758,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -10861,9 +10772,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -10875,7 +10783,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -11100,6 +11007,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -11113,9 +11021,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -11127,7 +11032,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -11352,6 +11256,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -11365,9 +11270,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -11379,7 +11281,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -11604,6 +11505,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -11617,9 +11519,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -11631,7 +11530,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -12349,6 +12247,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -12362,9 +12261,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -12376,7 +12272,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -12969,6 +12864,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -12982,9 +12878,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -12996,7 +12889,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,

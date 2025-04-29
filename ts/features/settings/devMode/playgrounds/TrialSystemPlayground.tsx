@@ -8,7 +8,6 @@ import {
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useEffect } from "react";
 import { constNull } from "fp-ts/lib/function";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -53,7 +52,7 @@ const TrialSystemPlayground = () => {
   });
 
   return (
-    <SafeAreaView style={IOStyles.flex}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ContentWrapper>
         <H3>{"Sperimentazione di IT-Wallet"}</H3>
         <VSpacer />
