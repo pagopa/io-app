@@ -1,7 +1,7 @@
 import {
   Divider,
   FooterActions,
-  IOStyles,
+  IOVisualCostants,
   useFooterActionsMeasurements
 } from "@pagopa/io-app-design-system";
 import { FlashList } from "@shopify/flash-list";
@@ -50,7 +50,7 @@ export const FimsHistoryNonEmptyContent = ({
         ListHeaderComponent={FimsHistoryHeaderComponent}
         data={accesses?.data}
         contentContainerStyle={{
-          ...IOStyles.horizontalContentPadding,
+          paddingHorizontal: IOVisualCostants.appMarginDefault,
           paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
         }}
         ItemSeparatorComponent={Divider}
