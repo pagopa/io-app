@@ -7,34 +7,34 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native";
-import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import I18n from "../../i18n";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
-} from "../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
-import ROUTES from "../../navigation/routes";
-import { servicesOptinCompleted } from "../../store/actions/onboarding";
-import { profileUpsert } from "../../features/settings/common/store/actions";
-import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
+} from "../../../navigation/params/AppParamsList";
+import { OnboardingParamsList } from "../navigation/params/OnboardingParamsList";
+import ROUTES from "../../../navigation/routes";
+import { servicesOptinCompleted } from "../store/actions";
+import { profileUpsert } from "../../settings/common/store/actions";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   profileSelector,
   profileServicePreferencesModeSelector
-} from "../../features/settings/common/store/selectors";
-import { isServicesPreferenceModeSet } from "../../features/settings/common/store/utils/guards";
-import { getFlowType } from "../../utils/analytics";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { usePrevious } from "../../utils/hooks/usePrevious";
+} from "../../settings/common/store/selectors";
+import { isServicesPreferenceModeSet } from "../../settings/common/store/utils/guards";
+import { getFlowType } from "../../../utils/analytics";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
-} from "../../features/settings/common/analytics";
-import { useManualConfigBottomSheet } from "../../features/settings/preferences/shared/hooks/useManualConfigBottomSheet";
-import ServicesContactComponent from "../../features/settings/preferences/shared/components/ServicesContactComponent";
-import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
+} from "../../settings/common/analytics";
+import { useManualConfigBottomSheet } from "../../settings/preferences/shared/hooks/useManualConfigBottomSheet";
+import ServicesContactComponent from "../../settings/preferences/shared/components/ServicesContactComponent";
+import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;

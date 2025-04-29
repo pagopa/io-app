@@ -1,5 +1,5 @@
-import { mixpanelTrack } from "../../../../mixpanel";
-import { FlowType, buildEventProperties } from "../../../../utils/analytics";
+import { mixpanelTrack } from "../../../../../mixpanel";
+import { FlowType, buildEventProperties } from "../../../../../utils/analytics";
 
 export function trackPinEducationalScreen(flow: FlowType) {
   void mixpanelTrack(
