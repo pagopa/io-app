@@ -28,7 +28,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { isReady } from "../../../../../common/model/RemoteValue";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
@@ -193,7 +192,7 @@ const CgnMerchantDetailScreen = () => {
     );
   } else {
     return (
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={{ flex: 1 }}>
         <CgnMerchantDetailScreenSkeleton />
       </SafeAreaView>
     );
