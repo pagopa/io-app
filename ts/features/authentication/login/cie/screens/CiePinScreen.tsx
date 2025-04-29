@@ -5,6 +5,7 @@ import {
   H2,
   IOStyles,
   OTPInput,
+  useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -13,7 +14,8 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import {
   useFocusEffect,
   useIsFocused,
-  useNavigation
+  useNavigation,
+  useRoute
 } from "@react-navigation/native";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
@@ -65,6 +67,7 @@ import {
 } from "../../../common/analytics/cieAnalytics";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -79,6 +82,9 @@ const CiePinScreen = () => {
   useOnFirstRender(() => {
     trackLoginCiePinScreen();
   });
+
+  const { error } = useIOToast();
+  const { name: routeName } = useRoute();
 
   const dispatch = useIODispatch();
 
@@ -259,7 +265,16 @@ const CiePinScreen = () => {
                 content={I18n.t("login.help_banner_content")}
                 accessibilityRole="link"
                 action={I18n.t("login.help_banner_action")}
-                onPress={() => openWebUrl(helpCenterHowToLoginWithEicUrl)}
+                onPress={() => {
+                  trackHelpCenterCtaTapped(
+                    "LOGIN_CIE_PIN",
+                    helpCenterHowToLoginWithEicUrl,
+                    routeName
+                  );
+                  openWebUrl(helpCenterHowToLoginWithEicUrl, () => {
+                    error(I18n.t("global.jserror.title"));
+                  });
+                }}
                 pictogramName="help"
               />
             </View>
