@@ -12,23 +12,25 @@ import {
   useScaleAnimation
 } from "@pagopa/io-app-design-system";
 import {
+  Blend,
   Canvas,
   LinearGradient,
   RoundedRect,
   vec
 } from "@shopify/react-native-skia";
 import { TxtParagraphNode, TxtStrongNode } from "@textlint/ast-node-types";
-import { useMemo, useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AccessibilityRole, Pressable, StyleSheet, View } from "react-native";
 import Animated, {
+  Easing,
   Extrapolation,
+  SharedValue,
   interpolate,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withRepeat,
-  withTiming,
-  Easing,
-  useDerivedValue
+  withTiming
 } from "react-native-reanimated";
 import HighlightImage from "../../../../../img/features/itWallet/l3/highlight.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -103,39 +105,16 @@ export const ItwHighlightBanner = (props: WithTestID<Props>) => {
 
 const BackgroundGradient = () => {
   const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
-
-  // Animation setup
   const progress = useSharedValue(0);
-  const animationRange = useMemo(() => width * 0.8, [width]);
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
     progress.value = withRepeat(
-      withTiming(1, { duration: 30000, easing: Easing.linear }),
-      -1, // Infinite repeat
-      true // Reverse direction
+      withTiming(1, { duration: 30000, easing: Easing.out(Easing.ease) }),
+      -1,
+      true
     );
-  }, [progress]); // Depend on all three
-
-  const animatedStart = useDerivedValue(() => {
-    const startX = interpolate(
-      progress.value,
-      [0, 1],
-      [-animationRange, animationRange], // Range of motion for start point X
-      Extrapolation.CLAMP
-    );
-    return vec(startX, height); // Keep Y fixed
-  }, [width, height]); // Derived value depends on layout dimensions
-
-  const animatedEnd = useDerivedValue(() => {
-    const endX = interpolate(
-      progress.value,
-      [0, 1],
-      [width - animationRange, width + animationRange], // Range of motion for end point X
-      Extrapolation.CLAMP
-    );
-    return vec(endX, 0); // Keep Y fixed
-  }, [width, height]); // Derived value depends on layout dimensions
+  }, [progress]);
 
   return (
     <Canvas
@@ -148,28 +127,85 @@ const BackgroundGradient = () => {
       }}
     >
       <RoundedRect x={0} y={0} width={width} height={height} r={16}>
-        <LinearGradient
-          // start={vec(0, height)}
-          // end={vec(width, 0)}
-          start={animatedStart}
-          end={animatedEnd}
-          mode="repeat"
-          colors={[
-            "#0B3EE3",
-            "#234FFF",
-            "#436FFF",
-            "#2F5EFF",
-            "#1E53FF",
-            "#1848F0",
-            "#0B3EE3",
-            "#1F4DFF",
-            "#2A5CFF",
-            "#1943E8",
-            "#0B3EE3"
-          ]}
-        />
+        <Blend mode="lighten">
+          <AnimatedLinearGradient
+            progress={progress}
+            width={width}
+            height={height}
+            rangeFactor={0.5}
+          />
+          <AnimatedLinearGradient
+            progress={progress}
+            width={width}
+            height={height}
+            rangeFactor={1.5}
+            reverse={true}
+          />
+        </Blend>
       </RoundedRect>
     </Canvas>
+  );
+};
+
+type AnimatedLinearGradientProps = {
+  progress: SharedValue<number>;
+  width: number;
+  height: number;
+  rangeFactor: number;
+  reverse?: boolean;
+};
+
+const AnimatedLinearGradient = ({
+  progress,
+  width,
+  height,
+  rangeFactor,
+  reverse = false
+}: AnimatedLinearGradientProps) => {
+  const animationRange = useMemo(
+    () => width * rangeFactor,
+    [width, rangeFactor]
+  );
+
+  const animatedStart = useDerivedValue(() => {
+    const startX = interpolate(
+      progress.value,
+      reverse ? [1, 0] : [0, 1],
+      [-animationRange, animationRange],
+      Extrapolation.CLAMP
+    );
+    return vec(startX, height);
+  }, [height]);
+
+  const animatedEnd = useDerivedValue(() => {
+    const endX = interpolate(
+      progress.value,
+      reverse ? [1, 0] : [0, 1],
+      [width - animationRange, width + animationRange],
+      Extrapolation.CLAMP
+    );
+    return vec(endX, 0);
+  }, [width]);
+
+  return (
+    <LinearGradient
+      start={animatedStart}
+      end={animatedEnd}
+      mode="repeat"
+      colors={[
+        "#0B3EE3",
+        "#234FFF",
+        "#436FFF",
+        "#2F5EFF",
+        "#1E53FF",
+        "#1848F0",
+        "#0B3EE3",
+        "#1F4DFF",
+        "#2A5CFF",
+        "#1943E8",
+        "#0B3EE3"
+      ]}
+    />
   );
 };
 

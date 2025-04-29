@@ -345,6 +345,10 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
         },
         {
           "elevation": NaN,
+          "shadowOffset": {
+            "height": NaN,
+            "width": 0,
+          },
           "shadowRadius": NaN,
         },
       ]
