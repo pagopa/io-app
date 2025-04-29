@@ -5,7 +5,6 @@ import {
   H3,
   IOColors,
   IOPictograms,
-  IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -257,7 +256,7 @@ export const ItwCieCardReaderScreen = () => {
   }
 
   const renderCardReaderFooter = () => (
-    <View style={IOStyles.alignCenter}>
+    <View style={{ alignItems: "center" }}>
       <View>
         <ButtonLink
           label={I18n.t("global.buttons.close")}

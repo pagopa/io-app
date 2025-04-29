@@ -1,7 +1,6 @@
 import {
   IOColors,
   IOSkeleton,
-  IOStyles,
   Icon,
   LabelMini,
   VSpacer
@@ -69,7 +68,13 @@ const PaymentCardSmall = ({
         style={[styles.card, props.isExpired && styles.cardError]}
         testID={testID}
       >
-        <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+        >
           <LogoPaymentWithFallback brand={iconName} size={24} />
           {props.isExpired && (
             <Icon

@@ -1,7 +1,7 @@
 import {
   Alert,
+  ContentWrapper,
   H4,
-  IOStyles,
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -9,7 +9,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 
 import { ReactElement } from "react";
-import { View } from "react-native";
 import { connect } from "react-redux";
 import { Card } from "../../../../../definitions/cgn/Card";
 import {
@@ -211,7 +210,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
         </H4>
       }
     >
-      <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+      <ContentWrapper style={{ flex: 1 }}>
         {CardRevoked.is(props.cgnDetails) && (
           <Alert
             variant="error"
@@ -241,7 +240,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
         {canDisplayEycaDetails && <EycaDetailComponent />}
         <VSpacer size={24} />
         {CardActivated.is(props.cgnDetails) && <CgnUnsubscribe />}
-      </View>
+      </ContentWrapper>
       <SectionStatusComponent sectionKey={"cgn"} />
     </BonusCardScreenComponent>
   );
