@@ -1,5 +1,4 @@
-import { View } from "react-native";
-import { Body, IOStyles } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import I18n from "../../../../../i18n";
 
@@ -10,13 +9,13 @@ type Props = {
 
 export const ItwRemoteLoadingScreen = ({ title, message }: Props) => (
   <LoadingScreenContent testID="loader" contentTitle={title}>
-    <View style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}>
+    <ContentWrapper style={{ alignItems: "center" }}>
       <Body>
         {message ??
           I18n.t(
             "features.itWallet.presentation.remote.loadingScreen.subtitle"
           )}
       </Body>
-    </View>
+    </ContentWrapper>
   </LoadingScreenContent>
 );
