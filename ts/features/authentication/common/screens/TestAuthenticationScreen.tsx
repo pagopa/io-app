@@ -10,35 +10,33 @@ import {
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { useFocusEffect } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
-import * as T from "fp-ts/lib/Task";
 import * as O from "fp-ts/lib/Option";
+import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { PasswordLogin } from "../../../../../definitions/session_manager/PasswordLogin";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import { testLoginCleanUp, testLoginRequest } from "../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { testLoginSelector } from "../store/reducers/testLogin";
+import { isMixpanelEnabled } from "../../../../store/reducers/persistedPreferences";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { handleRegenerateKey } from "../../../lollipop";
 import { lollipopKeyTagSelector } from "../../../lollipop/store/reducers/lollipop";
-import { isMixpanelEnabled } from "../../../../store/reducers/persistedPreferences";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
-
-const styles = StyleSheet.create({
-  appVersion: { ...IOStyles.flex, ...IOStyles.rowSpaceBetween }
-});
+import { testLoginCleanUp, testLoginRequest } from "../../common/store/actions";
+import { testLoginSelector } from "../store/reducers/testLogin";
 
 const checkUsernameValid = (username: string): boolean =>
   E.isRight(FiscalCode.decode(username));
 
 const VersionView = () => (
-  <View style={styles.appVersion} testID="appVersionView">
+  <View
+    style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}
+    testID="appVersionView"
+  >
     <Body>{I18n.t("profile.main.appVersion")}</Body>
     <Body numberOfLines={1} weight="Semibold" testID="appVersion">
       {getAppVersion()}
@@ -50,7 +48,7 @@ const LoadingView = () => {
   const theme = useIOTheme();
 
   return (
-    <View style={IOStyles.flex}>
+    <View style={{ flex: 1 }}>
       <VSpacer size={40} />
       <ActivityIndicator
         animating={true}
@@ -72,7 +70,7 @@ const LoadingView = () => {
 };
 
 const ErrorView = (content: string) => (
-  <View style={IOStyles.flex} testID="errorView">
+  <View style={{ flex: 1 }} testID="errorView">
     <VSpacer size={16} />
     <Alert variant="error" content={content} />
     <VSpacer size={16} />
@@ -80,7 +78,7 @@ const ErrorView = (content: string) => (
 );
 
 const SuccessfulView = () => (
-  <View style={IOStyles.flex} testID="successView">
+  <View style={{ flex: 1 }} testID="successView">
     <VSpacer size={16} />
     <Alert variant="success" content={"Success"} />
     <VSpacer size={16} />

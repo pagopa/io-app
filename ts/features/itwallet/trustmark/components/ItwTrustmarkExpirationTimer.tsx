@@ -1,10 +1,4 @@
-import {
-  Body,
-  HSpacer,
-  Icon,
-  IOSkeleton,
-  IOStyles
-} from "@pagopa/io-app-design-system";
+import { Body, HSpacer, Icon, IOSkeleton } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import { useMemo } from "react";
 import { View } from "react-native";
@@ -46,7 +40,7 @@ const ItwTrustmarkExpirationTimer = () => {
   }, [failure, expirationSeconds]);
 
   return (
-    <View style={[IOStyles.row, IOStyles.alignCenter]}>
+    <View style={{ flexDirection: "row", alignItems: "center" }}>
       <Icon name="history" size={24} color="grey-300" />
       <HSpacer size={24} />
       {content}
