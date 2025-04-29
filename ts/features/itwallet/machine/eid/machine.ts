@@ -301,16 +301,6 @@ export const itwEidIssuanceMachine = setup({
                 target: "CiePin"
               },
               {
-                guard: ({ event }) => event.mode === "cieId",
-                actions: assign(() => ({
-                  identification: {
-                    mode: "cieId",
-                    level: "L2"
-                  }
-                })),
-                target: "CieID"
-              },
-              {
                 guard: ({ event, context }) =>
                   event.mode === "cieId" &&
                   context.isL3FeaturesEnabled === true,
@@ -318,6 +308,16 @@ export const itwEidIssuanceMachine = setup({
                   identification: {
                     mode: "cieId",
                     level: "L3"
+                  }
+                })),
+                target: "CieID"
+              },
+              {
+                guard: ({ event }) => event.mode === "cieId",
+                actions: assign(() => ({
+                  identification: {
+                    mode: "cieId",
+                    level: "L2"
                   }
                 })),
                 target: "CieID"
