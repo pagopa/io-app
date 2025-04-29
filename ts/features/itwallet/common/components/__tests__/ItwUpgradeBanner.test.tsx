@@ -4,8 +4,8 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
-import { ItwAuthLevel } from "../../../common/utils/itwTypesUtils";
+import * as preferencesSelectors from "../../store/selectors/preferences";
+import { ItwAuthLevel } from "../../utils/itwTypesUtils";
 import { ItwUpgradeBanner } from "../ItwUpgradeBanner";
 
 describe("ItwUpgradeBanner", () => {

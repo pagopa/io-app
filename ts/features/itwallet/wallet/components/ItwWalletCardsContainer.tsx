@@ -18,7 +18,7 @@ import { ItwFeedbackBanner } from "../../common/components/ItwFeedbackBanner";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
-import { ItwUpgradeBanner } from "./ItwUpgradeBanner";
+import { ItwUpgradeBanner } from "../../common/components/ItwUpgradeBanner";
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const navigation = useIONavigation();

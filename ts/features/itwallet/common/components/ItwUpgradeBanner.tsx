@@ -2,9 +2,9 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { ItwHighlightBanner } from "../../common/components/ItwHighlightBanner";
-import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
+import { itwAuthLevelSelector } from "../store/selectors/preferences";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwHighlightBanner } from "./ItwHighlightBanner";
 
 export const ItwUpgradeBanner = () => {
   const navigation = useIONavigation();
