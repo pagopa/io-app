@@ -9,12 +9,12 @@ import {
   ContentWrapper,
   H3,
   IOPictograms,
-  IOStyles,
+  IOVisualCostants,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export type CustomWizardScreenProps = {
   title: string;
@@ -46,7 +46,7 @@ const CustomWizardScreen = ({
   actionButton,
   buttonLink
 }: CustomWizardScreenProps) => (
-  <SafeAreaView style={IOStyles.flex}>
+  <SafeAreaView style={{ flex: 1 }}>
     <WizardBody
       pictogram={pictogram}
       title={title}
@@ -58,7 +58,7 @@ const CustomWizardScreen = ({
       {actionButton && (
         <>
           <VSpacer size={24} />
-          <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
+          <View style={{ alignItems: "center", alignSelf: "center" }}>
             <ButtonLink {...actionButton} />
           </View>
           <VSpacer size={16} />
@@ -85,7 +85,7 @@ const WizardBody = ({
   buttonLink
 }: CustomWizardBodyProps) => (
   <View style={styles.wizardContent}>
-    <View style={IOStyles.alignCenter}>
+    <View style={{ alignItems: "center" }}>
       <Pictogram name={pictogram} size={120} />
     </View>
     <VSpacer size={24} />
@@ -102,7 +102,7 @@ const WizardBody = ({
         </>
       )}
       {buttonLink && (
-        <View style={IOStyles.selfCenter}>
+        <View style={{ alignSelf: "center" }}>
           <VSpacer size={16} />
           <ButtonLink {...buttonLink} />
         </View>
@@ -116,9 +116,9 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   wizardContent: {
-    ...IOStyles.flex,
-    ...IOStyles.horizontalContentPadding,
-    ...IOStyles.centerJustified
+    flex: 1,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    justifyContent: "center"
   }
 });
 
