@@ -3,7 +3,6 @@ import {
   ButtonSolid,
   H6,
   IOIcons,
-  IOStyles,
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -87,7 +86,7 @@ export const useItwIdentificationBottomSheet = ({
   };
 
   const BottomSheetBody = () => (
-    <View style={IOStyles.flex}>
+    <View style={{ flex: 1 }}>
       {content.map((item, index) => (
         <VStack key={`${index}_${item.title}`} space={8}>
           {item.title && <H6>{item.title}</H6>}
