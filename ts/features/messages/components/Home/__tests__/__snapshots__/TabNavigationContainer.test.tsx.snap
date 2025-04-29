@@ -477,6 +477,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     align="xMidYMid"
                                     bbHeight={16}
                                     bbWidth={16}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={16}
                                     importantForAccessibility="no-hide-descendants"
@@ -490,9 +491,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 16,
                                           "width": 16,
@@ -504,7 +502,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     width={16}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -646,6 +643,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     align="xMidYMid"
                                     bbHeight={16}
                                     bbWidth={16}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={16}
                                     importantForAccessibility="no-hide-descendants"
@@ -659,9 +657,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 16,
                                           "width": 16,
@@ -673,7 +668,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     width={16}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1214,6 +1208,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     align="xMidYMid"
                                     bbHeight={16}
                                     bbWidth={16}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={16}
                                     importantForAccessibility="no-hide-descendants"
@@ -1227,9 +1222,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 16,
                                           "width": 16,
@@ -1241,7 +1233,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     width={16}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1396,6 +1387,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     align="xMidYMid"
                                     bbHeight={16}
                                     bbWidth={16}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={16}
                                     importantForAccessibility="no-hide-descendants"
@@ -1409,9 +1401,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 16,
                                           "width": 16,
@@ -1423,7 +1412,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     width={16}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

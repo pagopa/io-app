@@ -592,6 +592,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -605,9 +606,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -619,7 +617,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -778,6 +775,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -791,9 +789,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -805,7 +800,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,

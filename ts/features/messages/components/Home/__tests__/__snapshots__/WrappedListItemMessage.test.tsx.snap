@@ -806,6 +806,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           align="xMidYMid"
                                           bbHeight={24}
                                           bbWidth={24}
+                                          color="#0B3EE3"
                                           focusable={false}
                                           height={24}
                                           importantForAccessibility="no-hide-descendants"
@@ -819,9 +820,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 24,
                                                 "width": 24,
@@ -833,7 +831,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           width={24}
                                         >
                                           <RNSVGGroup
-                                            color="#0B3EE3"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -926,6 +923,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           align="xMidYMid"
                                           bbHeight={24}
                                           bbWidth={24}
+                                          color="#636B82"
                                           focusable={false}
                                           height={24}
                                           importantForAccessibility="auto"
@@ -939,9 +937,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#636B82",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 24,
                                                 "width": 24,
@@ -953,7 +948,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           width={24}
                                         >
                                           <RNSVGGroup
-                                            color="#636B82"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -1859,6 +1853,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           align="xMidYMid"
                                           bbHeight={24}
                                           bbWidth={24}
+                                          color="#0B3EE3"
                                           focusable={false}
                                           height={24}
                                           importantForAccessibility="no-hide-descendants"
@@ -1872,9 +1867,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 24,
                                                 "width": 24,
@@ -1886,7 +1878,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           width={24}
                                         >
                                           <RNSVGGroup
-                                            color="#0B3EE3"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -1979,6 +1970,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           align="xMidYMid"
                                           bbHeight={24}
                                           bbWidth={24}
+                                          color="#636B82"
                                           focusable={false}
                                           height={24}
                                           importantForAccessibility="auto"
@@ -1992,9 +1984,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#636B82",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 24,
                                                 "width": 24,
@@ -2006,7 +1995,6 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           width={24}
                                         >
                                           <RNSVGGroup
-                                            color="#636B82"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -2630,6 +2618,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           align="xMidYMid"
                                           bbHeight={20}
                                           bbWidth={20}
+                                          color="#0066CC"
                                           focusable={false}
                                           height={20}
                                           importantForAccessibility="no-hide-descendants"
@@ -2643,9 +2632,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0066CC",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 20,
                                                 "width": 20,
@@ -2657,7 +2643,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           width={20}
                                         >
                                           <RNSVGGroup
-                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -2971,6 +2956,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           align="xMidYMid"
                                           bbHeight={24}
                                           bbWidth={24}
+                                          color="#427940"
                                           focusable={false}
                                           height={24}
                                           importantForAccessibility="no-hide-descendants"
@@ -2984,9 +2970,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#427940",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 24,
                                                 "width": 24,
@@ -2998,7 +2981,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           width={24}
                                         >
                                           <RNSVGGroup
-                                            color="#427940"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -3652,6 +3634,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           align="xMidYMid"
                                           bbHeight={20}
                                           bbWidth={20}
+                                          color="#0066CC"
                                           focusable={false}
                                           height={20}
                                           importantForAccessibility="no-hide-descendants"
@@ -3665,9 +3648,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0066CC",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 20,
                                                 "width": 20,
@@ -3679,7 +3659,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           width={20}
                                         >
                                           <RNSVGGroup
-                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -4048,6 +4027,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           align="xMidYMid"
                                           bbHeight={24}
                                           bbWidth={24}
+                                          color="#427940"
                                           focusable={false}
                                           height={24}
                                           importantForAccessibility="no-hide-descendants"
@@ -4061,9 +4041,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#427940",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 24,
                                                 "width": 24,
@@ -4075,7 +4052,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           width={24}
                                         >
                                           <RNSVGGroup
-                                            color="#427940"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -4729,6 +4705,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           align="xMidYMid"
                                           bbHeight={20}
                                           bbWidth={20}
+                                          color="#0066CC"
                                           focusable={false}
                                           height={20}
                                           importantForAccessibility="no-hide-descendants"
@@ -4742,9 +4719,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0066CC",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 20,
                                                 "width": 20,
@@ -4756,7 +4730,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           width={20}
                                         >
                                           <RNSVGGroup
-                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -5613,6 +5586,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           align="xMidYMid"
                                           bbHeight={20}
                                           bbWidth={20}
+                                          color="#0066CC"
                                           focusable={false}
                                           height={20}
                                           importantForAccessibility="no-hide-descendants"
@@ -5626,9 +5600,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0066CC",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 20,
                                                 "width": 20,
@@ -5640,7 +5611,6 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           width={20}
                                         >
                                           <RNSVGGroup
-                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,

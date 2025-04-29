@@ -417,14 +417,12 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -442,6 +440,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -455,9 +454,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -469,7 +465,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -535,14 +530,12 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -560,6 +553,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -573,9 +567,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -587,7 +578,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -653,14 +643,12 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -678,6 +666,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -691,9 +680,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -705,7 +691,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,

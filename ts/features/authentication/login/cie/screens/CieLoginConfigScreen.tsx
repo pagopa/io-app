@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
 import { ContentWrapper, OTPInput } from "@pagopa/io-app-design-system";
+import { useEffect, useState } from "react";
+import { SafeAreaView, ScrollView } from "react-native";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import CieLoginConfigScreenContent from "../components/CieLoginConfigScreenContent";
 
 const PIN_LENGTH = 6;
@@ -38,7 +37,7 @@ const CieLoginConfigScreen = () => {
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={"CIE Login Settings"}>
-      <SafeAreaView style={IOStyles.flex} testID="CieLoginConfigScreen">
+      <SafeAreaView style={{ flex: 1 }} testID="CieLoginConfigScreen">
         <ContentWrapper>
           {locked ? (
             <PinView pin={pin} setPin={setPin} />

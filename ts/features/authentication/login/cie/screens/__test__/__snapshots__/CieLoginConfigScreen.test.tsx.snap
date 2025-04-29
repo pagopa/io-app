@@ -435,14 +435,10 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                 onResponderTerminationRequest={[Function]}
                                 onStartShouldSetResponder={[Function]}
                                 style={
-                                  [
-                                    {
-                                      "flexDirection": "row",
-                                    },
-                                    {
-                                      "justifyContent": "space-around",
-                                    },
-                                  ]
+                                  {
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-around",
+                                  }
                                 }
                               >
                                 <TextInput

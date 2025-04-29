@@ -210,7 +210,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                       <RCTScrollView
                         contentContainerStyle={
                           {
-                            "paddingBottom": 16,
+                            "paddingBottom": 0,
                           }
                         }
                       >
@@ -280,6 +280,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       align="xMidYMid"
                                       bbHeight={24}
                                       bbWidth={24}
+                                      color="#0B3EE3"
                                       focusable={false}
                                       height={24}
                                       importantForAccessibility="no-hide-descendants"
@@ -293,9 +294,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0B3EE3",
-                                          },
-                                          {
                                             "flex": 0,
                                             "height": 24,
                                             "width": 24,
@@ -307,7 +305,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       width={24}
                                     >
                                       <RNSVGGroup
-                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -379,6 +376,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   align="xMidYMid"
                                   bbHeight={16}
                                   bbWidth={16}
+                                  color="#555C70"
                                   focusable={false}
                                   height={16}
                                   importantForAccessibility="no-hide-descendants"
@@ -390,9 +388,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       {
                                         "backgroundColor": "transparent",
                                         "borderWidth": 0,
-                                      },
-                                      {
-                                        "color": "#555C70",
                                       },
                                       {
                                         "flex": 0,
@@ -407,7 +402,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   width={16}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -902,6 +896,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     align="xMidYMid"
                                     bbHeight={24}
                                     bbWidth={24}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={24}
                                     importantForAccessibility="no-hide-descendants"
@@ -915,9 +910,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 24,
                                           "width": 24,
@@ -929,7 +921,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     width={24}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1128,6 +1119,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     align="xMidYMid"
                                     bbHeight={24}
                                     bbWidth={24}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={24}
                                     importantForAccessibility="no-hide-descendants"
@@ -1141,9 +1133,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 24,
                                           "width": 24,
@@ -1155,7 +1144,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     width={24}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1213,7 +1201,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 "marginBottom": "-95%",
                                 "paddingBottom": "95%",
                                 "paddingHorizontal": 24,
-                                "paddingTop": 16,
+                                "paddingTop": 24,
                               }
                             }
                           >
@@ -1295,6 +1283,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1308,9 +1297,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1322,7 +1308,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1515,6 +1500,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1528,9 +1514,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1542,7 +1525,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1816,6 +1798,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           align="xMidYMid"
                                           bbHeight={36}
                                           bbWidth={36}
+                                          color="#0B3EE3"
                                           focusable={false}
                                           height={36}
                                           importantForAccessibility="no-hide-descendants"
@@ -1829,9 +1812,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 36,
                                                 "width": 36,
@@ -1843,7 +1823,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           width={36}
                                         >
                                           <RNSVGGroup
-                                            color="#0B3EE3"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -2054,6 +2033,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           align="xMidYMid"
                                           bbHeight={36}
                                           bbWidth={36}
+                                          color="#0B3EE3"
                                           focusable={false}
                                           height={36}
                                           importantForAccessibility="no-hide-descendants"
@@ -2067,9 +2047,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 36,
                                                 "width": 36,
@@ -2081,7 +2058,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           width={36}
                                         >
                                           <RNSVGGroup
-                                            color="#0B3EE3"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -2209,14 +2185,12 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -2234,6 +2208,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -2247,9 +2222,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -2261,7 +2233,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2380,14 +2351,12 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -2405,6 +2374,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -2418,9 +2388,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -2432,7 +2399,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3068,14 +3034,12 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -3093,6 +3057,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -3106,9 +3071,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -3120,7 +3082,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3239,14 +3200,12 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -3264,6 +3223,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -3277,9 +3237,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -3291,7 +3248,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

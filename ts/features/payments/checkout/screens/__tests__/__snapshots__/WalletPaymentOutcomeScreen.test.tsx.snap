@@ -734,6 +734,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -747,9 +748,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -761,7 +759,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1118,6 +1115,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1131,9 +1129,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1145,7 +1140,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1299,6 +1293,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1312,9 +1307,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1326,7 +1318,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1480,6 +1471,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1493,9 +1485,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1507,7 +1496,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -2746,6 +2734,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -2759,9 +2748,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -2773,7 +2759,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3130,6 +3115,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -3143,9 +3129,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -3157,7 +3140,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3311,6 +3293,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -3324,9 +3307,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -3338,7 +3318,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3492,6 +3471,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -3505,9 +3485,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -3519,7 +3496,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -4739,6 +4715,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -4752,9 +4729,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -4766,7 +4740,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -5123,6 +5096,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -5136,9 +5110,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -5150,7 +5121,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -5304,6 +5274,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -5317,9 +5288,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -5331,7 +5299,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -5485,6 +5452,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -5498,9 +5466,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -5512,7 +5477,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -6717,6 +6681,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -6730,9 +6695,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -6744,7 +6706,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -7101,6 +7062,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -7114,9 +7076,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -7128,7 +7087,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -7282,6 +7240,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -7295,9 +7254,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -7309,7 +7265,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -7463,6 +7418,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -7476,9 +7432,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -7490,7 +7443,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -8709,6 +8661,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -8722,9 +8675,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -8736,7 +8686,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -9093,6 +9042,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -9106,9 +9056,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -9120,7 +9067,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -9274,6 +9220,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -9287,9 +9234,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -9301,7 +9245,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -9455,6 +9398,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -9468,9 +9412,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -9482,7 +9423,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -10777,6 +10717,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -10790,9 +10731,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -10804,7 +10742,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -11161,6 +11098,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -11174,9 +11112,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -11188,7 +11123,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -11342,6 +11276,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -11355,9 +11290,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -11369,7 +11301,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -11523,6 +11454,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -11536,9 +11468,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -11550,7 +11479,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -12817,6 +12745,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -12830,9 +12759,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -12844,7 +12770,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -13201,6 +13126,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -13214,9 +13140,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -13228,7 +13151,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -13382,6 +13304,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -13395,9 +13318,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -13409,7 +13329,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -13563,6 +13482,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -13576,9 +13496,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -13590,7 +13507,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -14795,6 +14711,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -14808,9 +14725,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -14822,7 +14736,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -15179,6 +15092,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -15192,9 +15106,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -15206,7 +15117,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -15360,6 +15270,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -15373,9 +15284,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -15387,7 +15295,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -15541,6 +15448,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -15554,9 +15462,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -15568,7 +15473,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -16723,6 +16627,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -16736,9 +16641,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -16750,7 +16652,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -17107,6 +17008,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -17120,9 +17022,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -17134,7 +17033,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -17288,6 +17186,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -17301,9 +17200,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -17315,7 +17211,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -17469,6 +17364,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -17482,9 +17378,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -17496,7 +17389,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -18735,6 +18627,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -18748,9 +18641,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -18762,7 +18652,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -19119,6 +19008,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -19132,9 +19022,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -19146,7 +19033,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -19300,6 +19186,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -19313,9 +19200,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -19327,7 +19211,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -19481,6 +19364,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -19494,9 +19378,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -19508,7 +19389,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -20727,6 +20607,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -20740,9 +20621,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -20754,7 +20632,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -21111,6 +20988,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -21124,9 +21002,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -21138,7 +21013,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -21292,6 +21166,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -21305,9 +21180,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -21319,7 +21191,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -21473,6 +21344,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -21486,9 +21358,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -21500,7 +21369,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -22739,6 +22607,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -22752,9 +22621,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -22766,7 +22632,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -23123,6 +22988,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -23136,9 +23002,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -23150,7 +23013,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -23304,6 +23166,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -23317,9 +23180,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -23331,7 +23191,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -23485,6 +23344,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -23498,9 +23358,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -23512,7 +23369,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -24807,6 +24663,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -24820,9 +24677,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -24834,7 +24688,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -25191,6 +25044,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -25204,9 +25058,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -25218,7 +25069,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -25372,6 +25222,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -25385,9 +25236,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -25399,7 +25247,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -25553,6 +25400,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -25566,9 +25414,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -25580,7 +25425,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -26819,6 +26663,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -26832,9 +26677,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -26846,7 +26688,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -27203,6 +27044,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -27216,9 +27058,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -27230,7 +27069,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -27384,6 +27222,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -27397,9 +27236,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -27411,7 +27247,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -27565,6 +27400,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -27578,9 +27414,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -27592,7 +27425,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -28831,6 +28663,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -28844,9 +28677,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -28858,7 +28688,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -29215,6 +29044,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -29228,9 +29058,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -29242,7 +29069,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -29396,6 +29222,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -29409,9 +29236,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -29423,7 +29247,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -29577,6 +29400,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -29590,9 +29414,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -29604,7 +29425,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -30851,6 +30671,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -30864,9 +30685,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -30878,7 +30696,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -31235,6 +31052,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -31248,9 +31066,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -31262,7 +31077,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -31416,6 +31230,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -31429,9 +31244,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -31443,7 +31255,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -31597,6 +31408,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -31610,9 +31422,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -31624,7 +31433,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -32843,6 +32651,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -32856,9 +32665,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -32870,7 +32676,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -33227,6 +33032,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -33240,9 +33046,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -33254,7 +33057,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -33408,6 +33210,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -33421,9 +33224,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -33435,7 +33235,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -33589,6 +33388,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -33602,9 +33402,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -33616,7 +33413,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -34913,6 +34709,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -34926,9 +34723,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -34940,7 +34734,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -35297,6 +35090,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -35310,9 +35104,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -35324,7 +35115,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -35478,6 +35268,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -35491,9 +35282,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -35505,7 +35293,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -35659,6 +35446,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -35672,9 +35460,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -35686,7 +35471,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -36905,6 +36689,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -36918,9 +36703,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -36932,7 +36714,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -37289,6 +37070,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -37302,9 +37084,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -37316,7 +37095,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -37470,6 +37248,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -37483,9 +37262,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -37497,7 +37273,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -37651,6 +37426,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -37664,9 +37440,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -37678,7 +37451,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -39023,6 +38795,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -39036,9 +38809,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -39050,7 +38820,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -39407,6 +39176,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -39420,9 +39190,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -39434,7 +39201,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -39588,6 +39354,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -39601,9 +39368,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -39615,7 +39379,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -39769,6 +39532,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -39782,9 +39546,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -39796,7 +39557,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -40186,14 +39946,12 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -40211,6 +39969,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -40224,9 +39983,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -40238,7 +39994,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -41253,6 +41008,7 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -41266,9 +41022,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -41280,7 +41033,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -41637,6 +41389,7 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -41650,9 +41403,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -41664,7 +41414,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -41818,6 +41567,7 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -41831,9 +41581,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -41845,7 +41592,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -41999,6 +41745,7 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -42012,9 +41759,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -42026,7 +41770,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -42416,14 +42159,12 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -42441,6 +42182,7 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -42454,9 +42196,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -42468,7 +42207,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -43398,6 +43136,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -43411,9 +43150,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -43425,7 +43161,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -43782,6 +43517,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -43795,9 +43531,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -43809,7 +43542,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -43963,6 +43695,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -43976,9 +43709,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -43990,7 +43720,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -44144,6 +43873,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -44157,9 +43887,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -44171,7 +43898,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -45469,6 +45195,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -45482,9 +45209,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -45496,7 +45220,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -45853,6 +45576,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -45866,9 +45590,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -45880,7 +45601,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -46034,6 +45754,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -46047,9 +45768,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -46061,7 +45779,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -46215,6 +45932,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -46228,9 +45946,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -46242,7 +45957,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -47601,6 +47315,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -47614,9 +47329,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -47628,7 +47340,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -47985,6 +47696,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -47998,9 +47710,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -48012,7 +47721,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -48166,6 +47874,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -48179,9 +47888,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -48193,7 +47899,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -48347,6 +48052,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -48360,9 +48066,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -48374,7 +48077,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -49579,6 +49281,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -49592,9 +49295,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -49606,7 +49306,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -49963,6 +49662,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -49976,9 +49676,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -49990,7 +49687,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -50144,6 +49840,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -50157,9 +49854,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -50171,7 +49865,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -50325,6 +50018,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -50338,9 +50032,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -50352,7 +50043,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -51599,6 +51289,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -51612,9 +51303,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -51626,7 +51314,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -51983,6 +51670,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -51996,9 +51684,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -52010,7 +51695,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -52164,6 +51848,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -52177,9 +51862,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -52191,7 +51873,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -52345,6 +52026,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -52358,9 +52040,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -52372,7 +52051,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -53591,6 +53269,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -53604,9 +53283,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -53618,7 +53294,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -53975,6 +53650,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -53988,9 +53664,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -54002,7 +53675,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -54156,6 +53828,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -54169,9 +53842,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -54183,7 +53853,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -54337,6 +54006,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -54350,9 +54020,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -54364,7 +54031,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -55603,6 +55269,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -55616,9 +55283,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -55630,7 +55294,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -55987,6 +55650,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -56000,9 +55664,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -56014,7 +55675,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -56168,6 +55828,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -56181,9 +55842,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -56195,7 +55853,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -56349,6 +56006,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -56362,9 +56020,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -56376,7 +56031,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,

@@ -2,7 +2,7 @@
  * A customized Header component.
  */
 
-import { IOStyles, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import { PropsWithChildren } from "react";
 import { ColorValue, View, ViewProps } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -24,7 +24,7 @@ const AppHeader = (props: PropsWithChildren<Props>) => {
     >
       <View
         style={{
-          ...IOStyles.row,
+          flexDirection: "row",
           alignItems: "center",
           height: IOVisualCostants.headerHeight
         }}

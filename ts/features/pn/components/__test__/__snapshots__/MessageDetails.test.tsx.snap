@@ -369,7 +369,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                       <RCTScrollView
                         contentContainerStyle={
                           {
-                            "paddingBottom": 16,
+                            "paddingBottom": 0,
                           }
                         }
                       >
@@ -439,6 +439,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       align="xMidYMid"
                                       bbHeight={24}
                                       bbWidth={24}
+                                      color="#0B3EE3"
                                       focusable={false}
                                       height={24}
                                       importantForAccessibility="no-hide-descendants"
@@ -452,9 +453,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0B3EE3",
-                                          },
-                                          {
                                             "flex": 0,
                                             "height": 24,
                                             "width": 24,
@@ -466,7 +464,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       width={24}
                                     >
                                       <RNSVGGroup
-                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -538,6 +535,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   align="xMidYMid"
                                   bbHeight={16}
                                   bbWidth={16}
+                                  color="#555C70"
                                   focusable={false}
                                   height={16}
                                   importantForAccessibility="no-hide-descendants"
@@ -549,9 +547,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       {
                                         "backgroundColor": "transparent",
                                         "borderWidth": 0,
-                                      },
-                                      {
-                                        "color": "#555C70",
                                       },
                                       {
                                         "flex": 0,
@@ -566,7 +561,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   width={16}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -732,7 +726,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                 "marginBottom": "-95%",
                                 "paddingBottom": "95%",
                                 "paddingHorizontal": 24,
-                                "paddingTop": 16,
+                                "paddingTop": 24,
                               }
                             }
                           >
@@ -814,6 +808,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -827,9 +822,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -841,7 +833,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1034,6 +1025,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1047,9 +1039,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1061,7 +1050,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1335,6 +1323,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           align="xMidYMid"
                                           bbHeight={36}
                                           bbWidth={36}
+                                          color="#0B3EE3"
                                           focusable={false}
                                           height={36}
                                           importantForAccessibility="no-hide-descendants"
@@ -1348,9 +1337,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 36,
                                                 "width": 36,
@@ -1362,7 +1348,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           width={36}
                                         >
                                           <RNSVGGroup
-                                            color="#0B3EE3"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -1573,6 +1558,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           align="xMidYMid"
                                           bbHeight={36}
                                           bbWidth={36}
+                                          color="#0B3EE3"
                                           focusable={false}
                                           height={36}
                                           importantForAccessibility="no-hide-descendants"
@@ -1586,9 +1572,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                 "borderWidth": 0,
                                               },
                                               {
-                                                "color": "#0B3EE3",
-                                              },
-                                              {
                                                 "flex": 0,
                                                 "height": 36,
                                                 "width": 36,
@@ -1600,7 +1583,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           width={36}
                                         >
                                           <RNSVGGroup
-                                            color="#0B3EE3"
                                             fill={
                                               {
                                                 "payload": 4278190080,

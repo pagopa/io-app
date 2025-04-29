@@ -4,6 +4,7 @@ import {
   BodySmall,
   H4,
   IOColors,
+  IOVisualCostants,
   PressableListItemBase,
   TextInput,
   VSpacer
@@ -11,7 +12,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Button, ScrollView, View } from "react-native";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { IdPayOnboardingRoutes } from "../../../idpay/onboarding/navigation/routes";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
@@ -45,7 +45,12 @@ const IdPayOnboardingPlayground = () => {
   });
 
   return (
-    <ScrollView style={IOStyles.horizontalContentPadding}>
+    <ScrollView
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        flexGrow: 1
+      }}
+    >
       <TextInput
         accessibilityLabel="ID dell'iniziativa"
         onChangeText={text => setServiceId(text)}

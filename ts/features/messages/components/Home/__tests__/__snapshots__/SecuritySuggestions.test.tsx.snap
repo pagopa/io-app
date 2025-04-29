@@ -419,6 +419,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   align="xMidYMid"
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#BBC2D6"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -432,9 +433,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#BBC2D6",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -446,7 +444,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#BBC2D6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -529,6 +526,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   align="xMidYMid"
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#BBC2D6"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -542,9 +540,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#BBC2D6",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -556,7 +551,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#BBC2D6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -666,6 +660,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   align="xMidYMid"
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#BBC2D6"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -679,9 +674,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#BBC2D6",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -693,7 +685,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#BBC2D6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -803,6 +794,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   align="xMidYMid"
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#BBC2D6"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -816,9 +808,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#BBC2D6",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -830,7 +819,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#BBC2D6"
                                     fill={
                                       {
                                         "payload": 4278190080,

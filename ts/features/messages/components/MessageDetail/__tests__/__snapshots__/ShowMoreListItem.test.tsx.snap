@@ -445,6 +445,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                               align="xMidYMid"
                               bbHeight={36}
                               bbWidth={36}
+                              color="#0B3EE3"
                               focusable={false}
                               height={36}
                               importantForAccessibility="no-hide-descendants"
@@ -458,9 +459,6 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 36,
                                     "width": 36,
@@ -472,7 +470,6 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                               width={36}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -1032,6 +1029,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                               align="xMidYMid"
                               bbHeight={36}
                               bbWidth={36}
+                              color="#0B3EE3"
                               focusable={false}
                               height={36}
                               importantForAccessibility="no-hide-descendants"
@@ -1045,9 +1043,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 36,
                                     "width": 36,
@@ -1059,7 +1054,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                               width={36}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -1674,6 +1668,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                               align="xMidYMid"
                               bbHeight={36}
                               bbWidth={36}
+                              color="#0B3EE3"
                               focusable={false}
                               height={36}
                               importantForAccessibility="no-hide-descendants"
@@ -1687,9 +1682,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 36,
                                     "width": 36,
@@ -1701,7 +1693,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                               width={36}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -1975,6 +1966,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1988,9 +1980,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -2002,7 +1991,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -2499,6 +2487,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                               align="xMidYMid"
                               bbHeight={36}
                               bbWidth={36}
+                              color="#0B3EE3"
                               focusable={false}
                               height={36}
                               importantForAccessibility="no-hide-descendants"
@@ -2512,9 +2501,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 36,
                                     "width": 36,
@@ -2526,7 +2512,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                               width={36}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -2800,6 +2785,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -2813,9 +2799,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -2827,7 +2810,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3324,6 +3306,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                               align="xMidYMid"
                               bbHeight={36}
                               bbWidth={36}
+                              color="#0B3EE3"
                               focusable={false}
                               height={36}
                               importantForAccessibility="no-hide-descendants"
@@ -3337,9 +3320,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 36,
                                     "width": 36,
@@ -3351,7 +3331,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                               width={36}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -3625,6 +3604,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -3638,9 +3618,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -3652,7 +3629,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3816,6 +3792,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -3829,9 +3806,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -3843,7 +3817,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -4340,6 +4313,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                               align="xMidYMid"
                               bbHeight={36}
                               bbWidth={36}
+                              color="#0B3EE3"
                               focusable={false}
                               height={36}
                               importantForAccessibility="no-hide-descendants"
@@ -4353,9 +4327,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 36,
                                     "width": 36,
@@ -4367,7 +4338,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                               width={36}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -4641,6 +4611,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -4654,9 +4625,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -4668,7 +4636,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -4832,6 +4799,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -4845,9 +4813,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -4859,7 +4824,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -5356,6 +5320,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               align="xMidYMid"
                               bbHeight={36}
                               bbWidth={36}
+                              color="#0B3EE3"
                               focusable={false}
                               height={36}
                               importantForAccessibility="no-hide-descendants"
@@ -5369,9 +5334,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 36,
                                     "width": 36,
@@ -5383,7 +5345,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               width={36}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -5657,6 +5618,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -5670,9 +5632,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -5684,7 +5643,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -5895,6 +5853,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -5908,9 +5867,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -5922,7 +5878,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -6086,6 +6041,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -6099,9 +6055,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -6113,7 +6066,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -6324,6 +6276,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -6337,9 +6290,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -6351,7 +6301,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -6515,6 +6464,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -6528,9 +6478,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -6542,7 +6489,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -6706,6 +6652,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -6719,9 +6666,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -6733,7 +6677,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -7230,6 +7173,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                               align="xMidYMid"
                               bbHeight={36}
                               bbWidth={36}
+                              color="#0B3EE3"
                               focusable={false}
                               height={36}
                               importantForAccessibility="no-hide-descendants"
@@ -7243,9 +7187,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 36,
                                     "width": 36,
@@ -7257,7 +7198,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                               width={36}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -7531,6 +7471,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -7544,9 +7485,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -7558,7 +7496,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -7769,6 +7706,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -7782,9 +7720,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -7796,7 +7731,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -7960,6 +7894,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -7973,9 +7908,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -7987,7 +7919,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,

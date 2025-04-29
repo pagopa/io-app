@@ -438,6 +438,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               align="xMidYMid"
                               bbHeight={36}
                               bbWidth={36}
+                              color="#614C15"
                               focusable={false}
                               height={36}
                               importantForAccessibility="no-hide-descendants"
@@ -451,9 +452,6 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#614C15",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 36,
                                     "width": 36,
@@ -465,7 +463,6 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               width={36}
                             >
                               <RNSVGGroup
-                                color="#614C15"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -493,12 +490,11 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                             </RNSVGSvgView>
                             <View
                               style={
-                                [
-                                  false,
-                                  {
-                                    "flex": 1,
-                                  },
-                                ]
+                                {
+                                  "flex": 1,
+                                  "marginBottom": -6,
+                                  "marginTop": -6,
+                                }
                               }
                             >
                               <View
@@ -514,7 +510,6 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                   allowFontScaling={true}
                                   dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.5}
-                                  onTextLayout={[Function]}
                                   style={
                                     [
                                       {},

@@ -757,6 +757,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       align="xMidYMid"
                                       bbHeight={24}
                                       bbWidth={24}
+                                      color="#0B3EE3"
                                       focusable={false}
                                       height={24}
                                       importantForAccessibility="no-hide-descendants"
@@ -770,9 +771,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0B3EE3",
-                                          },
-                                          {
                                             "flex": 0,
                                             "height": 24,
                                             "width": 24,
@@ -784,7 +782,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       width={24}
                                     >
                                       <RNSVGGroup
-                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -983,6 +980,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       align="xMidYMid"
                                       bbHeight={24}
                                       bbWidth={24}
+                                      color="#0B3EE3"
                                       focusable={false}
                                       height={24}
                                       importantForAccessibility="no-hide-descendants"
@@ -996,9 +994,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0B3EE3",
-                                          },
-                                          {
                                             "flex": 0,
                                             "height": 24,
                                             "width": 24,
@@ -1010,7 +1005,6 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       width={24}
                                     >
                                       <RNSVGGroup
-                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -2815,6 +2809,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               align="xMidYMid"
                               bbHeight={24}
                               bbWidth={24}
+                              color="#0B3EE3"
                               focusable={false}
                               height={24}
                               importantForAccessibility="no-hide-descendants"
@@ -2828,9 +2823,6 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -2842,7 +2834,6 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               width={24}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,

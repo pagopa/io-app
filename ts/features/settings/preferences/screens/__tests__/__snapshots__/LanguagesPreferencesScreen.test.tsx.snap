@@ -1075,14 +1075,12 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -1100,6 +1098,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -1113,9 +1112,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -1127,7 +1123,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1248,14 +1243,12 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -1273,6 +1266,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1286,9 +1280,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1300,7 +1291,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

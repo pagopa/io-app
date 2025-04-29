@@ -467,13 +467,6 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                           </Text>
                         </View>
                         <View
-                          style={
-                            {
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
-                        <View
                           accessibilityRole="checkbox"
                           accessibilityState={
                             {

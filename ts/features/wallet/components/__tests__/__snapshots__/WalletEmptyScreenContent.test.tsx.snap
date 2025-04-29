@@ -662,6 +662,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                 align="xMidYMid"
                                 bbHeight={30}
                                 bbWidth={30}
+                                color="#FFFFFF"
                                 focusable={false}
                                 height={30}
                                 importantForAccessibility="no-hide-descendants"
@@ -675,9 +676,6 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#FFFFFF",
-                                    },
-                                    {
                                       "flex": 0,
                                       "height": 30,
                                       "width": 30,
@@ -689,7 +687,6 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                 width={30}
                               >
                                 <RNSVGGroup
-                                  color="#FFFFFF"
                                   fill={
                                     {
                                       "payload": 4278190080,

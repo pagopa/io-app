@@ -416,14 +416,12 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                             style={
                               [
                                 {
+                                  "alignItems": "center",
+                                  "justifyContent": "center",
+                                },
+                                {
                                   "height": 24,
                                   "width": 24,
-                                },
-                                {
-                                  "alignItems": "center",
-                                },
-                                {
-                                  "justifyContent": "center",
                                 },
                                 false,
                               ]
@@ -441,6 +439,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               }
                               bbHeight={36}
                               bbWidth={36}
+                              color="#0E0F13"
                               focusable={false}
                               height={36}
                               importantForAccessibility="no-hide-descendants"
@@ -454,9 +453,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0E0F13",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 36,
                                     "width": 36,
@@ -468,7 +464,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               width={36}
                             >
                               <RNSVGGroup
-                                color="#0E0F13"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -1044,22 +1039,21 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 24,
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
                                   {
-                                    "height": 48,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
                                     "backgroundColor": "#0B3EE3",
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
                                   },
                                   {},
                                   false,
@@ -1096,16 +1090,21 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     [
                                       {},
                                       {
-                                        "color": "#FFFFFF",
+                                        "color": "#0E0F13",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 20,
+                                        "lineHeight": undefined,
                                       },
-                                      {
-                                        "alignSelf": "center",
-                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
