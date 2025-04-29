@@ -4,12 +4,11 @@ import {
   H2,
   Icon,
   IOColors,
-  IOStyles,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Second } from "@pagopa/ts-commons/lib/units";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { isReady } from "../../../../../common/model/RemoteValue";
@@ -124,8 +123,8 @@ const CgnDiscountCodeScreen = () => {
           </H2>
           <VSpacer size={24} />
           <View style={styles.discountCodeContainer}>
-            <View style={[IOStyles.row, { alignSelf: "center" }]}>
-              <Icon name="tag" color="grey-300" />
+            <View style={{ flexDirection: "row", alignSelf: "center" }}>
+              <Icon name="tag" color={theme["icon-decorative"]} />
             </View>
             <VSpacer size={4} />
             <H1 textStyle={StyleSheet.flatten([styles.labelCode])}>

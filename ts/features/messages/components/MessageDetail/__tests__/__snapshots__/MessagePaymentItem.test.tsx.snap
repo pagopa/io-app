@@ -955,6 +955,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -968,9 +969,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -982,7 +980,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1554,6 +1551,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -1567,9 +1565,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -1581,7 +1576,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
