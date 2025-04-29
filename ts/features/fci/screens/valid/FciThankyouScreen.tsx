@@ -1,7 +1,6 @@
 import {
   ButtonSolidProps,
   FooterActions,
-  IOStyles,
   Pictogram
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -48,7 +47,7 @@ const FciThankyouScreen = () => {
     };
 
     return (
-      <View style={IOStyles.flex} testID={"FciTypSuccessTestID"}>
+      <View style={{ flex: 1 }} testID={"FciTypSuccessTestID"}>
         <InfoScreenComponent
           image={<Pictogram name={"success"} />}
           title={I18n.t("features.fci.thankYouPage.title")}
