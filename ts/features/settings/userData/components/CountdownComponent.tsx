@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import { useCountdown } from "../../../../components/countdown/CountdownProvider";
 import I18n from "../../../../i18n";
 import { ProgressIndicator } from "../../../../components/ui/ProgressIndicator";
@@ -29,7 +29,7 @@ const Countdown = (props: CountdownProps) => {
 
   if (visible) {
     return (
-      <View style={IOStyles.alignCenter}>
+      <View style={{ alignItems: "center" }}>
         <VSpacer size={24} />
         <ProgressIndicator progress={(timerCount / 60) * 100} />
         <VSpacer size={8} />

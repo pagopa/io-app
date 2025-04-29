@@ -2,7 +2,6 @@ import {
   FooterActions,
   FooterActionsMeasurements,
   IOColors,
-  IOStyles,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
@@ -92,12 +91,10 @@ export const ItwPresentationCredentialAttachmentScreen = ({
 
   return (
     <View
-      style={[
-        IOStyles.flex,
-        {
-          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
-        }
-      ]}
+      style={{
+        flex: 1,
+        paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
+      }}
     >
       <Pdf
         enablePaging
@@ -162,6 +159,7 @@ const getFileNameWithExtension = (
 const styles = StyleSheet.create({
   pdfContainer: {
     flexGrow: 1,
+    // TODO: Dark mode: Replace with theme values
     backgroundColor: IOColors["grey-700"]
   }
 });
