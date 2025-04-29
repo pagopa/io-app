@@ -3958,13 +3958,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-login-utils@npm:^1.0.8":
-  version: 1.0.8
-  resolution: "@pagopa/io-react-native-login-utils@npm:1.0.8"
+"@pagopa/io-react-native-login-utils@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "@pagopa/io-react-native-login-utils@npm:1.0.9"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 636f5a4b12fa63dfc48d9d547aad87690557a17a4ea59f9fb87c9e3136a3254e4373284aefc02da9ca1cc42d78a03282d0a03bc9885690531fe118cfd58c247b
+  checksum: d9df42098dac39295e7a490a0f9ed821b720f441ee7ffd0f92a1dd870da343e38621c78f4019bd19497611893d9c4160e652f84147fc29988224b4888a44698f
   languageName: node
   linkType: hard
 
@@ -13136,7 +13136,7 @@ __metadata:
     "@pagopa/io-react-native-http-client": 1.0.5
     "@pagopa/io-react-native-integrity": ^0.3.1
     "@pagopa/io-react-native-jwt": ^1.4.0
-    "@pagopa/io-react-native-login-utils": ^1.0.8
+    "@pagopa/io-react-native-login-utils": ^1.0.9
     "@pagopa/io-react-native-secure-storage": ^0.2.0
     "@pagopa/io-react-native-wallet": ^0.28.2
     "@pagopa/io-react-native-zendesk": ^0.3.30
