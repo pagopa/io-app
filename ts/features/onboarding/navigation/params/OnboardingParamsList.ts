@@ -1,8 +1,8 @@
-import { OnboardingNotificationsPreferencesScreenNavigationParams } from "../../features/pushNotifications/screens/OnboardingNotificationsPreferencesScreen";
-import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
-import { EmailInsertScreenNavigationParams } from "../../features/settings/userData/shared/screens/EmailInsertScreen";
-import { SendEmailValidationScreenProp } from "../../features/settings/userData/shared/screens/EmailValidationSendEmailScreen";
-import ROUTES from "../routes";
+import { OnboardingNotificationsPreferencesScreenNavigationParams } from "../../../pushNotifications/screens/OnboardingNotificationsPreferencesScreen";
+import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/OnboardingServicesPreferenceScreen";
+import { EmailInsertScreenNavigationParams } from "../../../settings/userData/shared/screens/EmailInsertScreen";
+import { SendEmailValidationScreenProp } from "../../../settings/userData/shared/screens/EmailValidationSendEmailScreen";
+import ROUTES from "../../../../navigation/routes";
 
 export type OnboardingParamsList = {
   [ROUTES.ONBOARDING_SHARE_DATA]: undefined;
