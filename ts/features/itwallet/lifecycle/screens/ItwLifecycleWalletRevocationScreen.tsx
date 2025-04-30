@@ -8,7 +8,6 @@ import LoadingScreenContent from "../../../../components/screens/LoadingScreenCo
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
-import { withOfflineFailureScreen } from "../../wallet/utils/withOfflineFailureScreen.tsx";
 
 const RevocationLoadingScreen = () => {
   useItwDisableGestureNavigation();
@@ -29,7 +28,7 @@ const RevocationLoadingScreen = () => {
   );
 };
 
-const ItwLifecycleWalletRevocationComponent = () => {
+export const ItwLifecycleWalletRevocationScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
@@ -65,8 +64,3 @@ const ItwLifecycleWalletRevocationComponent = () => {
     />
   );
 };
-
-// Offline failure screen HOC
-export const ItwLifecycleWalletRevocationScreen = withOfflineFailureScreen(
-  ItwLifecycleWalletRevocationComponent
-);
