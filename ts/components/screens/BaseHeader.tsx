@@ -9,8 +9,7 @@ import {
   IconButton,
   IOColors,
   IOIcons,
-  IOSpacer,
-  IOStyles
+  IOSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import {
@@ -278,8 +277,8 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
     return (
       <View
         style={{
-          ...IOStyles.flex,
-          ...IOStyles.row,
+          flex: 1,
+          flexDirection: "row",
           justifyContent: "flex-end"
         }}
       >
@@ -319,12 +318,10 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
   private renderGoBack = () => {
     const { goBack, dark, customGoBack, backButtonTestID } = this.props;
     return customGoBack ? (
-      <View style={{ ...IOStyles.flex, alignSelf: "center" }}>
-        {customGoBack}
-      </View>
+      <View style={{ flex: 1, alignSelf: "center" }}>{customGoBack}</View>
     ) : (
       goBack && (
-        <View style={{ ...IOStyles.flex, alignSelf: "center" }}>
+        <View style={{ flex: 1, alignSelf: "center" }}>
           <GoBackButton
             testID={backButtonTestID ?? "back-button"}
             onPress={goBack}
@@ -344,7 +341,7 @@ class BaseHeaderComponent extends PureComponent<Props, State> {
         accessible={true}
         accessibilityElementsHidden={true}
         importantForAccessibility="no-hide-descendants"
-        style={{ ...IOStyles.flex, alignSelf: "flex-start" }}
+        style={{ flex: 1, alignSelf: "flex-start" }}
       >
         <Icon name="productIOApp" color={iconColor} accessible={false} />
       </View>

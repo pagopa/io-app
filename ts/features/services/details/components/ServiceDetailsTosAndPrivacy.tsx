@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import {
   Divider,
-  IOStyles,
+  IOVisualCostants,
   ListItemAction,
   ListItemHeader
 } from "@pagopa/io-app-design-system";
@@ -69,7 +69,9 @@ export const ServiceDetailsTosAndPrivacy = ({
         />
       }
       ItemSeparatorComponent={() => <Divider />}
-      contentContainerStyle={IOStyles.horizontalContentPadding}
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
       data={filteredTosAndPrivacyListItems}
       keyExtractor={item => item.label}
       renderItem={renderItem}

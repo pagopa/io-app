@@ -1,7 +1,6 @@
 import {
   Divider,
   IOColors,
-  IOStyles,
   IOToast,
   IOVisualCostants,
   ListItemNav,
@@ -46,9 +45,6 @@ type InstitutionServicesScreen = IOStackNavigationRouteProps<
 const scrollTriggerOffsetValue: number = 88;
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    flexGrow: 1
-  },
   refreshControlContainer: {
     zIndex: 1
   }
@@ -228,10 +224,10 @@ export const InstitutionServicesScreen = ({
         marginHorizontal: -IOVisualCostants.appMarginDefault
       }}
       ListFooterComponent={renderListFooterComponent}
-      contentContainerStyle={[
-        styles.contentContainer,
-        IOStyles.horizontalContentPadding
-      ]}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
       data={data?.services}
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.1}

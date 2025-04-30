@@ -1,4 +1,4 @@
-import { Body, H6, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H6, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { ComponentProps, ReactElement, useCallback } from "react";
@@ -57,7 +57,13 @@ const WalletDetailsPaymentMethodInitiatives = (
 
   return initiativesList.length > 0 ? (
     <View testID="idPayInitiativesList" style={props.style}>
-      <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center"
+        }}
+      >
         <H6 color={"grey-700"}>{I18n.t("wallet.capability.title")}</H6>
         <Body
           asLink

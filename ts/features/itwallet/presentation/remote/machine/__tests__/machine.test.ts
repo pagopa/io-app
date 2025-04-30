@@ -1,7 +1,13 @@
 import _ from "lodash";
-import { StateFrom, createActor } from "xstate";
+import { StateFrom, createActor, fromPromise } from "xstate";
 import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
-import { ItwRemoteRequestPayload } from "../../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../../utils/itwRemoteTypeUtils.ts";
+import {
+  EvaluateRelyingPartyTrustInput,
+  EvaluateRelyingPartyTrustOutput,
+  GetPresentationDetailsInput,
+  GetPresentationDetailsOutput
+} from "../actors.ts";
 
 const T_CLIENT_ID = "clientId";
 const T_REQUEST_URI = "https://example.com";
@@ -14,10 +20,13 @@ describe("itwRemoteMachine", () => {
   const navigateToFailureScreen = jest.fn();
   const navigateToClaimsDisclosureScreen = jest.fn();
   const navigateToIdentificationModeScreen = jest.fn();
-  const close = jest.fn();
+  const closePresentation = jest.fn();
 
   const isWalletActive = jest.fn();
   const isEidExpired = jest.fn();
+
+  const evaluateRelyingPartyTrust = jest.fn();
+  const getPresentationDetails = jest.fn();
 
   const mockedMachine = itwRemoteMachine.provide({
     actions: {
@@ -25,9 +34,18 @@ describe("itwRemoteMachine", () => {
       navigateToFailureScreen,
       navigateToClaimsDisclosureScreen,
       navigateToIdentificationModeScreen,
-      close
+      closePresentation
     },
-    actors: {},
+    actors: {
+      evaluateRelyingPartyTrust: fromPromise<
+        EvaluateRelyingPartyTrustOutput,
+        EvaluateRelyingPartyTrustInput
+      >(evaluateRelyingPartyTrust),
+      getPresentationDetails: fromPromise<
+        GetPresentationDetailsOutput,
+        GetPresentationDetailsInput
+      >(getPresentationDetails)
+    },
     guards: {
       isWalletActive,
       isEidExpired
@@ -85,7 +103,7 @@ describe("itwRemoteMachine", () => {
     actor.start();
 
     actor.send({ type: "close" });
-    expect(close).toHaveBeenCalledTimes(1);
+    expect(closePresentation).toHaveBeenCalledTimes(1);
   });
 
   it("Should navigate to TOS when user accept to active ITWallet", async () => {
@@ -156,7 +174,7 @@ describe("itwRemoteMachine", () => {
     expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("should transition from Idle to ClaimsDisclosure when ITWallet is active", () => {
+  it("should transition from Idle to EvaluatingRelyingPartyTrust when ITWallet is active", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -173,6 +191,8 @@ describe("itwRemoteMachine", () => {
     });
 
     expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
-    expect(actor.getSnapshot().value).toStrictEqual("ClaimsDisclosure");
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "EvaluatingRelyingPartyTrust"
+    );
   });
 });

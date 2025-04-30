@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0-rc.5](https://github.com/pagopa/io-app/compare/3.4.0-rc.4...3.4.0-rc.5) (2025-04-29)
+
+
+### Features
+
+* [[IOPID-2968](https://pagopa.atlassian.net/browse/IOPID-2968)] offline wallet: session expired scenario  ([#6916](https://github.com/pagopa/io-app/issues/6916)) ([92c5e89](https://github.com/pagopa/io-app/commit/92c5e8905f7c819dc5fce5310d9ad56f9b91b906))
+
+
+### Chores
+
+* [[IOBP-1581](https://pagopa.atlassian.net/browse/IOBP-1581)] Add more metadata to track inside the CGN debug mode ([#6925](https://github.com/pagopa/io-app/issues/6925)) ([3fca667](https://github.com/pagopa/io-app/commit/3fca667b183185cd8419b37ae07e8ff9ef2bf144))
+* [[IOPID-2663](https://pagopa.atlassian.net/browse/IOPID-2663)]: Track help center links ([#6927](https://github.com/pagopa/io-app/issues/6927)) ([ed9412d](https://github.com/pagopa/io-app/commit/ed9412d3e869439d2d8ba03980eaee70f5585172))
+
+## [3.4.0-rc.4](https://github.com/pagopa/io-app/compare/3.4.0-rc.3...3.4.0-rc.4) (2025-04-28)
+
+
+### Chores
+
+* [[IOPLT-1102](https://pagopa.atlassian.net/browse/IOPLT-1102),[IOCOM-2328](https://pagopa.atlassian.net/browse/IOCOM-2328)] Remove `IOStyles` utility classes from the codebase. Fix `Alert` component flickering on message details ([#6907](https://github.com/pagopa/io-app/issues/6907)) ([0819bf5](https://github.com/pagopa/io-app/commit/0819bf5cd7577715193a5b3820f6a0aec45d1b3e))
+
 ## [3.4.0-rc.3](https://github.com/pagopa/io-app/compare/3.4.0-rc.2...3.4.0-rc.3) (2025-04-25)
 
 ## [3.4.0-rc.2](https://github.com/pagopa/io-app/compare/3.4.0-rc.1...3.4.0-rc.2) (2025-04-24)

@@ -1,7 +1,16 @@
-import { assign, not, setup } from "xstate";
+import { assign, fromPromise, not, setup } from "xstate";
 import { InitialContext, Context } from "./context";
 import { mapEventToFailure, RemoteFailureType } from "./failure";
 import { RemoteEvents } from "./events";
+import { ItwPresentationTags } from "./tags";
+import {
+  EvaluateRelyingPartyTrustInput,
+  EvaluateRelyingPartyTrustOutput,
+  GetPresentationDetailsInput,
+  GetPresentationDetailsOutput,
+  SendAuthorizationResponseInput,
+  SendAuthorizationResponseOutput
+} from "./actors";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -18,9 +27,23 @@ export const itwRemoteMachine = setup({
     navigateToDiscoveryScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
-    close: notImplemented
+    navigateToAuthResponseScreen: notImplemented,
+    closePresentation: notImplemented
   },
-  actors: {},
+  actors: {
+    evaluateRelyingPartyTrust: fromPromise<
+      EvaluateRelyingPartyTrustOutput,
+      EvaluateRelyingPartyTrustInput
+    >(notImplemented),
+    getPresentationDetails: fromPromise<
+      GetPresentationDetailsOutput,
+      GetPresentationDetailsInput
+    >(notImplemented),
+    sendAuthorizationResponse: fromPromise<
+      SendAuthorizationResponseOutput,
+      SendAuthorizationResponseInput
+    >(notImplemented)
+  },
   guards: {
     isWalletActive: notImplemented,
     areRequiredCredentialsAvailable: notImplemented,
@@ -68,17 +91,106 @@ export const itwRemoteMachine = setup({
           target: "Failure"
         },
         {
-          target: "ClaimsDisclosure"
+          target: "EvaluatingRelyingPartyTrust"
         }
       ]
     },
-    ClaimsDisclosure: {
+    EvaluatingRelyingPartyTrust: {
       entry: "navigateToClaimsDisclosureScreen",
+      tags: [ItwPresentationTags.Loading],
+      description: "Determine whether the Relying Party is a trusted entity",
+      invoke: {
+        src: "evaluateRelyingPartyTrust",
+        input: ({ context }) => ({ qrCodePayload: context.payload }),
+        onDone: {
+          target: "GettingPresentationDetails",
+          actions: assign(({ event }) => event.output)
+        },
+        onError: {
+          actions: "setFailure",
+          target: "Failure"
+        }
+      }
+    },
+    GettingPresentationDetails: {
+      tags: [ItwPresentationTags.Loading],
+      description:
+        "Get the details of the presentation requested by the Relying Party (i.e. credentials)",
+      invoke: {
+        src: "getPresentationDetails",
+        input: ({ context }) => ({
+          qrCodePayload: context.payload,
+          rpSubject: context.rpSubject,
+          rpConf: context.rpConf
+        }),
+        onDone: {
+          actions: assign(({ event }) => event.output),
+          target: "ClaimsDisclosure"
+        },
+        onError: {
+          actions: "setFailure",
+          target: "Failure"
+        }
+      }
+    },
+    ClaimsDisclosure: {
       description:
         "Display the list of claims to disclose for the verifiable presentation",
       on: {
+        "toggle-credential": {
+          actions: assign(({ event: { credentialIds }, context }) => {
+            const optionalCredentials = new Set(
+              context.selectedOptionalCredentials
+            );
+            for (const id of credentialIds) {
+              if (optionalCredentials.has(id)) {
+                optionalCredentials.delete(id);
+              } else {
+                optionalCredentials.add(id);
+              }
+            }
+            return { selectedOptionalCredentials: optionalCredentials };
+          })
+        },
+        "holder-consent": {
+          target: "SendingAuthorizationResponse"
+        },
         close: {
-          actions: "close"
+          actions: "closePresentation"
+        }
+      }
+    },
+    SendingAuthorizationResponse: {
+      tags: [ItwPresentationTags.Loading],
+      entry: "navigateToAuthResponseScreen",
+      description:
+        "Create the Verifiable Presentation and send it to the Relying Party",
+      invoke: {
+        src: "sendAuthorizationResponse",
+        input: ({ context }) => ({
+          rpConf: context.rpConf,
+          requestObject: context.requestObject,
+          presentationDetails: context.presentationDetails,
+          optionalCredentials: context.selectedOptionalCredentials
+        }),
+        onDone: {
+          actions: assign(({ event }) => ({
+            redirectUri: event.output.redirectUri
+          })),
+          target: "Success"
+        },
+        onError: {
+          actions: "setFailure",
+          target: "Failure"
+        }
+      }
+    },
+    Success: {
+      description:
+        "The Verifiable Presentation has been successfully sent to the Relying Party",
+      on: {
+        close: {
+          actions: "closePresentation"
         }
       }
     },
@@ -93,7 +205,7 @@ export const itwRemoteMachine = setup({
           actions: "navigateToIdentificationModeScreen"
         },
         close: {
-          actions: "close"
+          actions: "closePresentation"
         }
       }
     }

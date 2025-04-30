@@ -1137,6 +1137,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               align="xMidYMid"
                               bbHeight={24}
                               bbWidth={24}
+                              color="#0B3EE3"
                               focusable={false}
                               height={24}
                               importantForAccessibility="no-hide-descendants"
@@ -1150,9 +1151,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -1164,7 +1162,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               width={24}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -1662,6 +1659,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             align="xMidYMid"
                             bbHeight={24}
                             bbWidth={24}
+                            color="#0B3EE3"
                             focusable={false}
                             height={24}
                             importantForAccessibility="no-hide-descendants"
@@ -1675,9 +1673,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#0B3EE3",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 24,
                                   "width": 24,
@@ -1689,7 +1684,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             width={24}
                           >
                             <RNSVGGroup
-                              color="#0B3EE3"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -2234,6 +2228,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               align="xMidYMid"
                               bbHeight={24}
                               bbWidth={24}
+                              color="#0B3EE3"
                               focusable={false}
                               height={24}
                               importantForAccessibility="no-hide-descendants"
@@ -2247,9 +2242,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                     "borderWidth": 0,
                                   },
                                   {
-                                    "color": "#0B3EE3",
-                                  },
-                                  {
                                     "flex": 0,
                                     "height": 24,
                                     "width": 24,
@@ -2261,7 +2253,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               width={24}
                             >
                               <RNSVGGroup
-                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
