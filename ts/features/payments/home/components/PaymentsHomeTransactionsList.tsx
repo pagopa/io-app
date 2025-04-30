@@ -1,5 +1,6 @@
 import {
   BannerErrorState,
+  ContentWrapper,
   Divider,
   ListItemHeader,
   ListItemTransaction
@@ -133,7 +134,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     }
 
     return (
-      <View testID="PaymentsHomeTransactionsListTestID-loading">
+      <ContentWrapper testID="PaymentsHomeTransactionsListTestID-loading">
         {Array.from({ length: 10 }).map((_, index) => (
           <ListItemTransaction
             isLoading={true}
@@ -146,7 +147,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
             subtitle=""
           />
         ))}
-      </View>
+      </ContentWrapper>
     );
   };
 
@@ -156,24 +157,26 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
 
   return (
     <Animated.View style={{ flex: 1 }} layout={LinearTransition.duration(200)}>
-      <ListItemHeader
-        label={I18n.t("features.payments.transactions.title")}
-        accessibilityLabel={I18n.t("features.payments.transactions.title")}
-        endElement={
-          !isLoading && !pot.isError(latestTransactionsPot)
-            ? {
-                type: "buttonLink",
-                componentProps: {
-                  label: I18n.t("features.payments.transactions.button"),
-                  onPress: handleNavigateToTransactionList,
-                  accessibilityLabel: I18n.t(
-                    "features.payments.transactions.button"
-                  )
+      <ContentWrapper>
+        <ListItemHeader
+          label={I18n.t("features.payments.transactions.title")}
+          accessibilityLabel={I18n.t("features.payments.transactions.title")}
+          endElement={
+            !isLoading && !pot.isError(latestTransactionsPot)
+              ? {
+                  type: "buttonLink",
+                  componentProps: {
+                    label: I18n.t("features.payments.transactions.button"),
+                    onPress: handleNavigateToTransactionList,
+                    accessibilityLabel: I18n.t(
+                      "features.payments.transactions.button"
+                    )
+                  }
                 }
-              }
-            : undefined
-        }
-      />
+              : undefined
+          }
+        />
+      </ContentWrapper>
       {renderLatestNoticesItems()}
     </Animated.View>
   );

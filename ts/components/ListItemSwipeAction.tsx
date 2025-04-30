@@ -1,8 +1,10 @@
 /* eslint-disable functional/immutable-data */
 import {
+  ContentWrapper,
   IconButton,
   IOColors,
   IOSpringValues,
+  IOVisualCostants,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { MutableRefObject, ReactNode, useRef } from "react";
@@ -35,6 +37,8 @@ const RightActions = ({
   accessibilityLabel,
   translateX
 }: RightActionsProps) => {
+  const { theme } = useIOThemeContext();
+
   const animatedIconStyle = useAnimatedStyle(() => {
     const clamped = Math.max(-translateX.value, 0);
     const progress = Math.min(clamped / 60, 1);
@@ -48,7 +52,7 @@ const RightActions = ({
   return (
     <View
       style={{
-        backgroundColor: IOColors["blueIO-500"],
+        backgroundColor: IOColors[theme["interactiveElem-default"]],
         justifyContent: "center",
         alignItems: "flex-end",
         paddingRight: 18,
@@ -183,7 +187,7 @@ const ListItemSwipeAction = ({
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View
+      <ContentWrapper
         style={{
           flex: 1,
           position: "relative"
@@ -212,15 +216,17 @@ const ListItemSwipeAction = ({
             style={[
               {
                 flex: 1,
-                backgroundColor
+                backgroundColor,
+                // for swipe actions visual effect
+                marginHorizontal: IOVisualCostants.appMarginDefault * -1
               },
               animatedStyle
             ]}
           >
-            {children}
+            <ContentWrapper>{children}</ContentWrapper>
           </Animated.View>
         </PanGestureHandler>
-      </View>
+      </ContentWrapper>
     </GestureHandlerRootView>
   );
 };

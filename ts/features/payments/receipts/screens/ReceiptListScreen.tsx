@@ -1,4 +1,5 @@
 import {
+  ContentWrapper,
   Divider,
   IOVisualCostants,
   ListItemHeader
@@ -167,7 +168,9 @@ const ReceiptListScreen = () => {
   const renderLoadingFooter = () => (
     <>
       {isLoading && (
-        <ReceiptLoadingList showSectionTitleSkeleton={!continuationToken} />
+        <ContentWrapper>
+          <ReceiptLoadingList showSectionTitleSkeleton={!continuationToken} />
+        </ContentWrapper>
       )}
     </>
   );

@@ -4,6 +4,7 @@ import Animated, {
   LinearTransition,
   useAnimatedRef
 } from "react-native-reanimated";
+import { ContentWrapper, IOVisualCostants } from "@pagopa/io-app-design-system";
 import {
   IOScrollView,
   IOScrollViewActions
@@ -141,6 +142,7 @@ const PaymentsHomeScreen = () => {
 
   return (
     <IOScrollView
+      includeContentMargins={false}
       excludeSafeAreaMargins={true}
       animatedRef={scrollViewContentRef}
       refreshControlProps={{
@@ -182,7 +184,11 @@ const PaymentsHomeScreenContent = () => {
 
   return (
     <>
-      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoadingFirstTime} />
+      <ContentWrapper>
+        <PaymentsHomeUserMethodsList
+          enforcedLoadingState={isLoadingFirstTime}
+        />
+      </ContentWrapper>
       <PaymentsHomeTransactionsList enforcedLoadingState={isLoadingFirstTime} />
     </>
   );
