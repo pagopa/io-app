@@ -98,6 +98,8 @@ const ListItemSwipeAction = ({
   const { width } = useWindowDimensions();
   const backgroundColor = IOColors[theme["appBackground-primary"]];
 
+  const gestureContext = useRef({ startX: 0 });
+
   const showAlertAction = () =>
     Alert.alert(alertProps.title, alertProps.message, [
       {
@@ -136,17 +138,22 @@ const ListItemSwipeAction = ({
     event: GestureEvent<PanGestureHandlerEventPayload>
   ) => {
     const { translationX } = event.nativeEvent;
+
     if (translationX < 0) {
-      // Close other items
+      const newTranslateX = gestureContext.current.startX + translationX;
+
+      // Clamp value to avoid over-dragging
+      translateX.value = Math.max(newTranslateX, -width * 0.9);
+
+      // Set the open item reference
       if (openedItemRef?.current && openedItemRef.current !== closeItem) {
         openedItemRef.current();
       }
-
-      translateX.value = translationX;
       if (openedItemRef) {
         openedItemRef.current = closeItem;
       }
     }
+
     if (translationX < -200 && !hapticTriggered.current) {
       HapticFeedback.trigger("impactLight");
       hapticTriggered.current = true;
@@ -192,6 +199,9 @@ const ListItemSwipeAction = ({
         />
         <PanGestureHandler
           onGestureEvent={handleGestureEvent}
+          onBegan={() => {
+            gestureContext.current.startX = translateX.value;
+          }}
           onEnded={event =>
             handleGestureEnd(
               event as HandlerStateChangeEvent<PanGestureHandlerEventPayload>
