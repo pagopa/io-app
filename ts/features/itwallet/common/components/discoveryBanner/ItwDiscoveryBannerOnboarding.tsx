@@ -57,7 +57,9 @@ const ItwDiscoveryBannerOnboarding = () => {
       content: I18n.t("features.itWallet.discovery.banner.home.content")
     },
     onboardingWithOffline: {
-      content: I18n.t("features.itWallet.discovery.banner.homeWithOffline.content")
+      content: I18n.t(
+        "features.itWallet.discovery.banner.homeWithOffline.content"
+      )
     },
     reactivating: {
       content: I18n.t(
