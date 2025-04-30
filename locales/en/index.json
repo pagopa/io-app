@@ -855,6 +855,7 @@
       "contextualHelpContent": "**You can register in the IO app by using your SPID identity (Public Digital Identity System) or your CIE (Electronic Identity Card).** Your security is guaranteed thanks to the use of those strong authentication methods.  \nIf you don’t have a SPID identity and you want to request one, you can visit [spid.gov.it](https://www.spid.gov.it) and choose one of the proposed identity providers. If you are interested in applying for the CIE, you can visit the website of your municipality for more information, and book an appointment with them.\n",
       "loginSpid": "Login with SPID",
       "loginCie": "Login with CIE",
+      "show_wallet": "Show my Documents",
       "loginSpidCie": "Login with SPID or CIE",
       "infoSpidCie": "Introduction to SPID and CIE",
       "loginSpidCieContent": "From today, in addition to SPID, you can use your Electronic ID Card to login",
@@ -4723,7 +4724,8 @@
           },
           "modal": {
             "title": "Nessuna connessione",
-            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO."
+            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
+            "footerAction": "What can I do?"
           }
         },
         "SESSION_EXPIRED": {
@@ -4733,7 +4735,8 @@
           },
           "modal": {
             "title": "Il tuo accesso all’app è scaduto",
-            "content": "###### Cosa posso fare?\n\nQuando la tua sessione di accesso all’app scade, alcuni servizi dell’app potrebbero essere limitati per motivi di sicurezza.\n\nAccedi di nuovo con SPID o CIE per continuare ad usare tutti i servizi di IO."
+            "content": "###### Cosa posso fare?\n\nQuando la tua sessione di accesso all’app scade, alcuni servizi dell’app potrebbero essere limitati per motivi di sicurezza.\n\nAccedi di nuovo con SPID o CIE per continuare ad usare tutti i servizi di IO.",
+            "footerAction": "Log in again"
           }
         },
         "SESSION_REFRESH": {
@@ -4743,7 +4746,8 @@
           },
           "modal": {
             "title": "Servizi dell’app limitati",
-            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO."
+            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
+            "footerAction": "What can I do?"
           }
         },
         "action": "Ricarica l'app IO",
