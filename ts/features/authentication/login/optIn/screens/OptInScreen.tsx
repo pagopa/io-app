@@ -122,7 +122,8 @@ const OptInScreen = () => {
         label: I18n.t("authentication.opt_in.button_decline_lv"),
         accessibilityLabel: I18n.t("authentication.opt_in.button_decline_lv"),
         onPress: () => navigateToIdpPage(false),
-        testID: "decline-button-test"
+        testID: "decline-button-test",
+        variant: "link"
       }}
     >
       <ContentWrapper>

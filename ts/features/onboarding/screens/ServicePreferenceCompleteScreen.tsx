@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
 import { connect } from "react-redux";
-import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
-import I18n from "../../i18n";
-import { servicesOptinCompleted } from "../../store/actions/onboarding";
-import { Dispatch } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../i18n";
+import { servicesOptinCompleted } from "../store/actions";
+import { Dispatch } from "../../../store/actions/types";
+import { GlobalState } from "../../../store/reducers/types";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

@@ -1,6 +1,6 @@
 import { call, put, select } from "typed-redux-saga/macro";
-import { fingerprintAcknowledged } from "../../../../store/actions/onboarding";
-import { isFingerprintAcknowledgedSelector } from "../../../../store/reducers/onboarding";
+import { fingerprintAcknowledged } from "../../../../features/onboarding/store/actions";
+import { isFingerprintAcknowledgedSelector } from "../../../../features/onboarding/store/selectors";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { getBometricState } from "../../../../utils/biometrics";
 import { isFingerprintEnabledSelector } from "../../../../store/reducers/persistedPreferences";
