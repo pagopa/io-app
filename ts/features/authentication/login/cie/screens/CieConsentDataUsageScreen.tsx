@@ -12,16 +12,16 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { trackLoginCieDataSharingError } from "../../../common/analytics/cieAnalytics";
+import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../../store/hooks";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { useOnboardingAbortAlert } from "../../../../../utils/hooks/useOnboardingAbortAlert";
-import { trackLoginCieDataSharingError } from "../../../common/analytics/cieAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { onLoginUriChanged } from "../../../common/utils/login";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
