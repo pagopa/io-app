@@ -16,7 +16,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
-import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
+import { servicePreferencePotByIdSelector } from "../../../services/details/store/reducers";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
 import { trackFciUxConversion } from "../../analytics";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
@@ -43,7 +43,10 @@ const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const [clausesChecked, setClausesChecked] = useState(0);
-  const servicePreferencePot = useIOSelector(servicePreferencePotSelector);
+  const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
+  const servicePreferencePot = useIOSelector(state =>
+    servicePreferencePotByIdSelector(state)(fciServiceId)
+  );
   const qtspClausesSelector = useIOSelector(fciQtspClausesSelector);
   const qtspPrivacyTextSelector = useIOSelector(fciQtspPrivacyTextSelector);
   const qtspPrivacyUrlSelector = useIOSelector(fciQtspPrivacyUrlSelector);
@@ -53,7 +56,6 @@ const FciQtspClausesScreen = () => {
   const fciPollFilledDocumentError = useIOSelector(
     fciPollFilledDocumentErrorSelector
   );
-  const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
 
   const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);

@@ -8,7 +8,7 @@ import { appReducer } from "../../../../store/reducers";
 import { NetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
-import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
+import { servicePreferencePotByIdSelector } from "../../../services/details/store/reducers";
 import {
   ServicePreferenceResponse,
   WithServiceID
@@ -22,7 +22,7 @@ jest.mock("../../../../store/hooks", () => ({
 }));
 jest.mock("../../../services/details/store/reducers/", () => ({
   ...jest.requireActual("../../../services/details/store/reducers/"),
-  servicePreferencePotSelector: jest.fn()
+  servicePreferencePotByIdSelector: jest.fn()
 }));
 
 type PreferencePotState = pot.Pot<
@@ -40,13 +40,16 @@ let testingHookData: {
 const mockDispatch = jest.fn();
 const mockUseIODispatch = useIODispatch as jest.Mock;
 const mockServicePreferencePotSelector =
-  servicePreferencePotSelector as jest.Mock;
+  servicePreferencePotByIdSelector as jest.Mock;
+const mockSelectorFn = jest.fn();
 
 const pnServiceId = "PN_SID" as ServiceId;
 describe("usePnPreferencesFetcher", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockUseIODispatch.mockReturnValue(mockDispatch);
+    // Mock the selector to return a function that can be called with a service ID
+    mockServicePreferencePotSelector.mockReturnValue(mockSelectorFn);
   });
 
   describe("should return correct values", () => {
@@ -93,11 +96,14 @@ describe("usePnPreferencesFetcher", () => {
       it(` when id is correct and preference is ${title}`, () => {
         const servicePreferencePot = preferenceCases[+index];
 
-        mockServicePreferencePotSelector.mockReturnValue(servicePreferencePot);
+        // The selector now returns a function that returns the preference pot
+        mockSelectorFn.mockReturnValue(servicePreferencePot);
 
         renderHook();
 
         expect(testingHookData).toEqual(expectedReturnTypes[+index]);
+        // The selector function should be called with the service ID
+        expect(mockSelectorFn).toHaveBeenCalledWith(pnServiceId);
       });
     }
   });
@@ -106,7 +112,8 @@ describe("usePnPreferencesFetcher", () => {
     jest.spyOn(React, "useState").mockImplementation(() => [false, jest.fn()]);
     const servicePreferencePot = pot.none;
 
-    mockServicePreferencePotSelector.mockReturnValue(servicePreferencePot);
+    // The selector now returns a function that returns the preference pot
+    mockSelectorFn.mockReturnValue(servicePreferencePot);
 
     renderHook();
 
@@ -116,6 +123,8 @@ describe("usePnPreferencesFetcher", () => {
     expect(mockDispatch).toHaveBeenCalledWith(
       loadServicePreference.request(pnServiceId)
     );
+    // The selector function should be called with the service ID
+    expect(mockSelectorFn).toHaveBeenCalledWith(pnServiceId);
   });
 });
 

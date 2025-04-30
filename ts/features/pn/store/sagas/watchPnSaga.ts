@@ -1,23 +1,24 @@
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { apiUrlPrefix } from "../../../../config";
+import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
-import { PnClient, createPnClient } from "../../api/client";
-import { pnActivationUpsert, startPNPaymentStatusTracking } from "../actions";
+import { servicePreferencePotByIdSelector } from "../../../services/details/store/reducers";
+import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
 import {
   trackPNServiceStatusChangeError,
   trackPNServiceStatusChangeSuccess
 } from "../../analytics";
-import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
-import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
+import { PnClient, createPnClient } from "../../api/client";
+import { pnActivationUpsert, startPNPaymentStatusTracking } from "../actions";
 import { watchPaymentStatusForMixpanelTracking } from "./watchPaymentStatusSaga";
 
 function* handlePnActivation(
@@ -63,11 +64,13 @@ function* handlePnActivation(
 }
 
 function* reportPNServiceStatusOnFailure(predictedValue: boolean) {
-  const selectedServicePreferencePot = yield* select(
-    servicePreferencePotSelector
+  const getPnServicePreferencesPot = yield* select(
+    servicePreferencePotByIdSelector
   );
+  const pnServiceId = yield* select(pnMessagingServiceIdSelector);
   const isServiceActive = pipe(
-    selectedServicePreferencePot,
+    pnServiceId,
+    getPnServicePreferencesPot,
     pot.toOption,
     O.map(
       servicePreferenceResponse =>
