@@ -11,7 +11,8 @@ import {
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
   itwIsDiscoveryBannerHiddenSelector,
-  itwIsFeedbackBannerHiddenSelector
+  itwIsFeedbackBannerHiddenSelector,
+  itwIsOfflineBannerHiddenSelector
 } from "./preferences";
 import {
   isItwEnabledSelector,
@@ -77,3 +78,16 @@ export const itwOfflineAccessAvailableSelector = (state: GlobalState) =>
   isItwOfflineAccessEnabledSelector(state) &&
   itwLifecycleIsOperationalOrValid(state) &&
   state.features.itWallet.credentials.credentials.length > 0;
+
+/**
+ * Returns if the offline banner should be visible. The banner is visible if:
+ * - The Wallet has a valid Wallet Instance
+ * - The Wallet has offline access enabled
+ * - The user did not close the banner
+ * @param state the application global state
+ * @returns true if the banner should be visible, false otherwise
+ */
+export const itwShouldRenderOfflineBannerSelector = (state: GlobalState) =>
+  itwLifecycleIsValidSelector(state) &&
+  isItwOfflineAccessEnabledSelector(state) &&
+  !itwIsOfflineBannerHiddenSelector(state);

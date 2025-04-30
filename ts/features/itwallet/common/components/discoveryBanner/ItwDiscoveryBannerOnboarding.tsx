@@ -28,9 +28,9 @@ const ItwDiscoveryBannerOnboarding = () => {
   const trackBannerProperties = useMemo(
     () => ({
       banner_id:
-        bannerType === "onboarding"
-          ? "itwDiscoveryBannerOnboardingTestID"
-          : "itwDiscoveryBannerOnboardingDeviceChanged",
+        bannerType === "reactivating"
+          ? "itwDiscoveryBannerOnboardingDeviceChanged"
+          : "itwDiscoveryBannerOnboardingTestID",
       banner_page: route.name,
       banner_landing: "ITW_ONBOARDING"
     }),
@@ -55,6 +55,9 @@ const ItwDiscoveryBannerOnboarding = () => {
   const bannerConfig = {
     onboarding: {
       content: I18n.t("features.itWallet.discovery.banner.home.content")
+    },
+    onboardingWithOffline: {
+      content: I18n.t("features.itWallet.discovery.banner.homeWithOffline.content")
     },
     reactivating: {
       content: I18n.t(
