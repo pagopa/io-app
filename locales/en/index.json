@@ -4648,7 +4648,7 @@
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           },
-          "NotTrustedRPScreen": {
+          "untrustedRpScreen": {
             "title": "Questo ente non è verificato",
             "subtitle": "Per la tua sicurezza, IO permette di condividere le tue informazioni solo con enti verificati e certificati.",
             "primaryAction": "Chiudi",

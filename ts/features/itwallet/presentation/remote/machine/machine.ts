@@ -108,7 +108,7 @@ export const itwRemoteMachine = setup({
         onError: {
           actions: assign({
             failure: {
-              type: RemoteFailureType.NOT_TRUSTED_RP,
+              type: RemoteFailureType.UNTRUSTED_RP,
               reason: "RP is not trusted"
             }
           }),

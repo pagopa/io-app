@@ -15,7 +15,7 @@ import I18n from "../../../../../i18n.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
-import { useItwRemoteNotTrustedRPBottomSheet } from "../hooks/useItwRemoteNotTrustedRPBottomSheet.tsx";
+import { useItwRemoteUntrustedRPBottomSheet } from "../hooks/useItwRemoteUntrustedRPBottomSheet.tsx";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 
 export const ItwRemoteFailureScreen = () => {
@@ -41,7 +41,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
     failure: serializeFailureReason(failure)
   });
 
-  const { bottomSheet, present } = useItwRemoteNotTrustedRPBottomSheet();
+  const { bottomSheet, present } = useItwRemoteUntrustedRPBottomSheet();
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "close" }),
     customBodyMessage: I18n.t(
@@ -137,24 +137,24 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
-        case RemoteFailureType.NOT_TRUSTED_RP: {
+        case RemoteFailureType.UNTRUSTED_RP: {
           return {
             title: I18n.t(
-              "features.itWallet.presentation.remote.NotTrustedRPScreen.title"
+              "features.itWallet.presentation.remote.untrustedRpScreen.title"
             ),
             subtitle: I18n.t(
-              "features.itWallet.presentation.remote.NotTrustedRPScreen.subtitle"
+              "features.itWallet.presentation.remote.untrustedRpScreen.subtitle"
             ),
             pictogram: "stopSecurity",
             action: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.NotTrustedRPScreen.primaryAction"
+                "features.itWallet.presentation.remote.untrustedRpScreen.primaryAction"
               ),
               onPress: () => machineRef.send({ type: "close" })
             },
             secondaryAction: {
               label: I18n.t(
-                "features.itWallet.presentation.remote.NotTrustedRPScreen.secondaryAction"
+                "features.itWallet.presentation.remote.untrustedRpScreen.secondaryAction"
               ),
               onPress: present
             }

@@ -7,25 +7,25 @@ import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.ts
 /**
  * Content component for the Not Trusted RP bottom sheet
  */
-export const ItwRemoteNotTrustedRPBottomSheetContent = () =>
+export const ItwRemoteUntrustedRPBottomSheetContent = () =>
   useMemo(
     () => (
       <View>
         <Body>
           {I18n.t(
-            "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.contentTop"
+            "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.contentTop"
           )}
         </Body>
         <VSpacer size={16} />
         <View>
           <ListItemHeader
             label={I18n.t(
-              "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.subtitle"
+              "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.subtitle"
             )}
           />
           <Body>
             {I18n.t(
-              "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.contentBottom"
+              "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.contentBottom"
             )}
           </Body>
         </View>
@@ -35,15 +35,15 @@ export const ItwRemoteNotTrustedRPBottomSheetContent = () =>
   );
 
 /**
- * Hook to create the Not Trusted RP bottom sheet
+ * Hook to create the  Untrusted RP bottom sheet
  * @returns Bottom sheet modal object
  */
-export const useItwRemoteNotTrustedRPBottomSheet = () =>
+export const useItwRemoteUntrustedRPBottomSheet = () =>
   useIOBottomSheetModal({
     title: I18n.t(
-      "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.title"
+      "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.title"
     ),
-    component: <ItwRemoteNotTrustedRPBottomSheetContent />,
+    component: <ItwRemoteUntrustedRPBottomSheetContent />,
     snapPoint: [300]
     // TODO: [SIW-2266] Uncomment when the FAQ are ready
     /*     footer: (
@@ -53,7 +53,7 @@ export const useItwRemoteNotTrustedRPBottomSheet = () =>
           primary: {
             onPress: () => {},
             label: I18n.t(
-              "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.primaryAction"
+              "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.primaryAction"
             )
           }
         }}
