@@ -33,7 +33,7 @@ import {
   IO_LOGIN_CIE_SOURCE_APP,
   IO_LOGIN_CIE_URL_SCHEME
 } from "../utils/cie";
-import { useOnboardingAbortAlert } from "../../../../../utils/hooks/useOnboardingAbortAlert";
+import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 export type WebViewLoginNavigationProps = {

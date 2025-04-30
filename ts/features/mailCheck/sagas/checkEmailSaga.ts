@@ -10,7 +10,7 @@ import {
   isProfileEmailAlreadyTaken
 } from "../../settings/common/store/utils/guards";
 import { setEmailCheckAtStartupFailure } from "../../settings/common/store/actions";
-import { emailAcknowledged } from "../../../store/actions/onboarding";
+import { emailAcknowledged } from "../../onboarding/store/actions";
 
 export function* checkEmailSaga() {
   // We get the latest profile from the store
