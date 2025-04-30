@@ -1,4 +1,4 @@
-import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/communications/ThirdPartyMessageWithContent";
 import { ThirdPartyAttachment } from "../../../../definitions/pn/ThirdPartyAttachment";
 import { message_1 } from "../../messages/__mocks__/message";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";

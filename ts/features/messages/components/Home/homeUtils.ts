@@ -27,7 +27,7 @@ import {
   isStrictSomeError
 } from "../../../../utils/pot";
 import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
-import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { TagEnum } from "../../../../../definitions/communications/MessageCategoryPN";
 import NavigationService from "../../../../navigation/NavigationService";
 import { trackMessageListEndReached, trackMessagesPage } from "../../analytics";
 import { MESSAGES_ROUTES } from "../../navigation/routes";

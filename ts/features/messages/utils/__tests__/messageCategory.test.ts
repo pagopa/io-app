@@ -1,4 +1,4 @@
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { MessageCategory } from "../../../../../definitions/communications/MessageCategory";
 import { foldMessageCategoryK } from "../messageCategory";
 
 describe("foldMessageCategoryK", () => {

@@ -1,5 +1,5 @@
-import { CreatedMessageWithContentAndAttachments } from "../../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import { CreatedMessageWithContentAndAttachments } from "../../../../../../definitions/communications/CreatedMessageWithContentAndAttachments";
+import { ThirdPartyAttachment } from "../../../../../../definitions/communications/ThirdPartyAttachment";
 import { message_1 } from "../../../__mocks__/message";
 
 import { attachmentDisplayName, toUIMessageDetails } from "../transformers";

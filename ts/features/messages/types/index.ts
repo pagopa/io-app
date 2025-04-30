@@ -1,14 +1,14 @@
 import { IUnitTag } from "@pagopa/ts-commons/lib/units";
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { FiscalCode } from "../../../../definitions/backend/FiscalCode";
-import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
-import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
-import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
-import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import { PublicMessage } from "../../../../definitions/backend/PublicMessage";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
-import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/communications/CreatedMessageWithContentAndAttachments";
+import { FiscalCode } from "../../../../definitions/auth/FiscalCode";
+import { MessageBodyMarkdown } from "../../../../definitions/communications/MessageBodyMarkdown";
+import { OrganizationFiscalCode } from "../../../../definitions/services/OrganizationFiscalCode";
+import { PaymentAmount } from "../../../../definitions/auth/PaymentAmount";
+import { PaymentNoticeNumber } from "../../../../definitions/auth/PaymentNoticeNumber";
+import { PublicMessage } from "../../../../definitions/communications/PublicMessage";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { TimeToLiveSeconds } from "../../../../definitions/communications/TimeToLiveSeconds";
+import { MessageCategory } from "../../../../definitions/communications/MessageCategory";
 
 /**
  * The unique ID of a UIMessage and UIMessageDetails, used to avoid passing the wrong ID as parameters

@@ -9,7 +9,7 @@ import { tosAccepted } from "../../../features/onboarding/store/actions";
 import { isProfileFirstOnBoarding } from "../../../features/settings/common/store/utils/guards";
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
-import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/auth/ServicesPreferencesMode";
 import { tosConfigSelector } from "../../../features/tos/store/selectors";
 
 const tosVersion = 3.2 as NonNegativeNumber;

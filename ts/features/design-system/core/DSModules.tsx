@@ -13,7 +13,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Alert } from "react-native";
-import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
+import { ProductCategoryEnum } from "../../../../definitions/cgn/ProductCategory";
 import CgnLogo from "../../../../img/bonus/cgn/cgn_logo.png";
 import { ModuleCgnDiscount } from "../../bonus/cgn/components/merchants/ModuleCgnDiscount";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";

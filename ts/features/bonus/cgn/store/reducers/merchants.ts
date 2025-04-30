@@ -20,11 +20,11 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../common/model/RemoteValue";
-import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
-import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { SearchResult } from "../../../../../../definitions/cgn/merchants/SearchResult";
+import { OnlineMerchants } from "../../../../../../definitions/cgn/OnlineMerchants";
+import { OfflineMerchants } from "../../../../../../definitions/cgn/OfflineMerchants";
+import { Merchant } from "../../../../../../definitions/cgn/Merchant";
+import { Discount } from "../../../../../../definitions/cgn/Discount";
+import { SearchResult } from "../../../../../../definitions/cgn/SearchResult";
 
 export type CgnMerchantsState = {
   merchantsCount: RemoteValue<number, NetworkError>;

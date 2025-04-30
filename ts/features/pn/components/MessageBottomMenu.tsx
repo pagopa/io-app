@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { ContactsListItem } from "../../messages/components/MessageDetail/ContactsListItem";
 import { useIOSelector } from "../../../store/hooks";
 import { serviceMetadataByIdSelector } from "../../services/details/store/reducers";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   ShowMoreListItem,
   ShowMoreSection

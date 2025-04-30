@@ -20,7 +20,7 @@ import {
 import { trackPNOptInMessageAccepted } from "../../../pn/analytics";
 import { handleCtaAction } from "../../utils/ctas";
 import { CTA, CTAS } from "../../../../types/LocalizedCTAs";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useFIMSFromServiceId } from "../../../fims/common/hooks";
 import { MessageDetailsPaymentButton } from "./MessageDetailsPaymentButton";
 import { computeAndTrackCTAPressAnalytics } from "./detailsUtils";

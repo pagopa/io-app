@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import sha from "sha.js";
 import { getType } from "typesafe-actions";
-import { AppVersion } from "../../../../../../definitions/backend/AppVersion";
+import { AppVersion } from "../../../../../../definitions/auth/AppVersion";
 import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode

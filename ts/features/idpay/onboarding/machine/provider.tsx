@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 
 import { ReactNode } from "react";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { PreferredLanguageEnum } from "../../../../../definitions/auth/PreferredLanguage";
 import {
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,

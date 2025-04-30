@@ -1,5 +1,6 @@
 import { createClient } from "../../../../../../definitions/fast_login/client";
-import { LollipopMethodEnum } from "../../../../../../definitions/lollipop/LollipopMethod";
+import { LollipopMethodEnum } from "../../../../../../definitions/fast_login/LollipopMethod";
+
 import { defaultRetryingFetch } from "../../../../../utils/fetch";
 import { LollipopConfig } from "../../../../lollipop";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";

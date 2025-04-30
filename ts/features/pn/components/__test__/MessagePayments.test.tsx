@@ -8,9 +8,9 @@ import { UIMessageId } from "../../../messages/types";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { GlobalState } from "../../../../store/reducers/types";
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/payments/PaymentRequestsGetResponse";
+import { Detail_v2Enum } from "../../../../../definitions/payments/PaymentProblemJson";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 const globalMessageId = "01HTFFDYS8VQ779EA4M5WB9YWA" as UIMessageId;
 const globalMaxVisiblePaymentCount = 5;

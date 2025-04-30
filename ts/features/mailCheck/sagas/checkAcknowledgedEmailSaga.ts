@@ -1,6 +1,6 @@
 import { call, take } from "typed-redux-saga/macro";
 import { CommonActions } from "@react-navigation/native";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../definitions/auth/InitializedProfile";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { emailAcknowledged } from "../../onboarding/store/actions";

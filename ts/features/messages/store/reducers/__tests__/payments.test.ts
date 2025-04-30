@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { Detail_v2Enum } from "../../../../../../definitions/payments/PaymentProblemJson";
+import { PaymentRequestsGetResponse } from "../../../../../../definitions/payments/PaymentRequestsGetResponse";
 import { reloadAllMessages } from "../../../../messages/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
@@ -35,7 +35,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import * as versionInfo from "../../../../../common/versionInfo/store/reducers/versionInfo";
 import * as profile from "../../../../settings/common/store/selectors";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 describe("Messages payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {

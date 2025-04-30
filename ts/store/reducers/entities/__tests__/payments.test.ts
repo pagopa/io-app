@@ -1,5 +1,5 @@
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { Detail_v2Enum } from "../../../../../definitions/payments/PaymentProblemJson";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   updatePaymentForMessage,
   UpdatePaymentForMessageFailure

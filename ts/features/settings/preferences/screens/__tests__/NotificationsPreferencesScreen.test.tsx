@@ -1,14 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { createStore } from "redux";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../../definitions/backend/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/auth/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../../../definitions/auth/ReminderStatus";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { NotificationsPreferencesScreen } from "../NotificationsPreferencesScreen";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../../../definitions/auth/InitializedProfile";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 describe("NotificationsPreferencesScreen", () => {

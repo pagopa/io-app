@@ -14,8 +14,8 @@ import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, RefreshControl, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
+import { Merchant } from "../../../../../../definitions/cgn/Merchant";
+import { ProductCategoryEnum } from "../../../../../../definitions/cgn/ProductCategory";
 import {
   getValueOrElse,
   isError,

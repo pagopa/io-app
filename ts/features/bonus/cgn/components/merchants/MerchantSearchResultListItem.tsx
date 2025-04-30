@@ -10,7 +10,7 @@ import { Keyboard, Text, View, StyleSheet } from "react-native";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import CGN_ROUTES from "../../navigation/routes";
-import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
+import { SearchItem } from "../../../../../../definitions/cgn/SearchItem";
 import { highlightSearchText } from "../../../../../utils/highlightSearchText";
 
 export const TEXT_LEGNTH_WITH_BADGE = 60;

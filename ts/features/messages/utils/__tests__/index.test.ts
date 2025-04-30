@@ -12,8 +12,8 @@ import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { addUserSelectedPaymentRptId } from "../../store/actions";
 import { startPaymentFlowWithRptIdWorkaround } from "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/communications/ThirdPartyMessageWithContent";
+import { ThirdPartyMessage } from "../../../../../definitions/communications/ThirdPartyMessage";
 
 jest.mock(
   "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround",

@@ -1,6 +1,6 @@
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { FiscalCode } from "../../../../definitions/backend/FiscalCode";
-import { PaymentDataWithRequiredPayee } from "../../../../definitions/backend/PaymentDataWithRequiredPayee";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/communications/CreatedMessageWithContentAndAttachments";
+import { FiscalCode } from "../../../../definitions/auth/FiscalCode";
+import { PaymentDataWithRequiredPayee } from "../../../../definitions/communications/PaymentDataWithRequiredPayee";
 import { UIMessageDetails } from "../types";
 import { toUIMessageDetails } from "../store/reducers/transformers";
 import { service_1 } from "./messages";

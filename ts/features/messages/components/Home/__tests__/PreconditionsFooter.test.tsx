@@ -6,7 +6,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PreconditionsFooter } from "../PreconditionsFooter";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum } from "../../../../../../definitions/communications/MessageCategoryBase";
 import * as messagePrecondition from "../../../store/reducers/messagePrecondition";
 import * as urlUtils from "../../../../../utils/url";
 import * as analytics from "../../../analytics";

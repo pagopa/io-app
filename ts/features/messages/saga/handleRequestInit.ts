@@ -7,7 +7,7 @@ import { generateKeyInfo } from "../../lollipop/saga";
 import { LollipopConfig } from "../../lollipop";
 import { lollipopRequestInit } from "../../lollipop/utils/fetch";
 import { isTestEnv } from "../../../utils/environment";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../definitions/communications/ThirdPartyAttachment";
 import { attachmentDownloadUrl } from "../store/reducers/transformers";
 import { UIMessageId } from "../types";
 

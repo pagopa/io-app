@@ -4,7 +4,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { MessageDetailsPaymentButton } from "../MessageDetailsPaymentButton";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentData } from "../../../types";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 describe("MessageDetailsPaymentButton", () => {
   it("should match snapshot when not loading", () => {

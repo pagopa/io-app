@@ -3,7 +3,7 @@ import { ComponentProps } from "react";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { MessageDetailsHeader } from "../MessageDetailsHeader";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";

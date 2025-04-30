@@ -5,7 +5,7 @@ import { UIMessageId } from "../../types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MessageRouterScreen } from "../MessageRouterScreen";
 import { getMessageDataAction } from "../../store/actions";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as IOHooks from "../../../../store/hooks";
 import { MessageGetStatus } from "../../store/reducers/messageGetStatus";
 import { MESSAGES_ROUTES } from "../../navigation/routes";

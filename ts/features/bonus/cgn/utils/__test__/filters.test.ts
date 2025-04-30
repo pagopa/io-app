@@ -1,11 +1,11 @@
 import {
   ProductCategory,
   ProductCategoryEnum
-} from "../../../../../../definitions/cgn/merchants/ProductCategory";
+} from "../../../../../../definitions/cgn/ProductCategory";
 import { Locales } from "../../../../../../locales/locales";
 import { setLocale } from "../../../../../i18n";
 import { orderCategoriesByNameKey } from "../filters";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/ProductCategoryWithNewDiscountsCount";
 
 const cases: ReadonlyArray<
   [

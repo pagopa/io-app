@@ -17,8 +17,8 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
+import { UserDataProcessingChoiceEnum } from "../../definitions/auth/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../definitions/auth/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";

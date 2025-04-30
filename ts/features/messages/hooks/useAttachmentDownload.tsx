@@ -15,8 +15,8 @@ import {
   downloadAttachment
 } from "../store/actions";
 import { MESSAGES_ROUTES } from "../navigation/routes";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { ThirdPartyAttachment } from "../../../../definitions/communications/ThirdPartyAttachment";
 import { attachmentDisplayName } from "../store/reducers/transformers";
 import I18n from "../../../i18n";
 import {

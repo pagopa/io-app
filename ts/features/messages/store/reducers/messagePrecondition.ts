@@ -6,7 +6,7 @@ import {
 } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import { getType } from "typesafe-actions";
-import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
+import { ThirdPartyMessagePrecondition } from "../../../../../definitions/communications/ThirdPartyMessagePrecondition";
 import { Action } from "../../../../store/actions/types";
 import { UIMessageId } from "../../types";
 import {
@@ -20,8 +20,8 @@ import {
 } from "../actions/preconditions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isPnAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { TagEnum as SENDTagEnum } from "../../../../../definitions/communications/MessageCategoryPN";
+import { MessageCategory } from "../../../../../definitions/communications/MessageCategory";
 
 // MPS stands for Message Precondition Status
 type MPSError = {

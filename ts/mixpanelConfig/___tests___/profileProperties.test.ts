@@ -3,8 +3,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { GlobalState } from "../../store/reducers/types";
 import { updateMixpanelProfileProperties } from "../profileProperties";
 import * as BIOMETRICS from "../../utils/biometrics";
-import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
-import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../definitions/auth/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../definitions/auth/PushNotificationsContentType";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { StoredCredential } from "../../features/itwallet/common/utils/itwTypesUtils";
 

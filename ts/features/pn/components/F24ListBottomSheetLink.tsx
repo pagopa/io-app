@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { ButtonLink } from "@pagopa/io-app-design-system";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../definitions/communications/ThirdPartyAttachment";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import I18n from "../../../i18n";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";

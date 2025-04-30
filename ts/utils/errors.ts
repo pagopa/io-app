@@ -1,4 +1,4 @@
-import { Detail_v2Enum } from "../../definitions/backend/PaymentProblemJson";
+import { Detail_v2Enum } from "../../definitions/payments/PaymentProblemJson";
 import { MessagesFailurePayload } from "../features/messages/store/actions";
 
 export type TimeoutError = { readonly kind: "timeout" };

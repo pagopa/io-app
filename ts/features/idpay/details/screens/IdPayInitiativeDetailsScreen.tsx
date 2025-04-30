@@ -53,7 +53,7 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { useFIMSAuthenticationFlow } from "../../../fims/common/hooks";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;

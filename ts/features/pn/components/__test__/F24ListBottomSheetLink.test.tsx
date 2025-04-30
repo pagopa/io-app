@@ -4,7 +4,7 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { F24ListBottomSheetLink } from "../F24ListBottomSheetLink";
 import { UIMessageId } from "../../../messages/types";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../../definitions/communications/ThirdPartyAttachment";
 
 const numberToThirdPartyAttachment = (index: number) =>
   ({

@@ -1,6 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { put, takeLatest } from "typed-redux-saga/macro";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { PreferredLanguageEnum } from "../../../../../definitions/auth/PreferredLanguage";
 import { IDPayClient } from "../../common/api/client";
 import {
   idPayEnrollCode,

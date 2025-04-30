@@ -14,8 +14,8 @@ import {
   useState
 } from "react";
 import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../definitions/backend/UserDataProcessingStatus";
+import { UserDataProcessingChoiceEnum } from "../../../../../definitions/auth/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../../../../definitions/auth/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";

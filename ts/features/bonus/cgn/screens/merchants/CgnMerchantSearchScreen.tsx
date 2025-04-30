@@ -31,7 +31,7 @@ import {
   cgnSearchMerchantsSelector
 } from "../../store/reducers/merchants";
 import { getValue } from "../../../../../common/model/RemoteValue";
-import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
+import { SearchItem } from "../../../../../../definitions/cgn/SearchItem";
 import {
   cgnMerchantsCount,
   cgnSearchMerchants

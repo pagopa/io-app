@@ -1,5 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/ProductCategoryWithNewDiscountsCount";
 import { NetworkError } from "../../../../../utils/errors";
 
 export const cgnCategories = createAsyncAction(

@@ -5,7 +5,7 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { identity, pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
-import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { CreatedMessageWithContentAndAttachments } from "../../definitions/communications/CreatedMessageWithContentAndAttachments";
 import { TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";

@@ -7,10 +7,10 @@ import {
   select
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { MessageStatusArchivingChange } from "../../../../definitions/backend/MessageStatusArchivingChange";
-import { MessageStatusBulkChange } from "../../../../definitions/backend/MessageStatusBulkChange";
-import { MessageStatusChange } from "../../../../definitions/backend/MessageStatusChange";
-import { MessageStatusReadingChange } from "../../../../definitions/backend/MessageStatusReadingChange";
+import { MessageStatusArchivingChange } from "../../../../definitions/communications/MessageStatusArchivingChange";
+import { MessageStatusBulkChange } from "../../../../definitions/communications/MessageStatusBulkChange";
+import { MessageStatusChange } from "../../../../definitions/communications/MessageStatusChange";
+import { MessageStatusReadingChange } from "../../../../definitions/communications/MessageStatusReadingChange";
 import { BackendClient } from "../../../api/backend";
 import {
   upsertMessageStatusAttributes,

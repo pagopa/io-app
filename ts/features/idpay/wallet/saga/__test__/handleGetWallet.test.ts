@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
+import { PreferredLanguageEnum } from "../../../../../../definitions/auth/PreferredLanguage";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { idPayWalletGet } from "../../store/actions";

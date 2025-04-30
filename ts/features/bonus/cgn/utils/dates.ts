@@ -1,4 +1,4 @@
-import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../../definitions/auth/InitializedProfile";
 import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 

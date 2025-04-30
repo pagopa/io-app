@@ -1,4 +1,4 @@
-import { createClient } from "../../../../definitions/pn/client";
+import { createClient } from "../../../../definitions/services/client";
 import { SessionToken } from "../../../types/SessionToken";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 

@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../definitions/auth/InitializedProfile";
 import mockedProfile from "../../__mocks__/initializedProfile";
 
 import { sessionExpired } from "../../features/authentication/common/store/actions";

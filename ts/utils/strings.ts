@@ -5,7 +5,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
-import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
+import { EnteBeneficiario } from "../../definitions/payments/EnteBeneficiario";
 
 /**
  * Check if the source includes searchText.

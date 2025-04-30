@@ -20,7 +20,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { Consent } from "../../../../../definitions/fims_sso/Consent";
 import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
 import I18n from "../../../../i18n";

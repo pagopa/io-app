@@ -6,7 +6,7 @@ import {
   StaticProvider
 } from "redux-saga-test-plan/providers";
 import * as O from "fp-ts/lib/Option";
-import { AssertionRef } from "../../../../definitions/backend/AssertionRef";
+import { AssertionRef } from "../../../../definitions/auth/AssertionRef";
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { checkLollipopSessionAssertionAndInvalidateIfNeeded } from "../saga";
 import { restartCleanApplication } from "../../../sagas/commons";

@@ -4,7 +4,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
+import { Discount } from "../../../../../../definitions/cgn/Discount";
 import { DiscountBucketCodeResponse } from "../../types/DiscountBucketCodeResponse";
 
 type CgnCodeBucketPayload = {

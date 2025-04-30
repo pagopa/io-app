@@ -1,7 +1,7 @@
 import { UIMessageId } from "../types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../navigation/params";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { MessageAttachment } from "../components/MessageAttachment/MessageAttachment";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 

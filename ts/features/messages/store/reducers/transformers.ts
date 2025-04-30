@@ -1,10 +1,10 @@
-import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { EnrichedMessage } from "../../../../../definitions/backend/EnrichedMessage";
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
-import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
-import { MessageStatusAttributes } from "../../../../../definitions/backend/MessageStatusAttributes";
-import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/communications/CreatedMessageWithContentAndAttachments";
+import { EnrichedMessage } from "../../../../../definitions/communications/EnrichedMessage";
+import { MessageCategory } from "../../../../../definitions/communications/MessageCategory";
+import { TagEnum } from "../../../../../definitions/communications/MessageCategoryBase";
+import { MessageStatusAttributes } from "../../../../../definitions/communications/MessageStatusAttributes";
+import { PublicMessage } from "../../../../../definitions/communications/PublicMessage";
+import { ThirdPartyAttachment } from "../../../../../definitions/communications/ThirdPartyAttachment";
 import { apiUrlPrefix } from "../../../../config";
 import {
   EUCovidCertificate,

@@ -9,8 +9,8 @@ import {
   isReady,
   RemoteValue
 } from "../../../../common/model/RemoteValue";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { Detail_v2Enum } from "../../../../../definitions/payments/PaymentProblemJson";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/payments/PaymentRequestsGetResponse";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
 import { SinglePaymentState } from "../../../messages/store/reducers/payments";

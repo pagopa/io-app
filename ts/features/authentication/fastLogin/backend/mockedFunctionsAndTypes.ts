@@ -9,7 +9,7 @@ import {
   IResponseType,
   ResponseDecoder
 } from "@pagopa/ts-commons/lib/requests";
-import { ProblemJson } from "../../../../../definitions/backend/ProblemJson";
+import { ProblemJson } from "../../../../../definitions/auth/ProblemJson";
 
 // ------------ Nonce ---------------------
 

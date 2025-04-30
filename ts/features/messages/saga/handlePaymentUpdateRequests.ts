@@ -4,7 +4,7 @@ import { call, flush, fork, put, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { BackendClient } from "../../../api/backend";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
+import { Detail_v2Enum } from "../../../../definitions/payments/PaymentProblemJson";
 import {
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage

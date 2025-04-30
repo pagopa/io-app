@@ -4,8 +4,8 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { toUndefinedOptional } from "../../../../utils/pot";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ThirdPartyAttachment } from "../../../../../definitions/communications/ThirdPartyAttachment";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/communications/ThirdPartyMessageWithContent";
 import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
@@ -15,10 +15,10 @@ import {
   toSome
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
-import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
 import { UIMessageDetails, UIMessageId } from "../../types";
 import { extractContentFromMessageSources } from "../../utils";
 import { isTestEnv } from "../../../../utils/environment";
+import { RemoteContentDetails } from "../../../../../definitions/remote_content/RemoteContentDetails";
 
 export type ThirdPartyById = IndexedById<
   pot.Pot<ThirdPartyMessageWithContent, Error>

@@ -6,7 +6,7 @@ import {
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
 } from "../../utils";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { computeAndTrackPaymentStart } from "./detailsUtils";
 
 type MessageDetailsPaymentButtonProps = {

@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { UserDataProcessing } from "../../../../../../definitions/backend/UserDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessing } from "../../../../../../definitions/auth/UserDataProcessing";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/auth/UserDataProcessingChoice";
 import { computedProp } from "../../../../../types/utils";
 import { clearCache } from "../actions";
 import { Action } from "../../../../../store/actions/types";

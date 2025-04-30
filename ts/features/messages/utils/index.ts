@@ -9,8 +9,8 @@ import { NetworkError, getNetworkError } from "../../../utils/errors";
 import { addUserSelectedPaymentRptId } from "../store/actions";
 import { Action } from "../../../store/actions/types";
 import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
-import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { RemoteContentDetails } from "../../../../definitions/remote_content/RemoteContentDetails";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/communications/ThirdPartyMessageWithContent";
 
 export const gapBetweenItemsInAGrid = 8;
 

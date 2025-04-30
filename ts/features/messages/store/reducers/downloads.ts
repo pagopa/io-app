@@ -18,7 +18,7 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessageId } from "../../types";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../../definitions/communications/ThirdPartyAttachment";
 
 export type Download = {
   attachment: ThirdPartyAttachment;

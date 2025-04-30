@@ -4,7 +4,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
 import I18n from "../../../../i18n";
 import { getRptIdStringFromPaymentData } from "../../utils";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
 type MessageDetailsPaymentProps = {

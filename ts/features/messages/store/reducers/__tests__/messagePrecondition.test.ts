@@ -1,8 +1,8 @@
 /* eslint-disable sonarjs/no-nested-switch */
 import { ActionType } from "typesafe-actions";
-import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
-import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend/MessageCategoryPayment";
-import { TagEnum as SENDTagEnum } from "../../../../../../definitions/backend/MessageCategoryPN";
+import { TagEnum } from "../../../../../../definitions/communications/MessageCategoryBase";
+import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/communications/MessageCategoryPayment";
+import { TagEnum as SENDTagEnum } from "../../../../../../definitions/communications/MessageCategoryPN";
 import { UIMessageId } from "../../../types";
 import {
   errorPreconditionStatusAction,
@@ -43,7 +43,7 @@ import {
 } from "../messagePrecondition";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
+import { MessageCategory } from "../../../../../../definitions/communications/MessageCategory";
 
 const messageId = "01J1FJADCJ53SN4A11J3TBSKQE" as UIMessageId;
 const categoryTag = TagEnum.GENERIC;

@@ -2,11 +2,11 @@ import * as E from "fp-ts/lib/Either";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { Linking } from "react-native";
 import FM from "front-matter";
-import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
-import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
-import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
-import { MessageContent } from "../../../../../definitions/backend/MessageContent";
-import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
+import { CreatedMessageWithContent } from "../../../../../definitions/communications/CreatedMessageWithContent";
+import { FiscalCode } from "../../../../../definitions/auth/FiscalCode";
+import { MessageBodyMarkdown } from "../../../../../definitions/communications/MessageBodyMarkdown";
+import { NewMessageContent as MessageContent } from "../../../../../definitions/communications/NewMessageContent";
+import { TimeToLiveSeconds } from "../../../../../definitions/communications/TimeToLiveSeconds";
 import { Locales } from "../../../../../locales/locales";
 import { setLocale } from "../../../../i18n";
 import { CTA, CTAS, LocalizedCTAs } from "../../../../types/LocalizedCTAs";
@@ -21,7 +21,7 @@ import {
   testable
 } from "../ctas";
 import * as ANALYTICS from "../../analytics";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
 
 const messageBody = `### this is a message

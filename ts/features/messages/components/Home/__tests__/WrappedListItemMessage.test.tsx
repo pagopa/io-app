@@ -2,14 +2,14 @@ import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { UIMessage } from "../../../types";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import { TagEnum as SENDTagEnum } from "../../../../../../definitions/backend/MessageCategoryPN";
-import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend/MessageCategoryPayment";
+import { TagEnum as SENDTagEnum } from "../../../../../../definitions/communications/MessageCategoryPN";
+import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/communications/MessageCategoryPayment";
 import { WrappedListItemMessage } from "../WrappedListItemMessage";
-import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum } from "../../../../../../definitions/communications/MessageCategoryBase";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   scheduledPreconditionStatusAction,

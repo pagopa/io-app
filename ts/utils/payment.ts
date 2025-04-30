@@ -2,7 +2,7 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Detail_v2Enum } from "../../definitions/backend/PaymentProblemJson";
+import { Detail_v2Enum } from "../../definitions/payments/PaymentProblemJson";
 import I18n from "../i18n";
 import { maybeNotNullyString } from "./strings";
 

@@ -22,9 +22,9 @@ import {
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { service_1 } from "../../../messages/__mocks__/messages";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/communications/ThirdPartyMessageWithContent";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../../definitions/communications/ThirdPartyAttachment";
 import { UIMessageId } from "../../types";
 
 export const thirdPartyMessage: ThirdPartyMessageWithContent = {

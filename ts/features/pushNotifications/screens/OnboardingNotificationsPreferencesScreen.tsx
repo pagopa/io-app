@@ -10,8 +10,8 @@ import {
   Body
 } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { PushNotificationsContentTypeEnum } from "../../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../../definitions/auth/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../definitions/auth/ReminderStatus";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../onboarding/navigation/params/OnboardingParamsList";

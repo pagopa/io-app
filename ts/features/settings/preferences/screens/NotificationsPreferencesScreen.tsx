@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
-import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../../../definitions/auth/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../../definitions/auth/ReminderStatus";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { profileUpsert } from "../../common/store/actions";

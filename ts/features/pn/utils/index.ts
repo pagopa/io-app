@@ -11,8 +11,8 @@ import { GlobalState } from "../../../store/reducers/types";
 import { NotificationRecipient } from "../../../../definitions/pn/NotificationRecipient";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../definitions/communications/ThirdPartyAttachment";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { TimelineStatus } from "../components/Timeline";
 
 export const maxVisiblePaymentCountGenerator = () => 5;

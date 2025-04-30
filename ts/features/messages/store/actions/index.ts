@@ -4,13 +4,13 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/communications/ThirdPartyMessageWithContent";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { ThirdPartyAttachment } from "../../../../../definitions/communications/ThirdPartyAttachment";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/payments/PaymentRequestsGetResponse";
+import { Detail_v2Enum } from "../../../../../definitions/payments/PaymentProblemJson";
 import { MessageListCategory } from "../../types/messageListCategory";
 import {
   errorPreconditionStatusAction,

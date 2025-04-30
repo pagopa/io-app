@@ -1,4 +1,4 @@
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { Access } from "../../../../../definitions/fims_history/Access";
 import { potFoldWithDefault } from "../../../../utils/pot";
 import { useAutoFetchingServiceByIdPot } from "../../common/hooks";

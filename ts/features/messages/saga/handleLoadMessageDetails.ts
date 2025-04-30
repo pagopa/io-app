@@ -1,6 +1,6 @@
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/communications/CreatedMessageWithContentAndAttachments";
 import { BackendClient } from "../../../api/backend";
 import { loadMessageDetails } from "../store/actions";
 import { SagaCallReturnType } from "../../../types/utils";
