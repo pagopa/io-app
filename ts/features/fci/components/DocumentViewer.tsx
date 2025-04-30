@@ -101,8 +101,6 @@ const renderFooter = (url: string, filePath: string) => {
 
 type Props = {
   documentUrl: string;
-  onLoadComplete?: (totalPages: number) => void;
-  onPageChanged?: (page: number) => void;
   onError: () => void;
 };
 
@@ -129,11 +127,14 @@ export const DocumentViewer = (props: Props): ReactElement => {
     <>
       {S.isEmpty(fciDownloadPath) === false && (
         <>
+          {/** Be aware that, in react-native-pdf 6.7.7, on Android, there
+           * is a bug where onLoadComplete callback is not called. So,
+           * if you have to use such callback, you should rely upon
+           * onPageChanged, which is called to report that the first page
+           * has loaded */}
           <Pdf
             source={{ uri: fciDownloadPath, cache: true }}
             style={styles.pdf}
-            onLoadComplete={props.onLoadComplete}
-            onPageChanged={props.onPageChanged}
             onError={_ => {
               setIsError(true);
             }}
