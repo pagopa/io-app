@@ -1,7 +1,6 @@
 import {
-  ButtonLink,
-  ButtonSolid,
   H6,
+  IOButton,
   IOIcons,
   VSpacer,
   VStack
@@ -30,7 +29,7 @@ type ItwIdentificationBottomSheetProps = {
 };
 
 /**
- * A hook that returns a function to present an info bottom sheet.
+ * A hook that returns a function to present an identification bottom sheet.
  * @param title - the title of the bottom sheet.
  * @param content - the content of the bottom sheet. Consists of an array of objects with a title and a body.
  * @param imageSrc - the source of the image to be displayed in the bottom sheet.
@@ -42,13 +41,13 @@ export const useItwIdentificationBottomSheet = ({
   imageSrc,
   footerButtons = []
 }: ItwIdentificationBottomSheetProps) => {
-  // Function to convert footerButtons array to FooterActions format
   const Footer = () => {
     // If there's only one button
     if (footerButtons.length === 1) {
       const button = footerButtons[0];
       return (
-        <ButtonSolid
+        <IOButton
+          variant="solid"
           label={button.label}
           onPress={button.onPress}
           icon={button.icon}
@@ -65,13 +64,15 @@ export const useItwIdentificationBottomSheet = ({
       return (
         <>
           <VStack space={8}>
-            <ButtonSolid
+            <IOButton
+              variant="solid"
               label={primaryButton.label}
               onPress={primaryButton.onPress}
               icon={primaryButton.icon}
             />
             <View style={{ alignSelf: "center" }}>
-              <ButtonLink
+              <IOButton
+                variant="link"
                 label={secondaryButton.label}
                 onPress={secondaryButton.onPress}
                 icon={secondaryButton.icon}
