@@ -2420,6 +2420,14 @@
           "subtitle": "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
         },
         "PAYMENT_ONGOING": {
+          "PAA_PAGAMENTO_IN_CORSO": {
+            "title": "C’è già un’operazione in corso, riprova più tardi",
+            "subtitle": "Se il problema persiste, puoi aprire una segnalazione."
+          },
+          "PPT_PAGAMENTO_IN_CORSO": {
+            "title": "C’è già un’operazione in corso, riprova più tardi",
+            "subtitle": "Se il problema persiste, puoi aprire una segnalazione."
+          },
           "title": "C’è già un’operazione in corso, riprova più tardi",
           "subtitle": "Se il problema persiste, puoi aprire una segnalazione."
         },

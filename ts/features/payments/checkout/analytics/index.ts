@@ -106,7 +106,7 @@ export const getPaymentAnalyticsEventFromRequestFailure = (
     case "DOMAIN_UNKNOWN":
       return "PAYMENT_ORGANIZATION_ERROR";
     case "PAYMENT_ONGOING":
-      return "PAYMENT_ONGOING_ERROR";
+      return failure.faultCodeDetail ?? "PAYMENT_ONGOING_ERROR";
     case "PAYMENT_EXPIRED":
       return "PAYMENT_EXPIRED_ERROR";
     case "PAYMENT_CANCELED":

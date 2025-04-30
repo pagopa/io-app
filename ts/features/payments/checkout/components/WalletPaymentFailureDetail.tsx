@@ -134,7 +134,8 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     };
 
   const getPropsFromFailure = ({
-    faultCodeCategory
+    faultCodeCategory,
+    faultCodeDetail
   }: WalletPaymentFailure): OperationResultScreenContentProps => {
     switch (faultCodeCategory) {
       case "PAYMENT_UNAVAILABLE":
@@ -160,6 +161,29 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           secondaryAction: contactSupportAction
         };
       case "PAYMENT_ONGOING":
+        if (faultCodeDetail === "PAA_PAGAMENTO_IN_CORSO") {
+          return {
+            pictogram: "timing",
+            title: I18n.t(
+              "wallet.payment.failure.PAYMENT_ONGOING.PAA_PAGAMENTO_IN_CORSO.title"
+            ),
+            subtitle: I18n.t(
+              "wallet.payment.failure.PAYMENT_ONGOING.PAA_PAGAMENTO_IN_CORSO.subtitle"
+            ),
+            action: closeAction
+          };
+        } else if (faultCodeDetail === "PPT_PAGAMENTO_IN_CORSO") {
+          return {
+            pictogram: "timing",
+            title: I18n.t(
+              "wallet.payment.failure.PAYMENT_ONGOING.PPT_PAGAMENTO_IN_CORSO.title"
+            ),
+            subtitle: I18n.t(
+              "wallet.payment.failure.PAYMENT_ONGOING.PPT_PAGAMENTO_IN_CORSO.subtitle"
+            ),
+            action: closeAction
+          };
+        }
         return {
           pictogram: "timing",
           title: I18n.t("wallet.payment.failure.PAYMENT_ONGOING.title"),
