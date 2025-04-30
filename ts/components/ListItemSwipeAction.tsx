@@ -17,6 +17,7 @@ import {
 import HapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   interpolateColor,
+  SharedValue,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -26,34 +27,50 @@ import Animated, {
 type RightActionsProps = {
   showDeleteAlert: () => void;
   accessibilityLabel: string;
+  translateX: SharedValue<number>;
 };
 
 const RightActions = ({
   showDeleteAlert,
-  accessibilityLabel
-}: RightActionsProps) => (
-  <View
-    style={{
-      backgroundColor: IOColors["blueIO-500"],
-      justifyContent: "center",
-      alignItems: "flex-end",
-      paddingRight: 18,
-      flex: 1,
-      position: "absolute",
-      right: 0,
-      top: 0,
-      bottom: 0,
-      width: 60
-    }}
-  >
-    <IconButton
-      accessibilityLabel={accessibilityLabel}
-      icon="eyeHide"
-      color="contrast"
-      onPress={showDeleteAlert}
-    />
-  </View>
-);
+  accessibilityLabel,
+  translateX
+}: RightActionsProps) => {
+  const animatedIconStyle = useAnimatedStyle(() => {
+    const clamped = Math.max(-translateX.value, 0);
+    const progress = Math.min(clamped / 60, 1);
+
+    return {
+      transform: [{ scale: progress }],
+      opacity: progress
+    };
+  });
+
+  return (
+    <View
+      style={{
+        backgroundColor: IOColors["blueIO-500"],
+        justifyContent: "center",
+        alignItems: "flex-end",
+        paddingRight: 18,
+        flex: 1,
+        position: "absolute",
+        right: 0,
+        top: 0,
+        bottom: 0,
+        width: 60
+      }}
+    >
+      <Animated.View style={animatedIconStyle}>
+        <IconButton
+          accessibilityLabel={accessibilityLabel}
+          icon="eyeHide"
+          color="contrast"
+          onPress={showDeleteAlert}
+        />
+      </Animated.View>
+    </View>
+  );
+};
 
 type ListItemSwipeActionProps = {
   children: ReactNode;
@@ -169,6 +186,7 @@ const ListItemSwipeAction = ({
           style={[StyleSheet.absoluteFillObject, backgroundStyle]}
         />
         <RightActions
+          translateX={translateX}
           showDeleteAlert={showAlertAction}
           accessibilityLabel={accessibilityLabel}
         />
