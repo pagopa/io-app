@@ -6,10 +6,7 @@ import { memo, useEffect, useRef, useState } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "../../../i18n";
-import {
-  isItwOfflineAccessEnabledSelector,
-  isMixpanelEnabled as isMixpanelEnabledSelector
-} from "../../../store/reducers/persistedPreferences";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
@@ -29,9 +26,9 @@ import waiting from "../../../../assets/animated-pictograms/Waiting.json";
 import { startupLoadSuccess } from "../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../store/reducers/startup";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
-import { itwLifecycleIsOperationalOrValid } from "../../itwallet/lifecycle/store/selectors";
-import { identificationRequest } from "../../../store/actions/identification";
+import { identificationRequest } from "../../identification/store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
+import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -41,11 +38,8 @@ export const IngressScreen = () => {
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const dispatch = useIODispatch();
   const isConnected = useIOSelector(isConnectedSelector);
-  const selectItwLifecycleIsOperationalOrValid = useIOSelector(
-    itwLifecycleIsOperationalOrValid
-  );
-  const isOfflineAccessEnabled = useIOSelector(
-    isItwOfflineAccessEnabledSelector
+  const isOfflineAccessAvailable = useIOSelector(
+    itwOfflineAccessAvailableSelector
   );
 
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
@@ -92,9 +86,7 @@ export const IngressScreen = () => {
 
   useEffect(() => {
     const visualizeOfflineWallet =
-      isConnected === false &&
-      selectItwLifecycleIsOperationalOrValid &&
-      isOfflineAccessEnabled;
+      isConnected === false && isOfflineAccessAvailable;
 
     if (visualizeOfflineWallet) {
       // This dispatch could be placed inside `onSuccess`,
@@ -111,17 +103,9 @@ export const IngressScreen = () => {
         })
       );
     }
-  }, [
-    dispatch,
-    isConnected,
-    isOfflineAccessEnabled,
-    selectItwLifecycleIsOperationalOrValid
-  ]);
+  }, [dispatch, isConnected, isOfflineAccessAvailable]);
 
-  if (
-    isConnected === false &&
-    (!selectItwLifecycleIsOperationalOrValid || !isOfflineAccessEnabled)
-  ) {
+  if (isConnected === false && !isOfflineAccessAvailable) {
     return <IngressScreenNoInternetConnection />;
   }
 

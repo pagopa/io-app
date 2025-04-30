@@ -101,7 +101,7 @@ describe("test decodeIOBarcode function", () => {
             clientId: "abc123xy",
             requestUri: "https://example.com/callback",
             state: "hyqizm592",
-            requestUriMethod: "get"
+            request_uri_method: "get"
           }
         })
       );
@@ -120,7 +120,7 @@ describe("test decodeIOBarcode function", () => {
             clientId: "abc123xy",
             requestUri: "https://example.com/callback",
             state: "hyqizm592",
-            requestUriMethod: "post"
+            request_uri_method: "post"
           }
         })
       );

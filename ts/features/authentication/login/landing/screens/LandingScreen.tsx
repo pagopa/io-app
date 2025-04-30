@@ -4,75 +4,76 @@
  */
 import {
   Banner,
-  ButtonLink,
   ButtonSolid,
   ContentWrapper,
   ModuleNavigation,
-  VSpacer,
   Tooltip,
-  useIOToast
+  useIOToast,
+  ButtonLink,
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
 import {
-  useState,
+  ComponentProps,
+  useCallback,
   useEffect,
   useMemo,
-  useCallback,
   useRef,
-  ComponentProps
+  useState
 } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Alert, View } from "react-native";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
-import _isEqual from "lodash/isEqual";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
-import {
-  isCieIDTourGuideEnabledSelector,
-  isCieLoginUatEnabledSelector
-} from "../../cie/store/selectors";
+import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import {
-  resetAuthenticationState,
-  sessionExpired
-} from "../../../common/store/actions";
+import { sessionExpired } from "../../../common/store/actions";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../../store/hooks";
-import { isSessionExpiredSelector } from "../../../common/store/selectors";
 import { continueWithRootOrJailbreakSelector } from "../../../../../store/reducers/persistedPreferences";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { openWebUrl } from "../../../../../utils/url";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { tosConfigSelector } from "../../../../tos/store/selectors";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
-import { cieIDDisableTourGuide } from "../../cie/store/actions";
-import { SpidLevel } from "../../cie/utils";
-import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 import { isTablet } from "../../../../../utils/device";
-import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { openWebUrl } from "../../../../../utils/url";
 import {
   loginCieWizardSelected,
   trackCieBottomSheetScreenView,
   trackCieIDLoginSelected,
   trackCieLoginSelected,
   trackCiePinLoginSelected,
-  trackMethodInfo,
   trackSpidLoginSelected
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+
+import { isSessionExpiredSelector } from "../../../common/store/selectors";
+import { cieIDDisableTourGuide } from "../../cie/store/actions";
+import {
+  isCieIDTourGuideEnabledSelector,
+  isCieLoginUatEnabledSelector
+} from "../../cie/store/selectors";
+import { SpidLevel } from "../../cie/utils";
+import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
+import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
+import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
+import { setOfflineAccessReason } from "../../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
+import { identificationRequest } from "../../../../identification/store/actions";
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
+import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
@@ -89,6 +90,9 @@ export const LandingScreen = () => {
   const insets = useSafeAreaInsets();
   const isCieIDTourGuideEnabled = useIOSelector(
     isCieIDTourGuideEnabledSelector
+  );
+  const itwOfflineAccessAvailable = useIOSelector(
+    itwOfflineAccessAvailableSelector
   );
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
@@ -107,6 +111,9 @@ export const LandingScreen = () => {
     void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
     navigateToCieIdLoginScreen(SPID_LEVEL);
   }, [store, navigateToCieIdLoginScreen]);
+
+  const { presentInfoBottomsheet, infoBottomsheetComponent } =
+    useInfoBottomsheetComponent();
 
   const {
     present,
@@ -170,9 +177,6 @@ export const LandingScreen = () => {
     snapPoint: [400]
   });
 
-  const tosConfig = useIOSelector(tosConfigSelector, _isEqual);
-  const privacyUrl = tosConfig.tos_url;
-
   const [isRootedOrJailbroken, setIsRootedOrJailbroken] = useState<
     O.Option<boolean>
   >(O.none);
@@ -211,7 +215,6 @@ export const LandingScreen = () => {
     if (isSessionExpired) {
       // eslint-disable-next-line functional/immutable-data
       isSessionExpiredRef.current = isSessionExpired;
-      dispatch(resetAuthenticationState());
     }
   });
 
@@ -252,11 +255,6 @@ export const LandingScreen = () => {
     }
   }, [present, isCieSupported, handleNavigateToCieIdLoginScreen]);
 
-  const navigateToPrivacyUrl = useCallback(() => {
-    trackMethodInfo();
-    openWebUrl(privacyUrl);
-  }, [privacyUrl]);
-
   const navigateToCieUatSelectionScreen = useCallback(() => {
     if (isCieSupported) {
       navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
@@ -270,7 +268,15 @@ export const LandingScreen = () => {
       title: "",
       supportRequest: true,
       canGoBack: false,
-      contextualHelpMarkdown
+      contextualHelpMarkdown,
+      variant: "primary",
+      secondAction: {
+        icon: "info",
+        onPress: presentInfoBottomsheet,
+        accessibilityLabel: I18n.t(
+          "authentication.landing.useful_resources.bottomSheet.title"
+        )
+      }
     });
 
     const { name: routeName } = useRoute();
@@ -333,8 +339,22 @@ export const LandingScreen = () => {
       []
     );
 
+    const navigateToWallet = () => {
+      dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.SESSION_EXPIRED));
+      dispatch(
+        identificationRequest(false, false, undefined, undefined, {
+          onSuccess: () => {
+            // This dispatch mounts the new offline navigator.
+            // It must be initialized **after** the user completes
+            // biometric authentication to prevent graphical glitches.
+            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
+          }
+        })
+      );
+    };
+
     return (
-      <View style={IOStyles.flex}>
+      <View style={{ flex: 1 }} testID="LandingScreen">
         {isSessionExpiredRef.current ? (
           <LandingSessionExpiredComponent
             ref={accessibilityFirstFocuseViewRef}
@@ -403,18 +423,23 @@ export const LandingScreen = () => {
             }}
           />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-          <View style={IOStyles.selfCenter}>
-            <ButtonLink
-              accessibilityRole="link"
-              accessibilityLabel={I18n.t("authentication.landing.privacyLink")}
-              color="primary"
-              label={I18n.t("authentication.landing.privacyLink")}
-              onPress={navigateToPrivacyUrl}
-            />
-            <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-          </View>
+          {itwOfflineAccessAvailable && isSessionExpired && (
+            <View style={{ alignSelf: "center" }}>
+              <ButtonLink
+                accessibilityRole="link"
+                accessibilityLabel={I18n.t(
+                  "authentication.landing.show_wallet"
+                )}
+                color="primary"
+                label={I18n.t("authentication.landing.show_wallet")}
+                onPress={navigateToWallet}
+              />
+              <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
+            </View>
+          )}
           {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
           {bottomSheet}
+          {infoBottomsheetComponent}
         </ContentWrapper>
       </View>
     );

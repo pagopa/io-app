@@ -6,7 +6,6 @@ import {
   FeatureInfo,
   GradientScrollView,
   H3,
-  IOStyles,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -38,7 +37,8 @@ import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 export enum Identifier {
   SPID = "SPID",
   CIE = "CIE",
-  CIE_ID = "CIE_ID"
+  CIE_ID = "CIE_ID",
+  TEST = "TEST"
 }
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt_in.contextualHelpTitle",
@@ -47,7 +47,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 export type ChosenIdentifier =
   | {
-      identifier: Identifier.SPID | Identifier.CIE;
+      identifier: Identifier.SPID | Identifier.CIE | Identifier.TEST;
     }
   | {
       identifier: Identifier.CIE_ID;
@@ -59,7 +59,8 @@ export const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 820;
 const authScreensMap = {
   CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
   SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
-  CIE_ID: AUTHENTICATION_ROUTES.CIE_ID_LOGIN
+  CIE_ID: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
+  TEST: AUTHENTICATION_ROUTES.IDP_TEST
 };
 
 const OptInScreen = () => {
@@ -121,7 +122,8 @@ const OptInScreen = () => {
         label: I18n.t("authentication.opt_in.button_decline_lv"),
         accessibilityLabel: I18n.t("authentication.opt_in.button_decline_lv"),
         onPress: () => navigateToIdpPage(false),
-        testID: "decline-button-test"
+        testID: "decline-button-test",
+        variant: "link"
       }}
     >
       <ContentWrapper>
@@ -130,12 +132,12 @@ const OptInScreen = () => {
           otherwise it will not be visible
           */}
         {Dimensions.get("screen").height > MIN_HEIGHT_TO_SHOW_FULL_RENDER && (
-          <View style={IOStyles.selfCenter} testID="pictogram-test">
+          <View style={{ alignSelf: "center" }} testID="pictogram-test">
             <Pictogram name="passcode" size={120} />
           </View>
         )}
         <VSpacer size={24} />
-        <View style={IOStyles.selfCenter}>
+        <View style={{ alignSelf: "center" }}>
           <Badge
             text={I18n.t("authentication.opt_in.news")}
             variant="highlight"

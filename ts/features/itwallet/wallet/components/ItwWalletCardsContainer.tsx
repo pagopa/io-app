@@ -5,7 +5,7 @@ import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { WalletCardsCategoryContainer } from "../../../wallet/components/WalletCardsCategoryContainer";
 import { selectWalletCardsByCategory } from "../../../wallet/store/selectors";
 import { withWalletCategoryFilter } from "../../../wallet/utils";
@@ -18,8 +18,6 @@ import { ItwFeedbackBanner } from "../../common/components/ItwFeedbackBanner";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
-
-const EID_INFO_BOTTOM_PADDING = 128;
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const navigation = useIONavigation();
@@ -39,14 +37,11 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     }
   });
 
-  const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
-    {
-      title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
-      // Navigation does not seem to work when the bottom sheet's component is not inline
-      component: <ItwEidInfoBottomSheetContent navigation={navigation} />
-    },
-    EID_INFO_BOTTOM_PADDING
-  );
+  const eidInfoBottomSheet = useIOBottomSheetModal({
+    title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
+    // Navigation does not seem to work when the bottom sheet's component is not inline
+    component: <ItwEidInfoBottomSheetContent navigation={navigation} />
+  });
 
   useFocusEffect(
     useCallback(

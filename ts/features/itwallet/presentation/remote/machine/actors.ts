@@ -4,7 +4,8 @@ import * as O from "fp-ts/lib/Option";
 import {
   ItwRemoteRequestPayload,
   EnrichedPresentationDetails,
-  RelyingPartyConfiguration
+  RelyingPartyConfiguration,
+  DcqlQuery
 } from "../utils/itwRemoteTypeUtils";
 import { RequestObject } from "../../../common/utils/itwTypesUtils";
 import { useIOStore } from "../../../../../store/hooks";
@@ -12,7 +13,9 @@ import { itwCredentialsSelector } from "../../../credentials/store/selectors";
 import { enrichPresentationDetails } from "../utils/itwRemotePresentationUtils";
 import { assert } from "../../../../../utils/assert";
 
-export type EvaluateRelyingPartyTrustInput = Partial<{ clientId: string }>;
+export type EvaluateRelyingPartyTrustInput = Partial<{
+  qrCodePayload: ItwRemoteRequestPayload;
+}>;
 export type EvaluateRelyingPartyTrustOutput = {
   rpConf: RelyingPartyConfiguration;
   rpSubject: string;
@@ -35,7 +38,7 @@ export type SendAuthorizationResponseInput = {
   rpConf?: RelyingPartyConfiguration;
 };
 export type SendAuthorizationResponseOutput = {
-  redirectUri: string;
+  redirectUri?: string; // Optional in cross-device presentation
 };
 
 export const createRemoteActorsImplementation = (
@@ -45,10 +48,13 @@ export const createRemoteActorsImplementation = (
     EvaluateRelyingPartyTrustOutput,
     EvaluateRelyingPartyTrustInput
   >(async ({ input }) => {
-    assert(input.clientId, "Missing required client ID");
+    const { qrCodePayload } = input;
+    assert(qrCodePayload?.client_id, "Missing required client ID");
 
     const { rpConf, subject } =
-      await Credential.Presentation.evaluateRelyingPartyTrust(input.clientId);
+      await Credential.Presentation.evaluateRelyingPartyTrust(
+        qrCodePayload.client_id
+      );
 
     // TODO: add trust chain validation
 
@@ -65,16 +71,16 @@ export const createRemoteActorsImplementation = (
       "Missing required getPresentationDetails actor params"
     );
 
-    const { requestUri, clientId, state } = qrCodePayload;
+    const { request_uri, client_id, state } = qrCodePayload;
 
     const { requestObjectEncodedJwt } =
-      await Credential.Presentation.getRequestObject(requestUri);
+      await Credential.Presentation.getRequestObject(request_uri);
 
     const { requestObject } = await Credential.Presentation.verifyRequestObject(
       requestObjectEncodedJwt,
       {
         rpConf,
-        clientId,
+        clientId: client_id,
         rpSubject,
         state
       }
@@ -95,7 +101,7 @@ export const createRemoteActorsImplementation = (
 
     const result = Credential.Presentation.evaluateDcqlQuery(
       credentialsSdJwt,
-      requestObject.dcql_query as any // TODO: fix type
+      requestObject.dcql_query as DcqlQuery
     );
 
     const credentialsByType = Object.fromEntries(
@@ -152,7 +158,7 @@ export const createRemoteActorsImplementation = (
       );
 
     return {
-      redirectUri: authResponse.redirect_uri!
+      redirectUri: authResponse.redirect_uri
     };
   });
 

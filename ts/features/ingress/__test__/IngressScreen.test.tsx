@@ -8,10 +8,9 @@ import { appReducer } from "../../../store/reducers";
 import I18n from "../../../i18n";
 import * as backendStatusSelectors from "../../../store/reducers/backendStatus/remoteConfig";
 import * as selectors from "../../connectivity/store/selectors";
-import * as persistedSelectors from "../../../store/reducers/persistedPreferences";
-import * as lifecycleSelectors from "../../itwallet/lifecycle/store/selectors";
+import * as itwSelectors from "../../itwallet/common/store/selectors";
 import * as ioHook from "../../../store/hooks";
-import { identificationRequest } from "../../../store/actions/identification";
+import { identificationRequest } from "../../identification/store/actions";
 
 jest.useFakeTimers();
 
@@ -44,7 +43,7 @@ describe(IngressScreen, () => {
         .spyOn(selectors, "isConnectedSelector")
         .mockImplementation(() => false);
       jest
-        .spyOn(persistedSelectors, "isItwOfflineAccessEnabledSelector")
+        .spyOn(itwSelectors, "itwOfflineAccessAvailableSelector")
         .mockImplementation(() => false);
 
       const { findByTestId, queryByTestId } = renderComponent();
@@ -60,10 +59,7 @@ describe(IngressScreen, () => {
         .spyOn(selectors, "isConnectedSelector")
         .mockImplementation(() => false);
       jest
-        .spyOn(persistedSelectors, "isItwOfflineAccessEnabledSelector")
-        .mockImplementation(() => true);
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsOperationalOrValid")
+        .spyOn(itwSelectors, "itwOfflineAccessAvailableSelector")
         .mockImplementation(() => true);
       jest
         .spyOn(ioHook, "useIODispatch")

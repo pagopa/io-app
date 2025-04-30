@@ -77,7 +77,7 @@ import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
-import { clearOnboarding } from "../store/actions/onboarding";
+import { clearOnboarding } from "../features/onboarding/store/actions";
 import {
   clearCache,
   resetProfileState
@@ -96,7 +96,7 @@ import {
   isPnEnabledSelector,
   remoteConfigSelector
 } from "../store/reducers/backendStatus/remoteConfig";
-import { IdentificationResult } from "../store/reducers/identification";
+import { IdentificationResult } from "../features/identification/store/reducers";
 import { profileSelector } from "../features/settings/common/store/selectors";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import {
@@ -131,7 +131,10 @@ import {
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
 import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
 import { watchSessionExpiredSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
-import { startAndReturnIdentificationResult } from "./identification";
+import { startAndReturnIdentificationResult } from "../features/identification/sagas";
+import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
+import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
+import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -146,9 +149,6 @@ import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
-import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
-import { checkAcknowledgedFingerprintSaga } from "./startup/onboarding/biometric/checkAcknowledgedFingerprintSaga";
-import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;

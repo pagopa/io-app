@@ -356,8 +356,9 @@
     }
   },
   "login": {
-    "expiration_info": "Per ragioni di sicurezza, dovrai entrare con SPID o CIE ogni 30 giorni.",
-    "expiration_info_FL": "Per ragioni di sicurezza, dovrai entrare con SPID o CIE una volta all’anno.",
+    "help_banner_title": "Come si accede?",
+    "help_banner_content": "Abbiamo preparato una guida per aiutarti passo passo.",
+    "help_banner_action": "Leggi come fare",
     "biometric_info": "Per accedere, ti basterà poi inserire il codice di sblocco o, se abilitati, usare l'impronta o il volto."
   },
   "inbox": {
@@ -807,6 +808,14 @@
           "hint": "Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto"
         }
       },
+      "useful_resources": {
+        "bottomSheet": {
+          "title": "Risorse utili",
+          "privacy_policy": "Informativa Privacy",
+          "manage_access": "Gestisci i tuoi accessi",
+          "io_more_informations": "Cosa puoi fare con l’app IO"
+        }
+      },
       "session_expired": {
         "title": "Accedi di nuovo",
         "body": "Per la tua sicurezza, di tanto in tanto dobbiamo verificare la tua identità",
@@ -846,6 +855,7 @@
       "contextualHelpContent": "Per accedere all'app IO dovrai autenticarti con la tua identità SPID (Sistema Pubblico di Identità Digitale) oppure utilizzando la CIE (Carta d'Identità Elettronica).\n**Grazie a questi sistemi di registrazione il tuo accesso all'app sarà sempre sicuro.**  \nPer richiedere un'identità digitale SPID puoi visitare [spid.gov.it](https://www.spid.gov.it) e scegliere un Identity Provider tra quelli proposti. \nSe invece sei interessato a fare richiesta per la CIE, puoi consultare maggiori informazioni sul sito del tuo Comune e prenotare un appuntamento.\n",
       "loginSpid": "Entra con SPID",
       "loginCie": "Entra con CIE",
+      "show_wallet": "Mostra i tuoi Documenti",
       "loginSpidCie": "Accedi con SPID o CIE",
       "infoSpidCie": "Introduzione a SPID e CIE",
       "loginSpidCieContent": "Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere",
@@ -4721,7 +4731,8 @@
           },
           "modal": {
             "title": "Nessuna connessione",
-            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO."
+            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
+            "footerAction": "Cosa posso fare?"
           }
         },
         "SESSION_EXPIRED": {
@@ -4731,7 +4742,8 @@
           },
           "modal": {
             "title": "Il tuo accesso all’app è scaduto",
-            "content": "###### Cosa posso fare?\n\nQuando la tua sessione di accesso all’app scade, alcuni servizi dell’app potrebbero essere limitati per motivi di sicurezza.\n\nAccedi di nuovo con SPID o CIE per continuare ad usare tutti i servizi di IO."
+            "content": "###### Cosa posso fare?\n\nQuando la tua sessione di accesso all’app scade, alcuni servizi dell’app potrebbero essere limitati per motivi di sicurezza.\n\nAccedi di nuovo con SPID o CIE per continuare ad usare tutti i servizi di IO.",
+            "footerAction": "Accedi di nuovo"
           }
         },
         "SESSION_REFRESH": {
@@ -4741,7 +4753,8 @@
           },
           "modal": {
             "title": "Servizi dell’app limitati",
-            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO."
+            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
+            "footerAction": "Cosa posso fare?"
           }
         },
         "action": "Ricarica l'app IO",

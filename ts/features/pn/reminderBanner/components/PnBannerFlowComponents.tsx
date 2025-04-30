@@ -1,4 +1,10 @@
-import { Body, H2, H6, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ContentWrapper,
+  H2,
+  H6,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Dimensions, Image, View } from "react-native";
 import landingHeroImage from "../../../../../img/features/pn/activationLandingHero.png";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -137,8 +143,10 @@ const CtaScreen = ({
         resizeMode="contain"
       />
       <VSpacer size={24} />
-      <View style={IOStyles.horizontalContentPadding}>
-        <H2>{I18n.t(`${ctaScreenBaseI18nKey}.title`)}</H2>
+      <ContentWrapper>
+        <H2 accessibilityRole="header">
+          {I18n.t(`${ctaScreenBaseI18nKey}.title`)}
+        </H2>
         <VSpacer size={24} />
 
         <H6>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph1.title`)}</H6>
@@ -157,7 +165,7 @@ const CtaScreen = ({
 
         <VSpacer size={24} />
         <Paragraph4 />
-      </View>
+      </ContentWrapper>
     </IOScrollView>
   );
 };

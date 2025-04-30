@@ -36,6 +36,11 @@ export type Context = {
    * Optional credentials selected by the user, identified by their presentation ID
    */
   selectedOptionalCredentials: Set<string>;
+  /**
+   * The URI to redirect the user to access the Relying Party's service
+   * It is not required in cross-device presentation
+   */
+  redirectUri?: string;
 };
 
 export const InitialContext: Context = {

@@ -374,6 +374,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             align="xMidYMid"
                             bbHeight={36}
                             bbWidth={36}
+                            color="#614C15"
                             focusable={false}
                             height={36}
                             importantForAccessibility="no-hide-descendants"
@@ -387,9 +388,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#614C15",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 36,
                                   "width": 36,
@@ -401,7 +399,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             width={36}
                           >
                             <RNSVGGroup
-                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -429,12 +426,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -450,7 +446,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -858,6 +853,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             align="xMidYMid"
                             bbHeight={36}
                             bbWidth={36}
+                            color="#614C15"
                             focusable={false}
                             height={36}
                             importantForAccessibility="no-hide-descendants"
@@ -871,9 +867,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#614C15",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 36,
                                   "width": 36,
@@ -885,7 +878,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             width={36}
                           >
                             <RNSVGGroup
-                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -913,12 +905,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -934,7 +925,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -1342,6 +1332,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             align="xMidYMid"
                             bbHeight={36}
                             bbWidth={36}
+                            color="#614C15"
                             focusable={false}
                             height={36}
                             importantForAccessibility="no-hide-descendants"
@@ -1355,9 +1346,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#614C15",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 36,
                                   "width": 36,
@@ -1369,7 +1357,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             width={36}
                           >
                             <RNSVGGroup
-                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1397,12 +1384,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -1418,7 +1404,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -1826,6 +1811,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             align="xMidYMid"
                             bbHeight={36}
                             bbWidth={36}
+                            color="#614C15"
                             focusable={false}
                             height={36}
                             importantForAccessibility="no-hide-descendants"
@@ -1839,9 +1825,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#614C15",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 36,
                                   "width": 36,
@@ -1853,7 +1836,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             width={36}
                           >
                             <RNSVGGroup
-                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1881,12 +1863,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -1902,7 +1883,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -2310,6 +2290,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             align="xMidYMid"
                             bbHeight={36}
                             bbWidth={36}
+                            color="#614C15"
                             focusable={false}
                             height={36}
                             importantForAccessibility="no-hide-descendants"
@@ -2323,9 +2304,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#614C15",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 36,
                                   "width": 36,
@@ -2337,7 +2315,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             width={36}
                           >
                             <RNSVGGroup
-                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -2365,12 +2342,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -2386,7 +2362,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -2794,6 +2769,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             align="xMidYMid"
                             bbHeight={36}
                             bbWidth={36}
+                            color="#614C15"
                             focusable={false}
                             height={36}
                             importantForAccessibility="no-hide-descendants"
@@ -2807,9 +2783,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#614C15",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 36,
                                   "width": 36,
@@ -2821,7 +2794,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             width={36}
                           >
                             <RNSVGGroup
-                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -2849,12 +2821,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -2870,7 +2841,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -3278,6 +3248,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             align="xMidYMid"
                             bbHeight={36}
                             bbWidth={36}
+                            color="#614C15"
                             focusable={false}
                             height={36}
                             importantForAccessibility="no-hide-descendants"
@@ -3291,9 +3262,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#614C15",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 36,
                                   "width": 36,
@@ -3305,7 +3273,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             width={36}
                           >
                             <RNSVGGroup
-                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -3333,12 +3300,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -3354,7 +3320,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -3762,6 +3727,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             align="xMidYMid"
                             bbHeight={36}
                             bbWidth={36}
+                            color="#614C15"
                             focusable={false}
                             height={36}
                             importantForAccessibility="no-hide-descendants"
@@ -3775,9 +3741,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#614C15",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 36,
                                   "width": 36,
@@ -3789,7 +3752,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             width={36}
                           >
                             <RNSVGGroup
-                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -3817,12 +3779,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -3838,7 +3799,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},
@@ -4246,6 +4206,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             align="xMidYMid"
                             bbHeight={36}
                             bbWidth={36}
+                            color="#614C15"
                             focusable={false}
                             height={36}
                             importantForAccessibility="no-hide-descendants"
@@ -4259,9 +4220,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                   "borderWidth": 0,
                                 },
                                 {
-                                  "color": "#614C15",
-                                },
-                                {
                                   "flex": 0,
                                   "height": 36,
                                   "width": 36,
@@ -4273,7 +4231,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             width={36}
                           >
                             <RNSVGGroup
-                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -4301,12 +4258,11 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           </RNSVGSvgView>
                           <View
                             style={
-                              [
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
+                              {
+                                "flex": 1,
+                                "marginBottom": -6,
+                                "marginTop": -6,
+                              }
                             }
                           >
                             <View
@@ -4322,7 +4278,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 allowFontScaling={true}
                                 dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.5}
-                                onTextLayout={[Function]}
                                 style={
                                   [
                                     {},

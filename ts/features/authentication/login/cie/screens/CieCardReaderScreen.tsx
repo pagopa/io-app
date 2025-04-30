@@ -11,7 +11,6 @@ import {
   H3,
   IOColors,
   IOPictograms,
-  IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
@@ -38,19 +37,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
-import CieCardReadingAnimation, {
-  ReadingState
-} from "../components/CieCardReadingAnimation";
-import { isCieLoginUatEnabledSelector } from "../store/selectors";
-import { getCieUatEndpoint } from "../utils/endpoints";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
-import {
-  CieAuthenticationErrorPayload,
-  CieAuthenticationErrorReason,
-  cieAuthenticationError
-} from "../store/actions";
 import { ReduxProps } from "../../../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -68,7 +56,18 @@ import {
   trackLoginCieCardReadingError,
   trackLoginCieCardReadingSuccess
 } from "../../../common/analytics/cieAnalytics";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import CieCardReadingAnimation, {
+  ReadingState
+} from "../components/CieCardReadingAnimation";
+import {
+  CieAuthenticationErrorPayload,
+  CieAuthenticationErrorReason,
+  cieAuthenticationError
+} from "../store/actions";
+import { isCieLoginUatEnabledSelector } from "../store/selectors";
+import { getCieUatEndpoint } from "../utils/endpoints";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -536,7 +535,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
   private getFooter = () =>
     Platform.select({
       default: (
-        <View style={IOStyles.alignCenter}>
+        <View style={{ alignItems: "center" }}>
           <View>
             <ButtonLink
               label={I18n.t("global.buttons.close")}
@@ -546,7 +545,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         </View>
       ),
       ios: (
-        <View style={IOStyles.alignCenter}>
+        <View style={{ alignItems: "center" }}>
           <View>
             <ButtonSolid
               label={I18n.t("authentication.cie.nfc.retry")}
@@ -566,7 +565,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 
   public render(): ReactNode {
     return (
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={{ flex: 1 }} testID="cie-card-reader-screen-test-id">
         <ScrollView
           centerContent={true}
           contentContainerStyle={styles.contentContainer}

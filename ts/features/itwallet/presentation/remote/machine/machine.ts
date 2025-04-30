@@ -100,7 +100,7 @@ export const itwRemoteMachine = setup({
       description: "Determine whether the Relying Party is a trusted entity",
       invoke: {
         src: "evaluateRelyingPartyTrust",
-        input: ({ context }) => ({ clientId: context.payload?.clientId }),
+        input: ({ context }) => ({ qrCodePayload: context.payload }),
         onDone: {
           target: "GettingPresentationDetails",
           actions: assign(({ event }) => event.output)
@@ -179,6 +179,9 @@ export const itwRemoteMachine = setup({
           optionalCredentials: context.selectedOptionalCredentials
         }),
         onDone: {
+          actions: assign(({ event }) => ({
+            redirectUri: event.output.redirectUri
+          })),
           target: "Success"
         },
         onError: {

@@ -13,10 +13,9 @@ import { pipe } from "fp-ts/lib/function";
 import { useEffect } from "react";
 import { View } from "react-native";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
-import { identificationRequest } from "../../../../store/actions/identification";
+import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
@@ -125,7 +124,13 @@ const AuthorizationScreenContent = ({
   <>
     <Divider />
     <VSpacer size={16} />
-    <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+      }}
+    >
       <H6>{I18n.t("idpay.payment.authorization.toAuth")}</H6>
       <H2>{formatNumberCurrencyCentsOrDefault(data.rewardCents)}</H2>
     </View>
@@ -175,7 +180,13 @@ const SmallSkeleton = () => (
 const AuthorizationScreenSkeleton = () => (
   <>
     <VSpacer size={16} />
-    <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+      }}
+    >
       <IOSkeleton shape="rectangle" width={82} height={29} radius={8} />
       <IOSkeleton shape="rectangle" width={130} height={29} radius={8} />
     </View>

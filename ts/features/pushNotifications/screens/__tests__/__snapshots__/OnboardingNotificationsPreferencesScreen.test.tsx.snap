@@ -209,6 +209,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -323,6 +324,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#555C70"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -336,9 +338,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#555C70",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -350,7 +349,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -956,7 +954,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               backgroundStyle={
@@ -965,15 +962,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               }
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -991,9 +985,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -1019,6 +1013,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -1311,14 +1312,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -1336,6 +1335,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1349,9 +1349,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1363,7 +1360,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1631,6 +1627,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -1745,6 +1742,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#555C70"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -1758,9 +1756,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#555C70",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -1772,7 +1767,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2378,7 +2372,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               backgroundStyle={
@@ -2387,15 +2380,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               }
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -2413,9 +2403,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -2441,6 +2431,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -2734,14 +2731,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -2759,6 +2754,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -2772,9 +2768,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -2786,7 +2779,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3054,6 +3046,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -3168,6 +3161,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#555C70"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -3181,9 +3175,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#555C70",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -3195,7 +3186,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3801,7 +3791,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               backgroundStyle={
@@ -3810,15 +3799,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               }
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -3836,9 +3822,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -3864,6 +3850,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -4157,14 +4150,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -4182,6 +4173,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -4195,9 +4187,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -4209,7 +4198,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -4477,6 +4465,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -4591,6 +4580,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#555C70"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -4604,9 +4594,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#555C70",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -4618,7 +4605,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -5224,7 +5210,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               backgroundStyle={
@@ -5233,15 +5218,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               }
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -5259,9 +5241,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -5287,6 +5269,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -5580,14 +5569,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -5605,6 +5592,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -5618,9 +5606,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -5632,7 +5617,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -5900,6 +5884,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             }
                           >
                             <Text
+                              accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
                               maxFontSizeMultiplier={1.5}
@@ -6014,6 +5999,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
+                                  color="#555C70"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -6027,9 +6013,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#555C70",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 24,
                                         "width": 24,
@@ -6041,7 +6024,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#555C70"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -6937,7 +6919,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             />
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               backgroundStyle={
@@ -6946,15 +6927,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 }
                               }
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
                               snapPoints={
                                 [
@@ -6972,9 +6950,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
@@ -7000,6 +6978,13 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -7436,14 +7421,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -7461,6 +7444,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -7474,9 +7458,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -7488,7 +7469,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
