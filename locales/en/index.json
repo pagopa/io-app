@@ -252,6 +252,15 @@
         "subtitle": "Collegati a internet per continuare ad usare tutti i servizi di app IO.",
         "action": "Riprova"
       },
+      "statusMessage": {
+        "message": "Nessuna connessione",
+        "action": "Cosa posso fare?"
+      },
+      "connectionRestored": "Connessione ripristinata.",
+      "bottomSheet": {
+        "title": "Nessuna connessione",
+        "content": "###### Cosa posso fare? \n\nQuando sei offline, alcuni servizi dell’app potrebbero non funzionare. \n\n Documenti su IO funziona anche offline (se hai attivato la funzionalità), ma la validità dei documenti è aggiornata all’ultimo accesso in app con connessione a una rete. \n\n Collegati a internet e ricarica l’app per tornare ad usare tutti i servizi di IO."
+      },
       "toast": "Nessuna connessione. Funzionalità non disponibile in assenza di rete."
     }
   },
@@ -2603,13 +2612,16 @@
   "messages": {
     "accessibility": {
       "message": {
+        "archive": "archive",
+        "description": "{{newMessage}} {{selected}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}",
+        "deselectInstructions": "Press and hold to deselect",
         "read": "Message",
-        "unread": "Unread message",
-        "archived": "Archived",
-        "description": "{{newMessage}} {{selected}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}",
-        "received_on": "received on",
         "received_at": "received at",
-        "selected": "selected"
+        "received_on": "received on",
+        "selectInstructions": "Press and hold to select and later",
+        "selected": "selected",
+        "unarchive": "unarchive",
+        "unread": "Unread message"
       }
     },
     "contextualHelpTitle": "About this section",
@@ -4324,6 +4336,43 @@
         }
       },
       "identification": {
+        "l3": {
+          "mode": {
+            "title": "Verifica la tua identità con CIE",
+            "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet.",
+            "action": "Inizia",
+            "ciePin": {
+              "header": "Avrai bisogno di:",
+              "card": "La tua carta d’identità elettronica (CIE)",
+              "pin": "Il PIN della CIE a 8 cifre"
+            },
+            "cieId": {
+              "header": "In alternativa:",
+              "title": "Usa l'app CieID",
+              "subtitle": "Utile se hai già installato l’app CieID"
+            },
+            "bottomSheet": {
+              "cie": {
+                "title": "Continua sull’app CieID",
+                "content": "Per completare la verifica della tua identità sull’app CieID avrai bisogno di:\n\n * La Carta di identità elettronica\n * Il PIN a 8 cifre della CIE\n\nSe hai già installato l’app e hai già registrato la CIE, usa l’app CieID come alternativa più veloce.",
+                "action": "Continua sull’app CieID",
+                "cancel": "Non ora"
+              },
+              "cieInfo": {
+                "title": "Carta di identità elettronica (CIE)",
+                "content": "La CIE è la Carta d'Identità in formato elettronico introdotto in Italia per sostituire la tradizionale carta d'identità cartacea.\n\nTi è utile averla per:\n * Accedere ai servizi online della Pubblica Amministrazione (es. INPS, Agenzia delle Entrate)\n * Identificarti ufficialmente in Italia e all’estero\n * Viaggiare nei Paesi dell’UE e in altri che la accettano al posto del passaporto.",
+                "primaryAction": "Ho capito",
+                "secondaryAction": "Non ho la CIE"
+              },
+              "pin": {
+                "title": "PIN della CIE",
+                "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE;\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
+                "primaryAction": "Ho capito",
+                "secondaryAction": "Non trovo il PIN della CIE"
+              }
+            }
+          }
+        },
         "mode": {
           "title": "Verifica la tua identità",
           "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
