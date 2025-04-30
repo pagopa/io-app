@@ -353,14 +353,12 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             style={
               [
                 {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                {
                   "height": 24,
                   "width": 24,
-                },
-                {
-                  "alignItems": "center",
-                },
-                {
-                  "justifyContent": "center",
                 },
                 false,
               ]
@@ -378,6 +376,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               }
               bbHeight={36}
               bbWidth={36}
+              color="#0E0F13"
               focusable={false}
               height={36}
               importantForAccessibility="no-hide-descendants"
@@ -391,9 +390,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                     "borderWidth": 0,
                   },
                   {
-                    "color": "#0E0F13",
-                  },
-                  {
                     "flex": 0,
                     "height": 36,
                     "width": 36,
@@ -405,7 +401,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               width={36}
             >
               <RNSVGGroup
-                color="#0E0F13"
                 fill={
                   {
                     "payload": 4278190080,
@@ -528,6 +523,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           align="xMidYMid"
           bbHeight={36}
           bbWidth={36}
+          color="#5D1313"
           focusable={false}
           height={36}
           importantForAccessibility="no-hide-descendants"
@@ -541,9 +537,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 "borderWidth": 0,
               },
               {
-                "color": "#5D1313",
-              },
-              {
                 "flex": 0,
                 "height": 36,
                 "width": 36,
@@ -555,7 +548,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           width={36}
         >
           <RNSVGGroup
-            color="#5D1313"
             fill={
               {
                 "payload": 4278190080,
@@ -583,12 +575,11 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
         </RNSVGSvgView>
         <View
           style={
-            [
-              false,
-              {
-                "flex": 1,
-              },
-            ]
+            {
+              "flex": 1,
+              "marginBottom": -6,
+              "marginTop": -6,
+            }
           }
         >
           <View
@@ -604,7 +595,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               allowFontScaling={true}
               dynamicTypeRamp="body"
               maxFontSizeMultiplier={1.5}
-              onTextLayout={[Function]}
               style={
                 [
                   {},

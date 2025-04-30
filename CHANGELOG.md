@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0-rc.5](https://github.com/pagopa/io-app/compare/3.4.0-rc.4...3.4.0-rc.5) (2025-04-29)
+
+
+### Features
+
+* [[IOPID-2968](https://pagopa.atlassian.net/browse/IOPID-2968)] offline wallet: session expired scenario  ([#6916](https://github.com/pagopa/io-app/issues/6916)) ([92c5e89](https://github.com/pagopa/io-app/commit/92c5e8905f7c819dc5fce5310d9ad56f9b91b906))
+
+
+### Chores
+
+* [[IOBP-1581](https://pagopa.atlassian.net/browse/IOBP-1581)] Add more metadata to track inside the CGN debug mode ([#6925](https://github.com/pagopa/io-app/issues/6925)) ([3fca667](https://github.com/pagopa/io-app/commit/3fca667b183185cd8419b37ae07e8ff9ef2bf144))
+* [[IOPID-2663](https://pagopa.atlassian.net/browse/IOPID-2663)]: Track help center links ([#6927](https://github.com/pagopa/io-app/issues/6927)) ([ed9412d](https://github.com/pagopa/io-app/commit/ed9412d3e869439d2d8ba03980eaee70f5585172))
+
+## [3.4.0-rc.4](https://github.com/pagopa/io-app/compare/3.4.0-rc.3...3.4.0-rc.4) (2025-04-28)
+
+
+### Chores
+
+* [[IOPLT-1102](https://pagopa.atlassian.net/browse/IOPLT-1102),[IOCOM-2328](https://pagopa.atlassian.net/browse/IOCOM-2328)] Remove `IOStyles` utility classes from the codebase. Fix `Alert` component flickering on message details ([#6907](https://github.com/pagopa/io-app/issues/6907)) ([0819bf5](https://github.com/pagopa/io-app/commit/0819bf5cd7577715193a5b3820f6a0aec45d1b3e))
+
+## [3.4.0-rc.3](https://github.com/pagopa/io-app/compare/3.4.0-rc.2...3.4.0-rc.3) (2025-04-25)
+
+## [3.4.0-rc.2](https://github.com/pagopa/io-app/compare/3.4.0-rc.1...3.4.0-rc.2) (2025-04-24)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2290](https://pagopa.atlassian.net/browse/SIW-2290)] Disable wallet offline access when no credentials are stored ([#6910](https://github.com/pagopa/io-app/issues/6910)) ([79d3c83](https://github.com/pagopa/io-app/commit/79d3c83a2d730cc721b5abece3d225cd22e0fcd8))
+
+## [3.4.0-rc.1](https://github.com/pagopa/io-app/compare/3.4.0-rc.0...3.4.0-rc.1) (2025-04-23)
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-357](https://pagopa.atlassian.net/browse/IOAPPX-357)] Upgrade `@gorhom/bottom-sheet` library ([#6062](https://github.com/pagopa/io-app/issues/6062)) ([6c288f7](https://github.com/pagopa/io-app/commit/6c288f7e5e5c85a0fcbe0c1ad30b062b4f707fb3))
+
+## [3.4.0-rc.0](https://github.com/pagopa/io-app/compare/3.3.0-rc.8...3.4.0-rc.0) (2025-04-23)
+
+
+### Features
+
+*  [[IOPID-2814](https://pagopa.atlassian.net/browse/IOPID-2814),[IOPID-2759](https://pagopa.atlassian.net/browse/IOPID-2759)] add helpful resources bottomsheet on LandingScreen and refactor test login  ([#6904](https://github.com/pagopa/io-app/issues/6904)) ([84c86aa](https://github.com/pagopa/io-app/commit/84c86aac0951490de884733cdc6ceea6a2566722))
+* [[IOBP-1578](https://pagopa.atlassian.net/browse/IOBP-1578)] Payment webview flow ([#6899](https://github.com/pagopa/io-app/issues/6899)) ([f9538a5](https://github.com/pagopa/io-app/commit/f9538a5f8c7771645f6ea019338aabc662a55a56))
+* [[IOBP-1593](https://pagopa.atlassian.net/browse/IOBP-1593)] Add header payment webview ([#6906](https://github.com/pagopa/io-app/issues/6906)) ([907c8a0](https://github.com/pagopa/io-app/commit/907c8a011f08630aa22587ace2fa671d8ffd41ae))
+
+
+### Bug Fixes
+
+* [[IOCOM-2296](https://pagopa.atlassian.net/browse/IOCOM-2296)] Accessibility header role for IO-COM sections ([#6897](https://github.com/pagopa/io-app/issues/6897)) ([03ad593](https://github.com/pagopa/io-app/commit/03ad59309767675ddfcd40339f8e2b0278692386))
+* [[IOCOM-2327](https://pagopa.atlassian.net/browse/IOCOM-2327)] Global mock for I18n ([#6909](https://github.com/pagopa/io-app/issues/6909)) ([940773c](https://github.com/pagopa/io-app/commit/940773c526fe3ecfbb59743bead02a9112185247))
+* [[IOPID-2949](https://pagopa.atlassian.net/browse/IOPID-2949)] keep `cie` and `connectivityStatus` after logout ([#6912](https://github.com/pagopa/io-app/issues/6912)) ([b0d9851](https://github.com/pagopa/io-app/commit/b0d9851790509ef3bd5cc132afbd71c0501ae5a9))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2055](https://pagopa.atlassian.net/browse/SIW-2055)] Update iPatente cta url with saved driving license number ([#6886](https://github.com/pagopa/io-app/issues/6886)) ([4aee01e](https://github.com/pagopa/io-app/commit/4aee01e5ac8f9ba81832316c2e068dd39b6faee1))
+
 ## [3.3.0-rc.8](https://github.com/pagopa/io-app/compare/3.3.0-rc.7...3.3.0-rc.8) (2025-04-17)
 
 

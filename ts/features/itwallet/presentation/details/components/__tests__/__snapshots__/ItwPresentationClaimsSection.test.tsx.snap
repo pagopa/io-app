@@ -412,14 +412,12 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -437,6 +435,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -450,9 +449,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -464,7 +460,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2134,14 +2129,12 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -2159,6 +2152,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -2172,9 +2166,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -2186,7 +2177,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -2218,7 +2208,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           </View>
                         </View>
                         <Modal
-                          accessibilityPositionChangeAnnouncement=""
                           accessible={false}
                           backdropComponent={[Function]}
                           backgroundStyle={
@@ -2227,21 +2216,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                           enableDismissOnClose={true}
+                          enableDynamicSizing={true}
                           footerComponent={[Function]}
                           handleComponent={[Function]}
-                          handleComponentAccessibility={
-                            {
-                              "accessible": false,
-                            }
-                          }
                           hardwareAccelerated={false}
                           importantForAccessibility="yes"
+                          maxDynamicContentSize={1334}
                           onDismiss={[Function]}
-                          snapPoints={
-                            [
-                              10,
-                            ]
-                          }
                           style={
                             {
                               "borderCurve": "continuous",
@@ -2253,137 +2234,140 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           visible={true}
                         >
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
-                                "flex": 1,
                                 "paddingHorizontal": 24,
                               }
                             }
                           >
                             <View>
                               <View
-                                onLayout={[Function]}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
                                 <View
                                   style={
                                     {
-                                      "flex": 1,
+                                      "display": "flex",
+                                      "flexDirection": "column",
+                                      "gap": 8,
                                     }
                                   }
                                 >
-                                  <View
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
                                     style={
-                                      {
-                                        "display": "flex",
-                                        "flexDirection": "column",
-                                        "gap": 8,
-                                      }
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
                                     }
                                   >
+                                    Chi è?
+                                  </Text>
+                                  <View>
                                     <Text
                                       allowFontScaling={true}
-                                      dynamicTypeRamp="headline"
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "600",
+                                            "fontWeight": "400",
                                             "lineHeight": 24,
                                           },
                                         ]
                                       }
                                     >
-                                      Chi è?
+                                      È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
                                     </Text>
-                                    <View>
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
+                                    <View
+                                      style={
+                                        {
+                                          "height": 8,
                                         }
-                                      >
-                                        È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
-                                      </Text>
-                                      <View
-                                        style={
-                                          {
-                                            "height": 8,
-                                          }
-                                        }
-                                      />
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Per sapere come tratta i tuoi dati consulta l’
-                                        <Text
-                                          accessibilityRole="link"
-                                          allowFontScaling={true}
-                                          dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.5}
-                                          onPress={[Function]}
-                                          style={
-                                            [
-                                              {
-                                                "textDecorationLine": "underline",
-                                              },
-                                              {
-                                                "color": "#0B3EE3",
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                                "lineHeight": 24,
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          Informativa Privacy
-                                        </Text>
-                                        .
-                                      </Text>
-                                    </View>
-                                  </View>
-                                  <View
-                                    style={
-                                      {
-                                        "height": 24,
                                       }
-                                    }
-                                  />
+                                    />
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="body"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Per sapere come tratta i tuoi dati consulta l’
+                                      <Text
+                                        accessibilityRole="link"
+                                        allowFontScaling={true}
+                                        dynamicTypeRamp="body"
+                                        maxFontSizeMultiplier={1.5}
+                                        onPress={[Function]}
+                                        style={
+                                          [
+                                            {
+                                              "textDecorationLine": "underline",
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 24,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        Informativa Privacy
+                                      </Text>
+                                      .
+                                    </Text>
+                                  </View>
                                 </View>
+                                <View
+                                  style={
+                                    {
+                                      "height": 24,
+                                    }
+                                  }
+                                />
                               </View>
+                              <View
+                                style={
+                                  {
+                                    "height": 0,
+                                  }
+                                }
+                              />
                             </View>
                           </RCTScrollView>
                         </Modal>
@@ -2813,14 +2797,12 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -2838,6 +2820,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0B3EE3"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -2851,9 +2834,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0B3EE3",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -2865,7 +2845,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4406,14 +4385,12 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -4431,6 +4408,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0B3EE3"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -4444,9 +4422,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0B3EE3",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -4458,7 +4433,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -4490,7 +4464,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           </View>
                         </View>
                         <Modal
-                          accessibilityPositionChangeAnnouncement=""
                           accessible={false}
                           backdropComponent={[Function]}
                           backgroundStyle={
@@ -4499,21 +4472,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             }
                           }
                           enableDismissOnClose={true}
+                          enableDynamicSizing={true}
                           footerComponent={[Function]}
                           handleComponent={[Function]}
-                          handleComponentAccessibility={
-                            {
-                              "accessible": false,
-                            }
-                          }
                           hardwareAccelerated={false}
                           importantForAccessibility="yes"
+                          maxDynamicContentSize={1334}
                           onDismiss={[Function]}
-                          snapPoints={
-                            [
-                              10,
-                            ]
-                          }
                           style={
                             {
                               "borderCurve": "continuous",
@@ -4525,137 +4490,140 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           visible={true}
                         >
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
-                                "flex": 1,
                                 "paddingHorizontal": 24,
                               }
                             }
                           >
                             <View>
                               <View
-                                onLayout={[Function]}
+                                style={
+                                  {
+                                    "flex": 1,
+                                  }
+                                }
                               >
                                 <View
                                   style={
                                     {
-                                      "flex": 1,
+                                      "display": "flex",
+                                      "flexDirection": "column",
+                                      "gap": 8,
                                     }
                                   }
                                 >
-                                  <View
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
                                     style={
-                                      {
-                                        "display": "flex",
-                                        "flexDirection": "column",
-                                        "gap": 8,
-                                      }
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
                                     }
                                   >
+                                    Chi è?
+                                  </Text>
+                                  <View>
                                     <Text
                                       allowFontScaling={true}
-                                      dynamicTypeRamp="headline"
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "600",
+                                            "fontWeight": "400",
                                             "lineHeight": 24,
                                           },
                                         ]
                                       }
                                     >
-                                      Chi è?
+                                      È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
                                     </Text>
-                                    <View>
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
+                                    <View
+                                      style={
+                                        {
+                                          "height": 8,
                                         }
-                                      >
-                                        È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
-                                      </Text>
-                                      <View
-                                        style={
-                                          {
-                                            "height": 8,
-                                          }
-                                        }
-                                      />
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Per sapere come tratta i tuoi dati consulta l’
-                                        <Text
-                                          accessibilityRole="link"
-                                          allowFontScaling={true}
-                                          dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.5}
-                                          onPress={[Function]}
-                                          style={
-                                            [
-                                              {
-                                                "textDecorationLine": "underline",
-                                              },
-                                              {
-                                                "color": "#0B3EE3",
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                                "lineHeight": 24,
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          Informativa Privacy
-                                        </Text>
-                                        .
-                                      </Text>
-                                    </View>
-                                  </View>
-                                  <View
-                                    style={
-                                      {
-                                        "height": 24,
                                       }
-                                    }
-                                  />
+                                    />
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="body"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Per sapere come tratta i tuoi dati consulta l’
+                                      <Text
+                                        accessibilityRole="link"
+                                        allowFontScaling={true}
+                                        dynamicTypeRamp="body"
+                                        maxFontSizeMultiplier={1.5}
+                                        onPress={[Function]}
+                                        style={
+                                          [
+                                            {
+                                              "textDecorationLine": "underline",
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 24,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        Informativa Privacy
+                                      </Text>
+                                      .
+                                    </Text>
+                                  </View>
                                 </View>
+                                <View
+                                  style={
+                                    {
+                                      "height": 24,
+                                    }
+                                  }
+                                />
                               </View>
+                              <View
+                                style={
+                                  {
+                                    "height": 0,
+                                  }
+                                }
+                              />
                             </View>
                           </RCTScrollView>
                         </Modal>

@@ -2,7 +2,6 @@ import {
   Body,
   ContentWrapper,
   H2,
-  IOStyles,
   OTPInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -26,7 +25,7 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
@@ -71,7 +70,7 @@ export const ItwCiePinScreen = () => {
   const headerHeight = useHeaderHeight();
   const isFocused = useIsFocused();
 
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
+  const { present, bottomSheet } = useIOBottomSheetModal({
     component: <ForgottenPin />,
     title: I18n.t("bottomSheets.ciePin.title")
   });
@@ -106,14 +105,14 @@ export const ItwCiePinScreen = () => {
   };
 
   return (
-    <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
+    <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
       <KeyboardAvoidingView
         behavior={Platform.select({
           ios: "padding",
           android: undefined
         })}
-        contentContainerStyle={IOStyles.flex}
-        style={IOStyles.flex}
+        contentContainerStyle={{ flex: 1 }}
+        style={{ flex: 1 }}
         keyboardVerticalOffset={headerHeight}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -131,7 +130,7 @@ export const ItwCiePinScreen = () => {
               {I18n.t("authentication.cie.pin.subtitleCTA")}
             </Body>
             <VSpacer size={24} />
-            <View style={IOStyles.flex}>
+            <View style={{ flex: 1 }}>
               <OTPInput
                 ref={pinPadViewRef}
                 secret

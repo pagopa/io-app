@@ -206,7 +206,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 variant="primary"
                               />
                               <Modal
-                                accessibilityPositionChangeAnnouncement=""
                                 accessible={false}
                                 backdropComponent={[Function]}
                                 backgroundStyle={
@@ -215,21 +214,13 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                   }
                                 }
                                 enableDismissOnClose={true}
+                                enableDynamicSizing={true}
                                 footerComponent={[Function]}
                                 handleComponent={[Function]}
-                                handleComponentAccessibility={
-                                  {
-                                    "accessible": false,
-                                  }
-                                }
                                 hardwareAccelerated={false}
                                 importantForAccessibility="yes"
+                                maxDynamicContentSize={1334}
                                 onDismiss={[Function]}
-                                snapPoints={
-                                  [
-                                    10,
-                                  ]
-                                }
                                 style={
                                   {
                                     "borderCurve": "continuous",
@@ -240,23 +231,33 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 }
                                 visible={true}
                               >
-                                <BottomSheetContent>
+                                <ScrollView
+                                  overScrollMode="never"
+                                  style={
+                                    {
+                                      "paddingHorizontal": 24,
+                                    }
+                                  }
+                                >
                                   <View
-                                    onLayout={[Function]}
-                                  >
-                                    <View
-                                      style={
-                                        {
-                                          "paddingBottom": 0,
-                                        }
+                                    style={
+                                      {
+                                        "paddingBottom": 0,
                                       }
-                                    >
-                                      <ForwardRef>
-                                        To facilitate your search and improve your experience, we have organized the categories according to frequency of use. This information is not tied to your profile, but is based on aggregate data from all users who use Carta Giovani Nazionale and have consented to data processing.
-                                      </ForwardRef>
-                                    </View>
+                                    }
+                                  >
+                                    <ForwardRef>
+                                      To facilitate your search and improve your experience, we have organized the categories according to frequency of use. This information is not tied to your profile, but is based on aggregate data from all users who use Carta Giovani Nazionale and have consented to data processing.
+                                    </ForwardRef>
                                   </View>
-                                </BottomSheetContent>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
+                                </ScrollView>
                               </Modal>
                             </React.Fragment>
                           </React.Fragment>
@@ -490,6 +491,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                         align="xMidYMid"
                                         bbHeight={16}
                                         bbWidth={16}
+                                        color="#0B3EE3"
                                         focusable={false}
                                         height={16}
                                         importantForAccessibility="no-hide-descendants"
@@ -503,9 +505,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0B3EE3",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 16,
                                               "width": 16,
@@ -517,7 +516,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                         width={16}
                                       >
                                         <RNSVGGroup
-                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -646,6 +644,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                         align="xMidYMid"
                                         bbHeight={16}
                                         bbWidth={16}
+                                        color="#0E0F13"
                                         focusable={false}
                                         height={16}
                                         importantForAccessibility="no-hide-descendants"
@@ -659,9 +658,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                               "borderWidth": 0,
                                             },
                                             {
-                                              "color": "#0E0F13",
-                                            },
-                                            {
                                               "flex": 0,
                                               "height": 16,
                                               "width": 16,
@@ -673,7 +669,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                         width={16}
                                       >
                                         <RNSVGGroup
-                                          color="#0E0F13"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -845,7 +840,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                               </View>
                             </View>
                             <Modal
-                              accessibilityPositionChangeAnnouncement=""
                               accessible={false}
                               backdropComponent={[Function]}
                               backgroundStyle={
@@ -854,21 +848,13 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 }
                               }
                               enableDismissOnClose={true}
+                              enableDynamicSizing={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              handleComponentAccessibility={
-                                {
-                                  "accessible": false,
-                                }
-                              }
                               hardwareAccelerated={false}
                               importantForAccessibility="yes"
+                              maxDynamicContentSize={1334}
                               onDismiss={[Function]}
-                              snapPoints={
-                                [
-                                  10,
-                                ]
-                              }
                               style={
                                 {
                                   "borderCurve": "continuous",
@@ -880,46 +866,49 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
-                                    "flex": 1,
                                     "paddingHorizontal": 24,
                                   }
                                 }
                               >
                                 <View>
                                   <View
-                                    onLayout={[Function]}
+                                    style={
+                                      {
+                                        "paddingBottom": 0,
+                                      }
+                                    }
                                   >
-                                    <View
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="body"
+                                      maxFontSizeMultiplier={1.5}
                                       style={
-                                        {
-                                          "paddingBottom": 0,
-                                        }
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
                                       }
                                     >
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        To facilitate your search and improve your experience, we have organized the categories according to frequency of use. This information is not tied to your profile, but is based on aggregate data from all users who use Carta Giovani Nazionale and have consented to data processing.
-                                      </Text>
-                                    </View>
+                                      To facilitate your search and improve your experience, we have organized the categories according to frequency of use. This information is not tied to your profile, but is based on aggregate data from all users who use Carta Giovani Nazionale and have consented to data processing.
+                                    </Text>
                                   </View>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 0,
+                                      }
+                                    }
+                                  />
                                 </View>
                               </RCTScrollView>
                             </Modal>
@@ -1013,14 +1002,12 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                 style={
                                   [
                                     {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
                                       "height": 24,
                                       "width": 24,
-                                    },
-                                    {
-                                      "alignItems": "center",
-                                    },
-                                    {
-                                      "justifyContent": "center",
                                     },
                                     false,
                                   ]
@@ -1038,6 +1025,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                   }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
@@ -1051,9 +1039,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0E0F13",
-                                      },
-                                      {
                                         "flex": 0,
                                         "height": 36,
                                         "width": 36,
@@ -1065,7 +1050,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                   width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1187,14 +1171,12 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -1212,6 +1194,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1225,9 +1208,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1239,7 +1219,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1305,14 +1284,12 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                   style={
                                     [
                                       {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
                                         "height": 24,
                                         "width": 24,
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                      {
-                                        "justifyContent": "center",
                                       },
                                       false,
                                     ]
@@ -1330,6 +1307,7 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                     }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1343,9 +1321,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0E0F13",
-                                        },
-                                        {
                                           "flex": 0,
                                           "height": 36,
                                           "width": 36,
@@ -1357,7 +1332,6 @@ exports[`CgnMerchantsCategoriesSelectionScreen should render correctly 1`] = `
                                     width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
