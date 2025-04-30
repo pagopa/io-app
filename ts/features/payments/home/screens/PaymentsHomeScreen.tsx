@@ -1,10 +1,10 @@
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useState } from "react";
 import Animated, {
   LinearTransition,
   useAnimatedRef
 } from "react-native-reanimated";
-import { ContentWrapper, IOVisualCostants } from "@pagopa/io-app-design-system";
 import {
   IOScrollView,
   IOScrollViewActions

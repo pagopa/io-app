@@ -202,6 +202,10 @@ const ListItemSwipeAction = ({
           accessibilityLabel={accessibilityLabel}
         />
         <PanGestureHandler
+          // This is the minimum distance to drag before the gesture is recognized
+          // We need it to be able to scroll the list
+          activeOffsetX={[-10, 10]} // Require a small horizontal drag to activate
+          failOffsetY={[-5, 5]} // Fail if vertical drag is more than 5px
           onGestureEvent={handleGestureEvent}
           onBegan={() => {
             gestureContext.current.startX = translateX.value;
