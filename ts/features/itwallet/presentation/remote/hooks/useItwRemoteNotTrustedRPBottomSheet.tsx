@@ -2,7 +2,7 @@ import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { useMemo } from "react";
 import I18n from "../../../../../i18n.ts";
-import {useIOBottomSheetModal} from "../../../../../utils/hooks/bottomSheet.tsx";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 
 /**
  * Content component for the Not Trusted RP bottom sheet
@@ -39,15 +39,14 @@ export const ItwRemoteNotTrustedRPBottomSheetContent = () =>
  * @returns Bottom sheet modal object
  */
 export const useItwRemoteNotTrustedRPBottomSheet = () =>
-  useIOBottomSheetModal(
-    {
-      title: I18n.t(
-        "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.title"
-      ),
-      component: <ItwRemoteNotTrustedRPBottomSheetContent />,
-      snapPoint: [300]
-      // TODO: [SIW-2266] Uncomment when the FAQ are ready
-      /*     footer: (
+  useIOBottomSheetModal({
+    title: I18n.t(
+      "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.title"
+    ),
+    component: <ItwRemoteNotTrustedRPBottomSheetContent />,
+    snapPoint: [300]
+    // TODO: [SIW-2266] Uncomment when the FAQ are ready
+    /*     footer: (
       <FooterActions
         actions={{
           type: "SingleButton",
@@ -60,4 +59,4 @@ export const useItwRemoteNotTrustedRPBottomSheet = () =>
         }}
       />
     ) */
-    });
+  });
