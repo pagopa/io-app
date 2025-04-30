@@ -6,7 +6,6 @@ import FM from "front-matter";
 import { Linking } from "react-native";
 import { MessageBodyMarkdown } from "../../../../definitions/communications/MessageBodyMarkdown";
 import { ServiceId } from "../../../../definitions/services/ServiceId";
-import { ServiceMetadata } from "../../../../definitions/services/ServiceMetadata";
 import { Locales } from "../../../../locales/locales";
 import {
   deriveCustomHandledLink,
@@ -27,6 +26,7 @@ import {
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isTestEnv } from "../../../utils/environment";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
+import { ServiceMetadataV2 } from "../../../../definitions/services/ServiceMetadataV2";
 
 export type CTAActionType =
   | "io_handled_link"
@@ -52,15 +52,15 @@ export const handleCtaAction = (
   }
 };
 
-const hasMetadataTokenName = (metadata?: ServiceMetadata): boolean =>
+const hasMetadataTokenName = (metadata?: ServiceMetadataV2): boolean =>
   metadata?.token_name !== undefined;
 
 // a mapping between routes name (the key) and predicates (the value)
 // the predicate says if for that specific route the navigation is allowed
 const internalRoutePredicates: Map<
   string,
-  Predicate<ServiceMetadata | undefined>
-> = new Map<string, Predicate<ServiceMetadata | undefined>>([
+  Predicate<ServiceMetadataV2 | undefined>
+> = new Map<string, Predicate<ServiceMetadataV2 | undefined>>([
   ["/services/webview", hasMetadataTokenName]
 ]);
 
@@ -86,7 +86,7 @@ export const getRemoteLocale = (): Extract<Locales, LocalizedCTALocales> =>
 export const getMessageCTAs = (
   markdown: MessageBodyMarkdown | string,
   serviceId: ServiceId,
-  serviceMetadata?: ServiceMetadata
+  serviceMetadata?: ServiceMetadataV2
 ): CTAS | undefined => getCTAsIfValid(markdown, serviceId, serviceMetadata);
 
 /**
@@ -96,7 +96,7 @@ export const getMessageCTAs = (
  */
 export const getServiceCTAs = (
   serviceId: ServiceId,
-  serviceMetadata?: ServiceMetadata
+  serviceMetadata?: ServiceMetadataV2
 ): CTAS | undefined => {
   const serviceCta = serviceMetadata?.cta;
   return serviceCta != null
@@ -129,7 +129,7 @@ export const removeCTAsFromMarkdown = (
 const getCTAsIfValid = (
   frontMatterText: string | undefined,
   serviceId: ServiceId,
-  serviceMetadata?: ServiceMetadata
+  serviceMetadata?: ServiceMetadataV2
 ): CTAS | undefined => {
   const localizedCTAs = localizedCTAsFromFrontMatter(
     frontMatterText,
@@ -208,7 +208,7 @@ export const ctasFromLocalizedCTAs = (
 const areCTAsActionsValid = (
   ctas: CTAS,
   serviceId: ServiceId,
-  serviceMetadata?: ServiceMetadata
+  serviceMetadata?: ServiceMetadataV2
 ): boolean => {
   const isCTA1Valid = isCtaActionValid(ctas.cta_1, serviceMetadata);
   if (!isCTA1Valid) {
@@ -239,7 +239,7 @@ const areCTAsActionsValid = (
  */
 const isCtaActionValid = (
   cta: CTA,
-  serviceMetadata?: ServiceMetadata
+  serviceMetadata?: ServiceMetadataV2
 ): boolean => {
   // check if it is an internal navigation
   if (isIoInternalLink(cta.action)) {

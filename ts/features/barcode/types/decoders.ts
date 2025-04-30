@@ -126,7 +126,7 @@ const decodeItwRemoteBarcode: IOBarcodeDecoderFn = (data: string) =>
         state: params.get("state"),
         request_uri_method: params.get(
           "request_uri_method"
-        ) as ItwRemoteRequestPayload["requestUriMethod"]
+        ) as ItwRemoteRequestPayload["request_uri_method"]
       })
     ),
     O.map(itwRemoteRequestPayload => ({

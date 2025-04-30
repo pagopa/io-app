@@ -5,8 +5,7 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
-import { SpecialServiceMetadata } from "../../../../../../definitions/services/SpecialServiceMetadata";
+import { SpecialServiceMetadataV2 } from "../../../../../../definitions/services/SpecialServiceMetadataV2";
 import {
   logoutSuccess,
   sessionExpired
@@ -28,6 +27,7 @@ import {
 } from "../actions/preference";
 import { ServiceKind } from "../../components/ServiceDetailsScreenComponent";
 import { EnabledChannels } from "../../../../../utils/profile";
+import { ServiceMetadataV2 } from "../../../../../../definitions/services/ServiceMetadataV2";
 
 export type ServicesDetailsState = {
   byId: Record<string, pot.Pot<ServiceDetails, Error>>;
@@ -171,12 +171,12 @@ export const serviceMetadataInfoSelector = createSelector(
     pipe(
       serviceMetadata,
       O.fromNullable,
-      O.chain<ServiceMetadata, ServiceMetadataInfo>(serviceMetadata => {
-        if (SpecialServiceMetadata.is(serviceMetadata)) {
+      O.chain<ServiceMetadataV2, ServiceMetadataInfo>(metadata => {
+        if (SpecialServiceMetadataV2.is(metadata)) {
           return O.some({
             isSpecialService: true,
             serviceKind:
-              serviceMetadata.custom_special_flow as NonNullable<ServiceKind>
+              metadata.custom_special_flow as NonNullable<ServiceKind>
           });
         }
         return O.none;

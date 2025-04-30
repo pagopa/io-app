@@ -22,7 +22,7 @@ import {
 } from "../ctas";
 import * as ANALYTICS from "../../analytics";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
+import { ServiceMetadataV2 } from "../../../../../definitions/services/ServiceMetadataV2";
 
 const messageBody = `### this is a message
 
@@ -631,7 +631,7 @@ describe("hasMetadataTokenName", () => {
     expect(hasTokenName).toBe(false);
   });
   it("should return false if metadata's token_name is undefined", () => {
-    const metadata = {} as ServiceMetadata;
+    const metadata = {} as ServiceMetadataV2;
 
     const hasTokenName = testable!.hasMetadataTokenName(metadata);
 
@@ -640,7 +640,7 @@ describe("hasMetadataTokenName", () => {
   it("should return true if metadata's token_name defined", () => {
     const metadata = {
       token_name: "a token name"
-    } as ServiceMetadata;
+    } as ServiceMetadataV2;
 
     const hasTokenName = testable!.hasMetadataTokenName(metadata);
 
@@ -1748,7 +1748,7 @@ describe("getServiceCTAs", () => {
     expect(serviceCTA).toBeUndefined();
   });
   it("should return undefined if input service has no cta", () => {
-    const serviceMetadata = {} as ServiceMetadata;
+    const serviceMetadata = {} as ServiceMetadataV2;
 
     const serviceCTA = getServiceCTAs(serviceId, serviceMetadata);
 
@@ -1758,7 +1758,7 @@ describe("getServiceCTAs", () => {
   it("should return the CTA if input service has a properly formatted cta", () => {
     const serviceMetadata = {
       cta: `---\nit:\n cta_1:\n  action: "ioit://messages"\n  text: "CTA's text"\n---`
-    } as ServiceMetadata;
+    } as ServiceMetadataV2;
 
     const serviceCTA = getServiceCTAs(serviceId, serviceMetadata);
 
