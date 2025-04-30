@@ -5,12 +5,11 @@ import {
   WebViewHttpErrorEvent,
   WebViewSourceUri
 } from "react-native-webview/lib/WebViewTypes";
-import { mixpanelTrack } from "../mixpanel";
 import I18n from "../i18n";
-import { useIODispatch } from "../store/hooks";
+import { mixpanelTrack } from "../mixpanel";
 import { resetDebugData, setDebugData } from "../store/actions/debug";
+import { useIODispatch } from "../store/hooks";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
-import { IOStyles } from "./core/variables/IOStyles";
 import { OperationResultScreenContent } from "./screens/OperationResultScreenContent";
 
 type Props = {
@@ -49,7 +48,9 @@ const WebviewComponent = ({ source }: Props) => {
     dispatch(
       setDebugData({
         cgnError: {
-          technicalLog: event.nativeEvent
+          technicalLog: event.nativeEvent,
+          uri: source.uri,
+          headers: source.headers
         }
       })
     );
@@ -77,7 +78,7 @@ const WebviewComponent = ({ source }: Props) => {
             androidMicrophoneAccessDisabled={true}
             allowsInlineMediaPlayback={true}
             mediaPlaybackRequiresUserAction={true}
-            style={IOStyles.flex}
+            style={{ flex: 1 }}
             ref={ref}
             onLoadEnd={() => setLoading(false)}
             onHttpError={handleError}

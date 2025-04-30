@@ -2,7 +2,6 @@ import {
   Body,
   H6,
   IOPictograms,
-  IOStyles,
   Pictogram,
   VSpacer,
   VStack,
@@ -29,7 +28,7 @@ export const EmptyState = ({
   testID
 }: EmptyStateProps) => (
   <View testID={testID}>
-    <VStack style={IOStyles.alignCenter} space={24}>
+    <VStack style={{ alignItems: "center" }} space={24}>
       <Pictogram name={pictogram} size={120} />
       <H6 style={styles.text}>{title}</H6>
     </VStack>
