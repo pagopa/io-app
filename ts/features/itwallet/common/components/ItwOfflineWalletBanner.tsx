@@ -8,7 +8,7 @@ export const ItwOfflineWalletBanner = () => {
   const dispatch = useIODispatch();
   const shouldRender = useIOSelector(itwShouldRenderOfflineBannerSelector);
 
-  // Show the banner only if offline access is enabled and the wallet is valid
+  // Show the banner only if the wallet is valid, offline access is enabled, and the banner is not hidden
   if (!shouldRender) {
     return null;
   }
