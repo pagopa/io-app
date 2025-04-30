@@ -103,9 +103,15 @@ const ContentView = ({ failure }: ContentViewProps) => {
                 }
               ),
               onPress: () =>
-                navigation.navigate(ITW_ROUTES.MAIN, {
-                  screen: ITW_ROUTES.ONBOARDING
-                })
+                navigation.navigate(
+                  ITW_ROUTES.MAIN,
+                  count === 1
+                    ? {
+                        screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+                        params: { credentialType: missingCredentials[0] }
+                      }
+                    : { screen: ITW_ROUTES.ONBOARDING }
+                )
             },
             secondaryAction: {
               label: I18n.t(
