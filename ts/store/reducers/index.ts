@@ -318,7 +318,9 @@ export function createRootReducer(
               isFingerprintEnabled: state.persistedPreferences
                 .isFingerprintEnabled
                 ? true
-                : undefined
+                : undefined,
+              isItwOfflineAccessEnabled:
+                state.persistedPreferences.isItwOfflineAccessEnabled
             },
             lollipop: {
               ...initialLollipopState,
