@@ -70,7 +70,7 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
-import OnboardingNavigator from "./OnboardingNavigator";
+import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
