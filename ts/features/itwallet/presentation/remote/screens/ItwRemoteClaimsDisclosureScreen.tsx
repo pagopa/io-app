@@ -93,7 +93,6 @@ const ContentView = () => {
               rpData?.logo_uri ? { uri: rpData.logo_uri } : undefined
             }
           />
-
           <VStack space={8}>
             <H2>
               {I18n.t(
