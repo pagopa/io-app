@@ -2603,13 +2603,16 @@
   "messages": {
     "accessibility": {
       "message": {
+        "archive": "archiviare",
+        "description": "{{newMessage}} {{selected}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}",
+        "deselectInstructions": "Tieni premuto per deselezionare",
         "read": "Messaggio",
-        "unread": "Messaggio non letto",
-        "archived": "Archiviato",
-        "description": "{{newMessage}} {{selected}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}",
-        "received_on": "ricevuto il",
         "received_at": "ricevuto alle ore",
-        "selected": "selezionato"
+        "received_on": "ricevuto il",
+        "selectInstructions": "Tieni premuto per selezionare e in seguito",
+        "selected": "selezionato",
+        "unarchive": "disarchiviare",
+        "unread": "Messaggio non letto"
       }
     },
     "contextualHelpTitle": "Cosa puoi fare nei tuoi Messaggi",
