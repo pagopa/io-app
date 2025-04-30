@@ -98,7 +98,7 @@ export const useStatusAlertProps = (
         setConnectivityAlert(undefined);
       }, 3000);
     }
-  }, [isConnected, present, prevIsConnected]);
+  }, [isConnected, present, prevIsConnected, currentRoute]);
 
   return useMemo(() => {
     if (isConnected === false || connectivityAlert) {
