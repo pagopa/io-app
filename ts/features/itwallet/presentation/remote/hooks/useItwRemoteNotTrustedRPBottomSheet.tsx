@@ -2,10 +2,7 @@ import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { useMemo } from "react";
 import I18n from "../../../../../i18n.ts";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet.tsx";
-
-// Constant for bottom padding
-// const NOT_TRUSTED_RP_INFO_BOTTOM_PADDING = 180;
+import {useIOBottomSheetModal} from "../../../../../utils/hooks/bottomSheet.tsx";
 
 /**
  * Content component for the Not Trusted RP bottom sheet
@@ -42,13 +39,14 @@ export const ItwRemoteNotTrustedRPBottomSheetContent = () =>
  * @returns Bottom sheet modal object
  */
 export const useItwRemoteNotTrustedRPBottomSheet = () =>
-  useIOBottomSheetAutoresizableModal(
+  useIOBottomSheetModal(
     {
       title: I18n.t(
         "features.itWallet.presentation.remote.NotTrustedRPScreen.bottomSheet.title"
       ),
-      component: <ItwRemoteNotTrustedRPBottomSheetContent />
-      // TODO: [SIW-2266] Uncomment when the FAQ are ready and use NOT_TRUSTED_RP_INFO_BOTTOM_PADDING instead of 100
+      component: <ItwRemoteNotTrustedRPBottomSheetContent />,
+      snapPoint: [300]
+      // TODO: [SIW-2266] Uncomment when the FAQ are ready
       /*     footer: (
       <FooterActions
         actions={{
@@ -62,6 +60,4 @@ export const useItwRemoteNotTrustedRPBottomSheet = () =>
         }}
       />
     ) */
-    },
-    100
-  );
+    });
