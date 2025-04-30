@@ -5,7 +5,7 @@ import {
   ListItemTransaction
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useEffect, useCallback, Fragment } from "react";
+import { useEffect, useCallback, Fragment, useRef } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
@@ -34,6 +34,8 @@ const PAYMENTS_HOME_TRANSACTIONS_LIST_BACKOFF: PaymentsBackoffRetry =
 const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  // Used for swipe feature
+  const openedItemRef = useRef<(() => void) | null>(null);
 
   const latestTransactionsPot = useIOSelector(
     walletLatestReceiptListPotSelector
@@ -107,6 +109,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
                   handleNavigateToTransactionDetails(latestTransaction)
                 }
                 transaction={latestTransaction}
+                openedItemRef={openedItemRef}
               />
               {index < latestTransactionsPot.value.length - 1 && <Divider />}
             </Fragment>

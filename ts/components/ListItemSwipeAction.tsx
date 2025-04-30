@@ -2,9 +2,10 @@
 import {
   IconButton,
   IOColors,
+  IOSpringValues,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
-import { useRef } from "react";
+import { MutableRefObject, ReactNode, useRef } from "react";
 import { Alert, StyleSheet, useWindowDimensions, View } from "react-native";
 import {
   GestureEvent,
@@ -55,7 +56,7 @@ const RightActions = ({
 );
 
 type ListItemSwipeActionProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   swipeAction: () => void;
   alertProps: {
     title: string;
@@ -64,19 +65,20 @@ type ListItemSwipeActionProps = {
     cancelText: string;
   };
   accessibilityLabel?: string;
+  openedItemRef?: MutableRefObject<(() => void) | null>;
 };
 
 const ListItemSwipeAction = ({
   children,
   swipeAction,
   alertProps,
-  accessibilityLabel = ""
+  accessibilityLabel = "",
+  openedItemRef
 }: ListItemSwipeActionProps) => {
   const hapticTriggered = useRef(false);
   const translateX = useSharedValue(0);
   const { theme } = useIOThemeContext();
   const { width } = useWindowDimensions();
-  const thresholds = [-width * 0.9, -width * 0.2, 0];
   const backgroundColor = IOColors[theme["appBackground-primary"]];
 
   const showAlertAction = () =>
@@ -84,7 +86,7 @@ const ListItemSwipeAction = ({
       {
         text: alertProps.cancelText,
         onPress: () => {
-          translateX.value = withSpring(0);
+          translateX.value = withSpring(0, IOSpringValues.accordion);
         },
         style: "cancel"
       },
@@ -99,11 +101,14 @@ const ListItemSwipeAction = ({
     ]);
 
   const backgroundStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(translateX.value, thresholds, [
-      IOColors[theme["interactiveElem-default"]],
-      IOColors[theme["interactiveElem-default"]],
-      backgroundColor
-    ])
+    backgroundColor: interpolateColor(
+      translateX.value,
+      [-width * 0.9, -width * 0.2],
+      [
+        IOColors[theme["interactiveElem-default"]],
+        IOColors[theme["interactiveElem-default"]]
+      ]
+    )
   }));
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -115,9 +120,16 @@ const ListItemSwipeAction = ({
   ) => {
     const { translationX } = event.nativeEvent;
     if (translationX < 0) {
-      translateX.value = translationX;
-    }
+      // Close other items
+      if (openedItemRef?.current && openedItemRef.current !== closeItem) {
+        openedItemRef.current();
+      }
 
+      translateX.value = translationX;
+      if (openedItemRef) {
+        openedItemRef.current = closeItem;
+      }
+    }
     if (translationX < -200 && !hapticTriggered.current) {
       HapticFeedback.trigger("impactLight");
       hapticTriggered.current = true;
@@ -134,8 +146,15 @@ const ListItemSwipeAction = ({
     if (translationX < -200 || velocityX < -800) {
       showAlertAction();
     } else {
-      translateX.value = withSpring(translationX < -50 ? -60 : 0);
+      translateX.value = withSpring(
+        translationX < -50 ? -60 : 0,
+        IOSpringValues.accordion
+      );
     }
+  };
+
+  const closeItem = () => {
+    translateX.value = withSpring(0, IOSpringValues.accordion);
   };
 
   return (

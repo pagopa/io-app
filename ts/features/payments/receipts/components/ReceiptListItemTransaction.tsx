@@ -1,7 +1,7 @@
 import { Avatar, ListItemTransaction } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { memo, useMemo } from "react";
+import { memo, MutableRefObject, useMemo } from "react";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import ListItemSwipeAction from "../../../../components/ListItemSwipeAction";
 import I18n from "../../../../i18n";
@@ -15,10 +15,11 @@ import { formatAmountText } from "../utils";
 type Props = {
   transaction: NoticeListItem;
   onPress?: () => void;
+  openedItemRef?: MutableRefObject<(() => void) | null>;
 };
 
 const ReceiptListItemTransaction = memo(
-  ({ transaction, onPress }: Props) => {
+  ({ transaction, onPress, openedItemRef }: Props) => {
     const recipient = transaction.isCart
       ? I18n.t("features.payments.transactions.multiplePayment")
       : transaction.payeeName ?? "";
@@ -86,7 +87,10 @@ const ReceiptListItemTransaction = memo(
 
     if (transaction.isCart) {
       return (
-        <ListItemSwipeAction {...swipeActionProps}>
+        <ListItemSwipeAction
+          {...swipeActionProps}
+          openedItemRef={openedItemRef}
+        >
           <ListItemTransaction
             {...swipeActionProps}
             paymentLogoIcon={TransactionEmptyIcon}
@@ -105,7 +109,7 @@ const ReceiptListItemTransaction = memo(
     }
 
     return (
-      <ListItemSwipeAction {...swipeActionProps}>
+      <ListItemSwipeAction {...swipeActionProps} openedItemRef={openedItemRef}>
         <ListItemTransaction
           paymentLogoIcon={transactionLogo}
           onPress={onPress}
