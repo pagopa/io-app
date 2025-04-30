@@ -18,21 +18,18 @@ export const createRemoteActionsImplementation = (
   },
 
   navigateToClaimsDisclosureScreen: () => {
-    navigation.replace(ITW_REMOTE_ROUTES.MAIN, {
+    navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
       screen: ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE
     });
   },
 
-  navigateToIdentificationModeScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-      params: {
-        eidReissuing: true
-      }
+  navigateToAuthResponseScreen: () => {
+    navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
+      screen: ITW_REMOTE_ROUTES.AUTH_RESPONSE
     });
   },
 
-  close: () => {
+  closePresentation: () => {
     navigation.popToTop();
   }
 });
