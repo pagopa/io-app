@@ -1,4 +1,4 @@
-import { ItwRemoteRequestPayload } from "../Utils/itwRemoteTypeUtils.ts";
+import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
 
 export type Start = {
   type: "start";
@@ -21,9 +21,20 @@ export type Close = {
   type: "close";
 };
 
+export type ToggleCredential = {
+  type: "toggle-credential";
+  credentialIds: Array<string>;
+};
+
+export type Consent = {
+  type: "holder-consent";
+};
+
 export type RemoteEvents =
   | Start
   | GoToWalletActivation
   | GoToIdentificationMode
+  | Consent
+  | ToggleCredential
   | Back
   | Close;
