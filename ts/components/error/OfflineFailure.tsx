@@ -4,10 +4,12 @@ import I18n from "../../i18n";
 
 type OfflineFailureComponentProps = {
   onRetry?: () => void;
+  isHeaderVisible?: boolean;
 };
 
 export const OfflineFailureComponent = ({
-  onRetry
+  onRetry,
+  isHeaderVisible
 }: OfflineFailureComponentProps) => (
   <OperationResultScreenContent
     pictogram="lostConnection"
@@ -21,6 +23,7 @@ export const OfflineFailureComponent = ({
           }
         : undefined
     }
+    isHeaderVisible={isHeaderVisible}
   />
 );
 

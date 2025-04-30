@@ -18,9 +18,9 @@ import {
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsRemove } from "../../../credentials/store/actions";
-import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks/index.tsx";
-import { useOfflineGuard } from "../../../../../hooks/useOfflineGuard.ts";
+import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
+import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -39,9 +39,11 @@ const ItwPresentationDetailsFooter = ({
   const navigation = useIONavigation();
   const toast = useIOToast();
 
-  const startSupportRequest = useStartSupportRequest({
-    faqCategories: []
-  });
+  const startSupportRequest = useOfflineToastGuard(
+    useStartSupportRequest({
+      faqCategories: []
+    })
+  );
 
   const handleRemoveCredential = () => {
     dispatch(itwCredentialsRemove(credential));
@@ -81,10 +83,10 @@ const ItwPresentationDetailsFooter = ({
     );
   };
 
-  const startAndTrackSupportRequest = useOfflineGuard(() => {
+  const startAndTrackSupportRequest = () => {
     trackWalletCredentialSupport(CREDENTIALS_MAP[credential.credentialType]);
     startSupportRequest();
-  });
+  };
 
   const credentialActions = useMemo(
     () => getCredentialActions(credential),

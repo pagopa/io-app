@@ -7,9 +7,9 @@ import {
 import { Action } from "../../../../store/actions/types";
 
 export enum OfflineAccessReasonEnum {
-  DEVICE_OFFLINE = "DEVICE_OFFLINE", // The device is offline when the app is started
-  SESSION_REFRESH = "SESSION_REFRESH", // Error on session refresh
-  SESSION_EXPIRED = "SESSION_EXPIRED" // Session has expired or user has logged out
+  DEVICE_OFFLINE = "device_offline", // The device is offline when the app is started
+  SESSION_REFRESH = "session_refresh", // Error on session refresh
+  SESSION_EXPIRED = "session_expired" // Session has expired or user has logged out
 }
 export type IngressScreenState = {
   isBlockingScreen: boolean;

@@ -48,8 +48,9 @@ import {
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
+import { withOfflineFailureScreen } from "../../wallet/utils/withOfflineFailureScreen.tsx";
 
-const ItwIssuanceCredentialTrustIssuerScreen = () => {
+const ItwIssuanceCredentialTrustIssuer = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -212,4 +213,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   );
 };
 
-export { ItwIssuanceCredentialTrustIssuerScreen };
+// Offline failure screen HOC
+export const ItwIssuanceCredentialTrustIssuerScreen = withOfflineFailureScreen(
+  ItwIssuanceCredentialTrustIssuer
+);

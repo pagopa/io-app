@@ -121,7 +121,8 @@ describe("superProperties", () => {
             NOTIFICATION_PERMISSION: notificationPermissionTuple[1],
             SAVED_PAYMENT_METHOD: 0,
             SERVICE_CONFIGURATION: "AUTO",
-            WELFARE_STATUS: []
+            WELFARE_STATUS: [],
+            OFFLINE_ACCESS_REASON: "not_available"
           });
         });
       })
@@ -155,6 +156,9 @@ const generateMockedGlobalState = (
         preferences: {
           authLevel: "L2"
         }
+      },
+      ingress: {
+        offlineAccessReason: undefined
       },
       loginFeatures: {
         fastLogin: {

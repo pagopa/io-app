@@ -4751,7 +4751,7 @@
         }
       },
       "offline": {
-        "DEVICE_OFFLINE": {
+        "device_offline": {
           "alert": {
             "content": "Nessuna connessione.",
             "action": "Cosa posso fare?"
@@ -4762,7 +4762,7 @@
             "footerAction": "What can I do?"
           }
         },
-        "SESSION_EXPIRED": {
+        "session_expired": {
           "alert": {
             "content": "Accedi di nuovo.",
             "action": "Perché?"
@@ -4773,7 +4773,7 @@
             "footerAction": "Log in again"
           }
         },
-        "SESSION_REFRESH": {
+        "session_refresh": {
           "alert": {
             "content": "Alcuni servizi dell’app sono limitati in questo momento.",
             "action": "Cosa posso fare?"
