@@ -35,7 +35,7 @@ import HighlightImage from "../../../../../img/features/itWallet/l3/highlight.sv
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
-
+import I18n from "../../../../i18n";
 type Props = {
   title: string;
   description: string;
@@ -267,7 +267,7 @@ const StaticContent = (props: Props) => {
         <VStack space={8} style={{ flex: 1 }}>
           <View style={{ flexDirection: "row" }}>
             <View style={{ alignSelf: "center" }}>
-              <Badge variant="highlight" text="Novità" />
+              <Badge variant="highlight" text={I18n.t("global.badges.new")} />
             </View>
           </View>
           <H4 color="white">{title}</H4>
