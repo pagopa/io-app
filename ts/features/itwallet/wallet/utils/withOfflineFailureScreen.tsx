@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
-import { OfflineFailureScreen } from "../../../../components/error/OfflineFailure.tsx";
+import { OfflineFailureComponent } from "../../../../components/error/OfflineFailure.tsx";
 import { trackContentNotAvailable } from "../../../../utils/analytics.ts";
 
 /**
@@ -48,7 +48,7 @@ export const withOfflineFailureScreen =
       O.fromNullable,
       O.fold(
         () => <Screen {...props} />,
-        () => <OfflineFailureScreen />
+        () => <OfflineFailureComponent isHeaderVisible={true} />
       )
     );
   };
