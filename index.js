@@ -44,7 +44,7 @@ const errorHandler = (e, isFatal) => {
   }
 };
 
-setJSExceptionHandler(errorHandler, true);
+setJSExceptionHandler(errorHandler);
 setNativeExceptionHandler(exceptionString => {
   if (isMixpanelInstanceInitialized()) {
     mixpanelTrack("APPLICATION_ERROR", {
