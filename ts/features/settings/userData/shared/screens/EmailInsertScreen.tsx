@@ -34,7 +34,7 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
-import { abortOnboarding } from "../../../../../store/actions/onboarding";
+import { abortOnboarding } from "../../../../onboarding/store/actions";
 import { profileUpsert } from "../../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emailValidationSelector } from "../../../../mailCheck/store/selectors/emailValidation";

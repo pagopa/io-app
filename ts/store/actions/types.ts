@@ -48,6 +48,7 @@ import { UserDataProcessingActions } from "../../features/settings/common/store/
 import { PinSetActions } from "../../features/settings/security/store/actions/pinset";
 import { ProfileEmailValidationAction } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
 import { IdentificationActions } from "../../features/identification/store/actions";
+import { OnboardingActions } from "../../features/onboarding/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { BackendStatusActions } from "./backendStatus";
@@ -57,7 +58,6 @@ import { CrossSessionsActions } from "./crossSessions";
 import { DebugActions } from "./debug";
 import { InstallationActions } from "./installation";
 import { MixpanelActions } from "./mixpanel";
-import { OnboardingActions } from "./onboarding";
 import { OrganizationsActions } from "./organizations";
 import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PreferencesActions } from "./preferences";

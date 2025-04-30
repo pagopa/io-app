@@ -96,7 +96,6 @@ const CgnLandingPlayground = () => {
               source={{
                 uri: loadUri,
                 headers: {
-                  referer: refererValue,
                   "X-PagoPa-CGN-Referer": refererValue
                 }
               }}

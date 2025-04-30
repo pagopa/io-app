@@ -1,46 +1,43 @@
 import {
-  Alert,
-  ClaimsSelector,
   ContentWrapper,
   FeatureInfo,
   ForceScrollDownView,
   H2,
-  IOButton,
-  ListItemHeader,
-  useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
-import { ComponentProps, useState } from "react";
-import { View } from "react-native";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import I18n from "../../../../../i18n";
+import { useIODispatch } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
+import { identificationRequest } from "../../../../identification/store/actions";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import { DisclosureClaim } from "../../../common/utils/itwClaimsUtils.ts";
-import { ItwRemotePresentationClaimsMock } from "../../../common/utils/itwMocksUtils.ts";
-
-type ClaimItem = ComponentProps<typeof ClaimsSelector>["items"][number];
-
-const RP_MOCK_NAME = "Comune di Milano";
-const RP_MOCK_PRIVACY_URL = "https://rp.privacy.url";
-
-const mapMockClaims = (claims: Array<DisclosureClaim>, missing = false) =>
-  claims.map(
-    ({ claim }): ClaimItem => ({
-      id: claim.id,
-      title: missing ? "-" : (claim.value as string),
-      description: claim.label
-    })
-  );
+import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
+import { ItwRemotePresentationDetails } from "../components/ItwRemotePresentationDetails.tsx";
+import { ItwRemoteMachineContext } from "../machine/provider.tsx";
+import {
+  selectIsLoading,
+  selectRelyingPartyData
+} from "../machine/selectors.ts";
 
 const ItwRemoteClaimsDisclosureScreen = () => {
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
+
+  const isLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
+
+  if (isLoading) {
+    return (
+      <ItwRemoteLoadingScreen
+        title={I18n.t(
+          "features.itWallet.presentation.remote.loadingScreen.request"
+        )}
+      />
+    );
+  }
 
   return <ContentView />;
 };
@@ -49,83 +46,29 @@ const ItwRemoteClaimsDisclosureScreen = () => {
  * The actual content of the screen, with the claims to disclose for the verifiable presentation.
  */
 const ContentView = () => {
-  useHeaderSecondLevel({ title: "" });
+  const machineRef = ItwRemoteMachineContext.useActorRef();
+  const rpData = ItwRemoteMachineContext.useSelector(selectRelyingPartyData);
+  const dispatch = useIODispatch();
 
-  const theme = useIOTheme();
+  const closePresentation = () => machineRef.send({ type: "close" });
 
-  const [selectedOptionalClaims, setSelectedOptionalClaims] = useState<
-    Array<string>
-  >([]);
-  const allOptionalClaimsSelected =
-    selectedOptionalClaims.length ===
-    ItwRemotePresentationClaimsMock.optional.length;
+  useHeaderSecondLevel({ title: "", goBack: closePresentation });
 
-  const toggleOptionalClaims = (claim: ClaimItem) => {
-    setSelectedOptionalClaims(prevState =>
-      prevState.includes(claim.id)
-        ? prevState.filter(id => id !== claim.id)
-        : [...prevState, claim.id]
+  const confirmVerifiablePresentation = () =>
+    dispatch(
+      identificationRequest(
+        false,
+        true,
+        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: () => machineRef.send({ type: "holder-consent" })
+        }
+      )
     );
-  };
-
-  const toggleAllOptionalClaims = () => {
-    ReactNativeHapticFeedback.trigger("impactLight");
-    setSelectedOptionalClaims(
-      allOptionalClaimsSelected
-        ? []
-        : ItwRemotePresentationClaimsMock.optional.map(c => c.claim.id)
-    );
-  };
-
-  const renderOptionalClaims = () => (
-    <VStack space={16}>
-      <View>
-        <ListItemHeader
-          label={I18n.t(
-            "features.itWallet.presentation.selectiveDisclosure.optionalClaims"
-          )}
-          iconName="security"
-          iconColor={theme["icon-default"]}
-        />
-        <View style={{ alignSelf: "flex-end" }}>
-          <IOButton
-            variant="link"
-            label={I18n.t(
-              `global.buttons.${
-                allOptionalClaimsSelected ? "deselectAll" : "selectAll"
-              }`
-            )}
-            onPress={toggleAllOptionalClaims}
-          />
-        </View>
-      </View>
-      <ClaimsSelector
-        title="Patente di guida"
-        items={mapMockClaims(ItwRemotePresentationClaimsMock.optional)}
-        selectedItemIds={selectedOptionalClaims}
-        onItemSelected={toggleOptionalClaims}
-        defaultExpanded
-      />
-      <ClaimsSelector
-        title="Credenziale mancante"
-        items={mapMockClaims(ItwRemotePresentationClaimsMock.optional, true)}
-        selectionEnabled={false}
-        defaultExpanded
-      />
-      <Alert
-        variant="info"
-        content={I18n.t(
-          "features.itWallet.presentation.selectiveDisclosure.optionalClaimsAlert"
-        )}
-      />
-      <Alert
-        variant="warning"
-        content={I18n.t(
-          "features.itWallet.presentation.selectiveDisclosure.missingClaimsAlert"
-        )}
-      />
-    </VStack>
-  );
 
   return (
     <ForceScrollDownView
@@ -134,11 +77,11 @@ const ContentView = () => {
           type: "TwoButtons",
           primary: {
             label: I18n.t("global.buttons.continue"),
-            onPress: () => null // TODO
+            onPress: confirmVerifiablePresentation
           },
           secondary: {
             label: I18n.t("global.buttons.cancel"),
-            onPress: () => null // TODO
+            onPress: closePresentation
           }
         }
       }}
@@ -146,7 +89,9 @@ const ContentView = () => {
       <ContentWrapper>
         <VStack space={24}>
           <ItwDataExchangeIcons
-            requesterLogoUri={require("../../../../../../img/features/itWallet/issuer/IPZS.png")} // TODO: get the Relying Party logo
+            requesterLogoUri={
+              rpData?.logo_uri ? { uri: rpData.logo_uri } : undefined
+            }
           />
 
           <VStack space={8}>
@@ -158,28 +103,11 @@ const ContentView = () => {
             <IOMarkdown
               content={I18n.t(
                 "features.itWallet.presentation.selectiveDisclosure.subtitle",
-                { relyingParty: RP_MOCK_NAME }
+                { relyingParty: rpData?.organization_name }
               )}
             />
           </VStack>
-
-          <View>
-            <ListItemHeader
-              label={I18n.t(
-                "features.itWallet.presentation.selectiveDisclosure.requiredClaims"
-              )}
-              iconName="security"
-              iconColor={theme["icon-default"]}
-            />
-            <ClaimsSelector
-              title="Identità digitale"
-              selectionEnabled={false}
-              items={mapMockClaims(ItwRemotePresentationClaimsMock.required)}
-            />
-          </View>
-
-          {renderOptionalClaims()}
-
+          <ItwRemotePresentationDetails />
           <FeatureInfo
             iconName="fornitori"
             body={I18n.t(
@@ -195,7 +123,7 @@ const ContentView = () => {
           <IOMarkdown
             content={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.tos",
-              { privacyUrl: RP_MOCK_PRIVACY_URL }
+              { privacyUrl: rpData?.policy_uri }
             )}
           />
         </VStack>

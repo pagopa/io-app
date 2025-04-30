@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0-rc.5](https://github.com/pagopa/io-app/compare/3.4.0-rc.4...3.4.0-rc.5) (2025-04-29)
+
+
+### Features
+
+* [[IOPID-2968](https://pagopa.atlassian.net/browse/IOPID-2968)] offline wallet: session expired scenario  ([#6916](https://github.com/pagopa/io-app/issues/6916)) ([92c5e89](https://github.com/pagopa/io-app/commit/92c5e8905f7c819dc5fce5310d9ad56f9b91b906))
+
+
+### Chores
+
+* [[IOBP-1581](https://pagopa.atlassian.net/browse/IOBP-1581)] Add more metadata to track inside the CGN debug mode ([#6925](https://github.com/pagopa/io-app/issues/6925)) ([3fca667](https://github.com/pagopa/io-app/commit/3fca667b183185cd8419b37ae07e8ff9ef2bf144))
+* [[IOPID-2663](https://pagopa.atlassian.net/browse/IOPID-2663)]: Track help center links ([#6927](https://github.com/pagopa/io-app/issues/6927)) ([ed9412d](https://github.com/pagopa/io-app/commit/ed9412d3e869439d2d8ba03980eaee70f5585172))
+
 ## [3.4.0-rc.4](https://github.com/pagopa/io-app/compare/3.4.0-rc.3...3.4.0-rc.4) (2025-04-28)
 
 

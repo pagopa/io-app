@@ -36,7 +36,7 @@ import {
 } from "../../../common/store/selectors";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emailValidationSelector } from "../../../../mailCheck/store/selectors/emailValidation";
-import { emailAcknowledged } from "../../../../../store/actions/onboarding";
+import { emailAcknowledged } from "../../../../onboarding/store/actions";
 import { getFlowType } from "../../../../../utils/analytics";
 import {
   trackEmailValidation,
