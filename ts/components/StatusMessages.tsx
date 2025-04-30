@@ -10,6 +10,7 @@ export const StatusMessages = ({ children }: StatusMessagesProps) => {
   return (
     <AlertEdgeToEdgeWrapper alertProps={statusAlert?.alertProps}>
       {children}
+      {statusAlert?.bottomSheet}
     </AlertEdgeToEdgeWrapper>
   );
 };
