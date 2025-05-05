@@ -280,7 +280,8 @@ const WalletPaymentOutcomeScreen = () => {
         saved_payment_method:
           paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
-        data_entry: paymentAnalyticsData?.startOrigin
+        data_entry: paymentAnalyticsData?.startOrigin,
+        browser_type: paymentAnalyticsData?.browserType
       });
       return;
     }
@@ -294,6 +295,7 @@ const WalletPaymentOutcomeScreen = () => {
       attempt: paymentOngoingHistory?.attempt,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       psp_selected: paymentAnalyticsData?.selectedPsp,
+      browser_type: paymentAnalyticsData?.browserType,
       payment_phase:
         outcome === WalletPaymentOutcomeEnum.GENERIC_ERROR
           ? getPaymentPhaseFromStep(currentStep)

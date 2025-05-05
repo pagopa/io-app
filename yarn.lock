@@ -3863,9 +3863,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.4.1":
-  version: 5.4.1
-  resolution: "@pagopa/io-app-design-system@npm:5.4.1"
+"@pagopa/io-app-design-system@npm:5.5.0":
+  version: 5.5.0
+  resolution: "@pagopa/io-app-design-system@npm:5.5.0"
   dependencies:
     "@testing-library/jest-native": ^5.4.2
     "@types/react-test-renderer": ^18.0.0
@@ -3888,7 +3888,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 0bcc0bd4303729db12dd246ba11b184c03a601fd20be5f44b48a9860da6b5e95af967e2c49ca1c36d601622a6a8caedbd98fd17682c541bd2e7aaf070daab721
+  checksum: 5d2e35a40fcb16f6583b8f70072d17b958916a7dc694659a63ab34ba3ab2dac6a12ee0513a06fb226c1ef73ab9aa5a4fc65da3c433ea42aeca773c5ed0ad6fbf
   languageName: node
   linkType: hard
 
@@ -3945,16 +3945,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-jwt@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@pagopa/io-react-native-jwt@npm:1.4.0"
+"@pagopa/io-react-native-jwt@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@pagopa/io-react-native-jwt@npm:2.1.0"
   dependencies:
     js-base64: ^3.7.7
     zod: ^3.22.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: e7fb643515d01752722fd15731d12f8cac5e4c2f457af517451291532bbc7f07a62181bfea4932844e9c50ec1d7a395ac1ad7d7e2e638e6bbe748478a59e3a08
+  checksum: 33792ef51952e83470017f3d9b8f6f0a5bf439b1919eef08529786c9c0994ef8384e52a856392fa51c01a13dc5eb6c4cca60386b7d37286cad2e05b508bd9de4
   languageName: node
   linkType: hard
 
@@ -3978,9 +3978,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:^0.28.2":
-  version: 0.28.2
-  resolution: "@pagopa/io-react-native-wallet@npm:0.28.2"
+"@pagopa/io-react-native-wallet@npm:^0.29.0":
+  version: 0.29.0
+  resolution: "@pagopa/io-react-native-wallet@npm:0.29.0"
   dependencies:
     dcql: ^0.2.21
     js-base64: ^3.7.7
@@ -3996,7 +3996,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": "*"
     react: "*"
     react-native: "*"
-  checksum: 94effeb7778fe07c5a4ca1e83c6516dfc82b61a852bcd05ba28f3b90719783c47b54a3aa6bd34ef4f132a1626f0e7ca5694592833eea932c67de6655f6138d31
+  checksum: daebb39e3bb29d82a984abec5661ec03347209ee74638178849b1d5a4c0c0c7e947ed82cd0d002929c18a82a3511e4e0c2307f97997e36aada73e421d8e1873d
   languageName: node
   linkType: hard
 
@@ -13129,16 +13129,16 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.4.1
+    "@pagopa/io-app-design-system": 5.5.0
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.0.1
     "@pagopa/io-react-native-http-client": 1.0.5
     "@pagopa/io-react-native-integrity": ^0.3.1
-    "@pagopa/io-react-native-jwt": ^1.4.0
+    "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.0.9
     "@pagopa/io-react-native-secure-storage": ^0.2.0
-    "@pagopa/io-react-native-wallet": ^0.28.2
+    "@pagopa/io-react-native-wallet": ^0.29.0
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.0.0
     "@pagopa/react-native-cie": ^1.4.2
