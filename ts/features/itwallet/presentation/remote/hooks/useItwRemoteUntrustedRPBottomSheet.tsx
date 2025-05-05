@@ -1,38 +1,38 @@
 import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { useMemo } from "react";
+import { memo } from "react";
 import I18n from "../../../../../i18n.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 
 /**
  * Content component for the Not Trusted RP bottom sheet
  */
-export const ItwRemoteUntrustedRPBottomSheetContent = () =>
-  useMemo(
-    () => (
-      <View>
-        <Body>
-          {I18n.t(
-            "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.contentTop"
-          )}
-        </Body>
-        <VSpacer size={16} />
-        <View>
-          <ListItemHeader
-            label={I18n.t(
-              "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.subtitle"
-            )}
-          />
-          <Body>
-            {I18n.t(
-              "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.contentBottom"
-            )}
-          </Body>
-        </View>
-      </View>
-    ),
-    []
-  );
+export const ItwRemoteUntrustedRPBottomSheetContent = () => (
+  <View>
+    <Body>
+      {I18n.t(
+        "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.contentTop"
+      )}
+    </Body>
+    <VSpacer size={16} />
+    <View>
+      <ListItemHeader
+        label={I18n.t(
+          "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.subtitle"
+        )}
+      />
+      <Body>
+        {I18n.t(
+          "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.contentBottom"
+        )}
+      </Body>
+    </View>
+  </View>
+);
+
+const ItwRemoteUntrustedRPBottomSheetContentMemo = memo(
+  ItwRemoteUntrustedRPBottomSheetContent
+);
 
 /**
  * Hook to create the  Untrusted RP bottom sheet
@@ -43,7 +43,7 @@ export const useItwRemoteUntrustedRPBottomSheet = () =>
     title: I18n.t(
       "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.title"
     ),
-    component: <ItwRemoteUntrustedRPBottomSheetContent />,
+    component: <ItwRemoteUntrustedRPBottomSheetContentMemo />,
     snapPoint: [300]
     // TODO: [SIW-2266] Uncomment when the FAQ are ready
     /*     footer: (
