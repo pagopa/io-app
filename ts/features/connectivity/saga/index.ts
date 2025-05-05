@@ -1,10 +1,12 @@
 import * as E from "fp-ts/lib/Either";
-import { call, fork, put } from "typed-redux-saga/macro";
+import { call, fork, put, select } from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { configureNetInfo, fetchNetInfoState } from "../utils";
 import { startTimer } from "../../../utils/timer";
 import { setConnectionStatus } from "../store/actions";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
+import { GlobalState } from "../../../store/reducers/types";
 
 const CONNECTIVITY_STATUS_LOAD_INTERVAL = (60 * 1000) as Millisecond;
 const CONNECTIVITY_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
@@ -31,6 +33,10 @@ export function* connectionStatusSaga(): Generator<
 
           // App is connected update the store and wait for the next check
           yield* put(setConnectionStatus(isAppConnected));
+
+          // update mixpanel super properties
+          const state = (yield* select()) as GlobalState;
+          void updateMixpanelSuperProperties(state);
 
           if (isAppConnected) {
             yield* call(startTimer, CONNECTIVITY_STATUS_LOAD_INTERVAL);
