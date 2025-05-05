@@ -19,6 +19,9 @@ describe("ItwUpgradeBanner", () => {
       jest
         .spyOn(preferencesSelectors, "itwAuthLevelSelector")
         .mockReturnValue(authLevel as ItwAuthLevel);
+      jest
+        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .mockReturnValue(true);
 
       const { getByTestId } = renderComponent();
 
