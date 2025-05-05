@@ -50,6 +50,7 @@ const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
+  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
 
