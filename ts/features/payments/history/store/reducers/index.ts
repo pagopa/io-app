@@ -27,7 +27,8 @@ import { WalletPaymentFailure } from "../../../checkout/types/WalletPaymentFailu
 import { PaymentHistory } from "../../types";
 import {
   storeNewPaymentAttemptAction,
-  storePaymentOutcomeToHistory
+  storePaymentOutcomeToHistory,
+  storePaymentsBrowserTypeAction
 } from "../actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { getPaymentsWalletUserMethods } from "../../../wallet/store/actions";
@@ -47,6 +48,7 @@ import {
 } from "../../../receipts/store/actions";
 import * as receiptsAnalytics from "../../../receipts/analytics";
 import { createSetTransform } from "../../../../../store/transforms/setTransform";
+import * as analytics from "../../../checkout/analytics";
 
 export type PaymentsHistoryState = {
   analyticsData?: PaymentAnalyticsData;
@@ -249,6 +251,17 @@ const reducer = (
         PDFsOpened: new Set(state.PDFsOpened).add(action.payload.transactionId)
       };
     }
+    case getType(storePaymentsBrowserTypeAction):
+      analytics.trackPaymentBrowserLanding({
+        browser_type: action.payload
+      });
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          browserType: action.payload
+        }
+      };
     case getType(differentProfileLoggedIn):
     case getType(clearCache):
       return INITIAL_STATE;
