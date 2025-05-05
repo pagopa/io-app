@@ -78,7 +78,8 @@
       "onGoing": "Ongoing",
       "failed": "Failed",
       "cancelled": "Cancelled",
-      "reversal": "Reversal"
+      "reversal": "Reversal",
+      "new": "New"
     },
     "modules": {
       "paymentNotice": {
