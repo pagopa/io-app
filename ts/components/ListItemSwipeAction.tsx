@@ -37,8 +37,6 @@ const RightActions = ({
   accessibilityLabel,
   translateX
 }: RightActionsProps) => {
-  const { theme } = useIOThemeContext();
-
   const animatedIconStyle = useAnimatedStyle(() => {
     const clamped = Math.max(-translateX.value, 0);
     const progress = Math.min(clamped / 60, 1);
@@ -52,7 +50,7 @@ const RightActions = ({
   return (
     <View
       style={{
-        backgroundColor: IOColors[theme["interactiveElem-default"]],
+        backgroundColor: IOColors["error-600"],
         justifyContent: "center",
         alignItems: "flex-end",
         paddingRight: 18,
@@ -127,10 +125,7 @@ const ListItemSwipeAction = ({
     backgroundColor: interpolateColor(
       translateX.value,
       [-width * 0.9, -width * 0.2],
-      [
-        IOColors[theme["interactiveElem-default"]],
-        IOColors[theme["interactiveElem-default"]]
-      ]
+      [IOColors["error-600"], IOColors["error-600"]]
     )
   }));
 
