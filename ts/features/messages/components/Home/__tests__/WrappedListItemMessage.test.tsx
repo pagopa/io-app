@@ -12,7 +12,7 @@ import {
   scheduledPreconditionStatusAction,
   toScheduledPayload
 } from "../../../store/actions/preconditions";
-import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
+import { MessageCategory } from "../../../../../../definitions/communications/MessageCategory";
 
 jest.mock("rn-qr-generator", () => ({}));
 jest.mock("react-native-screenshot-prevent", () => ({}));
