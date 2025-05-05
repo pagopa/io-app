@@ -4,34 +4,23 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as preferencesSelectors from "../../store/selectors/preferences";
-import { ItwAuthLevel } from "../../utils/itwTypesUtils";
+import * as selectors from "../../store/selectors";
 import { ItwUpgradeBanner } from "../ItwUpgradeBanner";
 
 describe("ItwUpgradeBanner", () => {
-  it.each([
-    [undefined, false],
-    ["L2", true],
-    ["L3", false]
-  ] as ReadonlyArray<[ItwAuthLevel | undefined, boolean]>)(
-    "should render %s",
-    (authLevel, expected) => {
-      jest
-        .spyOn(preferencesSelectors, "itwAuthLevelSelector")
-        .mockReturnValue(authLevel as ItwAuthLevel);
-      jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
-        .mockReturnValue(true);
+  it.each([true, false])("should render %s", shouldRender => {
+    jest
+      .spyOn(selectors, "itwShouldRenderL3UpgradeBannerSelector")
+      .mockReturnValue(shouldRender);
 
-      const { getByTestId } = renderComponent();
+    const { getByTestId } = renderComponent();
 
-      if (expected) {
-        expect(getByTestId("itwUpgradeBannerTestID")).toBeDefined();
-      } else {
-        expect(() => getByTestId("itwUpgradeBannerTestID")).toThrow();
-      }
+    if (shouldRender) {
+      expect(getByTestId("itwUpgradeBannerTestID")).toBeDefined();
+    } else {
+      expect(() => getByTestId("itwUpgradeBannerTestID")).toThrow();
     }
-  );
+  });
 });
 
 const renderComponent = () => {

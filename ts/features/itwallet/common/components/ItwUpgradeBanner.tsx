@@ -2,19 +2,15 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import {
-  itwAuthLevelSelector,
-  itwIsL3EnabledSelector
-} from "../store/selectors/preferences";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { itwShouldRenderL3UpgradeBannerSelector } from "../store/selectors";
 import { ItwHighlightBanner } from "./ItwHighlightBanner";
 
 export const ItwUpgradeBanner = () => {
   const navigation = useIONavigation();
-  const authLevel = useIOSelector(itwAuthLevelSelector);
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const shouldRender = useIOSelector(itwShouldRenderL3UpgradeBannerSelector);
 
-  if (authLevel !== "L2" || !isL3Enabled) {
+  if (!shouldRender) {
     return null;
   }
 

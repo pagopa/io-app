@@ -1,5 +1,6 @@
 import { isItwOfflineAccessEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
   itwCredentialsEidStatusSelector,
   itwIsWalletEmptySelector
@@ -10,8 +11,10 @@ import {
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
+  itwAuthLevelSelector,
   itwIsDiscoveryBannerHiddenSelector,
-  itwIsFeedbackBannerHiddenSelector
+  itwIsFeedbackBannerHiddenSelector,
+  itwIsL3EnabledSelector
 } from "./preferences";
 import {
   isItwEnabledSelector,
@@ -77,3 +80,14 @@ export const itwOfflineAccessAvailableSelector = (state: GlobalState) =>
   isItwOfflineAccessEnabledSelector(state) &&
   itwLifecycleIsOperationalOrValid(state) &&
   state.features.itWallet.credentials.credentials.length > 0;
+
+/**
+ * Returns if the L3 upgrade banner should be rendered. The banner is rendered if:
+ * - The wallet is not offline
+ * - The L3 feature flag is enabled
+ * - The wallet is not already with L3 auth
+ */
+export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
+  !offlineAccessReasonSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
+  itwAuthLevelSelector(state) !== "L3";
