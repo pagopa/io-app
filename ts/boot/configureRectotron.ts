@@ -1,19 +1,24 @@
+import { NativeModules } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-// using require import instead of static import due to library issue
-// https://github.com/infinitered/reactotron/issues/1430#issuecomment-2180872830
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const ReactotronReactNative = require("reactotron-react-native").default;
-// import ReactotronReactNative from "reactotron-react-native";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { reactotronRedux } = require("reactotron-redux");
+import Reactotron from "reactotron-react-native";
+import { reactotronRedux } from "reactotron-redux";
 
 // add a regex to avoid tracing specific urls in Reactotron timeline
 const ignoredUrls: RegExp | undefined = /symbolicate/;
 
+// Automatically gets the machine's IP address to configure Reactotron
+const getScriptHostname = () => {
+  if (__DEV__) {
+    const scriptURL = NativeModules.SourceCode.scriptURL;
+    return scriptURL.split("://")[1].split(":")[0];
+  }
+  return undefined;
+};
+
 export const configureReactotron = () => {
-  const rtt = ReactotronReactNative.configure({
-    host: "127.0.0.1"
+  const rtt = Reactotron.configure({
+    name: "IO App",
+    host: getScriptHostname()
   })
     .useReactNative({
       networking: {
