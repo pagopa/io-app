@@ -8,9 +8,12 @@ import { walletPaymentWebViewPayloadSelector } from "../store/selectors";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import I18n from "../../../../i18n";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import * as analytics from "../analytics";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 const WalletPaymentWebViewScreen = () => {
   const payload = useIOSelector(walletPaymentWebViewPayloadSelector);
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
 
   const navigation = useIONavigation();
 
@@ -24,15 +27,37 @@ const WalletPaymentWebViewScreen = () => {
     };
   }, [navigation]);
 
+  const dataToTrack = {
+    attempt: paymentAnalyticsData?.attempt,
+    organization_name: paymentAnalyticsData?.verifiedData?.paName,
+    organization_fiscal_code: paymentAnalyticsData?.verifiedData?.paFiscalCode,
+    amount: paymentAnalyticsData?.formattedAmount,
+    saved_payment_method:
+      paymentAnalyticsData?.savedPaymentMethods?.length ?? 0,
+    expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+    payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+    selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
+    data_entry: paymentAnalyticsData?.startOrigin,
+    browser_type: paymentAnalyticsData?.browserType
+  };
+
   const handleConfirmClose = () => {
+    analytics.trackPaymentUserCancellationContinue({
+      ...dataToTrack
+    });
     payload?.onCancel?.(WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER);
   };
 
   const handleCloseAlert = () => {
-    // TODO: Add the mixpanel tracking event (https://pagopa.atlassian.net/browse/IOBP-1580)
+    analytics.trackPaymentUserCancellationBack({
+      ...dataToTrack
+    });
   };
 
-  const promptUserToClose = () =>
+  const promptUserToClose = () => {
+    analytics.trackPaymentUserCancellationRequest({
+      ...dataToTrack
+    });
     Alert.alert(I18n.t("wallet.payment.abortDialog.title"), undefined, [
       {
         text: I18n.t("wallet.payment.abortDialog.confirm"),
@@ -45,6 +70,7 @@ const WalletPaymentWebViewScreen = () => {
         onPress: handleCloseAlert
       }
     ]);
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({

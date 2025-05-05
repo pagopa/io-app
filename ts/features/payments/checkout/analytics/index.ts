@@ -1,6 +1,7 @@
 import { getPeople, mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import {
+  PaymentAnalyticsBrowserType,
   PaymentAnalyticsEditingType,
   PaymentAnalyticsPhase,
   PaymentAnalyticsPreselectedPspFlag,
@@ -29,6 +30,7 @@ export type PaymentAnalyticsProps = {
   selected_psp_flag: PaymentAnalyticsSelectedPspFlag;
   psp_selected: string;
   editing: PaymentAnalyticsEditingType;
+  browser_type: PaymentAnalyticsBrowserType;
 };
 
 // eslint-disable-next-line complexity
@@ -441,5 +443,49 @@ export const trackPaymentsPspNotAvailableSelectNew = (
   void mixpanelTrack(
     "PAYMENT_PSP_NOT_AVAILABLE_SELECT_NEW",
     buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackPaymentBrowserLanding = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_BROWSER_LANDING",
+    buildEventProperties("TECH", undefined, {
+      ...props
+    })
+  );
+};
+
+export const trackPaymentUserCancellationRequest = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_USER_CANCELLATION_REQUEST",
+    buildEventProperties("UX", "screen_view", {
+      ...props
+    })
+  );
+};
+
+export const trackPaymentUserCancellationBack = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_USER_CANCELLATION_BACK",
+    buildEventProperties("UX", "action", {
+      ...props
+    })
+  );
+};
+
+export const trackPaymentUserCancellationContinue = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_USER_CANCELLATION_CONTINUE",
+    buildEventProperties("UX", "action", {
+      ...props
+    })
   );
 };
