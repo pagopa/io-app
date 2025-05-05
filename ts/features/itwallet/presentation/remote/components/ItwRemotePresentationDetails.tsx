@@ -13,7 +13,8 @@ import I18n from "../../../../../i18n";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
 import {
   ClaimDisplayFormat,
-  getClaimDisplayValue
+  getClaimDisplayValue,
+  getSafeText
 } from "../../../common/utils/itwClaimsUtils";
 import { selectPresentationDetails } from "../machine/selectors";
 import { ItwRemoteMachineContext } from "../machine/provider";
@@ -26,8 +27,8 @@ const mapClaims = (claims: Array<ClaimDisplayFormat>) =>
     return {
       id: c.id,
       title: Array.isArray(displayValue)
-        ? displayValue.join(", ")
-        : displayValue,
+        ? displayValue.map(getSafeText).join(", ")
+        : getSafeText(displayValue),
       description: c.label
     };
   });
