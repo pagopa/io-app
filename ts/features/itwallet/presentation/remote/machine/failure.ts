@@ -1,4 +1,8 @@
+import { Credential } from "@pagopa/io-react-native-wallet";
+import { isDefined } from "../../../../../utils/guards.ts";
 import { RemoteEvents } from "./events.ts";
+
+const { CredentialsNotFoundError } = Credential.Presentation.Errors;
 
 export enum RemoteFailureType {
   WALLET_INACTIVE = "WALLET_INACTIVE",
@@ -35,17 +39,29 @@ export type RemoteFailure = TypedRemoteFailures[keyof TypedRemoteFailures];
  * @returns A failure object which can be used to handle errors appropriately.
  */
 export const mapEventToFailure = (event: RemoteEvents): RemoteFailure => {
-  if ("error" in event) {
-    const { error } = event;
-
+  if (!("error" in event)) {
     return {
       type: RemoteFailureType.UNEXPECTED,
-      reason: String(error)
+      reason: event
+    };
+  }
+
+  const { error } = event;
+
+  if (error instanceof CredentialsNotFoundError) {
+    return {
+      type: RemoteFailureType.MISSING_CREDENTIALS,
+      // Missing credentials are identified by their VCT
+      reason: {
+        missingCredentials: error.details
+          .flatMap(c => c.vctValues)
+          .filter(isDefined)
+      }
     };
   }
 
   return {
     type: RemoteFailureType.UNEXPECTED,
-    reason: event
+    reason: String(error)
   };
 };
