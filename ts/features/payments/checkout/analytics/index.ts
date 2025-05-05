@@ -141,9 +141,7 @@ export const trackPaymentSummaryInfoScreen = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_SUMMARY_INFO_SCREEN",
-    buildEventProperties("UX", "screen_view", {
-      ...props
-    })
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
@@ -152,9 +150,7 @@ export const trackPaymentSummaryNoticeCopy = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_VERIFICA_COPY_INFO",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -163,9 +159,7 @@ export const trackPaymentSummaryAmountInfo = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_AMOUNT_INFO",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -174,9 +168,7 @@ export const trackPaymentMethodSelection = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_METHOD_SELECTION",
-    buildEventProperties("UX", "screen_view", {
-      ...props
-    })
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
@@ -185,9 +177,7 @@ export const trackPaymentMethodSelected = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_METHOD_SELECTED",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -205,9 +195,7 @@ export const trackPaymentMethodSelectionBackExit = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_METHOD_SELECTION_BACK_EXIT",
-    buildEventProperties("UX", "exit", {
-      ...props
-    })
+    buildEventProperties("UX", "exit", props)
   );
 };
 
@@ -216,9 +204,7 @@ export const trackPaymentMethodSelectionBackContinue = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_METHOD_SELECTION_BACK_CONTINUE",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -227,9 +213,7 @@ export const trackPaymentMethodVerificaFatalError = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_VERIFICA_FATAL_ERROR",
-    buildEventProperties("KO", undefined, {
-      ...props
-    })
+    buildEventProperties("KO", undefined, props)
   );
 };
 
@@ -238,9 +222,7 @@ export const trackPaymentFeeSelection = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_FEE_SELECTION",
-    buildEventProperties("UX", "screen_view", {
-      ...props
-    })
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
@@ -249,9 +231,7 @@ export const trackPaymentFeeSelected = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_FEE_SELECTED",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -260,9 +240,7 @@ export const trackPaymentSummaryScreen = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_SUMMARY",
-    buildEventProperties("UX", "screen_view", {
-      ...props
-    })
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
@@ -271,9 +249,7 @@ export const trackPaymentSummaryEditing = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_SUMMARY_EDITING",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -282,9 +258,7 @@ export const trackPaymentConversion = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_UX_CONVERSION",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -294,9 +268,7 @@ export const trackPaymentOutcomeSuccess = (
   getPeople()?.increment("PAYMENT_COMPLETED", 1);
   void mixpanelTrack(
     "PAYMENT_UX_SUCCESS",
-    buildEventProperties("UX", "screen_view", {
-      ...props
-    })
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
@@ -306,9 +278,7 @@ export const trackPaymentOutcomeFailure = (
 ) => {
   void mixpanelTrack(
     getPaymentAnalyticsEventFromFailureOutcome(outcome),
-    buildEventProperties("KO", undefined, {
-      ...props
-    })
+    buildEventProperties("KO", undefined, props)
   );
 };
 
@@ -318,9 +288,7 @@ export const trackPaymentRequestFailure = (
 ) => {
   void mixpanelTrack(
     getPaymentAnalyticsEventFromRequestFailure(failure),
-    buildEventProperties("KO", undefined, {
-      ...props
-    })
+    buildEventProperties("KO", undefined, props)
   );
 };
 
@@ -329,9 +297,7 @@ export const trackPaymentErrorHelp = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_ERROR_HELP",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -340,9 +306,7 @@ export const trackPaymentNoSavedMethodContinue = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_NO_SAVED_METHOD_CONTINUE",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -375,9 +339,7 @@ export const trackPaymentExpiredMethodContinue = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_METHOD_EXPIRED_CONTINUE",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -386,9 +348,7 @@ export const trackPaymentNoSavedMethodExit = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_NO_SAVED_METHOD_EXIT",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -397,9 +357,7 @@ export const trackPaymentExpiredMethodExit = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_METHOD_EXPIRED_DIFFERENT_METHOD",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -422,9 +380,7 @@ export const trackPaymentStartFlow = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_START_FLOW",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -451,9 +407,7 @@ export const trackPaymentBrowserLanding = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_BROWSER_LANDING",
-    buildEventProperties("TECH", undefined, {
-      ...props
-    })
+    buildEventProperties("TECH", undefined, props)
   );
 };
 
@@ -462,9 +416,7 @@ export const trackPaymentUserCancellationRequest = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_USER_CANCELLATION_REQUEST",
-    buildEventProperties("UX", "screen_view", {
-      ...props
-    })
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
@@ -473,9 +425,7 @@ export const trackPaymentUserCancellationBack = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_USER_CANCELLATION_BACK",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -484,8 +434,6 @@ export const trackPaymentUserCancellationContinue = (
 ) => {
   void mixpanelTrack(
     "PAYMENT_USER_CANCELLATION_CONTINUE",
-    buildEventProperties("UX", "action", {
-      ...props
-    })
+    buildEventProperties("UX", "action", props)
   );
 };

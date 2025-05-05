@@ -42,22 +42,16 @@ const WalletPaymentWebViewScreen = () => {
   };
 
   const handleConfirmClose = () => {
-    analytics.trackPaymentUserCancellationContinue({
-      ...dataToTrack
-    });
+    analytics.trackPaymentUserCancellationContinue(dataToTrack);
     payload?.onCancel?.(WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER);
   };
 
   const handleCloseAlert = () => {
-    analytics.trackPaymentUserCancellationBack({
-      ...dataToTrack
-    });
+    analytics.trackPaymentUserCancellationBack(dataToTrack);
   };
 
   const promptUserToClose = () => {
-    analytics.trackPaymentUserCancellationRequest({
-      ...dataToTrack
-    });
+    analytics.trackPaymentUserCancellationRequest(dataToTrack);
     Alert.alert(I18n.t("wallet.payment.abortDialog.title"), undefined, [
       {
         text: I18n.t("wallet.payment.abortDialog.confirm"),
