@@ -2,14 +2,24 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import I18n from "../../../../../i18n";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen";
 import { ItwRemoteMachineContext } from "../machine/provider";
-import { selectIsLoading, selectRelyingPartyData } from "../machine/selectors";
+import {
+  selectIsLoading,
+  selectIsSuccess,
+  selectRelyingPartyData
+} from "../machine/selectors";
 
 export const ItwRemoteAuthResponseScreen = () => {
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const isLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
+  const isSuccess = ItwRemoteMachineContext.useSelector(selectIsSuccess);
   const rpData = ItwRemoteMachineContext.useSelector(selectRelyingPartyData);
 
-  if (isLoading) {
+  /**
+   * In addition to checking for the loading state,
+   * we need to ensure that the current state is not `Success`
+   * to prevent a visual glitch caused by a slight delay in navigation
+   */
+  if (isLoading || !isSuccess) {
     return (
       <ItwRemoteLoadingScreen
         title={I18n.t(
