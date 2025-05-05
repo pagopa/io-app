@@ -8,6 +8,12 @@ type MachineSnapshot = StateFrom<ItwRemoteMachine>;
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwPresentationTags.Loading);
 
+export const selectIsSuccess = (snapshot: MachineSnapshot) =>
+  snapshot.matches("Success");
+
+export const selectIsClaimsDisclosure = (snapshot: MachineSnapshot) =>
+  snapshot.matches("ClaimsDisclosure");
+
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
 
