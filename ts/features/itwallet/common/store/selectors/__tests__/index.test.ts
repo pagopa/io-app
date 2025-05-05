@@ -25,7 +25,7 @@ const curriedAppReducer =
   (action: Action) => (state: GlobalState | undefined) =>
     appReducer(state, action);
 
-describe("itwDiscoveryBannerSelector", () => {
+describe("isItwDiscoveryBannerRenderableSelector", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
@@ -46,6 +46,9 @@ describe("itwDiscoveryBannerSelector", () => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(lifecycleValid);
+      jest
+        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .mockReturnValue(false);
 
       expect(
         isItwDiscoveryBannerRenderableSelector({} as unknown as GlobalState)
@@ -157,15 +160,18 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
   });
 
   it.each`
-    offlineAccessReason                       | isL3Enabled | authLevel    | expected
-    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${"L2"}      | ${false}
-    ${undefined}                              | ${false}    | ${"L2"}      | ${false}
-    ${undefined}                              | ${true}     | ${"L3"}      | ${false}
-    ${undefined}                              | ${true}     | ${"L2"}      | ${true}
-    ${undefined}                              | ${true}     | ${undefined} | ${true}
+    itwEnabled | offlineAccessReason                       | isL3Enabled | authLevel    | expected
+    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${"L2"}      | ${false}
+    ${true}    | ${undefined}                              | ${false}    | ${"L2"}      | ${false}
+    ${true}    | ${undefined}                              | ${true}     | ${"L3"}      | ${false}
+    ${true}    | ${undefined}                              | ${true}     | ${"L2"}      | ${true}
+    ${true}    | ${undefined}                              | ${true}     | ${undefined} | ${true}
   `(
     "should return $expected when offlineAccessReason is $offlineAccessReason, isL3Enabled is $isL3Enabled, authLevel is $authLevel",
     ({ offlineAccessReason, isL3Enabled, authLevel, expected }) => {
+      jest
+        .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
+        .mockReturnValue(true);
       jest
         .spyOn(ingressSelectors, "offlineAccessReasonSelector")
         .mockReturnValue(offlineAccessReason);

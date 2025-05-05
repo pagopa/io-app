@@ -25,11 +25,14 @@ import {
  * Returns if the discovery banner should be rendered. The banner is rendered if:
  * - The Wallet is not already activated and valid
  * - The IT Wallet feature flag is enabled
+ * - The L3 feature flag is disabled
  * @param state the application global state
  * @returns true if the banner should be rendered, false otherwise
  */
 export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
-  !itwLifecycleIsValidSelector(state) && isItwEnabledSelector(state);
+  !itwLifecycleIsValidSelector(state) &&
+  isItwEnabledSelector(state) &&
+  !itwIsL3EnabledSelector(state);
 
 /**
  * Returns the renderable state of the discovery banner with the persisted user's preference:
@@ -83,11 +86,13 @@ export const itwOfflineAccessAvailableSelector = (state: GlobalState) =>
 
 /**
  * Returns if the L3 upgrade banner should be rendered. The banner is rendered if:
+ * - The IT Wallet feature flag is enabled
  * - The wallet is not offline
  * - The L3 feature flag is enabled
  * - The wallet is not already with L3 auth
  */
 export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
+  isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   itwAuthLevelSelector(state) !== "L3";
