@@ -107,6 +107,7 @@ describe("superProperties", () => {
             appReadableVersion: "1.0.0.0",
             biometricTechnology: "FACE_ID",
             colorScheme: mockColorScheme,
+            CONNECTION_STATUS: "online",
             fontScale: 2.0,
             isScreenLockSet: true,
             isScreenReaderEnabled: true,
@@ -173,6 +174,9 @@ const generateMockedGlobalState = (
         placeholders: {
           items: {}
         }
+      },
+      connectivityStatus: {
+        isConnected: true
       }
     },
     persistedPreferences: {
