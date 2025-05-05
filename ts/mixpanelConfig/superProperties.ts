@@ -33,6 +33,7 @@ import {
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
+import { isConnectedSelector } from "../features/connectivity/store/selectors/index.ts";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -43,6 +44,8 @@ import {
   serviceConfigHandler,
   welfareStatusHandler
 } from "./mixpanelPropertyUtils";
+
+type ConnectivityStatus = "online" | "offline";
 
 type SuperProperties = {
   isScreenReaderEnabled: boolean;
@@ -63,6 +66,7 @@ type SuperProperties = {
   SAVED_PAYMENT_METHOD?: number;
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
+  CONNECTION_STATUS: ConnectivityStatus;
 };
 
 export const updateMixpanelSuperProperties = async (
@@ -88,6 +92,7 @@ export const updateMixpanelSuperProperties = async (
   const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
   const CGN_STATUS = cgnStatusHandler(state);
   const WELFARE_STATUS = welfareStatusHandler(state);
+  const CONNECTION_STATUS = offlineStatusHandler(state);
 
   const superPropertiesObject: SuperProperties = {
     isScreenReaderEnabled: screenReaderEnabled,
@@ -108,7 +113,8 @@ export const updateMixpanelSuperProperties = async (
     ITW_CED_V2,
     SAVED_PAYMENT_METHOD,
     CGN_STATUS,
-    WELFARE_STATUS
+    WELFARE_STATUS,
+    CONNECTION_STATUS
   };
 
   if (forceUpdateFor) {
@@ -148,4 +154,8 @@ const tsStatusHandler = (state: GlobalState): ItwTs => {
 const cedStatusHandler = (state: GlobalState): ItwCed => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
   return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
+};
+const offlineStatusHandler = (state: GlobalState): ConnectivityStatus => {
+  const isConnected = isConnectedSelector(state);
+  return isConnected ? "online" : "offline";
 };
