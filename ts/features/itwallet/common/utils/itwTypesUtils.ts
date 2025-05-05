@@ -105,3 +105,9 @@ export type ItwCredentialStatus =
   | ItwJwtCredentialStatus;
 
 export type ItwAuthLevel = "L2" | "L3";
+
+export type WhitelistedFiscalCodeData = {
+  whitelisted: boolean;
+  whitelistedAt?: string | undefined;
+  fiscalCode: string;
+};

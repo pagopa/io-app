@@ -5,7 +5,6 @@ import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwOfflineSection } from "../components/ItwOfflineSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
 import { ItwRemotePresentationSection } from "../components/ItwRemotePresentationSection";
-import { ItwL3Section } from "../components/ItwL3Section";
 
 /**
  * ITW Playground screen
@@ -21,7 +20,6 @@ const ItwPlayground = () => {
       <ContentWrapper>
         <VStack space={8}>
           <ItwOfflineSection />
-          <ItwL3Section />
           <ItwLifecycleSection />
           <ItwRemotePresentationSection />
           <ItwSkeumorphicCredentialSection />
