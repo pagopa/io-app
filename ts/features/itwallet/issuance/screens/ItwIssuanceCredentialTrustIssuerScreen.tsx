@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import {
   ContentWrapper,
   FeatureInfo,
@@ -6,7 +7,7 @@ import {
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useRoute } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -48,8 +49,27 @@ import {
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 
-const ItwIssuanceCredentialTrustIssuerScreen = () => {
+export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
+  credentialType?: string;
+  asyncContinuation?: boolean;
+};
+
+type ScreenProps =
+  // Props received when used inside a <Stack.Screen>
+  | IOStackNavigationRouteProps<
+      ItwParamsList,
+      "ITW_ISSUANCE_CREDENTIAL_TRUST_ISSUER"
+    >
+  // Props for standalone usage, outside a <Stack.Screen>
+  | ItwIssuanceCredentialTrustIssuerNavigationParams;
+
+const ItwIssuanceCredentialTrustIssuerScreen = (props: ScreenProps) => {
+  const { credentialType, asyncContinuation } =
+    ("route" in props ? props.route.params : props) ?? {};
+
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -60,10 +80,26 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
+
+  // Send the requested credential type to the machine when the issuance flow
+  // directly starts from this screen and not from the credentials catalog.
+  useFocusEffect(
+    useCallback(() => {
+      if (credentialType) {
+        machineRef.send({
+          type: "select-credential",
+          skipNavigation: true,
+          credentialType,
+          asyncContinuation
+        });
+      }
+    }, [credentialType, asyncContinuation, machineRef])
+  );
 
   if (isLoading) {
     return (
@@ -79,7 +115,7 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
     }),
     O.fold(
       () => <ItwGenericErrorContent />,
-      props => <ContentView {...props} />
+      innerProps => <ContentView {...innerProps} />
     )
   );
 };
