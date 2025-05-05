@@ -14,6 +14,7 @@ import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchange
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import {
+  selectIsClaimsDisclosure,
   selectIsLoading,
   selectRelyingPartyData
 } from "../machine/selectors.ts";
@@ -28,8 +29,16 @@ const ItwRemoteClaimsDisclosureScreen = () => {
   useAvoidHardwareBackButton();
 
   const isLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
+  const isClaimsDisclosure = ItwRemoteMachineContext.useSelector(
+    selectIsClaimsDisclosure
+  );
 
-  if (isLoading) {
+  /**
+   * In addition to checking for the loading state,
+   * we need to ensure that the current state is not `ClaimsDisclosure`
+   * to prevent a visual glitch caused by a slight delay in navigation
+   */
+  if (isLoading || !isClaimsDisclosure) {
     return (
       <ItwRemoteLoadingScreen
         title={I18n.t(
