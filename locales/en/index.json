@@ -4794,7 +4794,7 @@
           "modal": {
             "title": "Nessuna connessione",
             "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
-            "footerAction": "What can I do?"
+            "footerAction": "Ricarica l'app IO"
           }
         },
         "SESSION_EXPIRED": {
@@ -4816,7 +4816,7 @@
           "modal": {
             "title": "Servizi dell’app limitati",
             "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
-            "footerAction": "What can I do?"
+            "footerAction": "Ricarica l'app IO"
           }
         },
         "action": "Ricarica l'app IO",
