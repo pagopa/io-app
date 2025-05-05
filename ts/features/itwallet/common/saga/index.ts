@@ -10,9 +10,7 @@ import {
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
-import {
-  checkIsFiscalCodeEnabledSaga
-} from "../../trialSystem/saga/checkIfFiscalCodeIsEnabledSaga.ts";
+import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
 
 export function* watchItwSaga(): SagaIterator {
   yield* fork(warmUpIntegrityServiceSaga);
@@ -27,8 +25,8 @@ export function* watchItwSaga(): SagaIterator {
     return;
   }
 
-    // Check if the fiscal code is enabled, to enable the L3
-    yield* call(checkIsFiscalCodeEnabledSaga);
+  // Check if the fiscal code is enabled, to enable the L3
+  yield* call(checkFiscalCodeEnabledSaga);
 
   // Status attestations of credentials are checked only in case of a valid wallet instance.
   // For this reason, these sagas must be called sequentially.
