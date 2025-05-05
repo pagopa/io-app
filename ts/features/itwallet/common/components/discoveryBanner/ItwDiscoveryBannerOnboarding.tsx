@@ -56,6 +56,8 @@ const ItwDiscoveryBannerOnboarding = () => {
     onboarding: {
       content: I18n.t("features.itWallet.discovery.banner.home.content")
     },
+    // TODO: Once offline access is fully integrated, the "homeWithOffline" copy can be
+    // merged into "home" and onboardingWithOffline config can be removed. [SIW-2330]
     onboardingWithOffline: {
       content: I18n.t(
         "features.itWallet.discovery.banner.homeWithOffline.content"

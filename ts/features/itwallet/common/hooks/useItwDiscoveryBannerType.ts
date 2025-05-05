@@ -4,6 +4,7 @@ import { itwIsWalletInstanceRemotelyActiveSelector } from "../store/selectors/pr
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { isItwOfflineAccessEnabledSelector } from "../../../../store/reducers/persistedPreferences.ts";
 
+// TODO: Remove onboardingWithOffline when the feature is fully released [SIW-2330]
 type DiscoveryBannerType =
   | "onboarding"
   | "onboardingWithOffline"
@@ -28,6 +29,7 @@ export const useItwDiscoveryBannerType = ():
     isItwOfflineAccessEnabledSelector
   );
 
+  // TODO: Remove onboardingWithOffline when the feature is fully released [SIW-2330]
   return pipe(
     O.fromNullable(isWalletInstanceRemotelyActive),
     O.fold(

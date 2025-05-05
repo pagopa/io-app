@@ -72,7 +72,8 @@ export const ItwDiscoveryBanner = ({
       title: I18n.t("features.itWallet.discovery.banner.home.title"),
       action: I18n.t("features.itWallet.discovery.banner.home.action")
     },
-    // TODO: Once offline access is fully integrated, the "homeWithOffline" copy can be merged into "home" and this dynamic logic can be removed.
+    // TODO: Once offline access is fully integrated, the "homeWithOffline" copy can be
+    // merged into "home" and onboardingWithOffline config can be removed. [SIW-2330]
     onboardingWithOffline: {
       content: I18n.t(
         "features.itWallet.discovery.banner.homeWithOffline.content"
