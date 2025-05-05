@@ -4,7 +4,7 @@ import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getCurrentWalletInstanceStatus } from "../../common/utils/itwAttestationUtils.ts";
 import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
-import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
+import { itwLifecycleIsValidSelector } from "../store/selectors";
 
 export function* getCurrentStatusWalletInstance() {
   const sessionToken = yield* select(sessionTokenSelector);
@@ -26,14 +26,13 @@ export function* checkCurrentWalletInstanceStateSaga(): Generator<
   const remoteWalletInstanceStatus = yield* call(
     getCurrentStatusWalletInstance
   );
-  const isItwOperationalOrValid = yield* select(
-    itwLifecycleIsOperationalOrValid
-  );
+
+  const isItwValidLocally = yield* select(itwLifecycleIsValidSelector);
 
   const itwCanBeReactivated = Boolean(
     remoteWalletInstanceStatus &&
       !remoteWalletInstanceStatus.is_revoked &&
-      !isItwOperationalOrValid
+      !isItwValidLocally
   );
 
   yield* put(itwSetWalletInstanceRemotelyActive(itwCanBeReactivated));
