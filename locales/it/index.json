@@ -78,7 +78,8 @@
       "onGoing": "In corso",
       "failed": "Fallito",
       "cancelled": "Annullata",
-      "reversal": "Storno"
+      "reversal": "Storno",
+      "new": "Novità"
     },
     "modules": {
       "paymentNotice": {
@@ -4680,10 +4681,16 @@
             }
           },
           "missingCredentialsScreen": {
-            "title": "Mancano i dati contenuti in {{credentialName}}",
-            "subtitle": "Aggiungi il documento al Portafoglio prima di continuare e poi riprova.",
-            "primaryAction": "Aggiungi documento al Portafoglio",
-            "secondaryAction": "Annulla"
+            "title": {
+              "one": "Manca un documento per continuare",
+              "other": "Mancano alcuni documenti per continuare"
+            },
+            "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
+            "primaryAction": {
+              "one": "Aggiungi documento al Portafoglio",
+              "other": "Aggiungi documenti al Portafoglio"
+            },
+            "secondaryAction": "Non ora"
           },
           "deepLinkValidationErrorScreen": {
             "title": "Il link sembra non funzionare",
