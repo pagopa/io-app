@@ -118,15 +118,19 @@ Created on **28/02/2022**
   versions, thus this patch should be replicated for every new update. See https://github.com/pagopa/io-app/pull/3791
   for reference.
 
-### @gorhom+bottom-sheet+4.1.5
+### @gorhom+bottom-sheet+5.1.2
 
 Created on **24/03/2022**
+Updated on **23/04/2025**
 
 #### Reason:
 
-- This patch is going to add the customization of accessibility props on bottom sheet children components.
-  A [PR has been opened](https://github.com/gorhom/react-native-bottom-sheet/pull/889) on the package repo in order to
-  fix the issue on the dependency too.
+- The initial patch added customisazion of accessibility props on bottom sheet children components (v4). 
+  A [PR had been opened](https://github.com/gorhom/react-native-bottom-sheet/pull/889) on the package repo in order 
+  to fix the issue on the dependency too.
+- On v5, such customisations were not needed anymore (since the library had been updated by the author to handle 
+  accessibility). Nonetheless, a new patch has been applied in order to set accessibility-order starting from
+  the bottom-sheet content instead of the bottom-sheet background layer (chosen by the author as a default).
 
 ### react-native-flag-secure-android+1.0.3
 
