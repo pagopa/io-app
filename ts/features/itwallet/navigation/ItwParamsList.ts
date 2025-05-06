@@ -1,6 +1,7 @@
 import { ItwIdentificationModeSelectionScreenNavigationParams } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
+import { ItwIssuanceCredentialTrustIssuerNavigationParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
@@ -35,7 +36,9 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.EID_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_RESULT]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_FAILURE]: undefined;
-  [ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER]: undefined;
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER]:
+    | ItwIssuanceCredentialTrustIssuerNavigationParams
+    | undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE]: undefined;
   [ITW_ROUTES.ISSUANCE
