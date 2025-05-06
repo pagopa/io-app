@@ -26,6 +26,7 @@ export type PaymentAnalyticsData = {
   receiptOrganizationName?: string;
   receiptOrganizationFiscalCode?: string;
   receiptPayerFiscalCode?: string;
+  browserType?: PaymentAnalyticsBrowserType;
 };
 
 export type PaymentsAnalyticsReceiptUser = "payee" | "payer";
@@ -54,3 +55,5 @@ export type PaymentAnalyticsSelectedPspFlag =
 export type PaymentAnalyticsEditingType = "payment_method" | "psp";
 
 export type PaymentAnalyticsPhase = "verifica" | "attiva" | "pagamento";
+
+export type PaymentAnalyticsBrowserType = "webview" | "inapp_browser";
