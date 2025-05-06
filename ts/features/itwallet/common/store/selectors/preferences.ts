@@ -82,3 +82,10 @@ export const itwIsWalletInstanceRemotelyActiveSelector = (state: GlobalState) =>
  */
 export const itwIsL3EnabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isL3Enabled ?? false;
+
+/**
+ * Returns whether the fiscal code is whitelisted for L3 features.
+ * @param state the application global state
+ */
+export const itwIsFiscalCodeWhitelistedSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isFiscalCodeWhitelisted;

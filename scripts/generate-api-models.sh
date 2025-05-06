@@ -5,6 +5,8 @@ IO_BACKEND_VERSION=v16.12.1
 IO_SERVICES_METADATA_VERSION=1.0.68
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.4.0
+# IO Wallet Backend version
+IO_WALLET_BACKEND_VERSION=v16.14.0
 
 declare -a apis=(
   # Backend APIs
@@ -41,6 +43,8 @@ declare -a apis=(
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
   # FCI APIs
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
+  # ITW APIs
+  "./definitions/itw https://raw.githubusercontent.com/pagopa/io-backend/$IO_WALLET_BACKEND_VERSION/api_io_wallet.yaml"
 )
 
 for elem in "${apis[@]}"; do

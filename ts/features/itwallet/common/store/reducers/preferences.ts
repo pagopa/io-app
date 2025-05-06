@@ -7,6 +7,7 @@ import {
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
+  itwSetFiscalCodeWhitelisted,
   itwSetL3Enabled,
   itwSetReviewPending,
   itwSetWalletInstanceRemotelyActive,
@@ -37,6 +38,8 @@ export type ItwPreferencesState = {
   // Indicates whether the L3 is enabled, which allows to use the new IT Wallet
   // features for users with L3 authentication level
   isL3Enabled?: boolean;
+  // Indicates whether the fiscal code is whitelisted for L3 features
+  isFiscalCodeWhitelisted?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -129,6 +132,13 @@ const reducer = (
         claimValuesHidden,
         isL3Enabled
       };
+
+    case getType(itwSetFiscalCodeWhitelisted): {
+      return {
+        ...state,
+        isFiscalCodeWhitelisted: action.payload
+      };
+    }
 
     default:
       return state;

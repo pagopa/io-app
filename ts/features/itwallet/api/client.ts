@@ -2,6 +2,7 @@ import { URL as PolyfillURL } from "react-native-url-polyfill";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import { itwWalletProviderBaseUrl } from "../../../config";
 import { SessionToken } from "../../../types/SessionToken";
+import { createClient } from "../../../../definitions/itw/client";
 
 export class ItwSessionExpiredError extends Error {}
 
@@ -76,3 +77,20 @@ const throwSessionExpiredOrContinue = (response: Response) => {
   }
   return response;
 };
+
+/**
+ * Creates an instance of the IT Wallet client.
+ * @param baseUrl - The base URL for the IT Wallet API.
+ * @param sessionToken - The session token used for authorization in API calls.
+ * @returns An instance of the IT Wallet client configured with the provided base URL and fetch function.
+ */
+export const createItWalletClient = (
+  baseUrl: string,
+  sessionToken: SessionToken
+) =>
+  createClient({
+    baseUrl,
+    fetchApi: createItWalletFetch(baseUrl, sessionToken)
+  });
+
+export type ItWalletClient = ReturnType<typeof createItWalletClient>;

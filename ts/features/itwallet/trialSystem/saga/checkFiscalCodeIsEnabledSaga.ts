@@ -1,9 +1,10 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, select } from "typed-redux-saga/macro";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert.ts";
-import { itwSetL3Enabled } from "../../common/store/actions/preferences.ts";
-import { getIsFiscalCodeEnabled } from "../utils/itwTrialSystemUtils.ts";
+import { createItWalletClient } from "../../api/client.ts";
+import { apiUrlPrefix } from "../../../../config.ts";
+import { handleGetWhitelistedStatus } from "./handleGetWhitelistedStatus.ts";
 
 /**
  * Saga responsible to check whether the fiscal code is enabled or not, for the L3 features.
@@ -11,6 +12,6 @@ import { getIsFiscalCodeEnabled } from "../utils/itwTrialSystemUtils.ts";
 export function* checkFiscalCodeEnabledSaga(): SagaIterator {
   const sessionToken = yield* select(sessionTokenSelector);
   assert(sessionToken, "Missing session token");
-  const isFiscalCodeEnabled = yield* call(getIsFiscalCodeEnabled, sessionToken);
-  yield* put(itwSetL3Enabled(isFiscalCodeEnabled));
+  const client = createItWalletClient(apiUrlPrefix, sessionToken);
+  yield* call(handleGetWhitelistedStatus, client, sessionToken);
 }
