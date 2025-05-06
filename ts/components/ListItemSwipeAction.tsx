@@ -7,7 +7,8 @@ import {
   IOVisualCostants,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
-import { MutableRefObject, ReactNode, useRef } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { MutableRefObject, ReactNode, useCallback, useRef } from "react";
 import { Alert, StyleSheet, useWindowDimensions, View } from "react-native";
 import {
   GestureEvent,
@@ -179,6 +180,18 @@ const ListItemSwipeAction = ({
   const closeItem = () => {
     translateX.value = withSpring(0, IOSpringValues.accordion);
   };
+
+  // Close the item when the component is unmounted
+  // or when the screen is focused
+  // to avoid the item being open when navigating back
+  useFocusEffect(
+    useCallback(
+      () => () => {
+        translateX.value = withSpring(0, IOSpringValues.accordion);
+      },
+      [translateX]
+    )
+  );
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
