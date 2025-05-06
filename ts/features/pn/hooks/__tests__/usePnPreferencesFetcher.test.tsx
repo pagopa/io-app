@@ -26,7 +26,7 @@ jest.mock("react", () => ({
   ...jest.requireActual("react"),
   useState: jest.fn()
 }));
-// eslint-disable-next-line no-duplicate-imports, import/order
+// eslint-disable-next-line import/order
 import { useState } from "react";
 
 type PreferencePotState = pot.Pot<
