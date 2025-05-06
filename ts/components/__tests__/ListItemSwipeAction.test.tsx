@@ -1,3 +1,4 @@
+import { NavigationContainer } from "@react-navigation/native"; // Import NavigationContainer
 import { fireEvent, render } from "@testing-library/react-native";
 import { Alert, Text } from "react-native";
 import ListItemSwipeAction from "../ListItemSwipeAction";
@@ -31,6 +32,9 @@ beforeAll(() => {
   jest.useFakeTimers();
 });
 
+const renderWithNavigation = (component: JSX.Element) =>
+  render(<NavigationContainer>{component}</NavigationContainer>);
+
 describe("ListItemSwipeAction", () => {
   const alertProps = {
     title: "Confirm delete",
@@ -46,7 +50,7 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("triggers Alert on icon press", () => {
-    const { getByA11yLabel } = render(
+    const { getByA11yLabel } = renderWithNavigation(
       <ListItemSwipeAction
         swipeAction={swipeActionMock}
         alertProps={alertProps}
@@ -71,7 +75,7 @@ describe("ListItemSwipeAction", () => {
       confirmButton?.onPress?.();
     });
 
-    const { getByA11yLabel } = render(
+    const { getByA11yLabel } = renderWithNavigation(
       <ListItemSwipeAction
         swipeAction={swipeActionMock}
         alertProps={alertProps}
@@ -91,7 +95,7 @@ describe("ListItemSwipeAction", () => {
       cancelButton?.onPress?.();
     });
 
-    const { getByA11yLabel } = render(
+    const { getByA11yLabel } = renderWithNavigation(
       <ListItemSwipeAction
         swipeAction={swipeActionMock}
         alertProps={alertProps}
@@ -108,7 +112,7 @@ describe("ListItemSwipeAction", () => {
   it("calls showAlertAction when swipe exceeds threshold", () => {
     const alertSpy = jest.spyOn(Alert, "alert");
 
-    const { getByText } = render(
+    const { getByText } = renderWithNavigation(
       <ListItemSwipeAction
         swipeAction={swipeActionMock}
         alertProps={alertProps}
@@ -128,7 +132,7 @@ describe("ListItemSwipeAction", () => {
   it("does NOT call showAlertAction when swipe is too small", () => {
     const alertSpy = jest.spyOn(Alert, "alert");
 
-    render(
+    renderWithNavigation(
       <ListItemSwipeAction
         swipeAction={swipeActionMock}
         alertProps={alertProps}
@@ -155,7 +159,7 @@ describe("ListItemSwipeAction", () => {
       confirmButton?.onPress?.();
     });
 
-    const { getByA11yLabel } = render(
+    const { getByA11yLabel } = renderWithNavigation(
       <ListItemSwipeAction
         swipeAction={swipeActionMock}
         alertProps={alertProps}
@@ -178,7 +182,7 @@ describe("ListItemSwipeAction", () => {
       useIOThemeContext: () => ({ themeType: "dark" })
     }));
 
-    const { getByText } = render(
+    const { getByText } = renderWithNavigation(
       <ListItemSwipeAction
         swipeAction={swipeActionMock}
         alertProps={alertProps}
@@ -193,7 +197,7 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("handles gesture translation correctly", () => {
-    render(
+    renderWithNavigation(
       <ListItemSwipeAction
         swipeAction={swipeActionMock}
         alertProps={alertProps}
@@ -215,7 +219,7 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("renders RightActions component with correct props", () => {
-    const { getByA11yLabel } = render(
+    const { getByA11yLabel } = renderWithNavigation(
       <ListItemSwipeAction
         swipeAction={swipeActionMock}
         alertProps={alertProps}
