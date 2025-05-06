@@ -47,7 +47,8 @@ export const enrichPresentationDetails = (
       ...c,
       claimsToDisplay: c.requiredDisclosures.map<ClaimDisplayFormat>(
         ([, claimName, claimValue]) => {
-          const claimDisplayName = credential?.parsedCredential[claimName].name;
+          const claimDisplayName =
+            credential?.parsedCredential[claimName]?.name;
           return {
             id: claimName,
             label:

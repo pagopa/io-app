@@ -1539,8 +1539,7 @@
       "fee": "Commissione",
       "feeAppliedBy": "Applicata da",
       "editButton": "Modifica",
-      "termsAndConditions": "Proseguendo dichiari di aver letto e compreso i",
-      "termsAndConditionsLink": "Termini e condizioni d'uso e l'Informativa Privacy"
+      "termsAndConditions": "Proseguendo accetti i [Termini e condizioni d’uso](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) e confermi di aver letto l'[Informativa Privacy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) di {{pspName}}"
     }
   },
   "wallet": {
@@ -4775,7 +4774,7 @@
           "modal": {
             "title": "Nessuna connessione",
             "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
-            "footerAction": "Cosa posso fare?"
+            "footerAction": "Ricarica l'app IO"
           }
         },
         "SESSION_EXPIRED": {
@@ -4797,7 +4796,7 @@
           "modal": {
             "title": "Servizi dell’app limitati",
             "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
-            "footerAction": "Cosa posso fare?"
+            "footerAction": "Ricarica l'app IO"
           }
         },
         "action": "Ricarica l'app IO",
