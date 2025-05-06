@@ -4,7 +4,7 @@ import { Action } from "../../../../../store/actions/types";
 import {
   itwCloseDiscoveryBanner,
   itwCloseFeedbackBanner,
-  itwCloseOfflineBanner,
+  itwSetOfflineBannerHidden,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
@@ -38,8 +38,8 @@ export type ItwPreferencesState = {
   // Indicates whether the L3 is enabled, which allows to use the new IT Wallet
   // features for users with L3 authentication level
   isL3Enabled?: boolean;
-  // Date until which the offline usage banner should be hidden
-  hideOfflineBannerUntilDate?: string;
+  // Indicates whether the offline banner should be hidden
+  offlineBannerHidden?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -133,10 +133,10 @@ const reducer = (
         isL3Enabled
       };
 
-    case getType(itwCloseOfflineBanner): {
+    case getType(itwSetOfflineBannerHidden): {
       return {
         ...state,
-        hideOfflineBannerUntilDate: addMonths(new Date(), 1).toISOString()
+        offlineBannerHidden: action.payload
       };
     }
 

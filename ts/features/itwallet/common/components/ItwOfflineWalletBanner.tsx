@@ -1,7 +1,7 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwCloseOfflineBanner } from "../store/actions/preferences.ts";
+import { itwSetOfflineBannerHidden } from "../store/actions/preferences.ts";
 import { itwShouldRenderOfflineBannerSelector } from "../store/selectors";
 
 export const ItwOfflineWalletBanner = () => {
@@ -18,7 +18,7 @@ export const ItwOfflineWalletBanner = () => {
   };
 
   const handleOnClose = () => {
-    dispatch(itwCloseOfflineBanner());
+    dispatch(itwSetOfflineBannerHidden(true));
   };
 
   return (

@@ -4,7 +4,6 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import {
   itwCloseDiscoveryBanner,
   itwCloseFeedbackBanner,
-  itwCloseOfflineBanner,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
@@ -134,7 +133,7 @@ describe("IT Wallet preferences reducer", () => {
         claimValuesHidden: true,
         isWalletInstanceRemotelyActive: true,
         isL3Enabled: true,
-        hideOfflineBannerUntilDate: "abcd"
+        offlineBannerHidden: true,
       },
       action
     );
@@ -146,18 +145,4 @@ describe("IT Wallet preferences reducer", () => {
     });
   });
 
-  it("should handle itwCloseOfflineBanner action", () => {
-    const mockDate = "2025-04-30T09:43:21.361Z";
-    MockDate.set(mockDate);
-
-    const expectedDate = addMonths(mockDate, 1);
-    const action = itwCloseOfflineBanner();
-    const newState = reducer(INITIAL_STATE, action);
-
-    expect(newState).toEqual({
-      ...newState,
-      hideOfflineBannerUntilDate: expectedDate.toISOString()
-    });
-    MockDate.reset();
-  });
 });

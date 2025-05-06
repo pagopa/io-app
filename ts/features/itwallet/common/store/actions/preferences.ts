@@ -36,9 +36,9 @@ export const itwSetWalletInstanceRemotelyActive = createStandardAction(
 export const itwSetL3Enabled =
   createStandardAction("ITW_SET_L3_ENABLED")<boolean>();
 
-export const itwCloseOfflineBanner = createStandardAction(
-  "ITW_CLOSE_OFFLINE_BANNER"
-)();
+export const itwSetOfflineBannerHidden = createStandardAction(
+  "ITW_SET_OFFLINE_BANNER_HIDDEN"
+)<boolean>();
 
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
@@ -50,4 +50,4 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetClaimValuesHidden>
   | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetL3Enabled>
-  | ActionType<typeof itwCloseOfflineBanner>;
+  | ActionType<typeof itwSetOfflineBannerHidden>;

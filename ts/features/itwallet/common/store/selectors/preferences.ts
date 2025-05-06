@@ -84,12 +84,7 @@ export const itwIsL3EnabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isL3Enabled ?? false;
 
 /**
- * Returns if the offline banner should be displayed or not based on the user's preferences.
- * The banner should be visible only if the user closed it more than one month ago
- * and has not given feedback.
+ * Returns whether offline banner is hidden. Defaults to false.
  */
-export const itwIsOfflineBannerHiddenSelector = createSelector(
-  itwPreferencesSelector,
-  ({ hideOfflineBannerUntilDate }: ItwPreferencesState) =>
-    isPastDate(hideOfflineBannerUntilDate)
-);
+export const itwIsOfflineBannerHiddenSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.offlineBannerHidden ?? false;
