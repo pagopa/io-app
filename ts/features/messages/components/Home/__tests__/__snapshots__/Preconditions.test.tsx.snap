@@ -384,7 +384,7 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            500,
+                            550,
                           ]
                         }
                         style={
