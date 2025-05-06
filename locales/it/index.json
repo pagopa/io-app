@@ -4336,7 +4336,7 @@
         },
         "paywall": {
           "badge": "Novità",
-          "description": "L'unico Wallet di Stato: pubblico, sicuro, gratuito.",
+          "description": "L'unico Wallet di Stato:\npubblico, sicuro, gratuito.",
           "featureHighlights": {
             "1": "Ti basta il tuo telefono per dimostrare la tua identità",
             "2": "Hai tutto ciò che ti serve anche se lasci a casa il portafoglio",
