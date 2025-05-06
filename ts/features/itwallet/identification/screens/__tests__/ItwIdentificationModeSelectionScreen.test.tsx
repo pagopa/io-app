@@ -24,7 +24,10 @@ describe("ItwIdentificationModeSelectionScreen", () => {
   beforeEach(() => {
     // Default mock for L3 disabled
     jest
-      .spyOn(preferencesSelectors, "itwIsL3EnabledAndFiscalCodeWhitelistedSelector")
+      .spyOn(
+        preferencesSelectors,
+        "itwIsL3EnabledAndFiscalCodeWhitelistedSelector"
+      )
       .mockReturnValue(false);
 
     // Default mock for no disabled methods
@@ -45,7 +48,10 @@ describe("ItwIdentificationModeSelectionScreen", () => {
   describe("DefaultIdentificationView (L3 disabled)", () => {
     beforeEach(() => {
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledAndFiscalCodeWhitelistedSelector")
+        .spyOn(
+          preferencesSelectors,
+          "itwIsL3EnabledAndFiscalCodeWhitelistedSelector"
+        )
         .mockReturnValue(false);
     });
 
@@ -106,7 +112,10 @@ describe("ItwIdentificationModeSelectionScreen", () => {
   describe("L3IdentificationView (L3 enabled)", () => {
     beforeEach(() => {
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledAndFiscalCodeWhitelistedSelector")
+        .spyOn(
+          preferencesSelectors,
+          "itwIsL3EnabledAndFiscalCodeWhitelistedSelector"
+        )
         .mockReturnValue(true);
     });
 
