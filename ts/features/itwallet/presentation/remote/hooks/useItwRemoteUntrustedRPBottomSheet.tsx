@@ -7,7 +7,7 @@ import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.ts
 /**
  * Content component for the Not Trusted RP bottom sheet
  */
-export const ItwRemoteUntrustedRPBottomSheetContent = () => (
+const ItwRemoteUntrustedRPBottomSheetContent = memo(() => (
   <View>
     <Body>
       {I18n.t(
@@ -28,11 +28,7 @@ export const ItwRemoteUntrustedRPBottomSheetContent = () => (
       </Body>
     </View>
   </View>
-);
-
-const ItwRemoteUntrustedRPBottomSheetContentMemo = memo(
-  ItwRemoteUntrustedRPBottomSheetContent
-);
+));
 
 /**
  * Hook to create the  Untrusted RP bottom sheet
@@ -43,7 +39,7 @@ export const useItwRemoteUntrustedRPBottomSheet = () =>
     title: I18n.t(
       "features.itWallet.presentation.remote.untrustedRpScreen.bottomSheet.title"
     ),
-    component: <ItwRemoteUntrustedRPBottomSheetContentMemo />,
+    component: <ItwRemoteUntrustedRPBottomSheetContent />,
     snapPoint: [300]
     // TODO: [SIW-2266] Uncomment when the FAQ are ready
     /*     footer: (
