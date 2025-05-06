@@ -66,7 +66,13 @@ Sentry.init({
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
   },
-  ignoreErrors: ["HTTPClientError"],
+  ignoreErrors: [
+    /HTTPClientError/i,
+    /HTTP Client Error with status code: 500/i,
+    /ANR/i,
+    /ApplicationNotResponding/i,
+    /Background ANR/i
+  ],
   integrations: integrations => [
     ...integrations,
     Sentry.reactNativeTracingIntegration()

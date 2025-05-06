@@ -35,7 +35,8 @@ describe("index", () => {
         preselected_psp_flag: "customer",
         selected_psp_flag: "unique",
         psp_selected: "13",
-        editing: "payment_method"
+        editing: "payment_method",
+        browser_type: "webview"
       };
 
       trackPaymentOutcomeSuccess(paymentProps);
@@ -80,7 +81,8 @@ describe("index", () => {
         preselected_psp_flag: "customer",
         selected_psp_flag: "unique",
         psp_selected: "13",
-        editing: "payment_method"
+        editing: "payment_method",
+        browser_type: "webview"
       };
 
       trackPaymentOutcomeSuccess(paymentProps);

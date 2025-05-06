@@ -7,7 +7,10 @@ import { useState, useCallback, useEffect } from "react";
 import URLParse from "url-parse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
-import { storePaymentOutcomeToHistory } from "../../history/store/actions";
+import {
+  storePaymentOutcomeToHistory,
+  storePaymentsBrowserTypeAction
+} from "../../history/store/actions";
 import {
   WalletPaymentAuthorizePayload,
   paymentsStartPaymentAuthorizationAction
@@ -74,6 +77,7 @@ export const useWalletPaymentAuthorizationModal = ({
   const startWebviewPaymentSession = useCallback(
     (url: string): Promise<string> =>
       new Promise((resolve, reject) => {
+        dispatch(storePaymentsBrowserTypeAction("webview"));
         navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
           screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_WEB_VIEW
         });
@@ -87,6 +91,14 @@ export const useWalletPaymentAuthorizationModal = ({
         );
       }),
     [dispatch, navigation]
+  );
+
+  const startInAppBrowserPaymentSession = useCallback(
+    (url: string) => {
+      dispatch(storePaymentsBrowserTypeAction("inapp_browser"));
+      return openAuthenticationSession(url, WALLET_WEBVIEW_OUTCOME_SCHEMA);
+    },
+    [dispatch]
   );
 
   useEffect(() => {
@@ -104,7 +116,7 @@ export const useWalletPaymentAuthorizationModal = ({
             setIsPendingAuthorization(true);
             return isWebViewEnabled
               ? startWebviewPaymentSession(url)
-              : openAuthenticationSession(url, WALLET_WEBVIEW_OUTCOME_SCHEMA);
+              : startInAppBrowserPaymentSession(url);
           },
           () => {
             handleAuthorizationOutcome(
@@ -124,7 +136,8 @@ export const useWalletPaymentAuthorizationModal = ({
     handleAuthorizationOutcome,
     dispatch,
     isWebViewEnabled,
-    startWebviewPaymentSession
+    startWebviewPaymentSession,
+    startInAppBrowserPaymentSession
   ]);
 
   useEffect(

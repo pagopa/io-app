@@ -101,7 +101,7 @@ describe("test decodeIOBarcode function", () => {
             client_id: "abc123xy",
             request_uri: "https://example.com/callback",
             state: "hyqizm592",
-            request_uri_method: "GET"
+            request_uri_method: "get"
           }
         })
       );
@@ -109,7 +109,7 @@ describe("test decodeIOBarcode function", () => {
 
     it("should decode request_uri_method if provided", () => {
       const value =
-        "https://continua.io.pagopa.it/itw/auth?client_id=abc123xy&request_uri=https%3A%2F%2Fexample.com%2Fcallback&state=hyqizm592&request_uri_method=POST";
+        "https://continua.io.pagopa.it/itw/auth?client_id=abc123xy&request_uri=https%3A%2F%2Fexample.com%2Fcallback&state=hyqizm592&request_uri_method=post";
 
       const output = decodeIOBarcode(value);
 
@@ -120,7 +120,7 @@ describe("test decodeIOBarcode function", () => {
             client_id: "abc123xy",
             request_uri: "https://example.com/callback",
             state: "hyqizm592",
-            request_uri_method: "POST"
+            request_uri_method: "post"
           }
         })
       );
