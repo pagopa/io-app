@@ -157,7 +157,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
         }
       }}
     >
-      <ContentWrapper>
+      <ContentWrapper style={{ flexGrow: 1 }}>
         <H2>
           {I18n.t("features.itWallet.issuance.credentialPreview.title", {
             credential: getCredentialNameFromType(credentialType)
