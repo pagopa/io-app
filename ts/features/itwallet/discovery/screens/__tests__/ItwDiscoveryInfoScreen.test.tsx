@@ -1,4 +1,3 @@
-import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
