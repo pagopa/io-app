@@ -34,6 +34,8 @@ export const ItwRemoteAuthResponseScreen = () => {
     );
   }
 
+  const closeMachine = () => machineRef.send({ type: "close" });
+
   return (
     <OperationResultScreenContent
       pictogram="success"
@@ -46,14 +48,15 @@ export const ItwRemoteAuthResponseScreen = () => {
         redirectUri
           ? {
               label: "Continua",
-              onPress: () =>
-                Linking.openURL("redirectUri").catch(() =>
-                  IOToast.error("Something went wrong")
-                )
+              onPress: () => {
+                Linking.openURL(redirectUri)
+                  .then(closeMachine)
+                  .catch(() => IOToast.error("Something went wrong"));
+              }
             }
           : {
               label: I18n.t("global.buttons.close"),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: closeMachine
             }
       }
     />
