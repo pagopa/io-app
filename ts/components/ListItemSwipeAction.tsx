@@ -31,12 +31,14 @@ type RightActionsProps = {
   showDeleteAlert: () => void;
   accessibilityLabel: string;
   translateX: SharedValue<number>;
+  backgroundColor: string;
 };
 
 const RightActions = ({
   showDeleteAlert,
   accessibilityLabel,
-  translateX
+  translateX,
+  backgroundColor
 }: RightActionsProps) => {
   const animatedIconStyle = useAnimatedStyle(() => {
     const clamped = Math.max(-translateX.value, 0);
@@ -51,7 +53,7 @@ const RightActions = ({
   return (
     <View
       style={{
-        backgroundColor: IOColors["error-600"],
+        backgroundColor,
         justifyContent: "center",
         alignItems: "flex-end",
         paddingRight: 18,
@@ -122,13 +124,20 @@ const ListItemSwipeAction = ({
       }
     ]);
 
-  const backgroundStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(
-      translateX.value,
-      [-width * 0.9, -width * 0.2],
-      [IOColors["error-600"], IOColors["error-600"]]
-    )
-  }));
+  const backgroundStyle = useAnimatedStyle(() => {
+    const color =
+      translateX.value === 0
+        ? IOColors[theme["appBackground-primary"]]
+        : interpolateColor(
+            translateX.value,
+            [-width * 0.9, -width * 0.2],
+            [IOColors["error-600"], IOColors["error-600"]]
+          );
+
+    return {
+      backgroundColor: color
+    };
+  });
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }]
@@ -205,6 +214,7 @@ const ListItemSwipeAction = ({
           style={[StyleSheet.absoluteFillObject, backgroundStyle]}
         />
         <RightActions
+          backgroundColor={backgroundStyle.backgroundColor}
           translateX={translateX}
           showDeleteAlert={showAlertAction}
           accessibilityLabel={accessibilityLabel}
