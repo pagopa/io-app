@@ -345,7 +345,8 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3Enabled is fa
                                       ]
                                     }
                                   >
-                                    L'unico Wallet di Stato: pubblico, sicuro, gratuito.
+                                    L'unico Wallet di Stato:
+pubblico, sicuro, gratuito.
                                   </Text>
                                 </View>
                                 <View
@@ -419,7 +420,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3Enabled is fa
                                             <View
                                               style={
                                                 {
-                                                  "marginLeft": -12,
+                                                  "marginLeft": -8,
                                                 }
                                               }
                                             >
@@ -439,7 +440,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3Enabled is fa
                                             <View
                                               style={
                                                 {
-                                                  "marginLeft": -12,
+                                                  "marginLeft": -8,
                                                 }
                                               }
                                             >
@@ -459,7 +460,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3Enabled is fa
                                             <View
                                               style={
                                                 {
-                                                  "marginLeft": -12,
+                                                  "marginLeft": -8,
                                                 }
                                               }
                                             >
@@ -1372,7 +1373,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3Enabled is fa
                                               <View
                                                 style={
                                                   {
-                                                    "marginLeft": -12,
+                                                    "marginLeft": -8,
                                                   }
                                                 }
                                               >
@@ -1436,7 +1437,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3Enabled is fa
                                               <View
                                                 style={
                                                   {
-                                                    "marginLeft": -12,
+                                                    "marginLeft": -8,
                                                   }
                                                 }
                                               >
@@ -1500,7 +1501,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3Enabled is fa
                                               <View
                                                 style={
                                                   {
-                                                    "marginLeft": -12,
+                                                    "marginLeft": -8,
                                                   }
                                                 }
                                               >
