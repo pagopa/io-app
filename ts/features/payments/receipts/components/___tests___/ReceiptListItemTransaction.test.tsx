@@ -1,3 +1,4 @@
+import { NavigationContainer } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
 import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import I18n from "../../../../../i18n";
@@ -32,9 +33,12 @@ const mockCartTransaction: NoticeListItem = {
   payeeTaxCode: "XYZ12345"
 };
 
+const renderWithNavigation = (component: JSX.Element) =>
+  render(<NavigationContainer>{component}</NavigationContainer>);
+
 describe("ReceiptListItemTransaction", () => {
   it("renders correctly with a single transaction", () => {
-    const { getByText } = render(
+    const { getByText } = renderWithNavigation(
       <ReceiptListItemTransaction transaction={mockTransaction} />
     );
 
@@ -43,7 +47,7 @@ describe("ReceiptListItemTransaction", () => {
   });
 
   it("renders correctly with a cart transaction", () => {
-    const { getByText } = render(
+    const { getByText } = renderWithNavigation(
       <ReceiptListItemTransaction transaction={mockCartTransaction} />
     );
 
@@ -55,7 +59,7 @@ describe("ReceiptListItemTransaction", () => {
 
   it("calls onPress when the item is pressed", () => {
     const mockOnPress = jest.fn();
-    const { getByText } = render(
+    const { getByText } = renderWithNavigation(
       <ReceiptListItemTransaction
         transaction={mockTransaction}
         onPress={mockOnPress}
