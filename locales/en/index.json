@@ -4323,7 +4323,7 @@
         },
         "title": "La versione digitale dei tuoi documenti, su IO",
         "content": "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n\n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati.",
-        "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyAndTosUrl}}).",
+        "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
         "upcomingWalletBanner": {
           "title": "Novità in arrivo: i tuoi Documenti su IO",
           "content": "Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!",
@@ -4333,6 +4333,35 @@
           "title": "Documenti su IO è già attiva",
           "content": "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio.",
           "action": "Vai al Portafoglio"
+        },
+        "paywall": {
+          "badge": "Novità",
+          "description": "L'unico Wallet di Stato: pubblico, sicuro, gratuito.",
+          "featureHighlights": {
+            "1": "Ti basta il tuo telefono per dimostrare la tua identità",
+            "2": "Hai tutto ciò che ti serve anche se lasci a casa il portafoglio",
+            "3": "Nuovi documenti ufficiali, solo sull’app IO",
+            "4": "Accedi in pochi tocchi ai servizi digitali della PA"
+          },
+          "productHighlights": {
+            "1": {
+              "title": "Facile, sicuro, ufficiale",
+              "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** e il suo **PIN**.\n\n\nIT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantenerli al sicuro."
+            },
+            "2": {
+              "title": "Nuovi documenti in arrivo",
+              "content": "ISEE, titoli di studio, certificazione a uso elettorale e altri: potrai aggiungere all’app IO nuovi documenti ufficiali."
+            },
+            "3": {
+              "title": "Tutto nelle tue mani",
+              "content": "Con IT-Wallet mostri il codice QR dei tuoi documenti digitali: chi verifica non dovrà tenere in mano il tuo dispositivo."
+            },
+            "4": {
+              "title": "Progettato con l'Europa",
+              "content": "IT-Wallet si integrerà al Portafoglio Digitale Europeo: potrai usare i tuoi documenti con pieno valore legale in tutta Europa."
+            }
+          },
+          "tos": "Premendo **Ottieni IT-Wallet** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}})"
         }
       },
       "identification": {

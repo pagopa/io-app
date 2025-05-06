@@ -33,9 +33,12 @@ export const createEidIssuanceActionsImplementation = (
   store: ReturnType<typeof useIOStore>,
   toast: IOToast
 ) => ({
-  navigateToTosScreen: () => {
+  navigateToTosScreen: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: { isL3Enabled: context.isL3FeaturesEnabled }
     });
   },
 

@@ -6,6 +6,7 @@ import { ItwOfflineSection } from "../components/ItwOfflineSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
 import { ItwL3Section } from "../components/ItwL3Section";
 import { ItwBannerSection } from "../components/ItwBannerSection";
+import { ItwDiscoveryInfoSection } from "../components/ItwDiscoveryInfoSection";
 
 /**
  * ITW Playground screen
@@ -20,6 +21,7 @@ const ItwPlayground = () => {
     <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <ContentWrapper>
         <VStack space={8}>
+          <ItwDiscoveryInfoSection />
           <ItwOfflineSection />
           <ItwL3Section />
           <ItwLifecycleSection />

@@ -110,7 +110,8 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
           label: I18n.t(`${ns}.primaryAction`),
           onPress: () =>
             navigation.replace(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.DISCOVERY.INFO
+              screen: ITW_ROUTES.DISCOVERY.INFO,
+              params: {}
             })
         }}
         secondaryAction={{

@@ -6,33 +6,45 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwDiscoveryInfoScreen } from "../ItwDiscoveryInfoScreen";
+import {
+  ItwDiscoveryInfoScreen,
+  ItwDiscoveryInfoScreenProps
+} from "../ItwDiscoveryInfoScreen";
 
-describe("Test ItwDiscoveryInfo screen", () => {
-  it("it should render the screen correctly", () => {
-    const component = renderComponent();
-    expect(component).toBeTruthy();
+describe("ItwDiscoveryInfoScreen", () => {
+  it("should match the snapshot when isL3Enabled is true", () => {
+    const component = renderComponent(false);
+    expect(component).toMatchSnapshot();
+  });
+
+  it("should match the snapshot when isL3Enabled is false", () => {
+    const component = renderComponent(true);
+    expect(component).toMatchSnapshot();
   });
 });
 
-const renderComponent = () => {
+const renderComponent = (isL3Enabled: boolean = false) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
-  const logic = itwEidIssuanceMachine.provide({
-    actions: {
-      onInit: jest.fn(),
-      navigateToTosScreen: () => undefined
-    }
-  });
+  const WrappedComponent = (props: ItwDiscoveryInfoScreenProps) => {
+    const logic = itwEidIssuanceMachine.provide({
+      actions: {
+        onInit: jest.fn(),
+        navigateToTosScreen: () => undefined
+      }
+    });
+
+    return (
+      <ItwEidIssuanceMachineContext.Provider logic={logic}>
+        <ItwDiscoveryInfoScreen {...props} />
+      </ItwEidIssuanceMachineContext.Provider>
+    );
+  };
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => (
-      <ItwEidIssuanceMachineContext.Provider logic={logic}>
-        <ItwDiscoveryInfoScreen />
-      </ItwEidIssuanceMachineContext.Provider>
-    ),
+    WrappedComponent,
     ITW_ROUTES.DISCOVERY.INFO,
-    {},
+    { isL3Enabled },
     createStore(appReducer, globalState as any)
   );
 };

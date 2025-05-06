@@ -1,3 +1,4 @@
+import { ItwDiscoveryInfoScreenNavigationParams } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import { ItwIdentificationModeSelectionScreenNavigationParams } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
@@ -13,7 +14,7 @@ export type ItwParamsList = {
   // OFFLINE WALLET
   [ITW_ROUTES.OFFLINE.WALLET]: undefined;
   // DISCOVERY
-  [ITW_ROUTES.DISCOVERY.INFO]: undefined;
+  [ITW_ROUTES.DISCOVERY.INFO]: ItwDiscoveryInfoScreenNavigationParams;
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
   [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]: undefined;
   // IDENTIFICATION

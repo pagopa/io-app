@@ -3758,9 +3758,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.5.0":
+"@pagopa/io-app-design-system@git+https://github.com/pagopa/io-app-design-system.git#SIW-2315_SIW-2316":
   version: 5.5.0
-  resolution: "@pagopa/io-app-design-system@npm:5.5.0"
+  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=9451a97f0b723456b3ff9457c545437c19f4affb"
   dependencies:
     "@testing-library/jest-native": ^5.4.2
     "@types/react-test-renderer": ^18.0.0
@@ -3783,7 +3783,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 5d2e35a40fcb16f6583b8f70072d17b958916a7dc694659a63ab34ba3ab2dac6a12ee0513a06fb226c1ef73ab9aa5a4fc65da3c433ea42aeca773c5ed0ad6fbf
+  checksum: 0c5c75db8f1016997bdab912a502bc0bc80bb24ff625011d47055f60c9a69d47d2dc69fde1a31c44f79e95e535efbb4fbcf5245ebc3f695037259adb3ec0ffa1
   languageName: node
   linkType: hard
 
@@ -13666,7 +13666,7 @@ __metadata:
     "@babel/runtime": ^7.20.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.5.0
+    "@pagopa/io-app-design-system": "git+https://github.com/pagopa/io-app-design-system.git#SIW-2315_SIW-2316"
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.0.1
