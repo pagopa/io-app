@@ -1,8 +1,7 @@
 import { render, fireEvent } from "@testing-library/react-native";
-import { PaymentListItemInfo } from "../PaymentListItemInfo"; // aggiorna il path se necessario
+import { PaymentListItemInfo } from "../PaymentListItemInfo";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 
-// Mock delle funzioni di clipboard
 jest.mock("../../../../../utils/clipboard", () => ({
   clipboardSetStringWithFeedback: jest.fn()
 }));
