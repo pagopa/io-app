@@ -5,7 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { memo, MutableRefObject, useMemo, useRef } from "react";
+import { memo, MutableRefObject, useMemo } from "react";
 import { Alert } from "react-native";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import ListItemSwipeAction from "../../../../components/ListItemSwipeAction";
@@ -64,17 +64,19 @@ const ReceiptListItemTransaction = memo(
     );
 
     const dispatch = useIODispatch();
-    const swipeRef = useRef<{
-      triggerSwipeAction: () => void;
-      resetSwipePosition: () => void;
-    }>(null);
 
     const swipeActionProps = {
       icon: "eyeHide" as IOIcons,
       accessibilityLabel: I18n.t(
         "features.payments.transactions.receipt.hideFromList"
       ),
-      onRightActionPressed: () => {
+      onRightActionPressed: ({
+        resetSwipePosition,
+        triggerSwipeAction
+      }: {
+        resetSwipePosition: () => void;
+        triggerSwipeAction: () => void;
+      }) => {
         Alert.alert(
           I18n.t("features.payments.transactions.receipt.hideBanner.title"),
           I18n.t("features.payments.transactions.receipt.hideBanner.content"),
@@ -84,7 +86,7 @@ const ReceiptListItemTransaction = memo(
               style: "cancel",
               onPress: () => {
                 setTimeout(() => {
-                  swipeRef.current?.resetSwipePosition();
+                  resetSwipePosition();
                 }, 50);
               }
             },
@@ -94,7 +96,7 @@ const ReceiptListItemTransaction = memo(
               ),
               style: "destructive",
               onPress: () => {
-                swipeRef.current?.triggerSwipeAction();
+                triggerSwipeAction();
                 dispatch(
                   hidePaymentsReceiptAction.request({
                     transactionId: transaction.eventId
@@ -110,13 +112,11 @@ const ReceiptListItemTransaction = memo(
     if (transaction.isCart) {
       return (
         <ListItemSwipeAction
-          ref={swipeRef}
           color="contrast"
           {...swipeActionProps}
           openedItemRef={openedItemRef}
         >
           <ListItemTransaction
-            {...swipeActionProps}
             paymentLogoIcon={TransactionEmptyIcon}
             onPress={onPress}
             accessible
@@ -134,7 +134,6 @@ const ReceiptListItemTransaction = memo(
 
     return (
       <ListItemSwipeAction
-        ref={swipeRef}
         color="contrast"
         {...swipeActionProps}
         openedItemRef={openedItemRef}

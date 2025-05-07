@@ -1,6 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native"; // Import NavigationContainer
 import { fireEvent, render } from "@testing-library/react-native";
-import { createRef } from "react";
 import { Text } from "react-native";
 import ListItemSwipeAction from "../ListItemSwipeAction";
 
@@ -30,26 +29,32 @@ beforeAll(() => {
   jest.useFakeTimers();
 });
 
-const renderWithNavigation = (component: JSX.Element) =>
-  render(<NavigationContainer>{component}</NavigationContainer>);
+const swipeActionMock = jest.fn();
+
+const renderWithNavigation = () =>
+  render(
+    <NavigationContainer>
+      <ListItemSwipeAction
+        color="contrast"
+        icon="eyeHide"
+        onRightActionPressed={({ resetSwipePosition, triggerSwipeAction }) => {
+          swipeActionMock();
+          triggerSwipeAction();
+        }}
+        accessibilityLabel="Hide item"
+      >
+        <Text>Hide item</Text>
+      </ListItemSwipeAction>
+    </NavigationContainer>
+  );
 
 describe("ListItemSwipeAction", () => {
-  const swipeActionMock = jest.fn();
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it("triggers action on icon press", () => {
-    const { getByA11yLabel } = renderWithNavigation(
-      <ListItemSwipeAction
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Test Item</Text>
-      </ListItemSwipeAction>
-    );
+    const { getByA11yLabel } = renderWithNavigation();
 
     fireEvent.press(getByA11yLabel("Hide item"));
 
@@ -57,17 +62,9 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("calls action when swipe exceeds threshold", () => {
-    const { getByText } = renderWithNavigation(
-      <ListItemSwipeAction
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Swipe me</Text>
-      </ListItemSwipeAction>
-    );
+    const { getByText } = renderWithNavigation();
 
-    fireEvent(getByText("Swipe me"), "onEnded", {
+    fireEvent(getByText("Hide item"), "onEnded", {
       nativeEvent: { translationX: -300, velocityX: -900 }
     });
 
@@ -75,15 +72,7 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("does NOT call swipeActionMock when swipe is too small", () => {
-    renderWithNavigation(
-      <ListItemSwipeAction
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Swipe me</Text>
-      </ListItemSwipeAction>
-    );
+    renderWithNavigation();
 
     gestureProps.onGestureEvent({
       nativeEvent: { translationX: -30 }
@@ -102,29 +91,13 @@ describe("ListItemSwipeAction", () => {
       useIOThemeContext: () => ({ themeType: "dark" })
     }));
 
-    const { getByText } = renderWithNavigation(
-      <ListItemSwipeAction
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Swipe me</Text>
-      </ListItemSwipeAction>
-    );
+    const { getByText } = renderWithNavigation();
 
-    expect(getByText("Swipe me")).toBeTruthy();
+    expect(getByText("Hide item")).toBeTruthy();
   });
 
   it("handles gesture translation correctly", () => {
-    renderWithNavigation(
-      <ListItemSwipeAction
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Swipe me</Text>
-      </ListItemSwipeAction>
-    );
+    renderWithNavigation();
 
     gestureProps.onGestureEvent({
       nativeEvent: { translationX: -150 }
@@ -138,57 +111,14 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("renders RightActions component with correct props", () => {
-    const { getByA11yLabel } = renderWithNavigation(
-      <ListItemSwipeAction
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Swipe me</Text>
-      </ListItemSwipeAction>
-    );
+    const { getByA11yLabel } = renderWithNavigation();
 
     const button = getByA11yLabel("Hide item");
     expect(button).toBeTruthy();
   });
 
-  it("exposes triggerSwipeAction and resetSwipePosition via ref", () => {
-    const ref = createRef<any>();
-
-    renderWithNavigation(
-      <ListItemSwipeAction
-        ref={ref}
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Swipe me</Text>
-      </ListItemSwipeAction>
-    );
-
-    expect(typeof ref.current?.triggerSwipeAction).toBe("function");
-    expect(typeof ref.current?.resetSwipePosition).toBe("function");
-
-    // Trigger the swipe action
-    ref.current?.triggerSwipeAction();
-    expect(ref.current?.triggerSwipeAction).toBeDefined();
-
-    // Reset the swipe position
-    ref.current?.resetSwipePosition();
-    expect(ref.current?.resetSwipePosition).toBeDefined();
-  });
-
   it("updates translateX on gesture event", () => {
-    renderWithNavigation(
-      <ListItemSwipeAction
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Swipe me</Text>
-      </ListItemSwipeAction>
-    );
-
+    renderWithNavigation();
     gestureProps.onGestureEvent({
       nativeEvent: { translationX: -100 }
     });
@@ -198,15 +128,7 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("triggers haptic feedback when swipe exceeds threshold", () => {
-    renderWithNavigation(
-      <ListItemSwipeAction
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Swipe me</Text>
-      </ListItemSwipeAction>
-    );
+    renderWithNavigation();
 
     gestureProps.onGestureEvent({
       nativeEvent: { translationX: -250 }
@@ -217,16 +139,7 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("resets hapticTriggered when swipe is within threshold", () => {
-    renderWithNavigation(
-      <ListItemSwipeAction
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Swipe me</Text>
-      </ListItemSwipeAction>
-    );
-
+    renderWithNavigation();
     gestureProps.onGestureEvent({
       nativeEvent: { translationX: -50 }
     });
@@ -236,16 +149,7 @@ describe("ListItemSwipeAction", () => {
   });
 
   it("handles gesture end correctly", () => {
-    renderWithNavigation(
-      <ListItemSwipeAction
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Swipe me</Text>
-      </ListItemSwipeAction>
-    );
-
+    renderWithNavigation();
     gestureProps.onEnded({
       nativeEvent: { translationX: -300, velocityX: -900 }
     });
@@ -259,19 +163,5 @@ describe("ListItemSwipeAction", () => {
 
     // Verify that the action is not triggered for small swipes
     expect(swipeActionMock).toHaveBeenCalledTimes(1);
-  });
-
-  it("renders children inside ContentWrapper", () => {
-    const { getByText } = renderWithNavigation(
-      <ListItemSwipeAction
-        icon="eyeHide"
-        onRightActionPressed={swipeActionMock}
-        accessibilityLabel="Hide item"
-      >
-        <Text>Child Content</Text>
-      </ListItemSwipeAction>
-    );
-
-    expect(getByText("Child Content")).toBeTruthy();
   });
 });
