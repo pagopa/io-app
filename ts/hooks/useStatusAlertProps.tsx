@@ -19,6 +19,7 @@ import { usePrevious } from "../utils/hooks/usePrevious";
 import { mixpanelTrack } from "../mixpanel";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { buildEventProperties } from "../utils/analytics";
+import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 
 const statusVariantMap: Record<LevelEnum, AlertEdgeToEdgeProps["variant"]> = {
   [LevelEnum.normal]: "info",
@@ -59,6 +60,8 @@ export const useStatusAlertProps = (
 
   const currentRoute = useIOSelector(currentRouteSelector);
   const isConnected = useIOSelector(isConnectedSelector);
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+
   const prevIsConnected = usePrevious(isConnected);
 
   const locale = getFullLocale();
@@ -101,6 +104,13 @@ export const useStatusAlertProps = (
   }, [isConnected, present, prevIsConnected, currentRoute]);
 
   return useMemo(() => {
+    if (offlineAccessReason) {
+      /**
+       * In case we are in the mini-app for offline usage, we don't need to show the alert.
+       * The mini-app manages the alert by itself.
+       */
+      return undefined;
+    }
     if (isConnected === false || connectivityAlert) {
       return {
         alertProps: connectivityAlert,
@@ -137,6 +147,7 @@ export const useStatusAlertProps = (
     localeFallback,
     isConnected,
     bottomSheet,
-    connectivityAlert
+    connectivityAlert,
+    offlineAccessReason
   ]);
 };

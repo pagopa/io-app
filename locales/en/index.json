@@ -1536,8 +1536,7 @@
       "fee": "Commissione",
       "feeAppliedBy": "Applicata da",
       "editButton": "Modifica",
-      "termsAndConditions": "Proseguendo dichiari di aver letto e compreso i",
-      "termsAndConditionsLink": "Termini e condizioni d'uso e l'Informativa Privacy",
+      "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) of {{pspName}}.",
       "a11y": {
         "announce": "Payment Summary"
       }
