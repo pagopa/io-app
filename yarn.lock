@@ -3758,7 +3758,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:^5.5.1":
+"@pagopa/io-app-design-system@npm:5.5.1":
   version: 5.5.1
   resolution: "@pagopa/io-app-design-system@npm:5.5.1"
   dependencies:
@@ -13666,7 +13666,7 @@ __metadata:
     "@babel/runtime": ^7.20.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": ^5.5.1
+    "@pagopa/io-app-design-system": 5.5.1
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.0.1
