@@ -12,12 +12,12 @@ import {
 } from "../ItwDiscoveryInfoScreen";
 
 describe("ItwDiscoveryInfoScreen", () => {
-  it("should match the snapshot when isL3Enabled is true", () => {
+  it("should match the snapshot when isL3 is true", () => {
     const component = renderComponent(false);
     expect(component).toMatchSnapshot();
   });
 
-  it("should match the snapshot when isL3Enabled is false", () => {
+  it("should match the snapshot when isL3 is false", () => {
     const component = renderComponent(true);
     expect(component).toMatchSnapshot();
   });
