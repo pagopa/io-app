@@ -1,3 +1,4 @@
+import { NativeModules } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // using require import instead of static import due to library issue
@@ -12,8 +13,13 @@ const { reactotronRedux } = require("reactotron-redux");
 const ignoredUrls: RegExp | undefined = /symbolicate/;
 
 export const configureReactotron = () => {
+  // Automatically gets the machine's IP address to configure Reactotron
+  const scriptURL = NativeModules.SourceCode.scriptURL;
+  const host = scriptURL?.split("://")[1].split(":")[0];
+
   const rtt = ReactotronReactNative.configure({
-    host: "127.0.0.1"
+    name: "IO App",
+    host
   })
     .useReactNative({
       networking: {
