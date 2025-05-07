@@ -111,34 +111,36 @@ const InnerComponent = () => {
   const { tos_url } = useIOSelector(tosConfigSelector);
 
   return (
-    <View style={styles.container}>
-      <BackgroundGradient />
-      <View style={{ paddingBottom: 24 }}>
-        <View style={{ alignItems: "center" }}>
-          <ItwHero width={286} height={192} />
+    <VStack space={24}>
+      <View style={styles.cardContainer}>
+        <BackgroundGradient />
+        <View style={{ paddingBottom: 24 }}>
+          <View style={{ alignItems: "center" }}>
+            <ItwHero width={286} height={192} />
+          </View>
+          <VStack space={16} style={{ alignItems: "center" }}>
+            <Badge
+              variant="highlight"
+              text={I18n.t("features.itWallet.discovery.paywall.badge")}
+            />
+            <H4 color="white" style={{ textAlign: "center" }}>
+              {I18n.t("features.itWallet.discovery.paywall.description")}
+            </H4>
+          </VStack>
+          <VSpacer size={32} />
+          <FeatureHighlights />
+          <VSpacer size={24} />
+          <Divider />
+          <ProductHighlights />
         </View>
-        <VStack space={16} style={{ alignItems: "center" }}>
-          <Badge
-            variant="highlight"
-            text={I18n.t("features.itWallet.discovery.paywall.badge")}
-          />
-          <H4 color="white" style={{ textAlign: "center" }}>
-            {I18n.t("features.itWallet.discovery.paywall.description")}
-          </H4>
-        </VStack>
-        <VSpacer size={32} />
-        <FeatureHighlights />
-        <VSpacer size={24} />
-        <Divider />
-        <ProductHighlights />
-        <IOMarkdown
-          content={I18n.t("features.itWallet.discovery.paywall.tos", {
-            tos_url
-          })}
-          rules={markdownRules}
-        />
       </View>
-    </View>
+      <IOMarkdown
+        content={I18n.t("features.itWallet.discovery.paywall.tos", {
+          tos_url
+        })}
+        rules={markdownRules}
+      />
+    </VStack>
   );
 };
 
@@ -193,12 +195,20 @@ const FeatureHighlights = () => (
       body={I18n.t("features.itWallet.discovery.paywall.featureHighlights.2")}
       variant="contrast"
       pictogramProps={{
-        name: "cie",
+        name: "identity",
         pictogramStyle: "light-content"
       }}
     />
     <FeatureInfo
       body={I18n.t("features.itWallet.discovery.paywall.featureHighlights.3")}
+      variant="contrast"
+      pictogramProps={{
+        name: "cie",
+        pictogramStyle: "light-content"
+      }}
+    />
+    <FeatureInfo
+      body={I18n.t("features.itWallet.discovery.paywall.featureHighlights.4")}
       variant="contrast"
       pictogramProps={{
         name: "security",
@@ -209,7 +219,7 @@ const FeatureHighlights = () => (
       body={
         <VStack space={8}>
           <BodySmall color="white">
-            {I18n.t("features.itWallet.discovery.paywall.featureHighlights.4")}
+            {I18n.t("features.itWallet.discovery.paywall.featureHighlights.5")}
           </BodySmall>
           <View style={{ flexDirection: "row" }}>
             {institutionList.map((institutionId, index) => (
@@ -230,7 +240,7 @@ const FeatureHighlights = () => (
       }
       variant="contrast"
       pictogramProps={{
-        name: "itWallet",
+        name: "updateOS",
         pictogramStyle: "light-content"
       }}
     />
@@ -311,7 +321,7 @@ const ProductHighlights = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  cardContainer: {
     backgroundColor: IOColors["blueIO-500"],
     display: "flex",
     paddingHorizontal: 16,
