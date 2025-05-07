@@ -70,6 +70,10 @@
 
     <!-- END Required by react-native-push-notification -->
 
+    <!-- Sentry -->
+
+    <meta-data android:name="io.sentry.anr.enable" android:value="false" />
+
     <!-- Mixpanel -->
 
     <meta-data android:name="com.mixpanel.android.MPConfig.UseIpAddressForGeolocation" android:value="false" />
