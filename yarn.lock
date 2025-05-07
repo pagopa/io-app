@@ -3759,7 +3759,7 @@ __metadata:
   linkType: hard
 
 "@pagopa/io-app-design-system@git+https://github.com/pagopa/io-app-design-system.git#SIW-2315_SIW-2316":
-  version: 5.5.0
+  version: 5.5.1
   resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=9451a97f0b723456b3ff9457c545437c19f4affb"
   dependencies:
     "@testing-library/jest-native": ^5.4.2
