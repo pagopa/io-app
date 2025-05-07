@@ -32,7 +32,7 @@ type RightActionsProps = {
   accessibilityLabel: string;
   translateX: SharedValue<number>;
   backgroundColor: string;
-};
+} & Pick<IconButton, "color" | "icon">;
 
 const RightActions = ({
   showDeleteAlert,
@@ -88,14 +88,16 @@ type ListItemSwipeActionProps = {
   };
   accessibilityLabel?: string;
   openedItemRef?: MutableRefObject<(() => void) | null>;
-};
+} & Pick<IconButton, "color" | "icon">;
 
 const ListItemSwipeAction = ({
   children,
   swipeAction,
   alertProps,
   accessibilityLabel = "",
-  openedItemRef
+  openedItemRef,
+  icon,
+  color
 }: ListItemSwipeActionProps) => {
   const hapticTriggered = useRef(false);
   const translateX = useSharedValue(0);
@@ -125,7 +127,7 @@ const ListItemSwipeAction = ({
     ]);
 
   const backgroundStyle = useAnimatedStyle(() => {
-    const color =
+    const interpolatedColor =
       translateX.value === 0
         ? IOColors[theme["appBackground-primary"]]
         : interpolateColor(
@@ -135,7 +137,7 @@ const ListItemSwipeAction = ({
           );
 
     return {
-      backgroundColor: color
+      backgroundColor: interpolatedColor
     };
   });
 
@@ -214,6 +216,8 @@ const ListItemSwipeAction = ({
           style={[StyleSheet.absoluteFillObject, backgroundStyle]}
         />
         <RightActions
+          icon={icon}
+          color={color}
           backgroundColor={backgroundStyle.backgroundColor}
           translateX={translateX}
           showDeleteAlert={showAlertAction}

@@ -1,4 +1,8 @@
-import { Avatar, ListItemTransaction } from "@pagopa/io-app-design-system";
+import {
+  Avatar,
+  IOIcons,
+  ListItemTransaction
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { memo, MutableRefObject, useMemo } from "react";
@@ -61,6 +65,7 @@ const ReceiptListItemTransaction = memo(
     const dispatch = useIODispatch();
 
     const swipeActionProps = {
+      icon: "eyeHide" as IOIcons,
       accessibilityLabel: I18n.t(
         "features.payments.transactions.receipt.hideFromList"
       ),
@@ -88,6 +93,7 @@ const ReceiptListItemTransaction = memo(
     if (transaction.isCart) {
       return (
         <ListItemSwipeAction
+          color="contrast"
           {...swipeActionProps}
           openedItemRef={openedItemRef}
         >
@@ -109,7 +115,11 @@ const ReceiptListItemTransaction = memo(
     }
 
     return (
-      <ListItemSwipeAction {...swipeActionProps} openedItemRef={openedItemRef}>
+      <ListItemSwipeAction
+        color="contrast"
+        {...swipeActionProps}
+        openedItemRef={openedItemRef}
+      >
         <ListItemTransaction
           paymentLogoIcon={transactionLogo}
           onPress={onPress}

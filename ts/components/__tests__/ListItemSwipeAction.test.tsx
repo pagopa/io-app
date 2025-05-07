@@ -52,6 +52,7 @@ describe("ListItemSwipeAction", () => {
   it("triggers Alert on icon press", () => {
     const { getByA11yLabel } = renderWithNavigation(
       <ListItemSwipeAction
+        icon="eyeHide"
         swipeAction={swipeActionMock}
         alertProps={alertProps}
         accessibilityLabel="Hide item"
@@ -77,6 +78,7 @@ describe("ListItemSwipeAction", () => {
 
     const { getByA11yLabel } = renderWithNavigation(
       <ListItemSwipeAction
+        icon="eyeHide"
         swipeAction={swipeActionMock}
         alertProps={alertProps}
         accessibilityLabel="Hide item"
@@ -97,6 +99,7 @@ describe("ListItemSwipeAction", () => {
 
     const { getByA11yLabel } = renderWithNavigation(
       <ListItemSwipeAction
+        icon="eyeHide"
         swipeAction={swipeActionMock}
         alertProps={alertProps}
         accessibilityLabel="Hide item"
@@ -114,6 +117,7 @@ describe("ListItemSwipeAction", () => {
 
     const { getByText } = renderWithNavigation(
       <ListItemSwipeAction
+        icon="eyeHide"
         swipeAction={swipeActionMock}
         alertProps={alertProps}
         accessibilityLabel="Hide item"
@@ -134,6 +138,7 @@ describe("ListItemSwipeAction", () => {
 
     renderWithNavigation(
       <ListItemSwipeAction
+        icon="eyeHide"
         swipeAction={swipeActionMock}
         alertProps={alertProps}
         accessibilityLabel="Hide item"
@@ -161,6 +166,7 @@ describe("ListItemSwipeAction", () => {
 
     const { getByA11yLabel } = renderWithNavigation(
       <ListItemSwipeAction
+        icon="eyeHide"
         swipeAction={swipeActionMock}
         alertProps={alertProps}
         accessibilityLabel="Hide item"
@@ -184,6 +190,7 @@ describe("ListItemSwipeAction", () => {
 
     const { getByText } = renderWithNavigation(
       <ListItemSwipeAction
+        icon="eyeHide"
         swipeAction={swipeActionMock}
         alertProps={alertProps}
         accessibilityLabel="Hide item"
@@ -199,6 +206,7 @@ describe("ListItemSwipeAction", () => {
   it("handles gesture translation correctly", () => {
     renderWithNavigation(
       <ListItemSwipeAction
+        icon="eyeHide"
         swipeAction={swipeActionMock}
         alertProps={alertProps}
         accessibilityLabel="Hide item"
@@ -221,6 +229,7 @@ describe("ListItemSwipeAction", () => {
   it("renders RightActions component with correct props", () => {
     const { getByA11yLabel } = renderWithNavigation(
       <ListItemSwipeAction
+        icon="eyeHide"
         swipeAction={swipeActionMock}
         alertProps={alertProps}
         accessibilityLabel="Hide item"
