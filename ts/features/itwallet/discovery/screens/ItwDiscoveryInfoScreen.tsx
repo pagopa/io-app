@@ -9,9 +9,10 @@ import {
   trackItWalletActivationStart,
   trackItWalletIntroScreen
 } from "../../analytics/index.ts";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
-  isL3Enabled?: boolean;
+  isL3?: boolean;
 };
 
 export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
@@ -25,7 +26,7 @@ export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
 export const ItwDiscoveryInfoScreen = ({
   route
 }: ItwDiscoveryInfoScreenProps) => {
-  const { isL3Enabled = false } = route.params;
+  const { isL3 = false } = route.params;
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
@@ -35,12 +36,16 @@ export const ItwDiscoveryInfoScreen = ({
     }, [])
   );
 
+  useOnFirstRender(() => {
+    machineRef.send({ type: "start", isL3 });
+  });
+
   const handleContinuePress = useCallback(() => {
     trackItWalletActivationStart();
     machineRef.send({ type: "accept-tos" });
   }, [machineRef]);
 
-  if (!isL3Enabled) {
+  if (!isL3) {
     return <ItwDiscoveryInfoComponent onContinuePress={handleContinuePress} />;
   }
 

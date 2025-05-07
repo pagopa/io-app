@@ -5,6 +5,7 @@ export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
 export type Start = {
   type: "start";
+  isL3?: boolean;
 };
 
 export type AcceptTos = {
@@ -82,6 +83,10 @@ export type StartReissuing = {
   type: "start-reissuing";
 };
 
+export type Reset = {
+  type: "reset";
+};
+
 export type EidIssuanceEvents =
   | Start
   | AcceptTos
@@ -101,4 +106,5 @@ export type EidIssuanceEvents =
   | RevokeWalletInstance
   | ErrorActorEvent
   | ExternalErrorEvent
-  | StartReissuing;
+  | StartReissuing
+  | Reset;

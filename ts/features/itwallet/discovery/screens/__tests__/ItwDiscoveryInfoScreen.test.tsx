@@ -23,7 +23,7 @@ describe("ItwDiscoveryInfoScreen", () => {
   });
 });
 
-const renderComponent = (isL3Enabled: boolean = false) => {
+const renderComponent = (isL3: boolean = false) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -47,7 +47,7 @@ const renderComponent = (isL3Enabled: boolean = false) => {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     WrappedComponent,
     ITW_ROUTES.DISCOVERY.INFO,
-    { isL3Enabled },
+    { isL3 },
     store
   );
 };
