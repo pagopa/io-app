@@ -1,5 +1,5 @@
 import {
-  ButtonOutline,
+  IOButton,
   ContentWrapper,
   H6,
   IOSkeleton,
@@ -119,12 +119,11 @@ const useIdPayTimelineDetailsBottomSheet = (
   const modalFooter = (
     <ContentWrapper>
       <View style={styles.footer}>
-        <ButtonOutline
+        <IOButton
+          fullWidth
+          variant="outline"
           label={I18n.t("global.buttons.close")}
-          accessibilityLabel={I18n.t("global.buttons.close")}
-          color="primary"
           onPress={() => modal.dismiss()}
-          fullWidth={true}
         />
       </View>
     </ContentWrapper>
