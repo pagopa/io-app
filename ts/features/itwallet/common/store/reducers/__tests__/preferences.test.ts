@@ -133,7 +133,7 @@ describe("IT Wallet preferences reducer", () => {
         claimValuesHidden: true,
         isWalletInstanceRemotelyActive: true,
         isL3Enabled: true,
-        offlineBannerHidden: true,
+        offlineBannerHidden: true
       },
       action
     );
@@ -144,5 +144,4 @@ describe("IT Wallet preferences reducer", () => {
       isL3Enabled: true
     });
   });
-
 });
