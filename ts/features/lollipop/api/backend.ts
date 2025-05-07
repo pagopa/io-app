@@ -15,7 +15,8 @@ const createLollipopClient = (
 ) =>
   createClient({
     baseUrl,
-    fetchApi: lollipopFetch(lollipopConfig, keyInfo)
+    fetchApi: lollipopFetch(lollipopConfig, keyInfo),
+    basePath: ""
   });
 
 type LollipopSignRequestBody = {
