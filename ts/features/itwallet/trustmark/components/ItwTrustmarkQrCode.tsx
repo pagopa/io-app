@@ -1,7 +1,7 @@
 import {
   Body,
-  ButtonLink,
   Icon,
+  IOButton,
   IOColors,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
@@ -37,7 +37,8 @@ const ItwTrustmarkQrCode = () => {
             {I18n.t("features.itWallet.trustmark.failure.description")}
           </Body>
           <View>
-            <ButtonLink
+            <IOButton
+              variant="link"
               label={I18n.t("features.itWallet.trustmark.failure.action")}
               onPress={handleOnRetry}
             />

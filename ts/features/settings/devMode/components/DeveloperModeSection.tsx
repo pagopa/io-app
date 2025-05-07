@@ -1,8 +1,9 @@
 import {
-  ButtonSolid,
   ContentWrapper,
   Divider,
   H2,
+  IOButton,
+  IOButtonBlockSpecificProps,
   IOToast,
   IOVisualCostants,
   ListItemHeader,
@@ -77,7 +78,7 @@ type TestEnvironmentsListItem = Pick<
 
 type DevActionButton = {
   condition: boolean;
-} & Pick<ComponentProps<typeof ButtonSolid>, "color" | "label" | "onPress">;
+} & Pick<IOButtonBlockSpecificProps, "color" | "label" | "onPress">;
 
 const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
@@ -175,8 +176,9 @@ const DeveloperActionsSection = () => {
   const renderDevActionButton = ({
     item: { color = "danger", label, onPress }
   }: ListRenderItemInfo<DevActionButton>) => (
-    <ButtonSolid
+    <IOButton
       fullWidth
+      variant="solid"
       color={color}
       label={label}
       accessibilityLabel={label}
