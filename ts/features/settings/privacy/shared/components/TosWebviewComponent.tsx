@@ -1,4 +1,4 @@
-import { FooterActions } from "@pagopa/io-app-design-system";
+import { FooterActions, VSpacer } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { FunctionComponent, memo, useCallback, useState } from "react";
@@ -82,16 +82,20 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
         />
       </View>
       {shouldRenderFooter && onAcceptTos && (
-        <FooterActions
-          actions={{
-            type: "SingleButton",
-            primary: {
-              label: I18n.t("onboarding.tos.accept"),
-              onPress: onAcceptTos,
-              testID: "AcceptToSButton"
-            }
-          }}
-        />
+        <>
+          <VSpacer size={48} />
+          <VSpacer size={48} />
+          <FooterActions
+            actions={{
+              type: "SingleButton",
+              primary: {
+                label: I18n.t("onboarding.tos.accept"),
+                onPress: onAcceptTos,
+                testID: "AcceptToSButton"
+              }
+            }}
+          />
+        </>
       )}
     </>
   );
