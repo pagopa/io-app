@@ -24,6 +24,10 @@ export type Context = {
    */
   rpConf: RelyingPartyConfiguration | undefined;
   /**
+   * The Encoded Request Object fetched from the Relying Party in the authorization request
+   */
+  requestObjectEncodedJwt: string | undefined;
+  /**
    * The Request Object fetched from the Relying Party with the presentation details
    */
   requestObject: RequestObject | undefined;
@@ -48,6 +52,7 @@ export const InitialContext: Context = {
   failure: undefined,
   rpSubject: undefined,
   rpConf: undefined,
+  requestObjectEncodedJwt: undefined,
   requestObject: undefined,
   presentationDetails: undefined,
   selectedOptionalCredentials: new Set()

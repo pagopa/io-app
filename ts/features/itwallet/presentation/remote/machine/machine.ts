@@ -8,6 +8,8 @@ import {
   EvaluateRelyingPartyTrustOutput,
   GetPresentationDetailsInput,
   GetPresentationDetailsOutput,
+  GetRequestObjectInput,
+  GetRequestObjectOutput,
   SendAuthorizationResponseInput,
   SendAuthorizationResponseOutput
 } from "./actors";
@@ -35,6 +37,10 @@ export const itwRemoteMachine = setup({
     evaluateRelyingPartyTrust: fromPromise<
       EvaluateRelyingPartyTrustOutput,
       EvaluateRelyingPartyTrustInput
+    >(notImplemented),
+    getRequestObject: fromPromise<
+      GetRequestObjectOutput,
+      GetRequestObjectInput
     >(notImplemented),
     getPresentationDetails: fromPromise<
       GetPresentationDetailsOutput,
@@ -104,8 +110,28 @@ export const itwRemoteMachine = setup({
         src: "evaluateRelyingPartyTrust",
         input: ({ context }) => ({ qrCodePayload: context.payload }),
         onDone: {
-          target: "GettingPresentationDetails",
+          target: "GettingRequestObject",
           actions: assign(({ event }) => event.output)
+        },
+        onError: {
+          actions: "setFailure",
+          target: "Failure"
+        }
+      }
+    },
+    GettingRequestObject: {
+      tags: [ItwPresentationTags.Loading],
+      description: "Get the Request Object from the authorization Request",
+      invoke: {
+        src: "getRequestObject",
+        input: ({ context }) => ({
+          qrCodePayload: context.payload
+        }),
+        onDone: {
+          actions: assign(({ event }) => ({
+            requestObjectEncodedJwt: event.output
+          })),
+          target: "GettingPresentationDetails"
         },
         onError: {
           actions: "setFailure",
@@ -122,6 +148,7 @@ export const itwRemoteMachine = setup({
         input: ({ context }) => ({
           qrCodePayload: context.payload,
           rpSubject: context.rpSubject,
+          requestObjectEncodedJwt: context.requestObjectEncodedJwt,
           rpConf: context.rpConf
         }),
         onDone: {
