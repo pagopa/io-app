@@ -37,7 +37,7 @@ const renderWithNavigation = () =>
       <ListItemSwipeAction
         color="contrast"
         icon="eyeHide"
-        onRightActionPressed={({ resetSwipePosition, triggerSwipeAction }) => {
+        onRightActionPressed={({ triggerSwipeAction }) => {
           swipeActionMock();
           triggerSwipeAction();
         }}
