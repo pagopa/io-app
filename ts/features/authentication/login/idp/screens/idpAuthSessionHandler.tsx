@@ -17,8 +17,8 @@ import { mixpanelTrack } from "../../../../../mixpanel";
 
 import {
   Body,
-  ButtonSolid,
   H6,
+  IOButton,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -404,8 +404,9 @@ export const AuthSessionPage = () => {
               <Body>{I18n.t("spid.pending_login.details")}</Body>
             </View>
             <View style={styles.buttonContainer}>
-              <ButtonSolid
+              <IOButton
                 fullWidth
+                variant="solid"
                 label={I18n.t("spid.pending_login.button")}
                 accessibilityLabel={I18n.t("spid.pending_login.button")}
                 onPress={onBack}

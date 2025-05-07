@@ -1,4 +1,4 @@
-import { ButtonOutline, IOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { IOButton, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import IOMarkdown from "../../../../../../components/IOMarkdown";
 import I18n from "../../../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
@@ -13,10 +13,10 @@ const EycaInformationComponent: React.FunctionComponent = () => (
   <>
     <IOMarkdown content={I18n.t("bonus.cgn.detail.status.eycaDescription")} />
     <VSpacer size={16} />
-    <ButtonOutline
+    <IOButton
+      variant="outline"
       fullWidth
       label={I18n.t("bonus.cgn.detail.cta.eyca.bottomSheet")}
-      accessibilityLabel={I18n.t("bonus.cgn.detail.cta.eyca.bottomSheet")}
       onPress={() =>
         openWebUrl(EYCA_WEBSITE_BASE_URL, () =>
           IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
