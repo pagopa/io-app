@@ -47,7 +47,10 @@ describe("isItwDiscoveryBannerRenderableSelector", () => {
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(lifecycleValid);
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledAndFiscalCodeWhitelistedSelector")
+        .spyOn(
+          preferencesSelectors,
+          "itwIsL3EnabledAndFiscalCodeWhitelistedSelector"
+        )
         .mockReturnValue(false);
 
       expect(
@@ -176,7 +179,10 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
         .spyOn(ingressSelectors, "offlineAccessReasonSelector")
         .mockReturnValue(offlineAccessReason);
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledAndFiscalCodeWhitelistedSelector")
+        .spyOn(
+          preferencesSelectors,
+          "itwIsL3EnabledAndFiscalCodeWhitelistedSelector"
+        )
         .mockReturnValue(isL3Enabled);
       jest
         .spyOn(preferencesSelectors, "itwAuthLevelSelector")
