@@ -1,8 +1,4 @@
-import {
-  ButtonLink,
-  ButtonLinkProps,
-  ButtonSolid
-} from "@pagopa/io-app-design-system";
+import { IOButton } from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n.ts";
@@ -20,38 +16,29 @@ const ItwPresentationCredentialCardFlipButton = ({
   isFlipped,
   handleOnPress,
   fullScreen = false
-}: ItwPresentationCredentialCardFlipButtonProps) => {
-  const viewStyle = fullScreen ? styles.fullWidthButton : styles.button;
-
-  const buttonProps: ButtonLinkProps = {
-    label: I18n.t(
-      `features.itWallet.presentation.credentialDetails.card.${
-        isFlipped ? "showFront" : "showBack"
-      }`
-    ),
-    onPress: handleOnPress,
-    icon: "switchCard",
-    iconPosition: "end"
-  };
-
-  return (
-    <View
-      style={viewStyle}
-      accessible={true}
-      accessibilityLabel={I18n.t(
-        "features.itWallet.presentation.credentialDetails.card.showBack"
+}: ItwPresentationCredentialCardFlipButtonProps) => (
+  <View
+    style={fullScreen ? styles.fullWidthButton : styles.button}
+    accessible={true}
+    accessibilityLabel={I18n.t(
+      "features.itWallet.presentation.credentialDetails.card.showBack"
+    )}
+    accessibilityRole="switch"
+    accessibilityState={{ checked: isFlipped }}
+  >
+    <IOButton
+      variant={fullScreen ? "solid" : "link"}
+      label={I18n.t(
+        `features.itWallet.presentation.credentialDetails.card.${
+          isFlipped ? "showFront" : "showBack"
+        }`
       )}
-      accessibilityRole="switch"
-      accessibilityState={{ checked: isFlipped }}
-    >
-      {fullScreen ? (
-        <ButtonSolid {...buttonProps} />
-      ) : (
-        <ButtonLink {...buttonProps} />
-      )}
-    </View>
-  );
-};
+      onPress={handleOnPress}
+      icon="switchCard"
+      iconPosition="end"
+    />
+  </View>
+);
 
 const styles = StyleSheet.create({
   button: {
