@@ -47,7 +47,7 @@ const gradientSafeAreaHeight: IOSpacingScale = 96;
 /* End content margin before the actions */
 const contentEndMargin: IOSpacingScale = 32;
 /* Extra bottom margin for iPhone bottom handle because
-     ButtonLink doesn't have a fixed height */
+  Link variant doesn't have a fixed height */
 const extraSafeAreaMargin: IOSpacingScale = 8;
 
 const styles = StyleSheet.create({

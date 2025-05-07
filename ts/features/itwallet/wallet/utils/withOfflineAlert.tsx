@@ -1,6 +1,6 @@
 import {
   AlertEdgeToEdgeWrapper,
-  ButtonSolid,
+  IOButton,
   IOColors,
   VStack,
   useIOToast
@@ -88,7 +88,8 @@ const useOfflineAlertDetailModal = (
             `features.itWallet.offline.${offlineAccessReason}.modal.content`
           )}
         />
-        <ButtonSolid
+        <IOButton
+          variant="solid"
           label={I18n.t(
             `features.itWallet.offline.${offlineAccessReason}.modal.footerAction`
           )}

@@ -1,9 +1,9 @@
 import {
   Body,
   BodyProps,
-  ButtonLink,
   ComposedBodyFromArray,
   H3,
+  IOButton,
   IOPictograms,
   Pictogram,
   VStack
@@ -17,7 +17,7 @@ export type IOScrollViewCentredContent = {
   title: string;
   description?: string | Array<BodyProps>;
   additionalLink?: Pick<
-    ComponentProps<typeof ButtonLink>,
+    ComponentProps<typeof IOButton>,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
   actions: IOScrollViewActions;
@@ -58,7 +58,7 @@ export const IOScrollViewCentredContent = ({
       </View>
       {additionalLink && (
         <View style={{ alignSelf: "center" }}>
-          <ButtonLink {...additionalLink} />
+          <IOButton variant="link" {...additionalLink} />
         </View>
       )}
     </VStack>
