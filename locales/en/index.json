@@ -1536,7 +1536,7 @@
       "fee": "Commissione",
       "feeAppliedBy": "Applicata da",
       "editButton": "Modifica",
-      "termsAndConditions": "By proceeding, you accept the [Terms and Conditions](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) of use and confirm that you have read the {{pspName}} [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/).",
+      "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) of {{pspName}}.",
       "a11y": {
         "announce": "Payment Summary"
       }
