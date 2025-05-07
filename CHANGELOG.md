@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0-canary.7016](https://github.com/pagopa/io-app/compare/3.5.0-rc.0...3.5.0-canary.7016) (2025-05-07)
+
+
+### Bug Fixes
+
+* config file on canary build ([799983a](https://github.com/pagopa/io-app/commit/799983a0ec86092b824b036567f07ff9fede477d))
+
+
+### Chores
+
+* [[IOPLT-1096](https://pagopa.atlassian.net/browse/IOPLT-1096)] Replace all the buttons with unified `IOButton` ([#6919](https://github.com/pagopa/io-app/issues/6919)) ([dd782be](https://github.com/pagopa/io-app/commit/dd782bee82c17adeaa2d0407bc3be5e5351b803b))
+* add release title ([4f84a09](https://github.com/pagopa/io-app/commit/4f84a0937041eddafaed4eb44363842de3aa1785))
+* remove unwanted changes ([a0d9702](https://github.com/pagopa/io-app/commit/a0d9702ed7891bd940b43b09a4f7ee5ea29d19cf))
+
 ## [3.5.0-rc.0](https://github.com/pagopa/io-app/compare/3.4.0-rc.5...3.5.0-rc.0) (2025-05-07)
 
 
