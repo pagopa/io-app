@@ -5,7 +5,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { memo, MutableRefObject, useMemo } from "react";
+import { memo, MutableRefObject, useMemo, useRef } from "react";
+import { Alert } from "react-native";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import ListItemSwipeAction from "../../../../components/ListItemSwipeAction";
 import I18n from "../../../../i18n";
@@ -63,36 +64,53 @@ const ReceiptListItemTransaction = memo(
     );
 
     const dispatch = useIODispatch();
+    const swipeRef = useRef<{
+      triggerSwipeAction: () => void;
+      resetSwipePosition: () => void;
+    }>(null);
 
     const swipeActionProps = {
       icon: "eyeHide" as IOIcons,
       accessibilityLabel: I18n.t(
         "features.payments.transactions.receipt.hideFromList"
       ),
-      swipeAction: () => {
-        dispatch(
-          hidePaymentsReceiptAction.request({
-            transactionId: transaction.eventId
-          })
+      onRightActionPressed: () => {
+        Alert.alert(
+          I18n.t("features.payments.transactions.receipt.hideBanner.title"),
+          I18n.t("features.payments.transactions.receipt.hideBanner.content"),
+          [
+            {
+              text: I18n.t("global.buttons.cancel"),
+              style: "cancel",
+              onPress: () => {
+                setTimeout(() => {
+                  swipeRef.current?.resetSwipePosition();
+                }, 50);
+              }
+            },
+            {
+              text: I18n.t(
+                "features.payments.transactions.receipt.hideBanner.accept"
+              ),
+              style: "destructive",
+              onPress: () => {
+                swipeRef.current?.triggerSwipeAction();
+                dispatch(
+                  hidePaymentsReceiptAction.request({
+                    transactionId: transaction.eventId
+                  })
+                );
+              }
+            }
+          ]
         );
-      },
-      alertProps: {
-        title: I18n.t(
-          "features.payments.transactions.receipt.hideBanner.title"
-        ),
-        message: I18n.t(
-          "features.payments.transactions.receipt.hideBanner.content"
-        ),
-        confirmText: I18n.t(
-          "features.payments.transactions.receipt.hideBanner.accept"
-        ),
-        cancelText: I18n.t("global.buttons.cancel")
       }
     };
 
     if (transaction.isCart) {
       return (
         <ListItemSwipeAction
+          ref={swipeRef}
           color="contrast"
           {...swipeActionProps}
           openedItemRef={openedItemRef}
@@ -116,6 +134,7 @@ const ReceiptListItemTransaction = memo(
 
     return (
       <ListItemSwipeAction
+        ref={swipeRef}
         color="contrast"
         {...swipeActionProps}
         openedItemRef={openedItemRef}

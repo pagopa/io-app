@@ -8,8 +8,15 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { MutableRefObject, ReactNode, useCallback, useRef } from "react";
-import { Alert, StyleSheet, useWindowDimensions, View } from "react-native";
+import {
+  MutableRefObject,
+  ReactNode,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  forwardRef
+} from "react";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 import {
   GestureEvent,
   GestureHandlerRootView,
@@ -27,15 +34,16 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 
+// Right swipe action button component
 type RightActionsProps = {
-  showDeleteAlert: () => void;
+  onRightActionPressed: () => void;
   accessibilityLabel: string;
   translateX: SharedValue<number>;
   backgroundColor: string;
 } & Pick<IconButton, "color" | "icon">;
 
 const RightActions = ({
-  showDeleteAlert,
+  onRightActionPressed,
   accessibilityLabel,
   translateX,
   backgroundColor,
@@ -72,191 +80,188 @@ const RightActions = ({
           accessibilityLabel={accessibilityLabel}
           icon={icon}
           color={color}
-          onPress={showDeleteAlert}
+          onPress={onRightActionPressed}
         />
       </Animated.View>
     </View>
   );
 };
 
+// Swipe component props and ref type
 type ListItemSwipeActionProps = {
   children: ReactNode;
-  swipeAction: () => void;
-  alertProps: {
-    title: string;
-    message: string;
-    confirmText: string;
-    cancelText: string;
-  };
+  onRightActionPressed: () => void;
   accessibilityLabel?: string;
   openedItemRef?: MutableRefObject<(() => void) | null>;
 } & Pick<IconButton, "color" | "icon">;
 
-const ListItemSwipeAction = ({
-  children,
-  swipeAction,
-  alertProps,
-  accessibilityLabel = "",
-  openedItemRef,
-  icon,
-  color
-}: ListItemSwipeActionProps) => {
-  const hapticTriggered = useRef(false);
-  const translateX = useSharedValue(0);
-  const { theme } = useIOThemeContext();
-  const { width } = useWindowDimensions();
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
+export type ListItemSwipeActionRef = {
+  triggerSwipeAction: () => void;
+  resetSwipePosition: () => void;
+};
 
-  const gestureContext = useRef({ startX: 0 });
+const ListItemSwipeAction = forwardRef<
+  ListItemSwipeActionRef,
+  ListItemSwipeActionProps
+>(
+  (
+    {
+      children,
+      onRightActionPressed,
+      accessibilityLabel = "",
+      openedItemRef,
+      icon,
+      color
+    },
+    ref
+  ) => {
+    const hapticTriggered = useRef(false);
+    const translateX = useSharedValue(0);
+    const { theme } = useIOThemeContext();
+    const { width } = useWindowDimensions();
+    const backgroundColor = IOColors[theme["appBackground-primary"]];
+    const gestureContext = useRef({ startX: 0 });
 
-  const showAlertAction = () =>
-    Alert.alert(alertProps.title, alertProps.message, [
-      {
-        text: alertProps.cancelText,
-        onPress: () => {
-          translateX.value = withSpring(0, IOSpringValues.accordion);
-        },
-        style: "cancel"
+    // Expose method to parent
+    useImperativeHandle(ref, () => ({
+      triggerSwipeAction: () => {
+        "worklet";
+        translateX.value = withTiming(-500, { duration: 300 });
       },
-      {
-        text: alertProps.confirmText,
-        style: "destructive",
-        onPress: () => {
-          translateX.value = withTiming(-500, { duration: 300 });
-          swipeAction();
+      resetSwipePosition: () => {
+        "worklet";
+        translateX.value = withSpring(0, IOSpringValues.accordion);
+      }
+    }));
+
+    const backgroundStyle = useAnimatedStyle(() => {
+      const interpolatedColor =
+        translateX.value === 0
+          ? IOColors[theme["appBackground-primary"]]
+          : interpolateColor(
+              translateX.value,
+              [-width * 0.9, -width * 0.2],
+              [IOColors["error-600"], IOColors["error-600"]]
+            );
+
+      return {
+        backgroundColor: interpolatedColor
+      };
+    });
+
+    const animatedStyle = useAnimatedStyle(() => ({
+      transform: [{ translateX: translateX.value }]
+    }));
+
+    const handleGestureEvent = (
+      event: GestureEvent<PanGestureHandlerEventPayload>
+    ) => {
+      const { translationX } = event.nativeEvent;
+
+      if (translationX < 0) {
+        const newTranslateX = gestureContext.current.startX + translationX;
+
+        // Clamp value to avoid over-dragging
+        translateX.value = Math.max(newTranslateX, -width * 0.9);
+
+        if (openedItemRef?.current && openedItemRef.current !== closeItem) {
+          openedItemRef.current();
+        }
+        if (openedItemRef) {
+          openedItemRef.current = closeItem;
         }
       }
-    ]);
 
-  const backgroundStyle = useAnimatedStyle(() => {
-    const interpolatedColor =
-      translateX.value === 0
-        ? IOColors[theme["appBackground-primary"]]
-        : interpolateColor(
-            translateX.value,
-            [-width * 0.9, -width * 0.2],
-            [IOColors["error-600"], IOColors["error-600"]]
-          );
-
-    return {
-      backgroundColor: interpolatedColor
+      if (translationX < -200 && !hapticTriggered.current) {
+        HapticFeedback.trigger("impactLight");
+        hapticTriggered.current = true;
+      } else if (translationX >= -200) {
+        hapticTriggered.current = false;
+      }
     };
-  });
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: translateX.value }]
-  }));
+    const handleGestureEnd = (
+      event: HandlerStateChangeEvent<PanGestureHandlerEventPayload>
+    ) => {
+      const { translationX, velocityX } = event.nativeEvent;
 
-  const handleGestureEvent = (
-    event: GestureEvent<PanGestureHandlerEventPayload>
-  ) => {
-    const { translationX } = event.nativeEvent;
-
-    if (translationX < 0) {
-      const newTranslateX = gestureContext.current.startX + translationX;
-
-      // Clamp value to avoid over-dragging
-      translateX.value = Math.max(newTranslateX, -width * 0.9);
-
-      // Set the open item reference
-      if (openedItemRef?.current && openedItemRef.current !== closeItem) {
-        openedItemRef.current();
+      if (translationX < -200 || velocityX < -800) {
+        onRightActionPressed();
+      } else {
+        translateX.value = withSpring(
+          translationX < -50 ? -60 : 0,
+          IOSpringValues.accordion
+        );
       }
-      if (openedItemRef) {
-        openedItemRef.current = closeItem;
-      }
-    }
+    };
 
-    if (translationX < -200 && !hapticTriggered.current) {
-      HapticFeedback.trigger("impactLight");
-      hapticTriggered.current = true;
-    } else if (translationX >= -200) {
-      hapticTriggered.current = false;
-    }
-  };
+    const closeItem = () => {
+      translateX.value = withSpring(0, IOSpringValues.accordion);
+    };
 
-  const handleGestureEnd = (
-    event: HandlerStateChangeEvent<PanGestureHandlerEventPayload>
-  ) => {
-    const { translationX, velocityX } = event.nativeEvent;
+    // Close the item when the component is unmounted
+    // or when the screen is focused
+    // to avoid the item being open when navigating back
+    useFocusEffect(
+      useCallback(
+        () => () => {
+          translateX.value = withSpring(0, IOSpringValues.accordion);
+        },
+        [translateX]
+      )
+    );
 
-    if (translationX < -200 || velocityX < -800) {
-      showAlertAction();
-    } else {
-      translateX.value = withSpring(
-        translationX < -50 ? -60 : 0,
-        IOSpringValues.accordion
-      );
-    }
-  };
-
-  const closeItem = () => {
-    translateX.value = withSpring(0, IOSpringValues.accordion);
-  };
-
-  // Close the item when the component is unmounted
-  // or when the screen is focused
-  // to avoid the item being open when navigating back
-  useFocusEffect(
-    useCallback(
-      () => () => {
-        translateX.value = withSpring(0, IOSpringValues.accordion);
-      },
-      [translateX]
-    )
-  );
-
-  return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <ContentWrapper
-        style={{
-          flex: 1,
-          position: "relative"
-        }}
-      >
-        <Animated.View
-          style={[StyleSheet.absoluteFillObject, backgroundStyle]}
-        />
-        <RightActions
-          icon={icon}
-          color={color}
-          backgroundColor={backgroundStyle.backgroundColor}
-          translateX={translateX}
-          showDeleteAlert={showAlertAction}
-          accessibilityLabel={accessibilityLabel}
-        />
-        <PanGestureHandler
-          // This is the minimum distance to drag before the gesture is recognized
-          // We need it to be able to scroll the list
-          activeOffsetX={[-10, 10]} // Require a small horizontal drag to activate
-          failOffsetY={[-5, 5]} // Fail if vertical drag is more than 5px
-          onGestureEvent={handleGestureEvent}
-          onBegan={() => {
-            gestureContext.current.startX = translateX.value;
+    return (
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <ContentWrapper
+          style={{
+            flex: 1,
+            position: "relative"
           }}
-          onEnded={event =>
-            handleGestureEnd(
-              event as HandlerStateChangeEvent<PanGestureHandlerEventPayload>
-            )
-          }
         >
           <Animated.View
-            style={[
-              {
-                flex: 1,
-                backgroundColor,
-                // for swipe actions visual effect
-                marginHorizontal: IOVisualCostants.appMarginDefault * -1
-              },
-              animatedStyle
-            ]}
+            style={[StyleSheet.absoluteFillObject, backgroundStyle]}
+          />
+          <RightActions
+            icon={icon}
+            color={color}
+            backgroundColor={backgroundStyle.backgroundColor}
+            translateX={translateX}
+            onRightActionPressed={onRightActionPressed}
+            accessibilityLabel={accessibilityLabel}
+          />
+          <PanGestureHandler
+            // This is the minimum distance to drag before the gesture is recognized
+            // We need it to be able to scroll the list
+            activeOffsetX={[-10, 10]} // Require a small horizontal drag to activate
+            failOffsetY={[-5, 5]} // Fail if vertical drag is more than 5px
+            onGestureEvent={handleGestureEvent}
+            onBegan={() => {
+              gestureContext.current.startX = translateX.value;
+            }}
+            onEnded={event =>
+              handleGestureEnd(
+                event as HandlerStateChangeEvent<PanGestureHandlerEventPayload>
+              )
+            }
           >
-            <ContentWrapper>{children}</ContentWrapper>
-          </Animated.View>
-        </PanGestureHandler>
-      </ContentWrapper>
-    </GestureHandlerRootView>
-  );
-};
+            <Animated.View
+              style={[
+                {
+                  flex: 1,
+                  backgroundColor,
+                  marginHorizontal: IOVisualCostants.appMarginDefault * -1
+                },
+                animatedStyle
+              ]}
+            >
+              <ContentWrapper>{children}</ContentWrapper>
+            </Animated.View>
+          </PanGestureHandler>
+        </ContentWrapper>
+      </GestureHandlerRootView>
+    );
+  }
+);
 
 export default ListItemSwipeAction;
