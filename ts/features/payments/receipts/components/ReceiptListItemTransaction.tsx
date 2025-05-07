@@ -8,7 +8,9 @@ import { pipe } from "fp-ts/lib/function";
 import { memo, MutableRefObject, useMemo } from "react";
 import { Alert } from "react-native";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
-import ListItemSwipeAction from "../../../../components/ListItemSwipeAction";
+import ListItemSwipeAction, {
+  SwipeControls
+} from "../../../../components/ListItemSwipeAction";
 import I18n from "../../../../i18n";
 import { useIODispatch } from "../../../../store/hooks";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
@@ -73,10 +75,7 @@ const ReceiptListItemTransaction = memo(
       onRightActionPressed: ({
         resetSwipePosition,
         triggerSwipeAction
-      }: {
-        resetSwipePosition: () => void;
-        triggerSwipeAction: () => void;
-      }) => {
+      }: SwipeControls) => {
         Alert.alert(
           I18n.t("features.payments.transactions.receipt.hideBanner.title"),
           I18n.t("features.payments.transactions.receipt.hideBanner.content"),

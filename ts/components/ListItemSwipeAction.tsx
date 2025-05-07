@@ -80,16 +80,18 @@ const RightActions = ({
   );
 };
 
+export type SwipeControls = {
+  resetSwipePosition: () => void;
+  triggerSwipeAction: () => void;
+};
+
 // Props for the swipeable list item
 type ListItemSwipeActionProps = {
   children: ReactNode;
   icon: IconButton["icon"];
   color: IconButton["color"];
   accessibilityLabel?: string;
-  onRightActionPressed: (controls: {
-    resetSwipePosition: () => void;
-    triggerSwipeAction: () => void;
-  }) => void;
+  onRightActionPressed: (controls: SwipeControls) => void;
   openedItemRef?: MutableRefObject<(() => void) | null>;
 };
 
