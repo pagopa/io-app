@@ -38,7 +38,9 @@ const RightActions = ({
   showDeleteAlert,
   accessibilityLabel,
   translateX,
-  backgroundColor
+  backgroundColor,
+  icon,
+  color
 }: RightActionsProps) => {
   const animatedIconStyle = useAnimatedStyle(() => {
     const clamped = Math.max(-translateX.value, 0);
@@ -68,8 +70,8 @@ const RightActions = ({
       <Animated.View style={animatedIconStyle}>
         <IconButton
           accessibilityLabel={accessibilityLabel}
-          icon="eyeHide"
-          color="contrast"
+          icon={icon}
+          color={color}
           onPress={showDeleteAlert}
         />
       </Animated.View>
