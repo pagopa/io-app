@@ -1,7 +1,7 @@
 import {
   Body,
-  ButtonSolid,
   IOVisualCostants,
+  IOButton,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -29,13 +29,13 @@ const WalletEmptyScreenContent = () => {
         {I18n.t("features.wallet.home.emptyMessage")}
       </Body>
       <VSpacer size={24} />
-      <ButtonSolid
+      <IOButton
+        fullWidth
+        variant="solid"
         label={I18n.t("features.wallet.home.cta")}
-        accessibilityLabel={I18n.t("features.wallet.home.cta")}
         onPress={handleAddToWalletButtonPress}
         icon="addSmall"
         iconPosition="end"
-        fullWidth={true}
       />
     </View>
   );

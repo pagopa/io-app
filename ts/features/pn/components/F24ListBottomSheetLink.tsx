@@ -1,5 +1,4 @@
-import { StyleSheet, View } from "react-native";
-import { ButtonLink } from "@pagopa/io-app-design-system";
+import { IOButton } from "@pagopa/io-app-design-system";
 import { ThirdPartyAttachment } from "../../../../definitions/communications/ThirdPartyAttachment";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import I18n from "../../../i18n";
@@ -8,13 +7,6 @@ import { UIMessageId } from "../../messages/types";
 import { trackPNShowF24 } from "../analytics";
 import { useIODispatch } from "../../../store/hooks";
 import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
-
-const styles = StyleSheet.create({
-  buttonLinkContainer: {
-    justifyContent: "center",
-    alignSelf: "flex-start"
-  }
-});
 
 type F24ListBottomSheetLinkProps = {
   f24List: ReadonlyArray<ThirdPartyAttachment>;
@@ -50,16 +42,16 @@ export const F24ListBottomSheetLink = ({
     onDismiss: () => dispatch(cancelPreviousAttachmentDownload())
   });
   return (
-    <View style={styles.buttonLinkContainer}>
-      <ButtonLink
+    <>
+      <IOButton
+        variant="link"
+        label={I18n.t("features.pn.details.f24Section.showAll")}
         onPress={() => {
           trackPNShowF24();
           present();
         }}
-        label={I18n.t("features.pn.details.f24Section.showAll")}
-        accessibilityLabel={I18n.t("features.pn.details.f24Section.showAll")}
       />
       {bottomSheet}
-    </View>
+    </>
   );
 };
