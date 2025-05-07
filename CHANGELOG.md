@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0-canary.6969](https://github.com/pagopa/io-app/compare/3.4.0-rc.5...3.4.0-canary.6969) (2025-05-07)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1965](https://pagopa.atlassian.net/browse/SIW-1965),[SIW-2257](https://pagopa.atlassian.net/browse/SIW-2257)] Display missing credentials for presentation ([#6918](https://github.com/pagopa/io-app/issues/6918)) ([ec1b75e](https://github.com/pagopa/io-app/commit/ec1b75edd2d2770918ab140bcf05cf41280ae755))
+* **IT Wallet:** [[SIW-2306](https://pagopa.atlassian.net/browse/SIW-2306)] Add `ItwHighlightBanner` component ([#6921](https://github.com/pagopa/io-app/issues/6921)) ([7994d2d](https://github.com/pagopa/io-app/commit/7994d2d53ed6d774ce6603af6a663c3c85283e70))
+* [[IOCOM-2143](https://pagopa.atlassian.net/browse/IOCOM-2143),[IOCOM-2148](https://pagopa.atlassian.net/browse/IOCOM-2148)] Accessibility instruction for message archiving/unarchiving ([#6908](https://github.com/pagopa/io-app/issues/6908)) ([ba0b4f9](https://github.com/pagopa/io-app/commit/ba0b4f9de6760be5ea8041a57c25333737644ae6))
+* [[IOPLT-1015](https://pagopa.atlassian.net/browse/IOPLT-1015)] Offline UI Feedback ([#6891](https://github.com/pagopa/io-app/issues/6891)) ([c307f7d](https://github.com/pagopa/io-app/commit/c307f7d71973b5e943fc14f4d7ced639efb0cb0b))
+* **IT Wallet:** [[SIW-2157](https://pagopa.atlassian.net/browse/SIW-2157)] Add remote presentation ([#6879](https://github.com/pagopa/io-app/issues/6879)) ([f2c71e0](https://github.com/pagopa/io-app/commit/f2c71e06fdb7bfc1eb87e2be864c2209f505ca7b))
+* **IT Wallet:** [[SIW-2213](https://pagopa.atlassian.net/browse/SIW-2213)] add L3 identification mode ([#6902](https://github.com/pagopa/io-app/issues/6902)) ([4b6cb45](https://github.com/pagopa/io-app/commit/4b6cb45518b2f9caa3c5121fa7ed545a20ce9562))
+
+
+### Bug Fixes
+
+* [[IOPLT-0000](https://pagopa.atlassian.net/browse/IOPLT-0000)] Disables ANR errors to Sentry from native layer config ([#6952](https://github.com/pagopa/io-app/issues/6952)) ([71201d7](https://github.com/pagopa/io-app/commit/71201d7c0ab9b96daa9af5afb5bb964548b6bc74))
+* **IT Wallet:** [[SIW-2313](https://pagopa.atlassian.net/browse/SIW-2313)] Fix `flex` style on screens using `ForceScrollDownView` ([#6935](https://github.com/pagopa/io-app/issues/6935)) ([4e60522](https://github.com/pagopa/io-app/commit/4e605222a51023b9a1cc7d8671bc259a6442b486))
+* **IT Wallet:** [[SIW-2314](https://pagopa.atlassian.net/browse/SIW-2314)] Presentation claims optimization for UI display ([#6939](https://github.com/pagopa/io-app/issues/6939)) ([4adbf9f](https://github.com/pagopa/io-app/commit/4adbf9f0fc60cb910ef6d15b123b30ea31aa72ff))
+* **IT Wallet:** [[SIW-2339](https://pagopa.atlassian.net/browse/SIW-2339)] Disable status alert for offline mini-app ([#6950](https://github.com/pagopa/io-app/issues/6950)) ([c5a794c](https://github.com/pagopa/io-app/commit/c5a794c9e4be160ef95c4b1b3ae691d72de85bce))
+* [[IOPID-2689](https://pagopa.atlassian.net/browse/IOPID-2689)] edit offline wallet bottomsheet button copy  ([#6936](https://github.com/pagopa/io-app/issues/6936)) ([a960ab9](https://github.com/pagopa/io-app/commit/a960ab9f1495a430e2614ec4c6a25c5aad935651))
+* [[SIW-2312](https://pagopa.atlassian.net/browse/SIW-2312)] Fix visual glitches in some remote presentation's screens transitions ([#6937](https://github.com/pagopa/io-app/issues/6937)) ([f474a6b](https://github.com/pagopa/io-app/commit/f474a6b747f2e50dbc7f7b388ffcc1ba2d7ff105))
+
+
+### Chores
+
+* [[IOBP-1600](https://pagopa.atlassian.net/browse/IOBP-1600)] Adjust payment checkout tos EN text ([#6953](https://github.com/pagopa/io-app/issues/6953)) ([56c51a6](https://github.com/pagopa/io-app/commit/56c51a6e9a04b3ea274fd153cef01a507969c8ef))
+* [[IOBP-1612](https://pagopa.atlassian.net/browse/IOBP-1612)] Add payments receipt copy items with long press gesture ([#6951](https://github.com/pagopa/io-app/issues/6951)) ([87408b5](https://github.com/pagopa/io-app/commit/87408b514060ad63e8eb226b547496048831b943))
+* [[IOBP-1616](https://pagopa.atlassian.net/browse/IOBP-1616)] Add payment webview mixpanel tracking events ([#6943](https://github.com/pagopa/io-app/issues/6943)) ([711a84f](https://github.com/pagopa/io-app/commit/711a84f51f71e4a391b0ea1f6f706b2817205c61))
+* **IT Wallet:** [[SIW-2305](https://pagopa.atlassian.net/browse/SIW-2305)] Add remote presentation machine tests ([#6931](https://github.com/pagopa/io-app/issues/6931)) ([c8eaec2](https://github.com/pagopa/io-app/commit/c8eaec2f05d1f18b9eaa8b23c97facd7b3352a25))
+* [[IOPLT-1092](https://pagopa.atlassian.net/browse/IOPLT-1092)] Add dark mode support for the `ItwCredentialTrustmark` ([#6898](https://github.com/pagopa/io-app/issues/6898)) ([0ac28f5](https://github.com/pagopa/io-app/commit/0ac28f55b194683089a2767af844da94e67df25f))
+
 ## [3.4.0-rc.5](https://github.com/pagopa/io-app/compare/3.4.0-rc.4...3.4.0-rc.5) (2025-04-29)
 
 
