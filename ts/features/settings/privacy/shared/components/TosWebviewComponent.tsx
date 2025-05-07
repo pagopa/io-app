@@ -1,4 +1,7 @@
-import { FooterActions, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterActions,
+  useFooterActionsMeasurements
+} from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { FunctionComponent, memo, useCallback, useState } from "react";
@@ -36,6 +39,11 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
 }: Props) => {
   const [hasError, setHasError] = useState(false);
 
+  const showFooter = shouldRenderFooter && onAcceptTos;
+
+  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
+    useFooterActionsMeasurements();
+
   const handleError = useCallback(() => {
     handleLoadEnd();
     setHasError(true);
@@ -65,7 +73,15 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
     <TosWebviewErrorComponent handleRetry={handleRetry} />
   ) : (
     <>
-      <View style={{ flex: 1 }} testID="toSWebViewContainer">
+      <View
+        style={{
+          flex: 1,
+          paddingBottom: showFooter
+            ? footerActionsMeasurements.safeBottomAreaHeight
+            : 0
+        }}
+        testID="toSWebViewContainer"
+      >
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
@@ -81,21 +97,19 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
           )}
         />
       </View>
-      {shouldRenderFooter && onAcceptTos && (
-        <>
-          <VSpacer size={48} />
-          <VSpacer size={48} />
-          <FooterActions
-            actions={{
-              type: "SingleButton",
-              primary: {
-                label: I18n.t("onboarding.tos.accept"),
-                onPress: onAcceptTos,
-                testID: "AcceptToSButton"
-              }
-            }}
-          />
-        </>
+      {showFooter && (
+        <FooterActions
+          transparent
+          onMeasure={handleFooterActionsMeasurements}
+          actions={{
+            type: "SingleButton",
+            primary: {
+              label: I18n.t("onboarding.tos.accept"),
+              onPress: onAcceptTos,
+              testID: "AcceptToSButton"
+            }
+          }}
+        />
       )}
     </>
   );
