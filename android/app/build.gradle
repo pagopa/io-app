@@ -155,12 +155,14 @@ android {
     flavorDimensions += "version"
     productFlavors {
         create("production") {
-            applicationIdSuffix = "" // Nessun suffisso per la produzione
+            applicationIdSuffix = "" // No suffix for production builds
             versionNameSuffix = ""
         }
         create("canary") {
-            applicationIdSuffix = ".canary" // Suffix per identificare la build Canary
+            applicationIdSuffix = ".canary" // Suffix used to identify Canary builds
             versionNameSuffix = ""
+            resValue "string", "build_config_package", namespace
+            resValue "string", "app_name", "IO Canary"
         }
     }
     
