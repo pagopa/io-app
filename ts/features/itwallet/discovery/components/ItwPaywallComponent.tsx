@@ -16,7 +16,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
-import { useCallback, useState, ComponentProps } from "react";
+import { useCallback, useState } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import {
   Canvas,
@@ -101,13 +101,13 @@ export const ItwPaywallComponent = (_: ItwPaywallComponentProps) => {
           marginVertical: "-100%"
         }}
       >
-        <StaticContent />
+        <InnerComponent />
       </ContentWrapper>
     </IOScrollView>
   );
 };
 
-const StaticContent = () => {
+const InnerComponent = () => {
   const { tos_url } = useIOSelector(tosConfigSelector);
 
   return (
@@ -179,31 +179,34 @@ const BackgroundGradient = () => {
   );
 };
 
-const FeatureHighlights = () => {
-  const featureItems: Array<ComponentProps<typeof FeatureInfo>> = [
-    {
-      body: I18n.t("features.itWallet.discovery.paywall.featureHighlights.1"),
-      pictogramProps: {
+const FeatureHighlights = () => (
+  <VStack space={8}>
+    <FeatureInfo
+      body={I18n.t("features.itWallet.discovery.paywall.featureHighlights.1")}
+      variant="contrast"
+      pictogramProps={{
         name: "itWallet",
         pictogramStyle: "light-content"
-      }
-    },
-    {
-      body: I18n.t("features.itWallet.discovery.paywall.featureHighlights.2"),
-      pictogramProps: {
+      }}
+    />
+    <FeatureInfo
+      body={I18n.t("features.itWallet.discovery.paywall.featureHighlights.2")}
+      variant="contrast"
+      pictogramProps={{
         name: "cie",
         pictogramStyle: "light-content"
-      }
-    },
-    {
-      body: I18n.t("features.itWallet.discovery.paywall.featureHighlights.3"),
-      pictogramProps: {
+      }}
+    />
+    <FeatureInfo
+      body={I18n.t("features.itWallet.discovery.paywall.featureHighlights.3")}
+      variant="contrast"
+      pictogramProps={{
         name: "security",
         pictogramStyle: "light-content"
-      }
-    },
-    {
-      body: (
+      }}
+    />
+    <FeatureInfo
+      body={
         <VStack space={8}>
           <BodySmall color="white">
             {I18n.t("features.itWallet.discovery.paywall.featureHighlights.4")}
@@ -224,31 +227,15 @@ const FeatureHighlights = () => {
             ))}
           </View>
         </VStack>
-      ),
-      pictogramProps: {
-        name: "updateOS",
-        pictogramStyle: "light-content"
       }
-    }
-  ];
-
-  const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<ComponentProps<typeof FeatureInfo>>) => (
-      <FeatureInfo variant="contrast" {...item} />
-    ),
-    []
-  );
-
-  return (
-    <FlatList
-      ItemSeparatorComponent={() => <VSpacer size={8} />}
-      data={featureItems}
-      keyExtractor={(_, index) => `feature-${index}`}
-      renderItem={renderItem}
-      scrollEnabled={false}
+      variant="contrast"
+      pictogramProps={{
+        name: "itWallet",
+        pictogramStyle: "light-content"
+      }}
     />
-  );
-};
+  </VStack>
+);
 
 type ProductHighlightItem = {
   content: string;
