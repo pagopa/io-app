@@ -1362,8 +1362,7 @@
       "fee": "Kommission ",
       "feeAppliedBy": "Angewandt von: ",
       "editButton": "Ändern",
-      "termsAndConditions": "Wenn du fortfährst, erklärst du folgende Informationen gelesen und verstanden zu haben: ",
-      "termsAndConditionsLink": "Nutzungsbedingungen und Datenschutzrichtlinie",
+      "termsAndConditions": "Proseguendo accetti i [Termini e condizioni d’uso](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) e confermi di aver letto l'[Informativa Privacy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) di {{pspName}}",
       "a11y": {
         "announce": "Zusammenfassung Ihrer Zahlung"
       }
