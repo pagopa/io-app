@@ -1,7 +1,7 @@
 import {
-  ButtonLink,
   ContentWrapper,
   H2,
+  IOButton,
   IOPictograms,
   IconButton,
   Pictogram,
@@ -452,13 +452,14 @@ export const IdentificationModal = () => {
             <View>
               <VSpacer size={isDeviceScreenSmall ? 16 : 32} />
               <View style={{ alignSelf: "center" }}>
-                <ButtonLink
+                <IOButton
+                  variant="link"
                   textAlign="center"
+                  color="contrast"
                   /* Don't limit number of lines
                     when larger text is enabled */
                   numberOfLines={0}
                   accessibilityLabel={forgotCodeLabel}
-                  color="contrast"
                   label={forgotCodeLabel}
                   onPress={confirmResetAlert}
                 />

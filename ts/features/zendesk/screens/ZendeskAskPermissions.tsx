@@ -1,7 +1,7 @@
 import {
-  ButtonLink,
   ContentWrapper,
   Divider,
+  IOButton,
   IOToast,
   IOVisualCostants,
   ListItemHeader,
@@ -395,7 +395,8 @@ const ZendeskAskPermissions = () => {
       actions={buttonConf}
     >
       <ContentWrapper>
-        <ButtonLink
+        <IOButton
+          variant="link"
           accessibilityRole="link"
           label={I18n.t("support.askPermissions.privacyLink")}
           onPress={() => {
