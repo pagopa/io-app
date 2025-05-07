@@ -1,4 +1,4 @@
-import { ButtonLink } from "@pagopa/io-app-design-system";
+import { IOButton } from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n.ts";
@@ -24,7 +24,8 @@ const ItwPresentationCredentialCardHideValuesButton = ({
     accessibilityRole="switch"
     accessibilityState={{ checked: !valuesHidden }}
   >
-    <ButtonLink
+    <IOButton
+      variant="link"
       label={I18n.t(
         `features.itWallet.presentation.credentialDetails.card.${
           valuesHidden ? "showValues" : "hideValues"

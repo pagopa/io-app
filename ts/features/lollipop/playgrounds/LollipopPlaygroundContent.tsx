@@ -1,9 +1,8 @@
 import {
   Alert,
-  ButtonOutline,
-  ButtonSolid,
   CheckboxLabel,
   HSpacer,
+  IOButton,
   IOColors,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -73,8 +72,8 @@ const LollipopPlaygroundContent = (props: Props) => {
       </View>
       <VSpacer size={16} />
       <View style={styles.row}>
-        <ButtonSolid
-          accessibilityLabel="Sign body message"
+        <IOButton
+          variant="solid"
           label={`Sign message${
             props.playgroundState.doSignBody ? " with body" : ""
           }`}
@@ -82,8 +81,8 @@ const LollipopPlaygroundContent = (props: Props) => {
           onPress={() => props.onSignButtonPress(httpRequestBodyText)}
         />
         <HSpacer size={16} />
-        <ButtonOutline
-          accessibilityLabel="Clear"
+        <IOButton
+          variant="outline"
           label={"Clear"}
           disabled={!isMessageBodySet}
           onPress={() => {

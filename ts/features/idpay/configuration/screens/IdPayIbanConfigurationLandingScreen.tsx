@@ -1,7 +1,7 @@
 import {
   Body,
-  ButtonSolid,
   ContentWrapper,
+  IOButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -24,13 +24,11 @@ export const IdPayIbanConfigurationLandingScreen = () => {
     ),
     footer: (
       <ContentWrapper>
-        <ButtonSolid
+        <IOButton
+          fullWidth
+          variant="solid"
           label={I18n.t("idpay.configuration.iban.landing.modal.button")}
-          accessibilityLabel={I18n.t(
-            "idpay.configuration.iban.landing.modal.button"
-          )}
           onPress={() => dismiss()}
-          fullWidth={true}
         />
         <VSpacer size={32} />
       </ContentWrapper>
