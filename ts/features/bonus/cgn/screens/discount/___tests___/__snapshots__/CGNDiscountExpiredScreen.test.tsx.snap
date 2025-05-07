@@ -670,21 +670,22 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -720,16 +721,21 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >

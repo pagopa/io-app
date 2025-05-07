@@ -287,21 +287,22 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                   {
                     "alignItems": "center",
                     "borderCurve": "continuous",
-                    "borderRadius": 8,
                     "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
-                    "paddingHorizontal": 24,
+                    "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
                   {
-                    "height": 48,
+                    "paddingHorizontal": 24,
                   },
                   {
                     "backgroundColor": "#0B3EE3",
-                    "overflow": "hidden",
+                    "borderColor": "#FFFFFF",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": 48,
                   },
-                  false,
                   {},
                   false,
                   {
@@ -337,16 +338,21 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     [
                       {},
                       {
-                        "color": "#FFFFFF",
+                        "color": "#0E0F13",
                         "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
                         "fontWeight": "600",
-                        "lineHeight": 20,
+                        "lineHeight": undefined,
                       },
-                      {
-                        "alignSelf": "center",
-                      },
+                      [
+                        {
+                          "textAlign": "auto",
+                        },
+                        {
+                          "color": undefined,
+                        },
+                      ],
                     ]
                   }
                 >
@@ -377,7 +383,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
             accessibilityRole="button"
             accessibilityState={
               {
-                "busy": undefined,
+                "busy": false,
                 "checked": undefined,
                 "disabled": false,
                 "expanded": undefined,
@@ -412,7 +418,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
-            onTouchEnd={[Function]}
             style={
               {
                 "alignSelf": "flex-start",
@@ -425,55 +430,77 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                 [
                   {
                     "alignItems": "center",
+                    "borderCurve": "continuous",
                     "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
+                    "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
-                  false,
                   {
-                    "columnGap": 8,
+                    "paddingHorizontal": 0,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "borderColor": "#0B3EE3",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": undefined,
                   },
                   {},
-                  {
-                    "columnGap": 8,
-                  },
                   false,
+                  {},
                 ]
               }
             >
-              <Text
-                accessibilityElementsHidden={true}
-                accessible={false}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                importantForAccessibility="no-hide-descendants"
-                maxFontSizeMultiplier={1.5}
-                numberOfLines={1}
+              <View
                 style={
                   [
-                    {},
                     {
-                      "color": "#0E0F13",
-                      "fontFamily": "Titillio",
-                      "fontSize": 16,
-                      "fontStyle": "normal",
-                      "fontWeight": "600",
-                      "lineHeight": 20,
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
                     },
-                    [
-                      {
-                        "color": undefined,
-                      },
-                      {
-                        "textAlign": "auto",
-                      },
-                    ],
+                    {
+                      "columnGap": 8,
+                    },
+                    false,
                   ]
                 }
               >
-                Close
-              </Text>
+                <Text
+                  accessibilityElementsHidden={true}
+                  accessible={false}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  importantForAccessibility="no-hide-descendants"
+                  maxFontSizeMultiplier={1.5}
+                  numberOfLines={1}
+                  style={
+                    [
+                      {},
+                      {
+                        "color": "#0E0F13",
+                        "fontFamily": "Titillio",
+                        "fontSize": 16,
+                        "fontStyle": "normal",
+                        "fontWeight": "600",
+                        "lineHeight": 20,
+                      },
+                      [
+                        {
+                          "textAlign": "auto",
+                        },
+                        {
+                          "color": undefined,
+                        },
+                      ],
+                    ]
+                  }
+                >
+                  Close
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -772,21 +799,22 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                   {
                     "alignItems": "center",
                     "borderCurve": "continuous",
-                    "borderRadius": 8,
                     "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
-                    "paddingHorizontal": 24,
+                    "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
                   {
-                    "height": 48,
+                    "paddingHorizontal": 24,
                   },
                   {
                     "backgroundColor": "#0B3EE3",
-                    "overflow": "hidden",
+                    "borderColor": "#FFFFFF",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": 48,
                   },
-                  false,
                   {},
                   false,
                   {
@@ -822,16 +850,21 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     [
                       {},
                       {
-                        "color": "#FFFFFF",
+                        "color": "#0E0F13",
                         "fontFamily": "Titillio",
                         "fontSize": 16,
                         "fontStyle": "normal",
                         "fontWeight": "600",
-                        "lineHeight": 20,
+                        "lineHeight": undefined,
                       },
-                      {
-                        "alignSelf": "center",
-                      },
+                      [
+                        {
+                          "textAlign": "auto",
+                        },
+                        {
+                          "color": undefined,
+                        },
+                      ],
                     ]
                   }
                 >
@@ -862,7 +895,7 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
             accessibilityRole="button"
             accessibilityState={
               {
-                "busy": undefined,
+                "busy": false,
                 "checked": undefined,
                 "disabled": false,
                 "expanded": undefined,
@@ -897,7 +930,6 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
-            onTouchEnd={[Function]}
             style={
               {
                 "alignSelf": "flex-start",
@@ -910,55 +942,77 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                 [
                   {
                     "alignItems": "center",
+                    "borderCurve": "continuous",
                     "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
+                    "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
-                  false,
                   {
-                    "columnGap": 8,
+                    "paddingHorizontal": 0,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "borderColor": "#0B3EE3",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": undefined,
                   },
                   {},
-                  {
-                    "columnGap": 8,
-                  },
                   false,
+                  {},
                 ]
               }
             >
-              <Text
-                accessibilityElementsHidden={true}
-                accessible={false}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                importantForAccessibility="no-hide-descendants"
-                maxFontSizeMultiplier={1.5}
-                numberOfLines={1}
+              <View
                 style={
                   [
-                    {},
                     {
-                      "color": "#0E0F13",
-                      "fontFamily": "Titillio",
-                      "fontSize": 16,
-                      "fontStyle": "normal",
-                      "fontWeight": "600",
-                      "lineHeight": 20,
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
                     },
-                    [
-                      {
-                        "color": undefined,
-                      },
-                      {
-                        "textAlign": "auto",
-                      },
-                    ],
+                    {
+                      "columnGap": 8,
+                    },
+                    false,
                   ]
                 }
               >
-                Close
-              </Text>
+                <Text
+                  accessibilityElementsHidden={true}
+                  accessible={false}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  importantForAccessibility="no-hide-descendants"
+                  maxFontSizeMultiplier={1.5}
+                  numberOfLines={1}
+                  style={
+                    [
+                      {},
+                      {
+                        "color": "#0E0F13",
+                        "fontFamily": "Titillio",
+                        "fontSize": 16,
+                        "fontStyle": "normal",
+                        "fontWeight": "600",
+                        "lineHeight": 20,
+                      },
+                      [
+                        {
+                          "textAlign": "auto",
+                        },
+                        {
+                          "color": undefined,
+                        },
+                      ],
+                    ]
+                  }
+                >
+                  Close
+                </Text>
+              </View>
             </View>
           </View>
         </View>

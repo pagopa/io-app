@@ -493,21 +493,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -543,16 +544,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -2493,21 +2499,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -2543,16 +2550,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -4474,21 +4486,22 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -4524,16 +4537,21 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -6440,21 +6458,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -6490,16 +6509,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -8420,21 +8444,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -8470,16 +8495,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -10356,21 +10386,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -10406,16 +10437,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -10446,7 +10482,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
-                                      "busy": undefined,
+                                      "busy": false,
                                       "checked": undefined,
                                       "disabled": false,
                                       "expanded": undefined,
@@ -10481,7 +10517,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
                                   style={
                                     {
                                       "alignSelf": "flex-start",
@@ -10493,55 +10528,77 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       [
                                         {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        false,
                                         {
-                                          "columnGap": 8,
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
                                         },
                                         {},
-                                        {
-                                          "columnGap": 8,
-                                        },
                                         false,
+                                        {},
                                       ]
                                     }
                                   >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={true}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.5}
-                                      numberOfLines={1}
+                                    <View
                                       style={
                                         [
-                                          {},
                                           {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 20,
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
                                           },
-                                          [
-                                            {
-                                              "color": undefined,
-                                            },
-                                            {
-                                              "textAlign": "auto",
-                                            },
-                                          ],
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
                                         ]
                                       }
                                     >
-                                      Close
-                                    </Text>
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Close
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -12384,21 +12441,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -12434,16 +12492,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -12474,7 +12537,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
-                                      "busy": undefined,
+                                      "busy": false,
                                       "checked": undefined,
                                       "disabled": false,
                                       "expanded": undefined,
@@ -12509,7 +12572,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
                                   style={
                                     {
                                       "alignSelf": "flex-start",
@@ -12521,55 +12583,77 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       [
                                         {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        false,
                                         {
-                                          "columnGap": 8,
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
                                         },
                                         {},
-                                        {
-                                          "columnGap": 8,
-                                        },
                                         false,
+                                        {},
                                       ]
                                     }
                                   >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={true}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.5}
-                                      numberOfLines={1}
+                                    <View
                                       style={
                                         [
-                                          {},
                                           {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 20,
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
                                           },
-                                          [
-                                            {
-                                              "color": undefined,
-                                            },
-                                            {
-                                              "textAlign": "auto",
-                                            },
-                                          ],
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
                                         ]
                                       }
                                     >
-                                      Close
-                                    </Text>
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Close
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -14470,21 +14554,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -14520,16 +14605,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -16386,21 +16476,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -16436,16 +16527,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -18386,21 +18482,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -18436,16 +18533,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -20366,21 +20468,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -20416,16 +20519,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -22366,21 +22474,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -22416,16 +22525,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -24302,21 +24416,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -24352,16 +24467,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -24392,7 +24512,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
-                                      "busy": undefined,
+                                      "busy": false,
                                       "checked": undefined,
                                       "disabled": false,
                                       "expanded": undefined,
@@ -24427,7 +24547,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
                                   style={
                                     {
                                       "alignSelf": "flex-start",
@@ -24439,55 +24558,77 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       [
                                         {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        false,
                                         {
-                                          "columnGap": 8,
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
                                         },
                                         {},
-                                        {
-                                          "columnGap": 8,
-                                        },
                                         false,
+                                        {},
                                       ]
                                     }
                                   >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={true}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.5}
-                                      numberOfLines={1}
+                                    <View
                                       style={
                                         [
-                                          {},
                                           {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 20,
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
                                           },
-                                          [
-                                            {
-                                              "color": undefined,
-                                            },
-                                            {
-                                              "textAlign": "auto",
-                                            },
-                                          ],
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
                                         ]
                                       }
                                     >
-                                      Close
-                                    </Text>
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Close
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -26422,21 +26563,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -26472,16 +26614,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -28422,21 +28569,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -28472,16 +28620,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -30430,21 +30583,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -30480,16 +30634,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -32410,21 +32569,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -32460,16 +32620,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -34348,21 +34513,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -34398,16 +34564,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -34438,7 +34609,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
-                                      "busy": undefined,
+                                      "busy": false,
                                       "checked": undefined,
                                       "disabled": false,
                                       "expanded": undefined,
@@ -34473,7 +34644,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
                                   style={
                                     {
                                       "alignSelf": "flex-start",
@@ -34485,55 +34655,77 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       [
                                         {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        false,
                                         {
-                                          "columnGap": 8,
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
                                         },
                                         {},
-                                        {
-                                          "columnGap": 8,
-                                        },
                                         false,
+                                        {},
                                       ]
                                     }
                                   >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={true}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.5}
-                                      numberOfLines={1}
+                                    <View
                                       style={
                                         [
-                                          {},
                                           {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 20,
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
                                           },
-                                          [
-                                            {
-                                              "color": undefined,
-                                            },
-                                            {
-                                              "textAlign": "auto",
-                                            },
-                                          ],
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
                                         ]
                                       }
                                     >
-                                      Close
-                                    </Text>
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Close
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -36448,21 +36640,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -36498,16 +36691,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -38434,21 +38632,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -38484,16 +38683,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -38524,7 +38728,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
-                                      "busy": undefined,
+                                      "busy": false,
                                       "checked": undefined,
                                       "disabled": false,
                                       "expanded": undefined,
@@ -38559,7 +38763,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
                                   style={
                                     {
                                       "alignSelf": "flex-start",
@@ -38571,55 +38774,77 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       [
                                         {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        false,
                                         {
-                                          "columnGap": 8,
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
                                         },
                                         {},
-                                        {
-                                          "columnGap": 8,
-                                        },
                                         false,
+                                        {},
                                       ]
                                     }
                                   >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={true}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.5}
-                                      numberOfLines={1}
+                                    <View
                                       style={
                                         [
-                                          {},
                                           {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 20,
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
                                           },
-                                          [
-                                            {
-                                              "color": undefined,
-                                            },
-                                            {
-                                              "textAlign": "auto",
-                                            },
-                                          ],
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
                                         ]
                                       }
                                     >
-                                      Usa altri metodi
-                                    </Text>
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Usa altri metodi
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -40647,21 +40872,22 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -40697,16 +40923,21 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -40737,7 +40968,7 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
-                                      "busy": undefined,
+                                      "busy": false,
                                       "checked": undefined,
                                       "disabled": false,
                                       "expanded": undefined,
@@ -40772,7 +41003,6 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
                                   style={
                                     {
                                       "alignSelf": "flex-start",
@@ -40784,55 +41014,77 @@ It will be saved in your Wallet, making it easier for you to pay next time.
                                       [
                                         {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        false,
                                         {
-                                          "columnGap": 8,
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
                                         },
                                         {},
-                                        {
-                                          "columnGap": 8,
-                                        },
                                         false,
+                                        {},
                                       ]
                                     }
                                   >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={true}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.5}
-                                      numberOfLines={1}
+                                    <View
                                       style={
                                         [
-                                          {},
                                           {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 20,
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
                                           },
-                                          [
-                                            {
-                                              "color": undefined,
-                                            },
-                                            {
-                                              "textAlign": "auto",
-                                            },
-                                          ],
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
                                         ]
                                       }
                                     >
-                                      Usa altri metodi
-                                    </Text>
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Usa altri metodi
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -42895,21 +43147,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -42945,16 +43198,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -44834,21 +45092,22 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -44884,16 +45143,21 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -44924,7 +45188,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
-                                      "busy": undefined,
+                                      "busy": false,
                                       "checked": undefined,
                                       "disabled": false,
                                       "expanded": undefined,
@@ -44959,7 +45223,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
                                   style={
                                     {
                                       "alignSelf": "flex-start",
@@ -44971,55 +45234,77 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                       [
                                         {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        false,
                                         {
-                                          "columnGap": 8,
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
                                         },
                                         {},
-                                        {
-                                          "columnGap": 8,
-                                        },
                                         false,
+                                        {},
                                       ]
                                     }
                                   >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={true}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.5}
-                                      numberOfLines={1}
+                                    <View
                                       style={
                                         [
-                                          {},
                                           {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 20,
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
                                           },
-                                          [
-                                            {
-                                              "color": undefined,
-                                            },
-                                            {
-                                              "textAlign": "auto",
-                                            },
-                                          ],
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
                                         ]
                                       }
                                     >
-                                      Contatta l'assistenza
-                                    </Text>
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Contatta l'assistenza
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -46954,21 +47239,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -47004,16 +47290,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -47044,7 +47335,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
-                                      "busy": undefined,
+                                      "busy": false,
                                       "checked": undefined,
                                       "disabled": false,
                                       "expanded": undefined,
@@ -47079,7 +47370,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
                                   style={
                                     {
                                       "alignSelf": "flex-start",
@@ -47091,55 +47381,77 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       [
                                         {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
-                                        false,
                                         {
-                                          "columnGap": 8,
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
                                         },
                                         {},
-                                        {
-                                          "columnGap": 8,
-                                        },
                                         false,
+                                        {},
                                       ]
                                     }
                                   >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={true}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.5}
-                                      numberOfLines={1}
+                                    <View
                                       style={
                                         [
-                                          {},
                                           {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 20,
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
                                           },
-                                          [
-                                            {
-                                              "color": undefined,
-                                            },
-                                            {
-                                              "textAlign": "auto",
-                                            },
-                                          ],
+                                          {
+                                            "columnGap": 8,
+                                          },
+                                          false,
                                         ]
                                       }
                                     >
-                                      Contatta l'assistenza
-                                    </Text>
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        Contatta l'assistenza
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -49040,21 +49352,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -49090,16 +49403,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -51048,21 +51366,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -51098,16 +51417,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -53028,21 +53352,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -53078,16 +53403,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
@@ -55028,21 +55358,22 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 24,
+                                          "overflow": "hidden",
                                           "textAlignVertical": "center",
                                         },
                                         {
-                                          "height": 48,
+                                          "paddingHorizontal": 24,
                                         },
                                         {
                                           "backgroundColor": "#0B3EE3",
-                                          "overflow": "hidden",
+                                          "borderColor": "#FFFFFF",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": 48,
                                         },
-                                        false,
                                         {},
                                         false,
                                         {
@@ -55078,16 +55409,21 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           [
                                             {},
                                             {
-                                              "color": "#FFFFFF",
+                                              "color": "#0E0F13",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "lineHeight": undefined,
                                             },
-                                            {
-                                              "alignSelf": "center",
-                                            },
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >

@@ -440,22 +440,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
                                   "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
                                 },
                                 {},
                                 false,
@@ -492,16 +491,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -531,7 +535,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                             accessibilityRole="button"
                             accessibilityState={
                               {
-                                "busy": undefined,
+                                "busy": false,
                                 "checked": undefined,
                                 "disabled": false,
                                 "expanded": undefined,
@@ -566,7 +570,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            onTouchEnd={[Function]}
                             style={
                               {
                                 "alignSelf": "flex-start",
@@ -578,55 +581,77 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                 [
                                   {
                                     "alignItems": "center",
+                                    "borderCurve": "continuous",
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "columnGap": 8,
+                                    "paddingHorizontal": 0,
+                                  },
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderColor": "#0B3EE3",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": undefined,
                                   },
                                   {},
-                                  {
-                                    "columnGap": 8,
-                                  },
                                   false,
+                                  {},
                                 ]
                               }
                             >
-                              <Text
-                                accessibilityElementsHidden={true}
-                                accessible={false}
-                                allowFontScaling={true}
-                                ellipsizeMode="tail"
-                                importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.5}
-                                numberOfLines={1}
+                              <View
                                 style={
                                   [
-                                    {},
                                     {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
                                     },
-                                    [
-                                      {
-                                        "color": undefined,
-                                      },
-                                      {
-                                        "textAlign": "auto",
-                                      },
-                                    ],
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
                                   ]
                                 }
                               >
-                                CTA 2
-                              </Text>
+                                <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  ellipsizeMode="tail"
+                                  importantForAccessibility="no-hide-descendants"
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 20,
+                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
+                                    ]
+                                  }
+                                >
+                                  CTA 2
+                                </Text>
+                              </View>
                             </View>
                           </View>
                         </View>
@@ -1084,22 +1109,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
                                   "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
                                 },
                                 {},
                                 false,
@@ -1136,16 +1160,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -1166,7 +1195,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                           accessibilityRole="button"
                           accessibilityState={
                             {
-                              "busy": undefined,
+                              "busy": false,
                               "checked": undefined,
                               "disabled": false,
                               "expanded": undefined,
@@ -1195,8 +1224,8 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                           onStartShouldSetResponder={[Function]}
                           style={
                             {
-                              "alignSelf": "stretch",
-                              "flexShrink": 0,
+                              "alignSelf": "auto",
+                              "flexShrink": 1,
                             }
                           }
                         >
@@ -1206,30 +1235,23 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 24,
                                 },
-                                {
-                                  "borderWidth": 2,
-                                },
-                                {
-                                  "paddingHorizontal": 16,
-                                },
-                                {
-                                  "columnGap": 8,
-                                },
-                                false,
                                 {
                                   "backgroundColor": "rgba(9,50,182,0)",
                                   "borderColor": "#0B3EE3",
+                                  "borderRadius": 8,
+                                  "borderWidth": 2,
+                                  "height": 48,
                                 },
+                                {},
                                 false,
                                 {
                                   "backgroundColor": undefined,
@@ -1238,38 +1260,54 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               ]
                             }
                           >
-                            <Text
-                              accessibilityElementsHidden={true}
-                              accessible={false}
-                              allowFontScaling={true}
-                              ellipsizeMode="tail"
-                              importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.5}
-                              numberOfLines={1}
+                            <View
                               style={
                                 [
-                                  {},
                                   {
-                                    "color": "#0E0F13",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": undefined,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
                                   },
-                                  [
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                    {
-                                      "color": undefined,
-                                    },
-                                  ],
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
                                 ]
                               }
                             >
-                              CTA 1
-                            </Text>
+                              <Text
+                                accessibilityElementsHidden={true}
+                                accessible={false}
+                                allowFontScaling={true}
+                                ellipsizeMode="tail"
+                                importantForAccessibility="no-hide-descendants"
+                                maxFontSizeMultiplier={1.5}
+                                numberOfLines={1}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": undefined,
+                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
+                                  ]
+                                }
+                              >
+                                CTA 1
+                              </Text>
+                            </View>
                           </View>
                         </View>
                         <View
@@ -1293,7 +1331,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                             accessibilityRole="button"
                             accessibilityState={
                               {
-                                "busy": undefined,
+                                "busy": false,
                                 "checked": undefined,
                                 "disabled": false,
                                 "expanded": undefined,
@@ -1328,7 +1366,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            onTouchEnd={[Function]}
                             style={
                               {
                                 "alignSelf": "flex-start",
@@ -1340,55 +1377,77 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 [
                                   {
                                     "alignItems": "center",
+                                    "borderCurve": "continuous",
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "columnGap": 8,
+                                    "paddingHorizontal": 0,
+                                  },
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderColor": "#0B3EE3",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": undefined,
                                   },
                                   {},
-                                  {
-                                    "columnGap": 8,
-                                  },
                                   false,
+                                  {},
                                 ]
                               }
                             >
-                              <Text
-                                accessibilityElementsHidden={true}
-                                accessible={false}
-                                allowFontScaling={true}
-                                ellipsizeMode="tail"
-                                importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.5}
-                                numberOfLines={1}
+                              <View
                                 style={
                                   [
-                                    {},
                                     {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
                                     },
-                                    [
-                                      {
-                                        "color": undefined,
-                                      },
-                                      {
-                                        "textAlign": "auto",
-                                      },
-                                    ],
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
                                   ]
                                 }
                               >
-                                CTA 2
-                              </Text>
+                                <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  ellipsizeMode="tail"
+                                  importantForAccessibility="no-hide-descendants"
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 20,
+                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
+                                    ]
+                                  }
+                                >
+                                  CTA 2
+                                </Text>
+                              </View>
                             </View>
                           </View>
                         </View>
@@ -2224,22 +2283,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
                                   "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
                                 },
                                 {},
                                 false,
@@ -2276,16 +2334,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -3126,22 +3189,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
                                   "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
                                 },
                                 {},
                                 false,
@@ -3794,22 +3856,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
                                   "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
                                 },
                                 {},
                                 false,
@@ -3846,16 +3907,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -4318,22 +4384,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 24,
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
                                 {
-                                  "height": 48,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
                                   "backgroundColor": "#0B3EE3",
-                                  "overflow": "hidden",
-                                },
-                                {
-                                  "paddingHorizontal": 16,
+                                  "borderColor": "#FFFFFF",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": 48,
                                 },
                                 {},
                                 false,
@@ -4370,16 +4435,21 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                   [
                                     {},
                                     {
-                                      "color": "#FFFFFF",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "alignSelf": "center",
-                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -4409,7 +4479,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                             accessibilityRole="button"
                             accessibilityState={
                               {
-                                "busy": undefined,
+                                "busy": false,
                                 "checked": undefined,
                                 "disabled": false,
                                 "expanded": undefined,
@@ -4444,7 +4514,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            onTouchEnd={[Function]}
                             style={
                               {
                                 "alignSelf": "flex-start",
@@ -4456,55 +4525,77 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                 [
                                   {
                                     "alignItems": "center",
+                                    "borderCurve": "continuous",
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
+                                    "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "columnGap": 8,
+                                    "paddingHorizontal": 0,
+                                  },
+                                  {
+                                    "backgroundColor": "transparent",
+                                    "borderColor": "#0B3EE3",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": undefined,
                                   },
                                   {},
-                                  {
-                                    "columnGap": 8,
-                                  },
                                   false,
+                                  {},
                                 ]
                               }
                             >
-                              <Text
-                                accessibilityElementsHidden={true}
-                                accessible={false}
-                                allowFontScaling={true}
-                                ellipsizeMode="tail"
-                                importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.5}
-                                numberOfLines={1}
+                              <View
                                 style={
                                   [
-                                    {},
                                     {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
                                     },
-                                    [
-                                      {
-                                        "color": undefined,
-                                      },
-                                      {
-                                        "textAlign": "auto",
-                                      },
-                                    ],
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
                                   ]
                                 }
                               >
-                                CTA 1
-                              </Text>
+                                <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  ellipsizeMode="tail"
+                                  importantForAccessibility="no-hide-descendants"
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 20,
+                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
+                                    ]
+                                  }
+                                >
+                                  CTA 1
+                                </Text>
+                              </View>
                             </View>
                           </View>
                         </View>
