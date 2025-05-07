@@ -11,7 +11,7 @@ import {
   IOVisualCostants,
   Pictogram,
   Body,
-  ButtonLink
+  IOButton
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, View } from "react-native";
@@ -124,7 +124,8 @@ export const DSNumberPad = () => {
         />
         <VSpacer size={32} />
         <View style={{ alignSelf: "center" }}>
-          <ButtonLink
+          <IOButton
+            variant="link"
             color={primaryBackground ? "contrast" : "primary"}
             onPress={() => Alert.alert("Forgot unlock code")}
             label="Hai dimenticato il codice di sblocco?"

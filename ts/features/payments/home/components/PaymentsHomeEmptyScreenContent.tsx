@@ -1,7 +1,7 @@
 import {
   Body,
-  ButtonSolid,
   H4,
+  IOButton,
   IOVisualCostants,
   Pictogram,
   VSpacer
@@ -44,11 +44,11 @@ const PaymentsHomeEmptyScreenContent = ({ withPictogram = false }: Props) => {
       </Body>
       <VSpacer size={24} />
       <View style={{ alignItems: "center" }}>
-        <ButtonSolid
+        <IOButton
+          fullWidth
+          variant="solid"
           label={I18n.t("features.payments.cta")}
-          accessibilityLabel={I18n.t("features.payments.cta")}
           onPress={handleOnAddMethodPress}
-          fullWidth={true}
           icon="qrCode"
           iconPosition="end"
         />
