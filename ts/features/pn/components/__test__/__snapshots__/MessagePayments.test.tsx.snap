@@ -9841,7 +9841,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           accessibilityRole="button"
                           accessibilityState={
                             {
-                              "busy": undefined,
+                              "busy": false,
                               "checked": undefined,
                               "disabled": false,
                               "expanded": undefined,
@@ -9876,7 +9876,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          onTouchEnd={[Function]}
                           style={
                             {
                               "alignSelf": "flex-start",
@@ -9888,55 +9887,77 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
+                                  "borderCurve": "continuous",
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "columnGap": 8,
+                                  "paddingHorizontal": 0,
+                                },
+                                {
+                                  "backgroundColor": "transparent",
+                                  "borderColor": "#0B3EE3",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": undefined,
                                 },
                                 {},
-                                {
-                                  "columnGap": 8,
-                                },
                                 false,
+                                {},
                               ]
                             }
                           >
-                            <Text
-                              accessibilityElementsHidden={true}
-                              accessible={false}
-                              allowFontScaling={true}
-                              ellipsizeMode="tail"
-                              importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.5}
-                              numberOfLines={1}
+                            <View
                               style={
                                 [
-                                  {},
                                   {
-                                    "color": "#0E0F13",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 20,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
                                   },
-                                  [
-                                    {
-                                      "color": undefined,
-                                    },
-                                    {
-                                      "textAlign": "auto",
-                                    },
-                                  ],
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
                                 ]
                               }
                             >
-                              Vedi tutti gli avvisi (7)
-                            </Text>
+                              <Text
+                                accessibilityElementsHidden={true}
+                                accessible={false}
+                                allowFontScaling={true}
+                                ellipsizeMode="tail"
+                                importantForAccessibility="no-hide-descendants"
+                                maxFontSizeMultiplier={1.5}
+                                numberOfLines={1}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 20,
+                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
+                                  ]
+                                }
+                              >
+                                Vedi tutti gli avvisi (7)
+                              </Text>
+                            </View>
                           </View>
                         </View>
                       </View>
@@ -11579,7 +11600,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           accessibilityRole="button"
                           accessibilityState={
                             {
-                              "busy": undefined,
+                              "busy": false,
                               "checked": undefined,
                               "disabled": false,
                               "expanded": undefined,
@@ -11614,7 +11635,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          onTouchEnd={[Function]}
                           style={
                             {
                               "alignSelf": "flex-start",
@@ -11626,55 +11646,77 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
+                                  "borderCurve": "continuous",
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
+                                  "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
                                 {
-                                  "columnGap": 8,
+                                  "paddingHorizontal": 0,
+                                },
+                                {
+                                  "backgroundColor": "transparent",
+                                  "borderColor": "#0B3EE3",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": undefined,
                                 },
                                 {},
-                                {
-                                  "columnGap": 8,
-                                },
                                 false,
+                                {},
                               ]
                             }
                           >
-                            <Text
-                              accessibilityElementsHidden={true}
-                              accessible={false}
-                              allowFontScaling={true}
-                              ellipsizeMode="tail"
-                              importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.5}
-                              numberOfLines={1}
+                            <View
                               style={
                                 [
-                                  {},
                                   {
-                                    "color": "#0E0F13",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 20,
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
                                   },
-                                  [
-                                    {
-                                      "color": undefined,
-                                    },
-                                    {
-                                      "textAlign": "auto",
-                                    },
-                                  ],
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
                                 ]
                               }
                             >
-                              Vedi tutti gli avvisi (7)
-                            </Text>
+                              <Text
+                                accessibilityElementsHidden={true}
+                                accessible={false}
+                                allowFontScaling={true}
+                                ellipsizeMode="tail"
+                                importantForAccessibility="no-hide-descendants"
+                                maxFontSizeMultiplier={1.5}
+                                numberOfLines={1}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 20,
+                                    },
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": undefined,
+                                      },
+                                    ],
+                                  ]
+                                }
+                              >
+                                Vedi tutti gli avvisi (7)
+                              </Text>
+                            </View>
                           </View>
                         </View>
                       </View>

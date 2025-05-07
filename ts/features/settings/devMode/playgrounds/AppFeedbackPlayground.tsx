@@ -1,4 +1,4 @@
-import { Body, ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, IOButton, VSpacer } from "@pagopa/io-app-design-system";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clearFeedbackDatas } from "../../../appReviews/store/actions";
@@ -48,20 +48,27 @@ export const AppFeedbackPlayground = () => {
       <VSpacer />
       <Body>{`Ultimo feedback positivo (generale): ${appReviewNegativeFeedbackLogGeneral}`}</Body>
       <VSpacer />
-      <ButtonSolid
+      <IOButton
+        variant="solid"
         color="danger"
         onPress={() => dispatch(clearFeedbackDatas())}
         label="Rimuovi log sui feedback"
       />
       <VSpacer />
-      <ButtonSolid
+      <IOButton
+        variant="solid"
         onPress={requestFeedbackPayment}
         label="Richiedi feedback pagamenti"
       />
       <VSpacer />
-      <ButtonSolid onPress={requestFeedbackItw} label="Richiedi feedback ITW" />
+      <IOButton
+        variant="solid"
+        onPress={requestFeedbackItw}
+        label="Richiedi feedback ITW"
+      />
       <VSpacer />
-      <ButtonSolid
+      <IOButton
+        variant="solid"
         onPress={requestFeedbackGeneral}
         label="Richiedi feedback generale"
       />

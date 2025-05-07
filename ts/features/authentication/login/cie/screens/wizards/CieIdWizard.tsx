@@ -1,6 +1,6 @@
 import {
-  ButtonLink,
   ContentWrapper,
+  IOButton,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -69,7 +69,8 @@ const CieIdWizard = () => {
     >
       <ContentWrapper>
         <VSpacer size={12} />
-        <ButtonLink
+        <IOButton
+          variant="link"
           testID="cie-id-wizard-open-cie-id-link"
           onPress={() => {
             openWebUrl(CIE_ID_LINK, () => {

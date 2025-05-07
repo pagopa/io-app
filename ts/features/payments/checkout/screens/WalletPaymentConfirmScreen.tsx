@@ -13,6 +13,7 @@ import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -20,10 +21,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { capitalize } from "../../../../utils/strings";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
-import {
-  WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL,
-  getPaymentLogoFromWalletDetails
-} from "../../common/utils";
+import { getPaymentLogoFromWalletDetails } from "../../common/utils";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import * as analytics from "../analytics";
 import { WalletPaymentTotalAmount } from "../components/WalletPaymentTotalAmount";
@@ -196,6 +194,14 @@ const WalletPaymentConfirmScreen = () => {
     }
   }, [currentStep]);
 
+  const pspName = pipe(
+    selectedPspOption,
+    O.chainNullableK(({ pspBusinessName }) => pspBusinessName),
+    O.getOrElse(() => "")
+  );
+
+  const onLinkPress = (url: string) => openAuthenticationSession(url, "https");
+
   return (
     <IOScrollView
       actions={{
@@ -227,25 +233,27 @@ const WalletPaymentConfirmScreen = () => {
         accessibilityLabel={I18n.t("payment.confirm.fee")}
         iconName="psp"
       />
-      <SelectedPspModuleCheckout />
+      <SelectedPspModuleCheckout pspName={pspName} />
       <VSpacer size={24} />
       <WalletPaymentTotalAmount totalAmount={totalAmount} />
       <VSpacer size={16} />
-      <Body>
-        {I18n.t("payment.confirm.termsAndConditions")}{" "}
-        <Body
-          weight="Semibold"
-          asLink
-          onPress={() =>
-            openAuthenticationSession(
-              WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL,
-              "https"
-            )
-          }
-        >
-          {I18n.t("payment.confirm.termsAndConditionsLink")}
-        </Body>
-      </Body>
+      <IOMarkdown
+        rules={{
+          Link: (param, renderer) => (
+            <Body
+              asLink
+              weight="Semibold"
+              onPress={() => onLinkPress(param.url)}
+              accessibilityRole="link"
+            >
+              {param.children.map(child => renderer(child))}
+            </Body>
+          )
+        }}
+        content={I18n.t("payment.confirm.termsAndConditions", {
+          pspName
+        })}
+      />
     </IOScrollView>
   );
 };
@@ -310,18 +318,19 @@ const SelectedPaymentMethodModuleCheckout = () => {
   return null;
 };
 
-const SelectedPspModuleCheckout = () => {
+type SelectedPspModuleCheckoutProps = {
+  pspName: string;
+};
+
+const SelectedPspModuleCheckout = ({
+  pspName
+}: SelectedPspModuleCheckoutProps) => {
   const dispatch = useIODispatch();
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const pspList = pot.getOrElse(pspListPot, []);
-  const pspName = pipe(
-    selectedPspOption,
-    O.chainNullableK(({ pspBusinessName }) => pspBusinessName),
-    O.getOrElse(() => "")
-  );
 
   const taxFee = pipe(
     selectedPspOption,
