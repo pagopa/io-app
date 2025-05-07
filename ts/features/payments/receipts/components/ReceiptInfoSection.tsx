@@ -23,6 +23,7 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { capitalizeTextName } from "../../../../utils/strings";
 import { getPayerInfoLabel, isValidPspName, removeAsterisks } from "../utils";
+import { PaymentListItemInfo } from "../../common/components/PaymentListItemInfo";
 import { ReceiptDivider } from "./ReceiptDivider";
 
 type Props = {
@@ -76,7 +77,7 @@ const ReceiptInfoSection = ({
             <>
               {transactionInfo.payer && (
                 <>
-                  <ListItemInfo
+                  <PaymentListItemInfo
                     testID="payer-info"
                     label={I18n.t("transaction.details.info.executedBy")}
                     value={getPayerInfoLabel(transactionInfo.payer)}
@@ -93,7 +94,7 @@ const ReceiptInfoSection = ({
               {(transactionInfo.walletInfo?.maskedEmail ||
                 transactionInfo.walletInfo?.accountHolder) && (
                 <>
-                  <ListItemInfo
+                  <PaymentListItemInfo
                     label={I18n.t("transaction.details.info.headedTo")}
                     value={
                       transactionInfo.walletInfo?.maskedEmail ??
@@ -108,7 +109,7 @@ const ReceiptInfoSection = ({
               {transactionInfo.pspName &&
                 isValidPspName(transactionInfo.pspName) && (
                   <>
-                    <ListItemInfo
+                    <PaymentListItemInfo
                       label={I18n.t("transaction.details.info.pspName")}
                       value={transactionInfo.pspName}
                     />
@@ -117,7 +118,7 @@ const ReceiptInfoSection = ({
                 )}
               {transactionInfo.noticeDate && (
                 <>
-                  <ListItemInfo
+                  <PaymentListItemInfo
                     label={I18n.t("transaction.details.info.dateAndHour")}
                     value={format(
                       new Date(transactionInfo.noticeDate),
@@ -193,7 +194,7 @@ const ReceiptInfoSection = ({
 const renderPaymentMethod = (walletInfo: WalletInfo) => {
   if (walletInfo.blurredNumber && walletInfo.brand) {
     return (
-      <ListItemInfo
+      <PaymentListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}
         value={`${capitalize(walletInfo.brand)} •••• ${removeAsterisks(
           walletInfo.blurredNumber
