@@ -1245,4 +1245,28 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
   });
+
+  it("Should initialize the machine context with L3 active", async () => {
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    /**
+     * Start
+     */
+
+    actor.send({ type: "start", isL3: true });
+
+    expect(actor.getSnapshot().context).toMatchObject({
+      isL3FeaturesEnabled: true
+    });
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+  });
 });
