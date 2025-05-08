@@ -103,7 +103,6 @@ export const itwRemoteMachine = setup({
       ]
     },
     EvaluatingRelyingPartyTrust: {
-      entry: "navigateToClaimsDisclosureScreen",
       tags: [ItwPresentationTags.Loading],
       description: "Determine whether the Relying Party is a trusted entity",
       invoke: {
@@ -114,7 +113,12 @@ export const itwRemoteMachine = setup({
           actions: assign(({ event }) => event.output)
         },
         onError: {
-          actions: "setFailure",
+          actions: assign({
+            failure: {
+              type: RemoteFailureType.UNTRUSTED_RP,
+              reason: "RP is not trusted"
+            }
+          }),
           target: "Failure"
         }
       }
@@ -162,6 +166,7 @@ export const itwRemoteMachine = setup({
       }
     },
     ClaimsDisclosure: {
+      entry: "navigateToClaimsDisclosureScreen",
       description:
         "Display the list of claims to disclose for the verifiable presentation",
       on: {
