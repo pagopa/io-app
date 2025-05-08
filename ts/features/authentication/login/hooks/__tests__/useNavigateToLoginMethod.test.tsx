@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { View } from "react-native";
-import { ButtonSolid } from "@pagopa/io-app-design-system";
+import { IOButton } from "@pagopa/io-app-design-system";
 import * as rnCieId from "@pagopa/io-react-native-cieid";
 import useNavigateToLoginMethod from "../useNavigateToLoginMethod";
 import * as fastLoginSelector from "../../../fastLogin/store/selectors";
@@ -136,17 +136,20 @@ const TestComponent = withStore(() => {
   } = useNavigateToLoginMethod();
   return (
     <View>
-      <ButtonSolid
+      <IOButton
+        variant="solid"
         testID="navigate-to-cie-pin"
         onPress={navigateToCiePinInsertion}
         label=" Navigate to Cie + Pin"
       />
-      <ButtonSolid
+      <IOButton
+        variant="solid"
         testID="navigate-to-cie-id"
         onPress={() => navigateToCieIdLoginScreen(SPID_L2)}
         label=" Navigate to CieID"
       />
-      <ButtonSolid
+      <IOButton
+        variant="solid"
         testID="navigate-to-idp-selection"
         onPress={navigateToIdpSelection}
         label=" Navigate to IDP selection"
