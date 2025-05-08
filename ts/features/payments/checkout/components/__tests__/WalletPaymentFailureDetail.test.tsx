@@ -65,11 +65,12 @@ const state = mockStore({
 
 describe("WalletPaymentFailureDetail", () => {
   const renderComponent = (
-    faultCodeCategory: WalletPaymentFailure["faultCodeCategory"]
+    faultCodeCategory: WalletPaymentFailure["faultCodeCategory"],
+    faultCodeDetail?: string
   ) => {
     const failure: any = {
       faultCodeCategory,
-      faultCodeDetail: ""
+      faultCodeDetail: faultCodeDetail ?? ""
     };
 
     const store = createStore(appReducer, state as any);
@@ -86,7 +87,6 @@ describe("WalletPaymentFailureDetail", () => {
     "PAYMENT_UNAVAILABLE",
     "PAYMENT_DATA_ERROR",
     "DOMAIN_UNKNOWN",
-    "PAYMENT_ONGOING",
     "PAYMENT_EXPIRED",
     "PAYMENT_CANCELED",
     "PAYMENT_DUPLICATED",
@@ -110,6 +110,34 @@ describe("WalletPaymentFailureDetail", () => {
       ).toBeTruthy();
     }
   );
+
+  it("renders the right screen when faultCodeCategory is PAYMENT_ONGOING and faultCodeDetails is PAA_PAGAMENTO_IN_CORSO", () => {
+    const { getByText } = renderComponent(
+      "PAYMENT_ONGOING" as WalletPaymentFailure["faultCodeCategory"],
+      "PAA_PAGAMENTO_IN_CORSO"
+    );
+    expect(
+      getByText(
+        I18n.t(
+          `wallet.payment.failure.PAYMENT_ONGOING.PAA_PAGAMENTO_IN_CORSO.title`
+        )
+      )
+    ).toBeTruthy();
+  });
+
+  it("renders the right screen when faultCodeCategory is PAYMENT_ONGOING and faultCodeDetails is PPT_PAGAMENTO_IN_CORSO", () => {
+    const { getByText } = renderComponent(
+      "PAYMENT_ONGOING" as WalletPaymentFailure["faultCodeCategory"],
+      "PPT_PAGAMENTO_IN_CORSO"
+    );
+    expect(
+      getByText(
+        I18n.t(
+          `wallet.payment.failure.PAYMENT_ONGOING.PPT_PAGAMENTO_IN_CORSO.countdownExpiredTitle`
+        )
+      )
+    ).toBeTruthy();
+  });
 
   it("renders with GENERIC_ERROR fallback props if no specific error code is matched", () => {
     const { getByText } = renderComponent(
