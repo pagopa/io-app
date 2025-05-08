@@ -36,6 +36,7 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
 import I18n from "../../../../i18n";
+
 type Props = {
   title: string;
   description: string;
