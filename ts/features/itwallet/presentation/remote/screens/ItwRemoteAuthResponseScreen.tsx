@@ -51,7 +51,7 @@ export const ItwRemoteAuthResponseScreen = () => {
               onPress: () => {
                 Linking.openURL(redirectUri)
                   .then(closeMachine)
-                  .catch(() => IOToast.error("Something went wrong"));
+                  .catch(() => IOToast.error("global.genericError"));
               }
             }
           : {
