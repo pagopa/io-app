@@ -10,6 +10,8 @@ import {
 import { useItwIdentificationBottomSheet } from "../../common/hooks/useItwIdentificationBottomSheet.tsx";
 import I18n from "../../../../i18n.ts";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader.tsx";
+import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet.tsx";
+import { usePinBottomSheet } from "../hooks/usePinBottomSheet.tsx";
 
 type L3IdentificationViewProps = {
   handleCiePinPress: () => void;
@@ -53,69 +55,21 @@ export const L3IdentificationView = ({
     ]
   });
 
-  const cieInfoBottomSheet = useItwIdentificationBottomSheet({
-    title: I18n.t(
-      "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.title"
-    ),
-    content: [
-      {
-        body: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.content"
-        )
-      }
-    ],
-    imageSrc: require("../../../../../img/features/itWallet/identification/itw_cie_placeholder.png"),
-    footerButtons: [
-      {
-        label: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.primaryAction"
-        ),
-        onPress: () => {
-          cieBottomSheet.dismiss();
-        }
-      },
-      {
-        label: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.cieInfo.secondaryAction"
-        ),
-        onPress: () => {
-          cieBottomSheet.dismiss();
-        }
-      }
-    ]
+  const cieInfoBottomSheet = useCieInfoBottomSheet({
+    onPrimaryAction: () => {
+      cieBottomSheet.dismiss();
+    },
+    onSecondaryAction: () => {
+      cieBottomSheet.dismiss();
+    }
   });
-
-  const pinBottomSheet = useItwIdentificationBottomSheet({
-    title: I18n.t(
-      "features.itWallet.identification.l3.mode.bottomSheet.pin.title"
-    ),
-    content: [
-      {
-        body: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.pin.content"
-        )
-      }
-    ],
-    // TODO: replace with the correct image when available
-    imageSrc: require("../../../../../img/features/itWallet/identification/itw_cie_pin_placeholder.png"),
-    footerButtons: [
-      {
-        label: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.pin.primaryAction"
-        ),
-        onPress: () => {
-          cieBottomSheet.dismiss();
-        }
-      },
-      {
-        label: I18n.t(
-          "features.itWallet.identification.l3.mode.bottomSheet.pin.secondaryAction"
-        ),
-        onPress: () => {
-          cieBottomSheet.dismiss();
-        }
-      }
-    ]
+  const pinBottomSheet = usePinBottomSheet({
+    onPrimaryAction: () => {
+      cieBottomSheet.dismiss();
+    },
+    onSecondaryAction: () => {
+      cieBottomSheet.dismiss();
+    }
   });
 
   return (

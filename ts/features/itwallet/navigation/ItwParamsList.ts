@@ -7,6 +7,7 @@ import { ItwPresentationCredentialCardModalNavigationParams } from "../presentat
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ITW_ROUTES } from "./routes";
+import { ItwCiePreparationScreenNavigationParams } from "../identification/screens/cie/ItwCiePreparationScreen.tsx";
 
 export type ItwParamsList = {
   [ITW_ROUTES.ONBOARDING]: undefined;
@@ -24,6 +25,10 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.SPID.LOGIN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN]: undefined;
   // IDENTIFICATION CIE + PIN
+  [ITW_ROUTES.IDENTIFICATION.CIE
+    .PREPARATION_SCREEN]: ItwCiePreparationScreenNavigationParams;
+  [ITW_ROUTES.IDENTIFICATION.CIE
+    .PIN_PREPARATION_SCREEN]: ItwCiePreparationScreenNavigationParams;
   [ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE

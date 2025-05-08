@@ -82,6 +82,14 @@ export type StartReissuing = {
   type: "start-reissuing";
 };
 
+export type AcknowledgedCieInfo = {
+  type: "acknowledged-cie-info";
+};
+
+export type AcknowledgedCiePinInfo = {
+  type: "acknowledged-cie-pin-info";
+};
+
 export type EidIssuanceEvents =
   | Start
   | AcceptTos
@@ -101,4 +109,6 @@ export type EidIssuanceEvents =
   | RevokeWalletInstance
   | ErrorActorEvent
   | ExternalErrorEvent
-  | StartReissuing;
+  | StartReissuing
+  | AcknowledgedCieInfo
+  | AcknowledgedCiePinInfo;

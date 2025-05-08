@@ -129,6 +129,18 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToCiePreparationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN
+    });
+  },
+
+  navigateToCiePinPreparationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN
+    });
+  },
+
   navigateToCiePinScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN

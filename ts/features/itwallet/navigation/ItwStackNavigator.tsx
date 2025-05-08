@@ -42,12 +42,14 @@ import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/detail
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
+import { ItwCiePreparationScreen } from "../identification/screens/cie/ItwCiePreparationScreen";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { useIOSelector } from "../../../store/hooks";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
+import { ItwCiePinPreparationScreen } from "../identification/screens/cie/ItwCiePinPreparationScreen.tsx";
 
 const Stack = createStackNavigator<ItwParamsList>();
 
@@ -123,6 +125,14 @@ const InnerNavigator = () => {
         component={ItwCieIdLoginScreen}
       />
       {/* IDENTIFICATION CIE + PIN */}
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN}
+        component={ItwCiePreparationScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN}
+        component={ItwCiePinPreparationScreen}
+      />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
         component={ItwCiePinScreen}
