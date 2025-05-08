@@ -1,11 +1,6 @@
 import { View } from "react-native";
 import { Fragment } from "react";
-import {
-  ButtonOutline,
-  ButtonSolid,
-  HSpacer,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { HSpacer, IOButton, VSpacer } from "@pagopa/io-app-design-system";
 
 export type Suggestion = {
   label: string;
@@ -23,8 +18,9 @@ const IOMarkdownSuggestions = ({ suggestions, setContent }: Props) => (
       <Fragment key={`${first.label}_${second.label}_${idx}`}>
         <View style={{ flex: 1, flexDirection: "row" }}>
           <View style={{ flex: 1 }}>
-            <ButtonSolid
+            <IOButton
               fullWidth
+              variant="solid"
               label={first.label}
               onPress={() => {
                 setContent(first.content);
@@ -33,8 +29,9 @@ const IOMarkdownSuggestions = ({ suggestions, setContent }: Props) => (
           </View>
           <HSpacer />
           <View style={{ flex: 1 }}>
-            <ButtonSolid
+            <IOButton
               fullWidth
+              variant="solid"
               label={second.label}
               onPress={() => {
                 setContent(second.content);
@@ -47,8 +44,9 @@ const IOMarkdownSuggestions = ({ suggestions, setContent }: Props) => (
     ))}
     <View style={{ flex: 1, flexDirection: "row" }}>
       <View style={{ flex: 1 }}>
-        <ButtonOutline
+        <IOButton
           fullWidth
+          variant="outline"
           label="Clear"
           onPress={() => {
             setContent("");
