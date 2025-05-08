@@ -40,3 +40,10 @@ export type EnrichedPresentationDetails = Array<
  */
 export type DcqlQuery =
   Parameters<Credential.Presentation.EvaluateDcqlQuery>[1];
+
+/**
+ * Type that defines the structure of the body expected by the `sendAuthorizationErrorResponse`
+ */
+export type AuthErrorResponseBody = Parameters<
+  typeof Credential.Presentation.sendAuthorizationErrorResponse
+>[1];

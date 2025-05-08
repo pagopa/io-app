@@ -1,7 +1,13 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import { useEffect, useMemo } from "react";
+import { Credential } from "@pagopa/io-react-native-wallet";
+import { Nullable } from "@pagopa/io-app-design-system";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
-import { selectFailureOption } from "../machine/selectors.ts";
+import {
+  selectFailureOption,
+  selectUnverifiedRequestObject
+} from "../machine/selectors.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
 import {
@@ -20,6 +26,7 @@ import {
   useItwFailureSupportModal,
   ZendeskSubcategoryValue
 } from "../../../common/hooks/useItwFailureSupportModal.tsx";
+import { AuthErrorResponseBody } from "../utils/itwRemoteTypeUtils.ts";
 
 const zendeskAssistanceErrors = [
   RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE
@@ -43,7 +50,36 @@ type ContentViewProps = { failure: RemoteFailure };
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const navigation = useIONavigation();
+  const unverifiedRequestObject = ItwRemoteMachineContext.useSelector(
+    selectUnverifiedRequestObject
+  );
   const i18nNs = "features.itWallet.presentation.remote"; // Common i18n namespace
+
+  const authErrorBody = useMemo<Nullable<AuthErrorResponseBody>>(() => {
+    switch (failure.type) {
+      case RemoteFailureType.INVALID_REQUEST_OBJECT:
+        return {
+          error: "invalid_request_object",
+          errorDescription: JSON.stringify(failure.reason)
+        };
+      case RemoteFailureType.MISSING_CREDENTIALS:
+        return {
+          error: "access_denied",
+          errorDescription: JSON.stringify(failure.reason)
+        };
+      default:
+        return null;
+    }
+  }, [failure]);
+
+  useEffect(() => {
+    if (authErrorBody && unverifiedRequestObject) {
+      void Credential.Presentation.sendAuthorizationErrorResponse(
+        unverifiedRequestObject,
+        authErrorBody
+      ).catch(constNull); // Catching errors to ensure the app doesn't crash if sending the authorization error response fails.
+    }
+  }, [authErrorBody, unverifiedRequestObject]);
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
