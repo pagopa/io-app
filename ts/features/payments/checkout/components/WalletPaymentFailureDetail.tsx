@@ -14,7 +14,8 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../utils/url";
 import {
   paymentAnalyticsDataSelector,
-  selectOngoingPaymentHistory
+  selectOngoingPaymentHistory,
+  selectPaymentsOngoingFailed
 } from "../../history/store/selectors";
 import * as analytics from "../analytics";
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
@@ -28,6 +29,8 @@ import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 
 export const HC_PAYMENT_CANCELED_ERROR_ID = "PAYMENT_CANCELED_ERROR";
 
+const PAYMENT_ONGOING_FAILURE_WAIT_TIME = 15 * 60 * 1000; // 15 minutes
+
 type Props = {
   failure: WalletPaymentFailure;
 };
@@ -37,6 +40,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const supportModal = usePaymentFailureSupportModal({ failure });
   const paymentOngoingHistory = useIOSelector(selectOngoingPaymentHistory);
+  const paymentOngoingFailed = useIOSelector(selectPaymentsOngoingFailed);
   const dispatch = useIODispatch();
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
@@ -121,6 +125,29 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     onPress: handleDiscoverMore
   };
 
+  /**
+   * This function calculates the minutes to wait before retrying the payment
+   * in case of a payment ongoing failure (PPT_PAGAMENTO_IN_CORSO).
+   * @returns The number of minutes to wait before retrying the payment.
+   */
+  const getPaymentOngoingMinutesToWait = () => {
+    const firstTimeFailed = paymentOngoingHistory?.rptId
+      ? paymentOngoingFailed?.[paymentOngoingHistory.rptId]
+      : undefined;
+
+    return firstTimeFailed
+      ? Math.max(
+          Math.ceil(
+            (new Date(firstTimeFailed).getTime() +
+              PAYMENT_ONGOING_FAILURE_WAIT_TIME -
+              new Date().getTime()) /
+              60000
+          ),
+          0
+        )
+      : 0;
+  };
+
   const selectOtherPaymentMethodAction: OperationResultScreenContentProps["action"] =
     {
       label: I18n.t(
@@ -160,7 +187,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           action: closeAction,
           secondaryAction: contactSupportAction
         };
-      case "PAYMENT_ONGOING":
+      case "PAYMENT_ONGOING": {
         if (faultCodeDetail === "PAA_PAGAMENTO_IN_CORSO") {
           return {
             pictogram: "timing",
@@ -170,27 +197,33 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
             subtitle: I18n.t(
               "wallet.payment.failure.PAYMENT_ONGOING.PAA_PAGAMENTO_IN_CORSO.subtitle"
             ),
-            action: closeAction
+            action: closeAction,
+            secondaryAction: contactSupportAction
           };
-        } else if (faultCodeDetail === "PPT_PAGAMENTO_IN_CORSO") {
+        }
+        const minutesToWait = getPaymentOngoingMinutesToWait();
+        if (faultCodeDetail === "PPT_PAGAMENTO_IN_CORSO" && minutesToWait) {
           return {
             pictogram: "timing",
             title: I18n.t(
-              "wallet.payment.failure.PAYMENT_ONGOING.PPT_PAGAMENTO_IN_CORSO.title"
-            ),
-            subtitle: I18n.t(
-              "wallet.payment.failure.PAYMENT_ONGOING.PPT_PAGAMENTO_IN_CORSO.subtitle"
+              "wallet.payment.failure.PAYMENT_ONGOING.PPT_PAGAMENTO_IN_CORSO.countdownTitle",
+              { minutes: minutesToWait }
             ),
             action: closeAction
           };
         }
         return {
           pictogram: "timing",
-          title: I18n.t("wallet.payment.failure.PAYMENT_ONGOING.title"),
-          subtitle: I18n.t("wallet.payment.failure.PAYMENT_ONGOING.subtitle"),
-          action: closeAction,
-          secondaryAction: contactSupportAction
+          title: I18n.t(
+            "wallet.payment.failure.PAYMENT_ONGOING.PPT_PAGAMENTO_IN_CORSO.countdownExpiredTitle"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.failure.PAYMENT_ONGOING.PPT_PAGAMENTO_IN_CORSO.subtitle"
+          ),
+          action: contactSupportAction,
+          secondaryAction: closeAction
         };
+      }
       case "PAYMENT_EXPIRED":
         return {
           pictogram: "time",

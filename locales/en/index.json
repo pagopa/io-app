@@ -2430,12 +2430,13 @@
         },
         "PAYMENT_ONGOING": {
           "PAA_PAGAMENTO_IN_CORSO": {
-            "title": "C’è già un’operazione in corso, riprova più tardi",
-            "subtitle": "Se il problema persiste, puoi aprire una segnalazione."
+            "title": "There's already an ongoing transaction, please try again later",
+            "subtitle": "If the problem persists, please contact support."
           },
           "PPT_PAGAMENTO_IN_CORSO": {
-            "title": "C’è già un’operazione in corso, riprova più tardi",
-            "subtitle": "Se il problema persiste, puoi aprire una segnalazione."
+            "countdownTitle": "There's already an ongoing transaction, try again in {{minutes}} minutes",
+            "countdownExpiredTitle": "There's already an ongoing transaction, please try again later",
+            "subtitle": "If the problem persists, contact support."
           },
           "title": "C’è già un’operazione in corso, riprova più tardi",
           "subtitle": "Se il problema persiste, puoi aprire una segnalazione."
