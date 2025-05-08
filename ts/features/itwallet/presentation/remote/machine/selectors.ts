@@ -30,6 +30,10 @@ export const selectUserSelectedOptionalCredentials = (
   snapshot: MachineSnapshot
 ) => snapshot.context.selectedOptionalCredentials;
 
+// This selector returns a decoded but not validated Request Object.
+// It is used in scenarios where, due to a validation error during Request Object processing,
+// it becomes necessary to extract certain internal information (e.g., `response_uri`)
+// in order to communicate the details of the failed operation to the Relying Party.
 export const selectUnverifiedRequestObject = (snapshot: MachineSnapshot) =>
   pipe(
     O.fromNullable(snapshot.context.requestObjectEncodedJwt),

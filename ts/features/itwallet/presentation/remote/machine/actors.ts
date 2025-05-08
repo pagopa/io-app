@@ -65,12 +65,14 @@ export const createRemoteActorsImplementation = (
     return { rpConf, rpSubject: subject };
   });
 
+  // The retrieval of the Request Object is managed by a dedicated actor to enable access
+  // to the `response_uri` parameter in the event of a validation failure during its processing.
   const getRequestObject = fromPromise<
     GetRequestObjectOutput,
     GetRequestObjectInput
   >(async ({ input }) => {
     const { qrCodePayload } = input;
-    assert(qrCodePayload, "Missing required getRequestObject actor params");
+    assert(qrCodePayload, "Missing required qrCodePayload");
     const { request_uri } = qrCodePayload;
 
     const { requestObjectEncodedJwt } =
