@@ -11,6 +11,7 @@ export enum RemoteFailureType {
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
   RELYING_PARTY_INVALID_AUTH_RESPONSE = "RELYING_PARTY_INVALID_AUTH_RESPONSE",
   INVALID_REQUEST_OBJECT = "INVALID_REQUEST_OBJECT",
+  UNTRUSTED_RP = "UNTRUSTED_RP",
   UNEXPECTED = "UNEXPECTED"
 }
 const { isRelyingPartyResponseError, RelyingPartyResponseErrorCodes: Codes } =
@@ -44,6 +45,7 @@ export type ReasonTypeByFailure = {
   [RemoteFailureType.RELYING_PARTY_GENERIC]: Errors.RelyingPartyResponseError;
   [RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE]: Errors.RelyingPartyResponseError;
   [RemoteFailureType.INVALID_REQUEST_OBJECT]: InvalidRequestObjectError;
+  [RemoteFailureType.UNTRUSTED_RP]: string;
   [RemoteFailureType.UNEXPECTED]: unknown;
 };
 
