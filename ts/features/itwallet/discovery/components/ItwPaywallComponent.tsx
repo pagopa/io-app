@@ -1,8 +1,6 @@
 import {
-  Avatar,
   Badge,
   Body,
-  BodySmall,
   ContentWrapper,
   Divider,
   FeatureInfo,
@@ -34,18 +32,9 @@ import { Renderer } from "../../../../components/IOMarkdown/types";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { tosConfigSelector } from "../../../tos/store/selectors";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { getLogoForInstitution } from "../../../services/common/utils";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-
-const institutionList = [
-  "06363391001",
-  "80050050154",
-  "01165400589",
-  "80078750587"
-] as Array<ServiceId>;
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -216,28 +205,7 @@ const FeatureHighlights = () => (
       }}
     />
     <FeatureInfo
-      body={
-        <VStack space={8}>
-          <BodySmall color="white">
-            {I18n.t("features.itWallet.discovery.paywall.featureHighlights.5")}
-          </BodySmall>
-          <View style={{ flexDirection: "row" }}>
-            {institutionList.map((institutionId, index) => (
-              <View
-                key={institutionId}
-                style={{
-                  marginLeft: index === 0 ? 0 : -8
-                }}
-              >
-                <Avatar
-                  size="small"
-                  logoUri={getLogoForInstitution(institutionId)}
-                />
-              </View>
-            ))}
-          </View>
-        </VStack>
-      }
+      body={I18n.t("features.itWallet.discovery.paywall.featureHighlights.5")}
       variant="contrast"
       pictogramProps={{
         name: "updateOS",
