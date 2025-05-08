@@ -15,7 +15,8 @@ export const ItwUpgradeBanner = () => {
 
   const handleOnPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: {}
     });
   };
 
