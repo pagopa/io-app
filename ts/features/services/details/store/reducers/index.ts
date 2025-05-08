@@ -214,12 +214,11 @@ export const servicePreferencePotByIdSelector = (
   return state.features.services.details.preferencesById[id] ?? pot.none;
 };
 export const servicePreferenceResponseSuccessByIdSelector = createSelector(
-  (state: GlobalState) => (id: ServiceId | undefined) =>
-    servicePreferencePotByIdSelector(state, id),
-  (_state: GlobalState, id: ServiceId | undefined) => ({ id }),
-  (getServicePreferencePot, { id }) =>
+  servicePreferencePotByIdSelector,
+
+  servicePreferencePot =>
     pipe(
-      getServicePreferencePot(id),
+      servicePreferencePot,
       pot.toOption,
       O.filter(isServicePreferenceResponseSuccess),
       O.toUndefined
@@ -265,19 +264,15 @@ type PreferenceByChannelSelectorType = (
 export const servicePreferenceByChannelPotSelector: PreferenceByChannelSelectorType =
   createSelector(
     [
-      (state: GlobalState) => (serviceId: ServiceId | undefined) =>
-        servicePreferencePotByIdSelector(state, serviceId),
+      servicePreferencePotByIdSelector,
       (
         _state: GlobalState,
-        serviceId: ServiceId | undefined,
+        _serviceId: ServiceId | undefined,
         channel: keyof EnabledChannels
-      ) => ({
-        serviceId,
-        channel
-      })
+      ) => channel
     ],
-    (selector, { serviceId, channel }) =>
-      pot.mapNullable(selector(serviceId), servicePreference => {
+    (selector, channel) =>
+      pot.mapNullable(selector, servicePreference => {
         if (isServicePreferenceResponseSuccess(servicePreference)) {
           return servicePreference.value[channel];
         }
