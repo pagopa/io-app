@@ -20,7 +20,7 @@ export const useFciCheckService = () => {
   const dispatch = useIODispatch();
   const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
   const servicePreferencePot = useIOSelector(state =>
-    servicePreferencePotByIdSelector(state)(fciServiceId)
+    servicePreferencePotByIdSelector(state, fciServiceId)
   );
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);

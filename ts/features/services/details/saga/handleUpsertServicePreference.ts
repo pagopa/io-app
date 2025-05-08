@@ -97,7 +97,7 @@ export function* handleUpsertServicePreference(
   yield* call(trackPNPushNotificationSettings, action);
 
   const servicePreferencePot = yield* select(state =>
-    servicePreferencePotByIdSelector(state)(action.payload.id)
+    servicePreferencePotByIdSelector(state, action.payload.id)
   );
 
   const updatingPreference = calculateUpdatingPreference(

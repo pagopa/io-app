@@ -64,13 +64,13 @@ function* handlePnActivation(
 }
 
 function* reportPNServiceStatusOnFailure(predictedValue: boolean) {
-  const getPnServicePreferencesPot = yield* select(
-    servicePreferencePotByIdSelector
-  );
   const pnServiceId = yield* select(pnMessagingServiceIdSelector);
+  const pnServicePreferencesPot = yield* select(
+    servicePreferencePotByIdSelector,
+    pnServiceId
+  );
   const isServiceActive = pipe(
-    pnServiceId,
-    getPnServicePreferencesPot,
+    pnServicePreferencesPot,
     pot.toOption,
     O.map(
       servicePreferenceResponse =>

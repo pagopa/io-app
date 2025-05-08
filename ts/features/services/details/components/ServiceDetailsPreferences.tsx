@@ -39,15 +39,15 @@ export const ServiceDetailsPreferences = ({
   const dispatch = useIODispatch();
 
   const servicePreferenceResponseSuccess = useIOSelector(state =>
-    servicePreferenceResponseSuccessByIdSelector(state)(serviceId)
+    servicePreferenceResponseSuccessByIdSelector(state, serviceId)
   );
 
   const isLoadingServicePreference = useIOSelector(state =>
-    isLoadingServicePreferenceSelector(state)(serviceId)
+    isLoadingServicePreferenceSelector(state, serviceId)
   );
 
   const isErrorServicePreference = useIOSelector(state =>
-    isErrorServicePreferenceSelector(state)(serviceId)
+    isErrorServicePreferenceSelector(state, serviceId)
   );
 
   const isPremiumMessagesOptInOutEnabled = useIOSelector(

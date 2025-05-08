@@ -45,7 +45,7 @@ const FciQtspClausesScreen = () => {
   const [clausesChecked, setClausesChecked] = useState(0);
   const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
   const servicePreferencePot = useIOSelector(state =>
-    servicePreferencePotByIdSelector(state)(fciServiceId)
+    servicePreferencePotByIdSelector(state, fciServiceId)
   );
   const qtspClausesSelector = useIOSelector(fciQtspClausesSelector);
   const qtspPrivacyTextSelector = useIOSelector(fciQtspPrivacyTextSelector);

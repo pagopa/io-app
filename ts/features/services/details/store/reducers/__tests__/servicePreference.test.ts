@@ -299,8 +299,10 @@ describe("servicePreference selectors", () => {
     it("should return pot.none when service ID is undefined", () => {
       const state = appReducer(undefined, applicationChangeState("active"));
 
-      const servicePreferencePot =
-        servicePreferencePotByIdSelector(state)(undefined);
+      const servicePreferencePot = servicePreferencePotByIdSelector(
+        state,
+        undefined
+      );
       expect(servicePreferencePot).toStrictEqual(pot.none);
     });
 
@@ -310,20 +312,20 @@ describe("servicePreference selectors", () => {
 
       // Initial state should be pot.none
       expect(
-        servicePreferencePotByIdSelector(store.getState())(serviceId)
+        servicePreferencePotByIdSelector(store.getState(), serviceId)
       ).toStrictEqual(pot.none);
 
       // After loading request
       store.dispatch(loadServicePreference.request(serviceId));
       expect(
-        servicePreferencePotByIdSelector(store.getState())(serviceId)
+        servicePreferencePotByIdSelector(store.getState(), serviceId)
       ).toStrictEqual(pot.noneLoading);
 
       // After successful load
       const preference = getServicePreferenceResponseSuccess();
       store.dispatch(loadServicePreference.success(preference));
       expect(
-        servicePreferencePotByIdSelector(store.getState())(serviceId)
+        servicePreferencePotByIdSelector(store.getState(), serviceId)
       ).toStrictEqual(pot.some(preference));
     });
   });
@@ -337,7 +339,8 @@ describe("servicePreference selectors", () => {
       store.dispatch(loadServicePreference.success(preference));
 
       const servicePreferenceResponse =
-        servicePreferenceResponseSuccessByIdSelector(store.getState())(
+        servicePreferenceResponseSuccessByIdSelector(
+          store.getState(),
           serviceId
         );
       expect(servicePreferenceResponse).toStrictEqual(preference);
@@ -351,7 +354,8 @@ describe("servicePreference selectors", () => {
       store.dispatch(loadServicePreference.success(failure));
 
       const servicePreferenceResponse =
-        servicePreferenceResponseSuccessByIdSelector(store.getState())(
+        servicePreferenceResponseSuccessByIdSelector(
+          store.getState(),
           serviceId
         );
       expect(servicePreferenceResponse).toBeUndefined();
@@ -370,11 +374,13 @@ describe("servicePreference selectors", () => {
 
       // Check that correct preferences are returned for each service
       const servicePreference1 = servicePreferenceResponseSuccessByIdSelector(
-        store.getState()
-      )(serviceId);
+        store.getState(),
+        serviceId
+      );
       const servicePreference2 = servicePreferenceResponseSuccessByIdSelector(
-        store.getState()
-      )(serviceId2);
+        store.getState(),
+        serviceId2
+      );
 
       expect(servicePreference1).toStrictEqual(preference1);
       expect(servicePreference2).toStrictEqual(preference2);
@@ -389,8 +395,9 @@ describe("servicePreference selectors", () => {
       store.dispatch(loadServicePreference.request(serviceId));
 
       const isLoadingServicePreference = isLoadingServicePreferenceSelector(
-        store.getState()
-      )(serviceId);
+        store.getState(),
+        serviceId
+      );
       expect(isLoadingServicePreference).toStrictEqual(true);
     });
 
@@ -403,8 +410,9 @@ describe("servicePreference selectors", () => {
       store.dispatch(upsertServicePreference.request(getUpdatingResponse()));
 
       const isLoadingServicePreference = isLoadingServicePreferenceSelector(
-        store.getState()
-      )(serviceId);
+        store.getState(),
+        serviceId
+      );
       expect(isLoadingServicePreference).toStrictEqual(true);
     });
 
@@ -413,7 +421,7 @@ describe("servicePreference selectors", () => {
       const store = createStore(appReducer, state as any);
 
       expect(
-        isLoadingServicePreferenceSelector(store.getState())(serviceId)
+        isLoadingServicePreferenceSelector(store.getState(), serviceId)
       ).toStrictEqual(false);
 
       store.dispatch(
@@ -421,7 +429,7 @@ describe("servicePreference selectors", () => {
       );
 
       expect(
-        isLoadingServicePreferenceSelector(store.getState())(serviceId)
+        isLoadingServicePreferenceSelector(store.getState(), serviceId)
       ).toStrictEqual(false);
     });
 
@@ -442,10 +450,10 @@ describe("servicePreference selectors", () => {
 
       // Check that service 1 is loading but service 2 is not
       expect(
-        isLoadingServicePreferenceSelector(store.getState())(serviceId)
+        isLoadingServicePreferenceSelector(store.getState(), serviceId)
       ).toStrictEqual(true);
       expect(
-        isLoadingServicePreferenceSelector(store.getState())(serviceId2)
+        isLoadingServicePreferenceSelector(store.getState(), serviceId2)
       ).toStrictEqual(false);
     });
   });
@@ -460,8 +468,9 @@ describe("servicePreference selectors", () => {
       );
 
       const isErrorServicePreference = isErrorServicePreferenceSelector(
-        store.getState()
-      )(serviceId);
+        store.getState(),
+        serviceId
+      );
       expect(isErrorServicePreference).toStrictEqual(true);
     });
 
@@ -474,8 +483,9 @@ describe("servicePreference selectors", () => {
       );
 
       const isErrorServicePreference = isErrorServicePreferenceSelector(
-        store.getState()
-      )(serviceId);
+        store.getState(),
+        serviceId
+      );
       expect(isErrorServicePreference).toStrictEqual(true);
     });
 
@@ -488,8 +498,9 @@ describe("servicePreference selectors", () => {
       );
 
       const isErrorServicePreference = isErrorServicePreferenceSelector(
-        store.getState()
-      )(serviceId);
+        store.getState(),
+        serviceId
+      );
       expect(isErrorServicePreference).toStrictEqual(false);
     });
 
@@ -518,13 +529,13 @@ describe("servicePreference selectors", () => {
 
       // Check that service 1 is not error but services 2 and 3 are
       expect(
-        isErrorServicePreferenceSelector(store.getState())(serviceId)
+        isErrorServicePreferenceSelector(store.getState(), serviceId)
       ).toStrictEqual(false);
       expect(
-        isErrorServicePreferenceSelector(store.getState())(serviceId2)
+        isErrorServicePreferenceSelector(store.getState(), serviceId2)
       ).toStrictEqual(true);
       expect(
-        isErrorServicePreferenceSelector(store.getState())(serviceId3)
+        isErrorServicePreferenceSelector(store.getState(), serviceId3)
       ).toStrictEqual(true);
     });
   });

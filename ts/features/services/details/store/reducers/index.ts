@@ -204,16 +204,20 @@ export const serviceMetadataInfoSelector = createSelector(
     )
 );
 
-export const servicePreferencePotByIdSelector =
-  (state: GlobalState) => (id: ServiceId | undefined) => {
-    if (id === undefined) {
-      return pot.none;
-    }
-    return state.features.services.details.preferencesById[id] ?? pot.none;
-  };
+export const servicePreferencePotByIdSelector = (
+  state: GlobalState,
+  id: ServiceId | undefined
+) => {
+  if (id === undefined) {
+    return pot.none;
+  }
+  return state.features.services.details.preferencesById[id] ?? pot.none;
+};
 export const servicePreferenceResponseSuccessByIdSelector = createSelector(
-  servicePreferencePotByIdSelector,
-  getServicePreferencePot => (id: ServiceId | undefined) =>
+  (state: GlobalState) => (id: ServiceId | undefined) =>
+    servicePreferencePotByIdSelector(state, id),
+  (_state: GlobalState, id: ServiceId | undefined) => ({ id }),
+  (getServicePreferencePot, { id }) =>
     pipe(
       getServicePreferencePot(id),
       pot.toOption,
@@ -222,42 +226,61 @@ export const servicePreferenceResponseSuccessByIdSelector = createSelector(
     )
 );
 
-export const isLoadingServicePreferenceSelector = createSelector(
-  servicePreferencePotByIdSelector,
-  getServicePreferencePot => (id: ServiceId | undefined) =>
-    pipe(
-      getServicePreferencePot(id),
-      servicePreferencePot =>
-        pot.isLoading(servicePreferencePot) ||
-        pot.isUpdating(servicePreferencePot)
-    )
-);
+export const isLoadingServicePreferenceSelector = (
+  state: GlobalState,
+  id: ServiceId | undefined
+) =>
+  pipe(
+    servicePreferencePotByIdSelector(state, id),
+    servicePreferencePot =>
+      pot.isLoading(servicePreferencePot) ||
+      pot.isUpdating(servicePreferencePot)
+  );
 
-export const isErrorServicePreferenceSelector = createSelector(
-  servicePreferencePotByIdSelector,
-  getServicePreferencePot => (id: ServiceId | undefined) =>
-    pipe(
-      getServicePreferencePot(id),
-      servicePreferencePot =>
-        pot.isError(servicePreferencePot) ||
-        (isStrictSome(servicePreferencePot) &&
-          !isServicePreferenceResponseSuccess(servicePreferencePot.value))
-    )
-);
+export const isErrorServicePreferenceSelector = (
+  state: GlobalState,
+  id: ServiceId | undefined
+) =>
+  pipe(
+    servicePreferencePotByIdSelector(state, id),
+    servicePreferencePot =>
+      pot.isError(servicePreferencePot) ||
+      (isStrictSome(servicePreferencePot) &&
+        !isServicePreferenceResponseSuccess(servicePreferencePot.value))
+  );
+
+type PreferenceByChannelSelectorType = (
+  state: GlobalState,
+  serviceId: ServiceId | undefined,
+  channel: keyof EnabledChannels
+) => pot.Pot<boolean, WithServiceID<NetworkError>>;
 
 /**
  * Select the preference by channel
- * @param channel - The channel of the preference to select
  * @param serviceId - The ID of the service to select the preference for
+ * @param channel - The channel of the preference to select
+ * @returns The preference value for the specified channel or undefined
  */
-export const servicePreferenceByChannelPotSelector = createSelector(
-  servicePreferencePotByIdSelector,
-  (_: GlobalState, channel: keyof EnabledChannels) => channel,
-  (getServicePreferencePot, channel) => (serviceId: ServiceId | undefined) =>
-    pot.mapNullable(getServicePreferencePot(serviceId), servicePreference => {
-      if (isServicePreferenceResponseSuccess(servicePreference)) {
-        return servicePreference.value[channel];
-      }
-      return undefined;
-    })
-);
+
+export const servicePreferenceByChannelPotSelector: PreferenceByChannelSelectorType =
+  createSelector(
+    [
+      (state: GlobalState) => (serviceId: ServiceId | undefined) =>
+        servicePreferencePotByIdSelector(state, serviceId),
+      (
+        _state: GlobalState,
+        serviceId: ServiceId | undefined,
+        channel: keyof EnabledChannels
+      ) => ({
+        serviceId,
+        channel
+      })
+    ],
+    (selector, { serviceId, channel }) =>
+      pot.mapNullable(selector(serviceId), servicePreference => {
+        if (isServicePreferenceResponseSuccess(servicePreference)) {
+          return servicePreference.value[channel];
+        }
+        return undefined;
+      })
+  );

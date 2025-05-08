@@ -19,7 +19,7 @@ export const usePnPreferencesFetcher = (pnServiceId: ServiceId): PnStatus => {
   const [hasFetched, setHasFetched] = React.useState<boolean>(false);
   const dispatch = useIODispatch();
   const servicePreferencePot = useIOSelector(state =>
-    servicePreferencePotByIdSelector(state)(pnServiceId)
+    servicePreferencePotByIdSelector(state, pnServiceId)
   );
 
   const isError = pot.isError(servicePreferencePot);
