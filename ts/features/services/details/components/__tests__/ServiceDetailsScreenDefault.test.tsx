@@ -56,10 +56,12 @@ describe("ServiceDetailsScreenDefault", () => {
       features: {
         services: {
           details: {
-            byId: {
+            dataById: {
               [serviceId]: pot.some(service)
             },
-            servicePreference: pot.some(servicePreferenceWihInboxEnabled)
+            preferencesById: {
+              [serviceId]: pot.some(servicePreferenceWihInboxEnabled)
+            }
           }
         }
       }
@@ -74,10 +76,12 @@ describe("ServiceDetailsScreenDefault", () => {
       features: {
         services: {
           details: {
-            byId: {
+            dataById: {
               [serviceId]: pot.some(service)
             },
-            servicePreference: pot.some(servicePreferenceWihInboxEnabled)
+            preferencesById: {
+              [serviceId]: pot.some(servicePreferenceWihInboxEnabled)
+            }
           }
         }
       }
@@ -92,10 +96,12 @@ describe("ServiceDetailsScreenDefault", () => {
       features: {
         services: {
           details: {
-            byId: {
+            dataById: {
               [serviceId]: pot.some(service)
             },
-            servicePreference: pot.some(servicePreferenceWihInboxEnabled)
+            preferencesById: {
+              [serviceId]: pot.some(servicePreferenceWihInboxEnabled)
+            }
           }
         }
       }

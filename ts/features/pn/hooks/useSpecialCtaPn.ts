@@ -82,7 +82,7 @@ export const useSpecialCtaPn = (
     usePnActivation(serviceId);
 
   const { isLoadingServicePreferenceByChannel, servicePreferenceByChannel } =
-    useServicePreferenceByChannel("inbox");
+    useServicePreferenceByChannel("inbox", serviceId);
 
   const isLoading =
     isLoadingServicePreferenceByChannel || isLoadingPnActivation;
