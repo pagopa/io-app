@@ -1,10 +1,9 @@
 import {
   Body,
-  ButtonOutline,
-  ButtonSolid,
   ContentWrapper,
   H4,
   H5,
+  IOButton,
   IOVisualCostants,
   OTPInput,
   VStack,
@@ -55,7 +54,11 @@ const OTPWrapper = ({
           errorMessage={"Wrong OTP"}
           autoFocus={autoFocus}
         />
-        <ButtonSolid onPress={() => setValue("")} label={"Pulisci valore"} />
+        <IOButton
+          variant="solid"
+          onPress={() => setValue("")}
+          label={"Pulisci valore"}
+        />
       </VStack>
     ),
     [value, onValueChange, secret, onValidate, autoFocus]
@@ -89,8 +92,6 @@ export const DSOTPInput = () => {
   const autofocusableOTPViewRef = useRef<View>(null);
   const [showAutofocusableOTP, setShowAutofocusableOTP] = useState(false);
   const headerHeight = useHeaderHeight();
-
-  const ToggleButton = showAutofocusableOTP ? ButtonSolid : ButtonOutline;
 
   const { screenEndMargin } = useScreenEndMargin();
 
@@ -142,7 +143,8 @@ export const DSOTPInput = () => {
 
               <VStack space={sectionTitleMargin}>
                 <H5 color={theme["textHeading-default"]}>Autofocus</H5>
-                <ToggleButton
+                <IOButton
+                  variant={showAutofocusableOTP ? "solid" : "outline"}
                   onPress={() => {
                     setShowAutofocusableOTP(!showAutofocusableOTP);
                     setTimeout(() => {

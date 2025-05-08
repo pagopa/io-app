@@ -119,7 +119,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
           accessibilityRole="button"
           accessibilityState={
             {
-              "busy": undefined,
+              "busy": false,
               "checked": undefined,
               "disabled": false,
               "expanded": undefined,
@@ -154,7 +154,6 @@ To enter the IO app without physically using the Electronic Identity Card, you m
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          onTouchEnd={[Function]}
           style={
             {
               "alignSelf": "flex-start",
@@ -167,55 +166,77 @@ To enter the IO app without physically using the Electronic Identity Card, you m
               [
                 {
                   "alignItems": "center",
+                  "borderCurve": "continuous",
                   "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
                 {
-                  "columnGap": 8,
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
                 },
                 {},
-                {
-                  "columnGap": 8,
-                },
                 false,
+                {},
               ]
             }
           >
-            <Text
-              accessibilityElementsHidden={true}
-              accessible={false}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.5}
-              numberOfLines={1}
+            <View
               style={
                 [
-                  {},
                   {
-                    "color": "#0E0F13",
-                    "fontFamily": "Titillio",
-                    "fontSize": 16,
-                    "fontStyle": "normal",
-                    "fontWeight": "600",
-                    "lineHeight": 20,
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
                   },
-                  [
-                    {
-                      "color": undefined,
-                    },
-                    {
-                      "textAlign": "auto",
-                    },
-                  ],
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
                 ]
               }
             >
-              What is CieID?
-            </Text>
+              <Text
+                accessibilityElementsHidden={true}
+                accessible={false}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                importantForAccessibility="no-hide-descendants"
+                maxFontSizeMultiplier={1.5}
+                numberOfLines={1}
+                style={
+                  [
+                    {},
+                    {
+                      "color": "#0E0F13",
+                      "fontFamily": "Titillio",
+                      "fontSize": 16,
+                      "fontStyle": "normal",
+                      "fontWeight": "600",
+                      "lineHeight": 20,
+                    },
+                    [
+                      {
+                        "textAlign": "auto",
+                      },
+                      {
+                        "color": undefined,
+                      },
+                    ],
+                  ]
+                }
+              >
+                What is CieID?
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -402,22 +423,21 @@ To enter the IO app without physically using the Electronic Identity Card, you m
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "borderRadius": 8,
                 "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
-                "paddingHorizontal": 24,
+                "overflow": "hidden",
                 "textAlignVertical": "center",
               },
               {
-                "height": 48,
+                "paddingHorizontal": 16,
               },
               {
                 "backgroundColor": "#0B3EE3",
-                "overflow": "hidden",
-              },
-              {
-                "paddingHorizontal": 16,
+                "borderColor": "#FFFFFF",
+                "borderRadius": 8,
+                "borderWidth": 0,
+                "height": 48,
               },
               {},
               false,
@@ -454,16 +474,21 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                 [
                   {},
                   {
-                    "color": "#FFFFFF",
+                    "color": "#0E0F13",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": 20,
+                    "lineHeight": undefined,
                   },
-                  {
-                    "alignSelf": "center",
-                  },
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": undefined,
+                    },
+                  ],
                 ]
               }
             >
@@ -492,7 +517,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
           accessibilityRole="button"
           accessibilityState={
             {
-              "busy": undefined,
+              "busy": false,
               "checked": undefined,
               "disabled": false,
               "expanded": undefined,
@@ -527,7 +552,6 @@ To enter the IO app without physically using the Electronic Identity Card, you m
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          onTouchEnd={[Function]}
           style={
             {
               "alignSelf": "flex-start",
@@ -540,55 +564,77 @@ To enter the IO app without physically using the Electronic Identity Card, you m
               [
                 {
                   "alignItems": "center",
+                  "borderCurve": "continuous",
                   "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
                 {
-                  "columnGap": 8,
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
                 },
                 {},
-                {
-                  "columnGap": 8,
-                },
                 false,
+                {},
               ]
             }
           >
-            <Text
-              accessibilityElementsHidden={true}
-              accessible={false}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.5}
-              numberOfLines={1}
+            <View
               style={
                 [
-                  {},
                   {
-                    "color": "#0E0F13",
-                    "fontFamily": "Titillio",
-                    "fontSize": 16,
-                    "fontStyle": "normal",
-                    "fontWeight": "600",
-                    "lineHeight": 20,
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
                   },
-                  [
-                    {
-                      "color": undefined,
-                    },
-                    {
-                      "textAlign": "auto",
-                    },
-                  ],
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
                 ]
               }
             >
-              I don't have CieID
-            </Text>
+              <Text
+                accessibilityElementsHidden={true}
+                accessible={false}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                importantForAccessibility="no-hide-descendants"
+                maxFontSizeMultiplier={1.5}
+                numberOfLines={1}
+                style={
+                  [
+                    {},
+                    {
+                      "color": "#0E0F13",
+                      "fontFamily": "Titillio",
+                      "fontSize": 16,
+                      "fontStyle": "normal",
+                      "fontWeight": "600",
+                      "lineHeight": 20,
+                    },
+                    [
+                      {
+                        "textAlign": "auto",
+                      },
+                      {
+                        "color": undefined,
+                      },
+                    ],
+                  ]
+                }
+              >
+                I don't have CieID
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -714,7 +760,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           accessibilityRole="button"
           accessibilityState={
             {
-              "busy": undefined,
+              "busy": false,
               "checked": undefined,
               "disabled": false,
               "expanded": undefined,
@@ -749,7 +795,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          onTouchEnd={[Function]}
           style={
             {
               "alignSelf": "flex-start",
@@ -762,55 +807,77 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               [
                 {
                   "alignItems": "center",
+                  "borderCurve": "continuous",
                   "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
                 {
-                  "columnGap": 8,
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
                 },
                 {},
-                {
-                  "columnGap": 8,
-                },
                 false,
+                {},
               ]
             }
           >
-            <Text
-              accessibilityElementsHidden={true}
-              accessible={false}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.5}
-              numberOfLines={1}
+            <View
               style={
                 [
-                  {},
                   {
-                    "color": "#0E0F13",
-                    "fontFamily": "Titillio",
-                    "fontSize": 16,
-                    "fontStyle": "normal",
-                    "fontWeight": "600",
-                    "lineHeight": 20,
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
                   },
-                  [
-                    {
-                      "color": undefined,
-                    },
-                    {
-                      "textAlign": "auto",
-                    },
-                  ],
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
                 ]
               }
             >
-              Where can I find the CIE PIN?
-            </Text>
+              <Text
+                accessibilityElementsHidden={true}
+                accessible={false}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                importantForAccessibility="no-hide-descendants"
+                maxFontSizeMultiplier={1.5}
+                numberOfLines={1}
+                style={
+                  [
+                    {},
+                    {
+                      "color": "#0E0F13",
+                      "fontFamily": "Titillio",
+                      "fontSize": 16,
+                      "fontStyle": "normal",
+                      "fontWeight": "600",
+                      "lineHeight": 20,
+                    },
+                    [
+                      {
+                        "textAlign": "auto",
+                      },
+                      {
+                        "color": undefined,
+                      },
+                    ],
+                  ]
+                }
+              >
+                Where can I find the CIE PIN?
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -1051,7 +1118,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             accessibilityRole="button"
             accessibilityState={
               {
-                "busy": undefined,
+                "busy": false,
                 "checked": undefined,
                 "disabled": false,
                 "expanded": undefined,
@@ -1086,7 +1153,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
-            onTouchEnd={[Function]}
             style={
               {
                 "alignSelf": "flex-start",
@@ -1099,55 +1165,77 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 [
                   {
                     "alignItems": "center",
+                    "borderCurve": "continuous",
                     "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
+                    "overflow": "hidden",
                     "textAlignVertical": "center",
                   },
-                  false,
                   {
-                    "columnGap": 8,
+                    "paddingHorizontal": 0,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "borderColor": "#0B3EE3",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": undefined,
                   },
                   {},
-                  {
-                    "columnGap": 8,
-                  },
                   false,
+                  {},
                 ]
               }
             >
-              <Text
-                accessibilityElementsHidden={true}
-                accessible={false}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                importantForAccessibility="no-hide-descendants"
-                maxFontSizeMultiplier={1.5}
-                numberOfLines={1}
+              <View
                 style={
                   [
-                    {},
                     {
-                      "color": "#0E0F13",
-                      "fontFamily": "Titillio",
-                      "fontSize": 16,
-                      "fontStyle": "normal",
-                      "fontWeight": "600",
-                      "lineHeight": 20,
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
                     },
-                    [
-                      {
-                        "color": undefined,
-                      },
-                      {
-                        "textAlign": "auto",
-                      },
-                    ],
+                    {
+                      "columnGap": 8,
+                    },
+                    false,
                   ]
                 }
               >
-                Forgotten your PIN?
-              </Text>
+                <Text
+                  accessibilityElementsHidden={true}
+                  accessible={false}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  importantForAccessibility="no-hide-descendants"
+                  maxFontSizeMultiplier={1.5}
+                  numberOfLines={1}
+                  style={
+                    [
+                      {},
+                      {
+                        "color": "#0E0F13",
+                        "fontFamily": "Titillio",
+                        "fontSize": 16,
+                        "fontStyle": "normal",
+                        "fontWeight": "600",
+                        "lineHeight": 20,
+                      },
+                      [
+                        {
+                          "textAlign": "auto",
+                        },
+                        {
+                          "color": undefined,
+                        },
+                      ],
+                    ]
+                  }
+                >
+                  Forgotten your PIN?
+                </Text>
+              </View>
             </View>
           </View>
           <View
@@ -1342,22 +1430,21 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "borderRadius": 8,
                 "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
-                "paddingHorizontal": 24,
+                "overflow": "hidden",
                 "textAlignVertical": "center",
               },
               {
-                "height": 48,
+                "paddingHorizontal": 16,
               },
               {
                 "backgroundColor": "#0B3EE3",
-                "overflow": "hidden",
-              },
-              {
-                "paddingHorizontal": 16,
+                "borderColor": "#FFFFFF",
+                "borderRadius": 8,
+                "borderWidth": 0,
+                "height": 48,
               },
               {},
               false,
@@ -1394,16 +1481,21 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 [
                   {},
                   {
-                    "color": "#FFFFFF",
+                    "color": "#0E0F13",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": 20,
+                    "lineHeight": undefined,
                   },
-                  {
-                    "alignSelf": "center",
-                  },
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": undefined,
+                    },
+                  ],
                 ]
               }
             >
@@ -1432,7 +1524,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           accessibilityRole="button"
           accessibilityState={
             {
-              "busy": undefined,
+              "busy": false,
               "checked": undefined,
               "disabled": false,
               "expanded": undefined,
@@ -1467,7 +1559,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          onTouchEnd={[Function]}
           style={
             {
               "alignSelf": "flex-start",
@@ -1480,55 +1571,77 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               [
                 {
                   "alignItems": "center",
+                  "borderCurve": "continuous",
                   "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
                 {
-                  "columnGap": 8,
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
                 },
                 {},
-                {
-                  "columnGap": 8,
-                },
                 false,
+                {},
               ]
             }
           >
-            <Text
-              accessibilityElementsHidden={true}
-              accessible={false}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.5}
-              numberOfLines={1}
+            <View
               style={
                 [
-                  {},
                   {
-                    "color": "#0E0F13",
-                    "fontFamily": "Titillio",
-                    "fontSize": 16,
-                    "fontStyle": "normal",
-                    "fontWeight": "600",
-                    "lineHeight": 20,
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
                   },
-                  [
-                    {
-                      "color": undefined,
-                    },
-                    {
-                      "textAlign": "auto",
-                    },
-                  ],
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
                 ]
               }
             >
-              I don't have a CIE and PIN
-            </Text>
+              <Text
+                accessibilityElementsHidden={true}
+                accessible={false}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                importantForAccessibility="no-hide-descendants"
+                maxFontSizeMultiplier={1.5}
+                numberOfLines={1}
+                style={
+                  [
+                    {},
+                    {
+                      "color": "#0E0F13",
+                      "fontFamily": "Titillio",
+                      "fontSize": 16,
+                      "fontStyle": "normal",
+                      "fontWeight": "600",
+                      "lineHeight": 20,
+                    },
+                    [
+                      {
+                        "textAlign": "auto",
+                      },
+                      {
+                        "color": undefined,
+                      },
+                    ],
+                  ]
+                }
+              >
+                I don't have a CIE and PIN
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -2381,22 +2494,21 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "borderRadius": 8,
                 "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
-                "paddingHorizontal": 24,
+                "overflow": "hidden",
                 "textAlignVertical": "center",
               },
               {
-                "height": 48,
+                "paddingHorizontal": 16,
               },
               {
                 "backgroundColor": "#0B3EE3",
-                "overflow": "hidden",
-              },
-              {
-                "paddingHorizontal": 16,
+                "borderColor": "#FFFFFF",
+                "borderRadius": 8,
+                "borderWidth": 0,
+                "height": 48,
               },
               {},
               false,
@@ -2433,16 +2545,21 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 [
                   {},
                   {
-                    "color": "#FFFFFF",
+                    "color": "#0E0F13",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": 20,
+                    "lineHeight": undefined,
                   },
-                  {
-                    "alignSelf": "center",
-                  },
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": undefined,
+                    },
+                  ],
                 ]
               }
             >
@@ -2730,22 +2847,21 @@ exports[`SpidWizard Should match the snapshot 1`] = `
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "borderRadius": 8,
                 "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
-                "paddingHorizontal": 24,
+                "overflow": "hidden",
                 "textAlignVertical": "center",
               },
               {
-                "height": 48,
+                "paddingHorizontal": 16,
               },
               {
                 "backgroundColor": "#0B3EE3",
-                "overflow": "hidden",
-              },
-              {
-                "paddingHorizontal": 16,
+                "borderColor": "#FFFFFF",
+                "borderRadius": 8,
+                "borderWidth": 0,
+                "height": 48,
               },
               {},
               false,
@@ -2782,16 +2898,21 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 [
                   {},
                   {
-                    "color": "#FFFFFF",
+                    "color": "#0E0F13",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": 20,
+                    "lineHeight": undefined,
                   },
-                  {
-                    "alignSelf": "center",
-                  },
+                  [
+                    {
+                      "textAlign": "auto",
+                    },
+                    {
+                      "color": undefined,
+                    },
+                  ],
                 ]
               }
             >
@@ -2820,7 +2941,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
           accessibilityRole="button"
           accessibilityState={
             {
-              "busy": undefined,
+              "busy": false,
               "checked": undefined,
               "disabled": false,
               "expanded": undefined,
@@ -2855,7 +2976,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          onTouchEnd={[Function]}
           style={
             {
               "alignSelf": "flex-start",
@@ -2868,55 +2988,77 @@ exports[`SpidWizard Should match the snapshot 1`] = `
               [
                 {
                   "alignItems": "center",
+                  "borderCurve": "continuous",
                   "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "overflow": "hidden",
                   "textAlignVertical": "center",
                 },
-                false,
                 {
-                  "columnGap": 8,
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
                 },
                 {},
-                {
-                  "columnGap": 8,
-                },
                 false,
+                {},
               ]
             }
           >
-            <Text
-              accessibilityElementsHidden={true}
-              accessible={false}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.5}
-              numberOfLines={1}
+            <View
               style={
                 [
-                  {},
                   {
-                    "color": "#0E0F13",
-                    "fontFamily": "Titillio",
-                    "fontSize": 16,
-                    "fontStyle": "normal",
-                    "fontWeight": "600",
-                    "lineHeight": 20,
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
                   },
-                  [
-                    {
-                      "color": undefined,
-                    },
-                    {
-                      "textAlign": "auto",
-                    },
-                  ],
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
                 ]
               }
             >
-              I don't have SPID
-            </Text>
+              <Text
+                accessibilityElementsHidden={true}
+                accessible={false}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                importantForAccessibility="no-hide-descendants"
+                maxFontSizeMultiplier={1.5}
+                numberOfLines={1}
+                style={
+                  [
+                    {},
+                    {
+                      "color": "#0E0F13",
+                      "fontFamily": "Titillio",
+                      "fontSize": 16,
+                      "fontStyle": "normal",
+                      "fontWeight": "600",
+                      "lineHeight": 20,
+                    },
+                    [
+                      {
+                        "textAlign": "auto",
+                      },
+                      {
+                        "color": undefined,
+                      },
+                    ],
+                  ]
+                }
+              >
+                I don't have SPID
+              </Text>
+            </View>
           </View>
         </View>
       </View>
