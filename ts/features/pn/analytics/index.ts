@@ -9,7 +9,7 @@ import {
   buildEventProperties,
   numberToYesNoOnThreshold
 } from "../../../utils/analytics";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../definitions/communications/ThirdPartyAttachment";
 
 export interface TrackPNPaymentStatus {
   paymentCount: number;

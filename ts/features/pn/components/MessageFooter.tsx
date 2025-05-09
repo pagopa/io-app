@@ -15,7 +15,7 @@ import { trackPNPaymentStart, trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { shouldUseBottomSheetForPayments } from "../utils";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 
 type MessageFooterProps = {
   messageId: UIMessageId;

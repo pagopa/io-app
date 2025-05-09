@@ -42,7 +42,7 @@ export function* handleCreateFilledDocument(
   try {
     const postQtspFilledBodyRequest = postQtspFilledBody({
       body: action.payload,
-      Bearer: `Bearer ${bearerToken}`
+      Bearer: `${bearerToken}`
     });
     const postQtspFilledBodyResponse = (yield* call(
       withRefreshApiCall,

@@ -1,9 +1,9 @@
-import { LollipopContentDigest } from "../../../../definitions/lollipop/LollipopContentDigest";
-import { LollipopMethodEnum } from "../../../../definitions/lollipop/LollipopMethod";
-import { LollipopOriginalURL } from "../../../../definitions/lollipop/LollipopOriginalURL";
-import { LollipopSignature } from "../../../../definitions/lollipop/LollipopSignature";
-import { LollipopSignatureInput } from "../../../../definitions/lollipop/LollipopSignatureInput";
-import { createClient } from "../../../../definitions/lollipop/client";
+import { LollipopContentDigest } from "../../../../definitions/auth/LollipopContentDigest";
+import { LollipopMethodEnum } from "../../../../definitions/auth/LollipopMethod";
+import { LollipopOriginalURL } from "../../../../definitions/auth/LollipopOriginalURL";
+import { LollipopSignature } from "../../../../definitions/auth/LollipopSignature";
+import { LollipopSignatureInput } from "../../../../definitions/auth/LollipopSignatureInput";
+import { createClient } from "../../../../definitions/auth/client";
 import { LollipopConfig } from "../../lollipop";
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import { lollipopFetch } from "../../lollipop/utils/fetch";
@@ -15,7 +15,8 @@ const createLollipopClient = (
 ) =>
   createClient({
     baseUrl,
-    fetchApi: lollipopFetch(lollipopConfig, keyInfo)
+    fetchApi: lollipopFetch(lollipopConfig, keyInfo),
+    basePath: ""
   });
 
 type LollipopSignRequestBody = {
@@ -29,7 +30,7 @@ const signMessage = async (
 ) =>
   await lollipopClient.signMessage({
     body,
-    Bearer: `Bearer ${sessionToken}`,
+    Bearer: `${sessionToken}`,
     "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
     "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
     "content-digest": "" as LollipopContentDigest,

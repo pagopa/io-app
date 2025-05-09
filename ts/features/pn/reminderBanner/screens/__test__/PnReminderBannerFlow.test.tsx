@@ -13,7 +13,7 @@ import {
   pnBannerFlowStateEnum
 } from "../PnReminderBannerFlow";
 import { pnActivationUpsert } from "../../../store/actions";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";

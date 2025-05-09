@@ -1,9 +1,9 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
-import { UserDataProcessing } from "../../../../../../definitions/backend/UserDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/UserDataProcessingStatus";
+import { UserDataProcessing } from "../../../../../../definitions/auth/UserDataProcessing";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/auth/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../../../../../definitions/auth/UserDataProcessingStatus";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing,

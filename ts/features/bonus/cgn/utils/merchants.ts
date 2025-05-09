@@ -1,8 +1,8 @@
-import { OfflineMerchant } from "../../../../../definitions/cgn/merchants/OfflineMerchant";
-import { OnlineMerchant } from "../../../../../definitions/cgn/merchants/OnlineMerchant";
+import { OfflineMerchant } from "../../../../../definitions/cgn/OfflineMerchant";
+import { OnlineMerchant } from "../../../../../definitions/cgn/OnlineMerchant";
 import { MerchantsAll } from "../screens/merchants/CgnMerchantsListScreen";
-import { OnlineMerchants } from "../../../../../definitions/cgn/merchants/OnlineMerchants";
-import { OfflineMerchants } from "../../../../../definitions/cgn/merchants/OfflineMerchants";
+import { OnlineMerchants } from "../../../../../definitions/cgn/OnlineMerchants";
+import { OfflineMerchants } from "../../../../../definitions/cgn/OfflineMerchants";
 
 export const mixAndSortMerchants = (
   onlineMerchants: OnlineMerchants["items"],

@@ -1,5 +1,5 @@
 import { ListItemInfo, ListItemInfoCopy } from "@pagopa/io-app-design-system";
-import { Address } from "../../../../../../definitions/cgn/merchants/Address";
+import { Address } from "../../../../../../definitions/cgn/Address";
 import I18n from "../../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 

@@ -6,7 +6,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { Preconditions } from "../Preconditions";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as messagePrecondition from "../../../store/reducers/messagePrecondition";
-import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum } from "../../../../../../definitions/communications/MessageCategoryBase";
 import * as analytics from "../../../analytics";
 import {
   idlePreconditionStatusAction,

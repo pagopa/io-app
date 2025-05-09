@@ -8,7 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ComponentProps, useCallback, useEffect, useMemo } from "react";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessingChoiceEnum } from "../../../../../definitions/auth/UserDataProcessingChoice";
 import { BulletList, BulletListItem } from "../../../../components/BulletList";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";

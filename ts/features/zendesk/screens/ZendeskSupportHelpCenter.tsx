@@ -27,7 +27,7 @@ import {
 import { FlatList, ListRenderItemInfo } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import _ from "lodash";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../definitions/auth/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
 import {

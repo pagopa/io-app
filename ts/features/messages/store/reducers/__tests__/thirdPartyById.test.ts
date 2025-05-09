@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "redux";
 import { appReducer } from "../../../../../store/reducers";
-import { ThirdPartyMessageWithContent } from "../../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ThirdPartyMessageWithContent } from "../../../../../../definitions/communications/ThirdPartyMessageWithContent";
 import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import {
@@ -17,9 +17,9 @@ import { UIMessageDetails, UIMessageId } from "../../../types";
 import {
   ThirdPartyMessage,
   ThirdPartyMessageDetails
-} from "../../../../../../definitions/backend/ThirdPartyMessage";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+} from "../../../../../../definitions/communications/ThirdPartyMessage";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/communications/ThirdPartyAttachment";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { DetailsById } from "../detailsById";

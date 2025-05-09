@@ -8,7 +8,7 @@ import { MessagePaymentItem } from "../../messages/components/MessageDetail/Mess
 import { cancelQueuedPaymentUpdates } from "../../messages/store/actions";
 import { UIMessageId } from "../../messages/types";
 import { getRptIdStringFromPayment } from "../utils/rptId";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 
 export type MessagePaymentBottomSheetProps = {
   messageId: UIMessageId;

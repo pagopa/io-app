@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { PreferredLanguageEnum } from "../../../../../definitions/auth/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";

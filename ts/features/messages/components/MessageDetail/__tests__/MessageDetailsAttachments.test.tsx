@@ -5,9 +5,9 @@ import { UIMessageId } from "../../../types";
 import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { loadThirdPartyMessage } from "../../../store/actions";
-import { ThirdPartyMessage } from "../../../../../../definitions/backend/ThirdPartyMessage";
-import { ThirdPartyMessageWithContent } from "../../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyMessage } from "../../../../../../definitions/communications/ThirdPartyMessage";
+import { ThirdPartyMessageWithContent } from "../../../../../../definitions/communications/ThirdPartyMessageWithContent";
+import { ThirdPartyAttachment } from "../../../../../../definitions/communications/ThirdPartyAttachment";
 import { ATTACHMENT_CATEGORY } from "../../../types/attachmentCategory";
 
 describe("MessageDetailsAttachments", () => {

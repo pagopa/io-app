@@ -23,7 +23,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage, UIMessageId } from "../../types";
 import { foldK, isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 import { emptyMessageArray } from "../../utils";
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { MessageCategory } from "../../../../../definitions/communications/MessageCategory";
 import { foldMessageCategoryK } from "../../utils/messageCategory";
 import { paymentsByRptIdSelector } from "../../../../store/reducers/entities/payments";
 import { isTextIncludedCaseInsensitive } from "../../../../utils/strings";

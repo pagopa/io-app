@@ -2,7 +2,7 @@ import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { UIMessage } from "../../../types";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
@@ -12,7 +12,7 @@ import {
   scheduledPreconditionStatusAction,
   toScheduledPayload
 } from "../../../store/actions/preconditions";
-import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
+import { MessageCategory } from "../../../../../../definitions/communications/MessageCategory";
 
 jest.mock("rn-qr-generator", () => ({}));
 jest.mock("react-native-screenshot-prevent", () => ({}));
