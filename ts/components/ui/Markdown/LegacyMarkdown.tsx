@@ -316,7 +316,7 @@ class LegacyMarkdown extends PureComponent<Props, State> {
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
             <View style={containerStyle}>
               <MarkdownWebviewComponent
-                injectedJavascript={INJECTED_JAVASCRIPT}
+                injectedJavascript={closeInjectedScript(INJECTED_JAVASCRIPT)}
                 handleLoadEnd={this.handleLoadEnd}
                 shouldHandleLink={this.props.shouldHandleLink}
                 html={html}

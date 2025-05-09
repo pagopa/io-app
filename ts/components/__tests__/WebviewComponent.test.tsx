@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent, render, userEvent } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../i18n";
@@ -44,7 +44,7 @@ describe("WebviewComponent tests", () => {
     expect(getByText(I18n.t("global.buttons.retry"))).toBeTruthy();
   });
 
-  it("should reload on retry", () => {
+  it("should reload on retry", async () => {
     const { getByText, getByTestId } = render(
       <Provider store={store}>
         <WebviewComponent source={{ uri: "https://google.com" }} />
@@ -54,8 +54,8 @@ describe("WebviewComponent tests", () => {
     fireEvent(getByTestId("webview"), "onError", {
       nativeEvent: { description: "Network error" }
     });
-
-    fireEvent.press(getByText(I18n.t("global.buttons.retry")));
+    userEvent.setup();
+    await userEvent.press(getByText(I18n.t("global.buttons.retry")));
 
     expect(getByTestId("webview")).toBeTruthy();
   });

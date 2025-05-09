@@ -34,9 +34,12 @@ exports[`FimsHistoryListItem should call the "failureListItem" in case of (noneE
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -64,18 +67,26 @@ exports[`FimsHistoryListItem should call the "failureListItem" in case of (noneE
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -83,13 +94,15 @@ exports[`FimsHistoryListItem should call the "failureListItem" in case of (noneE
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -143,11 +156,16 @@ exports[`FimsHistoryListItem should call the "failureListItem" in case of (noneE
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   FIMS_HISTORY
@@ -192,20 +210,30 @@ exports[`FimsHistoryListItem should call the "failureListItem" in case of (noneE
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -275,15 +303,19 @@ exports[`FimsHistoryListItem should call the "failureListItem" in case of (noneE
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={4}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -386,9 +418,12 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (some)
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -416,18 +451,26 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (some)
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -435,13 +478,15 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (some)
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -495,11 +540,16 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (some)
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   FIMS_HISTORY
@@ -544,20 +594,30 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (some)
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -627,15 +687,19 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (some)
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={1}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -738,9 +802,12 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someE
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -768,18 +835,26 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someE
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -787,13 +862,15 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someE
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -847,11 +924,16 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someE
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   FIMS_HISTORY
@@ -896,20 +978,30 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someE
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -979,15 +1071,19 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someE
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={3}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -1090,9 +1186,12 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someL
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -1120,18 +1219,26 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someL
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -1139,13 +1246,15 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someL
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -1199,11 +1308,16 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someL
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   FIMS_HISTORY
@@ -1248,20 +1362,30 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someL
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -1331,15 +1455,19 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someL
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={2}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -1442,9 +1570,12 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -1472,18 +1603,26 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -1491,13 +1630,15 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -1551,11 +1692,16 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   FIMS_HISTORY
@@ -1600,20 +1746,30 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -1683,15 +1839,19 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={7}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -1792,9 +1952,12 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -1822,18 +1985,26 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -1841,13 +2012,15 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -1901,11 +2074,16 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   FIMS_HISTORY
@@ -1950,20 +2128,30 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -2033,15 +2221,19 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={5}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2142,9 +2334,12 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -2172,18 +2367,26 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -2191,13 +2394,15 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -2251,11 +2456,16 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   FIMS_HISTORY
@@ -2300,20 +2510,30 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -2383,15 +2603,19 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={6}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2492,9 +2716,12 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
         collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
@@ -2522,18 +2749,26 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
             <View
               collapsable={false}
               style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
                   },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
               }
             />
           </View>
@@ -2541,13 +2776,15 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
             collapsable={false}
             pointerEvents="box-none"
             style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
             }
           >
             <View
@@ -2601,11 +2838,16 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   FIMS_HISTORY
@@ -2650,20 +2892,30 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
           }
           onGestureCancel={[Function]}
           pointerEvents="box-none"
-          sheetAllowedDetents="large"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
           sheetCornerRadius={-1}
+          sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
-          sheetLargestUndimmedDetent="all"
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
           style={
-            {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": undefined,
-            }
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
           }
         >
           <View
@@ -2733,15 +2985,19 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
               collapsable={false}
               pointerEvents="box-none"
               style={
-                {
-                  "flex": 1,
-                }
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
               }
             >
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={8}
+                handlerTag={-1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}

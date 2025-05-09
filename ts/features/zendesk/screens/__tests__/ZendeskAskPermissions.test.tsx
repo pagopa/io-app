@@ -1,5 +1,5 @@
 import { createStore, Store } from "redux";
-import { fireEvent, RenderAPI } from "@testing-library/react-native";
+import { act, fireEvent, RenderAPI } from "@testing-library/react-native";
 import { ReactTestInstance } from "react-test-renderer";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -68,7 +68,9 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
-    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    act(() => {
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    });
     const component: RenderAPI = renderComponent(store, true);
     expect(component.getByTestId("ZendeskAskPermissions")).toBeDefined();
   });
@@ -78,7 +80,9 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
-    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    act(() => {
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    });
     const component: RenderAPI = renderComponent(store, true);
     expect(component.getByTestId("appVersionsHistory")).toBeDefined();
   });
@@ -88,7 +92,9 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
-    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    act(() => {
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    });
     const component: RenderAPI = renderComponent(store, true);
     expect(component.getByTestId("paymentIssues")).toBeDefined();
   });
@@ -97,7 +103,9 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
-    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    act(() => {
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    });
     const component: RenderAPI = renderComponent(store, false);
     expect(component.queryByTestId("paymentIssues")).toBeNull();
   });
@@ -106,7 +114,9 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
-    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    act(() => {
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    });
     const component: RenderAPI = renderComponent(store, false);
     expect(component.queryByTestId("identityProvider")).toBeNull();
     expect(component.queryByTestId("profileFiscalCode")).toBeNull();
@@ -118,9 +128,13 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
-    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    act(() => {
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    });
     const component: RenderAPI = renderComponent(store, false);
-    store.dispatch(idpSelected(mockedIdp));
+    act(() => {
+      store.dispatch(idpSelected(mockedIdp));
+    });
     expect(component.queryByTestId("identityProvider")).not.toBeNull();
   });
   describe("if user is logged in", () => {
@@ -129,20 +143,22 @@ describe("the ZendeskAskPermissions screen", () => {
         appReducer,
         globalState as any
       );
-      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
       const component: RenderAPI = renderComponent(store, false);
-      store.dispatch(idpSelected(mockedIdp));
-      store.dispatch(
-        loginSuccess({
-          idp: "test",
-          token: "123456" as SessionToken
-        })
-      );
-      store.dispatch(
-        profileLoadSuccess({
-          fiscal_code: "mockedFiscalCode"
-        } as InitializedProfile)
-      );
+      act(() => {
+        store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+        store.dispatch(idpSelected(mockedIdp));
+        store.dispatch(
+          loginSuccess({
+            idp: "test",
+            token: "123456" as SessionToken
+          })
+        );
+        store.dispatch(
+          profileLoadSuccess({
+            fiscal_code: "mockedFiscalCode"
+          } as InitializedProfile)
+        );
+      });
       expect(component.queryByTestId("profileFiscalCode")).not.toBeNull();
     });
     it("should render nameSurname if is available", () => {
@@ -150,21 +166,23 @@ describe("the ZendeskAskPermissions screen", () => {
         appReducer,
         globalState as any
       );
-      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
       const component: RenderAPI = renderComponent(store, false);
-      store.dispatch(idpSelected(mockedIdp));
-      store.dispatch(
-        loginSuccess({
-          idp: "test",
-          token: "123456" as SessionToken
-        })
-      );
-      store.dispatch(
-        profileLoadSuccess({
-          family_name: "mockedFamilyName",
-          name: "mockedName"
-        } as InitializedProfile)
-      );
+      act(() => {
+        store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+        store.dispatch(idpSelected(mockedIdp));
+        store.dispatch(
+          loginSuccess({
+            idp: "test",
+            token: "123456" as SessionToken
+          })
+        );
+        store.dispatch(
+          profileLoadSuccess({
+            family_name: "mockedFamilyName",
+            name: "mockedName"
+          } as InitializedProfile)
+        );
+      });
       expect(component.queryByTestId("profileNameSurname")).not.toBeNull();
     });
     it("should render email if is available", () => {
@@ -172,20 +190,23 @@ describe("the ZendeskAskPermissions screen", () => {
         appReducer,
         globalState as any
       );
-      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
       const component: RenderAPI = renderComponent(store, false);
-      store.dispatch(idpSelected(mockedIdp));
-      store.dispatch(
-        loginSuccess({
-          idp: "test",
-          token: "123456" as SessionToken
-        })
-      );
-      store.dispatch(
-        profileLoadSuccess({
-          email: "mockedEmail"
-        } as InitializedProfile)
-      );
+      act(() => {
+        store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+
+        store.dispatch(idpSelected(mockedIdp));
+        store.dispatch(
+          loginSuccess({
+            idp: "test",
+            token: "123456" as SessionToken
+          })
+        );
+        store.dispatch(
+          profileLoadSuccess({
+            email: "mockedEmail"
+          } as InitializedProfile)
+        );
+      });
       expect(component.queryByTestId("profileEmail")).not.toBeNull();
     });
   });
@@ -203,7 +224,9 @@ describe("the ZendeskAskPermissions screen", () => {
       appReducer,
       globalState as any
     );
-    store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    act(() => {
+      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+    });
     const component: RenderAPI = renderComponent(store, false);
     const cancelButton = component.getByTestId("cancelButtonId");
     fireEvent(cancelButton, "onPress");
@@ -220,7 +243,9 @@ describe("the ZendeskAskPermissions screen", () => {
         appReducer,
         globalState as any
       );
-      store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+      act(() => {
+        store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+      });
       const component: RenderAPI = renderComponent(store, false);
 
       const continueButton: ReactTestInstance =
