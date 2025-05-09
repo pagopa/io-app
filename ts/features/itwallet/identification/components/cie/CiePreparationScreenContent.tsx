@@ -36,7 +36,9 @@ const getContent = (
     onPress: () =>
       sendEvent({
         type:
-        infoType === "cie" ? "acknowledged-cie-info" : "acknowledged-cie-pin-info"
+          infoType === "cie"
+            ? "acknowledged-cie-info"
+            : "acknowledged-cie-pin-info"
       })
   },
   secondaryAction: {
