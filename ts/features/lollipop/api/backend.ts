@@ -30,7 +30,7 @@ const signMessage = async (
 ) =>
   await lollipopClient.signMessage({
     body,
-    Bearer: `Bearer ${sessionToken}`,
+    Bearer: `${sessionToken}`,
     "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
     "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
     "content-digest": "" as LollipopContentDigest,

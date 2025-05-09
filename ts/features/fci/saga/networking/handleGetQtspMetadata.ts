@@ -22,7 +22,7 @@ export function* handleGetQtspMetadata(
   try {
     const issuerEnvironment = yield* select(fciIssuerEnvironmentSelector);
     const getQtspClausesMetadataRequest = getQtspClausesMetadata({
-      Bearer: `Bearer ${bearerToken}`,
+      Bearer: `${bearerToken}`,
       "x-iosign-issuer-environment": issuerEnvironment
     });
     const getQtspClausesMetadataResponse = (yield* call(

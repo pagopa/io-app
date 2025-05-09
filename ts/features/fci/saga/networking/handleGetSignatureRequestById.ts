@@ -28,7 +28,7 @@ export function* handleGetSignatureRequestById(
   try {
     const getSignatureDetailByIdRequest = getSignatureRequestById({
       id: action.payload,
-      Bearer: `Bearer ${bearerToken}`
+      Bearer: `${bearerToken}`
     });
 
     const getSignatureDetailViewByIdResponse = (yield* call(

@@ -9,7 +9,7 @@ export const createPnClient = (baseUrl: string, token: SessionToken) =>
     withDefaults: op => params =>
       op({
         ...params,
-        Bearer: `Bearer ${token}`
+        Bearer: `${token}`
       })
   });
 

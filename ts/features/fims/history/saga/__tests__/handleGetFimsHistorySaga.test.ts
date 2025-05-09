@@ -67,7 +67,7 @@ describe("handleGetFimsHistorySaga", () => {
       .next()
       .isDone();
     expect(mockSuccessClient).toHaveBeenCalledWith({
-      Bearer: "Bearer MOCK_BEARER",
+      Bearer: "MOCK_BEARER",
       "Accept-Language": "it",
       page: action.payload.continuationToken
     });

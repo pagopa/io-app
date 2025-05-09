@@ -35,7 +35,7 @@ describe("handleExportFimsHistorySaga", () => {
       .isDone();
 
     expect(mockClient).toHaveBeenCalledWith({
-      Bearer: `Bearer ${mockBearerToken}`
+      Bearer: `${mockBearerToken}`
     });
     expect(trackExportSucceeded).toHaveBeenCalledTimes(1);
   });

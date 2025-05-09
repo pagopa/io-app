@@ -9,7 +9,7 @@ export const createServicesClient = (baseUrl: string, token: SessionToken) =>
     withDefaults: op => params =>
       op({
         ...params,
-        Bearer: `Bearer ${token}`
+        Bearer: `${token}`
       })
   });
 
