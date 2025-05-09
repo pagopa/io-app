@@ -67,7 +67,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
             ),
             onPress: () =>
               Linking.openURL(
-                "https://www.cartaidentita.interno.gov.it/assistenza/"
+                "https://assistenza.ioapp.it/hc/it/articles/30724116346129-Cos-%C3%A8-la-CIE-e-come-richiederla"
               )
           };
           return {
