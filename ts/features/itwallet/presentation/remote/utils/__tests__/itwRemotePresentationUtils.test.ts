@@ -1,4 +1,8 @@
-import { groupCredentialsByPurpose } from "../itwRemotePresentationUtils";
+import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
+import {
+  enrichPresentationDetails,
+  groupCredentialsByPurpose
+} from "../itwRemotePresentationUtils";
 import { type EnrichedPresentationDetails } from "../itwRemoteTypeUtils";
 
 type Expected = ReturnType<typeof groupCredentialsByPurpose>;
@@ -151,5 +155,71 @@ describe("groupCredentialsByPurpose", () => {
     };
 
     expect(groupCredentialsByPurpose(presentationDetails)).toEqual(expected);
+  });
+});
+
+describe("enrichPresentationDetails", () => {
+  const storedCredentialMock = {
+    credentialType: "PID",
+    parsedCredential: {
+      name: {
+        value: "Mario",
+        name: { "it-IT": "Nome", "en-US": "Name" }
+      },
+      surname: {
+        value: "Rossi",
+        name: { "it-IT": "Cognome", "en-US": "Surname" }
+      }
+    }
+  } as unknown as StoredCredential;
+
+  it("should work when all disclosures are found in the parsed credential", () => {
+    const [result] = enrichPresentationDetails(
+      [
+        {
+          id: "one",
+          credential: "",
+          keyTag: "one-keytag",
+          vct: "PID",
+          requiredDisclosures: [
+            ["salt1", "name", "Mario"],
+            ["salt2", "surname", "Rossi"]
+          ],
+          purposes: [{ required: true }]
+        }
+      ],
+      { PID: storedCredentialMock }
+    );
+
+    expect(result.claimsToDisplay).toEqual([
+      { id: "name", label: "Name", value: "Mario" },
+      { id: "surname", label: "Surname", value: "Rossi" }
+    ]);
+  });
+
+  it("should work when some disclosure is missing in the parsed credential", () => {
+    const [result] = enrichPresentationDetails(
+      [
+        {
+          id: "one",
+          credential: "",
+          keyTag: "one-keytag",
+          vct: "PID",
+          requiredDisclosures: [
+            ["salt1", "name", "Mario"],
+            ["salt2", "surname", "Rossi"],
+            ["salt3", "iat", 123456]
+          ],
+          purposes: [{ required: true }]
+        }
+      ],
+      { PID: storedCredentialMock }
+    );
+
+    expect(result.claimsToDisplay).toEqual([
+      { id: "name", label: "Name", value: "Mario" },
+      { id: "surname", label: "Surname", value: "Rossi" },
+      { id: "iat", label: "iat", value: 123456 }
+    ]);
   });
 });

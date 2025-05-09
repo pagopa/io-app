@@ -1536,8 +1536,7 @@
       "fee": "Commissione",
       "feeAppliedBy": "Applicata da",
       "editButton": "Modifica",
-      "termsAndConditions": "Proseguendo dichiari di aver letto e compreso i",
-      "termsAndConditionsLink": "Termini e condizioni d'uso e l'Informativa Privacy",
+      "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) of {{pspName}}.",
       "a11y": {
         "announce": "Payment Summary"
       }
@@ -4681,10 +4680,16 @@
             }
           },
           "missingCredentialsScreen": {
-            "title": "Mancano i dati contenuti in {{credentialName}}",
-            "subtitle": "Aggiungi il documento al Portafoglio prima di continuare e poi riprova.",
-            "primaryAction": "Aggiungi documento al Portafoglio",
-            "secondaryAction": "Annulla"
+            "title": {
+              "one": "Manca un documento per continuare",
+              "other": "Mancano alcuni documenti per continuare"
+            },
+            "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
+            "primaryAction": {
+              "one": "Aggiungi documento al Portafoglio",
+              "other": "Aggiungi documenti al Portafoglio"
+            },
+            "secondaryAction": "Non ora"
           },
           "deepLinkValidationErrorScreen": {
             "title": "Il link sembra non funzionare",
@@ -4697,6 +4702,19 @@
             "subtitle": "È un passaggio di verifica necessario per continuare ad usare IT-Wallet e per autenticarti.",
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
+          },
+          "untrustedRpScreen": {
+            "title": "Questo ente non è verificato",
+            "subtitle": "Per la tua sicurezza, IO permette di condividere le tue informazioni solo con enti verificati e certificati.",
+            "primaryAction": "Chiudi",
+            "secondaryAction": "Cosa significa?",
+            "bottomSheet": {
+              "title": "Sistema di verifica degli enti",
+              "contentTop": "IO controlla sempre che un ente sia verificato prima di consentire la lettura dei tuoi dati.",
+              "subtitle": "Quando un ente è verificato?",
+              "contentBottom": "Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.",
+              "primaryAction": "Scopri di più"
+            }
           },
           "purpose": "Finalità: {{purpose}}",
           "success": {
@@ -4769,7 +4787,7 @@
           "modal": {
             "title": "Nessuna connessione",
             "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline**, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
-            "footerAction": "What can I do?"
+            "footerAction": "Ricarica l'app IO"
           }
         },
         "SESSION_EXPIRED": {
@@ -4791,11 +4809,18 @@
           "modal": {
             "title": "Servizi dell’app limitati",
             "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi**, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
-            "footerAction": "What can I do?"
+            "footerAction": "Ricarica l'app IO"
           }
         },
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
+      },
+      "upgrade": {
+        "banner": {
+          "title": "IT-Wallet per\ni tuoi documenti",
+          "description": "L’unico Wallet di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
+          "action": "Ottieni IT-Wallet"
+        }
       }
     }
   },
