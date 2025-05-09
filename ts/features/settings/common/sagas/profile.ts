@@ -498,6 +498,8 @@ export const profileSagaTestable = isTestEnv
       handleLoadBonusBeforeRemoveAccount,
       handleRemoveAccount,
       checkStoreHashedFiscalCode,
-      createOrUpdateProfileSaga
+      createOrUpdateProfileSaga,
+      handleProfileChangesSaga,
+      loadProfile
     }
   : undefined;

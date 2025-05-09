@@ -14,5 +14,10 @@ module.exports = {
   globalSetup: "./jestGlobalSetup.js",
   setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
   collectCoverage: true,
-  testPathIgnorePatterns: [".*fiscal-code.test.ts$"]
+  testPathIgnorePatterns: [".*fiscal-code.test.ts$"],
+  coveragePathIgnorePatterns: ["<rootDir>/ts/features/settings/devMode/"]
 };
+
+// Exclude devMode tools and playgrounds from testing and coverage
+// as they are development-only features not shipped in production
+// and not relevant for the app's functionality.

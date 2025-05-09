@@ -56,7 +56,7 @@ export const getLocalePrimaryWithFallback = (): Locales =>
     O.getOrElseW(() => localeFallback.locale)
   );
 
-const preferredLanguageMappingToLocale = new Map<
+export const preferredLanguageMappingToLocale = new Map<
   PreferredLanguageEnum,
   Locales
 >(Array.from(localeToPreferredLanguageMapping).map(item => [item[1], item[0]]));

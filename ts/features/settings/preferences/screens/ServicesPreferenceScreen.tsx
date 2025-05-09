@@ -111,6 +111,7 @@ const ServicesPreferenceScreen = (): ReactElement => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <IOScrollViewWithLargeHeader
+        testID="services-preference-screen"
         includeContentMargins
         title={{
           label: I18n.t("services.optIn.preferences.title")

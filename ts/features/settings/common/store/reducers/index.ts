@@ -16,6 +16,7 @@ import {
 import { Action } from "../../../../../store/actions/types";
 import { ProfileError } from "../types";
 import { isProfileFirstOnBoarding } from "../utils/guards";
+import { isDevEnv } from "../../../../../utils/environment";
 
 export type ProfileState = pot.Pot<InitializedProfile, ProfileError>;
 
@@ -121,3 +122,9 @@ const reducer = (
 };
 
 export default reducer;
+
+export const exported = isDevEnv
+  ? {
+      INITIAL_STATE
+    }
+  : null;
