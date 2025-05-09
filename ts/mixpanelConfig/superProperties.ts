@@ -34,6 +34,7 @@ import {
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
 import { isConnectedSelector } from "../features/connectivity/store/selectors/index.ts";
+import { sendExceptionToSentry } from "../utils/sentryUtils.ts";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -44,7 +45,6 @@ import {
   serviceConfigHandler,
   welfareStatusHandler
 } from "./mixpanelPropertyUtils";
-import { sendExceptionToSentry } from "../utils/sentryUtils.ts";
 
 type ConnectivityStatus = "online" | "offline";
 

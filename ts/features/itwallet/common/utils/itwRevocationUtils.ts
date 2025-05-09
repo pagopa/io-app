@@ -2,7 +2,7 @@ import { WalletInstance } from "@pagopa/io-react-native-wallet";
 import { itwWalletProviderBaseUrl } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
-import { sendExceptionToSentry } from "./itwSentryUtils.ts";
+import { sendExceptionToSentry } from "../../../../utils/sentryUtils";
 
 /**
  * Revoke the current wallet instance.
