@@ -7,6 +7,7 @@ import {
 import { itwWalletProviderBaseUrl } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
+import { sendExceptionToSentry } from "../../../../utils/sentryUtils.ts";
 import { regenerateCryptoKey, WIA_KEYTAG } from "./itwCryptoContextUtils";
 import {
   generateIntegrityHardwareKeyTag,
@@ -100,8 +101,14 @@ export const getWalletInstanceStatus = (
  * This operation will check the wallet instance status based on the current fiscal code of the user.
  * @param sessionToken The session token to use for the API calls
  */
-export const getCurrentWalletInstanceStatus = (sessionToken: SessionToken) =>
-  WalletInstance.getCurrentWalletInstanceStatus({
-    walletProviderBaseUrl: itwWalletProviderBaseUrl,
-    appFetch: createItWalletFetch(itwWalletProviderBaseUrl, sessionToken)
-  });
+export const getCurrentWalletInstanceStatus = (sessionToken: SessionToken) => {
+  try {
+    return WalletInstance.getCurrentWalletInstanceStatus({
+      walletProviderBaseUrl: itwWalletProviderBaseUrl,
+      appFetch: createItWalletFetch(itwWalletProviderBaseUrl, sessionToken)
+    });
+  } catch (e) {
+    sendExceptionToSentry(e, "getCurrentWalletInstanceStatus");
+    throw new Error("Error getting current wallet instance status");
+  }
+};

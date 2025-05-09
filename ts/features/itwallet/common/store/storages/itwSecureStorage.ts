@@ -1,6 +1,6 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
 import { type Storage } from "redux-persist";
-import { itwSendExceptionToSentry } from "../../utils/itwSentryUtils";
+import { sendExceptionToSentry } from "../../../../../utils/sentryUtils.ts";
 
 export default function itwCreateSecureStorage(): Storage {
   return {
@@ -8,7 +8,7 @@ export default function itwCreateSecureStorage(): Storage {
       try {
         return await SecureStorage.get(key);
       } catch (e) {
-        itwSendExceptionToSentry(e, "itwSecureStorageGetItem", true);
+        sendExceptionToSentry(e, "itwSecureStorageGetItem", true);
         return undefined;
       }
     },
@@ -17,7 +17,7 @@ export default function itwCreateSecureStorage(): Storage {
       try {
         await SecureStorage.put(key, value);
       } catch (e) {
-        itwSendExceptionToSentry(e, "itwSecureStorageSetItem", true);
+        sendExceptionToSentry(e, "itwSecureStorageSetItem", true);
       }
     },
 
@@ -25,7 +25,7 @@ export default function itwCreateSecureStorage(): Storage {
       try {
         await SecureStorage.remove(key);
       } catch (e) {
-        itwSendExceptionToSentry(e, "itwSecureStorageRemoveItem", true);
+        sendExceptionToSentry(e, "itwSecureStorageRemoveItem", true);
       }
     }
   };

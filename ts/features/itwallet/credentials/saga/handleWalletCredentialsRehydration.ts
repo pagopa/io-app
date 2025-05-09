@@ -9,7 +9,6 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { walletAddCards } from "../../../wallet/store/actions/cards";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import { itwSendExceptionToSentry } from "../../common/utils/itwSentryUtils";
 
 const mapCredentialsToWalletCards = (
   credentials: Array<StoredCredential>
@@ -27,19 +26,15 @@ const mapCredentialsToWalletCards = (
  * It should be invoked as soon as possible to properly sync credentials to the wallet.
  */
 export function* handleWalletCredentialsRehydration() {
-  try {
-    const isItWalletValid = yield* select(itwLifecycleIsValidSelector);
-    const { eid, credentials } = yield* select(itwCredentialsSelector);
+  const isItWalletValid = yield* select(itwLifecycleIsValidSelector);
+  const { eid, credentials } = yield* select(itwCredentialsSelector);
 
-    // Only a valid wallet should contain credentials to display
-    if (!isItWalletValid || O.isNone(eid)) {
-      return;
-    }
-
-    const allItwCredentials = pipe(credentials, A.filterMap(identity));
-
-    yield* put(walletAddCards(mapCredentialsToWalletCards(allItwCredentials)));
-  } catch (e) {
-    itwSendExceptionToSentry(e, "handleWalletCredentialsRehydration");
+  // Only a valid wallet should contain credentials to display
+  if (!isItWalletValid || O.isNone(eid)) {
+    return;
   }
+
+  const allItwCredentials = pipe(credentials, A.filterMap(identity));
+
+  yield* put(walletAddCards(mapCredentialsToWalletCards(allItwCredentials)));
 }

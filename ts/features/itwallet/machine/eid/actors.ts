@@ -20,7 +20,6 @@ import {
   itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { itwSendExceptionToSentry } from "../../common/utils/itwSentryUtils";
 import type {
   AuthenticationContext,
   CieContext,
@@ -152,10 +151,6 @@ export const createEidIssuanceActorsImplementation = (
     }
     assert(sessionToken, "sessionToken is undefined");
 
-    try {
-      await revokeCurrentWalletInstance(sessionToken, integrityKeyTag.value);
-    } catch (e) {
-      itwSendExceptionToSentry(e, "revokeWalletInstance");
-    }
+    await revokeCurrentWalletInstance(sessionToken, integrityKeyTag.value);
   })
 });

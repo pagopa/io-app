@@ -2,6 +2,7 @@ import { WalletInstance } from "@pagopa/io-react-native-wallet";
 import { itwWalletProviderBaseUrl } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
+import { sendExceptionToSentry } from "./itwSentryUtils.ts";
 
 /**
  * Revoke the current wallet instance.
@@ -12,10 +13,14 @@ export const revokeCurrentWalletInstance = async (
   integrityKeyTag: string
 ): Promise<void> => {
   const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
-
-  await WalletInstance.revokeWalletInstance({
-    walletProviderBaseUrl: itwWalletProviderBaseUrl,
-    id: integrityKeyTag,
-    appFetch
-  });
+  try {
+    await WalletInstance.revokeWalletInstance({
+      walletProviderBaseUrl: itwWalletProviderBaseUrl,
+      id: integrityKeyTag,
+      appFetch
+    });
+  } catch (e) {
+    sendExceptionToSentry(e, "revokeWalletInstance");
+    throw new Error("Error revoking wallet instance");
+  }
 };

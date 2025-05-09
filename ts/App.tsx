@@ -44,7 +44,7 @@ const beforeSendHandler = <T extends ErrorEvent | TransactionEvent>(
   event: T
 ): T | null => {
   const safeEvent = removeUserFromEvent(event);
-  const isSendRequired = event.contexts?.send?.isSendRequired;
+  const isSendRequired = event.contexts?.send?.isRequired;
 
   // Always send events marked as required
   if (isSendRequired) {

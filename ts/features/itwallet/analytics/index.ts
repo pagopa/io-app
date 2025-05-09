@@ -10,7 +10,6 @@ import {
   WalletInstanceRevocationReason
 } from "../common/utils/itwTypesUtils";
 import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
-import { itwSendExceptionToSentry } from "../common/utils/itwSentryUtils.ts";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -851,26 +850,22 @@ export const updateITWStatusAndIDProperties = (state: GlobalState) => {
     return;
   }
 
-  try {
-    void updateMixpanelProfileProperties(state, {
-      property: "ITW_STATUS_V2",
-      value: authLevel
-    });
-    void updateMixpanelSuperProperties(state, {
-      property: "ITW_STATUS_V2",
-      value: authLevel
-    });
-    void updateMixpanelProfileProperties(state, {
-      property: "ITW_ID_V2",
-      value: "valid"
-    });
-    void updateMixpanelSuperProperties(state, {
-      property: "ITW_ID_V2",
-      value: "valid"
-    });
-  } catch (e) {
-    itwSendExceptionToSentry(e, "updateITWStatusAndIDProperties");
-  }
+  void updateMixpanelProfileProperties(state, {
+    property: "ITW_STATUS_V2",
+    value: authLevel
+  });
+  void updateMixpanelSuperProperties(state, {
+    property: "ITW_STATUS_V2",
+    value: authLevel
+  });
+  void updateMixpanelProfileProperties(state, {
+    property: "ITW_ID_V2",
+    value: "valid"
+  });
+  void updateMixpanelSuperProperties(state, {
+    property: "ITW_ID_V2",
+    value: "valid"
+  });
 };
 
 /**
@@ -878,28 +873,24 @@ export const updateITWStatusAndIDProperties = (state: GlobalState) => {
  * @param state
  */
 export const updatePropertiesWalletRevoked = (state: GlobalState) => {
-  try {
-    mixPanelCredentials.forEach(property => {
-      void updateMixpanelProfileProperties(state, {
-        property,
-        value: "not_available"
-      });
-      void updateMixpanelSuperProperties(state, {
-        property,
-        value: "not_available"
-      });
-    });
+  mixPanelCredentials.forEach(property => {
     void updateMixpanelProfileProperties(state, {
-      property: "ITW_STATUS_V2",
-      value: "not_active"
+      property,
+      value: "not_available"
     });
     void updateMixpanelSuperProperties(state, {
-      property: "ITW_STATUS_V2",
-      value: "not_active"
+      property,
+      value: "not_available"
     });
-  } catch (error) {
-    itwSendExceptionToSentry(error, "updatePropertiesWalletRevoked");
-  }
+  });
+  void updateMixpanelProfileProperties(state, {
+    property: "ITW_STATUS_V2",
+    value: "not_active"
+  });
+  void updateMixpanelSuperProperties(state, {
+    property: "ITW_STATUS_V2",
+    value: "not_active"
+  });
 };
 
 // #endregion PROFILE AND SUPER PROPERTIES UPDATE

@@ -40,6 +40,7 @@ import {
   serviceConfigHandler,
   welfareStatusHandler
 } from "./mixpanelPropertyUtils";
+import { sendExceptionToSentry } from "../utils/sentryUtils.ts";
 
 type ProfileProperties = {
   LOGIN_SESSION: LoginSessionDuration;
@@ -66,58 +67,62 @@ export const updateMixpanelProfileProperties = async (
   state: GlobalState,
   forceUpdateFor?: PropertyToUpdate<ProfileProperties>
 ) => {
-  if (!isMixpanelInstanceInitialized()) {
-    return;
+  try {
+    if (!isMixpanelInstanceInitialized()) {
+      return;
+    }
+    const LOGIN_SESSION = loginSessionConfigHandler(state);
+    const LOGIN_METHOD = loginMethodHandler(state);
+    const TOS_ACCEPTED_VERSION = tosVersionHandler(state);
+    const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
+    const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
+    const notificationsEnabled = await checkNotificationPermissions();
+    const NOTIFICATION_TOKEN = getNotificationTokenType(state);
+    const SERVICE_CONFIGURATION = serviceConfigHandler(state);
+    const TRACKING = mixpanelOptInHandler(state);
+    const ITW_STATUS_V2 = walletStatusHandler(state);
+    const ITW_ID_V2 = idStatusHandler(state);
+    const ITW_PG_V2 = pgStatusHandler(state);
+    const ITW_TS_V2 = tsStatusHandler(state);
+    const ITW_CED_V2 = cedStatusHandler(state);
+    const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
+    const CGN_STATUS = cgnStatusHandler(state);
+    const WELFARE_STATUS = welfareStatusHandler(state);
+    const FONT_PREFERENCE = fontPreferenceSelector(state);
+
+    const profilePropertiesObject: ProfileProperties = {
+      LOGIN_SESSION,
+      LOGIN_METHOD,
+      TOS_ACCEPTED_VERSION,
+      BIOMETRIC_TECHNOLOGY,
+      NOTIFICATION_CONFIGURATION,
+      NOTIFICATION_PERMISSION:
+        getNotificationPermissionType(notificationsEnabled),
+      NOTIFICATION_TOKEN,
+      SERVICE_CONFIGURATION,
+      TRACKING,
+      ITW_STATUS_V2,
+      ITW_ID_V2,
+      ITW_PG_V2,
+      ITW_TS_V2,
+      ITW_CED_V2,
+      SAVED_PAYMENT_METHOD,
+      CGN_STATUS,
+      WELFARE_STATUS,
+      FONT_PREFERENCE
+    };
+
+    if (forceUpdateFor) {
+      forceUpdate<keyof ProfileProperties>(
+        profilePropertiesObject,
+        forceUpdateFor
+      );
+    }
+
+    getPeople()?.set(profilePropertiesObject);
+  } catch (e) {
+    sendExceptionToSentry(e, "updateMixpanelProfileProperties");
   }
-  const LOGIN_SESSION = loginSessionConfigHandler(state);
-  const LOGIN_METHOD = loginMethodHandler(state);
-  const TOS_ACCEPTED_VERSION = tosVersionHandler(state);
-  const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
-  const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
-  const notificationsEnabled = await checkNotificationPermissions();
-  const NOTIFICATION_TOKEN = getNotificationTokenType(state);
-  const SERVICE_CONFIGURATION = serviceConfigHandler(state);
-  const TRACKING = mixpanelOptInHandler(state);
-  const ITW_STATUS_V2 = walletStatusHandler(state);
-  const ITW_ID_V2 = idStatusHandler(state);
-  const ITW_PG_V2 = pgStatusHandler(state);
-  const ITW_TS_V2 = tsStatusHandler(state);
-  const ITW_CED_V2 = cedStatusHandler(state);
-  const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
-  const CGN_STATUS = cgnStatusHandler(state);
-  const WELFARE_STATUS = welfareStatusHandler(state);
-  const FONT_PREFERENCE = fontPreferenceSelector(state);
-
-  const profilePropertiesObject: ProfileProperties = {
-    LOGIN_SESSION,
-    LOGIN_METHOD,
-    TOS_ACCEPTED_VERSION,
-    BIOMETRIC_TECHNOLOGY,
-    NOTIFICATION_CONFIGURATION,
-    NOTIFICATION_PERMISSION:
-      getNotificationPermissionType(notificationsEnabled),
-    NOTIFICATION_TOKEN,
-    SERVICE_CONFIGURATION,
-    TRACKING,
-    ITW_STATUS_V2,
-    ITW_ID_V2,
-    ITW_PG_V2,
-    ITW_TS_V2,
-    ITW_CED_V2,
-    SAVED_PAYMENT_METHOD,
-    CGN_STATUS,
-    WELFARE_STATUS,
-    FONT_PREFERENCE
-  };
-
-  if (forceUpdateFor) {
-    forceUpdate<keyof ProfileProperties>(
-      profilePropertiesObject,
-      forceUpdateFor
-    );
-  }
-
-  getPeople()?.set(profilePropertiesObject);
 };
 
 const forceUpdate = <T extends keyof ProfileProperties>(

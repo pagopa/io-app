@@ -2,7 +2,7 @@ import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { call, put } from "typed-redux-saga/macro";
 import { walletRemoveCards } from "../../../wallet/store/actions/cards";
 import { itwCredentialsRemove } from "../store/actions";
-import { itwSendExceptionToSentry } from "../../common/utils/itwSentryUtils";
+import { sendExceptionToSentry } from "../../../../utils/sentryUtils.ts";
 
 /**
  * This saga handles the credential removal action and ensures the consistency between stored credentials and wallet state.
@@ -17,6 +17,6 @@ export function* handleItwCredentialsRemoveSaga(
     yield* call(deleteKey, keyTag);
     yield* put(walletRemoveCards([`ITW_${credentialType}`]));
   } catch (e) {
-    itwSendExceptionToSentry(e, "handleItwCredentialsRemoveSaga");
+    sendExceptionToSentry(e, "handleItwCredentialsRemoveSaga");
   }
 }

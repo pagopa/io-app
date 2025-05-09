@@ -12,7 +12,7 @@ import { itwCredentialsSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../store/actions";
 import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
-import { itwSendExceptionToSentry } from "../../common/utils/itwSentryUtils.ts";
+import { sendExceptionToSentry } from "../../../../utils/sentryUtils.ts";
 
 const getKeyTag = (credential: O.Option<StoredCredential>) =>
   pipe(
@@ -44,6 +44,6 @@ export function* handleWalletInstanceResetSaga() {
     // Update every mixpanel property related to the wallet instance and its credentials.
     void updatePropertiesWalletRevoked(state);
   } catch (e) {
-    itwSendExceptionToSentry(e, "handleWalletInstanceResetSaga");
+    sendExceptionToSentry(e, "handleWalletInstanceResetSaga");
   }
 }
