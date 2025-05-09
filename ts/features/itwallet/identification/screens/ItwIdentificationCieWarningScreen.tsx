@@ -30,15 +30,6 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
 
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
-      const primaryAction = {
-        label: I18n.t(
-          "features.itWallet.identification.cieWarning.primaryAction"
-        ),
-        onPress: () =>
-          Linking.openURL(
-            "https://www.cartaidentita.interno.gov.it/assistenza/"
-          )
-      };
       const closeAction = {
         label: I18n.t(
           "features.itWallet.identification.cieWarning.closeAction"
@@ -47,6 +38,15 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
       };
       switch (warning) {
         case "noPin": {
+          const primaryAction = {
+            label: I18n.t(
+              "features.itWallet.identification.cieWarning.primaryAction"
+            ),
+            onPress: () =>
+              Linking.openURL(
+                "https://assistenza.ioapp.it/hc/it/articles/30724125085713-Ho-dimenticato-il-PIN-della-CIE"
+              )
+          };
           return {
             title: I18n.t(
               "features.itWallet.identification.cieWarning.noPin.title"
@@ -59,7 +59,17 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
             secondaryAction: closeAction
           };
         }
-        case "noCie":
+        case "noCie": {
+          // TODO: update the URL when the new one is available
+          const primaryAction = {
+            label: I18n.t(
+              "features.itWallet.identification.cieWarning.primaryAction"
+            ),
+            onPress: () =>
+              Linking.openURL(
+                "https://www.cartaidentita.interno.gov.it/assistenza/"
+              )
+          };
           return {
             title: I18n.t(
               "features.itWallet.identification.cieWarning.noCie.title"
@@ -71,6 +81,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
             action: primaryAction,
             secondaryAction: closeAction
           };
+        }
       }
     };
 
