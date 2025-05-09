@@ -21,6 +21,6 @@ export const revokeCurrentWalletInstance = async (
     });
   } catch (e) {
     sendExceptionToSentry(e, "revokeCurrentWalletInstance");
-    throw new Error("Error revoking wallet instance");
+    throw e;
   }
 };

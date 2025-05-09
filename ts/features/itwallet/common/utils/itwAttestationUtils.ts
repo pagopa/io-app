@@ -109,6 +109,6 @@ export const getCurrentWalletInstanceStatus = (sessionToken: SessionToken) => {
     });
   } catch (e) {
     sendExceptionToSentry(e, "getCurrentWalletInstanceStatus");
-    throw new Error("Error getting current wallet instance status");
+    throw e;
   }
 };
