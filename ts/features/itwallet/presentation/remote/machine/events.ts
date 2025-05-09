@@ -13,6 +13,10 @@ export type GoToIdentificationMode = {
   type: "go-to-identification-mode";
 };
 
+export type GoToBarcodeScan = {
+  type: "go-to-barcode-scan";
+};
+
 export type Back = {
   type: "back";
 };
@@ -34,6 +38,7 @@ export type RemoteEvents =
   | Start
   | GoToWalletActivation
   | GoToIdentificationMode
+  | GoToBarcodeScan
   | Consent
   | ToggleCredential
   | Back

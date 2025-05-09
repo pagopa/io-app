@@ -17,6 +17,14 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList.
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwRemoteUntrustedRPBottomSheet } from "../hooks/useItwRemoteUntrustedRPBottomSheet.tsx";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
+import {
+  useItwFailureSupportModal,
+  ZendeskSubcategoryValue
+} from "../../../common/hooks/useItwFailureSupportModal.tsx";
+
+const zendeskAssistanceErrors = [
+  RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE
+];
 
 export const ItwRemoteFailureScreen = () => {
   const failureOption =
@@ -46,6 +54,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "close" }),
     customBodyMessage: I18n.t(`${i18nNs}.walletInactiveScreen.alert.body`)
+  });
+
+  const failureSupportModal = useItwFailureSupportModal({
+    failure,
+    supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
+    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA
   });
 
   const getOperationResultScreenContentProps =
@@ -139,6 +153,69 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
+        case RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.subtitle"
+            ),
+            pictogram: "stopSecurity",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.secondaryAction"
+              ),
+              onPress: failureSupportModal.present
+            }
+          };
+        }
+        case RemoteFailureType.RELYING_PARTY_GENERIC: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.genericError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.genericError.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.genericError.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "go-to-barcode-scan" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.genericError.secondaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
+        }
+        case RemoteFailureType.INVALID_REQUEST_OBJECT: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
+        }
         case RemoteFailureType.UNTRUSTED_RP: {
           return {
             title: I18n.t(
@@ -174,6 +251,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
         subtitleProps={{ textBreakStrategy: "simple" }}
       />
       {bottomSheet}
+      {failureSupportModal.bottomSheet}
     </>
   );
 };
