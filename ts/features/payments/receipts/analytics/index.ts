@@ -9,6 +9,7 @@ export type PaymentReceiptAnalyticsProps = {
   first_time_opening: boolean;
   user: PaymentsAnalyticsReceiptUser;
   organization_fiscal_code: string;
+  trigger: "tap" | "swipe";
 };
 
 export const trackPaymentsReceiptListing = () => {
