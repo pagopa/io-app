@@ -4,12 +4,10 @@ import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/
 import I18n from "../../../../../i18n";
 import { ReceiptListItemTransaction } from "../ReceiptListItemTransaction";
 
-const mockDispatch = jest.fn();
-
 jest.mock("../../../../../store/hooks", () => ({
   useIODispatch: jest.fn(),
   useIOStore: jest.fn(),
-  useIOSelector: mockDispatch
+  useIOSelector: jest.fn()
 }));
 
 const mockTransaction: NoticeListItem = {
