@@ -42,8 +42,22 @@ export const AttachmentsDirectoryPath =
  * Builds the save path for the given attachment
  * @param attachment
  */
-const savePath = (messageId: UIMessageId, attachmentId: string, name: string) =>
-  `${AttachmentsDirectoryPath}/${messageId}/${attachmentId}/${name}`;
+export const pdfSavePath = (
+  messageId: UIMessageId,
+  attachmentId: string,
+  name: string
+) => {
+  // Trim leading/trailing whitespace
+  // Basic sanitization: remove characters not allowed in filenames (common for most OS)
+  // Characters removed: / \ : * ? " < > |
+  const sanitizedFileName = name.trim().replace(/[/\\:*?"<>|]/g, "");
+  const sanitizedFileNameWithExtension = !sanitizedFileName
+    .toLowerCase()
+    .endsWith(".pdf")
+    ? `{sanitizedFileName}.pdf`
+    : sanitizedFileName;
+  return `${AttachmentsDirectoryPath}/${messageId}/${attachmentId}/${sanitizedFileNameWithExtension}`;
+};
 
 const getDelayMilliseconds = (headers: Record<string, string>) =>
   pipe(
@@ -84,7 +98,7 @@ export function* downloadAttachmentWorker(
   while (true) {
     try {
       const config = yield* call(ReactNativeBlobUtil.config, {
-        path: savePath(messageId, attachment.id, name),
+        path: pdfSavePath(messageId, attachment.id, name),
         timeout: fetchTimeout
       });
 
