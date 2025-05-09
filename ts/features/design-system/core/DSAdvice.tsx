@@ -98,19 +98,25 @@ const renderFeatureInfo = () => (
     <DSComponentViewerBox name="FeatureInfo · with Pictogram">
       <VStack space={componentInnerMargin}>
         <FeatureInfo
-          pictogramName="followMessage"
+          pictogramProps={{
+            name: "followMessage"
+          }}
           body={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
           }
         />
         <FeatureInfo
-          pictogramName="manual"
+          pictogramProps={{
+            name: "manual"
+          }}
           body={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
           }
         />
         <FeatureInfo
-          pictogramName="followMessage"
+          pictogramProps={{
+            name: "followMessage"
+          }}
           body={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
           }
