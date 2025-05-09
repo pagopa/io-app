@@ -4370,6 +4370,22 @@
                 "primaryAction": "Ho capito",
                 "secondaryAction": "Non trovo il PIN della CIE"
               }
+            },
+            "preparationScreen": {
+              "cie": {
+                "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
+                "content": "Dovrai appoggiarla alla parte superiore del tuo dispositivo per permentterne la lettura.",
+                "buttonLink": "Cos'è la CIE?",
+                "primaryAction": "Ho pronto la CIE",
+                "secondaryAction": "Non ho la CIE"
+              },
+              "pin": {
+                "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)",
+                "content": "Dovrai digitarlo dopo la lettura della carta per completare la verifica dell'identità.",
+                "buttonLink": "Cos'è il PIN della CIE?",
+                "primaryAction": "Ho pronto il PIN",
+                "secondaryAction": "Non trovo il PIN della CIE"
+              }
             }
           }
         },
