@@ -51,6 +51,11 @@ describe("ServicesPreferenceScreen", () => {
     } as any);
   });
 
+  it("should match snapshot", () => {
+    const tree = renderComponent().toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it("should render the screen", () => {
     const { getByTestId } = renderComponent();
     expect(getByTestId("services-preference-screen")).toBeTruthy();

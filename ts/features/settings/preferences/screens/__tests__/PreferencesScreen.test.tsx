@@ -39,6 +39,11 @@ describe("PreferencesScreen", () => {
     });
   });
 
+  it("should match snapshot", () => {
+    const tree = renderComponent().toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it("should render the preferences screen correctly", () => {
     const { getByText, getAllByText } = renderComponent();
     expect(

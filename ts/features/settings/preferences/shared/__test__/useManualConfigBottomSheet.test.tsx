@@ -31,6 +31,11 @@ describe("useManualConfigBottomSheet", () => {
     (I18n.t as jest.Mock).mockImplementation((key: string) => key);
   });
 
+  it("should match snapshot", () => {
+    const tree = renderComponent().toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it("should render bottom sheet content", () => {
     const { getByText } = renderComponent();
 
