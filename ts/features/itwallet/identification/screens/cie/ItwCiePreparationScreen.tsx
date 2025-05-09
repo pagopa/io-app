@@ -1,5 +1,5 @@
-import { CiePreparationScreenContent } from "../../components/cie/CiePreparationScreenContent.tsx";
+import { CiePreparationScreenContent } from "../../components/cie/CiePreparationScreenContent";
 
 export const ItwCiePreparationScreen = () => (
-  <CiePreparationScreenContent mode="cie" />
+  <CiePreparationScreenContent infoType="cie" />
 );

@@ -4,56 +4,53 @@ import I18n from "../../../../../i18n";
 import { useCieInfoBottomSheet } from "../../hooks/useCieInfoBottomSheet";
 import { usePinBottomSheet } from "../../hooks/usePinBottomSheet";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { EidIssuanceEvents } from "../../../machine/eid/events.ts";
 
-type Props = {
-  mode: "cie" | "pin";
-};
+type InfoType = "cie" | "pin";
 
-const getPreparationContent = (
-  mode: "cie" | "pin",
-  presentCieSheet: () => void,
-  presentPinSheet: () => void,
-  sendEvent: (event: any) => void
+type Props = { infoType: InfoType };
+
+const getContent = (
+  infoType: InfoType,
+  presentCieBottomSheet: () => void,
+  presentPinBottomSheet: () => void,
+  sendEvent: (event: EidIssuanceEvents) => void
 ) => ({
   title: I18n.t(
-    `features.itWallet.identification.l3.mode.preparationScreen.${mode}.title`
+    `features.itWallet.identification.l3.mode.preparationScreen.${infoType}.title`
   ),
   description: I18n.t(
-    `features.itWallet.identification.l3.mode.preparationScreen.${mode}.content`
+    `features.itWallet.identification.l3.mode.preparationScreen.${infoType}.content`
   ),
   buttonLink: {
     label: I18n.t(
-      `features.itWallet.identification.l3.mode.preparationScreen.${mode}.buttonLink`
+      `features.itWallet.identification.l3.mode.preparationScreen.${infoType}.buttonLink`
     ),
-    onPress: () => (mode === "cie" ? presentCieSheet() : presentPinSheet())
+    onPress: () =>
+      infoType === "cie" ? presentCieBottomSheet() : presentPinBottomSheet()
   },
   primaryAction: {
     label: I18n.t(
-      `features.itWallet.identification.l3.mode.preparationScreen.${mode}.primaryAction`
-    ),
-    accessibilityLabel: I18n.t(
-      `features.itWallet.identification.l3.mode.preparationScreen.${mode}.primaryAction`
+      `features.itWallet.identification.l3.mode.preparationScreen.${infoType}.primaryAction`
     ),
     onPress: () =>
       sendEvent({
         type:
-          mode === "cie" ? "acknowledged-cie-info" : "acknowledged-cie-pin-info"
+        infoType === "cie" ? "acknowledged-cie-info" : "acknowledged-cie-pin-info"
       })
   },
   secondaryAction: {
     label: I18n.t(
-      `features.itWallet.identification.l3.mode.preparationScreen.${mode}.secondaryAction`
-    ),
-    accessibilityLabel: I18n.t(
-      `features.itWallet.identification.l3.mode.preparationScreen.${mode}.secondaryAction`
+      `features.itWallet.identification.l3.mode.preparationScreen.${infoType}.secondaryAction`
     ),
     onPress: () => {
       // TODO
     }
   }
+  // imageSource: require("../../../../../../img/features/itWallet/identification/")
 });
 
-export const CiePreparationScreenContent = ({ mode }: Props) => {
+export const CiePreparationScreenContent = ({ infoType }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const cieInfoBottomSheet = useCieInfoBottomSheet({
@@ -67,8 +64,8 @@ export const CiePreparationScreenContent = ({ mode }: Props) => {
   });
 
   const { title, description, buttonLink, primaryAction, secondaryAction } =
-    getPreparationContent(
-      mode,
+    getContent(
+      infoType,
       cieInfoBottomSheet.present,
       pinBottomSheet.present,
       machineRef.send
@@ -83,12 +80,10 @@ export const CiePreparationScreenContent = ({ mode }: Props) => {
         type: "TwoButtons",
         primary: {
           label: primaryAction.label,
-          accessibilityLabel: primaryAction.accessibilityLabel,
           onPress: primaryAction.onPress
         },
         secondary: {
           label: secondaryAction.label,
-          accessibilityLabel: secondaryAction.accessibilityLabel,
           onPress: secondaryAction.onPress
         }
       }}
@@ -99,6 +94,14 @@ export const CiePreparationScreenContent = ({ mode }: Props) => {
           label={buttonLink.label}
           onPress={buttonLink.onPress}
         />
+        {/**
+        TODO: replace with the correct image when available
+         If it's a gif, remember to add  "implementation 'com.facebook.fresco:animated-gif:3.6.0'"
+        in android/app/build.gradle, otherwise it won't work on Android
+        */}
+        {/*         <Image
+          source={imageSource}
+        /> */}
         {cieInfoBottomSheet.bottomSheet}
         {pinBottomSheet.bottomSheet}
       </ContentWrapper>

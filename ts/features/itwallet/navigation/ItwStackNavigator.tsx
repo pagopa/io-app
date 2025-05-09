@@ -42,7 +42,7 @@ import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/detail
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
-import { ItwCiePreparationScreen } from "../identification/screens/cie/ItwCiePreparationScreen";
+import { ItwCiePreparationScreen } from "../identification/screens/cie/ItwCiePreparationScreen.tsx";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { useIOSelector } from "../../../store/hooks";
