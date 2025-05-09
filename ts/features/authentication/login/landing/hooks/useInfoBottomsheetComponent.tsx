@@ -1,31 +1,35 @@
 import { Divider, ListItemAction } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
-import { useCallback, useRef } from "react";
 import _isEqual from "lodash/isEqual";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import I18n from "../../../../../i18n";
+import { useCallback, useRef } from "react";
+import { View } from "react-native";
+import { IdpData } from "../../../../../../definitions/content/IdpData";
 import AppVersion from "../../../../../components/AppVersion";
+import I18n from "../../../../../i18n";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { tosConfigSelector } from "../../../../tos/store/selectors";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { SpidIdp } from "../../../../../utils/idps";
 import { openWebUrl } from "../../../../../utils/url";
+import { tosConfigSelector } from "../../../../tos/store/selectors";
 import {
   trackLoginInfoResourceTap,
   trackLoginInfoTap
 } from "../../../common/analytics";
-import { isFastLoginFFEnabledSelector } from "../../../fastLogin/store/selectors";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { Identifier } from "../../optIn/screens/OptInScreen";
-import { SpidIdp } from "../../../../../../definitions/content/SpidIdp";
 import { idpSelected } from "../../../common/store/actions";
-import { IdpData } from "../../../../../../definitions/content/IdpData";
+import { isFastLoginFFEnabledSelector } from "../../../fastLogin/store/selectors";
+import { Identifier } from "../../optIn/screens/OptInScreen";
 
 const TAPS_TO_INIT_TESTIDP_FLOW = 5;
 
 const TestIdp: SpidIdp = {
   id: "test" as keyof IdpData,
   name: "Test Idp",
-  logo: "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/spid/idps/spid.png",
+  logo: {
+    light: {
+      uri: "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/spid/idps/spid.png"
+    }
+  },
   profileUrl: "",
   isTestIdp: true
 };

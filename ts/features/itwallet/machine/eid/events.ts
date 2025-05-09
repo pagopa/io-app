@@ -1,5 +1,5 @@
 import { ErrorActorEvent } from "xstate";
-import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
+import { SpidIdp } from "../../../../utils/idps";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 

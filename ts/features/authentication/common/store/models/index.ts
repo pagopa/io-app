@@ -1,6 +1,6 @@
-import { SpidIdp } from "../../../../../../definitions/content/SpidIdp";
 import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
 import { SessionToken } from "../../../../../types/SessionToken";
+import { SpidIdp } from "../../../../../utils/idps";
 
 // reason for the user to be in the unauthenticated state
 type LoggedOutReason = "NOT_LOGGED_IN" | "SESSION_EXPIRED";

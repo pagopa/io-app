@@ -7,8 +7,7 @@ import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/B
 import I18n from "../../../../../i18n";
 import { idpSelected } from "../../../common/store/actions";
 import { idpsRemoteValueSelector } from "../../../../../store/reducers/content";
-import { SpidIdp } from "../../../../../../definitions/content/SpidIdp";
-import { idps as idpsFallback } from "../../../../../utils/idps";
+import { idps as idpsFallback, SpidIdp } from "../../../../../utils/idps";
 import { loadIdps } from "../../../../../store/actions/content";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import {
@@ -71,7 +70,7 @@ const IdpSelectionScreen = (): ReactElement => {
   const { name: routeName } = useRoute();
 
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-  const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
+  const idpValue = isReady(idps) ? idps.value : idpsFallback;
   const randomIdps = useRef<ReadonlyArray<SpidIdp>>(randomOrderIdps(idpValue));
   const firstIdpsRef = useRef<ReadonlyArray<SpidIdp>>(idpValue);
 
@@ -99,12 +98,12 @@ const IdpSelectionScreen = (): ReactElement => {
   // is saved in firstIdpsRef and then compared with the data that is
   // collected after the data is updated (so when it isReady again).
   if (isReady(idps)) {
-    if (!_.isEqual(firstIdpsRef.current, idps.value.items)) {
+    if (!_.isEqual(firstIdpsRef.current, idps.value)) {
       // eslint-disable-next-line functional/immutable-data
-      randomIdps.current = randomOrderIdps(idps.value.items);
+      randomIdps.current = randomOrderIdps(idps.value);
     }
     // eslint-disable-next-line functional/immutable-data
-    firstIdpsRef.current = idps.value.items;
+    firstIdpsRef.current = idps.value;
   }
 
   const isNativeLoginEnabled = () =>

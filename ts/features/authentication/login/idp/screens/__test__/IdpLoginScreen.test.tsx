@@ -38,7 +38,7 @@ describe("IdpLoginScreen", () => {
       idp: {
         id: "testidp1",
         name: "testidp1",
-        logo: "",
+        logo: { light: { uri: "" } },
         profileUrl: ""
       },
       reason: "NOT_LOGGED_IN"
@@ -79,7 +79,7 @@ describe("IdpLoginScreen", () => {
       idp: {
         id: "testidp1",
         name: "testidp1",
-        logo: "",
+        logo: { light: { uri: "" } },
         profileUrl: ""
       },
       sessionToken: "fake-session-token" as SessionToken,
