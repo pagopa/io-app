@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0-rc.2](https://github.com/pagopa/io-app/compare/3.5.0-rc.1...3.5.0-rc.2) (2025-05-08)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2358](https://pagopa.atlassian.net/browse/SIW-2358)] Bump io-app-design-system to version 5.6.0 ([#6964](https://github.com/pagopa/io-app/issues/6964)) ([af78760](https://github.com/pagopa/io-app/commit/af787607453f64e851b7ff563409b51039c7009e))
+* [[IOCOM-2334](https://pagopa.atlassian.net/browse/IOCOM-2334)] services reducer and selectors refactor ([#6938](https://github.com/pagopa/io-app/issues/6938)) ([aef91e3](https://github.com/pagopa/io-app/commit/aef91e376136a87d61a2dd8137c17bce96df07b3))
+* **IT Wallet:** [[SIW-2211](https://pagopa.atlassian.net/browse/SIW-2211),[SIW-2273](https://pagopa.atlassian.net/browse/SIW-2273)] Add IT Wallet upgrade banner ([#6929](https://github.com/pagopa/io-app/issues/6929)) ([1420e35](https://github.com/pagopa/io-app/commit/1420e357580827941893d0d636ae6ac1de33231b))
+* **IT Wallet:** [[SIW-2254](https://pagopa.atlassian.net/browse/SIW-2254)] Remote presentation add not trusted RP failure case ([#6903](https://github.com/pagopa/io-app/issues/6903)) ([f5131c5](https://github.com/pagopa/io-app/commit/f5131c57381364c6520045a62fabaee27f3df498))
+
+## [3.5.0-rc.1](https://github.com/pagopa/io-app/compare/3.5.0-rc.0...3.5.0-rc.1) (2025-05-07)
+
+
+### Chores
+
+* [[IOAPPX-495](https://pagopa.atlassian.net/browse/IOAPPX-495)] Automatically configure Reactotron host with the local machine's IP ([#6949](https://github.com/pagopa/io-app/issues/6949)) ([e23706c](https://github.com/pagopa/io-app/commit/e23706c660f4a09297be965e250144c531e5f8e1))
+* [[IOPLT-1096](https://pagopa.atlassian.net/browse/IOPLT-1096)] Replace all the buttons with unified `IOButton` ([#6919](https://github.com/pagopa/io-app/issues/6919)) ([dd782be](https://github.com/pagopa/io-app/commit/dd782bee82c17adeaa2d0407bc3be5e5351b803b))
+
 ## [3.5.0-rc.0](https://github.com/pagopa/io-app/compare/3.4.0-rc.5...3.5.0-rc.0) (2025-05-07)
 
 
