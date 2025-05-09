@@ -16,6 +16,7 @@ exports[`TosWebviewComponent The snapshot for the TosWebviewComponent Should ren
     style={
       {
         "flex": 1,
+        "paddingBottom": 0,
       }
     }
     testID="toSWebViewContainer"
