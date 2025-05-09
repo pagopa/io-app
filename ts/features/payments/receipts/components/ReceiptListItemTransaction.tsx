@@ -12,19 +12,17 @@ import ListItemSwipeAction, {
   SwipeControls
 } from "../../../../components/ListItemSwipeAction";
 import I18n from "../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIODispatch } from "../../../../store/hooks";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { format } from "../../../../utils/dates";
+import { PaymentAnalyticsData } from "../../common/types/PaymentAnalytics";
 import { getTransactionLogo } from "../../common/utils";
-import { hidePaymentsReceiptAction } from "../store/actions";
-import { formatAmountText } from "../utils";
 import {
   analyticsHideReceiptAction,
   analyticsHideReceiptConfirmAction
 } from "../analytics/utils";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { paymentsGetPaymentDetailsAction } from "../../checkout/store/actions/networking";
-import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+import { hidePaymentsReceiptAction } from "../store/actions";
+import { formatAmountText } from "../utils";
 
 type Props = {
   transaction: NoticeListItem;
@@ -74,7 +72,11 @@ const ReceiptListItemTransaction = memo(
 
     const dispatch = useIODispatch();
 
-    const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+    const paymentAnalyticsData: PaymentAnalyticsData = {
+      receiptOrganizationName: transaction.payeeName,
+      receiptOrganizationFiscalCode: transaction.payeeTaxCode,
+      receiptUser: transaction.isPayer ? "payer" : "payee"
+    };
 
     const swipeActionProps = {
       icon: "eyeHide" as IOIcons,
@@ -85,10 +87,6 @@ const ReceiptListItemTransaction = memo(
         resetSwipePosition,
         triggerSwipeAction
       }: SwipeControls) => {
-        dispatch(
-          paymentsGetPaymentDetailsAction.request(transaction.eventId as RptId)
-        );
-
         analyticsHideReceiptAction(paymentAnalyticsData, "swipe");
 
         Alert.alert(
