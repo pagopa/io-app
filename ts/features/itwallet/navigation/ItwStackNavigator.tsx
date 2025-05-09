@@ -46,6 +46,7 @@ import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { useIOSelector } from "../../../store/hooks";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
+import { ItwIdentificationCieWarningScreen } from "../identification/screens/ItwIdentificationCieWarningScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -109,6 +110,10 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
         component={ItwIdentificationModeSelectionScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE_WARNING}
+        component={ItwIdentificationCieWarningScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
