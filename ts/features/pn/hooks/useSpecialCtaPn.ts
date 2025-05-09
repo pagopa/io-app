@@ -1,24 +1,23 @@
-import { useCallback, useMemo } from "react";
 import { IOToast } from "@pagopa/io-app-design-system";
+import { useCallback, useMemo } from "react";
 import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isLoadingPnActivationSelector } from "../store/reducers/activation";
 import I18n from "../../../i18n";
-import { pnActivationUpsert } from "../store/actions";
-import { loadServicePreference } from "../../services/details/store/actions/preference";
-import * as analytics from "../../services/common/analytics";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import {
-  trackPNServiceActivated,
-  trackPNServiceDeactivated
-} from "../analytics";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   isPnAppVersionSupportedSelector,
   isPnEnabledSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { openAppStoreUrl } from "../../../utils/url";
+import * as analytics from "../../services/common/analytics";
 import { useServicePreferenceByChannel } from "../../services/details/hooks/useServicePreference";
+import {
+  trackPNServiceActivated,
+  trackPNServiceDeactivated
+} from "../analytics";
+import { pnActivationUpsert } from "../store/actions";
+import { isLoadingPnActivationSelector } from "../store/reducers/activation";
 
 /**
  * Hook to handle the PN activation/deactivation
@@ -29,19 +28,14 @@ const usePnActivation = (serviceId: ServiceId) => {
   const isLoadingPnActivation = useIOSelector(isLoadingPnActivationSelector);
 
   const handleActivationFailure = useCallback(() => {
-    dispatch(loadServicePreference.request(serviceId));
     IOToast.error(I18n.t("features.pn.service.toast.error"));
-  }, [dispatch, serviceId]);
+  }, []);
 
-  const handleActivationSuccess = useCallback(
-    (status: boolean) => {
-      dispatch(loadServicePreference.request(serviceId));
-      if (status) {
-        IOToast.success(I18n.t("features.pn.service.toast.activated"));
-      }
-    },
-    [dispatch, serviceId]
-  );
+  const handleActivationSuccess = useCallback((status: boolean) => {
+    if (status) {
+      IOToast.success(I18n.t("features.pn.service.toast.activated"));
+    }
+  }, []);
 
   const activationHandler = useCallback(
     (status: boolean) => {
