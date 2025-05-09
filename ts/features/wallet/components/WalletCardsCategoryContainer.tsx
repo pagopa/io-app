@@ -1,4 +1,8 @@
-import { ListItemHeader, WithTestID } from "@pagopa/io-app-design-system";
+import {
+  ListItemHeader,
+  VSpacer,
+  WithTestID
+} from "@pagopa/io-app-design-system";
 import { Platform, StyleSheet } from "react-native";
 import Animated, {
   FadeInDown,
@@ -38,7 +42,7 @@ export const WalletCardsCategoryContainer = ({
     testID={testID}
     layout={LinearTransition.duration(200)}
   >
-    {header && <ListItemHeader {...header} />}
+    {header ? <ListItemHeader {...header} /> : <VSpacer size={16} />}
     <Animated.FlatList
       scrollEnabled={false}
       data={cards}

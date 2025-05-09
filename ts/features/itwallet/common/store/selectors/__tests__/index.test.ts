@@ -3,7 +3,8 @@ import {
   isItwDiscoveryBannerRenderableSelector,
   itwOfflineAccessAvailableSelector,
   itwShouldRenderFeedbackBannerSelector,
-  itwShouldRenderOfflineBannerSelector
+  itwShouldRenderOfflineBannerSelector,
+  itwShouldRenderL3UpgradeBannerSelector
 } from "..";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -19,12 +20,14 @@ import * as credentialsSelectors from "../../../../credentials/store/selectors";
 import * as preferencesSelectors from "../preferences";
 import * as remoteConfigSelectors from "../remoteConfig";
 import * as persistedSelectors from "../../../../../../store/reducers/persistedPreferences.ts";
+import * as ingressSelectors from "../../../../../ingress/store/selectors";
+import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
 
 const curriedAppReducer =
   (action: Action) => (state: GlobalState | undefined) =>
     appReducer(state, action);
 
-describe("itwDiscoveryBannerSelector", () => {
+describe("isItwDiscoveryBannerRenderableSelector", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
@@ -45,6 +48,9 @@ describe("itwDiscoveryBannerSelector", () => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(lifecycleValid);
+      jest
+        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .mockReturnValue(false);
 
       expect(
         isItwDiscoveryBannerRenderableSelector({} as unknown as GlobalState)
@@ -179,6 +185,42 @@ describe("itwOfflineAccessAvailableSelector", () => {
       expect(
         itwShouldRenderOfflineBannerSelector({} as unknown as GlobalState)
       ).toBe(shouldRenderBanner);
+    }
+  );
+});
+
+describe("itwShouldRenderL3UpgradeBannerSelector", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it.each`
+    itwEnabled | offlineAccessReason                       | isL3Enabled | authLevel    | expected
+    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${"L2"}      | ${false}
+    ${true}    | ${undefined}                              | ${false}    | ${"L2"}      | ${false}
+    ${true}    | ${undefined}                              | ${true}     | ${"L3"}      | ${false}
+    ${true}    | ${undefined}                              | ${true}     | ${"L2"}      | ${true}
+    ${true}    | ${undefined}                              | ${true}     | ${undefined} | ${true}
+  `(
+    "should return $expected when offlineAccessReason is $offlineAccessReason, isL3Enabled is $isL3Enabled, authLevel is $authLevel",
+    ({ offlineAccessReason, isL3Enabled, authLevel, expected }) => {
+      jest
+        .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
+        .mockReturnValue(true);
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(offlineAccessReason);
+      jest
+        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .mockReturnValue(isL3Enabled);
+      jest
+        .spyOn(preferencesSelectors, "itwAuthLevelSelector")
+        .mockReturnValue(authLevel);
+
+      expect(
+        itwShouldRenderL3UpgradeBannerSelector({} as unknown as GlobalState)
+      ).toBe(expected);
     }
   );
 });

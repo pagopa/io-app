@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import {
-  ButtonLink,
   ContentWrapper,
+  IOButton,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -45,7 +45,8 @@ const CiePinWizard = () => {
           )}
         />
         <VSpacer size={24} />
-        <ButtonLink
+        <IOButton
+          variant="link"
           testID="cie-pin-wizard-open-cie-pin-link"
           label={I18n.t(
             "authentication.wizards.cie_pin_wizard.bottom_sheet.link"
@@ -113,7 +114,8 @@ const CiePinWizard = () => {
     >
       <ContentWrapper>
         <VSpacer size={12} />
-        <ButtonLink
+        <IOButton
+          variant="link"
           testID="cie-pin-wizard-open-bottom-sheet"
           label={I18n.t(
             "authentication.wizards.cie_pin_wizard.bottom_sheet.cta.label"

@@ -1536,7 +1536,7 @@
       "fee": "Commissione",
       "feeAppliedBy": "Applicata da",
       "editButton": "Modifica",
-      "termsAndConditions": "By proceeding, you accept the [Terms and Conditions](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) of use and confirm that you have read the {{pspName}} [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/).",
+      "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) of {{pspName}}.",
       "a11y": {
         "announce": "Payment Summary"
       }
@@ -4713,6 +4713,19 @@
             "primaryAction": "Inizia",
             "secondaryAction": "Annulla"
           },
+          "untrustedRpScreen": {
+            "title": "Questo ente non è verificato",
+            "subtitle": "Per la tua sicurezza, IO permette di condividere le tue informazioni solo con enti verificati e certificati.",
+            "primaryAction": "Chiudi",
+            "secondaryAction": "Cosa significa?",
+            "bottomSheet": {
+              "title": "Sistema di verifica degli enti",
+              "contentTop": "IO controlla sempre che un ente sia verificato prima di consentire la lettura dei tuoi dati.",
+              "subtitle": "Quando un ente è verificato?",
+              "contentBottom": "Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.",
+              "primaryAction": "Scopri di più"
+            }
+          },
           "purpose": "Finalità: {{purpose}}",
           "success": {
             "title": "Fatto!",
@@ -4811,6 +4824,13 @@
         },
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
+      },
+      "upgrade": {
+        "banner": {
+          "title": "IT-Wallet per\ni tuoi documenti",
+          "description": "L’unico Wallet di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
+          "action": "Ottieni IT-Wallet"
+        }
       }
     }
   },

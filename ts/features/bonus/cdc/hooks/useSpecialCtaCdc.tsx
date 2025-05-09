@@ -7,6 +7,7 @@ import { isCdcAppVersionSupportedSelector } from "../../../../store/reducers/bac
 import { useServicePreferenceByChannel } from "../../../services/details/hooks/useServicePreference";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import { CDC_ROUTES } from "../navigation/routes";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 /**
  * Hook to handle the CDC activation/deactivation
  */
@@ -31,15 +32,15 @@ const useCdcActivation = () => {
  * This hook determines and returns the appropriate primary action prop
  * for activating and deactivating the CDC service.
  */
-export const useSpecialCtaCdc = ():
-  | IOScrollViewActions["primary"]
-  | undefined => {
+export const useSpecialCtaCdc = (
+  serviceId: ServiceId
+): IOScrollViewActions["primary"] | undefined => {
   const isCdcEnabled = useIOSelector(isCdcAppVersionSupportedSelector);
 
   const { subscribeHandler } = useCdcActivation();
 
   const { isLoadingServicePreferenceByChannel, servicePreferenceByChannel } =
-    useServicePreferenceByChannel("inbox");
+    useServicePreferenceByChannel("inbox", serviceId);
 
   const loading = isLoadingServicePreferenceByChannel;
 
