@@ -20,7 +20,7 @@ export const revokeCurrentWalletInstance = async (
       appFetch
     });
   } catch (e) {
-    sendExceptionToSentry(e, "revokeWalletInstance");
+    sendExceptionToSentry(e, "revokeCurrentWalletInstance");
     throw new Error("Error revoking wallet instance");
   }
 };
