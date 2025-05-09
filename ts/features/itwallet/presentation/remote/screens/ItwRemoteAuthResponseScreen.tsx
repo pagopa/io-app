@@ -44,10 +44,12 @@ export const ItwRemoteAuthResponseScreen = () => {
         "features.itWallet.presentation.remote.success.subtitle"
       )}
       action={
-        // When there is a redirect uri it means it's the same-device flow
         redirectUri
           ? {
-              label: "Continua",
+              icon: "externalLinkSmall",
+              label: I18n.t(
+                "features.itWallet.presentation.remote.success.cta"
+              ),
               onPress: () => {
                 Linking.openURL(redirectUri)
                   .then(closeMachine)

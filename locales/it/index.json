@@ -4719,7 +4719,8 @@
           "purpose": "Finalità: {{purpose}}",
           "success": {
             "title": "Fatto!",
-            "subtitle": "Continua sul sito dell'ente"
+            "subtitle": "Continua sul sito dell'ente.",
+            "cta":  "Continua sul sito dell'ente"
           }
         }
       },
