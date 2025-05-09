@@ -54,7 +54,7 @@ export const pdfSavePath = (
   const sanitizedFileNameWithExtension = !sanitizedFileName
     .toLowerCase()
     .endsWith(".pdf")
-    ? `{sanitizedFileName}.pdf`
+    ? `${sanitizedFileName}.pdf`
     : sanitizedFileName;
   return `${AttachmentsDirectoryPath}/${messageId}/${attachmentId}/${sanitizedFileNameWithExtension}`;
 };

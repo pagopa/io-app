@@ -165,9 +165,7 @@ describe("pdfSavePath function", () => {
   });
   it("should add .pdf extension if missing", () => {
     const path = pdfSavePath(messageId, "att123", "document");
-    expect(path).toBe(
-      `/attachments/${messageId}/att123/{sanitizedFileName}.pdf`
-    );
+    expect(path).toBe(`/attachments/${messageId}/att123/document.pdf`);
   });
   it("should sanitize invalid filename characters", () => {
     const path = pdfSavePath(messageId, "att123", ' d\\oc/u*m:e"n<t?.p>d|f  ');
