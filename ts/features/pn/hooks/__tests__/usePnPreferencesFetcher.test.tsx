@@ -6,7 +6,7 @@ import { useIODispatch } from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { NetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
+import { servicePreferencePotByIdSelector } from "../../../services/details/store/reducers";
 import {
   ServicePreferenceResponse,
   WithServiceID
@@ -20,7 +20,7 @@ jest.mock("../../../../store/hooks", () => ({
 }));
 jest.mock("../../../services/details/store/reducers/", () => ({
   ...jest.requireActual("../../../services/details/store/reducers/"),
-  servicePreferencePotSelector: jest.fn()
+  servicePreferencePotByIdSelector: jest.fn()
 }));
 jest.mock("react", () => ({
   ...jest.requireActual("react"),
@@ -44,7 +44,7 @@ let testingHookData: {
 const mockDispatch = jest.fn();
 const mockUseIODispatch = useIODispatch as jest.Mock;
 const mockServicePreferencePotSelector =
-  servicePreferencePotSelector as jest.Mock;
+  servicePreferencePotByIdSelector as jest.Mock;
 
 const pnServiceId = "PN_SID" as ServiceId;
 describe("usePnPreferencesFetcher", () => {
@@ -99,12 +99,16 @@ describe("usePnPreferencesFetcher", () => {
     for (const [index, title] of titles.entries()) {
       it(` when id is correct and preference is ${title}`, () => {
         const servicePreferencePot = preferenceCases[+index];
-
         mockServicePreferencePotSelector.mockReturnValue(servicePreferencePot);
 
         renderHook();
 
         expect(testingHookData).toEqual(expectedReturnTypes[+index]);
+        // The selector should be called with state and service ID
+        expect(mockServicePreferencePotSelector).toHaveBeenCalledWith(
+          expect.anything(),
+          pnServiceId
+        );
       });
     }
   });
