@@ -97,11 +97,12 @@ export const CiePreparationScreenContent = ({ infoType }: Props) => {
           onPress={buttonLink.onPress}
         />
         {/**
-        TODO: replace with the correct image when available
+        TODO: [SIW-2361] Replace with the correct image when available
          If it's a gif, remember to add  "implementation 'com.facebook.fresco:animated-gif:3.6.0'"
         in android/app/build.gradle, otherwise it won't work on Android
         */}
-        {/*         <Image
+        {/*         
+        <Image
           source={imageSource}
         /> */}
         {cieInfoBottomSheet.bottomSheet}
