@@ -82,3 +82,9 @@ export const itwIsWalletInstanceRemotelyActiveSelector = (state: GlobalState) =>
  */
 export const itwIsL3EnabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isL3Enabled ?? false;
+
+/**
+ * Returns whether offline banner is hidden. Defaults to false.
+ */
+export const itwIsOfflineBannerHiddenSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.offlineBannerHidden ?? false;

@@ -132,7 +132,8 @@ describe("IT Wallet preferences reducer", () => {
         authLevel: "L2",
         claimValuesHidden: true,
         isWalletInstanceRemotelyActive: true,
-        isL3Enabled: true
+        isL3Enabled: true,
+        offlineBannerHidden: true
       },
       action
     );
