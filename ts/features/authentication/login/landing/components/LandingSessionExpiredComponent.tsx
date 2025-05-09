@@ -4,10 +4,10 @@
 
 import {
   Body,
-  ButtonLink,
-  ButtonLinkProps,
   ContentWrapper,
   H3,
+  IOButton,
+  IOButtonLinkSpecificProps,
   IOPictograms,
   Pictogram,
   VSpacer
@@ -22,7 +22,7 @@ type Props = {
   accessibilityLabel?: string;
   accessibilityHint?: string;
   buttonLink?: Pick<
-    ButtonLinkProps,
+    IOButtonLinkSpecificProps,
     | "color"
     | "testID"
     | "label"
@@ -64,7 +64,7 @@ export const LandingSessionExpiredComponent = forwardRef<View, Props>(
           {buttonLink && (
             <View style={{ alignSelf: "center" }}>
               <VSpacer size={BUTTON_VERTICAL_SPACING} />
-              <ButtonLink {...buttonLink} />
+              <IOButton variant="link" {...buttonLink} />
             </View>
           )}
         </ContentWrapper>
