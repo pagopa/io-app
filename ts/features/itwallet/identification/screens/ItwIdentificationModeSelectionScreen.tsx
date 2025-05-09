@@ -8,7 +8,7 @@ import {
 } from "../../analytics";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
+import { itwIsL3EnabledAndFiscalCodeWhitelistedSelector } from "../../common/store/selectors/preferences.ts";
 import { L3IdentificationView } from "../components/L3IdentificationView.tsx";
 import { DefaultIdentificationView } from "../components/DefaultIdentificationView.tsx";
 
@@ -23,7 +23,9 @@ type ScreenProps = IOStackNavigationRouteProps<
 
 export const ItwIdentificationModeSelectionScreen = (params: ScreenProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const isL3Enabled = useIOSelector(
+    itwIsL3EnabledAndFiscalCodeWhitelistedSelector
+  );
 
   const { eidReissuing } = params.route.params;
 

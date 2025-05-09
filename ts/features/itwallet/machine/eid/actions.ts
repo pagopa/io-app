@@ -24,7 +24,7 @@ import {
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwSetAuthLevel } from "../../common/store/actions/preferences.ts";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
+import { itwIsL3EnabledAndFiscalCodeWhitelistedSelector } from "../../common/store/selectors/preferences.ts";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -215,7 +215,8 @@ export const createEidIssuanceActionsImplementation = (
       const storedIntegrityKeyTag = itwIntegrityKeyTagSelector(state);
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
-      const isL3FeaturesEnabled = itwIsL3EnabledSelector(state);
+      const isL3FeaturesEnabled =
+        itwIsL3EnabledAndFiscalCodeWhitelistedSelector(state);
 
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),

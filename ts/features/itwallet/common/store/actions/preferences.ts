@@ -36,6 +36,10 @@ export const itwSetWalletInstanceRemotelyActive = createStandardAction(
 export const itwSetL3Enabled =
   createStandardAction("ITW_SET_L3_ENABLED")<boolean>();
 
+export const itwSetFiscalCodeWhitelisted = createStandardAction(
+  "ITW_SET_FISCAL_CODE_WHITELISTED"
+)<boolean>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
@@ -45,4 +49,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
   | ActionType<typeof itwSetWalletInstanceRemotelyActive>
-  | ActionType<typeof itwSetL3Enabled>;
+  | ActionType<typeof itwSetL3Enabled>
+  | ActionType<typeof itwSetFiscalCodeWhitelisted>;
