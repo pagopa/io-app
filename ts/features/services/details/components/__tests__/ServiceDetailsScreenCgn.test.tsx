@@ -89,10 +89,12 @@ describe("ServiceDetailsScreenCgn", () => {
       features: {
         services: {
           details: {
-            byId: {
+            dataById: {
               [serviceId]: pot.some(service)
             },
-            servicePreference: pot.noneError(servicePreferenceError)
+            preferencesById: {
+              [serviceId]: pot.noneError(servicePreferenceError)
+            }
           }
         }
       },
@@ -116,10 +118,12 @@ describe("ServiceDetailsScreenCgn", () => {
       features: {
         services: {
           details: {
-            byId: {
+            dataById: {
               [serviceId]: pot.some(service)
             },
-            servicePreference: pot.some(servicePreferenceWihInboxDisabled)
+            preferencesById: {
+              [serviceId]: pot.some(servicePreferenceWihInboxDisabled)
+            }
           }
         }
       },
@@ -143,10 +147,12 @@ describe("ServiceDetailsScreenCgn", () => {
       features: {
         services: {
           details: {
-            byId: {
+            dataById: {
               [serviceId]: pot.some(service)
             },
-            servicePreference: pot.some(servicePreferenceWihInboxEnabled)
+            preferencesById: {
+              [serviceId]: pot.some(servicePreferenceWihInboxEnabled)
+            }
           }
         }
       },

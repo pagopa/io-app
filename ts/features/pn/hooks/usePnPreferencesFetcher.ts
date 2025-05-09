@@ -6,7 +6,7 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../services/details/store/actions/preference";
-import { servicePreferencePotSelector } from "../../services/details/store/reducers";
+import { servicePreferencePotByIdSelector } from "../../services/details/store/reducers";
 import { isServicePreferenceResponseSuccess } from "../../services/details/types/ServicePreferenceResponse";
 
 type PnStatus = {
@@ -19,7 +19,7 @@ export const usePnPreferencesFetcher = (pnServiceId: ServiceId): PnStatus => {
   const [hasFetched, setHasFetched] = React.useState<boolean>(false);
   const dispatch = useIODispatch();
   const servicePreferencePot = useIOSelector(state =>
-    servicePreferencePotSelector(state)
+    servicePreferencePotByIdSelector(state, pnServiceId)
   );
 
   const isError = pot.isError(servicePreferencePot);

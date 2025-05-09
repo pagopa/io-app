@@ -220,7 +220,6 @@ describe("itwRemoteMachine", () => {
       payload: qrCodePayload
     });
 
-    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().value).toStrictEqual(
       "EvaluatingRelyingPartyTrust"
     );
@@ -267,7 +266,6 @@ describe("itwRemoteMachine", () => {
     actor.start();
 
     actor.send({ type: "start", payload: qrCodePayload });
-    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       payload: qrCodePayload
@@ -307,6 +305,7 @@ describe("itwRemoteMachine", () => {
      * The user selects optional credentials and gives consent to share the credentials with the RP
      */
     await waitFor(actor, snapshot => snapshot.matches("ClaimsDisclosure"));
+    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     actor.send({
       type: "toggle-credential",
       credentialIds: ["cred01", "cred02", "cred03"]
@@ -398,5 +397,29 @@ describe("itwRemoteMachine", () => {
 
     expect(sendAuthorizationResponse).toHaveBeenCalledTimes(1);
     await waitFor(actor, snapshot => snapshot.matches("Failure"));
+  });
+
+  it("should transition to Failure when an error occurs in EvaluatingRelyingPartyTrust", async () => {
+    isWalletActive.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+
+    evaluateRelyingPartyTrust.mockImplementation(() => {
+      throw new Error("Trust evaluation failed");
+    });
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: {
+        client_id: T_CLIENT_ID,
+        request_uri: T_REQUEST_URI,
+        state: T_STATE
+      } as ItwRemoteRequestPayload
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
   });
 });
